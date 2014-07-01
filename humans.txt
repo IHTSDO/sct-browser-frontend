@@ -1,0 +1,37 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+                              ,----,                                           
+                 ,--,       ,/   .`|                                ,----..    
+   ,---,       ,--.'|     ,`   .'  :   .--.--.        ,---,        /   /   \   
+,`--.' |    ,--,  | :   ;    ;     /  /  /    '.    .'  .' `\     /   .     :  
+|   :  : ,---.'|  : ' .'___,/    ,'  |  :  /`. /  ,---.'     \   .   /   ;.  \ 
+:   |  ' |   | : _' | |    :     |   ;  |  |--`   |   |  .`\  | .   ;   /  ` ; 
+|   :  | :   : |.'  | ;    |.';  ;   |  :  ;_     :   : |  '  | ;   |  ; \ ; | 
+'   '  ; |   ' '  ; : `----'  |  |    \  \    `.  |   ' '  ;  : |   :  | ; | ' 
+|   |  | '   |  .'. |     '   :  ;     `----.   \ '   | ;  .  | .   |  ' ' ' : 
+'   :  ; |   | :  | '     |   |  '     __ \  \  | |   | :  |  ' '   ;  \; /  | 
+|   |  ' '   : |  : ;     '   :  |    /  /`--'  / '   : | /  ;   \   \  ',  /  
+'   :  | |   | '  ,/      ;   |.'    '--'.     /  |   | '` ,/     ;   :    /   
+;   |.'  ;   : ;--'       '---'        `--'---'   ;   :  .'        \   \ .'    
+'---'    |   ,/                                   |   ,.'           `---`      
+         '---'                                    '---'                        
+                                                                               
+
+/* TEAM */
+		Alejandro Lopez Osornio
+		Contact: alopez@termmed.com
+
+		Rory Davidson
+		Contact: rda@ihtsdo.org
+
+/* THANKS */
+
+		termmed.com, ihtsdo.org
+
+/* SITE */
+		Domain name: browser.ihtsdo.org
+		Last update: 2014-04-13
+		Language: English
+		Standards: HTML5 CSS3
+		IDE: TextWrangler, Aptana, Webstorm
