@@ -1,4 +1,4 @@
-sct-browser-fontend
-===================
+sct-browser-frontend
+====================
 
-sct-browser-fontend
+sct-browser-frontend
