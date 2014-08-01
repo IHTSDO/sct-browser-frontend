@@ -30,167 +30,179 @@ function taxonomyPanel(divElement, conceptId, options) {
     this.history = [];
 
     this.setupCanvas = function() {
-        var taxonomyHtml = "<div style='height:100%;margin: 5px; overflow:auto;' class='panel panel-default' id='" + panel.divElement.id + "-mainPanel'>";
-        taxonomyHtml = taxonomyHtml + "<div class='panel-heading' id='" + panel.divElement.id + "-panelHeading'>";
-        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-subscribersMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-bookmark'></i></button>"
-        taxonomyHtml = taxonomyHtml + "<div class='row'>";
-        taxonomyHtml = taxonomyHtml + "<div class='col-md-6' id='" + panel.divElement.id + "-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_taxonomy'>Taxonomy</span></strong></div>";
-        taxonomyHtml = taxonomyHtml + "<div class='col-md-6 text-right'>";
-        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-resetButton' class='btn btn-link' data-panel='" + panel.divElement.id + "' style='padding:2px'><i class='glyphicon glyphicon-repeat'></i></button>"
-        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-linkerButton' class='btn btn-link jqui-draggable linker-button' data-panel='" + panel.divElement.id + "' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>"
-        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-configButton' class='btn btn-link' style='padding:2px' data-target='#" + panel.divElement.id + "-configModal'><i class='glyphicon glyphicon-cog'></i></button>"
-        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-collapseButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-small'></i></button>"
-        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-expandButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-full'></i></button>"
-        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-closeButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-remove'></i></button>"
-        taxonomyHtml = taxonomyHtml + "</div>";
-        taxonomyHtml = taxonomyHtml + "</div>";
-        taxonomyHtml = taxonomyHtml + "</div>";
-        taxonomyHtml = taxonomyHtml + "<div id='" + panel.divElement.id + "-taxonomyConfigBar' style='margin-bottom: 10px;'><nav class='navbar navbar-default' role='navigation' style='min-height: 28px;border-radius: 0px;border-bottom: 1px lightgray solid;'>";
-        taxonomyHtml = taxonomyHtml + " <ul class='nav navbar-nav navbar-left'>";
-        taxonomyHtml = taxonomyHtml + "     <li class='dropdown' style='margin-bottom: 2px; margin-top: 2px;'>";
-        taxonomyHtml = taxonomyHtml + "         <a href='javascript:void(0);' class='dropdown-toggle' data-toggle='dropdown' style='padding-top: 2px; padding-bottom: 2px;'><span id='" + panel.divElement.id + "-txViewLabel'></span> <b class='caret'></b></a>";
-        taxonomyHtml = taxonomyHtml + "         <ul class='dropdown-menu' role='menu' style='float: none;'>";
-        taxonomyHtml = taxonomyHtml + "             <li><button class='btn btn-link' id='" + panel.divElement.id + "-inferredViewButton'><span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span></button></li>";
-        taxonomyHtml = taxonomyHtml + "             <li><button class='btn btn-link' id='" + panel.divElement.id + "-statedViewButton'><span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span></button></li>";
-        taxonomyHtml = taxonomyHtml + "         </ul>";
-        taxonomyHtml = taxonomyHtml + "     </li>";
-        taxonomyHtml = taxonomyHtml + " </ul>";
-        taxonomyHtml = taxonomyHtml + "</nav></div>";
-        taxonomyHtml = taxonomyHtml + "<div class='panel-body' style='height:100%' id='" + panel.divElement.id + "-panelBody'>";
-        taxonomyHtml = taxonomyHtml + "</div>";
-        taxonomyHtml = taxonomyHtml + "</div>";
-        $(divElement).html(taxonomyHtml);
-        $("#" + panel.divElement.id + "-resetButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-linkerButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-subscribersMarker").disableTextSelect();
-        $("#" + panel.divElement.id + "-configButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-collapseButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-expandButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-closeButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-expandButton").hide();
-        $("#" + panel.divElement.id + "-subscribersMarker").hide();
-
-        $("#" + panel.divElement.id + "-closeButton").click(function(event) {
-            $(divElement).remove();
-        });
-
-        $("#" + panel.divElement.id + "-configButton").click(function (event) {
-            $("#" + panel.divElement.id + "-taxonomyConfigBar").slideToggle('slow');
-        });
-
-        if (typeof panel.options.closeButton != "undefined" && panel.options.closeButton == false) {
-            $("#" + panel.divElement.id + "-closeButton").hide();
+//        var taxonomyHtml = "<div style='height:100%;margin: 5px; overflow:auto;' class='panel panel-default' id='" + panel.divElement.id + "-mainPanel'>";
+//        taxonomyHtml = taxonomyHtml + "<div class='panel-heading' id='" + panel.divElement.id + "-panelHeading'>";
+//        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-subscribersMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-bookmark'></i></button>"
+//        taxonomyHtml = taxonomyHtml + "<div class='row'>";
+//        taxonomyHtml = taxonomyHtml + "<div class='col-md-6' id='" + panel.divElement.id + "-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_taxonomy'>Taxonomy</span></strong></div>";
+//        taxonomyHtml = taxonomyHtml + "<div class='col-md-6 text-right'>";
+//        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-resetButton' class='btn btn-link' data-panel='" + panel.divElement.id + "' style='padding:2px'><i class='glyphicon glyphicon-repeat'></i></button>"
+//        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-linkerButton' class='btn btn-link jqui-draggable linker-button' data-panel='" + panel.divElement.id + "' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>"
+//        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-configButton' class='btn btn-link' style='padding:2px' data-target='#" + panel.divElement.id + "-configModal'><i class='glyphicon glyphicon-cog'></i></button>"
+//        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-collapseButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-small'></i></button>"
+//        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-expandButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-full'></i></button>"
+//        taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-closeButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-remove'></i></button>"
+//        taxonomyHtml = taxonomyHtml + "</div>";
+//        taxonomyHtml = taxonomyHtml + "</div>";
+//        taxonomyHtml = taxonomyHtml + "</div>";
+//        taxonomyHtml = taxonomyHtml + "<div id='" + panel.divElement.id + "-taxonomyConfigBar' style='margin-bottom: 10px;'><nav class='navbar navbar-default' role='navigation' style='min-height: 28px;border-radius: 0px;border-bottom: 1px lightgray solid;'>";
+//        taxonomyHtml = taxonomyHtml + " <ul class='nav navbar-nav navbar-left'>";
+//        taxonomyHtml = taxonomyHtml + "     <li class='dropdown' style='margin-bottom: 2px; margin-top: 2px;'>";
+//        taxonomyHtml = taxonomyHtml + "         <a href='javascript:void(0);' class='dropdown-toggle' data-toggle='dropdown' style='padding-top: 2px; padding-bottom: 2px;'><span id='" + panel.divElement.id + "-txViewLabel'></span> <b class='caret'></b></a>";
+//        taxonomyHtml = taxonomyHtml + "         <ul class='dropdown-menu' role='menu' style='float: none;'>";
+//        taxonomyHtml = taxonomyHtml + "             <li><button class='btn btn-link' id='" + panel.divElement.id + "-inferredViewButton'><span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span></button></li>";
+//        taxonomyHtml = taxonomyHtml + "             <li><button class='btn btn-link' id='" + panel.divElement.id + "-statedViewButton'><span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span></button></li>";
+//        taxonomyHtml = taxonomyHtml + "         </ul>";
+//        taxonomyHtml = taxonomyHtml + "     </li>";
+//        taxonomyHtml = taxonomyHtml + " </ul>";
+//        taxonomyHtml = taxonomyHtml + "</nav></div>";
+//        taxonomyHtml = taxonomyHtml + "<div class='panel-body' style='height:100%' id='" + panel.divElement.id + "-panelBody'>";
+//        taxonomyHtml = taxonomyHtml + "</div>";
+//        taxonomyHtml = taxonomyHtml + "</div>";
+//        $(divElement).html(taxonomyHtml);
+        var context = {
+            divElementId: panel.divElement.id
         }
-
-        if (typeof panel.options.linkerButton != "undefined" && panel.options.linkerButton == false) {
-            $("#" + panel.divElement.id + "-linkerButton").hide();
-        }
-
-        if (typeof panel.options.subscribersMarker != "undefined" && panel.options.subscribersMarker == false) {
-            $("#" + panel.divElement.id + "-subscribersMarker").remove();
-        }
-
-        if (typeof panel.options.collapseButton != "undefined" && panel.options.collapseButton == false) {
+        $.get("./views/taxonomyPlugin/taxonomyPlugin-main.hbs").then(function (src) {
+            var template = Handlebars.compile(src);
+            $(divElement).html(template(context));
+            $("#" + panel.divElement.id + "-resetButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-linkerButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-subscribersMarker").disableTextSelect();
+            $("#" + panel.divElement.id + "-configButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-collapseButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-expandButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-closeButton").disableTextSelect();
             $("#" + panel.divElement.id + "-expandButton").hide();
-            $("#" + panel.divElement.id + "-collapseButton").hide();
-        }
+            $("#" + panel.divElement.id + "-subscribersMarker").hide();
 
-        $("#" + panel.divElement.id + "-expandButton").click(function(event) {
-            $("#" + panel.divElement.id + "-panelBody").slideDown("fast");
-            $("#" + panel.divElement.id + "-expandButton").hide();
-            $("#" + panel.divElement.id + "-collapseButton").show();
-        });
-        $("#" + panel.divElement.id + "-collapseButton").click(function(event) {
-            $("#" + panel.divElement.id + "-panelBody").slideUp("fast");
-            $("#" + panel.divElement.id + "-expandButton").show();
-            $("#" + panel.divElement.id + "-collapseButton").hide();
-        });
-        $("#" + panel.divElement.id + "-configButton").tooltip({
-            placement : 'left',
-            trigger: 'hover',
-            title: i18n_panel_options,
-            animation: true,
-            delay: 1000
-        });
-        if (typeof i18n_reset == "undefined") {
-            i18n_reset = 'Reset';
-        }
-        $("#" + panel.divElement.id + "-resetButton").tooltip({
-            placement : 'left',
-            trigger: 'hover',
-            title: i18n_reset,
-            animation: true,
-            delay: 1000
-        });
-        if (typeof i18n_panel_links == "undefined") {
-            i18n_panel_links = 'Panel links';
-        }
-        $("#" + panel.divElement.id + "-linkerButton").tooltip({
-            placement : 'left',
-            trigger: 'hover',
-            title: i18n_panel_links,
-            animation: true,
-            delay: 1000
-        });
-        $("#" + panel.divElement.id + "-linkerButton").draggable({
-            cancel: false,
-            appendTo: 'body',
-            helper: 'clone',
-            delay: 500,
-            revert: false
-        });
-
-        $("#" + panel.divElement.id + "-panelBody").droppable({
-            drop: panel.handleDropEvent,
-            hoverClass: "bg-info"
-        });
-
-        $("#" + panel.divElement.id + "-panelHeading").droppable({
-            drop: panel.handleDropEvent,
-            hoverClass: "bg-info"
-        });
-
-        $("#" + panel.divElement.id + "-resetButton").click(function() {
-            panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
-        });
-
-        $("#" + panel.divElement.id + "-apply-button").click(function() {
-            //console.log("apply!");
-            panel.readOptionsPanel();
-            panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
-        });
-
-
-        $("#" + panel.divElement.id + "-linkerButton").click(function(event) {
-            $("#" + panel.divElement.id + "-linkerButton").popover({
-                trigger: 'manual',
-                placement: 'bottomRight',
-                html: true,
-                content: function() {
-                    linkerHtml = '<div class="text-center text-muted"><em>Drag to link with other panels<br>';
-                    if (panel.subscribers.length == 1) {
-                        linkerHtml = linkerHtml + panel.subscribers.length + ' link established</em></div>';
-                    } else {
-                        linkerHtml = linkerHtml + panel.subscribers.length + ' links established</em></div>';
-                    }
-                    linkerHtml = linkerHtml + '<div class="text-center"><a href="javascript:void(0);" onclick="clearTaxonomyPanelSubscriptions(\'' + panel.divElement.id + '\');">Clear links</a></div>';
-                    return linkerHtml;
-                }
+            $("#" + panel.divElement.id + "-closeButton").click(function(event) {
+                $(divElement).remove();
             });
-            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
+
+            $("#" + panel.divElement.id + "-configButton").click(function (event) {
+                $("#" + panel.divElement.id + "-taxonomyConfigBar").slideToggle('slow');
+            });
+
+            if (typeof panel.options.closeButton != "undefined" && panel.options.closeButton == false) {
+                $("#" + panel.divElement.id + "-closeButton").hide();
+            }
+
+            if (typeof panel.options.linkerButton != "undefined" && panel.options.linkerButton == false) {
+                $("#" + panel.divElement.id + "-linkerButton").hide();
+            }
+
+            if (typeof panel.options.subscribersMarker != "undefined" && panel.options.subscribersMarker == false) {
+                $("#" + panel.divElement.id + "-subscribersMarker").remove();
+            }
+
+            if (typeof panel.options.collapseButton != "undefined" && panel.options.collapseButton == false) {
+                $("#" + panel.divElement.id + "-expandButton").hide();
+                $("#" + panel.divElement.id + "-collapseButton").hide();
+            }
+
+            $("#" + panel.divElement.id + "-expandButton").click(function(event) {
+                $("#" + panel.divElement.id + "-panelBody").slideDown("fast");
+                $("#" + panel.divElement.id + "-expandButton").hide();
+                $("#" + panel.divElement.id + "-collapseButton").show();
+            });
+            $("#" + panel.divElement.id + "-collapseButton").click(function(event) {
+                $("#" + panel.divElement.id + "-panelBody").slideUp("fast");
+                $("#" + panel.divElement.id + "-expandButton").show();
+                $("#" + panel.divElement.id + "-collapseButton").hide();
+            });
+            if (typeof i18n_panel_options == "undefined") {
+                i18n_panel_options = 'Options';
+            }
+            $("#" + panel.divElement.id + "-configButton").tooltip({
+                placement : 'left',
+                trigger: 'hover',
+                title: i18n_panel_options,
+                animation: true,
+                delay: 1000
+            });
+            if (typeof i18n_reset == "undefined") {
+                i18n_reset = 'Reset';
+            }
+            $("#" + panel.divElement.id + "-resetButton").tooltip({
+                placement : 'left',
+                trigger: 'hover',
+                title: i18n_reset,
+                animation: true,
+                delay: 1000
+            });
+            if (typeof i18n_panel_links == "undefined") {
+                i18n_panel_links = 'Panel links';
+            }
+            $("#" + panel.divElement.id + "-linkerButton").tooltip({
+                placement : 'left',
+                trigger: 'hover',
+                title: i18n_panel_links,
+                animation: true,
+                delay: 1000
+            });
+            $("#" + panel.divElement.id + "-linkerButton").draggable({
+                cancel: false,
+                appendTo: 'body',
+                helper: 'clone',
+                delay: 500,
+                revert: false
+            });
+
+            $("#" + panel.divElement.id + "-panelBody").droppable({
+                drop: panel.handleDropEvent,
+                hoverClass: "bg-info"
+            });
+
+            $("#" + panel.divElement.id + "-panelHeading").droppable({
+                drop: panel.handleDropEvent,
+                hoverClass: "bg-info"
+            });
+
+            $("#" + panel.divElement.id + "-resetButton").click(function() {
+                panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
+            });
+
+            $("#" + panel.divElement.id + "-apply-button").click(function() {
+                //console.log("apply!");
+                panel.readOptionsPanel();
+                panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
+            });
+
+
+            $("#" + panel.divElement.id + "-linkerButton").click(function(event) {
+                $("#" + panel.divElement.id + "-linkerButton").popover({
+                    trigger: 'manual',
+                    placement: 'bottomRight',
+                    html: true,
+                    content: function() {
+                        linkerHtml = '<div class="text-center text-muted"><em>Drag to link with other panels<br>';
+                        if (panel.subscribers.length == 1) {
+                            linkerHtml = linkerHtml + panel.subscribers.length + ' link established</em></div>';
+                        } else {
+                            linkerHtml = linkerHtml + panel.subscribers.length + ' links established</em></div>';
+                        }
+                        linkerHtml = linkerHtml + '<div class="text-center"><a href="javascript:void(0);" onclick="clearTaxonomyPanelSubscriptions(\'' + panel.divElement.id + '\');">Clear links</a></div>';
+                        return linkerHtml;
+                    }
+                });
+                $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
+            });
+
+            $("#" + panel.divElement.id + "-inferredViewButton").click(function (event) {
+                panel.options.selectedView = 'inferred';
+                $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
+                panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
+            });
+
+            $("#" + panel.divElement.id + "-statedViewButton").click(function (event) {
+                panel.options.selectedView = 'stated';
+                $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
+                panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
+            });
+            $("#" + panel.divElement.id + "-inferredViewButton").click();
         });
 
-        $("#" + panel.divElement.id + "-inferredViewButton").click(function (event) {
-            panel.options.selectedView = 'inferred';
-            $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
-            panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
-        });
-
-        $("#" + panel.divElement.id + "-statedViewButton").click(function (event) {
-            panel.options.selectedView = 'stated';
-            $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
-            panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
-        });
     }
 
     this.setupParents = function(parents, focusConcept) {
@@ -243,6 +255,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var selectedId = $(event.target).attr('data-concept-id');
                 var selectedLabel = $(event.target).attr('data-term');
                 if (typeof selectedId != "undefined") {
+                    console.log(panel.options.selectedView);
                     $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
                         // done
                     }).done(function(result) {
@@ -358,6 +371,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 });
             });
         }).fail(function() {
+            $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-minus");
         });
     }
 
@@ -427,7 +441,8 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.setToConcept = function(conceptId, term, definitionStatus) {
         $("#" + panel.divElement.id + "-panelBody").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=inferred", function(result) {
+        console.log(panel.options.selectedView);
+        $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form="+panel.options.selectedView, function(result) {
             // done
         }).done(function(result) {
             if (definitionStatus != "Primitive" && definitionStatus != "Fully defined") {

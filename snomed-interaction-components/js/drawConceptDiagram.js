@@ -39,9 +39,10 @@ function drawConceptDiagram (concept, div, options) {
     } else {
         sctClass = "sct-defined-concept";
     }
-    var rect1 = drawSctBox(parentDiv, x, y, concept.defaultTerm, sctClass);
+    //console.log("In draw: " + concept.defaultTerm + " " + concept.conceptId + " " + sctClass);
+    var rect1 = drawSctBox(svg, x, y, concept.defaultTerm, concept.conceptId, sctClass);
     x = x + 90;
-    y = y + rect1.outerHeight() + 40;
+    y = y + rect1.getBBox().height + 40;
     var circle1;
     if (concept.definitionStatus == "Primitive") {
         circle1 = drawSubsumedByNode(svg, x, y);
@@ -53,6 +54,7 @@ function drawConceptDiagram (concept, div, options) {
     var circle2 = drawConjunctionNode(svg, x, y);
     connectElements(svg, circle1, circle2, 'right', 'left', 'LineMarker');
     x = x + 40;
+    y = y - 18;
     // load stated parents
     sctClass = "sct-defined-concept";
     $.each(svgIsaModel, function(i, relationship) {
@@ -61,11 +63,11 @@ function drawConceptDiagram (concept, div, options) {
         } else {
             sctClass = "sct-defined-concept";
         }
-        var rectParent = drawSctBox(parentDiv, x, y, relationship.target.defaultTerm, sctClass);
+        var rectParent = drawSctBox(svg, x, y, relationship.target.defaultTerm, relationship.target.conceptId, sctClass);
         // $("#" + rectParent.id).css({"top":
         // (rectParent.outerHeight()/2) + "px"});
         connectElements(svg, circle2, rectParent, 'center', 'left', 'ClearTriangle');
-        y = y + rectParent.outerHeight() + 30;
+        y = y + rectParent.getBBox().height + 25;
     });
 
     // load ungrouped attributes
@@ -77,17 +79,18 @@ function drawConceptDiagram (concept, div, options) {
             sctClass = "sct-defined-concept";
         }
         if (relationship.groupId == 0) {
-            var rectAttr = drawSctBox(parentDiv, x, y, relationship.type.defaultTerm, "sct-attribute");
+            var rectAttr = drawSctBox(svg, x, y, relationship.type.defaultTerm,relationship.type.conceptId, "sct-attribute");
             connectElements(svg, circle2, rectAttr, 'center', 'left');
-            var rectTarget = drawSctBox(parentDiv, x + rectAttr.outerWidth() + 50, y, relationship.target.defaultTerm, sctClass);
+            var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, relationship.target.defaultTerm,relationship.target.conceptId, sctClass);
             connectElements(svg, rectAttr, rectTarget, 'right', 'left');
-            y = y + rectTarget.outerHeight() + 30;
+            y = y + rectTarget.getBBox().height + 25;
         } else {
             if (relationship.groupId > maxRoleNumber) {
                 maxRoleNumber = relationship.groupId;
             }
         }
     });
+    y = y + 15;
     for (var i = 1; i <= maxRoleNumber; i++) {
         var groupNode = drawAttributeGroupNode(svg, x, y);
         connectElements(svg, circle2, groupNode, 'center', 'left');
@@ -100,12 +103,37 @@ function drawConceptDiagram (concept, div, options) {
                 } else {
                     sctClass = "sct-defined-concept";
                 }
-                var rectRole = drawSctBox(parentDiv, x + 85, y, relationship.type.defaultTerm, "sct-attribute");
+                var rectRole = drawSctBox(svg, x + 85, y - 18, relationship.type.defaultTerm, relationship.type.conceptId,"sct-attribute");
                 connectElements(svg, conjunctionNode, rectRole, 'center', 'left');
-                var rectRole2 = drawSctBox(parentDiv, x + 85 + rectRole.outerWidth() + 30, y, relationship.target.defaultTerm, sctClass);
+                var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, relationship.target.defaultTerm,relationship.target.conceptId, sctClass);
                 connectElements(svg, rectRole, rectRole2, 'right', 'left');
-                y = y + rectRole2.outerHeight() + 40;
+                y = y + rectRole2.getBBox().height + 25;
             }
         });
     }
+    var svgCode = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' + parentDiv.html();
+    svgCode = svgCode.substr(0, svgCode.indexOf("svg") + 4) +
+        ' xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" ' +
+        svgCode.substr(svgCode.indexOf("svg") + 5)
+    var b64 = Base64.encode(svgCode);
+    $(div).prepend($("<a href-lang='image/svg+xml' href='data:image/svg+xml;base64,\n"+b64+"' download='diagram.svg'>Download</a>"));
+
+}
+
+function saveAsPng(svg) {
+    //Create PNG Image
+    //Get the svg
+    //Create the canvas element
+    var canvas = document.createElement('canvas');
+    canvas.id = "canvas";
+    document.body.appendChild(canvas);
+
+    //Load the canvas element with our svg
+    canvg(document.getElementById('canvas'), svg);
+
+    //Save the svg to png
+    Canvas2Image.saveAsPNG(canvas);
+
+    //Clear the canvas
+    canvas.width = canvas.width;
 }

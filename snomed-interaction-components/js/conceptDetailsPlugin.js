@@ -54,252 +54,259 @@ function conceptDetails(divElement, conceptId, options) {
         panel.childrenPId = panel.divElement.id + "-children-panel";
         panel.defaultTerm = "";
         $(divElement).html();
-        // main panel
-        var detailsHtml = "<div style='margin: 5px; height:98%; overflow:auto;' class='panel panel-default'>";
-        detailsHtml = detailsHtml + "<div class='panel-heading' id='" + panel.divElement.id + "-panelHeading'>";
-        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-subscribersMarker' class='btn btn-link btn-lg' style='padding:2px;position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-bookmark'></i></button>"
-        detailsHtml = detailsHtml + "<div class='row'>";
-        detailsHtml = detailsHtml + "<div class='col-md-8' id='" + panel.divElement.id + "-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_concept_details'>Concept Details</span></strong></div>";
-        detailsHtml = detailsHtml + "<div class='col-md-4 text-right'>";
-        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-linkerButton' class='btn btn-link jqui-draggable linker-button' data-panel='" + panel.divElement.id + "' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>"
-        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-historyButton' class='btn btn-link history-button' style='padding:2px'><i class='glyphicon glyphicon-time'></i></button>"
-        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-configButton' class='btn btn-link' data-toggle='modal' style='padding:2px' data-target='#" + panel.divElement.id + "-configModal'><i class='glyphicon glyphicon-cog'></i></button>"
-        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-collapseButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-small'></i></button>"
-        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-expandButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-full'></i></button>"
-        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-closeButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-remove'></i></button>"
-        detailsHtml = detailsHtml + "</div>";
-        detailsHtml = detailsHtml + "</div>";
-        detailsHtml = detailsHtml + "</div>";
-        detailsHtml = detailsHtml + "<div class='panel-body' id='" + panel.divElement.id + "-panelBody'>";
-        detailsHtml = detailsHtml + "<!-- Nav tabs -->";
-        detailsHtml = detailsHtml + '<ul class="nav nav-tabs" id="details-tabs-' + panel.divElement.id + '">';
-        detailsHtml = detailsHtml + '    <li class="active"><a href="#home-' + panel.divElement.id + '" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_summary">Summary</span></a></li>';
-        detailsHtml = detailsHtml + '    <li><a href="#details-' + panel.divElement.id + '" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_details">Details</span></a></li>';
-        detailsHtml = detailsHtml + '    <li id="diagram-tab"><a href="#diagram-' + panel.divElement.id + '" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;" id="diagram-tab-link-' + panel.divElement.id + '"><span class="i18n" data-i18n-id="i18n_diagram">Diagram</span></a></li>';
-        detailsHtml = detailsHtml + '    <li><a href="#refsets-' + panel.divElement.id + '" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_refsets">Refsets</span></a></li>';
-        detailsHtml = detailsHtml + '</ul>';
-        detailsHtml = detailsHtml + "<!-- Tab panes -->";
-        detailsHtml = detailsHtml + '<div class="tab-content" id="details-tab-content-' + panel.divElement.id + '">';
-        detailsHtml = detailsHtml + '    <div class="tab-pane fade in active" id="home-' + panel.divElement.id + '" style="padding: 5px;">';
-        detailsHtml = detailsHtml + '       <div class="row" style="margin-right: 20px"><span class="pull-right text-muted" id="home-' + panel.divElement.id + '-viewLabel"></span></div>';
-        detailsHtml = detailsHtml + '       <div style="margin-left: 0%; margin-bottom: 10px; margin-top: 10px; width: 80%;border: 2px solid forestgreen; border-radius: 4px; padding: 5px;" id="home-parents-' + panel.divElement.id + '">No parents</div>';
-        detailsHtml = detailsHtml + '       <div style="margin-left: 10%; margin-bottom: 10px; margin-top: 10px; width: 80%;border: 2px solid saddlebrown; border-radius: 4px; padding: 5px;" id="home-attributes-' + panel.divElement.id + '">Attributes</div>';
-        detailsHtml = detailsHtml + '       <div style="margin-left: 20%; margin-bottom: 10px; margin-top: 10px; width: 80%;border: 2px solid darkslateblue; border-radius: 4px; padding: 5px;" id="home-roles-' + panel.divElement.id + '">Relationships</div>';
-        detailsHtml = detailsHtml + '       <div><span class="text-muted pull-right" id="footer-' + panel.divElement.id + '"></span></div>';
-        detailsHtml = detailsHtml + '    </div>';
-        detailsHtml = detailsHtml + '    <div class="tab-pane fade" id="details-' + panel.divElement.id + '">';
-        detailsHtml = detailsHtml + "       <div id='" + panel.attributesPId + "' class='panel panel-default'>";
-        detailsHtml = detailsHtml + "       </div>";
-        detailsHtml = detailsHtml + "       <div id='" + panel.descsPId + "' class='panel panel-default'>";
-        detailsHtml = detailsHtml + "       </div>";
-        detailsHtml = detailsHtml + "       <div id='" + panel.relsPId + "' class='panel panel-default'>";
-        detailsHtml = detailsHtml + "       </div>";
-        detailsHtml = detailsHtml + "       <div id='" + panel.childrenPId + "' class='panel panel-default' style='height:100px;overflow:auto;margin-bottom: 15px;'>";
-        detailsHtml = detailsHtml + "       </div>";
-        detailsHtml = detailsHtml + '    </div>';
-        detailsHtml = detailsHtml + '    <div class="tab-pane fade" id="diagram-' + panel.divElement.id + '">';
-        detailsHtml = detailsHtml + '       <div class="row" style="margin-right: 20px"><span class="pull-right text-muted" id="home-' + panel.divElement.id + '-diagram-viewLabel"></span></div>';
-        detailsHtml = detailsHtml + '       <div id="diagram-canvas-' + panel.divElement.id + '" style="position: relative; width: 1000px;"></div>';
-        //detailsHtml = detailsHtml + '       <div><span class="text-muted pull-right"><a href="http://www.ihtsdo.org/fileadmin/user_upload/Docs_01/Publications/SNOMED_CT_Diagramming_Guideline.pdf" target="_blank">Read about the IHTSDO Diagramming Guideline</a></span></div>';
-        detailsHtml = detailsHtml + '    </div>';
-        detailsHtml = detailsHtml + '    <div class="tab-pane fade" id="refsets-' + panel.divElement.id + '">';
-        detailsHtml = detailsHtml + '    </div>';
-        detailsHtml = detailsHtml + '</div>';
-        detailsHtml = detailsHtml + "</div>";
-        detailsHtml = detailsHtml + "</div>";
-        // modal config panel
-        detailsHtml = detailsHtml + "<div class='modal fade' id='" + panel.divElement.id + "-configModal'>";
-        detailsHtml = detailsHtml + "<div class='modal-dialog'>";
-        detailsHtml = detailsHtml + "<div class='modal-content'>";
-        detailsHtml = detailsHtml + "<div class='modal-header'>";
-        detailsHtml = detailsHtml + "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>";
-        detailsHtml = detailsHtml + "<h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span> (" + panel.divElement.id + ")</h4>";
-        detailsHtml = detailsHtml + "</div>";
-        detailsHtml = detailsHtml + "<div class='modal-body' id='" + panel.divElement.id + "-modal-body'>";
-        detailsHtml = detailsHtml + "<p></p>";
-        detailsHtml = detailsHtml + "</div>";
-        detailsHtml = detailsHtml + "<div class='modal-footer'>";
-        detailsHtml = detailsHtml + "<button type='button' class='btn btn-danger' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_cancel'>Cancel</span></button>";
-        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>";
-        detailsHtml = detailsHtml + "</div>";
-        detailsHtml = detailsHtml + "</div><!-- /.modal-content -->";
-        detailsHtml = detailsHtml + "</div><!-- /.modal-dialog -->";
-        detailsHtml = detailsHtml + "</div><!-- /.modal -->";
-        $(divElement).html(detailsHtml);
-
-        $("#" + panel.divElement.id + "-linkerButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-subscribersMarker").disableTextSelect();
-        $("#" + panel.divElement.id + "-configButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-historyButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-collapseButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-expandButton").disableTextSelect();
-        $("#" + panel.divElement.id + "-closeButton").disableTextSelect();
-
-        $("#" + panel.divElement.id + "-expandButton").hide();
-        $("#" + panel.divElement.id + "-subscribersMarker").hide();
-
-        $("#" + panel.divElement.id + "-closeButton").click(function(event) {
-            $(divElement).remove();
-        });
-
-        if (typeof panel.options.closeButton != "undefined" && panel.options.closeButton == false) {
-            $("#" + panel.divElement.id + "-closeButton").hide();
+        var context = {
+            divElementId: panel.divElement.id
         }
+        $.get("views/conceptDetailsPlugin/conceptDetailsPlugin-main.hbs").then(function (src) {
+            var template = Handlebars.compile(src);
+            $(divElement).html(template(context));
+            $("#" + panel.divElement.id + "-linkerButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-subscribersMarker").disableTextSelect();
+            $("#" + panel.divElement.id + "-configButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-historyButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-collapseButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-expandButton").disableTextSelect();
+            $("#" + panel.divElement.id + "-closeButton").disableTextSelect();
 
-        if (typeof panel.options.linkerButton != "undefined" && panel.options.linkerButton == false) {
-            $("#" + panel.divElement.id + "-linkerButton").hide();
-        }
-
-        if (typeof panel.options.subscribersMarker != "undefined" && panel.options.subscribersMarker == false) {
-            $("#" + panel.divElement.id + "-subscribersMarker").remove();
-        }
-
-        if (typeof panel.options.collapseButton != "undefined" && panel.options.collapseButton == false) {
             $("#" + panel.divElement.id + "-expandButton").hide();
-            $("#" + panel.divElement.id + "-collapseButton").hide();
-        }
+            $("#" + panel.divElement.id + "-subscribersMarker").hide();
 
-        $("#" + panel.divElement.id + "-expandButton").click(function(event) {
-            $("#" + panel.divElement.id + "-panelBody").slideDown("fast");
-            $("#" + panel.divElement.id + "-expandButton").hide();
-            $("#" + panel.divElement.id + "-collapseButton").show();
-            $("#" + panel.divElement.id + "-panelTitle").html("&nbsp&nbsp&nbsp<strong>Concept Details</strong>");
-        });
+            $("#" + panel.divElement.id + "-closeButton").click(function(event) {
+                $(divElement).remove();
+            });
 
-        $("#" + panel.divElement.id + "-collapseButton").click(function(event) {
-            $("#" + panel.divElement.id + "-panelBody").slideUp("fast");
-            $("#" + panel.divElement.id + "-expandButton").show();
-            $("#" + panel.divElement.id + "-collapseButton").hide();
-            //if (panel.defaultTerm.length > 25) {
-            //    $("#" + panel.divElement.id + "-panelTitle").html("<strong>Concept Details: " + panel.defaultTerm.substring(0, 24).trim() + "...</strong>");
-            //} else {
-            $("#" + panel.divElement.id + "-panelTitle").html("&nbsp&nbsp&nbsp<strong>Concept Details: " + panel.defaultTerm + "</strong>");
-            //}
-        });
-
-        $('#' + panel.divElement.id).click(function(event) {
-            if (!$(event.target).hasClass('glyphicon')) {
-                $('#' + panel.divElement.id).find('.more-fields-button').popover('hide');
+            if (typeof panel.options.closeButton != "undefined" && panel.options.closeButton == false) {
+                $("#" + panel.divElement.id + "-closeButton").hide();
             }
-        });
 
-        $("#" + panel.divElement.id + "-historyButton").click(function(event) {
-            $("#" + panel.divElement.id + "-historyButton").popover({
-                trigger: 'manual',
-                placement: 'bottomRight',
-                html: true,
-                content: function() {
-                    var historyHtml = '<div style="height:100px;overflow:auto;">';
-                    historyHtml = historyHtml + '<table>';
-                    var reversedHistory = panel.history.slice(0);
-                    reversedHistory.reverse();
-                    //console.log(JSON.stringify(reversedHistory));
-                    $.each(reversedHistory, function(i, field) {
-                        var d = new Date();
-                        var curTime = d.getTime();
-                        var ago = curTime - field.time;
-                        var agoString = "";
-                        if (ago < (1000 * 60)) {
-                            if (Math.round((ago / 1000)) == 1) {
-                                agoString = Math.round((ago / 1000)) + ' second ago';
-                            } else {
-                                agoString = Math.round((ago / 1000)) + ' seconds ago';
-                            }
-                        } else if (ago < (1000 * 60 * 60)) {
-                            if (Math.round((ago / 1000) / 60) == 1) {
-                                agoString = Math.round((ago / 1000) / 60) + ' minute ago';
-                            } else {
-                                agoString = Math.round((ago / 1000) / 60) + ' minutes ago';
-                            }
-                        } else if (ago < (1000 * 60 * 60 * 60)) {
-                            if (Math.round(((ago / 1000) / 60) / 60) == 1) {
-                                agoString = Math.round(((ago / 1000) / 60) / 60) + ' hour ago';
-                            } else {
-                                agoString = Math.round(((ago / 1000) / 60) / 60) + ' hours ago';
-                            }
-                        }
-                        historyHtml = historyHtml + '<tr><td><a href="javascript:void(0);" onclick="updateCD(\'' + panel.divElement.id + '\',' + field.conceptId + ');">' + field.defaultTerm + '</a>';
-                        historyHtml = historyHtml + ' <span class="text-muted" style="font-size: 80%"><em>' + agoString + '<em></span>';
-                        historyHtml = historyHtml + '</td></tr>';
-                    });
-                    historyHtml = historyHtml + '</table>';
-                    historyHtml = historyHtml + '</div>';
-                    return historyHtml;
+            if (typeof panel.options.linkerButton != "undefined" && panel.options.linkerButton == false) {
+                $("#" + panel.divElement.id + "-linkerButton").hide();
+            }
+
+            if (typeof panel.options.subscribersMarker != "undefined" && panel.options.subscribersMarker == false) {
+                $("#" + panel.divElement.id + "-subscribersMarker").remove();
+            }
+
+            if (typeof panel.options.collapseButton != "undefined" && panel.options.collapseButton == false) {
+                $("#" + panel.divElement.id + "-expandButton").hide();
+                $("#" + panel.divElement.id + "-collapseButton").hide();
+            }
+
+            $("#" + panel.divElement.id + "-expandButton").click(function(event) {
+                $("#" + panel.divElement.id + "-panelBody").slideDown("fast");
+                $("#" + panel.divElement.id + "-expandButton").hide();
+                $("#" + panel.divElement.id + "-collapseButton").show();
+                $("#" + panel.divElement.id + "-panelTitle").html("&nbsp&nbsp&nbsp<strong>Concept Details</strong>");
+            });
+
+            $("#" + panel.divElement.id + "-collapseButton").click(function(event) {
+                $("#" + panel.divElement.id + "-panelBody").slideUp("fast");
+                $("#" + panel.divElement.id + "-expandButton").show();
+                $("#" + panel.divElement.id + "-collapseButton").hide();
+                //if (panel.defaultTerm.length > 25) {
+                //    $("#" + panel.divElement.id + "-panelTitle").html("<strong>Concept Details: " + panel.defaultTerm.substring(0, 24).trim() + "...</strong>");
+                //} else {
+                $("#" + panel.divElement.id + "-panelTitle").html("&nbsp&nbsp&nbsp<strong>Concept Details: " + panel.defaultTerm + "</strong>");
+                //}
+            });
+
+            $('#' + panel.divElement.id).click(function(event) {
+                if (!$(event.target).hasClass('glyphicon')) {
+                    $('#' + panel.divElement.id).find('.more-fields-button').popover('hide');
                 }
             });
-            $("#" + panel.divElement.id + "-historyButton").popover('toggle');
-        });
 
-        if (typeof i18n_panel_options == "undefined") {
-            i18n_panel_options = "Panel options";
-        }
-        $("#" + panel.divElement.id + "-configButton").tooltip({
-            placement : 'left',
-            trigger: 'hover',
-            title: i18n_panel_options,
-            animation: true,
-            delay: 1000
-        });
-        if (typeof i18n_history == "undefined") {
-            i18n_history = 'History';
-        }
-        $("#" + panel.divElement.id + "-historyButton").tooltip({
-            placement : 'left',
-            trigger: 'hover',
-            title: i18n_history,
-            animation: true,
-            delay: 1000
-        });
-        if (typeof i18n_panel_links == "undefined") {
-            i18n_panel_links = 'Panel links';
-        }
-        $("#" + panel.divElement.id + "-linkerButton").tooltip({
-            placement : 'left',
-            trigger: 'hover',
-            title: i18n_panel_links,
-            animation: true,
-            delay: 1000
-        });
-
-        $("#" + panel.divElement.id + "-apply-button").click(function() {
-            //console.log("apply!");
-            panel.readOptionsPanel();
-            panel.updateCanvas();
-        });
-
-        $("#" + panel.divElement.id + "-linkerButton").draggable({
-            cancel: false,
-            appendTo: 'body',
-            helper: 'clone',
-            delay: 500
-        });
-
-        $(".resizable").resizable();
-
-        $('#' + panel.divElement.id + '-panelHeading').droppable({
-            drop: panel.handleDropEvent,
-            hoverClass: "bg-info"
-        });
-
-        $("#" + panel.divElement.id + "-linkerButton").click(function(event) {
-            $("#" + panel.divElement.id + "-linkerButton").popover({
-                trigger: 'manual',
-                placement: 'bottomRight',
-                html: true,
-                content: function() {
-                    if (!panel.subscription) {
-                        linkerHtml = '<div class="text-center text-muted"><em>Not linked yet<br>Drag to link with other panels</em></div>';
-                    } else {
-                        linkerHtml = '<div class="text-center"><a href="javascript:void(0);" onclick="cancelSubscription(\'' + panel.subscription.divElement.id + '\',\'' + panel.divElement.id + '\');">Clear link</a></div>';
+            $("#" + panel.divElement.id + "-historyButton").click(function(event) {
+                $("#" + panel.divElement.id + "-historyButton").popover({
+                    trigger: 'manual',
+                    placement: 'bottomRight',
+                    html: true,
+                    content: function() {
+                        var historyHtml = '<div style="height:100px;overflow:auto;">';
+                        historyHtml = historyHtml + '<table>';
+                        var reversedHistory = panel.history.slice(0);
+                        reversedHistory.reverse();
+                        //console.log(JSON.stringify(reversedHistory));
+                        $.each(reversedHistory, function(i, field) {
+                            var d = new Date();
+                            var curTime = d.getTime();
+                            var ago = curTime - field.time;
+                            var agoString = "";
+                            if (ago < (1000 * 60)) {
+                                if (Math.round((ago / 1000)) == 1) {
+                                    agoString = Math.round((ago / 1000)) + ' second ago';
+                                } else {
+                                    agoString = Math.round((ago / 1000)) + ' seconds ago';
+                                }
+                            } else if (ago < (1000 * 60 * 60)) {
+                                if (Math.round((ago / 1000) / 60) == 1) {
+                                    agoString = Math.round((ago / 1000) / 60) + ' minute ago';
+                                } else {
+                                    agoString = Math.round((ago / 1000) / 60) + ' minutes ago';
+                                }
+                            } else if (ago < (1000 * 60 * 60 * 60)) {
+                                if (Math.round(((ago / 1000) / 60) / 60) == 1) {
+                                    agoString = Math.round(((ago / 1000) / 60) / 60) + ' hour ago';
+                                } else {
+                                    agoString = Math.round(((ago / 1000) / 60) / 60) + ' hours ago';
+                                }
+                            }
+                            historyHtml = historyHtml + '<tr><td><a href="javascript:void(0);" onclick="updateCD(\'' + panel.divElement.id + '\',' + field.conceptId + ');">' + field.defaultTerm + '</a>';
+                            historyHtml = historyHtml + ' <span class="text-muted" style="font-size: 80%"><em>' + agoString + '<em></span>';
+                            historyHtml = historyHtml + '</td></tr>';
+                        });
+                        historyHtml = historyHtml + '</table>';
+                        historyHtml = historyHtml + '</div>';
+                        return historyHtml;
                     }
-                    return linkerHtml;
-                }
+                });
+                $("#" + panel.divElement.id + "-historyButton").popover('toggle');
             });
-            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
-        });
 
-        panel.updateCanvas();
-        panel.setupOptionsPanel();
+            if (typeof i18n_panel_options == "undefined") {
+                i18n_panel_options = "Panel options";
+            }
+            $("#" + panel.divElement.id + "-configButton").tooltip({
+                placement : 'left',
+                trigger: 'hover',
+                title: i18n_panel_options,
+                animation: true,
+                delay: 1000
+            });
+            if (typeof i18n_history == "undefined") {
+                i18n_history = 'History';
+            }
+            $("#" + panel.divElement.id + "-historyButton").tooltip({
+                placement : 'left',
+                trigger: 'hover',
+                title: i18n_history,
+                animation: true,
+                delay: 1000
+            });
+            if (typeof i18n_panel_links == "undefined") {
+                i18n_panel_links = 'Panel links';
+            }
+            $("#" + panel.divElement.id + "-linkerButton").tooltip({
+                placement : 'left',
+                trigger: 'hover',
+                title: i18n_panel_links,
+                animation: true,
+                delay: 1000
+            });
+
+            $("#" + panel.divElement.id + "-apply-button").click(function() {
+                //console.log("apply!");
+                panel.readOptionsPanel();
+                panel.updateCanvas();
+            });
+
+            $("#" + panel.divElement.id + "-linkerButton").draggable({
+                cancel: false,
+                appendTo: 'body',
+                helper: 'clone',
+                delay: 500
+            });
+
+            $(".resizable").resizable();
+
+            $('#' + panel.divElement.id + '-panelHeading').droppable({
+                drop: panel.handleDropEvent,
+                hoverClass: "bg-info"
+            });
+
+            $("#" + panel.divElement.id + "-linkerButton").click(function(event) {
+                $("#" + panel.divElement.id + "-linkerButton").popover({
+                    trigger: 'manual',
+                    placement: 'bottomRight',
+                    html: true,
+                    content: function() {
+                        if (!panel.subscription) {
+                            linkerHtml = '<div class="text-center text-muted"><em>Not linked yet<br>Drag to link with other panels</em></div>';
+                        } else {
+                            linkerHtml = '<div class="text-center"><a href="javascript:void(0);" onclick="cancelSubscription(\'' + panel.subscription.divElement.id + '\',\'' + panel.divElement.id + '\');">Clear link</a></div>';
+                        }
+                        return linkerHtml;
+                    }
+                });
+                $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
+            });
+
+            panel.updateCanvas();
+            panel.setupOptionsPanel();
+        });
+        // main panel
+//        var detailsHtml = "<div style='margin: 5px; height:98%; overflow:auto;' class='panel panel-default'>";
+//        detailsHtml = detailsHtml + "<div class='panel-heading' id='" + panel.divElement.id + "-panelHeading'>";
+//        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-subscribersMarker' class='btn btn-link btn-lg' style='padding:2px;position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-bookmark'></i></button>"
+//        detailsHtml = detailsHtml + "<div class='row'>";
+//        detailsHtml = detailsHtml + "<div class='col-md-8' id='" + panel.divElement.id + "-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_concept_details'>Concept Details</span></strong></div>";
+//        detailsHtml = detailsHtml + "<div class='col-md-4 text-right'>";
+//        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-linkerButton' class='btn btn-link jqui-draggable linker-button' data-panel='" + panel.divElement.id + "' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>"
+//        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-historyButton' class='btn btn-link history-button' style='padding:2px'><i class='glyphicon glyphicon-time'></i></button>"
+//        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-configButton' class='btn btn-link' data-toggle='modal' style='padding:2px' data-target='#" + panel.divElement.id + "-configModal'><i class='glyphicon glyphicon-cog'></i></button>"
+//        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-collapseButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-small'></i></button>"
+//        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-expandButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-full'></i></button>"
+//        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-closeButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-remove'></i></button>"
+//        detailsHtml = detailsHtml + "</div>";
+//        detailsHtml = detailsHtml + "</div>";
+//        detailsHtml = detailsHtml + "</div>";
+//        detailsHtml = detailsHtml + "<div class='panel-body' id='" + panel.divElement.id + "-panelBody'>";
+//        detailsHtml = detailsHtml + "<!-- Nav tabs -->";
+//        detailsHtml = detailsHtml + '<ul class="nav nav-tabs" id="details-tabs-' + panel.divElement.id + '">';
+//        detailsHtml = detailsHtml + '    <li class="active"><a href="#home-' + panel.divElement.id + '" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_summary">Summary</span></a></li>';
+//        detailsHtml = detailsHtml + '    <li><a href="#details-' + panel.divElement.id + '" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_details">Details</span></a></li>';
+//        detailsHtml = detailsHtml + '    <li id="diagram-tab"><a href="#diagram-' + panel.divElement.id + '" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;" id="diagram-tab-link-' + panel.divElement.id + '"><span class="i18n" data-i18n-id="i18n_diagram">Diagram</span></a></li>';
+//        detailsHtml = detailsHtml + '    <li><a href="#refsets-' + panel.divElement.id + '" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_refsets">Refsets</span></a></li>';
+//        detailsHtml = detailsHtml + '</ul>';
+//        detailsHtml = detailsHtml + "<!-- Tab panes -->";
+//        detailsHtml = detailsHtml + '<div class="tab-content" id="details-tab-content-' + panel.divElement.id + '">';
+//        detailsHtml = detailsHtml + '    <div class="tab-pane fade in active" id="home-' + panel.divElement.id + '" style="padding: 5px;">';
+//        detailsHtml = detailsHtml + '       <div class="row" style="margin-right: 20px"><span class="pull-right text-muted" id="home-' + panel.divElement.id + '-viewLabel"></span></div>';
+//        detailsHtml = detailsHtml + '       <div style="margin-left: 0%; margin-bottom: 10px; margin-top: 10px; width: 80%;border: 2px solid forestgreen; border-radius: 4px; padding: 5px;" id="home-parents-' + panel.divElement.id + '">No parents</div>';
+//        detailsHtml = detailsHtml + '       <div style="margin-left: 10%; margin-bottom: 10px; margin-top: 10px; width: 80%;border: 2px solid saddlebrown; border-radius: 4px; padding: 5px;" id="home-attributes-' + panel.divElement.id + '">Attributes</div>';
+//        detailsHtml = detailsHtml + '       <div style="margin-left: 20%; margin-bottom: 10px; margin-top: 10px; width: 80%;border: 2px solid darkslateblue; border-radius: 4px; padding: 5px;" id="home-roles-' + panel.divElement.id + '">Relationships</div>';
+//        detailsHtml = detailsHtml + '       <div><span class="text-muted pull-right" id="footer-' + panel.divElement.id + '"></span></div>';
+//        detailsHtml = detailsHtml + '    </div>';
+//        detailsHtml = detailsHtml + '    <div class="tab-pane fade" id="details-' + panel.divElement.id + '">';
+//        detailsHtml = detailsHtml + "       <div id='" + panel.attributesPId + "' class='panel panel-default'>";
+//        detailsHtml = detailsHtml + "       </div>";
+//        detailsHtml = detailsHtml + "       <div id='" + panel.descsPId + "' class='panel panel-default'>";
+//        detailsHtml = detailsHtml + "       </div>";
+//        detailsHtml = detailsHtml + "       <div id='" + panel.relsPId + "' class='panel panel-default'>";
+//        detailsHtml = detailsHtml + "       </div>";
+//        detailsHtml = detailsHtml + "       <div id='" + panel.childrenPId + "' class='panel panel-default' style='height:100px;overflow:auto;margin-bottom: 15px;'>";
+//        detailsHtml = detailsHtml + "       </div>";
+//        detailsHtml = detailsHtml + '    </div>';
+//        detailsHtml = detailsHtml + '    <div class="tab-pane fade" id="diagram-' + panel.divElement.id + '">';
+//        detailsHtml = detailsHtml + '       <div class="row" style="margin-right: 20px"><span class="pull-right text-muted" id="home-' + panel.divElement.id + '-diagram-viewLabel"></span></div>';
+//        detailsHtml = detailsHtml + '       <div id="diagram-canvas-' + panel.divElement.id + '" style="position: relative; width: 1000px;"></div>';
+//        //detailsHtml = detailsHtml + '       <div><span class="text-muted pull-right"><a href="http://www.ihtsdo.org/fileadmin/user_upload/Docs_01/Publications/SNOMED_CT_Diagramming_Guideline.pdf" target="_blank">Read about the IHTSDO Diagramming Guideline</a></span></div>';
+//        detailsHtml = detailsHtml + '    </div>';
+//        detailsHtml = detailsHtml + '    <div class="tab-pane fade" id="refsets-' + panel.divElement.id + '">';
+//        detailsHtml = detailsHtml + '    </div>';
+//        detailsHtml = detailsHtml + '</div>';
+//        detailsHtml = detailsHtml + "</div>";
+//        detailsHtml = detailsHtml + "</div>";
+//        // modal config panel
+//        detailsHtml = detailsHtml + "<div class='modal fade' id='" + panel.divElement.id + "-configModal'>";
+//        detailsHtml = detailsHtml + "<div class='modal-dialog'>";
+//        detailsHtml = detailsHtml + "<div class='modal-content'>";
+//        detailsHtml = detailsHtml + "<div class='modal-header'>";
+//        detailsHtml = detailsHtml + "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>";
+//        detailsHtml = detailsHtml + "<h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span> (" + panel.divElement.id + ")</h4>";
+//        detailsHtml = detailsHtml + "</div>";
+//        detailsHtml = detailsHtml + "<div class='modal-body' id='" + panel.divElement.id + "-modal-body'>";
+//        detailsHtml = detailsHtml + "<p></p>";
+//        detailsHtml = detailsHtml + "</div>";
+//        detailsHtml = detailsHtml + "<div class='modal-footer'>";
+//        detailsHtml = detailsHtml + "<button type='button' class='btn btn-danger' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_cancel'>Cancel</span></button>";
+//        detailsHtml = detailsHtml + "<button id='" + panel.divElement.id + "-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>";
+//        detailsHtml = detailsHtml + "</div>";
+//        detailsHtml = detailsHtml + "</div><!-- /.modal-content -->";
+//        detailsHtml = detailsHtml + "</div><!-- /.modal-dialog -->";
+//        detailsHtml = detailsHtml + "</div><!-- /.modal -->";
+//        $(divElement).html(detailsHtml);
+
     }
 
     this.handleDropEvent = function(event, ui) {
@@ -408,9 +415,9 @@ function conceptDetails(divElement, conceptId, options) {
             // load home-attributes
             var homeAttrHtml = "";
             if (firstMatch.definitionStatus == "Primitive") {
-                homeAttrHtml = homeAttrHtml + '<h4><a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning jqui-draggable"  data-concept-id="' + firstMatch.conceptId + '" data-term="' + firstMatch.defaultTerm + '" data-def-status="' + firstMatch.definitionStatus + '">&nbsp;</span></a>&nbsp;&nbsp;<span class="jqui-droppable">';
+                homeAttrHtml = homeAttrHtml + '<h4><a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning" draggable="true" ondragstart="draghtml5(event)" data-concept-id="' + firstMatch.conceptId + '" data-term="' + firstMatch.defaultTerm + '" data-def-status="' + firstMatch.definitionStatus + '">&nbsp;</span></a>&nbsp;&nbsp;<span class="jqui-droppable">';
             } else {
-                homeAttrHtml = homeAttrHtml + '<h4><a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning jqui-draggable"  data-concept-id="' + firstMatch.conceptId + '" data-term="' + firstMatch.defaultTerm + '" data-def-status="' + firstMatch.definitionStatus + '">&equiv;</span></a>&nbsp;&nbsp;<span class="jqui-droppable">';
+                homeAttrHtml = homeAttrHtml + '<h4><a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning" draggable="true" ondragstart="draghtml5(event)" data-concept-id="' + firstMatch.conceptId + '" data-term="' + firstMatch.defaultTerm + '" data-def-status="' + firstMatch.definitionStatus + '">&equiv;</span></a>&nbsp;&nbsp;<span class="jqui-droppable">';
             }
             homeAttrHtml = homeAttrHtml + firstMatch.defaultTerm + "</span></h4>";
             homeAttrHtml = homeAttrHtml + "<h5>SCTID: " + firstMatch.conceptId + "</h5>";
@@ -437,6 +444,10 @@ function conceptDetails(divElement, conceptId, options) {
                 helper: 'clone',
                 delay: 10
             });
+
+            if (typeof i18n_drag_this == "undefined") {
+                i18n_drag_this = "Drag this";
+            }
             $('#' + panel.attributesPId + ',#home-attributes-' + panel.divElement.id).find(".jqui-draggable").tooltip({
                 placement : 'left auto',
                 trigger: 'hover',
@@ -528,6 +539,16 @@ function conceptDetails(divElement, conceptId, options) {
                     }
 
                     row = row + "'><td>";
+
+                    if (typeof i18n_fsn == "undefined") {
+                        i18n_fsn = "F";
+                    }
+                    if (typeof i18n_synonym == "undefined") {
+                        i18n_synonym = "S";
+                    }
+                    if (typeof i18n_definition == "undefined") {
+                        i18n_definition = "D";
+                    }
 
                     if (isFsn) {
                         row = row + '<span rel="tooltip-right" title="' + i18n_fsn + '">F</span>';
@@ -1398,6 +1419,13 @@ $(document).keypress(function(event) {
     }
 }
 );
+
+
+function draghtml5(ev) {
+    console.log("Entro al evento");
+    console.log(ev.target.getAttribute('data-concept-id'));
+    ev.dataTransfer.setData("Text", ev.target.getAttribute('data-concept-id')+ "|" + ev.target.getAttribute('data-term'));
+}
 
 
 

@@ -1,0 +1,29 @@
+<div style='height:100%;margin: 0px; overflow:auto;' class='panel panel-default' id='{{divElementId}}-mainPanel'>
+    <div class='panel-heading' id='{{divElementId}}-panelHeading'>
+        <button id='{{divElementId}}-subscribersMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-bookmark'></i></button>
+        <div class='row'>
+            <div class='col-md-6' id='{{divElementId}}-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_taxonomy'>Taxonomy</span></strong></div>
+            <div class='col-md-6 text-right'>
+                <button id='{{divElementId}}-resetButton' class='btn btn-link' data-panel='{{divElementId}}' style='padding:2px'><i class='glyphicon glyphicon-repeat'></i></button>
+                <button id='{{divElementId}}-linkerButton' class='btn btn-link jqui-draggable linker-button' data-panel='{{divElementId}}' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>
+                <button id='{{divElementId}}-configButton' class='btn btn-link' style='padding:2px' data-target='#{{divElementId}}-configModal'><i class='glyphicon glyphicon-cog'></i></button>
+                <button id='{{divElementId}}-collapseButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-small'></i></button>
+                <button id='{{divElementId}}-expandButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-full'></i></button>
+                <button id='{{divElementId}}-closeButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-remove'></i></button>
+            </div>
+        </div>
+    </div>
+    <div id='{{divElementId}}-taxonomyConfigBar' style='margin-bottom: 10px;'><nav class='navbar navbar-default' role='navigation' style='min-height: 28px;border-radius: 0px;border-bottom: 1px lightgray solid;'>
+        <ul class='nav navbar-nav navbar-left'>
+            <li class='dropdown' style='margin-bottom: 2px; margin-top: 2px;'>
+                <a href='javascript:void(0);' class='dropdown-toggle' data-toggle='dropdown' style='padding-top: 2px; padding-bottom: 2px;'><span id='{{divElementId}}-txViewLabel'></span> <b class='caret'></b></a>
+                <ul class='dropdown-menu' role='menu' style='float: none;'>
+                    <li><button class='btn btn-link' id='{{divElementId}}-inferredViewButton'><span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span></button></li>
+                    <li><button class='btn btn-link' id='{{divElementId}}-statedViewButton'><span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span></button></li>
+                </ul>
+            </li>
+        </ul>
+    </nav></div>
+    <div class='panel-body' style='height:100%' id='{{divElementId}}-panelBody'>
+    </div>
+</div>
