@@ -33,6 +33,7 @@
         <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.19.0.min.css">
 
         <script src="snomed-interaction-components/js/snomed-interaction-components-1.19.0.min.js"></script>
+        <script src="snomed-interaction-components/js/dailyBuildPlugin.js"></script>
 
         <script type="text/javascript">
             var selectedLanguage = 'en_US';
@@ -40,14 +41,13 @@
             var currentPerspective = "home";
 
             var options = {
-//                serverUrl: "http://browser.ihtsdotools.org/api",
-//                serverUrl: "http://107.170.33.116:3000/snomed",
-                serverUrl: "http://162.243.35.127:3000/snomed",
-                edition: "multi-edition",
-                release: "v20140701",
+                serverUrl: "http://107.170.53.78/api",
+                //serverUrl: "http://browser.ihtsdotools.org/api",
+                edition: "en-edition",
+                release: "v20150131",
                 showIds: false,
                 hideNotAcceptable: true,
-                displayInactiveDescriptions: false,
+                displayInactiveDescriptions: true,
                 displaySynonyms: true,
                 selectedView: "inferred",
                 displayChildren: false,
@@ -60,7 +60,7 @@
                 searchLang: "english",
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
-                highlightByEffectiveTime: "false"
+                highlightByEffectiveTime: "20150131"
             };
 
             var tours = {};
@@ -92,13 +92,13 @@
                 }
                 var edition = QueryString.edition;
                 if (typeof edition == "undefined" || edition == null || edition == "") {
-                    edition = "multi-edition";
+                    edition = "en-edition";
                 }
                 options.edition = edition;
 
                 var release = QueryString.release;
                 if (typeof release == "undefined" || release == null || release == "") {
-                    release = "v20140701";
+                    release = "v20150131";
                 }
                 options.release = release;
 
@@ -347,6 +347,7 @@
             }
             function initialize() {
                 currentPerspective = "home";
+                componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"block"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -358,6 +359,9 @@
             }
             function switchToBrowsing(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "browsing";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"block"});
@@ -384,6 +388,9 @@
             }
             function switchToComparingConcepts(cd1Value, cd2Value) {
                 currentPerspective = "compare_concepts";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -407,6 +414,9 @@
             }
             function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
                 currentPerspective = "compare_hierarchies";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -431,6 +441,9 @@
             }
             function switchToFullHeight(cd1Value, txValue1) {
                 currentPerspective = "full";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -445,8 +458,10 @@
                 var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, fhOptions);
                 var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
                 var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
+                var dff = new dailyBuildPanel(document.getElementById("fh-diff_canvas"), fhOptions);
                 cdPanel1.subscribe(tpt);
                 cdPanel1.subscribe(spa);
+                cdPanel1.subscribe(dff);
                 cdPanel1.setupCanvas();
                 $('#spliter-fh').split({orientation: 'vertical', limit: 20, position: '40%'});
                 switchLanguage(selectedLanguage, selectedFlag, false);
@@ -460,6 +475,9 @@
             }
             function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "responsive";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -623,11 +641,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-btn" id="edition-selector">
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">Multi-english Edition 20140604</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20150131</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="javascript:void(0);" onclick="switchRelease('Multi-english Edition 20140604', 'multi-edition', 'v20140701', '900000000000509007');reloadCurrentPerspective();">Multi-english Edition 20140604</a></li>
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20140131', 'en-edition', 'v20140131', '900000000000509007');reloadCurrentPerspective();">International Edition 20140131</a></li>-->
+                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Multi-english Edition 20140604', 'multi-edition', 'v20140701', '900000000000509007');reloadCurrentPerspective();">Multi-english Edition 20140604</a></li>-->
+                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20140131', 'en-edition', 'v20140131', '900000000000509007');reloadCurrentPerspective();">International Edition 20140131</a></li>
                                 <!--<li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20140131', 'es-edition', 'v20140430', '450828004');reloadCurrentPerspective();">Spanish Edition 20140430</a></li>-->
                                 <!--<li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20140131', 'da-edition', 'v20131018', '554461000005103');reloadCurrentPerspective();">Danish Edition 20131018</a></li>-->
                                 <!--<li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20131130', 'sv-edition', 'v20131130', '46011000052107');reloadCurrentPerspective();">Swedish Edition 20131130</a></li>-->
@@ -684,7 +702,8 @@
                     <p><span class="i18n" data-i18n-id="i18n_home1">This is a beta... a work in progress of ways to browse and search SNOMED CT as part of development within the IHTSDO Open Tooling Framework, by the IHTSDO and its development partners</span></p>
                     <p><span class="i18n" data-i18n-id="i18n_home2">Please select a SNOMED CT release and a perspective from the top menu to start, or...</span></p>
                     <p>
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Multi-english Edition 20140604', 'multi-edition', 'v20140701', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Multi-English Browser</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20150131', 'en-edition', 'v20150131', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Start browsing...</span><br><span class="small">Daily build, 20150131</span></a>
+                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Multi-english Edition 20140604', 'multi-edition', 'v20140701', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Multi-English Browser</span></a>-->
                         <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20140131', 'en-edition', 'v20140131', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Terms and UI in English</span></a>-->
                         <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20131031', 'es-edition', 'v20140430', '450828004');switchLanguage('es', 'img/flags/es.png', true);switchToFullHeight(404684003);"><img src="img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Términos e interfaz en Español</span></a>-->
                         <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20140131', 'da-edition', 'v20131018', '554461000005103');switchLanguage('da', 'img/flags/dk.png', true);switchToFullHeight(404684003);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Terms and UI in Danish</span></a>-->
@@ -765,10 +784,12 @@
                         <ul class="nav nav-tabs" id="fh-tabs">
                             <li class="active"><a href="#fh-taxonomy_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span></a></li>
                             <li><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
+                            <li><a href="#fh-diff_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_daily_build">Daily Build</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
                             <div class="tab-pane" id="fh-search_canvas" style="padding: 0px;margin: 0;"></div>
+                            <div class="tab-pane" id="fh-diff_canvas" style="padding: 0px;margin: 0;"></div>
                         </div>
                     </div>
                     <div class="" id="conceptDetails-fh">
