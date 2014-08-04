@@ -346,6 +346,7 @@
                 }
             }
             function initialize() {
+                componentsRegistry = [];
                 currentPerspective = "home";
                 $("#welcome-perspective").css({"display":"block"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -358,6 +359,9 @@
             }
             function switchToBrowsing(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "browsing";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"block"});
@@ -384,6 +388,9 @@
             }
             function switchToComparingConcepts(cd1Value, cd2Value) {
                 currentPerspective = "compare_concepts";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -407,6 +414,9 @@
             }
             function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
                 currentPerspective = "compare_hierarchies";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -431,6 +441,9 @@
             }
             function switchToFullHeight(cd1Value, txValue1) {
                 currentPerspective = "full";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -460,6 +473,9 @@
             }
             function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "responsive";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
                 componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
