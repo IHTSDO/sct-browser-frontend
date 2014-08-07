@@ -13,25 +13,26 @@
         <script src="external-libs/base64.js" type="text/javascript"></script>
         <script src="external-libs/jquery.svg.js" type="text/javascript"></script>
         <script src="external-libs/jquery.splitter-0.14.0.js" type="text/javascript"></script>
-        <script src="snomed-interaction-components/js/svgdiagrammingv2.js" type="text/javascript"></script>
-        <script src="snomed-interaction-components/js/drawConceptDiagram.js" type="text/javascript"></script>
-        <script src="snomed-interaction-components/js/searchPlugin.js" type="text/javascript"></script>
-        <script src="snomed-interaction-components/js/taxonomyPlugin.js" type="text/javascript"></script>
-        <script src="snomed-interaction-components/js/conceptDetailsPlugin.js" type="text/javascript"></script>
+        <script src="external-libs/conduit.min.js" type="text/javascript"></script>
+        <script src="external-libs/lodash.js" type="text/javascript"></script>
+        <script src="external-libs/postal.min.js" type="text/javascript"></script>
+        <script src="external-libs/bootstrap-tour.min.js"></script>
+        <script src="external-libs/jquery.i18n.properties-min-1.0.9.js"></script>
+        <script src="external-libs/handlebars-v1.3.0.js"></script>
+        <script src="external-libs/bootstrap.min.js" type="text/javascript"></script>
+        <script src="external-libs/jquery.ui.touch-punch.min.js"></script>
+        <script src="external-libs/popover-extra-placements.js" type="text/javascript"></script>
+
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/jquery.splitter.css">
         <link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.base.12.css">
         <link rel="stylesheet" href="css/bootstrap-tour.css">
-        <script src="external-libs/bootstrap.min.js" type="text/javascript"></script>
-        <script src="external-libs/jquery.ui.touch-punch.min.js"></script>
-        <script src="external-libs/popover-extra-placements.js" type="text/javascript"></script>
         <link rel="stylesheet" href="css/popover-extra-placements.css">
-        <link rel="stylesheet" href="snomed-interaction-components/css/sct-widgets.css">
-        <link rel="stylesheet" href="snomed-interaction-components/css/sct-diagram.css">
-        <script src="external-libs/bootstrap-tour.min.js"></script>
-        <script src="external-libs/jquery.i18n.properties-min-1.0.9.js"></script>
-        <script src="external-libs/handlebars-v1.3.0.js"></script>
+
+        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.19.0.min.css">
+
+        <script src="snomed-interaction-components/js/snomed-interaction-components-1.19.0.min.js"></script>
 
         <script type="text/javascript">
             var selectedLanguage = 'en_US';
@@ -39,7 +40,7 @@
             var currentPerspective = "home";
 
             var options = {
-                serverUrl: "http://browser.ihtsdotools.org/api",
+                serverUrl: "http://104.131.195.232/api/snomed",
                 //serverUrl: "http://107.170.33.116:3000"
                 edition: "en-edition",
                 release: "v20140131",
@@ -344,6 +345,7 @@
                 }
             }
             function initialize() {
+                componentsRegistry = [];
                 currentPerspective = "home";
                 $("#welcome-perspective").css({"display":"block"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -356,6 +358,10 @@
             }
             function switchToBrowsing(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "browsing";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
+                componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"block"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -366,18 +372,25 @@
                 var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), txValue1, options);
                 var spa = new searchPanel(document.getElementById("bp-search_canvas"), options);
                 var cdPanel1 = new conceptDetails(document.getElementById("bp-cd1_canvas"), cd1Value, options);
-                cdPanel1.setupCanvas();
                 var cdPanel2 = new conceptDetails(document.getElementById("bp-cd2_canvas"), cd2Value, options);
+                cdPanel1.subscribe(tpt);
+                cdPanel1.setupCanvas();
+                cdPanel2.subscribe(spa);
                 cdPanel2.setupCanvas();
-                tpt.subscribe(cdPanel1);
-                spa.subscribe(cdPanel2);
                 $('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
                 $('#searchDetails').split({orientation: 'horizontal', limit: 10});
                 $('#details').split({orientation: 'vertical', limit: 20});
                 switchLanguage(selectedLanguage, selectedFlag, false);
+                $.each(componentsRegistry, function (i, field){
+                    field.loadMarkers();
+                });
             }
             function switchToComparingConcepts(cd1Value, cd2Value) {
                 currentPerspective = "compare_concepts";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
+                componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"block"});
@@ -387,16 +400,23 @@
                 $("#perspectiveLabel").html("Comparing concepts");
                 var spa = new searchPanel(document.getElementById("cc-search_canvas"), options);
                 var cdPanel1 = new conceptDetails(document.getElementById("cc-cd1_canvas"), cd1Value, options);
-                cdPanel1.setupCanvas();
                 var cdPanel2 = new conceptDetails(document.getElementById("cc-cd2_canvas"), cd2Value, options);
+                cdPanel1.subscribe(spa);
+                cdPanel1.setupCanvas();
                 cdPanel2.setupCanvas();
-                spa.subscribe(cdPanel1);
                 $('#comparing-concepts-wrapper').split({orientation: 'horizontal'});
                 $('#comparing-concept-details').split({orientation: 'vertical'});
                 switchLanguage(selectedLanguage, selectedFlag, false);
+                $.each(componentsRegistry, function (i, field){
+                    field.loadMarkers();
+                });
             }
             function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
                 currentPerspective = "compare_hierarchies";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
+                componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -408,15 +428,22 @@
                 var tx2 = new taxonomyPanel(document.getElementById("ct-tx2_canvas"), txValue2, options);
                 var spa = new searchPanel(document.getElementById("ct-search_canvas"), options);
                 var cdPanel1 = new conceptDetails(document.getElementById("ct-cd1_canvas"), cd1Value, options);
+                cdPanel1.subscribe(spa);
                 cdPanel1.setupCanvas();
-                spa.subscribe(cdPanel1);
                 $('#comparing-taxonomies-wrapper').split({orientation: 'horizontal'});
                 $('#taxonomies-canvas-wrapper').split({orientation: 'vertical'});
                 $('#search-cd-wrapper').split({orientation: 'vertical'});
                 switchLanguage(selectedLanguage, selectedFlag, false);
+                $.each(componentsRegistry, function (i, field){
+                    field.loadMarkers();
+                });
             }
             function switchToFullHeight(cd1Value, txValue1) {
                 currentPerspective = "full";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
+                componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -430,18 +457,25 @@
                 var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, fhOptions);
                 var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
                 var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
+                cdPanel1.subscribe(tpt);
+                cdPanel1.subscribe(spa);
                 cdPanel1.setupCanvas();
-                tpt.subscribe(cdPanel1);
-                spa.subscribe(cdPanel1);
                 $('#spliter-fh').split({orientation: 'vertical', limit: 20, position: '40%'});
                 switchLanguage(selectedLanguage, selectedFlag, false);
                 if (typeof QueryString.searchTerm != "undefined") {
                     $('#fh-tabs li:eq(1) a').tab('show');
                     searchInPanel(spa.divElement.id, decodeURI(QueryString.searchTerm));
                 }
+                $.each(componentsRegistry, function (i, field){
+                    field.loadMarkers();
+                });
             }
             function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "responsive";
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
+                componentsRegistry = [];
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -452,15 +486,18 @@
                 var tpt = new taxonomyPanel(document.getElementById("rp-taxonomy_canvas"), txValue1, options);
                 var spa = new searchPanel(document.getElementById("rp-search_canvas"), options);
                 var cdPanel1 = new conceptDetails(document.getElementById("rp-cd1_canvas"), cd1Value, options);
-                cdPanel1.setupCanvas();
                 var cdPanel2 = new conceptDetails(document.getElementById("rp-cd2_canvas"), cd2Value, options);
+                cdPanel1.subscribe(tpt);
+                cdPanel1.setupCanvas();
+                cdPanel2.subscribe(spa);
                 cdPanel2.setupCanvas();
-                tpt.subscribe(cdPanel1);
-                spa.subscribe(cdPanel2);
                 $('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
                 $('#searchDetails').split({orientation: 'horizontal', limit: 10});
                 $('#details').split({orientation: 'vertical', limit: 20});
                 switchLanguage(selectedLanguage, selectedFlag, false);
+                $.each(componentsRegistry, function (i, field){
+                    field.loadMarkers();
+                });
             }
 
             function reloadCurrentPerspective() {
@@ -503,12 +540,12 @@
                 //console.log("Dates: " + now + " " + releaseDate + " " + diff);
                 if (diff > 180 ) {
                     //console.log("Alert! outadated...");
-                    var alertHtml = '<div class="alert alert-danger" id="outdated-alert">';
-                    alertHtml = alertHtml + '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-                    alertHtml = alertHtml + '<strong>Warning!</strong> the release you are browsing is more than 6 months old.';
-                    alertHtml = alertHtml + '</div>';
-                    $("#alert-section").html(alertHtml);
-                    $("#outdated-alert").alert();
+//                    var alertHtml = '<div class="alert alert-danger" id="outdated-alert">';
+//                    alertHtml = alertHtml + '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+//                    alertHtml = alertHtml + '<strong>Warning!</strong> the release you are browsing is more than 6 months old.';
+//                    alertHtml = alertHtml + '</div>';
+//                    $("#alert-section").html(alertHtml);
+//                    $("#outdated-alert").alert();
                 } else {
                     $("#alert-section").html("");
                 }
@@ -661,10 +698,10 @@
                     <p><span class="i18n" data-i18n-id="i18n_home1">This is a beta... a work in progress of ways to browse and search SNOMED CT as part of development within the IHTSDO Open Tooling Framework, by the IHTSDO and its development partners</span></p>
                     <p><span class="i18n" data-i18n-id="i18n_home2">Please select a SNOMED CT release and a perspective from the top menu to start, or...</span></p>
                     <p>
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20140131', 'en-edition', 'v20140131', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Terms and UI in English</span></a>
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20131031', 'es-edition', 'v20140430', '450828004');switchLanguage('es', 'img/flags/es.png', true);switchToFullHeight(404684003);"><img src="img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Términos e interfaz en Español</span></a>
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20140131', 'da-edition', 'v20131018', '554461000005103');switchLanguage('da', 'img/flags/dk.png', true);switchToFullHeight(404684003);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Terms and UI in Danish</span></a>
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20131130', 'sv-edition', 'v20131130', '46011000052107');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Terms in Swedish, UI in English</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20140731', 'en-edition', 'v20140731', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Terms and UI in English</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20140430', 'es-edition', 'v20140430', '450828004');switchLanguage('es', 'img/flags/es.png', true);switchToFullHeight(404684003);"><img src="img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Términos e interfaz en Español</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20140131', 'dk-edition', 'v20140131', '554461000005103');switchLanguage('da', 'img/flags/dk.png', true);switchToFullHeight(404684003);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Terms and UI in Danish</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20140531', 'se-edition', 'v20140531', '46011000052107');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Terms in Swedish, UI in English</span></a>
                         &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                         <a class="btn btn-primary btn-lg" role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
                     <p><span class="i18n" data-i18n-id="i18n_home3">Also, please provide any feedback by emailing <a href="mailto:otf@ihtsdo.org?subject=Browser Feedback" target="_blank">otf@ihtsdo.org</a>. Your feedback is essential to the evolution and improvement of this service.</span></p>
