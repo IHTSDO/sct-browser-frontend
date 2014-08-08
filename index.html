@@ -196,7 +196,7 @@
                     $('#license-modal').modal('show');
                 }
 
-                verifyDate(release)
+//                verifyDate(release)
             }
 
             function initTour() {
@@ -364,6 +364,7 @@
             }
             function initialize() {
                 componentsRegistry = [];
+                postal.unsubscribeFor();
                 currentPerspective = "home";
                 $("#welcome-perspective").css({"display":"block"});
                 $("#browsing-perspective").css({"display":"none"});
@@ -376,6 +377,7 @@
             }
             function switchToBrowsing(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "browsing";
+                postal.unsubscribeFor();
                 $.each(componentsRegistry, function(i, field){
                     field = null;
                 });
@@ -405,6 +407,7 @@
             }
             function switchToComparingConcepts(cd1Value, cd2Value) {
                 currentPerspective = "compare_concepts";
+                postal.unsubscribeFor();
                 $.each(componentsRegistry, function(i, field){
                     field = null;
                 });
@@ -431,6 +434,7 @@
             }
             function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
                 currentPerspective = "compare_hierarchies";
+                postal.unsubscribeFor();
                 $.each(componentsRegistry, function(i, field){
                     field = null;
                 });
@@ -458,6 +462,7 @@
             }
             function switchToFullHeight(cd1Value, txValue1) {
                 currentPerspective = "full";
+                postal.unsubscribeFor();
                 $.each(componentsRegistry, function(i, field){
                     field = null;
                 });
@@ -490,6 +495,7 @@
             }
             function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "responsive";
+                postal.unsubscribeFor();
                 $.each(componentsRegistry, function(i, field){
                     field = null;
                 });
@@ -542,13 +548,15 @@
             }
 
             function switchRelease(label, edition, release, langRefset, serverUrl) {
-                verifyDate(release);
+//                verifyDate(release);
+                postal.unsubscribeFor();
                 $.each(componentsRegistry, function(i, field){
                     field = null;
                 });
                 $.each(manifests, function (i, field){
                     if (edition == field.databaseName){
                         options.manifest = field;
+                        verifyDate(field.expirationDate);
                     }
                 });
                 options.textIndexNormalized = options.manifest.textIndexNormalized;
@@ -568,19 +576,17 @@
                 var now = new Date()
                 //console.log(release.substring(1, 5) + " " +  release.substring(5, 7) + " " +  release.substring(7, 9));
                 var releaseDate = new Date(release.substring(1, 5), release.substring(5, 7)-1, release.substring(7, 9));
-                var diff = now - releaseDate;
-                diff = Math.round(diff/1000/60/60/24);
-                //console.log("Dates: " + now + " " + releaseDate + " " + diff);
-                if (diff > 180 ) {
-                    //console.log("Alert! outadated...");
-//                    var alertHtml = '<div class="alert alert-danger" id="outdated-alert">';
-//                    alertHtml = alertHtml + '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-//                    alertHtml = alertHtml + '<strong>Warning!</strong> the release you are browsing is more than 6 months old.';
-//                    alertHtml = alertHtml + '</div>';
-//                    $("#alert-section").html(alertHtml);
-//                    $("#outdated-alert").alert();
-                } else {
+                if (releaseDate < now){
+//                    console.log("bien");
                     $("#alert-section").html("");
+                }else{
+//                    console.log("expirada");
+                    var alertHtml = '<div class="alert alert-danger" id="outdated-alert">';
+                    alertHtml = alertHtml + '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+                    alertHtml = alertHtml + '<strong>Warning!</strong> the release you are browsing is expired.';
+                    alertHtml = alertHtml + '</div>';
+                    $("#alert-section").html(alertHtml);
+                    $("#outdated-alert").alert();
                 }
             }
 
