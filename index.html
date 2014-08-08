@@ -525,6 +525,10 @@
 
             function switchRelease(label, edition, release, langRefset, serverUrl) {
                 verifyDate(release);
+                $.each(componentsRegistry, function(i, field){
+                    field = null;
+                });
+                componentsRegistry = [];
                 options.edition = edition;
                 options.release = release;
                 options.langRefset = langRefset;
