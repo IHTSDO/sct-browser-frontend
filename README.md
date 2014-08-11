@@ -1,4 +1,4 @@
-sct-browser-frontend
-====================
+IHTSDO International Browser Frontend
+=====================================
 
-sct-browser-frontend
+IHTSDO Browser App customized for the International browser.
