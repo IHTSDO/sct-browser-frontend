@@ -1,4 +1,4 @@
-sct-browser-frontend
-====================
+IHTSDO Browser Frontend
+=======================
 
-sct-browser-frontend
+Generic root project, specific instances of the browser are customized in branches of this project.
