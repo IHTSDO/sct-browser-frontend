@@ -107,6 +107,11 @@
                     console.log("Using Dev Server...");
                     //options.serverUrl = "http://107.170.33.116/api";
                 }
+
+                if (typeof QueryString.server != "undefined") {
+                    options.serverUrl = QueryString.server + "api/snomed";
+                }
+
                 var edition = QueryString.edition;
                 if (typeof edition == "undefined" || edition == null || edition == "") {
                     edition = "en-edition";
