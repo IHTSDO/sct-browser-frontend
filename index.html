@@ -560,9 +560,12 @@
             function switchRelease(label, edition, release, langRefset, serverUrl) {
 //                verifyDate(release);
                 postal.unsubscribeFor();
-                $.each(componentsRegistry, function(i, field){
-                    field = null;
-                });
+                if (typeof componentsRegistry !="undefined"){
+                    $.each(componentsRegistry, function(i, field){
+                        field = null;
+                    });
+                    componentsRegistry = [];
+                }
                 $.each(manifests, function (i, field){
                     if (edition == field.databaseName){
                         options.manifest = field;
@@ -570,7 +573,6 @@
                     }
                 });
                 options.textIndexNormalized = options.manifest.textIndexNormalized;
-                componentsRegistry = [];
                 options.edition = edition;
                 options.release = release;
                 options.langRefset = langRefset;
