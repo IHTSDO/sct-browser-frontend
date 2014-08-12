@@ -108,6 +108,10 @@
                     //options.serverUrl = "http://107.170.33.116/api";
                 }
 
+                if (typeof QueryString.langRefset != "undefined") {
+                    options.langRefset = QueryString.langRefset;
+                }
+
                 if (typeof QueryString.server != "undefined") {
                     options.serverUrl = QueryString.server + "api/snomed";
                 }
