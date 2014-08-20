@@ -1,4 +1,4 @@
-sct-browser-frontend
-====================
+IHTSDO Multi-English Browser Frontend
+=====================================
 
-sct-browser-frontend
+IHTSDO Browser App customized for the Multi-English combined edition browser.
