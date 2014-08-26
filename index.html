@@ -107,6 +107,11 @@
                     console.log("Using Dev Server...");
                     //options.serverUrl = "http://107.170.33.116/api";
                 }
+
+                if (typeof QueryString.server != "undefined") {
+                    options.serverUrl = QueryString.server + "api/snomed";
+                }
+
                 var edition = QueryString.edition;
                 if (typeof edition == "undefined" || edition == null || edition == "") {
                     edition = "en-edition";
@@ -378,10 +383,12 @@
             function switchToBrowsing(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "browsing";
                 postal.unsubscribeFor();
-                $.each(componentsRegistry, function(i, field){
-                    field = null;
-                });
-                componentsRegistry = [];
+                if (typeof componentsRegistry !="undefined"){
+                    $.each(componentsRegistry, function(i, field){
+                        field = null;
+                    });
+                    componentsRegistry = [];
+                }
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"block"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -408,10 +415,12 @@
             function switchToComparingConcepts(cd1Value, cd2Value) {
                 currentPerspective = "compare_concepts";
                 postal.unsubscribeFor();
-                $.each(componentsRegistry, function(i, field){
-                    field = null;
-                });
-                componentsRegistry = [];
+                if (typeof componentsRegistry !="undefined"){
+                    $.each(componentsRegistry, function(i, field){
+                        field = null;
+                    });
+                    componentsRegistry = [];
+                }
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"block"});
@@ -435,10 +444,12 @@
             function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
                 currentPerspective = "compare_hierarchies";
                 postal.unsubscribeFor();
-                $.each(componentsRegistry, function(i, field){
-                    field = null;
-                });
-                componentsRegistry = [];
+                if (typeof componentsRegistry !="undefined"){
+                    $.each(componentsRegistry, function(i, field){
+                        field = null;
+                    });
+                    componentsRegistry = [];
+                }
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -463,10 +474,12 @@
             function switchToFullHeight(cd1Value, txValue1) {
                 currentPerspective = "full";
                 postal.unsubscribeFor();
-                $.each(componentsRegistry, function(i, field){
-                    field = null;
-                });
-                componentsRegistry = [];
+                if (typeof componentsRegistry !="undefined"){
+                    $.each(componentsRegistry, function(i, field){
+                        field = null;
+                    });
+                    componentsRegistry = [];
+                }
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -496,10 +509,12 @@
             function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "responsive";
                 postal.unsubscribeFor();
-                $.each(componentsRegistry, function(i, field){
-                    field = null;
-                });
-                componentsRegistry = [];
+                if (typeof componentsRegistry !="undefined"){
+                    $.each(componentsRegistry, function(i, field){
+                        field = null;
+                    });
+                    componentsRegistry = [];
+                }
                 $("#welcome-perspective").css({"display":"none"});
                 $("#browsing-perspective").css({"display":"none"});
                 $("#comparing-concepts-perspective").css({"display":"none"});
@@ -550,9 +565,12 @@
             function switchRelease(label, edition, release, langRefset, serverUrl) {
 //                verifyDate(release);
                 postal.unsubscribeFor();
-                $.each(componentsRegistry, function(i, field){
-                    field = null;
-                });
+                if (typeof componentsRegistry !="undefined"){
+                    $.each(componentsRegistry, function(i, field){
+                        field = null;
+                    });
+                    componentsRegistry = [];
+                }
                 $.each(manifests, function (i, field){
                     if (edition == field.databaseName){
                         options.manifest = field;
@@ -560,7 +578,6 @@
                     }
                 });
                 options.textIndexNormalized = options.manifest.textIndexNormalized;
-                componentsRegistry = [];
                 options.edition = edition;
                 options.release = release;
                 options.langRefset = langRefset;
@@ -614,6 +631,7 @@
                         }
                     } else {
                         console.log($(this).attr('data-i18n-id') + " = " + $(this).html());
+                        console.log($(this));
                     }
                 });
                 initTour();
