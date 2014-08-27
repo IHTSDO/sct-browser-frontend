@@ -757,7 +757,7 @@
                 <div class="jumbotron">
                     <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">Welcome to the 2nd Beta</span></h1>
                     <p><span class="i18n" data-i18n-id="i18n_home1">This is a beta... a work in progress of ways to browse and search SNOMED CT as part of development within the IHTSDO Open Tooling Framework, by the IHTSDO and its development partners</span></p>
-                    <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button in the bottom right of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
+                    <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button on the right of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
                     <!--<p><span class="i18n" data-i18n-id="i18n_home2">Please select a SNOMED CT release and a perspective from the top menu to start, or...</span></p>
                     --><h2>International Editions</h2>
                     <p>
@@ -927,8 +927,15 @@
         </div><!-- /.modal -->        
         
         
-        <!-- JIRA feedback script -->
+        <!-- JIRA feedback script 
         <script type="text/javascript" src="https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e/en_US-dgb2l9-1988229788/6256/5/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=9215d950"></script>
+        -->
+        
+        <!-- Using Freshdesk Widget for feedback -->
+<script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
+<script type="text/javascript">
+	FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&submitThanks=Thank+you+for+your+feedback.+We+will+respond+once+the+team+has+had+the+opportunity+to+investigate.&searchArea=no", "widgetType": "popup", "buttonType": "text", "buttonText": "Feedback", "buttonColor": "white", "buttonBg": "#0077B3", "alignment": "2", "offset": "400px", "submitThanks": "Thank you for your feedback. We will respond once the team has had the opportunity to investigate.", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );
+</script>
         
         <!-- Google Analytics script -->
         <script>
