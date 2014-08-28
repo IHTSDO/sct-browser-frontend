@@ -62,23 +62,29 @@
                 highlightByEffectiveTime: "false"
             };
 
-            var manifests;
-
+            var manifests, manifests2;
             xhr = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
                 manifests = result;
-            })
+            }).fail(function(){
+                console.log("fail Manifest");
+            });
 
             xhr = $.getJSON("http://107.170.22.98/api/snomed".replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
                 manifests2 = result;
+                if (typeof manifest == "undefined"){
+                    manifests = [];
+                }
                 $.each(result, function (i, field){
                     manifests.push(field);
                 });
 //                console.log(manifests);
-            })
+            }).fail(function(){
+                console.log("fail Manifest");
+            });
 
             var tours = {};
             var tour;
@@ -106,6 +112,10 @@
                 if (typeof QueryString.dev != "undefined") {
                     console.log("Using Dev Server...");
                     //options.serverUrl = "http://107.170.33.116/api";
+                }
+
+                if (typeof QueryString.langRefset != "undefined") {
+                    options.langRefset = QueryString.langRefset;
                 }
 
                 if (typeof QueryString.server != "undefined") {
@@ -407,10 +417,10 @@
                 $('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
                 $('#searchDetails').split({orientation: 'horizontal', limit: 10});
                 $('#details').split({orientation: 'vertical', limit: 20});
-                switchLanguage(selectedLanguage, selectedFlag, false);
                 $.each(componentsRegistry, function (i, field){
                     field.loadMarkers();
                 });
+                switchLanguage(selectedLanguage, selectedFlag, false);
             }
             function switchToComparingConcepts(cd1Value, cd2Value) {
                 currentPerspective = "compare_concepts";
@@ -436,10 +446,10 @@
                 cdPanel2.setupCanvas();
                 $('#comparing-concepts-wrapper').split({orientation: 'horizontal'});
                 $('#comparing-concept-details').split({orientation: 'vertical'});
-                switchLanguage(selectedLanguage, selectedFlag, false);
                 $.each(componentsRegistry, function (i, field){
                     field.loadMarkers();
                 });
+                switchLanguage(selectedLanguage, selectedFlag, false);
             }
             function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
                 currentPerspective = "compare_hierarchies";
@@ -466,10 +476,10 @@
                 $('#comparing-taxonomies-wrapper').split({orientation: 'horizontal'});
                 $('#taxonomies-canvas-wrapper').split({orientation: 'vertical'});
                 $('#search-cd-wrapper').split({orientation: 'vertical'});
-                switchLanguage(selectedLanguage, selectedFlag, false);
                 $.each(componentsRegistry, function (i, field){
                     field.loadMarkers();
                 });
+                switchLanguage(selectedLanguage, selectedFlag, false);
             }
             function switchToFullHeight(cd1Value, txValue1) {
                 currentPerspective = "full";
@@ -497,7 +507,6 @@
                 cdPanel1.subscribe(spa);
                 cdPanel1.setupCanvas();
                 $('#spliter-fh').split({orientation: 'vertical', limit: 20, position: '40%'});
-                switchLanguage(selectedLanguage, selectedFlag, false);
                 if (typeof QueryString.searchTerm != "undefined") {
                     $('#fh-tabs li:eq(1) a').tab('show');
                     searchInPanel(spa.divElement.id, decodeURI(QueryString.searchTerm));
@@ -505,6 +514,7 @@
                 $.each(componentsRegistry, function (i, field){
                     field.loadMarkers();
                 });
+                switchLanguage(selectedLanguage, selectedFlag, false);
             }
             function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "responsive";
@@ -533,10 +543,10 @@
                 $('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
                 $('#searchDetails').split({orientation: 'horizontal', limit: 10});
                 $('#details').split({orientation: 'vertical', limit: 20});
-                switchLanguage(selectedLanguage, selectedFlag, false);
                 $.each(componentsRegistry, function (i, field){
                     field.loadMarkers();
                 });
+                switchLanguage(selectedLanguage, selectedFlag, false);
             }
 
             function reloadCurrentPerspective() {
@@ -574,10 +584,11 @@
                 $.each(manifests, function (i, field){
                     if (edition == field.databaseName){
                         options.manifest = field;
+                        options.textIndexNormalized = options.manifest.textIndexNormalized;
+                        console.log(options.textIndexNormalized);
                         verifyDate(field.expirationDate);
                     }
                 });
-                options.textIndexNormalized = options.manifest.textIndexNormalized;
                 options.edition = edition;
                 options.release = release;
                 options.langRefset = langRefset;
@@ -631,7 +642,6 @@
                         }
                     } else {
                         console.log($(this).attr('data-i18n-id') + " = " + $(this).html());
-                        console.log($(this));
                     }
                 });
                 initTour();
@@ -702,9 +712,17 @@
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20140430', 'es-edition', 'v20140430', '450828004');reloadCurrentPerspective();">Spanish Edition 20140430</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20140531', 'au-edition', 'v20140531', '46011000052107', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">Australian Edition 20140531</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20140131', 'dk-edition', 'v20140131', '554461000005103');reloadCurrentPerspective();">Danish Edition 20140131</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20140531', 'sv-edition', 'v20140531', '46011000052107');reloadCurrentPerspective();">Swedish Edition 20140531</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('United Kingdom Edition 20140401', 'uk-edition', 'v20140401', '46011000052107', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">UK Edition 20140401</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20140301', 'us-edition', 'v20140301', '46011000052107', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">US Edition 20140301</a></li>
+<!--<<<<<<< HEAD-->
+                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20140531', 'se-edition', 'v20140531', '46011000052107');reloadCurrentPerspective();">Swedish Edition 20140531</a></li>-->
+                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20140531', 'au-edition', 'v20140531', '32570271000036106', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">Australian Edition 20140531</a></li>-->
+                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('United Kingdom Edition 20140401', 'uk-edition', 'v20140401', '999001251000000103', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">UK Edition 20140401</a></li>-->
+                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Netherlands Edition 20140731', 'nl-edition', 'v20140731', '11000146104', 'http://107.170.22.98/api/snomed');reloadCurrentPerspective();">NL Edition 20140731</a></li>-->
+                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20140301', 'us-edition', 'v20140301', '900000000000509007', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">US Edition 20140301</a></li>-->
+<!--=======-->
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20140531', 'se-edition', 'v20140531', '46011000052107');reloadCurrentPerspective();">Swedish Edition 20140531</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('United Kingdom Edition 20140401', 'uk-edition', 'v20140401', '999001251000000103', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">UK Edition 20140401</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20140301', 'us-edition', 'v20140301', '900000000000509007', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">US Edition 20140301</a></li>
+<!-->>>>>>> upstream/ihtsdo-browser-->
                             </ul>
                         </li>
                         <li class="navbar-text"></li>
@@ -770,9 +788,13 @@
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20140131', 'dk-edition', 'v20140131', '554461000005103');switchLanguage('da', 'img/flags/dk.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20140531', 'se-edition', 'v20140531', '46011000052107');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Swedish edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United Kingdom Edition 20140401', 'uk-edition', 'v20140401', '999001251000000103', 'http://107.170.178.177/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition</span></a>
+<!--<<<<<<< HEAD-->
+                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20140731', 'nl-edition', 'v20140731', '11000146104', 'http://107.170.22.98/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition</span></a>-->
+<!--=======-->
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20140531', 'us-edition', 'v20140301', '900000000000509007', 'http://107.170.178.177/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition</span></a>
                     </p>
                     <p>    
+<!-- upstream/ihtsdo-browser-->
                         &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                         <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
 
