@@ -63,37 +63,35 @@
                 highlightByEffectiveTime: "false"
             };
 
-            var manifests, manifests2;
-            xhr = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
+            var manifests;
+            xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
                 manifests = result;
+                console.log(result);
             }).fail(function(){
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
                     className: "error"
                 });
 //                alert("Error Terminolgy server not accesed");
-//                console.log("fail Manifest");
+                console.log("fail Manifest");
             });
-
-            xhr = $.getJSON("http://107.170.22.98/api/snomed".replace("snomed", "") + "server/releases", function (result) {
-                // nothing
-            }).done(function (result) {
-                manifests2 = result;
-                if (typeof manifest == "undefined"){
-                    manifests = [];
-                }
-                $.each(result, function (i, field){
-                    manifests.push(field);
-                });
-//                console.log(manifests);
-            }).fail(function(){
-                $.notify("Error Terminology server not accessible!", {
-                    autoHide: false,
-                    className: "error"
-                });
+            $.when(xhrM).done(function(){
+                xhr = $.getJSON("http://107.170.22.98/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
+                }).done(function (result) {
+                    $.each(result, function (i, field){
+                        manifests.push(field);
+                    });
+                console.log(manifests);
+                }).fail(function(){
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
 //                console.log("fail Manifest");
+                });
             });
 
             var tours = {};
