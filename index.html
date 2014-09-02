@@ -68,7 +68,7 @@
                 // nothing
             }).done(function (result) {
                 manifests = result;
-                console.log(result);
+//                console.log(result);
             }).fail(function(){
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
@@ -84,7 +84,7 @@
                     $.each(result, function (i, field){
                         manifests.push(field);
                     });
-                console.log(manifests);
+//                console.log(manifests);
                 }).fail(function(){
                     $.notify("Error Terminology server not accessible!", {
                         autoHide: false,
@@ -601,7 +601,7 @@
                     if (edition == field.databaseName){
                         options.manifest = field;
                         options.textIndexNormalized = options.manifest.textIndexNormalized;
-                        console.log(options.textIndexNormalized);
+//                        console.log(options.textIndexNormalized);
                         verifyDate(field.expirationDate);
                     }
                 });
