@@ -63,12 +63,12 @@
             };
 
             var manifests = [];
-
+//            console.log(options.serverUrl.replace("snomed", "") + "server/releases");
             xhr = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
                 manifests = result;
-                console.log(manifests);
+//                console.log(manifests);
             });
 
             var tours = {};
