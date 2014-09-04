@@ -1,4 +1,4 @@
 IHTSDO Browser Frontend
 =======================
 
-Generic root project, specific instances of the browser are customized in branches of this project.
+This is a generic browser front end project, specific instances used in the IHTSDO browsers are customized in branches of this project.
