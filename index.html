@@ -698,8 +698,10 @@
                 text-decoration: none;
             }
             .navbar-brand {
-                margin-left: 50px;
             }
+			.navbar .navbar-btn {
+				margin-left: 10px;
+			}
         </style>
     </head>
     <body onLoad="start();" style="height: 100%; display: block;">
@@ -737,7 +739,6 @@
                                 <li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20140301', 'us-edition', 'v20140301', '900000000000509007', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">US Edition 20140301</a></li>
                             </ul>
                         </li>
-                        <li class="navbar-text"></li>
                         <li class="navbar-btn" id="perspective-selector">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
@@ -750,6 +751,11 @@
                                 <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003,138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>
                             </ul>
                         </li>
+						<li class="navbar-btn feedback-button">
+							<button type="button" class="btn btn-primary" onclick="FreshWidget.show(); return false;">
+								<span>Feedback</span>
+							</button>
+						</li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -976,7 +982,7 @@
         <!-- Using Freshdesk Widget for feedback -->
 <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
 <script type="text/javascript">
-	FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "0px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );
+	FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );
 </script>
 
 <script type="text/javascript"> 
