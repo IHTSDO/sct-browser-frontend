@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>IHTSDO SNOMED CT Browser - Phase 2 - beta</title>
+        <title>IHTSDO SNOMED CT Browser</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
 		<meta name="description" content="IHTSDO SNOMED CT Browser">
@@ -712,9 +712,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                 </button>
-                <div class="ribbon"><span>Beta</span></div>
                 <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand"><strong>
-                     	&nbsp;&nbsp;IHTSDO SNOMED CT Browser - Beta 2</strong></a>
+                     	&nbsp;&nbsp;IHTSDO SNOMED CT Browser</strong></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
@@ -748,7 +747,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">About</span> <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                          <!--       <li><a href="mailto:otf@ihtsdo.org?subject=feedback" target="_blank"><span class="i18n" data-i18n-id="i18n_provide_feedback">Provide feedback on this browser</span></a></li> -->
                                 <li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>
@@ -771,7 +770,7 @@
                                 <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
                             </ul>
                         </li>
-                        <img class="pull-right visible-lg" src="img/logo.png" alt="IHTSDO delivering SNOMED, the global clinical terminology">
+                        <img class="pull-right visible-lg" src="img/newlogo.png" alt="IHTSDO delivering SNOMED, the global clinical terminology">
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -782,7 +781,7 @@
             <!-- Welcome Perspective -->
             <div id="welcome-perspective"  class="bperspective">
                 <div class="jumbotron">
-                    <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">Welcome to the 2nd Beta</span></h1>
+                    <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">Welcome to the IHTSDO SNOMED CT Browser</span></h1>
                     <p><span class="i18n" data-i18n-id="i18n_home1">This is a beta... a work in progress of ways to browse and search SNOMED CT as part of development within the IHTSDO Open Tooling Framework, by the IHTSDO and its development partners</span></p>
                     <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button on the bottom of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
                     <!--<p><span class="i18n" data-i18n-id="i18n_home2">Please select a SNOMED CT release and a perspective from the top menu to start, or...</span></p>
@@ -969,7 +968,18 @@
 	FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&submitThanks=Thank+you+for+your+feedback.+We+will+respond+once+the+team+has+had+the+opportunity+to+investigate.&searchArea=no", "widgetType": "popup", "buttonType": "text", "buttonText": "Feedback", "buttonColor": "white", "buttonBg": "#0077B3", "alignment": "3", "offset": "650px", "submitThanks": "Thank you for your feedback. We will respond once the team has had the opportunity to investigate.", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );
 </script>
         
-        <!-- Google Analytics script -->
+<script type="text/javascript"> 
+var $buoop = {}; 
+$buoop.ol = window.onload; 
+window.onload=function(){ 
+ try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
+ var e = document.createElement("script"); 
+ e.setAttribute("type", "text/javascript"); 
+ e.setAttribute("src", "//browser-update.org/update.js"); 
+ document.body.appendChild(e); 
+} 
+</script> 
+<!-- Google Analytics script -->
         <script>
 			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
