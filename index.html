@@ -222,7 +222,7 @@
 
 //                verifyDate(release)
             }
-            
+
             function initTour() {
                 if (typeof  tours[selectedLanguage]  == "undefined") {
                     tours[selectedLanguage] = new Tour({
@@ -719,7 +719,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                 </button>
-                
+
         <!--        <img class="pull-left " src="img/box-logo.png" style="height:50px" alt="IHTSDO delivering SNOMED, the global clinical terminology"> -->
                 <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
                     <strong>
@@ -749,10 +749,10 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:void(0);" onclick="switchToFullHeight(404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_full_perspective">Full</span></a></li>
-                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li>
+<!--                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li> -->
                                 <li><a href="javascript:void(0);" onclick="switchToComparingConcepts(404684003,404684003);"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
                                 <li><a href="javascript:void(0);" onclick="switchToComparingTaxonomies(404684003, 138875005, 138875005);"><span class="i18n" data-i18n-id="i18n_comp_hier_perspective">Comparing hierarchy</span></a></li>
-                                <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003,138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>
+<!--                                <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003,138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li> -->
                             </ul>
                         </li>
 						<li class="navbar-btn feedback-button">
@@ -816,7 +816,7 @@
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20140731', 'nl-edition', 'v20140731', '31000146106', 'http://107.170.22.98/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20140531', 'us-edition', 'v20140301', '900000000000509007', 'http://107.170.178.177/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition</span></a>
                     </p>
-                    <p>    
+                    <p>
                         &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                         <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
 
@@ -827,7 +827,7 @@
                         <br><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
                         <br><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="http://systems.hscic.gov.uk/data/uktc" target="_blank">The Health and Social Care Information Centre (HSCIC), United Kingdom</a>
                         <br><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    </p>    
+                    </p>
 
                     <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. Please find more information on the <a href="http://ihtsdo.github.io/sct-browser-frontend/" target="_blank">IHTSDO Browser service page</a></span></p>
                 </div>
@@ -976,30 +976,30 @@
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->        
-        
-        
-        <!-- JIRA feedback script 
+        </div><!-- /.modal -->
+
+
+        <!-- JIRA feedback script
         <script type="text/javascript" src="https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e/en_US-dgb2l9-1988229788/6256/5/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=9215d950"></script>
         -->
-        
+
         <!-- Using Freshdesk Widget for feedback -->
 <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
 <script type="text/javascript">
 	FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );
 </script>
 
-<script type="text/javascript"> 
-var $buoop = {}; 
-$buoop.ol = window.onload; 
-window.onload=function(){ 
- try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
- var e = document.createElement("script"); 
- e.setAttribute("type", "text/javascript"); 
- e.setAttribute("src", "//browser-update.org/update.js"); 
- document.body.appendChild(e); 
-} 
-</script> 
+<script type="text/javascript">
+var $buoop = {};
+$buoop.ol = window.onload;
+window.onload=function(){
+ try {if ($buoop.ol) $buoop.ol();}catch (e) {}
+ var e = document.createElement("script");
+ e.setAttribute("type", "text/javascript");
+ e.setAttribute("src", "//browser-update.org/update.js");
+ document.body.appendChild(e);
+}
+</script>
 <!-- Google Analytics script -->
         <script>
 			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -1011,6 +1011,6 @@ window.onload=function(){
   				ga('send', 'pageview');
 
 		</script>
-        
+
     </body>
 </html>
