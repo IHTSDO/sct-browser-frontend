@@ -85,7 +85,6 @@
                     $.each(result, function (i, field){
                         manifests.push(field);
                     });
-//                console.log(manifests);
                 }).fail(function(){
                     $.notify("Error Terminology server not accessible!", {
                         autoHide: false,
@@ -601,14 +600,16 @@
                     });
                     componentsRegistry = [];
                 }
-                $.each(manifests, function (i, field){
-                    if (edition == field.databaseName){
-                        options.manifest = field;
-                        options.textIndexNormalized = options.manifest.textIndexNormalized;
+                var i = 0;
+                while (i < manifests.length && manifests[i].databaseName != edition){
+                    i++;
+                }
+                if (i < manifests.length){
+                    options.manifest = manifests[i];
+                    options.textIndexNormalized = options.manifest.textIndexNormalized;
 //                        console.log(options.textIndexNormalized);
-                        verifyDate(field.expirationDate);
-                    }
-                });
+                    verifyDate(options.manifest.expirationDate);
+                }
                 options.edition = edition;
                 options.release = release;
                 options.langRefset = langRefset;
