@@ -1,9 +1,9 @@
-IHTSDO Browser Frontend
-=======================
+IHTSDO International Browser Frontend
+=====================================
 
-This is a generic browser front end project, specific instances used in the IHTSDO browsers are customized in branches of this project.
+IHTSDO Browser App customized for the International browser.
 
-This project is an HTML / JS application that uses the IHTSDO SNOMED CT Interaction Components (https://github.com/IHTSDO/snomed-interaction-components) to create aa SNOMED CT Browser.
+This project is an HTML / JS application that uses the IHTSDO SNOMED CT Interaction Components (https://github.com/IHTSDO/snomed-interaction-components) to create the International SNOMED CT Browser.
 
 The browser connects to a backend REST API provided by the project: https://github.com/IHTSDO/sct-snapshot-rest-api
 
