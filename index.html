@@ -42,7 +42,7 @@
             var currentPerspective = "home";
 
             var options = {
-                serverUrl: "http://107.170.143.181/api/snomed",
+                serverUrl: "http://107.170.53.78/api/snomed",
                 //serverUrl: "http://107.170.33.116:3000"
                 edition: "en-edition",
                 release: "v20140731",
@@ -77,21 +77,6 @@
                 });
 //                alert("Error Terminolgy server not accesed");
                 console.log("fail Manifest");
-            });
-            $.when(xhrM).done(function(){
-                xhr = $.getJSON("http://107.170.22.98/api/snomed".replace("snomed", "") + "server/releases", function (result) {
-                    // nothing
-                }).done(function (result) {
-                    $.each(result, function (i, field){
-                        manifests.push(field);
-                    });
-                }).fail(function(){
-                    $.notify("Error Terminology server not accessible!", {
-                        autoHide: false,
-                        className: "error"
-                    });
-//                console.log("fail Manifest");
-                });
             });
 
             var tours = {};
