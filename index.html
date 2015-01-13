@@ -65,7 +65,7 @@
             };
 
             var manifests;
-            xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
+            var xhrM = $.ajax(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
                 manifests = result;
@@ -77,6 +77,10 @@
                 });
 //                alert("Error Terminolgy server not accesed");
                 console.log("fail Manifest");
+            });
+
+            jQuery.get('lastupdated.txt', function(data) {
+                $("#lastUpdatedText").html(data);
             });
 
             var tours = {};
@@ -799,6 +803,8 @@
                     <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
                     <p>No new concepts or identifiers may be used in clinical systems.</p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20150731', 'en-edition', 'v20150731', '900000000000509007', 'http://107.170.53.78/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>
+                    <br>
+                    <p id="lastUpdatedText"></p>
                     <br>
                 </div>
                 <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span></p>
