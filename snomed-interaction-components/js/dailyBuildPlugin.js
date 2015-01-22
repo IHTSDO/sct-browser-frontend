@@ -149,7 +149,7 @@ function dailyBuildPanel(divElement, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON("http;//107.170.67.17/diff_reports/diff_index.json", function( data ) {
+        xhr = $.getJSON("http://107.170.67.17/diff_reports/diff_index.json", function( data ) {
             var reportsHtml =  '';
             panel.title = data.title;
             panel.executionTime = data.executionTime;
