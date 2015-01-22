@@ -24,6 +24,7 @@
         <script src="external-libs/excellentexport.min.js"></script>
         <script src="external-libs/notify.js"></script>
         <script src="external-libs/popover-extra-placements.js" type="text/javascript"></script>
+        <script src="snomed-interaction-components/js/dailyBuildPlugin.js" type="text/javascript"></script>
 
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/jquery.splitter.css">
@@ -513,6 +514,7 @@
                 var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, fhOptions);
                 var fav = new favoritePanel(document.getElementById("fh-favorites_canvas"), fhOptions);
                 var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), fhOptions);
+                var dai = new dailyBuildPanel(document.getElementById("fh-daily_canvas"), fhOptions);
                 var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
                 var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
                 cdPanel1.subscribe(tpt);
@@ -885,12 +887,14 @@
                             <li><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
                             <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
                             <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
+                            <li id="fh-daily_canvas-li"><a href="#fh-daily_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_daily_build">Daily Build</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
                             <div class="tab-pane" id="fh-search_canvas" style="padding: 0px;margin: 0;"></div>
                             <div class="tab-pane" id="fh-favorites_canvas" style="padding: 0px;margin: 0;"></div>
                             <div class="tab-pane" id="fh-refset_canvas" style="padding: 0px;margin: 0;"></div>
+                            <div class="tab-pane" id="fh-daily_canvas" style="padding: 0px;margin: 0;"></div>
                         </div>
                     </div>
                     <div class="" id="conceptDetails-fh">
