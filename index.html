@@ -69,7 +69,7 @@
                 // nothing
             }).done(function (result) {
                 manifests = result;
-//                console.log(result);
+                console.log(result);
             }).fail(function(){
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
@@ -80,6 +80,36 @@
             });
             $.when(xhrM).done(function(){
                 xhr = $.getJSON("http://107.170.22.98/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
+                }).done(function (result) {
+                    $.each(result, function (i, field){
+                        manifests.push(field);
+                    });
+                }).fail(function(){
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
+//                console.log("fail Manifest");
+                });
+            });
+            $.when(xhrM).done(function(){
+                xhr = $.getJSON("http://107.170.178.177/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
+                }).done(function (result) {
+                    $.each(result, function (i, field){
+                        manifests.push(field);
+                    });
+                }).fail(function(){
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
+//                console.log("fail Manifest");
+                });
+            });
+            $.when(xhrM).done(function(){
+                xhr = $.getJSON("http://107.170.143.181/api/snomed".replace("snomed", "") + "server/releases", function (result) {
                     // nothing
                 }).done(function (result) {
                     $.each(result, function (i, field){
@@ -604,9 +634,14 @@
                     componentsRegistry = [];
                 }
                 var i = 0;
-                while (i < manifests.length && manifests[i].databaseName != edition){
+                var releaseName = release.substring(1, 9);
+//                console.log(releaseName);
+                while (i < manifests.length && manifests[i].databaseName != edition || manifests[i].effectiveTime != releaseName){
                     i++;
                 }
+//                console.log(manifests[i].databaseName);
+//                console.log(manifests[i].effectiveTime);
+
                 if (i < manifests.length){
                     options.manifest = manifests[i];
                     options.textIndexNormalized = options.manifest.textIndexNormalized;
