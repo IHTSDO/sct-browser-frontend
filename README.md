@@ -114,4 +114,5 @@ conceptId1|any SCTID|Sets the first concept details widget to this concept.
 conceptId2|any SCTID|Sets the second concept details widget to this concept.
 conceptIdTx1|any SCTID|Sets the first taxonomy widget to this concept.
 conceptIdTx2|any SCTID|Sets the second taxonomy widget to this concept.
-acceptLicense|1, 0|Is 1, the SNOMED CT Browser License is automatically accepted without displaying the modal window.
+acceptLicense|true| the SNOMED CT Browser License is automatically accepted without displaying the modal window. This means that you are explicitly accepting the license.
+diagrammingMarkupEnabled|true|SNOMED CT diagramming Markup is enabled.
