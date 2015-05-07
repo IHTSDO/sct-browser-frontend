@@ -1,9 +1,9 @@
-IHTSDO International Browser Frontend
-=====================================
+IHTSDO Browser Frontend
+=======================
 
-IHTSDO Browser App customized for the International browser.
+This is a generic browser front end project, specific instances used in the IHTSDO browsers are customized in branches of this project.
 
-This project is an HTML / JS application that uses the IHTSDO SNOMED CT Interaction Components (https://github.com/IHTSDO/snomed-interaction-components) to create the International SNOMED CT Browser.
+This project is an HTML / JS application that uses the IHTSDO SNOMED CT Interaction Components (https://github.com/IHTSDO/snomed-interaction-components) to create aa SNOMED CT Browser.
 
 The browser connects to a backend REST API provided by the project: https://github.com/IHTSDO/sct-snapshot-rest-api
 
@@ -114,4 +114,5 @@ conceptId1|any SCTID|Sets the first concept details widget to this concept.
 conceptId2|any SCTID|Sets the second concept details widget to this concept.
 conceptIdTx1|any SCTID|Sets the first taxonomy widget to this concept.
 conceptIdTx2|any SCTID|Sets the second taxonomy widget to this concept.
-acceptLicense|1, 0|Is 1, the SNOMED CT Browser License is automatically accepted without displaying the modal window.
+acceptLicense|true| the SNOMED CT Browser License is automatically accepted without displaying the modal window. This means that you are explicitly accepting the license.
+diagrammingMarkupEnabled|true|SNOMED CT diagramming Markup is enabled.
