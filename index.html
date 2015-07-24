@@ -42,7 +42,8 @@
             var currentPerspective = "home";
 
             var options = {
-                serverUrl: "http://107.170.143.181/api/snomed",
+                serverUrl: "/api/snomed",
+//                serverUrl: "http://107.170.143.181/api/snomed",
                 //serverUrl: "http://107.170.33.116:3000"
                 edition: "en-edition",
                 release: "v20140731",
@@ -65,11 +66,21 @@
             };
 
             var manifests;
+            function loadReleasesButtons(){
+                var buttonsHtml = "";
+                $.each(manifests, function(i, field){
+                    buttonsHtml += '<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease(\'' + field.resourceSetName + " " + field.effectiveTime + '\', \'' + field.databaseName + '\', \'v' + field.collectionName + '\', \'' + field.defaultTermLangRefset + '\', false, \'' + field._id + '\');switchLanguage(\'' + field.defaultTermLangCode + '\', \'img/flags/us.png\', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Start browsing...</span><br><span class="small">' + field.resourceSetName + " " + field.effectiveTime + '</span></a>&nbsp;&nbsp;';
+                });
+                $("#releasesButtons").html(buttonsHtml);
+            }
+
             xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
-                manifests = result;
-//                console.log(result);
+                $.each(result, function (i, field){
+                    manifests.push(field);
+                });
+                loadReleasesButtons();
             }).fail(function(){
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
@@ -78,21 +89,22 @@
 //                alert("Error Terminolgy server not accesed");
                 console.log("fail Manifest");
             });
-            $.when(xhrM).done(function(){
-                xhr = $.getJSON("http://107.170.22.98/api/snomed".replace("snomed", "") + "server/releases", function (result) {
-                    // nothing
-                }).done(function (result) {
-                    $.each(result, function (i, field){
-                        manifests.push(field);
-                    });
-                }).fail(function(){
-                    $.notify("Error Terminology server not accessible!", {
-                        autoHide: false,
-                        className: "error"
-                    });
-//                console.log("fail Manifest");
-                });
-            });
+//
+//            $.when(xhrM).done(function(){
+//                xhr = $.getJSON("http://107.170.22.98/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+//                    // nothing
+//                }).done(function (result) {
+//                    $.each(result, function (i, field){
+//                        manifests.push(field);
+//                    });
+//                }).fail(function(){
+//                    $.notify("Error Terminology server not accessible!", {
+//                        autoHide: false,
+//                        className: "error"
+//                    });
+////                console.log("fail Manifest");
+//                });
+//            });
 
             var tours = {};
             var tour;
@@ -808,8 +820,10 @@
                     <p><span class="i18n" data-i18n-id="i18n_home1">The IHTSDO SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the IHTSDO Open Tooling Framework, by the IHTSDO and its development partners</span></p>
                     <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the IHTSDO to anyone for reference purposes. There are other tools developed by IHTSDO for Members for the use in health care settings. </span></p>
                     <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20140731', 'en-edition', 'v20150731', '900000000000509007', 'http://107.170.169.46/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>
+                        <span id="releasesButtons">
+                            <i class='glyphicon glyphicon-refresh icon-spin'></i>
+                        </span>
+                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20140731', 'en-edition', 'v20150731', '900000000000509007', 'http://107.170.169.46/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>-->
                     <br>
                     <!--<h2>International Editions</h2>-->
                     <!--<p>-->
