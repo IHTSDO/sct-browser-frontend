@@ -69,7 +69,7 @@
             function loadReleasesButtons(){
                 var buttonsHtml = "";
                 $.each(manifests, function(i, field){
-                    buttonsHtml += '<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease(\'' + field.resourceSetName + " " + field.effectiveTime + '\', \'' + field.databaseName + '\', \'v' + field.collectionName + '\', \'' + field.defaultTermLangRefset + '\', false, \'' + field._id + '\');switchLanguage(\'' + field.defaultTermLangCode + '\', \'img/flags/us.png\', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Start browsing...</span><br><span class="small">' + field.resourceSetName + " " + field.effectiveTime + '</span></a>&nbsp;&nbsp;';
+                    buttonsHtml += '<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease(\'' + field.resourceSetName + " " + field.effectiveTime + '\', \'' + field.databaseName + '\', \'v' + field.collectionName + '\', \'' + field.defaultTermLangRefset + '\', false, \'' + field._id + '\');switchLanguage(\'' + field.defaultTermLangCode + '\', \'img/flags/us.png\', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/' + field.databaseName.substr(0, 2) + '.png">&nbsp;&nbsp;&nbsp;Start browsing...</span><br><span class="small">' + field.resourceSetName + " " + field.effectiveTime + '</span></a>&nbsp;&nbsp;';
                 });
                 $("#releasesButtons").html(buttonsHtml);
             }
@@ -82,6 +82,7 @@
                     manifests.push(field);
                 });
                 loadReleasesButtons();
+                countryIcons[5641000179103] = "uy";
             }).fail(function(){
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
