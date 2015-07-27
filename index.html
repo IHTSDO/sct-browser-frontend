@@ -65,7 +65,7 @@
                 highlightByEffectiveTime: "false"
             };
 
-            var manifests;
+            var manifests = [];
             function loadReleasesButtons(){
                 var buttonsHtml = "";
                 $.each(manifests, function(i, field){
@@ -77,7 +77,7 @@
             xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
-                console.log(result);
+//                console.log(result);
                 $.each(result, function (i, field){
                     manifests.push(field);
                 });
