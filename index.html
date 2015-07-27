@@ -633,11 +633,12 @@
                 if (serverUrl){
                     options.serverUrl = serverUrl;
                 }
+                $("#perspective-selector").removeClass("disabled");
                 $("#editionLabel").html(label);
             }
 
             function verifyDate(release) {
-                var now = new Date()
+                var now = new Date();
                 //console.log(release.substring(1, 5) + " " +  release.substring(5, 7) + " " +  release.substring(7, 9));
                 var releaseDate = new Date(release.substring(1, 5), release.substring(5, 7)-1, release.substring(7, 9));
                 if (releaseDate < now){
@@ -745,7 +746,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-btn" id="edition-selector">
-                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" class="btn btn-success dropdown-toggle disabled" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20140731</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
@@ -762,7 +763,7 @@
                             </ul>
                         </li>
                         <li class="navbar-btn" id="perspective-selector">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle disabled" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
