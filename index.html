@@ -69,6 +69,7 @@
             function loadReleasesButtons(){
                 var buttonsHtml = "";
                 $.each(manifests, function(i, field){
+                    field.defaultTermLangCode("es_UY");
                     buttonsHtml += '<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease(\'' + field.resourceSetName + " " + field.effectiveTime + '\', \'' + field.databaseName + '\', \'v' + field.collectionName + '\', \'' + field.defaultTermLangRefset + '\', false, \'' + field._id + '\');switchLanguage(\'' + field.defaultTermLangCode + '\', \'img/flags/us.png\', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/' + field.databaseName.substr(0, 2) + '.png">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing ">Ir al Navegador</span></span><br><span class="small">' + field.resourceSetName + " " + field.effectiveTime + '</span></a>&nbsp;&nbsp;';
                 });
                 $("#releasesButtons").html(buttonsHtml);
@@ -794,7 +795,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png"> English</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchLanguage('es_UY', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a></li>
 <!--                                <li><a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Portuguese</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('en_GB', 'img/flags/gb.png', true);"><img src="img/flags/gb.png"> English (GB)</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('se', 'img/flags/se.png', true);"><img src="img/flags/se.png"> Swedish</a></li> -->
@@ -805,7 +806,7 @@
                             </ul>
                         </li>
                         <li>
-                            <p class="pull-right"><a href="http://www.agesic.gub.uy/" target="_blank"><img class="pull-right visible-lg" src="img/logo-agesic-2.png" alt="Agesic"></a>
+                            <p class="pull-right"><a href="http://www.agesic.gub.uy/" target="_blank"><img class="pull-right visible-lg" src="img/logo-salud-uy-small.png" alt="Agesic"></a>
                         </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -995,7 +996,7 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png"> English</a></li>
-                                <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a></li>
+                                <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('es_UY', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a></li>
                                 <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png"> Dansk</a></li>
                                 <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Português</a></li>
                             </ul>
