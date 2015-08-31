@@ -69,7 +69,6 @@
             function loadReleasesButtons(){
                 var buttonsHtml = "";
                 $.each(manifests, function(i, field){
-                    field.defaultTermLangCode = "es_UY";
                     buttonsHtml += '<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease(\'' + field.resourceSetName + " " + field.effectiveTime + '\', \'' + field.databaseName + '\', \'v' + field.collectionName + '\', \'' + field.defaultTermLangRefset + '\', false, \'' + field._id + '\');switchLanguage(\'' + field.defaultTermLangCode + '\', \'img/flags/uy.png\', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/' + field.databaseName.substr(0, 2) + '.png">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing ">Ir al Navegador</span></span><br><span class="small">' + field.resourceSetName + " " + /*field.effectiveTime*/ '20150727' + '</span></a>&nbsp;&nbsp;';
                 });
                 $("#releasesButtons").html(buttonsHtml);
@@ -886,7 +885,7 @@
             </div>
                     <footer>
                         <p>
-                            <small><b>&copy; Salud.uy 2015</b></small>
+                            <small><b>&copy;</b></small>
                         </p>
                     </footer>
 
@@ -998,7 +997,7 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png"> English</a></li>
-                                <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('es_UY', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a></li>
+                                <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a></li>
                                 <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png"> Dansk</a></li>
                                 <li class="pull-left"><a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Português</a></li>
                             </ul>
