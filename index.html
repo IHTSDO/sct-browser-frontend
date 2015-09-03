@@ -123,6 +123,21 @@
 //                console.log("fail Manifest");
                 });
             });
+            $.when(xhrM).done(function(){
+                xhr = $.getJSON("https://browser-aws-1.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
+                }).done(function (result) {
+                    $.each(result, function (i, field){
+                        manifests.push(field);
+                    });
+                }).fail(function(){
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
+//                console.log("fail Manifest");
+                });
+            });
 
             var tours = {};
             var tour;
@@ -781,6 +796,7 @@
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20150531', 'se-edition', 'v20150531', '46011000052107', 'http://browser.ihtsdotools.org/api/snomed');reloadCurrentPerspective();">Swedish Edition 20150531</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('United Kingdom Edition 20150401', 'uk-edition', 'v20150401', '999001251000000103','http://browserdata-1.ihtsdotools.org/api/snomed');reloadCurrentPerspective();">UK Edition 20150401</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20150301', 'us-edition', 'v20150301', '900000000000509007', 'http://browserdata-1.ihtsdotools.org/api/snomed');reloadCurrentPerspective();">US Edition 20150301</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Uruguay Edition 20150807', 'uy-edition', 'v20150727', '5641000179103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');reloadCurrentPerspective();">UY Edition 20150808</a></li>
                             </ul>
                         </li> 
                         <li class="navbar-btn" id="perspective-selector">
@@ -855,6 +871,7 @@
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United Kingdom Edition 20150401', 'uk-edition', 'v20150401', '999001251000000103','http://browserdata-1.ihtsdotools.org/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20150331', 'nl-edition', 'v20150331', '31000146106', 'http://multibrowser.ihtsdotools.org/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20150301', 'us-edition', 'v20150301', '900000000000509007', 'http://browserdata-1.ihtsdotools.org/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Uruguay Edition 20150807', 'uy-edition', 'v20150807', '5641000179103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');switchLanguage('es', 'img/flags/uy.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/uy.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Uruguay edition</span></a>
                     </p>
                     <p>
                         &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
@@ -864,9 +881,11 @@
                     <p class="lead">
                         <img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nehta.gov.au" target="_blank">National E-Health Transition Authority (NEHTA), Australia</a>
                         <br><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
+                        <br><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
                         <br><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
                         <br><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="http://systems.hscic.gov.uk/data/uktc" target="_blank">The Health and Social Care Information Centre (HSCIC), United Kingdom</a>
                         <br><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
+                        <br><img src="img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">AEGESIC, Uruguay</a>
                     </p>
 
                     <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. Please find more information on the <a href="http://ihtsdo.github.io/sct-browser-frontend/" target="_blank">IHTSDO Browser service page</a></span></p>
@@ -1027,7 +1046,7 @@
         <!-- Using Freshdesk Widget for feedback -->
 <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
 <script type="text/javascript">
-	FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );
+	FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Application+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );
 </script>
 
 <script type="text/javascript">
