@@ -36,6 +36,7 @@ These parameters include the server, the edition and the release,
 
 Converting and loading all of the data into the mongo database (for the rest server which serves this UI)
 can be time consuming.  If you choose to only load one country's release you can use the following in index.html
+```javascript
             //It can be time consuming to load all the collections into mongo.  If you are only loading one collection
             //set it here and all GUI elements will use this collection.  Used by switchReleases function
             var mongoDetails = {
@@ -44,7 +45,7 @@ can be time consuming.  If you choose to only load one country's release you can
                 collection: 'concepts',
                 mongoRestServer: 'http://localhost:3000/snomed'
             }
-
+```
 Internationalization
 --------------------
 
