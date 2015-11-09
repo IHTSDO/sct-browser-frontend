@@ -41,6 +41,16 @@
             var selectedFlag = 'img/flags/us.png';
             var currentPerspective = "home";
 
+            //It can be time consuming to load all the collections into mongo.  If you are only loading one collection
+            //set it here and all GUI elements will use this collection.  Used by switchReleases function
+            var mongoDetails = {
+                useMe: false,//if set to false this is ignored and normal defaults are taken
+                database: 'test',
+                collection: 'concepts',
+                mongoRestServer: 'http://localhost:3000/snomed'
+            };
+
+
             var options = {
                 serverUrl: "http://browserdata-2.ihtsdotools.org/api/snomed",
 //                serverUrl: "http://browser.ihtsdotools.org/api/snomed",
@@ -63,6 +73,10 @@
                 statusSearchFilter: "activeOnly",
                 highlightByEffectiveTime: "false"
             };
+
+            if (mongoDetails.useMe) {
+                options.serverUrl = mongoDetails.mongoRestServer
+            }
 
             var manifests;
             xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
@@ -622,6 +636,11 @@
             }
 
             function switchRelease(label, edition, release, langRefset, serverUrl) {
+                if (mongoDetails.useMe) {
+                    edition = mongoDetails.database;
+                    release = mongoDetails.collection;
+                    serverUrl = mongoDetails.mongoRestServer;//serverUrl seems hardcoded in many places throughout the code
+                }
 //                verifyDate(release);
                 if (langRefset == "31000146106"){
                     options.hideNotAcceptable = false;
@@ -636,9 +655,11 @@
                 var i = 0;
                 var releaseName = release.substring(1, 9);
 //                console.log(releaseName);
-                while (i < manifests.length && manifests[i].databaseName != edition || manifests[i].effectiveTime != releaseName){
+                while ( (i < manifests.length)  && (manifests[i].databaseName != edition || manifests[i].effectiveTime != releaseName)) {
                     i++;
                 }
+                i = Math.min(i,manifests.length - 1);//fix array out of bounds causing NPE.
+
 //                console.log(manifests[i].databaseName);
 //                console.log(manifests[i].effectiveTime);
 
