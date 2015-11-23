@@ -31,10 +31,14 @@
         <link rel="stylesheet" href="css/bootstrap.min.base.12.css">
         <link rel="stylesheet" href="css/bootstrap-tour.css">
         <link rel="stylesheet" href="css/popover-extra-placements.css">
+        <link rel="stylesheet" href="css/animate.css">
 
-        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.19.0.min.css">
+        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.27.0.min.css">
 
-        <script src="snomed-interaction-components/js/snomed-interaction-components-1.26.0.min.js"></script>
+        <script src="snomed-interaction-components/js/snomed-interaction-components-1.27.0.min.js"></script>
+        <script src="snomed-interaction-components/js/templates.js"></script>
+        <script src="external-libs/jquery.history.js"></script>
+        <script src="external-libs/ZeroClipboard.js"></script>
 
         <script type="text/javascript">
             var selectedLanguage = 'en';
@@ -42,7 +46,8 @@
             var currentPerspective = "home";
 
             var options = {
-                serverUrl: "/api/snomed",
+//                serverUrl: "/api/snomed",
+                serverUrl: "http://107.170.43.89//api/snomed",
 //                serverUrl: "http://107.170.143.181/api/snomed",
                 //serverUrl: "http://107.170.33.116:3000"
                 edition: "en-edition",
@@ -62,7 +67,8 @@
                 searchLang: "english",
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
-                highlightByEffectiveTime: "false"
+                highlightByEffectiveTime: "false",
+                langRefset: ["900000000000509007","20581000087109"],
             };
 
             options.languageNameOfLangRefset = {
@@ -156,7 +162,8 @@
                 }
 
                 if (typeof QueryString.server != "undefined") {
-                    options.serverUrl = QueryString.server + "api/snomed";
+//                    options.serverUrl = QueryString.server + "api/snomed";
+                    options.serverUrl = QueryString.server;
                 }
 
                 var edition = QueryString.edition;
@@ -177,11 +184,14 @@
                 }
                 options.diagrammingMarkupEnabled = diagrammingMarkupEnabled;
 
-                var langRefset = QueryString.langRefset;
-                if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
-                    langRefset = "900000000000509007";
+//                var langRefset = QueryString.langRefset;
+                if (QueryString.langRefset) {
+                    var langRefset = QueryString.langRefset.split(",");
+                    if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
+                        langRefset = options.langRefset;
+                    }
+                    options.langRefset = langRefset;
                 }
-                options.langRefset = langRefset;
 
                 $("#editionLabel").html(edition + " " + release);
 
@@ -226,30 +236,46 @@
                     acceptLicense = false;
                 }
                 options.acceptLicense = (acceptLicense == "true");
+                $.when(xhrM).done(function(){
+                    if (QueryString.edition && QueryString.release){
+                        var i = 0;
+                        while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
+                            i++;
+                        }
+                        if (i < manifests.length){
+                            options.manifest = manifests[i];
+                            options.textIndexNormalized = options.manifest.textIndexNormalized;
+//                        console.log(options.textIndexNormalized);
+                            verifyDate(options.manifest.expirationDate);
+                        }
+                    }
+                    if (QueryString.perspective == "home") {
+                        initialize();
+                    } else if (QueryString.perspective == "browsing") {
+                        currentPerspective = "browsing";
+                        switchToBrowsing(cdValue1,cdValue2,txValue1);
+                    } else if (QueryString.perspective == "full") {
+                        currentPerspective = "full";
+                        switchToFullHeight(cdValue1,txValue1);
+                    } else if (QueryString.perspective == "compare_concepts") {
+                        currentPerspective = "compare_concepts";
+                        switchToComparingConcepts(cdValue1,cdValue2);
+                    } else if (QueryString.perspective == "compare_hierarchies") {
+                        currentPerspective = "compare_hierarchies";
+                        switchToComparingTaxonomies(cdValue1,txValue1,txValue2);
+                    } else if (QueryString.perspective == "responsive") {
+                        currentPerspective = "responsive";
+                        switchToResponsiveLayout(cdValue1,cdValue2,txValue1)
+                    } else {
+                        initialize();
+                    }
+                    if (!options.acceptLicense) {
+                        $('#license-modal').modal('show');
+                    }
+                    //                console.log(manifests);
+                });
 
-                if (QueryString.perspective == "home") {
-                    initialize();
-                } else if (QueryString.perspective == "browsing") {
-                    currentPerspective = "browsing";
-                    switchToBrowsing(cdValue1,cdValue2,txValue1);
-                } else if (QueryString.perspective == "full") {
-                    currentPerspective = "full";
-                    switchToFullHeight(cdValue1,txValue1);
-                } else if (QueryString.perspective == "compare_concepts") {
-                    currentPerspective = "compare_concepts";
-                    switchToComparingConcepts(cdValue1,cdValue2);
-                } else if (QueryString.perspective == "compare_hierarchies") {
-                    currentPerspective = "compare_hierarchies";
-                    switchToComparingTaxonomies(cdValue1,txValue1,txValue2);
-                } else if (QueryString.perspective == "responsive") {
-                    currentPerspective = "responsive";
-                    switchToResponsiveLayout(cdValue1,cdValue2,txValue1)
-                } else {
-                    initialize();
-                }
-                if (!options.acceptLicense) {
-                    $('#license-modal').modal('show');
-                }
+
 
 //                verifyDate(release)
             }
@@ -615,7 +641,7 @@
                 } else if (currentPerspective == "responsive") {
                     switchToResponsiveLayout(cdValue1,cdValue2,txValue1)
                 } else {
-                    currentPerspective = "home"
+                    currentPerspective = "home";
                     initialize();
                 }
             }
@@ -633,7 +659,7 @@
                     componentsRegistry = [];
                 }
                 var i = 0;
-                while (i < manifests.length && manifests[i].databaseName != edition){
+                while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
                     i++;
                 }
                 if (i < manifests.length){
@@ -644,7 +670,7 @@
                 }
                 options.edition = edition;
                 options.release = release;
-                options.langRefset = langRefset;
+                options.langRefset = [langRefset];
                 if (serverUrl){
                     options.serverUrl = serverUrl;
                 }
