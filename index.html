@@ -452,7 +452,7 @@
                     url: historyUrl
                 };
                 History.pushState(state, "SNOMED CT - Home");
-                window.history.pushState("", "", "");
+                window.history.pushState("", "", "?");
                 componentsRegistry = [];
                 postal.unsubscribeFor();
                 currentPerspective = "home";
