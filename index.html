@@ -466,15 +466,6 @@
                 $('.more-fields-button').popover('hide');
             }
             function switchToBrowsing(cd1Value, cd2Value, txValue1) {
-                var historyUrl = "?perspective=browsing";
-                manualStateChange = false;
-                var state = {
-                    name: "",
-                    conceptId: "",
-                    url: historyUrl
-                };
-                History.pushState(state, "SNOMED CT - Home");
-
                 currentPerspective = "browsing";
                 postal.unsubscribeFor();
                 if (typeof componentsRegistry !="undefined"){
@@ -507,14 +498,6 @@
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
             function switchToComparingConcepts(cd1Value, cd2Value) {
-                var historyUrl = "?perspective=compare_concepts";
-                manualStateChange = false;
-                var state = {
-                    name: "",
-                    conceptId: "",
-                    url: historyUrl
-                };
-                History.pushState(state, "SNOMED CT - Home");
                 currentPerspective = "compare_concepts";
                 postal.unsubscribeFor();
                 if (typeof componentsRegistry !="undefined"){
@@ -544,14 +527,6 @@
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
             function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
-                var historyUrl = "?perspective=compare_hierarchies";
-                manualStateChange = false;
-                var state = {
-                    name: "",
-                    conceptId: "",
-                    url: historyUrl
-                };
-                History.pushState(state, "SNOMED CT - Home");
                 currentPerspective = "compare_hierarchies";
                 postal.unsubscribeFor();
                 if (typeof componentsRegistry !="undefined"){
@@ -582,14 +557,6 @@
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
             function switchToFullHeight(cd1Value, txValue1) {
-                var historyUrl = "?perspective=full";
-                manualStateChange = false;
-                var state = {
-                    name: "",
-                    conceptId: "",
-                    url: historyUrl
-                };
-                History.pushState(state, "SNOMED CT - Home");
                 currentPerspective = "full";
                 postal.unsubscribeFor();
                 if (typeof componentsRegistry !="undefined"){
@@ -633,14 +600,6 @@
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
             function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
-                var historyUrl = "?perspective=responsive";
-                manualStateChange = false;
-                var state = {
-                    name: "",
-                    conceptId: "",
-                    url: historyUrl
-                };
-                History.pushState(state, "SNOMED CT - Home");
                 currentPerspective = "responsive";
                 postal.unsubscribeFor();
                 if (typeof componentsRegistry !="undefined"){
