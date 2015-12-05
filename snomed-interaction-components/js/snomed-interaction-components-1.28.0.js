@@ -7212,11 +7212,11 @@ function program7(depth0,data) {
     + escapeExpression((helper = helpers.countryIcon || (depth0 && depth0.countryIcon),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module), options) : helperMissing.call(depth0, "countryIcon", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module), options)))
     + "\"></span>\n       </div>\n    </span>\n</h4>\n\n<h5>SCTID: "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</h5>\n<h5>"
+    + "<br><br><div id=\"copy-content\">"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " | "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " |</H5>\n<div id=\"home-descriptions-";
+    + " |</div></h5>\n\n<script type=\"text/javascript\">\n// inspired by this: https://www.lucidchart.com/techblog/2014/12/02/definitive-guide-copying-pasting-javascript/\n//\ndocument.addEventListener(\"copy\", copyHandler, false);\nfunction copyHandler(e) {\n  if(window.getSelection().isCollapsed) {\n	  var copyContent = document.getElementById(\"copy-content\");\n	  e.clipboardData.setData('text/plain', copyContent.innerHTML);\n	  e.preventDefault();\n  }\n}\n</script>\n\n<div id=\"home-descriptions-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
