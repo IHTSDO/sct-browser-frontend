@@ -142,6 +142,7 @@
                     $.each(result, function (i, field) {
                         manifests.push(field);
                     });
+                    start();
                 }).fail(function () {
                     $.notify("Error Terminology server not accessible!", {
                         autoHide: false,
@@ -259,44 +260,42 @@
                     acceptLicense = false;
                 }
                 options.acceptLicense = (acceptLicense == "true");
-                $.when(xhrM).done(function(){
-                    if (QueryString.edition && QueryString.release){
-                        var i = 0;
-                        while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
-                            i++;
-                        }
-                        if (i < manifests.length){
-                            options.manifest = manifests[i];
-                            options.textIndexNormalized = options.manifest.textIndexNormalized;
+                if (QueryString.edition && QueryString.release){
+                    var i = 0;
+                    while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
+                        i++;
+                    }
+                    if (i < manifests.length){
+                        options.manifest = manifests[i];
+                        options.textIndexNormalized = options.manifest.textIndexNormalized;
 //                        console.log(options.textIndexNormalized);
-                            verifyDate(options.manifest.expirationDate);
-                        }
+                        verifyDate(options.manifest.expirationDate);
                     }
-                    if (QueryString.perspective == "home") {
-                        initialize();
-                    } else if (QueryString.perspective == "browsing") {
-                        currentPerspective = "browsing";
-                        switchToBrowsing(cdValue1,cdValue2,txValue1);
-                    } else if (QueryString.perspective == "full") {
-                        currentPerspective = "full";
-                        switchToFullHeight(cdValue1,txValue1);
-                    } else if (QueryString.perspective == "compare_concepts") {
-                        currentPerspective = "compare_concepts";
-                        switchToComparingConcepts(cdValue1,cdValue2);
-                    } else if (QueryString.perspective == "compare_hierarchies") {
-                        currentPerspective = "compare_hierarchies";
-                        switchToComparingTaxonomies(cdValue1,txValue1,txValue2);
-                    } else if (QueryString.perspective == "responsive") {
-                        currentPerspective = "responsive";
-                        switchToResponsiveLayout(cdValue1,cdValue2,txValue1)
-                    } else {
-                        initialize();
-                    }
-                    if (!options.acceptLicense) {
-                        $('#license-modal').modal('show');
-                    }
-                    //                console.log(manifests);
-                });
+                }
+                if (QueryString.perspective == "home") {
+                    initialize();
+                } else if (QueryString.perspective == "browsing") {
+                    currentPerspective = "browsing";
+                    switchToBrowsing(cdValue1,cdValue2,txValue1);
+                } else if (QueryString.perspective == "full") {
+                    currentPerspective = "full";
+                    switchToFullHeight(cdValue1,txValue1);
+                } else if (QueryString.perspective == "compare_concepts") {
+                    currentPerspective = "compare_concepts";
+                    switchToComparingConcepts(cdValue1,cdValue2);
+                } else if (QueryString.perspective == "compare_hierarchies") {
+                    currentPerspective = "compare_hierarchies";
+                    switchToComparingTaxonomies(cdValue1,txValue1,txValue2);
+                } else if (QueryString.perspective == "responsive") {
+                    currentPerspective = "responsive";
+                    switchToResponsiveLayout(cdValue1,cdValue2,txValue1)
+                } else {
+                    initialize();
+                }
+                if (!options.acceptLicense) {
+                    $('#license-modal').modal('show');
+                }
+                //                console.log(manifests);
 
 
 
@@ -798,7 +797,7 @@
 			}
         </style>
     </head>
-    <body onLoad="start();" style="height: 100%; display: block;">
+    <body onLoad="//start();" style="height: 100%; display: block;">
         <nav class="navbar navbar-default  navbar-static-top" role="navigation">
             <div>
                 <!-- Brand and toggle get grouped for better mobile display -->
