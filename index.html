@@ -4,8 +4,8 @@
         <title>SNOMED CT Browser - Canada</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
-		<meta name="description" content="SNOMED CT Browser - Canada">
-		<meta name="author" content="termMed">
+		<meta name="description" content="IHTSDO SNOMED CT Browser">
+		<meta name="author" content="IHTSDO">
 		<link rel="icon" type="image/png"  href="favicon.png">
 
         <script src="external-libs/jquery-2.1.0.min.js" type="text/javascript"></script>
@@ -33,32 +33,52 @@
         <link rel="stylesheet" href="css/popover-extra-placements.css">
         <link rel="stylesheet" href="css/animate.css">
 
-        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.27.0.min.css">
+        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.29.0.min.css">
 
-        <script src="snomed-interaction-components/js/snomed-interaction-components-1.27.0.min.js"></script>
+        <script src="snomed-interaction-components/js/snomed-interaction-components-1.29.0.min.js"></script>
         <!--<script src="snomed-interaction-components/js/templates.js"></script>-->
         <script src="external-libs/jquery.history.js"></script>
         <script src="external-libs/ZeroClipboard.js"></script>
 
+        <script>
+            $(function () {
+                $("#canada").click(function () {
+                    $("#canadaChoice").dialog();
+                });
+                $("#canada1").click(function () {
+                    $("#canadaChoice").dialog("close");
+                });
+                $("#canada2").click(function () {
+                    $("#canadaChoice").dialog("close");
+                });
+            });
+        </script>
+
+
         <script type="text/javascript">
-            var selectedLanguage = 'en';
-            var selectedFlag = 'img/flags/ca.png';
+            var selectedLanguage = 'en_US';
+            var selectedFlag = 'img/flags/us.png';
             var currentPerspective = "home";
 
+            //It can be time consuming to load all the collections into mongo.  If you are only loading one collection
+            //set it here and all GUI elements will use this collection.  Used by switchReleases function
+            var mongoDetails = {
+                useMe: false,//if set to false this is ignored and normal defaults are taken, if true all the parameters are used!
+                database: 'test',
+                collection: 'concepts',
+                mongoRestServer: 'http://localhost:3000/snomed'
+            };
             var options = {
-                serverUrl: "/api/snomed",
-//                serverUrl: "http://107.170.43.89//api/snomed",
-//                serverUrl: "http://107.170.143.181/api/snomed",
-                //serverUrl: "http://107.170.33.116:3000"
-                edition: "en-edition",//
-                release: "v20140731",
+                serverUrl: "http://browser.ihtsdotools.org/api/snomed",
+                edition: "en-edition",
+                release: "v20150731",
                 showIds: false,
-                hideNotAcceptable: false,
+                hideNotAcceptable: true,
                 displayInactiveDescriptions: false,
                 displaySynonyms: true,
                 selectedView: "inferred",
                 displayChildren: false,
-//                langRefset: "900000000000509007",
+                langRefset: ["900000000000509007"],
                 closeButton: false,
                 collapseButton: false,
                 linkerButton: true,
@@ -67,8 +87,7 @@
                 searchLang: "english",
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
-                highlightByEffectiveTime: "false",
-                langRefset: ["900000000000509007","20581000087109"]
+                highlightByEffectiveTime: "false"
             };
 
             options.languageNameOfLangRefset = {
@@ -84,27 +103,16 @@
                 "11000146104":"NL"
             };
 
-            var manifests = [];
-            function loadReleasesButtons(){
-                var buttonsHtml = "";
-                $.each(manifests, function(i, field){
-                    buttonsHtml += '<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease(\'' + field.resourceSetName + " " + field.effectiveTime + '\', \'' + field.databaseName + '\', \'v' + field.collectionName + '\', \'' + field.defaultTermLangRefset + '\', false, \'' + field._id + '\');switchLanguage(\'' + field.defaultTermLangCode + '\', \'img/flags/uy.png\', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/' + field.databaseName.substr(0, 2) + '.png">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing ">Ir al Navegador</span></span><br><span class="small">' + field.resourceSetName + " " + /*field.effectiveTime*/ '20150727' + '</span></a>&nbsp;&nbsp;';
-                });
-                $("#releasesButtons").html(buttonsHtml);
+            if (mongoDetails.useMe) {
+                options.serverUrl = mongoDetails.mongoRestServer
             }
-
+            var manifests;
             xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
-//                console.log(result);
-                $.each(result, function (i, field){
-                    manifests.push(field);
-                });
-                loadReleasesButtons();
-                countryIcons["5631000179106"] = "uy";
-                countryIcons["20621000087109"] = "ca";
-                countryIcons["20611000087101"] = "ca";
-            }).fail(function(){
+                manifests = result;
+                console.log(result);
+            }).fail(function () {
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
                     className: "error"
@@ -112,22 +120,37 @@
 //                alert("Error Terminolgy server not accesed");
                 console.log("fail Manifest");
             });
-//
-//            $.when(xhrM).done(function(){
-//                xhr = $.getJSON("http://107.170.22.98/api/snomed".replace("snomed", "") + "server/releases", function (result) {
-//                    // nothing
-//                }).done(function (result) {
-//                    $.each(result, function (i, field){
-//                        manifests.push(field);
-//                    });
-//                }).fail(function(){
-//                    $.notify("Error Terminology server not accessible!", {
-//                        autoHide: false,
-//                        className: "error"
-//                    });
-////                console.log("fail Manifest");
-//                });
-//            });
+            $.when(xhrM).done(function () {
+                xhr = $.getJSON("http://multibrowser.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
+                }).done(function (result) {
+                    $.each(result, function (i, field) {
+                        manifests.push(field);
+                    });
+                }).fail(function () {
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
+//                console.log("fail Manifest");
+                });
+            });
+            $.when(xhrM).done(function () {
+                xhr = $.getJSON("https://browser-aws-1.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
+                }).done(function (result) {
+                    $.each(result, function (i, field) {
+                        manifests.push(field);
+                    });
+                }).fail(function () {
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
+//                console.log("fail Manifest");
+                });
+            });
+
 
             var tours = {};
             var tour;
@@ -790,64 +813,77 @@
         <!--        <img class="pull-left " src="img/box-logo.png" style="height:50px" alt="IHTSDO delivering SNOMED, the global clinical terminology"> -->
                 <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
                     <strong>
-                     	&nbsp;&nbsp;SNOMED CT - Canada</strong></a>
+                        &nbsp;&nbsp;IHTSDO SNOMED CT Browser</strong></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
                     <ul class="nav navbar-nav navbar-right">
-                        <!--<li class="navbar-btn" id="edition-selector">-->
-                            <!--<button type="button" class="btn btn-success dropdown-toggle disabled" data-toggle="dropdown">-->
-                                <!--<span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20140731</span> <span class="caret"></span>-->
-                            <!--</button>-->
-                            <!--<ul class="dropdown-menu" role="menu">-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20140731', 'en-edition', 'v20140731', '900000000000509007');reloadCurrentPerspective();">International Edition 20140731</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20140430', 'es-edition', 'v20140430', '450828004');reloadCurrentPerspective();">Spanish Edition 20140430</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20140531', 'au-edition', 'v20140531', '46011000052107', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">Australian Edition 20140531</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20141001', 'dk-edition', 'v20141001', '554461000005103');reloadCurrentPerspective();">Danish Edition 20141001</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Netherlands Edition 20140731', 'nl-edition', 'v20140731', '31000146106', 'http://107.170.22.98/api/snomed');reloadCurrentPerspective();">NL Edition 20140731</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20140531', 'se-edition', 'v20140531', '46011000052107', 'http://107.170.22.98/api/snomed');reloadCurrentPerspective();">Swedish Edition 20140531</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('United Kingdom Edition 20141001', 'uk-edition', 'v20141001', '999001251000000103', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">UK Edition 20141001</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20140301', 'us-edition', 'v20140301', '900000000000509007', 'http://107.170.178.177/api/snomed');reloadCurrentPerspective();">US Edition 20140301</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Canadian National Extension 20150131', 'ca-edition', 'v20150131', '900000000000509007', 'http://107.170.98.11/api/snomed');reloadCurrentPerspective();">CA Edition 20150131</a></li>-->
-                                <!--<li><a href="javascript:void(0);" onclick="switchRelease('Canadian French Translation 20150131', 'ca-fr-edition', 'v20150131', '20581000087109', 'http://107.170.98.11/api/snomed');reloadCurrentPerspective();">CA-FR Edition 20150131</a></li>-->
-                            <!--</ul>-->
-                        <!--</li>-->
+                        <li class="navbar-btn" id="edition-selector">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20150731</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20150731', 'en-edition', 'v20150731', '900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">International Edition 20150731</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20150430', 'es-edition', 'v20150430', '450828004', 'http://multibrowser.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Spanish Edition 20150430</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20150531', 'au-edition', 'v20150531', '46011000052107', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Australian Edition 20150531</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('en-Canadian Edition 20150526', 'en-ca-edition', 'v20150526', '19491000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Canadian EN Edition 20150526</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('fr-Canadian Edition 20150526', 'fr-ca-edition', 'v20150526', '20581000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Canadian FR Edition 20150526</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20150731', 'dk-edition', 'v20150731', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Danish Edition 20150731</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Netherlands Edition 20150916', 'nl-edition', 'v20150916', '31000146106', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">NL Edition 20150916</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20150531', 'se-edition', 'v20150531', '46011000052107', 'http://browser.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Swedish Edition 20150531</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('United Kingdom Edition 20151001', 'uk-edition', 'v20151001', '900000000000508004', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">UK Edition 20151001</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20150901', 'us-edition', 'v20150901', '900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">US Edition 20150901</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Uruguay Edition 20150807', 'uy-edition', 'v20150807', '5641000179103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">UY Edition 20150808</a></li>
+                            </ul>
+                        </li>
                         <li class="navbar-btn" id="perspective-selector">
-                            <button type="button" class="btn btn-primary dropdown-toggle disabled" data-toggle="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:void(0);" onclick="switchToFullHeight(404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_full_perspective">Full</span></a></li>
-<!--                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li> -->
-                                <li><a href="javascript:void(0);" onclick="switchToComparingConcepts(404684003,404684003);"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
+                                <!--                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li> -->
+                                <li><a href="javascript:void(0);" onclick="switchToComparingConcepts(404684003, 404684003);"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
                                 <li><a href="javascript:void(0);" onclick="switchToComparingTaxonomies(404684003, 138875005, 138875005);"><span class="i18n" data-i18n-id="i18n_comp_hier_perspective">Comparing hierarchy</span></a></li>
-<!--                                <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003,138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li> -->
+                                <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>
                             </ul>
                         </li>
-						<!--<li class="navbar-btn feedback-button">-->
-							<!--<button type="button" class="btn btn-info" onclick="FreshWidget.show(); return false;">-->
-								<!--<span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>-->
-							<!--</button>-->
-						<!--</li>-->
-                        <!--<li class="dropdown">-->
-                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>-->
-                            <!--<ul class="dropdown-menu">-->
-                         <!--&lt;!&ndash;       <li><a href="mailto:otf@ihtsdo.org?subject=feedback" target="_blank"><span class="i18n" data-i18n-id="i18n_provide_feedback">Provide feedback on this browser</span></a></li> &ndash;&gt;-->
-                                <!--<li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>-->
-                              <!--&lt;!&ndash;  <li><a href="#">About SNOMED CT</a></li> &ndash;&gt;-->
-                                <!--<li class="divider"></li>-->
-                                <!--<li><a href="http://www.ihtsdotools.org" target="_blank">IHTSDO Tooling</a></li>-->
-                                <!--<li><a href="http://www.ihtsdo.org" target="_blank">IHTSDO.org</a></li>-->
-                            <!--</ul>-->
-                        <!--</li>-->
+                        <li class="navbar-btn feedback-button">
+                            <button type="button" class="btn btn-info" onclick="FreshWidget.show();
+                                    return false;">
+                                <span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
+                            </button>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <!--       <li><a href="mailto:otf@ihtsdo.org?subject=feedback" target="_blank"><span class="i18n" data-i18n-id="i18n_provide_feedback">Provide feedback on this browser</span></a></li> -->
+                                <li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>
+                                <!--  <li><a href="#">About SNOMED CT</a></li> -->
+                                <li class="divider"></li>
+                                <li><a href="http://www.ihtsdotools.org" target="_blank">IHTSDO Tooling</a></li>
+                                <li><a href="http://www.ihtsdo.org" target="_blank">IHTSDO.org</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png"> English</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a></li>
-<!--                                <li><a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Portuguese</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchLanguage('en_GB', 'img/flags/gb.png', true);"><img src="img/flags/gb.png"> English (GB)</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchLanguage('se', 'img/flags/se.png', true);"><img src="img/flags/se.png"> Swedish</a></li> -->
+                                <!--                                <li><a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Portuguese</a></li>
+                                                                <li><a href="javascript:void(0);" onclick="switchLanguage('en_GB', 'img/flags/gb.png', true);"><img src="img/flags/gb.png"> English (GB)</a></li>
+                                                                <li><a href="javascript:void(0);" onclick="switchLanguage('se', 'img/flags/se.png', true);"><img src="img/flags/se.png"> Swedish</a></li> -->
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png"> Dansk</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Português</a></li>
                                 <li class="divider"></li>
@@ -855,7 +891,7 @@
                             </ul>
                         </li>
                         <li>
-                            <!--<p class="pull-right"><a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank"><img class="pull-right visible-lg" src="img/logo-salud-uy-small.png" alt="Agesic"></a>-->
+                            <p class="pull-right"><a href="http://www.ihtsdo.org" target="_blank"><img class="pull-right visible-lg" src="img/newlogo.png" alt="IHTSDO delivering SNOMED, the global clinical terminology"></a>
                         </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -871,44 +907,62 @@
                     <p><span class="i18n" data-i18n-id="i18n_home1">The IHTSDO SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the IHTSDO Open Tooling Framework, by the IHTSDO and its development partners</span></p>
                     <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the IHTSDO to anyone for reference purposes. There are other tools developed by IHTSDO for Members for the use in health care settings. </span></p>
                     <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-                        <span id="releasesButtons">
-                            <i class='glyphicon glyphicon-refresh icon-spin'></i>
-                        </span>
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20140731', 'en-edition', 'v20150731', '900000000000509007', 'http://107.170.169.46/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>-->
-                    <br>
-                    <!--<h2>International Editions</h2>-->
-                    <!--<p>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20140731', 'en-edition', 'v20140731', '900000000000509007');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">International edition</span></a>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20140430', 'es-edition', 'v20140430', '450828004');switchLanguage('es', 'img/flags/es.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español</span></a>-->
-                    <!--</p>-->
-                    <!--<h2>Local Extensions</h2>-->
-                    <!--<p>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20140531', 'au-edition', 'v20140501', '32570271000036106', 'http://107.170.178.177/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition</span></a>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20141001', 'dk-edition', 'v20141001', '554461000005103');switchLanguage('da', 'img/flags/dk.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition</span></a>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20140531', 'se-edition', 'v20140531', '46011000052107', 'http://107.170.22.98/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Swedish edition</span></a>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United Kingdom Edition 20141001', 'uk-edition', 'v20141001', '999001251000000103', 'http://107.170.178.177/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition</span></a>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20140731', 'nl-edition', 'v20140731', '31000146106', 'http://107.170.22.98/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition</span></a>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20140531', 'us-edition', 'v20140301', '900000000000509007', 'http://107.170.178.177/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition</span></a>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Canadian French Translation 20150131', 'ca-fr-edition', 'v20150131', '20581000087109', 'http://107.170.98.11/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/fr.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian French Translation</span></a>-->
-                        <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Canadian National Extension 20150131', 'ca-edition', 'v20150131', '900000000000509007', 'http://107.170.98.11/api/snomed');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian National Extension</span></a>-->
-                    <!--</p>-->
-                    <!--<p>-->
-                        <!--&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;-->
-                        <!--<a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>-->
+                    <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
+                    <p>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20150731', 'en-edition', 'v20150731', '900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2015</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20150430', 'es-edition', 'v20150430', '450828004', 'http://multibrowser.ihtsdotools.org/api/snomed');
+                                switchLanguage('es', 'img/flags/es.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español</span></a>
+                    </p>
+                    <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
+                    <p>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20150531', 'au-edition', 'v20150531', '32570271000036106', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                switchLanguage('en_US', 'img/flags/au.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#canadaModal"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition</span></a>
 
-                    <!--<p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the IHTSDO Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>-->
-                    <!--<p class="lead">-->
-                        <!--<img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nehta.gov.au" target="_blank">National E-Health Transition Authority (NEHTA), Australia</a>-->
-                        <!--<br><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>-->
-                        <!--<br><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>-->
-                        <!--<br><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="http://systems.hscic.gov.uk/data/uktc" target="_blank">The Health and Social Care Information Centre (HSCIC), United Kingdom</a>-->
-                        <!--<br><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>-->
-                    <!--</p>-->
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20150731', 'dk-edition', 'v20150731', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                switchLanguage('da', 'img/flags/dk.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20150916', 'nl-edition', 'v20150916', '31000146106', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                switchLanguage('en_US', 'img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition</span></a>
+                    </p>
+                    <p>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20150531', 'se-edition', 'v20150531', '46011000052107', 'http://browser.ihtsdotools.org/api/snomed');
+                                switchLanguage('en_US', 'img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Swedish edition</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United Kingdom Edition 20151001', 'uk-edition', 'v20151001', '900000000000508004', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                switchLanguage('en_US', 'img/flags/gb.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20150901', 'us-edition', 'v20150901', '900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                switchLanguage('en_US', 'img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Uruguay Edition 20150807', 'uy-edition', 'v20150807', '5641000179103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                switchLanguage('es', 'img/flags/uy.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/uy.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Uruguay edition</span></a>
+                    </p>
+                    <p>
+                        &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
+                        <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
 
-                    <!--<p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. Please find more information on the <a href="http://ihtsdo.github.io/sct-browser-frontend/" target="_blank">IHTSDO Browser service page</a></span></p>-->
+                    <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the IHTSDO Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
+                    <p class="lead">
+                        <img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nehta.gov.au" target="_blank">National E-Health Transition Authority (NEHTA), Australia</a>
+                        <br><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://www.infoway-inforoute.ca/en/" target="_blank">Canada Health Infoway, Canada</a>
+                        <br><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
+                        <br><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
+                        <br><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
+                        <br><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="http://systems.hscic.gov.uk/data/uktc" target="_blank">The Health and Social Care Information Centre (HSCIC), United Kingdom</a>
+                        <br><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
+                        <br><img src="img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
+                    </p>
+
+                    <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/IHTSDO+SNOMED+CT+Browser" target="_blank">IHTSDO Browser service page</a></span></p>
                 </div>
-                <!--<p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span></p>-->
-                <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span>  are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003,138875005);">responsive perspective</a> for best results in tablets and phones.</span></p>
+                <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span></p>
+                <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span>  are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a> for best results in tablets and phones.</span></p>
             </div>
             <!-- Browsing Perspective -->
             <div id="browsing-perspective" class="bperspective">
@@ -1054,57 +1108,51 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
-
         <!-- JIRA feedback script
-        <script type="text/javascript" src="https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e/en_US-dgb2l9-1988229788/6256/5/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=9215d950"></script>
-        -->
+                <script type="text/javascript" src="https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e/en_US-dgb2l9-1988229788/6256/5/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=9215d950"></script>
+                -->
 
         <!-- Using Freshdesk Widget for feedback -->
-<!--<script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>-->
-<!--<script type="text/javascript">-->
-	<!--FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );-->
-<!--</script>-->
+        <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+        <script type="text/javascript">
+            FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Application+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"});
+        </script>
 
-<script type="text/javascript">
-var $buoop = {};
-$buoop.ol = window.onload;
-window.onload=function(){
- try {if ($buoop.ol) $buoop.ol();}catch (e) {}
- var e = document.createElement("script");
- e.setAttribute("type", "text/javascript");
- e.setAttribute("src", "//browser-update.org/update.js");
- document.body.appendChild(e);
-}
-</script>
-<script>
-    manualStateChange = true;
-    History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
-        if(manualStateChange == true){
-            // BACK BUTTON WAS PRESSED
-            var State = History.getState(); // Note: We are using History.getState() instead of event.state
-            if (State.data && State.data.url) {
-                //console.log("Back button! ", State.data.name);
-                if (State.data.url.indexOf("acceptLicense") == -1) {
-                    State.data.url = State.data.url + "&acceptLicense=true";
+        <script type="text/javascript">
+            var $buoop = {};
+            $buoop.ol = window.onload;
+            window.onload = function () {
+                try {
+                    if ($buoop.ol)
+                        $buoop.ol();
+                } catch (e) {
                 }
-                window.location.href = State.data.url;
+                var e = document.createElement("script");
+                e.setAttribute("type", "text/javascript");
+                e.setAttribute("src", "//browser-update.org/update.js");
+                document.body.appendChild(e);
             }
-        }
-        manualStateChange = true;
-    });
-</script>
-<!-- Google Analytics script -->
+        </script>
+        <!--Start Cookie Script-->
+        <script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>
+        <!--End Cookie Script-->
+
+
+        <!-- Google Analytics script -->
         <script>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  				ga('create', 'UA-41892858-7', 'ihtsdotools.org');
-  				ga('send', 'pageview');
-
-		</script>
-
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-41892858-7', 'ihtsdotools.org');
+            ga('send', 'pageview');
+        </script>
     </body>
 </html>
