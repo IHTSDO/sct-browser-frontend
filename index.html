@@ -56,6 +56,34 @@
 
 
         <script type="text/javascript">
+            function getCookie(c_name) {
+                if (document.cookie.length > 0) {
+                    var c_start = document.cookie.indexOf(c_name + "=");
+                    if (c_start != -1) {
+                        c_start = c_start + c_name.length + 1;
+                        c_end = document.cookie.indexOf(";", c_start);
+                        if (c_end == -1) {
+                            c_end = document.cookie.length;
+                        }
+                        return unescape(document.cookie.substring(c_start, c_end));
+                    }
+                }
+                return "";
+            }
+
+            function createCookie(name, value, days) {
+                var expires;
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toGMTString();
+                }
+                else {
+                    expires = "";
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+
             var selectedLanguage = 'en_US';
             var selectedFlag = 'img/flags/us.png';
             var currentPerspective = "home";
@@ -176,6 +204,22 @@
 
             function start() {
                 // Read parameters
+                $(function() {
+                    $.extend($.fn.disableTextSelect = function() {
+                        return this.each(function() {
+                            $(this).mousedown(function() {
+                                return false;
+                            });
+                        });
+                    });
+                    $('.noSelect').disableTextSelect(); //No text selection on elements with a class of 'noSelect'
+                });
+
+                $("#accept-license-button-modal").unbind();
+                $("#accept-license-button-modal").click(function(){
+                    createCookie("licenseCookie", "true", 1);
+                });
+
                 if (typeof QueryString.dev != "undefined") {
                     console.log("Using Dev Server...");
                     //options.serverUrl = "http://107.170.33.116/api";
@@ -259,7 +303,7 @@
                 if (typeof acceptLicense == "undefined" || acceptLicense == null || acceptLicense == "") {
                     acceptLicense = false;
                 }
-                options.acceptLicense = (acceptLicense == "true");
+                options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
                 if (QueryString.edition && QueryString.release){
                     var i = 0;
                     while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
@@ -1101,7 +1145,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="http://www.ihtsdo.org" class="btn btn-danger"><span class="i18n" data-i18n-id="i18n_reject">Reject</span></a>
-                        <button type="button" class="btn btn-success" data-dismiss="modal"><span class="i18n" data-i18n-id="i18n_accept">Accept</span></button>
+                        <button id="accept-license-button-modal" type="button" class="btn btn-success" data-dismiss="modal"><span class="i18n" data-i18n-id="i18n_accept">Accept</span></button>
                         <div class="btn-group dropup pull-left">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span id="nav-selected-flag-modal"></span> <span class="caret"></span>
@@ -1195,9 +1239,11 @@
             // History capture of the manual back and forward buttons
             manualStateChange = true;
             History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+//                console.log(History.getState());
                 if(manualStateChange == true){
                     // BACK BUTTON WAS PRESSED
                     var State = History.getState(); // Note: We are using History.getState() instead of event.state
+//                    console.log(State);
                     if (State.data && State.data.url) {
                         //console.log("Back button! ", State.data.name);
                         if (State.data.url.indexOf("acceptLicense") == -1) {
