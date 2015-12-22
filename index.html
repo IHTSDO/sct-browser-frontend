@@ -773,7 +773,7 @@
                 }
                 options.edition = edition;
                 options.release = release;
-                options.langRefset = [langRefset];
+                options.langRefset = langRefset.split(",");
                 if (serverUrl){
                     options.serverUrl = serverUrl;
                 } else {
@@ -904,7 +904,7 @@
                                         reloadCurrentPerspective();">Australian Edition 20150531</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('en-Canadian Edition 20150526', 'en-ca-edition', 'v20150526', '19491000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Canadian EN Edition 20150526</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('fr-Canadian Edition 20150526', 'fr-ca-edition', 'v20150526', '20581000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                <li><a href="javascript:void(0);" onclick="switchRelease('fr-Canadian Edition 20150526', 'fr-ca-edition', 'v20150526', '20581000087109,900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Canadian FR Edition 20150526</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20150731', 'dk-edition', 'v20150731', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Danish Edition 20150731</a></li>
@@ -1121,12 +1121,14 @@
                             <li><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
                             <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
                             <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
+                            <li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_query">Query</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
                             <div class="tab-pane" id="fh-search_canvas" style="padding: 0px;margin: 0;"></div>
                             <div class="tab-pane" id="fh-favorites_canvas" style="padding: 0px;margin: 0;"></div>
                             <div class="tab-pane" id="fh-refset_canvas" style="padding: 0px;margin: 0;"></div>
+                            <div class="tab-pane" id="fh-query_canvas" style="padding: 0px;margin: 0;"></div>
                         </div>
                     </div>
                     <div class="" id="conceptDetails-fh">
@@ -1206,7 +1208,7 @@
                         switchToFullHeight(404684003, 138875005);"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition (English)</span></a>
                         </p>
                         <p style="text-align:center">
-                            <a class="btn btn-primary btn-lg" role="button"  data-dismiss="modal" onclick="switchRelease('fr-Canadian Edition 20150526', 'fr-ca-edition', 'v20150526', '20581000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                            <a class="btn btn-primary btn-lg" role="button"  data-dismiss="modal" onclick="switchRelease('fr-Canadian Edition 20150526', 'fr-ca-edition', 'v20150526', '20581000087109,900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                         switchLanguage('en_US', 'img/flags/ca.png', true);
                         switchToFullHeight(404684003, 138875005);"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition (Français)</span></a>
                         </p>

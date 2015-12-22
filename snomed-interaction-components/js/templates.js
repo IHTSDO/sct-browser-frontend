@@ -1505,7 +1505,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<p class=\"\" style=\"margin-top: 20px;\">Pre-coordinated Expression&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export\" id=\"";
+  buffer += "<p class=\"\" style=\"margin-top: 20px;\">Pre-coordinated Expression (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1513,7 +1513,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.preCoordinatedExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.preCoordinatedExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n<p class=\"\" style=\"margin-top: 20px;\">Expression from Stated Concept Definition&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export\" id=\"";
+  buffer += "</div>\n<p class=\"\" style=\"margin-top: 20px;\">Expression from Stated Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1521,7 +1521,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.statedExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.statedExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n<p class=\"\" style=\"margin-top: 20px;\">Expression from Inferred Concept Definition&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export\" id=\"";
+  buffer += "</div>\n<p class=\"\" style=\"margin-top: 20px;\">Expression from Inferred Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1529,7 +1529,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.inferredExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.inferredExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>";
+  buffer += "</div>\n<br><br>\n<div class=\"well small\">\n    <p>(*) The expressions are generated according to the ABNF syntax found in the \"SNOMED CT Compositional Grammar Specification and Guide\" (<a href=\"http://snomed.org/compgrammar\" target=\"_blank\">http://snomed.org/compgrammar</a>)</p>\n    <p>SNOMED CT Compositional Grammar is a lightweight syntax for the representation of SNOMED CT expressions. SNOMED CT expressions are used in Electronic Health Records (EHRs) to represent clinical meanings in a way that enables automatic interpretation. They are also carried in messages, used to define precoordinated concepts and used to represent links between SNOMED CT and other terminologies.</p>\n    <p>These expressions are generated as an example from the published concept definition, a Pre-coordinated Expression is direct reference to the concept, and Post-coordinated expressions are generated from the stated or inferred relationships. In a Sufficiently Defined concept, all three will be equivalent.</p>\n</div>";
   return buffer;
   });
 
@@ -3393,7 +3393,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-addCriteriaButton' style=\"margin: 10px;\">";
-  stack1 = (helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_add_condition", "Add condition", options) : helperMissing.call(depth0, "i18n", "i18n_add_condition", "Add condition", options));
+  stack1 = (helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_add_condition", "Add instruction", options) : helperMissing.call(depth0, "i18n", "i18n_add_condition", "Add instruction", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</button>\n                    <!--<button type=\"button\" class=\"btn btn-primary\"  id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
