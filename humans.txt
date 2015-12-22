@@ -30,8 +30,8 @@
 		termmed.com, ihtsdo.org
 
 /* SITE */
-		Domain name: browser.ihtsdo.org
-		Last update: 2014-04-13
+		Domain name: browser.ihtsdotools.org
+		Last update: 2015-10-13
 		Language: English
 		Standards: HTML5 CSS3
 		IDE: TextWrangler, Aptana, Webstorm
