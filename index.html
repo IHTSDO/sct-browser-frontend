@@ -4,9 +4,9 @@
         <title>IHTSDO SNOMED CT Browser</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
-        <meta name="description" content="IHTSDO SNOMED CT Browser">
-        <meta name="author" content="IHTSDO">
-        <link rel="icon" type="image/png"  href="favicon.png">
+		<meta name="description" content="IHTSDO SNOMED CT Browser">
+		<meta name="author" content="IHTSDO">
+		<link rel="icon" type="image/png"  href="favicon.png">
 
         <script src="external-libs/jquery-2.1.0.min.js" type="text/javascript"></script>
         <script src="external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
@@ -31,13 +31,17 @@
         <link rel="stylesheet" href="css/bootstrap.min.base.12.css">
         <link rel="stylesheet" href="css/bootstrap-tour.css">
         <link rel="stylesheet" href="css/popover-extra-placements.css">
+        <link rel="stylesheet" href="css/animate.css">
 
-        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.28.0.min.css">
+        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.29.0.min.css">
 
-        <script src="snomed-interaction-components/js/snomed-interaction-components-1.28.0.min.js"></script>
+        <script src="snomed-interaction-components/js/snomed-interaction-components-1.30.0.min.js"></script>
+        <!--<script src="snomed-interaction-components/js/templates.js"></script>-->
+        <script src="external-libs/jquery.history.js"></script>
+        <script src="external-libs/ZeroClipboard.js"></script>
+
         <script>
             $(function () {
-
                 $("#canada").click(function () {
                     $("#canadaChoice").dialog();
                 });
@@ -50,7 +54,37 @@
             });
         </script>
 
+
         <script type="text/javascript">
+            function getCookie(c_name) {
+                if (document.cookie.length > 0) {
+                    var c_start = document.cookie.indexOf(c_name + "=");
+                    if (c_start != -1) {
+                        c_start = c_start + c_name.length + 1;
+                        c_end = document.cookie.indexOf(";", c_start);
+                        if (c_end == -1) {
+                            c_end = document.cookie.length;
+                        }
+                        return unescape(document.cookie.substring(c_start, c_end));
+                    }
+                }
+                return "";
+            }
+
+            function createCookie(name, value, days) {
+                var expires;
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toGMTString();
+                }
+                else {
+                    expires = "";
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+
+            var enableQueriesInFullPerspective = false;
             var selectedLanguage = 'en_US';
             var selectedFlag = 'img/flags/us.png';
             var currentPerspective = "home";
@@ -64,7 +98,6 @@
                 mongoRestServer: 'http://localhost:3000/snomed'
             };
 
-
             var options = {
                 serverUrl: "http://browser.ihtsdotools.org/api/snomed",
                 edition: "en-edition",
@@ -75,7 +108,7 @@
                 displaySynonyms: true,
                 selectedView: "inferred",
                 displayChildren: false,
-                langRefset: "900000000000509007",
+                langRefset: ["900000000000509007"],
                 closeButton: false,
                 collapseButton: false,
                 linkerButton: true,
@@ -87,16 +120,28 @@
                 highlightByEffectiveTime: "false"
             };
 
+            options.languageNameOfLangRefset = {
+                "20581000087109": "fr-CA",
+                "19491000087109": "en-CA",
+                "900000000000508004": "GB",
+                "900000000000509007": "US",
+                "450828004":"ES",
+                "554461000005103":"DA",
+                "46011000052107":"SV",
+                "32570271000036106":"AU",
+                "999001251000000103":"UK",
+                "11000146104":"NL"
+            };
+
             if (mongoDetails.useMe) {
                 options.serverUrl = mongoDetails.mongoRestServer
             }
-
             var manifests;
             xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
                 // nothing
             }).done(function (result) {
                 manifests = result;
-                console.log(result);
+                //console.log(result);
             }).fail(function () {
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
@@ -127,6 +172,7 @@
                     $.each(result, function (i, field) {
                         manifests.push(field);
                     });
+                    start();
                 }).fail(function () {
                     $.notify("Error Terminology server not accessible!", {
                         autoHide: false,
@@ -135,6 +181,7 @@
 //                console.log("fail Manifest");
                 });
             });
+
 
             var tours = {};
             var tour;
@@ -159,6 +206,22 @@
 
             function start() {
                 // Read parameters
+                $(function() {
+                    $.extend($.fn.disableTextSelect = function() {
+                        return this.each(function() {
+                            $(this).mousedown(function() {
+                                return false;
+                            });
+                        });
+                    });
+                    $('.noSelect').disableTextSelect(); //No text selection on elements with a class of 'noSelect'
+                });
+
+                $("#accept-license-button-modal").unbind();
+                $("#accept-license-button-modal").click(function(){
+                    createCookie("licenseCookie", "true", 1);
+                });
+
                 if (typeof QueryString.dev != "undefined") {
                     console.log("Using Dev Server...");
                     //options.serverUrl = "http://107.170.33.116/api";
@@ -169,7 +232,8 @@
                 }
 
                 if (typeof QueryString.server != "undefined") {
-                    options.serverUrl = QueryString.server + "api/snomed";
+//                    options.serverUrl = QueryString.server + "api/snomed";
+                    options.serverUrl = QueryString.server;
                 }
 
                 var edition = QueryString.edition;
@@ -190,11 +254,14 @@
                 }
                 options.diagrammingMarkupEnabled = diagrammingMarkupEnabled;
 
-                var langRefset = QueryString.langRefset;
-                if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
-                    langRefset = "900000000000509007";
+//                var langRefset = QueryString.langRefset;
+                if (QueryString.langRefset) {
+                    var langRefset = QueryString.langRefset.split(",");
+                    if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
+                        langRefset = options.langRefset;
+                    }
+                    options.langRefset = langRefset;
                 }
-                options.langRefset = langRefset;
 
                 $("#editionLabel").html(edition + " " + release);
 
@@ -238,8 +305,19 @@
                 if (typeof acceptLicense == "undefined" || acceptLicense == null || acceptLicense == "") {
                     acceptLicense = false;
                 }
-                options.acceptLicense = (acceptLicense == "true");
-
+                options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
+                if (QueryString.edition && QueryString.release){
+                    var i = 0;
+                    while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
+                        i++;
+                    }
+                    if (i < manifests.length){
+                        options.manifest = manifests[i];
+                        options.textIndexNormalized = options.manifest.textIndexNormalized;
+//                        console.log(options.textIndexNormalized);
+                        verifyDate(options.manifest.expirationDate);
+                    }
+                }
                 if (QueryString.perspective == "home") {
                     initialize();
                 } else if (QueryString.perspective == "browsing") {
@@ -263,6 +341,9 @@
                 if (!options.acceptLicense) {
                     $('#license-modal').modal('show');
                 }
+                //                console.log(manifests);
+
+
 
 //                verifyDate(release)
             }
@@ -409,9 +490,7 @@
                                 content: i18n_tour_step14_text,
                                 placement: "left",
                                 backdrop: true,
-                                onNext: function (tour) {
-                                    initialize()
-                                }
+                                onNext: function (tour) { initialize() }
                             },
                             {
                                 element: "nothing",
@@ -441,6 +520,15 @@
                 }
             }
             function initialize() {
+                var historyUrl = "?";
+                manualStateChange = false;
+                var state = {
+                    name: "Home",
+                    conceptId: "",
+                    url: historyUrl
+                };
+                History.pushState(state, "SNOMED CT - Home");
+                window.history.pushState("", "", "?");
                 componentsRegistry = [];
                 postal.unsubscribeFor();
                 currentPerspective = "home";
@@ -480,7 +568,7 @@
                 $('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
                 $('#searchDetails').split({orientation: 'horizontal', limit: 10});
                 $('#details').split({orientation: 'vertical', limit: 20});
-                $.each(componentsRegistry, function (i, field) {
+                $.each(componentsRegistry, function (i, field){
                     field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
@@ -568,6 +656,13 @@
                 var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), fhOptions);
                 var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
                 var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
+                if (enableQueriesInFullPerspective){
+                    $("#fh-query_canvas-li").show();
+                    var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), fhOptions);
+                    cdPanel1.subscribe(qpa);
+                }else{
+                    $("#fh-query_canvas-li").hide();
+                }
                 cdPanel1.subscribe(tpt);
                 cdPanel1.subscribe(spa);
                 cdPanel1.subscribe(fav);
@@ -582,8 +677,9 @@
                     $('#fh-tabs li:eq(1) a').tab('show');
                     searchInPanel(spa.divElement.id, decodeURI(QueryString.searchTerm));
                 }
-                $.each(componentsRegistry, function (i, field) {
-                    field.loadMarkers();
+                $.each(componentsRegistry, function (i, field){
+                    if (field.loadMarkers)
+                        field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
@@ -638,7 +734,7 @@
                 } else if (currentPerspective == "responsive") {
                     switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
                 } else {
-                    currentPerspective = "home"
+                    currentPerspective = "home";
                     initialize();
                 }
             }
@@ -661,9 +757,7 @@
                     componentsRegistry = [];
                 }
                 var i = 0;
-                var releaseName = release.substring(1, 9);
-//                console.log(releaseName);
-                while ( (i < manifests.length)  && (manifests[i].databaseName != edition || manifests[i].effectiveTime != releaseName)) {
+                while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
                     i++;
                 }
                 i = Math.min(i,manifests.length - 1);//fix array out of bounds causing NPE.
@@ -679,18 +773,18 @@
                 }
                 options.edition = edition;
                 options.release = release;
-                options.langRefset = langRefset;
-                if (serverUrl) {
+                options.langRefset = [langRefset];
+                if (serverUrl){
                     options.serverUrl = serverUrl;
                 } else {
                     options.serverUrl = "http://browser.ihtsdotools.org/api/snomed";
-//                    options.serverUrl = "http://browserdata-2.ihtsdotools.org/api/snomed";
                 }
+                $("#perspective-selector").find("button").first().removeClass("disabled");
                 $("#editionLabel").html(label);
             }
 
             function verifyDate(release) {
-                var now = new Date()
+                var now = new Date();
                 //console.log(release.substring(1, 5) + " " +  release.substring(5, 7) + " " +  release.substring(7, 9));
                 var releaseDate = new Date(release.substring(1, 5), release.substring(5, 7) - 1, release.substring(7, 9));
                 if (releaseDate < now) {
@@ -777,7 +871,7 @@
             }
         </style>
     </head>
-    <body onLoad="start();" style="height: 100%; display: block;">
+    <body onLoad="//start();" style="height: 100%; display: block;">
         <nav class="navbar navbar-default  navbar-static-top" role="navigation">
             <div>
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -887,6 +981,10 @@
                     <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the IHTSDO to anyone for reference purposes. There are other tools developed by IHTSDO for Members for the use in health care settings. </span></p>
                     <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
                     <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
+                    <p>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20160131', 'en-edition', 'v20160131', '900000000000509007', 'http://192.241.166.137/api/snomed');
+                        switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2016 (Data v2)</span></a>
+                    </p>
                     <p>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20150731', 'en-edition', 'v20150731', '900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                 switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2015</span></a>
@@ -1013,7 +1111,13 @@
                     <div class="a panel panel-default" id="fh-tabs-pane" style="border-radius: 0px;">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" id="fh-tabs">
-                            <li class="active"><a href="#fh-taxonomy_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span></a></li>
+                            <li class="active">
+                                <a href="#fh-taxonomy_canvas" data-toggle="tab">
+                                    <div>
+                                        <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
+                                    </div>
+                                </a>
+                            </li>
                             <li><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
                             <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
                             <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
@@ -1071,7 +1175,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="http://www.ihtsdo.org" class="btn btn-danger"><span class="i18n" data-i18n-id="i18n_reject">Reject</span></a>
-                        <button type="button" class="btn btn-success" data-dismiss="modal"><span class="i18n" data-i18n-id="i18n_accept">Accept</span></button>
+                        <button id="accept-license-button-modal" type="button" class="btn btn-success" data-dismiss="modal"><span class="i18n" data-i18n-id="i18n_accept">Accept</span></button>
                         <div class="btn-group dropup pull-left">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span id="nav-selected-flag-modal"></span> <span class="caret"></span>
@@ -1087,7 +1191,6 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
 
         <div class="modal fade" id="canadaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -1116,8 +1219,8 @@
         </div>
 
         <!-- JIRA feedback script
-        <script type="text/javascript" src="https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e/en_US-dgb2l9-1988229788/6256/5/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=9215d950"></script>
-        -->
+                <script type="text/javascript" src="https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e/en_US-dgb2l9-1988229788/6256/5/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=9215d950"></script>
+                -->
 
         <!-- Using Freshdesk Widget for feedback -->
         <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
@@ -1164,5 +1267,23 @@
 
         </script>
 
+        <script>
+            // History capture of the manual back and forward buttons
+            manualStateChange = true;
+            History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+                if(manualStateChange == true){
+                    // BACK BUTTON WAS PRESSED
+                    var State = History.getState(); // Note: We are using History.getState() instead of event.state
+                    if (State.data && State.data.url) {
+                        //console.log("Back button! ", State.data.name);
+                        if (State.data.url.indexOf("acceptLicense") == -1) {
+                            State.data.url = State.data.url + "&acceptLicense=true";
+                        }
+                        window.location.href = State.data.url;
+                    }
+                }
+                manualStateChange = true;
+            });
+        </script>
     </body>
 </html>
