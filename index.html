@@ -4,9 +4,9 @@
         <title>IHTSDO SNOMED CT Browser</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
-        <meta name="description" content="IHTSDO SNOMED CT Browser">
-        <meta name="author" content="IHTSDO">
-        <link rel="icon" type="image/png"  href="favicon.png">
+		<meta name="description" content="IHTSDO SNOMED CT Browser">
+		<meta name="author" content="IHTSDO">
+		<link rel="icon" type="image/png"  href="favicon.png">
 
         <script src="external-libs/jquery-2.1.0.min.js" type="text/javascript"></script>
         <script src="external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
@@ -54,7 +54,37 @@
             });
         </script>
 
+
         <script type="text/javascript">
+            function getCookie(c_name) {
+                if (document.cookie.length > 0) {
+                    var c_start = document.cookie.indexOf(c_name + "=");
+                    if (c_start != -1) {
+                        c_start = c_start + c_name.length + 1;
+                        c_end = document.cookie.indexOf(";", c_start);
+                        if (c_end == -1) {
+                            c_end = document.cookie.length;
+                        }
+                        return unescape(document.cookie.substring(c_start, c_end));
+                    }
+                }
+                return "";
+            }
+
+            function createCookie(name, value, days) {
+                var expires;
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toGMTString();
+                }
+                else {
+                    expires = "";
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+
+            var enableQueriesInFullPerspective = false;
             var selectedLanguage = 'en_US';
             var selectedFlag = 'img/flags/us.png';
             var currentPerspective = "home";
@@ -176,6 +206,22 @@
 
             function start() {
                 // Read parameters
+                $(function() {
+                    $.extend($.fn.disableTextSelect = function() {
+                        return this.each(function() {
+                            $(this).mousedown(function() {
+                                return false;
+                            });
+                        });
+                    });
+                    $('.noSelect').disableTextSelect(); //No text selection on elements with a class of 'noSelect'
+                });
+
+                $("#accept-license-button-modal").unbind();
+                $("#accept-license-button-modal").click(function(){
+                    createCookie("licenseCookie", "true", 1);
+                });
+
                 if (typeof QueryString.dev != "undefined") {
                     console.log("Using Dev Server...");
                     //options.serverUrl = "http://107.170.33.116/api";
@@ -259,7 +305,7 @@
                 if (typeof acceptLicense == "undefined" || acceptLicense == null || acceptLicense == "") {
                     acceptLicense = false;
                 }
-                options.acceptLicense = (acceptLicense == "true");
+                options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
                 if (QueryString.edition && QueryString.release){
                     var i = 0;
                     while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
@@ -444,9 +490,7 @@
                                 content: i18n_tour_step14_text,
                                 placement: "left",
                                 backdrop: true,
-                                onNext: function (tour) {
-                                    initialize()
-                                }
+                                onNext: function (tour) { initialize() }
                             },
                             {
                                 element: "nothing",
@@ -524,7 +568,7 @@
                 $('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
                 $('#searchDetails').split({orientation: 'horizontal', limit: 10});
                 $('#details').split({orientation: 'vertical', limit: 20});
-                $.each(componentsRegistry, function (i, field) {
+                $.each(componentsRegistry, function (i, field){
                     field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
@@ -612,6 +656,13 @@
                 var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), fhOptions);
                 var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
                 var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
+                if (enableQueriesInFullPerspective){
+                    $("#fh-query_canvas-li").show();
+                    var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), fhOptions);
+                    cdPanel1.subscribe(qpa);
+                }else{
+                    $("#fh-query_canvas-li").hide();
+                }
                 cdPanel1.subscribe(tpt);
                 cdPanel1.subscribe(spa);
                 cdPanel1.subscribe(fav);
@@ -626,8 +677,9 @@
                     $('#fh-tabs li:eq(1) a').tab('show');
                     searchInPanel(spa.divElement.id, decodeURI(QueryString.searchTerm));
                 }
-                $.each(componentsRegistry, function (i, field) {
-                    field.loadMarkers();
+                $.each(componentsRegistry, function (i, field){
+                    if (field.loadMarkers)
+                        field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
@@ -1123,7 +1175,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="http://www.ihtsdo.org" class="btn btn-danger"><span class="i18n" data-i18n-id="i18n_reject">Reject</span></a>
-                        <button type="button" class="btn btn-success" data-dismiss="modal"><span class="i18n" data-i18n-id="i18n_accept">Accept</span></button>
+                        <button id="accept-license-button-modal" type="button" class="btn btn-success" data-dismiss="modal"><span class="i18n" data-i18n-id="i18n_accept">Accept</span></button>
                         <div class="btn-group dropup pull-left">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span id="nav-selected-flag-modal"></span> <span class="caret"></span>
@@ -1139,32 +1191,6 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
-        <div class="modal fade" id="canadaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Choose a Canadian Edition</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p style="text-align:center">
-                            <a class="btn btn-primary btn-lg"  role="button"  data-dismiss="modal" onclick="switchRelease('en-Canadian Edition 20150526', 'en-ca-edition', 'v20150526', '19491000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
-                        switchLanguage('en_US', 'img/flags/ca.png', true);
-                        switchToFullHeight(404684003, 138875005);"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition (English)</span></a>
-                        </p>
-                        <p style="text-align:center">
-                            <a class="btn btn-primary btn-lg" role="button"  data-dismiss="modal" onclick="switchRelease('fr-Canadian Edition 20150526', 'fr-ca-edition', 'v20150526', '20581000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
-                        switchLanguage('en_US', 'img/flags/ca.png', true);
-                        switchToFullHeight(404684003, 138875005);"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition (Français)</span></a>
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="modal fade" id="canadaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
