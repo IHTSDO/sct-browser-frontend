@@ -622,6 +622,8 @@
                 var tx2 = new taxonomyPanel(document.getElementById("ct-tx2_canvas"), txValue2, options);
                 var spa = new searchPanel(document.getElementById("ct-search_canvas"), options);
                 var cdPanel1 = new conceptDetails(document.getElementById("ct-cd1_canvas"), cd1Value, options);
+                cdPanel1.subscribe(tx2);
+                cdPanel1.subscribe(tx1);
                 cdPanel1.subscribe(spa);
                 cdPanel1.setupCanvas();
                 $('#comparing-taxonomies-wrapper').split({orientation: 'horizontal'});
