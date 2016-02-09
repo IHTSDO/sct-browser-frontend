@@ -99,7 +99,7 @@
             };
 
             var options = {
-                serverUrl: "http://browser.ihtsdotools.org/api/snomed",
+                serverUrl: "https://browser-aws-1.ihtsdotools.org/api/snomed",
                 edition: "en-edition",
                 release: "v20160131",
                 showIds: false,
@@ -166,7 +166,7 @@
                 });
             });
             $.when(xhrM).done(function () {
-                xhr = $.getJSON("https://browser-aws-1.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                xhr = $.getJSON("http://browser.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
                     // nothing
                 }).done(function (result) {
                     $.each(result, function (i, field) {
@@ -235,6 +235,12 @@
 //                    options.serverUrl = QueryString.server + "api/snomed";
                     options.serverUrl = QueryString.server;
                 }
+
+/*                if (typeof QueryString.server == "undefined" || QueryString.server == null || QueryString.server == "") {
+//                    options.serverUrl = QueryString.server + "api/snomed";
+                    QueryString.server = "https://browser.ihtsdotools.org/api/snomed";
+                }
+*/
 
                 var edition = QueryString.edition;
                 if (typeof edition == "undefined" || edition == null || edition == "") {
