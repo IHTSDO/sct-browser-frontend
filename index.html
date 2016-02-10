@@ -36,16 +36,30 @@
         <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.31.0.min.css">
 
         <script src="snomed-interaction-components/js/snomed-interaction-components-1.31.0.min.js"></script>
+        <script src="external-libs/jquery.history.js"></script>
+        <script src="external-libs/ZeroClipboard.js"></script>
 
         <script type="text/javascript">
+            function createCookie(name, value, days) {
+                var expires;
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toGMTString();
+                }
+                else {
+                    expires = "";
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+
+            var enableQueriesInFullPerspective = false;
             var selectedLanguage = 'en_US';
             var selectedFlag = 'img/flags/us.png';
             var currentPerspective = "home";
 
             var options = {
-//                serverUrl: "http://107.170.67.17/api/snomed",
                 serverUrl: "http://dailybuild.ihtsdotools.org/api/snomed",
-                //serverUrl: "http://107.170.33.116:3000"
                 edition: "en-edition",
                 release: "v20160131",
                 showIds: false,
@@ -64,6 +78,18 @@
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
                 highlightByEffectiveTime: "20160731"
+            };
+            options.languageNameOfLangRefset = {
+                "20581000087109": "fr-CA",
+                "19491000087109": "en-CA",
+                "900000000000508004": "GB",
+                "900000000000509007": "US",
+                "450828004":"ES",
+                "554461000005103":"DA",
+                "46011000052107":"SV",
+                "32570271000036106":"AU",
+                "999001251000000103":"UK",
+                "11000146104":"NL"
             };
 
             var manifests;
@@ -108,7 +134,24 @@
 
             function start() {
                 // Read parameters
-                if (typeof QueryString.dev != "undefined") {
+                // Read parameters
+                $(function() {
+                    $.extend($.fn.disableTextSelect = function() {
+                        return this.each(function() {
+                            $(this).mousedown(function() {
+                                return false;
+                            });
+                        });
+                    });
+                    $('.noSelect').disableTextSelect(); //No text selection on elements with a class of 'noSelect'
+                });
+
+                $("#accept-license-button-modal").unbind();
+                $("#accept-license-button-modal").click(function(){
+                    createCookie("licenseCookie", "true", 2);
+                });
+                
+        if (typeof QueryString.dev != "undefined") {
                     console.log("Using Dev Server...");
                     //options.serverUrl = "http://107.170.33.116/api";
                 }
@@ -118,7 +161,7 @@
                 }
 
                 if (typeof QueryString.server != "undefined") {
-                    options.serverUrl = QueryString.server + "api/snomed";
+                    options.serverUrl = QueryString.server;
                 }
 
                 var edition = QueryString.edition;
@@ -139,11 +182,13 @@
                 }
                 options.diagrammingMarkupEnabled = diagrammingMarkupEnabled;
 
-                var langRefset = QueryString.langRefset;
-                if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
-                    langRefset = "900000000000509007";
+                if (QueryString.langRefset) {
+                    var langRefset = QueryString.langRefset.split(",");
+                    if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
+                        langRefset = options.langRefset;
+                    }
+                    options.langRefset = langRefset;
                 }
-                options.langRefset = langRefset;
 
 //                $("#editionLabel").html(edition + " " + release);
 
@@ -381,15 +426,24 @@
                 }
             }
             function initialize() {
+                var historyUrl = "?";
+                manualStateChange = false;
+                var state = {
+                    name: "Home",
+                    conceptId: "",
+                    url: historyUrl
+                };
+                History.pushState(state, "SNOMED CT - Home");
+                window.history.pushState("", "", "?");
                 componentsRegistry = [];
                 postal.unsubscribeFor();
                 currentPerspective = "home";
-                $("#welcome-perspective").css({"display":"block"});
-                $("#browsing-perspective").css({"display":"none"});
-                $("#comparing-concepts-perspective").css({"display":"none"});
-                $("#comparing-taxonomies-perspective").css({"display":"none"});
-                $("#full-height-perspective").css({"display":"none"});
-                $("#responsive-perspective").css({"display":"none"});
+                $("#welcome-perspective").css({"display": "block"});
+                $("#browsing-perspective").css({"display": "none"});
+                $("#comparing-concepts-perspective").css({"display": "none"});
+                $("#comparing-taxonomies-perspective").css({"display": "none"});
+                $("#full-height-perspective").css({"display": "none"});
+                $("#responsive-perspective").css({"display": "none"});
                 $("#perspectiveLabel").html("<em>...</em>");
                 $('.more-fields-button').popover('hide');
             }
@@ -598,22 +652,26 @@
             }
 
             function switchRelease(label, edition, release, langRefset, serverUrl) {
-//                verifyDate(release);
-                if (langRefset == "31000146106"){
+                if (langRefset == "31000146106") {
                     options.hideNotAcceptable = false;
                 }
                 postal.unsubscribeFor();
-                if (typeof componentsRegistry !="undefined"){
-                    $.each(componentsRegistry, function(i, field){
+                if (typeof componentsRegistry != "undefined") {
+                    $.each(componentsRegistry, function (i, field) {
                         field = null;
                     });
                     componentsRegistry = [];
                 }
                 var i = 0;
-                while (i < manifests.length && manifests[i].databaseName != edition){
+                while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
                     i++;
                 }
-                if (i < manifests.length){
+                i = Math.min(i,manifests.length - 1);//fix array out of bounds causing NPE.
+
+//                console.log(manifests[i].databaseName);
+//                console.log(manifests[i].effectiveTime);
+
+                if (i < manifests.length) {
                     options.manifest = manifests[i];
                     options.textIndexNormalized = options.manifest.textIndexNormalized;
 //                        console.log(options.textIndexNormalized);
@@ -621,14 +679,15 @@
                 }
                 options.edition = edition;
                 options.release = release;
-                options.langRefset = langRefset;
+                options.langRefset = langRefset.split(",");
                 if (serverUrl){
                     options.serverUrl = serverUrl;
-                }else{
-                    options.serverUrl = "http://107.170.67.17/api/snomed";
+                } else {
+                    options.serverUrl = "http://dailybuild.ihtsdotools.org/api/snomed";
                 }
+                $("#perspective-selector").find("button").first().removeClass("disabled");
                 $("#editionLabel").html(label);
-            }
+          }
 
             function verifyDate(release) {
                 var now = new Date()
@@ -834,7 +893,7 @@
             </div>
                     <footer>
                         <p>
-                            <small><b>&copy; IHTSDO 2016</b></small>
+                            <small><b>&copy; IHTSDO 2016</b> v1.31</small>
                         </p>
                     </footer>
 
