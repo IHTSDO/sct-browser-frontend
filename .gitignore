@@ -25,3 +25,7 @@ build/Release
 node_modules
 
 .idea
+
+*.json
+
+lastupdated.txt

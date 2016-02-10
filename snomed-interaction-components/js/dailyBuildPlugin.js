@@ -1,12 +1,10 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Created by termmed on 1/22/15.
  */
-
 function dailyBuildPanel(divElement, options) {
     var panel = this;
     this.subscribers = [];
+    this.subscriptions = [];
     var xhr = null;
     var title = "";
     var executionTime = "";
@@ -111,23 +109,6 @@ function dailyBuildPanel(divElement, options) {
             animation: true,
             delay: 1000
         });
-        $("#" + panel.divElement.id + "-linkerButton").draggable({
-            cancel: false,
-            appendTo: 'body',
-            helper: 'clone',
-            delay: 500,
-            revert: false
-        });
-
-        $("#" + panel.divElement.id + "-panelBody").droppable({
-            drop: panel.handleDropEvent,
-            hoverClass: "bg-info"
-        });
-
-        $("#" + panel.divElement.id + "-panelHeading").droppable({
-            drop: panel.handleDropEvent,
-            hoverClass: "bg-info"
-        });
 
         $("#" + panel.divElement.id + "-resetButton").click(function() {
             panel.setupParents([], {conceptId: 138875005, defaultTerm: "SNOMED CT Concept", definitionStatus: "Primitive"});
@@ -169,7 +150,7 @@ function dailyBuildPanel(divElement, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON("http://107.170.53.78/diff_reports/diff_index.json", function( data ) {
+        xhr = $.getJSON("diff_reports/diff_index.json", function( data ) {
             var reportsHtml =  '';
             panel.title = data.title;
             panel.executionTime = data.executionTime;
@@ -189,7 +170,8 @@ function dailyBuildPanel(divElement, options) {
             $('#' + panel.divElement.id + '-panelBody').find('.selectable-row').click(function (event) {
                 panel.reportTitle = $(event.target).closest('tr').attr('data-title');
                 var link = $(event.target).closest('tr').attr('data-file');
-                panel.loadReport("http://107.170.53.78/diff_reports/" + link);
+                panel.loadReport("diff_reports/" + link);
+//                panel.loadReport("diff_reports/" + link);
             });
 
         });
@@ -246,53 +228,9 @@ function dailyBuildPanel(divElement, options) {
         });
     }
 
-    this.subscribe = function(subscriber) {
-        var alreadySubscribed = false;
-        $.each(panel.subscribers, function(i, field) {
-            if (subscriber.divElement.id == field.divElement.id) {
-                alreadySubscribed = true;
-            }
-        });
-        if (!alreadySubscribed) {
-            if (panel.subscribers.length == 0) {
-                if (typeof globalMarkerColor == "undefined") {
-                    globalMarkerColor = 'black';
-                }
-                panel.markerColor = panel.getNextMarkerColor(globalMarkerColor);
-                //console.log(panel.markerColor);
-                $("#" + panel.divElement.id + "-subscribersMarker").css('color', panel.markerColor);
-                $("#" + panel.divElement.id + "-subscribersMarker").show();
-            }
-            panel.subscribers.push(subscriber);
-            subscriber.setSubscription(panel);
-        }
-    }
+    this.loadMarkers = function() {
 
-    this.unsubscribe = function(subscriber) {
-        var indexToRemove = -1;
-        var i = 0;
-        $.each(panel.subscribers, function(i, field) {
-            if (subscriber.divElement.id == field.divElement.id) {
-                indexToRemove = i;
-            }
-            i = i + 1;
-        });
-        if (indexToRemove > -1) {
-            panel.subscribers.splice(indexToRemove, 1);
-        }
-        if (panel.subscribers.length == 0) {
-            $("#" + panel.divElement.id + "-subscribersMarker").hide();
-        }
-        subscriber.clearSubscription();
     }
-
-    this.unsubscribeAll = function() {
-        var subscribersClone = panel.subscribers.slice(0);
-        $.each(subscribersClone, function (i, field) {
-            panel.unsubscribe(field);
-        });
-    }
-
     this.getNextMarkerColor = function(color) {
 //console.log(color);
         var returnColor = 'black';
