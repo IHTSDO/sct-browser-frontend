@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="css/bootstrap-tour.css">
         <link rel="stylesheet" href="css/popover-extra-placements.css">
         <link rel="stylesheet" href="css/animate.css">
- 
+
         <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.31.0.min.css">
 
         <script src="snomed-interaction-components/js/snomed-interaction-components-1.31.0.min.js"></script>
@@ -137,51 +137,52 @@
                 options.serverUrl = mongoDetails.mongoRestServer
             }
             var manifests;
-            xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
-                // nothing
-            }).done(function (result) {
-                manifests = result;
-                //console.log(result);
-            }).fail(function () {
-                $.notify("Error Terminology server not accessible!", {
-                    autoHide: false,
-                    className: "error"
-                });
+            function loadManifests(){
+                xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
+                }).done(function (result) {
+                    manifests = result;
+                    //console.log(result);
+                }).fail(function () {
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
 //                alert("Error Terminolgy server not accesed");
-                console.log("fail Manifest");
-            });
-            $.when(xhrM).done(function () {
-                xhr = $.getJSON("http://multibrowser.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
-                    // nothing
-                }).done(function (result) {
-                    $.each(result, function (i, field) {
-                        manifests.push(field);
-                    });
-                }).fail(function () {
-                    $.notify("Error Terminology server not accessible!", {
-                        autoHide: false,
-                        className: "error"
-                    });
-//                console.log("fail Manifest");
+                    console.log("fail Manifest");
                 });
-            });
-            $.when(xhrM).done(function () {
-                xhr = $.getJSON("https://browser-aws-1.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
-                    // nothing
-                }).done(function (result) {
-                    $.each(result, function (i, field) {
-                        manifests.push(field);
-                    });
-                    start();
-                }).fail(function () {
-                    $.notify("Error Terminology server not accessible!", {
-                        autoHide: false,
-                        className: "error"
-                    });
+                $.when(xhrM).done(function () {
+                    xhr = $.getJSON("http://multibrowser.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                        // nothing
+                    }).done(function (result) {
+                        $.each(result, function (i, field) {
+                            manifests.push(field);
+                        });
+                    }).fail(function () {
+                        $.notify("Error Terminology server not accessible!", {
+                            autoHide: false,
+                            className: "error"
+                        });
 //                console.log("fail Manifest");
+                    });
                 });
-            });
-
+                $.when(xhrM).done(function () {
+                    xhr = $.getJSON("https://browser-aws-1.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                        // nothing
+                    }).done(function (result) {
+                        $.each(result, function (i, field) {
+                            manifests.push(field);
+                        });
+                        start();
+                    }).fail(function () {
+                        $.notify("Error Terminology server not accessible!", {
+                            autoHide: false,
+                            className: "error"
+                        });
+//                console.log("fail Manifest");
+                    });
+                });
+            }
 
             var tours = {};
             var tour;
@@ -882,7 +883,7 @@
             }
         </style>
     </head>
-    <body onLoad="//start();" style="height: 100%; display: block;">
+    <body onLoad="loadManifests();" style="height: 100%; display: block;">
         <nav class="navbar navbar-default  navbar-static-top" role="navigation">
             <div>
                 <!-- Brand and toggle get grouped for better mobile display -->
