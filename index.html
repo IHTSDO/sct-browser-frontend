@@ -4,9 +4,9 @@
         <title>IHTSDO SNOMED Daily Build CT Browser</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
-		<meta name="description" content="IHTSDO SNOMED CT Daily Build Browser">
-		<meta name="author" content="IHTSDO">
-		<link rel="icon" type="image/png"  href="favicon.png">
+        <meta name="description" content="IHTSDO SNOMED CT Daily Build Browser">
+        <meta name="author" content="IHTSDO">
+        <link rel="icon" type="image/png"  href="favicon.png">
 
         <script src="external-libs/jquery-2.1.0.min.js" type="text/javascript"></script>
         <script src="external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
@@ -40,14 +40,27 @@
         <script src="external-libs/ZeroClipboard.js"></script>
 
         <script type="text/javascript">
+            function getCookie(c_name) {
+                if (document.cookie.length > 0) {
+                    var c_start = document.cookie.indexOf(c_name + "=");
+                    if (c_start != -1) {
+                        c_start = c_start + c_name.length + 1;
+                        c_end = document.cookie.indexOf(";", c_start);
+                        if (c_end == -1) {
+                            c_end = document.cookie.length;
+                        }
+                        return unescape(document.cookie.substring(c_start, c_end));
+                    }
+                }
+                return "";
+            }
             function createCookie(name, value, days) {
                 var expires;
                 if (days) {
                     var date = new Date();
                     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
                     expires = "; expires=" + date.toGMTString();
-                }
-                else {
+                } else {
                     expires = "";
                 }
                 document.cookie = name + "=" + value + expires + "; path=/";
@@ -84,32 +97,48 @@
                 "19491000087109": "en-CA",
                 "900000000000508004": "GB",
                 "900000000000509007": "US",
-                "450828004":"ES",
-                "554461000005103":"DA",
-                "46011000052107":"SV",
-                "32570271000036106":"AU",
-                "999001251000000103":"UK",
-                "11000146104":"NL"
+                "450828004": "ES",
+                "554461000005103": "DA",
+                "46011000052107": "SV",
+                "32570271000036106": "AU",
+                "999001251000000103": "UK",
+                "11000146104": "NL"
             };
 
             var manifests;
-            function loadManifests(){
-            	 	xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
-            	     // nothing
+            function loadManifests() {
+                xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
                 }).done(function (result) {
-                  		manifests = result;
-                  		//console.log(result);
-                 	}).fail(function () {
-                   $.notify("Error Terminology server not accessible!", {
-                    	autoHide: false,
-                    	className: "error"
-                	});
-                   
-               		console.log("fail Manifest");
-             	 });
+                    manifests = result;
+                    //console.log(result);
+                }).fail(function () {
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
+                    console.log("fail Manifest");
+                });
+                $.when(xhrM).done(function () {
+                    xhr = $.getJSON("http://dailybuild.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function (result) {
+                        // nothing
+                    }).done(function (result) {
+                        $.each(result, function (i, field) {
+                            manifests.push(field);
+                        });
+                        start();
+                    }).fail(function () {
+                        $.notify("Error Terminology server not accessible!", {
+                            autoHide: false,
+                            className: "error"
+                        });
+//                console.log("fail Manifest");
+                    });
+                });
+                
             }
 
-            jQuery.get('lastupdated.txt', function(data) {
+            jQuery.get('lastupdated.txt', function (data) {
                 $("#lastUpdatedText").html(data);
             });
 
@@ -120,27 +149,27 @@
                 var query_string = {};
                 var query = window.location.search.substring(1);
                 var vars = query.split("&");
-                for (var i=0;i<vars.length;i++) {
+                for (var i = 0; i < vars.length; i++) {
                     var pair = vars[i].split("=");
                     if (typeof query_string[pair[0]] === "undefined") {
                         query_string[pair[0]] = pair[1];
                     } else if (typeof query_string[pair[0]] === "string") {
-                        var arr = [ query_string[pair[0]], pair[1] ];
+                        var arr = [query_string[pair[0]], pair[1]];
                         query_string[pair[0]] = arr;
                     } else {
                         query_string[pair[0]].push(pair[1]);
                     }
                 }
                 return query_string;
-            } ();
+            }();
 
             function start() {
                 // Read parameters
                 // Read parameters
-                $(function() {
-                    $.extend($.fn.disableTextSelect = function() {
-                        return this.each(function() {
-                            $(this).mousedown(function() {
+                $(function () {
+                    $.extend($.fn.disableTextSelect = function () {
+                        return this.each(function () {
+                            $(this).mousedown(function () {
                                 return false;
                             });
                         });
@@ -149,11 +178,11 @@
                 });
 
                 $("#accept-license-button-modal").unbind();
-                $("#accept-license-button-modal").click(function(){
+                $("#accept-license-button-modal").click(function () {
                     createCookie("licenseCookie", "true", 2);
                 });
-                
-        if (typeof QueryString.dev != "undefined") {
+
+                if (typeof QueryString.dev != "undefined") {
                     console.log("Using Dev Server...");
                     //options.serverUrl = "http://107.170.33.116/api";
                 }
@@ -200,13 +229,13 @@
                 } else if (QueryString.ui_language == "es") {
                     selectedLanguage = 'es';
                     selectedFlag = 'img/flags/es.png';
-                }  else if (QueryString.ui_language == "da") {
+                } else if (QueryString.ui_language == "da") {
                     selectedLanguage = 'da';
                     selectedFlag = 'img/flags/dk.png';
-                }  else if (QueryString.ui_language == "pt") {
+                } else if (QueryString.ui_language == "pt") {
                     selectedLanguage = 'pt';
                     selectedFlag = 'img/flags/pt.png';
-                }  
+                }
 
                 switchLanguage(selectedLanguage, selectedFlag, false);
 
@@ -240,19 +269,19 @@
                     initialize();
                 } else if (QueryString.perspective == "browsing") {
                     currentPerspective = "browsing";
-                    switchToBrowsing(cdValue1,cdValue2,txValue1);
+                    switchToBrowsing(cdValue1, cdValue2, txValue1);
                 } else if (QueryString.perspective == "full") {
                     currentPerspective = "full";
-                    switchToFullHeight(cdValue1,txValue1);
+                    switchToFullHeight(cdValue1, txValue1);
                 } else if (QueryString.perspective == "compare_concepts") {
                     currentPerspective = "compare_concepts";
-                    switchToComparingConcepts(cdValue1,cdValue2);
+                    switchToComparingConcepts(cdValue1, cdValue2);
                 } else if (QueryString.perspective == "compare_hierarchies") {
                     currentPerspective = "compare_hierarchies";
-                    switchToComparingTaxonomies(cdValue1,txValue1,txValue2);
+                    switchToComparingTaxonomies(cdValue1, txValue1, txValue2);
                 } else if (QueryString.perspective == "responsive") {
                     currentPerspective = "responsive";
-                    switchToResponsiveLayout(cdValue1,cdValue2,txValue1)
+                    switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
                 } else {
                     initialize();
                 }
@@ -265,7 +294,7 @@
             }
 
             function initTour() {
-                if (typeof  tours[selectedLanguage]  == "undefined") {
+                if (typeof tours[selectedLanguage] == "undefined") {
                     tours[selectedLanguage] = new Tour({
                         steps: [
                             {
@@ -275,7 +304,9 @@
                                 placement: "bottom",
                                 orphan: true,
                                 backdrop: false,
-                                onShow: function (tour) { switchToFullHeight(204351007, 138875005) }
+                                onShow: function (tour) {
+                                    switchToFullHeight(204351007, 138875005)
+                                }
                             },
                             {
                                 element: "#fh-tabs-pane",
@@ -311,7 +342,9 @@
                                 content: i18n_tour_step2_5_text,
                                 placement: "bottom",
                                 backdrop: true,
-                                onNext: function (tour) { $('#fh-tabs li:eq(1) a').tab('show')  }
+                                onNext: function (tour) {
+                                    $('#fh-tabs li:eq(1) a').tab('show')
+                                }
                             },
                             {
                                 element: "#fh-tabs-pane",
@@ -340,7 +373,9 @@
                                 content: i18n_tour_step13_text,
                                 placement: "left",
                                 backdrop: true,
-                                onNext: function (tour) { $('#fh-tabs li:eq(0) a').tab('show')  }
+                                onNext: function (tour) {
+                                    $('#fh-tabs li:eq(0) a').tab('show')
+                                }
                             },
                             {
                                 element: "#fh-cd1_canvas",
@@ -357,19 +392,19 @@
                                 backdrop: true
                             },
                             /*{
-                                element: "#fh-taxonomy_canvas-linkerButton",
-                                title: i18n_tour_step8_title,
-                                content: i18n_tour_step8_text,
-                                placement: "left",
-                                backdrop: true
-                            },
-                            {
-                                element: "#bp-taxonomy_canvas-subscribersMarker",
-                                title: i18n_tour_step9_title,
-                                content: i18n_tour_step9_text,
-                                placement: "right",
-                                backdrop: true
-                            },*/
+                             element: "#fh-taxonomy_canvas-linkerButton",
+                             title: i18n_tour_step8_title,
+                             content: i18n_tour_step8_text,
+                             placement: "left",
+                             backdrop: true
+                             },
+                             {
+                             element: "#bp-taxonomy_canvas-subscribersMarker",
+                             title: i18n_tour_step9_title,
+                             content: i18n_tour_step9_text,
+                             placement: "right",
+                             backdrop: true
+                             },*/
                             {
                                 element: "#details-tabs-fh-cd1_canvas",
                                 title: i18n_tour_step13_1_title,
@@ -383,7 +418,9 @@
                                 content: i18n_tour_step13_2_text,
                                 placement: "left",
                                 backdrop: true,
-                                onNext: function (tour) { $('#details-tabs-fh-cd1_canvas li:eq(1) a').tab('show')  }
+                                onNext: function (tour) {
+                                    $('#details-tabs-fh-cd1_canvas li:eq(1) a').tab('show')
+                                }
                             },
                             {
                                 element: "#fh-cd1_canvas-panelBody",
@@ -398,7 +435,9 @@
                                 content: i18n_tour_step14_text,
                                 placement: "left",
                                 backdrop: true,
-                                onNext: function (tour) { initialize() }
+                                onNext: function (tour) {
+                                    initialize()
+                                }
                             },
                             {
                                 element: "nothing",
@@ -452,18 +491,18 @@
             function switchToBrowsing(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "browsing";
                 postal.unsubscribeFor();
-                if (typeof componentsRegistry !="undefined"){
-                    $.each(componentsRegistry, function(i, field){
+                if (typeof componentsRegistry != "undefined") {
+                    $.each(componentsRegistry, function (i, field) {
                         field = null;
                     });
                     componentsRegistry = [];
                 }
-                $("#welcome-perspective").css({"display":"none"});
-                $("#browsing-perspective").css({"display":"block"});
-                $("#comparing-concepts-perspective").css({"display":"none"});
-                $("#comparing-taxonomies-perspective").css({"display":"none"});
-                $("#full-height-perspective").css({"display":"none"});
-                $("#responsive-perspective").css({"display":"none"});
+                $("#welcome-perspective").css({"display": "none"});
+                $("#browsing-perspective").css({"display": "block"});
+                $("#comparing-concepts-perspective").css({"display": "none"});
+                $("#comparing-taxonomies-perspective").css({"display": "none"});
+                $("#full-height-perspective").css({"display": "none"});
+                $("#responsive-perspective").css({"display": "none"});
                 $("#perspectiveLabel").html("Browsing");
                 var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), txValue1, options);
                 var spa = new searchPanel(document.getElementById("bp-search_canvas"), options);
@@ -476,29 +515,29 @@
                 $('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
                 $('#searchDetails').split({orientation: 'horizontal', limit: 10});
                 $('#details').split({orientation: 'vertical', limit: 20});
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
             }
             function switchToComparingConcepts(cd1Value, cd2Value) {
                 currentPerspective = "compare_concepts";
                 postal.unsubscribeFor();
-                if (typeof componentsRegistry !="undefined"){
-                    $.each(componentsRegistry, function(i, field){
+                if (typeof componentsRegistry != "undefined") {
+                    $.each(componentsRegistry, function (i, field) {
                         field = null;
                     });
                     componentsRegistry = [];
                 }
-                $("#welcome-perspective").css({"display":"none"});
-                $("#browsing-perspective").css({"display":"none"});
-                $("#comparing-concepts-perspective").css({"display":"block"});
-                $("#comparing-taxonomies-perspective").css({"display":"none"});
-                $("#full-height-perspective").css({"display":"none"});
-                $("#responsive-perspective").css({"display":"none"});
+                $("#welcome-perspective").css({"display": "none"});
+                $("#browsing-perspective").css({"display": "none"});
+                $("#comparing-concepts-perspective").css({"display": "block"});
+                $("#comparing-taxonomies-perspective").css({"display": "none"});
+                $("#full-height-perspective").css({"display": "none"});
+                $("#responsive-perspective").css({"display": "none"});
                 $("#perspectiveLabel").html("Comparing concepts");
                 var spa = new searchPanel(document.getElementById("cc-search_canvas"), options);
                 var cdPanel1 = new conceptDetails(document.getElementById("cc-cd1_canvas"), cd1Value, options);
@@ -508,29 +547,29 @@
                 cdPanel2.setupCanvas();
                 $('#comparing-concepts-wrapper').split({orientation: 'horizontal'});
                 $('#comparing-concept-details').split({orientation: 'vertical'});
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
             }
             function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
                 currentPerspective = "compare_hierarchies";
                 postal.unsubscribeFor();
-                if (typeof componentsRegistry !="undefined"){
-                    $.each(componentsRegistry, function(i, field){
+                if (typeof componentsRegistry != "undefined") {
+                    $.each(componentsRegistry, function (i, field) {
                         field = null;
                     });
                     componentsRegistry = [];
                 }
-                $("#welcome-perspective").css({"display":"none"});
-                $("#browsing-perspective").css({"display":"none"});
-                $("#comparing-concepts-perspective").css({"display":"none"});
-                $("#comparing-taxonomies-perspective").css({"display":"block"});
-                $("#full-height-perspective").css({"display":"none"});
-                $("#responsive-perspective").css({"display":"none"});
+                $("#welcome-perspective").css({"display": "none"});
+                $("#browsing-perspective").css({"display": "none"});
+                $("#comparing-concepts-perspective").css({"display": "none"});
+                $("#comparing-taxonomies-perspective").css({"display": "block"});
+                $("#full-height-perspective").css({"display": "none"});
+                $("#responsive-perspective").css({"display": "none"});
                 $("#perspectiveLabel").html("Comparing taxonomies");
                 var tx1 = new taxonomyPanel(document.getElementById("ct-tx1_canvas"), txValue1, options);
                 var tx2 = new taxonomyPanel(document.getElementById("ct-tx2_canvas"), txValue2, options);
@@ -541,29 +580,29 @@
                 $('#comparing-taxonomies-wrapper').split({orientation: 'horizontal'});
                 $('#taxonomies-canvas-wrapper').split({orientation: 'vertical'});
                 $('#search-cd-wrapper').split({orientation: 'vertical'});
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
             }
             function switchToFullHeight(cd1Value, txValue1) {
                 currentPerspective = "full";
                 postal.unsubscribeFor();
-                if (typeof componentsRegistry !="undefined"){
-                    $.each(componentsRegistry, function(i, field){
+                if (typeof componentsRegistry != "undefined") {
+                    $.each(componentsRegistry, function (i, field) {
                         field = null;
                     });
                     componentsRegistry = [];
                 }
-                $("#welcome-perspective").css({"display":"none"});
-                $("#browsing-perspective").css({"display":"none"});
-                $("#comparing-concepts-perspective").css({"display":"none"});
-                $("#comparing-taxonomies-perspective").css({"display":"none"});
-                $("#full-height-perspective").css({"display":"block"});
-                $("#responsive-perspective").css({"display":"none"});
+                $("#welcome-perspective").css({"display": "none"});
+                $("#browsing-perspective").css({"display": "none"});
+                $("#comparing-concepts-perspective").css({"display": "none"});
+                $("#comparing-taxonomies-perspective").css({"display": "none"});
+                $("#full-height-perspective").css({"display": "block"});
+                $("#responsive-perspective").css({"display": "none"});
                 $("#perspectiveLabel").html("Full");
                 var fhOptions = jQuery.extend(true, {}, options);
                 fhOptions.subscribersMarker = false;
@@ -580,16 +619,16 @@
                 cdPanel1.subscribe(ref);
                 cdPanel1.subscribe(dai);
                 cdPanel1.setupCanvas();
-                if(window.screen.width > 1500){
+                if (window.screen.width > 1500) {
                     $('#spliter-fh').split({orientation: 'vertical', limit: 20, position: '40%'});
-                }else{
+                } else {
                     $('#spliter-fh').split({orientation: 'vertical', limit: 20, position: '50%'});
                 }
                 if (typeof QueryString.searchTerm != "undefined") {
                     $('#fh-tabs li:eq(1) a').tab('show');
                     searchInPanel(spa.divElement.id, decodeURI(QueryString.searchTerm));
                 }
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
@@ -597,18 +636,18 @@
             function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "responsive";
                 postal.unsubscribeFor();
-                if (typeof componentsRegistry !="undefined"){
-                    $.each(componentsRegistry, function(i, field){
+                if (typeof componentsRegistry != "undefined") {
+                    $.each(componentsRegistry, function (i, field) {
                         field = null;
                     });
                     componentsRegistry = [];
                 }
-                $("#welcome-perspective").css({"display":"none"});
-                $("#browsing-perspective").css({"display":"none"});
-                $("#comparing-concepts-perspective").css({"display":"none"});
-                $("#comparing-taxonomies-perspective").css({"display":"none"});
-                $("#full-height-perspective").css({"display":"none"});
-                $("#responsive-perspective").css({"display":"block"});
+                $("#welcome-perspective").css({"display": "none"});
+                $("#browsing-perspective").css({"display": "none"});
+                $("#comparing-concepts-perspective").css({"display": "none"});
+                $("#comparing-taxonomies-perspective").css({"display": "none"});
+                $("#full-height-perspective").css({"display": "none"});
+                $("#responsive-perspective").css({"display": "block"});
                 $("#perspectiveLabel").html("Responsive");
                 var tpt = new taxonomyPanel(document.getElementById("rp-taxonomy_canvas"), txValue1, options);
                 var spa = new searchPanel(document.getElementById("rp-search_canvas"), options);
@@ -621,11 +660,11 @@
                 $('#spliter2').split({orientation: 'vertical', limit: 20, position: '30%'});
                 $('#searchDetails').split({orientation: 'horizontal', limit: 10});
                 $('#details').split({orientation: 'vertical', limit: 20});
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
                 switchLanguage(selectedLanguage, selectedFlag, false);
-                $.each(componentsRegistry, function (i, field){
+                $.each(componentsRegistry, function (i, field) {
                     field.loadMarkers();
                 });
             }
@@ -638,15 +677,15 @@
                 if (currentPerspective == "home") {
                     initialize();
                 } else if (currentPerspective == "browsing") {
-                    switchToBrowsing(cdValue1,cdValue2,txValue1);
+                    switchToBrowsing(cdValue1, cdValue2, txValue1);
                 } else if (currentPerspective == "full") {
-                    switchToFullHeight(cdValue1,txValue1);
+                    switchToFullHeight(cdValue1, txValue1);
                 } else if (currentPerspective == "compare_concepts") {
-                    switchToComparingConcepts(cdValue1,cdValue2);
+                    switchToComparingConcepts(cdValue1, cdValue2);
                 } else if (currentPerspective == "compare_hierarchies") {
-                    switchToComparingTaxonomies(cdValue1,txValue1,txValue2);
+                    switchToComparingTaxonomies(cdValue1, txValue1, txValue2);
                 } else if (currentPerspective == "responsive") {
-                    switchToResponsiveLayout(cdValue1,cdValue2,txValue1)
+                    switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
                 } else {
                     currentPerspective = "home"
                     initialize();
@@ -665,10 +704,10 @@
                     componentsRegistry = [];
                 }
                 var i = 0;
-                while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
+                while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))) {
                     i++;
                 }
-                i = Math.min(i,manifests.length - 1);//fix array out of bounds causing NPE.
+                i = Math.min(i, manifests.length - 1);//fix array out of bounds causing NPE.
 
 //                console.log(manifests[i].databaseName);
 //                console.log(manifests[i].effectiveTime);
@@ -682,23 +721,23 @@
                 options.edition = edition;
                 options.release = release;
                 options.langRefset = langRefset.split(",");
-                if (serverUrl){
+                if (serverUrl) {
                     options.serverUrl = serverUrl;
                 } else {
                     options.serverUrl = "http://dailybuild.ihtsdotools.org/api/snomed";
                 }
                 $("#perspective-selector").find("button").first().removeClass("disabled");
                 $("#editionLabel").html(label);
-          }
+            }
 
             function verifyDate(release) {
                 var now = new Date()
                 //console.log(release.substring(1, 5) + " " +  release.substring(5, 7) + " " +  release.substring(7, 9));
-                var releaseDate = new Date(release.substring(1, 5), release.substring(5, 7)-1, release.substring(7, 9));
-                if (releaseDate < now){
+                var releaseDate = new Date(release.substring(1, 5), release.substring(5, 7) - 1, release.substring(7, 9));
+                if (releaseDate < now) {
 //                    console.log("bien");
                     $("#alert-section").html("");
-                }else{
+                } else {
 //                    console.log("expirada");
                     var alertHtml = '<div class="alert alert-danger" id="outdated-alert">';
                     alertHtml = alertHtml + '<a href="#" class="close" data-dismiss="alert">&times;</a>';
@@ -715,16 +754,16 @@
                 $("#nav-selected-flag").html('<img src="' + flagPng + '">');
                 $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
                 jQuery.i18n.properties({
-                    name:'Languages',
-                    path:'i18n/',
-                    mode:'both',
-                    language:language
+                    name: 'Languages',
+                    path: 'i18n/',
+                    mode: 'both',
+                    language: language
                 });
-                $( ".i18n" ).each(function( index ) {
+                $(".i18n").each(function (index) {
                     var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
                     if (translation != "[" + $(this).attr('data-i18n-id') + "]") {
                         if (fade) {
-                            $(this).fadeOut("slow", function(){
+                            $(this).fadeOut("slow", function () {
                                 $(this).html(translation);
                                 $(this).fadeIn("slow");
                             });
@@ -738,7 +777,7 @@
                 initTour();
                 $("#navBarBrand").tooltip().tooltip('destroy');
                 $("#navBarBrand").tooltip({
-                    placement : 'bottom',
+                    placement: 'bottom',
                     trigger: 'hover',
                     title: i18n_go_back_home,
                     animation: true,
@@ -772,29 +811,29 @@
                 text-decoration: none;
             }
             .navbar-brand {
-				margin-top: 4px;
+                margin-top: 4px;
             }
-			.navbar .navbar-btn {
-				margin-left: 10px;
-			}
+            .navbar .navbar-btn {
+                margin-left: 10px;
+            }
         </style>
     </head>
-   <body onLoad="loadManifests();" style="height: 100%; display: block;">
+    <body onLoad="loadManifests();" style="height: 100%; display: block;">
         <nav class="navbar navbar-default  navbar-static-top" role="navigation">
             <div>
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                </button>
+                    </button>
 
-        <!--        <img class="pull-left " src="img/box-logo.png" style="height:50px" alt="IHTSDO delivering SNOMED, the global clinical terminology"> -->
-                <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
-                    <strong>
-                     	&nbsp;&nbsp;IHTSDO SNOMED CT Daily Build Browser</strong></a>
+                    <!--        <img class="pull-left " src="img/box-logo.png" style="height:50px" alt="IHTSDO delivering SNOMED, the global clinical terminology"> -->
+                    <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
+                        <strong>
+                            &nbsp;&nbsp;IHTSDO SNOMED CT Daily Build Browser</strong></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
@@ -813,23 +852,23 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:void(0);" onclick="switchToFullHeight(404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_full_perspective">Full</span></a></li>
-<!--                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li> -->
-                                <li><a href="javascript:void(0);" onclick="switchToComparingConcepts(404684003,404684003);"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
+                                <!--                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li> -->
+                                <li><a href="javascript:void(0);" onclick="switchToComparingConcepts(404684003, 404684003);"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
                                 <li><a href="javascript:void(0);" onclick="switchToComparingTaxonomies(404684003, 138875005, 138875005);"><span class="i18n" data-i18n-id="i18n_comp_hier_perspective">Comparing hierarchy</span></a></li>
-<!--                                <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003,138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li> -->
+                                <!--                                <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003,138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li> -->
                             </ul>
                         </li>
-						<li class="navbar-btn feedback-button">
-							<button type="button" class="btn btn-info" onclick="FreshWidget.show(); return false;">
-								<span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
-							</button>
-						</li>
+                        <li class="navbar-btn feedback-button">
+                            <button type="button" class="btn btn-info" onclick="FreshWidget.show(); return false;">
+                                <span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
+                            </button>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                         <!--       <li><a href="mailto:otf@ihtsdo.org?subject=feedback" target="_blank"><span class="i18n" data-i18n-id="i18n_provide_feedback">Provide feedback on this browser</span></a></li> -->
+                                <!--       <li><a href="mailto:otf@ihtsdo.org?subject=feedback" target="_blank"><span class="i18n" data-i18n-id="i18n_provide_feedback">Provide feedback on this browser</span></a></li> -->
                                 <li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>
-                              <!--  <li><a href="#">About SNOMED CT</a></li> -->
+                                <!--  <li><a href="#">About SNOMED CT</a></li> -->
                                 <li class="divider"></li>
                                 <li><a href="http://www.ihtsdotools.org" target="_blank">IHTSDO Tooling</a></li>
                                 <li><a href="http://www.ihtsdo.org" target="_blank">IHTSDO.org</a></li>
@@ -852,7 +891,7 @@
         </nav>
         <div id="alert-section">
         </div>
-        
+
         <div class="container-fluid" style="height: 100%">
             <!-- Welcome Perspective -->
             <div id="welcome-perspective"  class="bperspective">
@@ -865,12 +904,12 @@
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20160731', 'en-edition', 'v20160731', '900000000000509007', 'http://dailybuild.ihtsdotools.org/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>
                     <br>
                     <p>See the work tasks which will appear in the browser since it was updated here - <a href="https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=22319818">https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=22319818</a>
-                    <br>
+                        <br>
                     <p id="lastUpdatedText"></p>
                     <br>
                 </div>
                 <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span></p>
-                <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span>  are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003,138875005);">responsive perspective</a> for best results in tablets and phones.</span></p>
+                <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span>  are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a> for best results in tablets and phones.</span></p>
             </div>
             <!-- Browsing Perspective -->
             <div id="browsing-perspective" class="bperspective">
@@ -893,11 +932,11 @@
                     </div>
                 </div>
             </div>
-                    <footer>
-                        <p>
-                            <small><b>&copy; IHTSDO 2016</b> v1.32</small>
-                        </p>
-                    </footer>
+            <footer>
+                <p>
+                    <small><b>&copy; IHTSDO 2016</b> v1.32</small>
+                </p>
+            </footer>
 
             <!-- Comparing concepts -->
             <div id="comparing-concepts-perspective" class="bperspective">
@@ -974,17 +1013,17 @@
             </div>
         </div>
         <!-- License agreement modal -->
-         <div class="modal fade" id="license-modal" data-backdrop="static">
+        <div class="modal fade" id="license-modal" data-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title"><span class="i18n" data-i18n-id="i18n_licence_agreement">IHTSDO SNOMED CT Browser License Agreement</span></h4>
                     </div>
                     <div class="modal-body">
-                            <p><span class="i18n" data-i18n-id="i18n_licence_agreement_1">In order to use the IHTSDO SNOMED CT Browser, please accept the following license agreement</span>:</p>
-                            <div style="height: 300px; overflow: auto; margin: 20px; border: 1px solid; padding: 10px;">
+                        <p><span class="i18n" data-i18n-id="i18n_licence_agreement_1">In order to use the IHTSDO SNOMED CT Browser, please accept the following license agreement</span>:</p>
+                        <div style="height: 300px; overflow: auto; margin: 20px; border: 1px solid; padding: 10px;">
                             <p><span class="i18n" data-i18n-id="i18n_licence_agreement_2"><strong>IHTSDO SNOMED CT Browser</strong> includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of the International Health Terminology Standards Development Organization (IHTSDO). All rights reserved. SNOMED CT® was originally created by the College of American Pathologists.</span>
-                               <span class="i18n" data-i18n-id="i18n_licence_agreement_3">“SNOMED”, “SNOMED CT” and “SNOMED Clinical Terms” are registered trademarks of the IHTSDO</span> (<a href="http://www.ihtsdo.org">www.ihtsdo.org</a>).</p>
+                                <span class="i18n" data-i18n-id="i18n_licence_agreement_3">“SNOMED”, “SNOMED CT” and “SNOMED Clinical Terms” are registered trademarks of the IHTSDO</span> (<a href="http://www.ihtsdo.org">www.ihtsdo.org</a>).</p>
                             <p><span class="i18n" data-i18n-id="i18n_licence_agreement_4">Use of SNOMED CT in <strong>IHTSDO SNOMED CT Browser</strong> is governed by the conditions of the following SNOMED CT license issued by the IHTSDO</span>:</p>
                             <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”, “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and “SNOMED CT Content” are as defined in the IHTSDO Affiliate License Agreement (see www.ihtsdo.org/license.pdf)</span>.</p>
                             <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://www.ihtsdo.org/license">www.ihtsdo.org/license</a>. Individuals or organizations wishing to register as IHTSDO Affiliates can register at <a href="http://www.ihtsdo.org/salsa">www.ihtsdo.org/salsa</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://www.ihtsdo.org/license.pdf">www.ihtsdo.org/license.pdf)</a></span>.</p>
@@ -1025,33 +1064,44 @@
         -->
 
         <!-- Using Freshdesk Widget for feedback -->
-<script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
-<script type="text/javascript">
-	FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"} );
-</script>
+        <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+        <script type="text/javascript">
+                                            FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"});
+        </script>
 
-<script type="text/javascript">
-var $buoop = {};
-$buoop.ol = window.onload;
-window.onload=function(){
- try {if ($buoop.ol) $buoop.ol();}catch (e) {}
- var e = document.createElement("script");
- e.setAttribute("type", "text/javascript");
- e.setAttribute("src", "//browser-update.org/update.js");
- document.body.appendChild(e);
-}
-</script>
-<!-- Google Analytics script -->
+        <script type="text/javascript">
+            var $buoop = {};
+            $buoop.ol = window.onload;
+            window.onload = function () {
+                try {
+                    if ($buoop.ol)
+                        $buoop.ol();
+                } catch (e) {
+                }
+                var e = document.createElement("script");
+                e.setAttribute("type", "text/javascript");
+                e.setAttribute("src", "//browser-update.org/update.js");
+                document.body.appendChild(e);
+            }
+        </script>
+        <!-- Google Analytics script -->
         <script>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-  				ga('create', 'UA-41892858-7', 'ihtsdotools.org');
-  				ga('send', 'pageview');
+            ga('create', 'UA-41892858-7', 'ihtsdotools.org');
+            ga('send', 'pageview');
 
-		</script>
+        </script>
 
     </body>
 </html>
