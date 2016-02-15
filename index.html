@@ -93,19 +93,21 @@
             };
 
             var manifests;
-            var xhrM = $.ajax(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
-                // nothing
-            }).done(function (result) {
-                manifests = result;
-//                console.log(result);
-            }).fail(function(){
-                $.notify("Error Terminology server not accessible!", {
-                    autoHide: false,
-                    className: "error"
-                });
-//                alert("Error Terminolgy server not accesed");
-                console.log("fail Manifest");
-            });
+            function loadManifests(){
+            	 	xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
+            	     // nothing
+                }).done(function (result) {
+                  		manifests = result;
+                  		//console.log(result);
+                 	}).fail(function () {
+                   $.notify("Error Terminology server not accessible!", {
+                    	autoHide: false,
+                    	className: "error"
+                	});
+                   
+               		console.log("fail Manifest");
+             	 });
+            }
 
             jQuery.get('lastupdated.txt', function(data) {
                 $("#lastUpdatedText").html(data);
@@ -777,7 +779,7 @@
 			}
         </style>
     </head>
-    <body onLoad="start();" style="height: 100%; display: block;">
+   <body onLoad="loadManifests();" style="height: 100%; display: block;">
         <nav class="navbar navbar-default  navbar-static-top" role="navigation">
             <div>
                 <!-- Brand and toggle get grouped for better mobile display -->

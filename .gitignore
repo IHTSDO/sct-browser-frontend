@@ -27,5 +27,6 @@ node_modules
 .idea
 
 *.json
+.project
 
 lastupdated.txt
