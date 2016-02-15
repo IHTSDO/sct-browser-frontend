@@ -135,7 +135,7 @@
 //                console.log("fail Manifest");
                     });
                 });
-                
+
             }
 
             jQuery.get('lastupdated.txt', function (data) {
@@ -264,6 +264,20 @@
                     acceptLicense = false;
                 }
                 options.acceptLicense = (acceptLicense == "true");
+
+                if (QueryString.edition && QueryString.release) {
+                    var i = 0;
+                    while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))) {
+                        i++;
+                    }
+                    if (i < manifests.length) {
+                        options.manifest = manifests[i];
+                        options.textIndexNormalized = options.manifest.textIndexNormalized;
+//                        console.log(options.textIndexNormalized);
+                        verifyDate(options.manifest.expirationDate);
+                    }
+                }
+
 
                 if (QueryString.perspective == "home") {
                     initialize();
@@ -859,7 +873,8 @@
                             </ul>
                         </li>
                         <li class="navbar-btn feedback-button">
-                            <button type="button" class="btn btn-info" onclick="FreshWidget.show(); return false;">
+                            <button type="button" class="btn btn-info" onclick="FreshWidget.show();
+                                    return false;">
                                 <span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
                             </button>
                         </li>
@@ -1066,7 +1081,7 @@
         <!-- Using Freshdesk Widget for feedback -->
         <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
         <script type="text/javascript">
-                                            FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"});
+                                    FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Feedback%2FIssue+Reporting&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"});
         </script>
 
         <script type="text/javascript">
