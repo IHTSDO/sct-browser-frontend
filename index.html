@@ -82,7 +82,7 @@
                 document.cookie = name + "=" + value + expires + "; path=/";
             }
 
-            var enableQueriesInFullPerspective = true;
+            var enableQueriesInFullPerspective = false;
             var selectedLanguage = 'en_US';
             var selectedFlag = 'img/flags/us.png';
             var currentPerspective = "home";
@@ -916,8 +916,8 @@
                                         reloadCurrentPerspective();">Canadian EN Edition 20150526</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('fr-Canadian Edition 20150526', 'fr-ca-edition', 'v20150526', '20581000087109,900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Canadian FR Edition 20150526</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20150731', 'dk-edition', 'v20150731', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
-                                        reloadCurrentPerspective();">Danish Edition 20150731</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20160215', 'dk-edition', 'v20160215', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Danish Edition 20160215</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Netherlands Edition 20150916', 'nl-edition', 'v20150916', '31000146106', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">NL Edition 20150916</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20151130', 'se-edition', 'v20151130', '46011000052107', 'http://multibrowser.ihtsdotools.org/api/snomed');
@@ -1010,7 +1010,7 @@
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#canadaModal"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition</span></a>
 
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20150731', 'dk-edition', 'v20150731', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20160215', 'dk-edition', 'v20160215', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                 switchLanguage('da', 'img/flags/dk.png', true);
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20150916', 'nl-edition', 'v20150916', '31000146106', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
