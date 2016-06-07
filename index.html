@@ -74,7 +74,7 @@
             var options = {
                 serverUrl: "http://dailybuild.ihtsdotools.org/api/snomed",
                 edition: "en-edition",
-                release: "v20160131",
+                release: "v20170131",
                 showIds: false,
                 hideNotAcceptable: true,
                 displayInactiveDescriptions: false,
@@ -90,7 +90,7 @@
                 searchLang: "english",
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
-                highlightByEffectiveTime: "20160731"
+                highlightByEffectiveTime: "20170131"
             };
             options.languageNameOfLangRefset = {
                 "20581000087109": "fr-CA",
@@ -203,7 +203,7 @@
 
                 var release = QueryString.release;
                 if (typeof release == "undefined" || release == null || release == "") {
-                    release = "v20160731";
+                    release = "v20170131";
                 }
                 options.release = release;
 
@@ -854,10 +854,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-btn" id="edition-selector">
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20160731</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20170131</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20160731', 'en-edition', 'v20160731', '900000000000509007');reloadCurrentPerspective();">International Edition 20160731</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20170131', 'en-edition', 'v20170131', '900000000000509007');reloadCurrentPerspective();">International Edition 20170131</a></li>
                             </ul>
                         </li>
                         <li class="navbar-btn" id="perspective-selector">
@@ -912,11 +912,11 @@
             <div id="welcome-perspective"  class="bperspective">
                 <div class="jumbotron">
                     <h1>Daily Build SNOMED CT Browser</h1>
-                    <p>This is a browser for the SNOMED CT Daily Build towards the 20160731 release.</p>
+                    <p>This is a browser for the SNOMED CT Daily Build towards the 20170131 release.</p>
                     <h2><span class="text-warning">Warning</span></h2>
                     <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
                     <p>No new concepts or identifiers may be used in clinical systems.</p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20160731', 'en-edition', 'v20160731', '900000000000509007', 'http://dailybuild.ihtsdotools.org/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20170131', 'en-edition', 'v20170131', '900000000000509007', 'http://dailybuild.ihtsdotools.org/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>
                     <br>
                     <p>See the work tasks which will appear in the browser since it was updated here - <a href="https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=22319818">https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=22319818</a>
                         <br>
