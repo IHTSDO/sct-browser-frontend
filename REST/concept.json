@@ -18,8 +18,8 @@
       "term": "Clinical finding (finding)",
       "caseSignificance": "INITIAL_CHARACTER_CASE_INSENSITIVE", (use of constant)
       "acceptabilityMap": {
-        900000000000508004: "ACCEPTABLE",
-        900000000000509007: "ACCEPTABLE"
+        "900000000000508004": "ACCEPTABLE",
+        "900000000000509007": "ACCEPTABLE"
       }
     },
     {
@@ -32,8 +32,8 @@
       "term": "Clinical finding",
       "caseSignificance": "INITIAL_CHARACTER_CASE_INSENSITIVE", (use of constant)
       "acceptabilityMap": {
-        900000000000508004: "PREFERRED",
-        900000000000509007: "PREFERRED"
+        "900000000000508004": "PREFERRED",
+        "900000000000509007": "PREFERRED"
       }
     }
   ],
