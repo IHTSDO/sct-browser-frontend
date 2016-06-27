@@ -54,7 +54,7 @@
         "conceptId": "116680003",
         "fsn": "Is a (attribute)", (changed)
       },
-      "charecteristicType": "INFERRED", (user of constant)
+      "charecteristicType": "INFERRED", (use of constant)
       "modifier": "EXISTENTIAL_RESTRICTION"
     },
     {
@@ -72,7 +72,7 @@
         "conceptId": "116680003",
         "fsn": "Is a (attribute)", (changed)
       },
-      "charecteristicType": "STATED", (user of constant)
+      "charecteristicType": "STATED", (use of constant)
       "modifier": "EXISTENTIAL_RESTRICTION"
     }
   ]
