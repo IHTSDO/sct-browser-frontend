@@ -1,0 +1,62 @@
+{
+  "PRIMITIVE": {
+    "conceptId": "900000000000074008",
+    "fsn": "Necessary but not sufficient concept definition status (core metadata concept)"
+  },
+  "FULLY_DEFINED": {
+    "conceptId": "900000000000073002",
+    "fsn": "Sufficiently defined concept definition status (core metadata concept)"
+  },
+  "DEFINING_RELATIONSHIP": {
+    "conceptId": "900000000000006009",
+    "fsn": "Defining relationship (core metadata concept)"
+  },
+  "STATED_RELATIONSHIP": {
+    "conceptId": "900000000000010007",
+    "fsn": "Stated relationship (core metadata concept)"
+  },
+  "INFERRED_RELATIONSHIP": {
+    "conceptId": "900000000000011006",
+    "fsn": "Inferred relationship (core metadata concept)"
+  },
+  "QUALIFYING_RELATIONSHIP": {
+    "conceptId": "900000000000225001",
+    "fsn": "Qualifying relationship (core metadata concept)"
+  },
+  "ADDITIONAL_RELATIONSHIP": {
+    "conceptId": "900000000000227009",
+    "fsn": "Additional relationship (core metadata concept)"
+  },
+  "ENTIRE_TERM_CASE_SENSITIVE": {
+    "conceptId": "900000000000017005",
+    "fsn": "Entire term case sensitive (core metadata concept)"
+  },
+  "CASE_INSENSITIVE": {
+    "conceptId": "900000000000448009",
+    "fsn": "Entire term case insensitive (core metadata concept)"
+  },
+  "INITIAL_CHARACTER_CASE_INSENSITIVE": {
+    "conceptId": "900000000000020002",
+    "fsn": "Only initial character case insensitive (core metadata concept)"
+  },
+  "FSN": {
+    "conceptId": "900000000000003001",
+    "fsn": "Fully specified name (core metadata concept)"
+  },
+  "SYNONYM": {
+    "conceptId": "900000000000013009",
+    "fsn": "Synonym (core metadata concept)"
+  },
+  "TEXT_DEFINITION": {
+    "conceptId": "900000000000550004",
+    "fsn": "Definition (core metadata concept)"
+  },
+  "EXISTENTIAL": {
+    "conceptId": "900000000000451002",
+    "fsn": "Existential restriction modifier (core metadata concept)"
+  },
+  "UNIVERSAL": {
+    "conceptId": "900000000000452009",
+    "fsn": "Universal restriction modifier (core metadata concept)"
+  }
+}
