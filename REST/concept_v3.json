@@ -1,0 +1,161 @@
+{
+    "conceptId": "404684003",
+    "effectiveTime": "20040131",
+    "active": true,
+    "module": {
+        "preferredTerm": "SNOMED CT core",
+        "conceptId": "900000000000207008"
+    },
+    "definitionStatus": {
+        "preferredTerm": "Primitive",
+        "conceptId": "900000000000074008"
+    },
+    "fullySpecifiedName": "Clinical finding (finding)",
+    "preferredTerm": "Clinical finding",
+    "descriptions": [
+        {
+            "descriptionId": "2148514019",
+            "effectiveTime": "20040131",
+            "active": true,
+            "module": {
+                "preferredTerm": "SNOMED CT core",
+                "conceptId": "900000000000207008"
+            },
+            "languageCode": "en",
+            "type": {
+                "preferredTerm": "Fully specified name",
+                "conceptId": "900000000000003001"
+            },
+            "term": "Clinical finding (finding)",
+            "caseSignificance": {
+                "preferredTerm": "Initial character case insensitive",
+                "conceptId": "900000000000020002"
+            },
+            "acceptability": [
+                {
+                    "languageReferenceSet": {
+                        "preferredTerm": "GB English",
+                        "conceptId": "900000000000508004"
+                    },
+                    "acceptability": {
+                        "preferredTerm": "Acceptable",
+                        "conceptId": "900000000000549004"
+                    }
+                },
+                {
+                    "languageReferenceSet": {
+                        "preferredTerm": "US English",
+                        "conceptId": "900000000000509007"
+                    },
+                    "acceptability": {
+                        "preferredTerm": "Acceptable",
+                        "conceptId": "900000000000549004"
+                    }
+                }
+            ]
+        },
+        {
+            "descriptionId": "2148514019",
+            "effectiveTime": "20040131",
+            "active": true,
+            "module": {
+                "preferredTerm": "SNOMED CT core",
+                "conceptId": "900000000000207008"
+            },
+            "languageCode": "en",
+            "type": {
+                "preferredTerm": "Fully specified name",
+                "conceptId": "900000000000003001"
+            },
+            "term": "Clinical finding",
+            "caseSignificance": {
+                "preferredTerm": "Initial character case insensitive",
+                "conceptId": "900000000000020002"
+            },
+            "acceptability": [
+                {
+                    "languageReferenceSet": {
+                        "preferredTerm": "GB English",
+                        "conceptId": "900000000000508004"
+                    },
+                    "acceptability": {
+                        "preferredTerm": "Acceptable",
+                        "conceptId": "900000000000549004"
+                    }
+                },
+                {
+                    "languageReferenceSet": {
+                        "preferredTerm": "US English",
+                        "conceptId": "900000000000509007"
+                    },
+                    "acceptability": {
+                        "preferredTerm": "Acceptable",
+                        "conceptId": "900000000000549004"
+                    }
+                }
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipId": "2472459022",
+            "effectiveTime": "20040131",
+            "active": true,
+            "module": {
+                "preferredTerm": "SNOMED CT core",
+                "conceptId": "900000000000207008"
+            },
+            "destination": {
+                "preferredTerm": "SNOMED CT Concept",
+                "conceptId": "138875005",
+                "definitionStatus": {
+                    "preferredTerm": "Primitive",
+                    "conceptId": "900000000000074008"
+                }
+            },
+            "relationshipGroup": 0,
+            "type": {
+                "conceptId": "116680003",
+                "preferredTerm": "Is a"
+            },
+            "characteristicType": {
+                "preferredTerm": "Inferred relationship",
+                "conceptId": "900000000000011006"
+            },
+            "modifier": {
+                "preferredTerm": "Some",
+                "conceptId": "900000000000451002"
+            }
+        },
+        {
+            "relationshipId": "4257218027",
+            "effectiveTime": "20040131",
+            "active": true,
+            "module": {
+                "preferredTerm": "SNOMED CT core",
+                "conceptId": "900000000000207008"
+            },
+            "destination": {
+                "conceptId": "138875005",
+                "preferredTerm": "SNOMED CT Concept",
+                "definitionStatus": {
+                    "preferredTerm": "Primitive",
+                    "conceptId": "900000000000074008"
+                }
+            },
+            "relationshipGroup": 0,
+            "type": {
+                "conceptId": "116680003",
+                "preferredTerm": "Is a"
+            },
+            "characteristicType": {
+                "preferredTerm": "Stated relationship",
+                "conceptId": "900000000000010007"
+            },
+            "modifier": {
+                "preferredTerm": "Some",
+                "conceptId": "900000000000451002"
+            }
+        }
+    ]
+}
