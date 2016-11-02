@@ -38,21 +38,6 @@
         <script src="external-libs/jquery.history.js"></script>
         <script src="external-libs/ZeroClipboard.js"></script>
 
-        <script>
-            $(function () {
-                $("#canada").click(function () {
-                    $("#canadaChoice").dialog();
-                });
-                $("#canada1").click(function () {
-                    $("#canadaChoice").dialog("close");
-                });
-                $("#canada2").click(function () {
-                    $("#canadaChoice").dialog("close");
-                });
-            });
-        </script>
-
-
         <script type="text/javascript">
             function getCookie(c_name) {
                 if (document.cookie.length > 0) {
@@ -232,6 +217,10 @@
                     edition = "en-edition";
                 }
                 options.edition = edition;
+
+                //if (edition == "ca-edition") {
+                  //options.langRefset = ["19491000087109", "20581000087109"];
+                //}
 
                 var release = QueryString.release;
                 if (typeof release == "undefined" || release == null || release == "") {
@@ -765,7 +754,6 @@
                     options.manifest = manifests[i];
                     options.textIndexNormalized = options.manifest.textIndexNormalized;
 //                        console.log(options.textIndexNormalized);
-                    verifyDate(options.manifest.expirationDate);
                 }
                 options.edition = edition;
                 options.release = release;
@@ -777,24 +765,6 @@
                 }
                 $("#perspective-selector").find("button").first().removeClass("disabled");
                 $("#editionLabel").html(label);
-            }
-
-            function verifyDate(release) {
-                var now = new Date();
-                //console.log(release.substring(1, 5) + " " +  release.substring(5, 7) + " " +  release.substring(7, 9));
-                var releaseDate = new Date(release.substring(1, 5), release.substring(5, 7) - 1, release.substring(7, 9));
-                if (releaseDate < now) {
-//                    console.log("bien");
-                    $("#alert-section").html("");
-                } else {
-//                    console.log("expirada");
-                    var alertHtml = '<div class="alert alert-danger" id="outdated-alert">';
-                    alertHtml = alertHtml + '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-                    alertHtml = alertHtml + '<strong>Warning!</strong> the release you are browsing is expired.';
-                    alertHtml = alertHtml + '</div>';
-                    $("#alert-section").html(alertHtml);
-                    $("#outdated-alert").alert();
-                }
             }
 
             function switchLanguage(language, flagPng, fade) {
@@ -898,10 +868,8 @@
                                         reloadCurrentPerspective();">Spanish Edition 20161031</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20160930', 'au-edition', 'v20160930', '46011000052107', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Australian Edition 20160930</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('en-Canadian Edition 20150526', 'en-ca-edition', 'v20150526', '19491000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
-                                        reloadCurrentPerspective();">Canadian EN Edition 20150526</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('fr-Canadian Edition 20150526', 'fr-ca-edition', 'v20150526', '20581000087109,900000000000509007', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
-                                        reloadCurrentPerspective();">Canadian FR Edition 20150526</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Canadian Edition 20161031', 'ca-edition', 'v20161031', '19491000087109,20581000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Canadian Edition 20161031</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20160215', 'dk-edition', 'v20160215', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Danish Edition 20160215</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Netherlands Edition 20160930', 'nl-edition', 'v20160930', '31000146106', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
@@ -989,11 +957,15 @@
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20160930', 'au-edition', 'v20160930', '32570271000036106', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                 switchLanguage('en_US', 'img/flags/au.png', true);
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition</span></a>
-                        <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#canadaModal"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition</span></a>
+
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Canadian Edition 20161031', 'ca-edition', 'v20161031', '19491000087109,20581000087109', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
+                                switchLanguage('en_US', 'img/flags/ca.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition</span></a>
 
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20160215', 'dk-edition', 'v20160215', '554461000005103', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                 switchLanguage('da', 'img/flags/dk.png', true);
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition</span></a>
+
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20160930', 'nl-edition', 'v20160930', '31000146106', 'https://browser-aws-1.ihtsdotools.org/api/snomed');
                                 switchLanguage('en_US', 'img/flags/us.png', true);
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition</span></a>
