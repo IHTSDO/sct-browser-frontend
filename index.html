@@ -766,6 +766,24 @@
                 $("#perspective-selector").find("button").first().removeClass("disabled");
                 $("#editionLabel").html(label);
             }
+            //PWI 20161108 This function went missing at some point.  Returning as urgent P1
+                    function verifyDate(release) {
+                        var now = new Date();
+                        //console.log(release.substring(1, 5) + " " +  release.substring(5, 7) + " " +  release.substring(7, 9));
+                        var releaseDate = new Date(release.substring(1, 5), release.substring(5, 7) - 1, release.substring(7, 9));
+                        if (releaseDate < now) {
+        //                    console.log("bien");
+                            $("#alert-section").html("");
+                        } else {
+        //                    console.log("expirada");
+                            var alertHtml = '<div class="alert alert-danger" id="outdated-alert">';
+                            alertHtml = alertHtml + '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+                            alertHtml = alertHtml + '<strong>Warning!</strong> the release you are browsing is expired.';
+                            alertHtml = alertHtml + '</div>';
+                            $("#alert-section").html(alertHtml);
+                            $("#outdated-alert").alert();
+                        }
+                    }
 
             function switchLanguage(language, flagPng, fade) {
                 selectedLanguage = language;
