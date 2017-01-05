@@ -21,6 +21,7 @@
         <script src="external-libs/handlebars-v1.3.0.js"></script>
         <script src="external-libs/bootstrap.min.js" type="text/javascript"></script>
         <script src="external-libs/jquery.ui.touch-punch.min.js"></script>
+        <script src="https://cdn.ravenjs.com/3.9.1/raven.min.js"></script>
         <script src="external-libs/excellentexport.min.js"></script>
         <script src="external-libs/notify.js"></script>
         <script src="external-libs/popover-extra-placements.js" type="text/javascript"></script>
@@ -37,7 +38,7 @@
         <script src="snomed-interaction-components/js/snomed-interaction-components-1.33.2.min.js"></script>
         <script src="external-libs/jquery.history.js"></script>
         <script src="external-libs/ZeroClipboard.js"></script>
-
+        <script>Raven.config('https://ac957d034c844e1abd708918a77b7b30@sentry.io/126782').install();</script>
         <script type="text/javascript">
             function getCookie(c_name) {
                 if (document.cookie.length > 0) {
@@ -202,25 +203,14 @@
                 }
 
                 if (typeof QueryString.server != "undefined") {
-//                    options.serverUrl = QueryString.server + "api/snomed";
                     options.serverUrl = QueryString.server;
                 }
-
-/*                if (typeof QueryString.server == "undefined" || QueryString.server == null || QueryString.server == "") {
-//                    options.serverUrl = QueryString.server + "api/snomed";
-                    QueryString.server = "https://browser.ihtsdotools.org/api/snomed";
-                }
-*/
 
                 var edition = QueryString.edition;
                 if (typeof edition == "undefined" || edition == null || edition == "") {
                     edition = "en-edition";
                 }
                 options.edition = edition;
-
-                //if (edition == "ca-edition") {
-                  //options.langRefset = ["19491000087109", "20581000087109"];
-                //}
 
                 var release = QueryString.release;
                 if (typeof release == "undefined" || release == null || release == "") {
@@ -866,8 +856,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
-                    <!--        <img class="pull-left " src="img/box-logo.png" style="height:50px" alt="IHTSDO delivering SNOMED, the global clinical terminology"> -->
                     <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
                         <strong>
                             &nbsp;&nbsp;SNOMED International SNOMED CT Browser</strong></a>
@@ -923,9 +911,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <!--       <li><a href="mailto:otf@ihtsdo.org?subject=feedback" target="_blank"><span class="i18n" data-i18n-id="i18n_provide_feedback">Provide feedback on this browser</span></a></li> -->
                                 <li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>
-                                <!--  <li><a href="#">About SNOMED CT</a></li> -->
                                 <li class="divider"></li>
                                 <li><a href="http://www.ihtsdotools.org" target="_blank">SNOMED International Tooling</a></li>
                                 <li><a href="http://www.snomed.org" target="_blank">SNOMED International</a></li>
@@ -936,8 +922,6 @@
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png"> English</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a></li>
-                                <!--                                <li><a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Portuguese</a></li>
-                                                                <li><a href="javascript:void(0);" onclick="switchLanguage('en_GB', 'img/flags/gb.png', true);"><img src="img/flags/gb.png"> English (GB)</a></li>-->
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('se', 'img/flags/se.png', true);"><img src="img/flags/se.png"> Swedish</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png"> Dansk</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Português</a></li>
@@ -993,7 +977,7 @@
                                 switchLanguage('se', 'img/flags/se.png', true);
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United Kingdom Edition 20161001', 'uk-edition', 'v20161001', '900000000000508004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('en_US', 'img/flags/gb.png', true);
+                                switchLanguage('en_GB', 'img/flags/gb.png', true);
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20160901', 'us-edition', 'v20160901', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                 switchLanguage('en_US', 'img/flags/us.png', true);
@@ -1153,11 +1137,11 @@
                         <p><span class="i18n" data-i18n-id="i18n_licence_agreement_1">In order to use the SNOMED International SNOMED CT Browser, please accept the following license agreement</span>:</p>
                         <div style="height: 300px; overflow: auto; margin: 20px; border: 1px solid; padding: 10px;">
                             <p><span class="i18n" data-i18n-id="i18n_licence_agreement_2"><strong>SNOMED International SNOMED CT Browser</strong> includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of SNOMED International. All rights reserved. SNOMED CT® was originally created by the College of American Pathologists.</span>
-                                <span class="i18n" data-i18n-id="i18n_licence_agreement_3">“SNOMED”, “SNOMED CT” and “SNOMED Clinical Terms” are registered trademarks of the SNOMED International (<a href="http://www.ihtsdo.org">www.snomed.org</a>).</span></p>
+                                <span class="i18n" data-i18n-id="i18n_licence_agreement_3">“SNOMED”, “SNOMED CT” and “SNOMED Clinical Terms” are registered trademarks of the SNOMED International (<a href="http://www.snomed.org">www.snomed.org</a>).</span></p>
                             <p><span class="i18n" data-i18n-id="i18n_licence_agreement_4">Use of SNOMED CT in <strong>SNOMED International SNOMED CT Browser</strong> is governed by the conditions of the following SNOMED CT license issued by the SNOMED International</span>:</p>
-                            <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”, “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and “SNOMED CT Content” are as defined in the SNOMED International Affiliate License Agreement (see www.ihtsdo.org/license.pdf)</span>.</p>
-                            <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://www.ihtsdo.org/license">www.ihtsdo.org/license</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="http://www.ihtsdo.org/salsa">www.ihtsdo.org/salsa</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://www.ihtsdo.org/license.pdf">www.snomed.org/license.pdf)</a></span>.</p>
-                            <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://www.ihtsdo.org/members">www.ihtsdo.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
+                            <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”, “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and “SNOMED CT Content” are as defined in the SNOMED International Affiliate License Agreement (see www.snomed.org/license.pdf)</span>.</p>
+                            <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://www.snomed.org/license">www.snomed.org/license</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://www.snomed.org/license.pdf">www.snomed.org/license.pdf)</a></span>.</p>
+                            <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://www.snomed.org/members">www.snomed.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
                             <p style="margin-left: 20px;">4. <span class="i18n" data-i18n-id="i18n_licence_agreement_8">End Users, that do not hold an SNOMED International Affiliate License, may access SNOMED CT® using <strong>SNOMED International SNOMED CT Browser</strong> subject to acceptance of and adherence to the following sub-license limitations</span>:</p>
                             <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_9">The sub-licensee is only permitted to access SNOMED CT® using this software (or service) for the purpose of exploring and evaluating the terminology</span>.</p>
                             <p style="margin-left: 40px;">b) <span class="i18n" data-i18n-id="i18n_licence_agreement_10">The sub-licensee is not permitted the use of this software as part of a system that constitutes a SNOMED CT “Data Creation System” or “Data Analysis System”, as defined in the SNOMED International Affiliate License. This means that the sub-licensee must not use <strong>SNOMED International SNOMED CT Browser</strong> to add or copy SNOMED CT identifiers into any type of record system, database or document</span>.</p>
@@ -1215,14 +1199,10 @@
             </div>
         </div>
 
-        <!-- JIRA feedback script
-                <script type="text/javascript" src="https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e/en_US-dgb2l9-1988229788/6256/5/1.4.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=9215d950"></script>
-                -->
-
         <!-- Using Freshdesk Widget for feedback -->
         <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
         <script type="text/javascript">
-                    FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=IHTSDO+Browser+Application+Feedback%2FIssue+Reporting+(Not+for+Content+Issues)&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"});
+                    FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Application+Feedback%2FIssue+Reporting+(Not+for+Content+Issues)&searchArea=no", "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png", "widgetType": "popup", "buttonType": "image", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#00AADD", "alignment": "1", "offset": "-1500px", "formHeight": "500px", "url": "https://ihtsdo.freshdesk.com"});
         </script>
 
         <script type="text/javascript">
