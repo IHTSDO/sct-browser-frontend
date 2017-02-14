@@ -1,0 +1,79 @@
+{
+  "conceptId": "404684003",
+  "active": true,
+  "module": "900000000000207008",
+  "effectiveTime": "20040131",
+  "definitionStatus": "PRIMITIVE", (use of constant)
+  "fsn": "Clinical finding (finding)",
+  "preferredTerm": "Clinical finding", (changed)
+
+  "descriptions": [
+    {
+      "descriptionId": "2148514019",
+      "effectiveTime": "20040131",
+      "active": true,
+      "module": "900000000000207008",
+      "languageCode": "en",
+      "type": "FSN", (use of constant)
+      "term": "Clinical finding (finding)",
+      "caseSignificance": "INITIAL_CHARACTER_CASE_INSENSITIVE", (use of constant)
+      "acceptabilityMap": {
+        "900000000000508004": "ACCEPTABLE",
+        "900000000000509007": "ACCEPTABLE"
+      }
+    },
+    {
+      "descriptionId": "2148514019",
+      "effectiveTime": "20040131",
+      "active": true,
+      "module": "900000000000207008",
+      "languageCode": "en",
+      "type": "SYNONYM", (use of constant)
+      "term": "Clinical finding",
+      "caseSignificance": "INITIAL_CHARACTER_CASE_INSENSITIVE", (use of constant)
+      "acceptabilityMap": {
+        "900000000000508004": "PREFERRED",
+        "900000000000509007": "PREFERRED"
+      }
+    }
+  ],
+
+  "relationships": [
+    {
+      "relationshipId": "2472459022",
+      "effectiveTime": "20040131",
+      "active": true,
+      "module": "900000000000207008",
+      "sourceId": "404684003",
+      "destination": {
+        "conceptId": "138875005",
+        "fsn": "SNOMED CT Concept (SNOMED RT+CTV3)", (changed)
+      },
+      "relationshipGroup": 0, (changed)
+      "type": {
+        "conceptId": "116680003",
+        "fsn": "Is a (attribute)", (changed)
+      },
+      "charecteristicType": "INFERRED", (use of constant)
+      "modifier": "EXISTENTIAL_RESTRICTION"
+    },
+    {
+      "relationshipId": "4257218027",
+      "effectiveTime": "20040131",
+      "active": true,
+      "module": "900000000000207008",
+      "sourceId": "404684003",
+      "destination": {
+        "conceptId": "138875005",
+        "fsn": "SNOMED CT Concept (SNOMED RT+CTV3)", (changed)
+      },
+      "relationshipGroup": 0, (changed)
+      "type": {
+        "conceptId": "116680003",
+        "fsn": "Is a (attribute)", (changed)
+      },
+      "charecteristicType": "STATED", (use of constant)
+      "modifier": "EXISTENTIAL_RESTRICTION"
+    }
+  ]
+}
