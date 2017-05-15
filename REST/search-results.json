@@ -1,44 +1,56 @@
 {
-    "items": [
+    "content": [
         {
             "term": "Heart",
             "conceptId": "302509004",
-            "active": true,
+            "termActive": true,
             "conceptActive": true,
             "fsn": "Entire heart (body structure)",
-            "module": "900000000000207008",
-            "definitionStatus": "Primitive"
+            "moduleId": "900000000000207008",
+            "definitionStatus": {
+                "preferredTerm": "Primitive",
+                "conceptId": "900000000000074008"
+            },
         },
         {
             "term": "Heart",
             "conceptId": "80891009",
-            "active": true,
+            "termActive": true,
             "conceptActive": true,
             "fsn": "Heart structure (body structure)",
-            "module": "900000000000207008",
-            "definitionStatus": "Primitive"
+            "moduleId": "900000000000207008",
+            "definitionStatus": {
+                "preferredTerm": "Primitive",
+                "conceptId": "900000000000074008"
+            },
         },
         {
             "term": "Heartburn",
             "conceptId": "16331000",
-            "active": true,
+            "termActive": true,
             "conceptActive": true,
             "fsn": "Heartburn (finding)",
-            "module": "900000000000207008",
-            "definitionStatus": "Primitive"
+            "moduleId": "900000000000207008",
+            "definitionStatus": {
+                "preferredTerm": "Primitive",
+                "conceptId": "900000000000074008"
+            },
         },
         {
             "term": "Heart rate",
             "conceptId": "364075005",
-            "active": true,
+            "termActive": true,
             "conceptActive": true,
             "fsn": "Heart rate (observable entity)",
-            "module": "900000000000207008",
-            "definitionStatus": "Primitive"
+            "moduleId": "900000000000207008",
+            "definitionStatus": {
+                "preferredTerm": "Primitive",
+                "conceptId": "900000000000074008"
+            },
         }
     ],
-    "total": 2798,
-    "page": 1,
-    "pageSize": 4,
-    "totalPages": 700
+    "size": 4,
+    "number": 0,
+    "totalPages": 2,
+    "totalElements": 7
 }
