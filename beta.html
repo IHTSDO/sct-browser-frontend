@@ -4,7 +4,7 @@
         <title>SNOMED International SNOMED CT Browser - Beta</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
-		<meta name="description" content="SNOMED International SNOMED CT Browser">
+		<meta name="description" content="SNOMED International SNOMED CT Beta Browser">
 		<meta name="author" content="SNOMED International">
 		<link rel="icon" type="image/png"  href="favicon.png">
 
@@ -45,11 +45,9 @@
             var currentPerspective = "home";
 
             var options = {
-//                serverUrl: "http://107.170.67.17/api/snomed",
                 serverUrl: "https://prod-browser-exten.ihtsdotools.org/api/snomed",
-                //serverUrl: "http://107.170.33.116:3000"
-                edition: "en-edition",
-                release: "v20170131",
+                edition: "beta-edition",
+                release: "v20170731",
                 showIds: false,
                 hideNotAcceptable: true,
                 displayInactiveDescriptions: false,
@@ -65,7 +63,7 @@
                 searchLang: "english",
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
-                highlightByEffectiveTime: "20170131"
+                highlightByEffectiveTime: "20170731"
             };
             options.languageNameOfLangRefset = {
                 "20581000087109": "fr-CA",
@@ -754,10 +752,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-btn" id="edition-selector">
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20170131 Beta</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20170731 Beta</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20170131', 'en-edition', 'v20170131', '900000000000509007');reloadCurrentPerspective();">International Edition 20170131 Beta</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Beta International Edition 20170731', 'beta-edition', 'v20170731', '900000000000509007');reloadCurrentPerspective();">International Edition 20170731 Beta</a></li>
                             </ul>
                         </li>
                         <li class="navbar-btn" id="perspective-selector">
@@ -816,11 +814,11 @@
             <div id="welcome-perspective"  class="bperspective">
                 <div class="jumbotron">
                     <h1>Beta SNOMED CT Browser</h1>
-                    <p>This is a browser for the <strong>SNOMED CT Beta Build</strong> of the January 2017 release.</p>
+                    <p>This is a browser for the <strong>SNOMED CT Beta Build</strong> of the July 2017 release.</p>
                     <h2><span class="text-warning">Warning</span></h2>
                     <p>This browser contains a test build of the terminology for beta evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
                     <p>No new concepts or identifiers may be used in clinical systems.</p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20170131', 'en-edition', 'v20170131', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Beta edition</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Beta InternationalEdition 20170731', 'beta-edition', 'v20170731', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">July 2017 Beta edition</span></a>
                     <br>
                 </div>
                 <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span></p>
@@ -849,7 +847,7 @@
             </div>
             <footer>
                 <p>
-                    <small><b>&copy; SNOMED International 2017</b> v1.25</small>
+                    <small><b>&copy; SNOMED International 2017</b> v1.25.0</small>
                 </p>
             </footer>
 
@@ -900,6 +898,7 @@
                             <li><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
                             <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
                             <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
+                            <li id="fh-daily_canvas-li"><a href="#fh-daily_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_daily_build">Daily Build</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>

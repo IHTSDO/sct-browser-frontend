@@ -45,11 +45,9 @@
             var currentPerspective = "home";
 
             var options = {
-//                serverUrl: "http://107.170.67.17/api/snomed",
                 serverUrl: "https://dailybuild.ihtsdotools.org/api/snomed",
-                //serverUrl: "http://107.170.33.116:3000"
                 edition: "en-edition",
-                release: "v20170731",
+                release: "v20180131",
                 showIds: false,
                 hideNotAcceptable: true,
                 displayInactiveDescriptions: false,
@@ -65,7 +63,7 @@
                 searchLang: "english",
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
-                highlightByEffectiveTime: "20170731"
+                highlightByEffectiveTime: "20180131"
             };
             options.languageNameOfLangRefset = {
                 "20581000087109": "fr-CA",
@@ -754,10 +752,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-btn" id="edition-selector">
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20170731</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180131</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20170731', 'en-edition', 'v20170731', '900000000000509007');reloadCurrentPerspective();">International Edition 20170731</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180131', 'en-edition', 'v20180131', '900000000000509007');reloadCurrentPerspective();">International Edition 20180131</a></li>
                             </ul>
                         </li>
                         <li class="navbar-btn" id="perspective-selector">
@@ -816,7 +814,7 @@
             <div id="welcome-perspective"  class="bperspective">
                 <div class="jumbotron">
                     <h1>Daily Build SNOMED CT Browser</h1>
-                    <p>This is a browser for the SNOMED CT Daily Build towards the July 2017 release.</p>
+                    <p>This is a browser for the SNOMED CT Daily Build towards the January 2018 release.</p>
                     <p>Statistics on the current authoring cycle can be found on the <strong><a href="https://dailybuild.ihtsdotools.org/qa" target="_blank">Daily Build Statistics site</a></strong>.</p>
                     <h2><span class="text-warning">Warning</span></h2>
                     <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
