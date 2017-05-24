@@ -40,21 +40,21 @@
         <script src="external-libs/ZeroClipboard.js"></script>
 
         <script type="text/javascript">
-            var selectedLanguage = 'en_US';
-            var selectedFlag = 'img/flags/us.png';
+            var selectedLanguage = 'da';
+            var selectedFlag = 'img/flags/da.png';
             var currentPerspective = "home";
 
             var options = {
                 serverUrl: "https://dailybuild.ihtsdotools.org/api/snomed",
-                edition: "en-edition",
-                release: "v20180131",
+                edition: "dk-edition",
+                release: "v20170731",
                 showIds: false,
                 hideNotAcceptable: true,
                 displayInactiveDescriptions: false,
                 displaySynonyms: true,
                 selectedView: "inferred",
                 displayChildren: false,
-                langRefset: "900000000000509007",
+                langRefset: "554461000005103",
                 closeButton: false,
                 collapseButton: false,
                 linkerButton: true,
@@ -63,7 +63,7 @@
                 searchLang: "english",
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
-                highlightByEffectiveTime: "20180131"
+                highlightByEffectiveTime: "20170731"
             };
             options.languageNameOfLangRefset = {
                 "20581000087109": "fr-CA",
@@ -752,11 +752,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-btn" id="edition-selector">
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180131</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20170731</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180131', 'en-edition', 'v20180131', '900000000000509007');reloadCurrentPerspective();">International Edition 20180131</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('Danish Daily Build Edition', 'dk-edition', 'v20170731', '554461000005103');reloadCurrentPerspective();">International Edition 20180131</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20170731', 'en-edition', 'v20170731', '900000000000509007');reloadCurrentPerspective();">International Edition 20170731</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Danish Daily Build Edition', 'dk-edition', 'v20170731', '554461000005103');reloadCurrentPerspective();">Danish Daily Build</a></li>
                             </ul>
                         </li>
                         <li class="navbar-btn" id="perspective-selector">
