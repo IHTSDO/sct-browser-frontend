@@ -150,6 +150,8 @@ function dailyBuildPanel(divElement, options) {
             xhr.abort();
             console.log("aborting call...");
         }
+        console.log("edition = "panel.options.edition);
+        console.log("release = "panel.options.release);
         xhr = $.getJSON("diff_reports/diff_index.json", function( data ) {
             var reportsHtml =  '';
             panel.title = data.title;
