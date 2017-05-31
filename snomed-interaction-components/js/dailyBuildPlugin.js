@@ -152,7 +152,7 @@ function dailyBuildPanel(divElement, options) {
         }
         console.log("edition = "+panel.options.edition);
         console.log("release = "+panel.options.release);
-        var diffDir = "diff_reports_"++panel.options.edition+"_"+panel.options.release;
+        var diffDir = "diff_reports_"+panel.options.edition+"_"+panel.options.release;
         console.log("diffDir = "+diffDir);
         xhr = $.getJSON("diff_reports/diff_index.json", function( data ) {
             var reportsHtml =  '';
