@@ -46,7 +46,7 @@
 
             var options = {
                 serverUrl: "https://prod-dailybuild.ihtsdotools.org/api/snomed",
-                edition: "en-edition",
+                edition: "se-edition",
                 release: "v20170731",
                 showIds: false,
                 hideNotAcceptable: true,
@@ -752,10 +752,9 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-btn" id="edition-selector">
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180131</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">Swedish Daily Build Edition</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-								<li><a href="javascript:void(0);" onclick="switchRelease('Daily Build Edition 20170731', 'en-edition', 'v20170731', '900000000000509007', 'https://prod-dailybuild.ihtsdotools.org/api/snomed');reloadCurrentPerspective();">Daily Build Edition 20170731</a></li>
                                	<li><a href="javascript:void(0);" onclick="switchRelease('Swedish Daily Build Edition', 'se-edition', 'v20170731', '46011000052107', 'https://prod-dailybuild.ihtsdotools.org/api/snomed');reloadCurrentPerspective();">Swedish Daily Build Edition</a></li>
                             </ul>
                         </li>
@@ -815,7 +814,6 @@
                     <h2><span class="text-warning">Warning</span></h2>
                     <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
                     <p>No new concepts or identifiers may be used in clinical systems.</p>
-					<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20170731', 'en-edition', 'v20170731', '900000000000509007', 'https://prod-dailybuild.ihtsdotools.org/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n"data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build Edition 20170731</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Daily Build Edition', 'se-edition', 'v20170731', '46011000052107', 'https://prod-dailybuild.ihtsdotools.org/api/snomed'); switchLanguage('da', 'img/flags/se.png', true); switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish Daily Build edition</span></a>
                     <br>
                     <p>See the work tasks which will appear in the browser since it was updated here - <a href="https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=22319818">https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=22319818</a>
