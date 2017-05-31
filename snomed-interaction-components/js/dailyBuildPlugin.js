@@ -152,6 +152,8 @@ function dailyBuildPanel(divElement, options) {
         }
         console.log("edition = "+panel.options.edition);
         console.log("release = "+panel.options.release);
+        var diffDir = "diff_reports_"++panel.options.edition+"_"+panel.options.release;
+        console.log("diffDir = "+diffDir);
         xhr = $.getJSON("diff_reports/diff_index.json", function( data ) {
             var reportsHtml =  '';
             panel.title = data.title;
@@ -172,6 +174,7 @@ function dailyBuildPanel(divElement, options) {
             $('#' + panel.divElement.id + '-panelBody').find('.selectable-row').click(function (event) {
                 panel.reportTitle = $(event.target).closest('tr').attr('data-title');
                 var link = $(event.target).closest('tr').attr('data-file');
+                console.log("diffDir2 = "+diffDir);
                 panel.loadReport("diff_reports/" + link);
 //                panel.loadReport("diff_reports/" + link);
             });
