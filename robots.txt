@@ -1,6 +1,6 @@
 # robotstxt.org/
 
 User-agent: *
-Disallow: /query.html
-Disallow: /drugs.html
-Disallow: /REST
+Allow: /$
+Allow: /index.html
+Disallow: /
