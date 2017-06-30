@@ -179,6 +179,9 @@ function dailyBuildPanel(divElement, options) {
 //                panel.loadReport("diff_reports/" + link);
             });
 
+        }).fail(function () {
+            $('#' + panel.divElement.id + '-panelBody').html("<br><br><p class='text-center'>" +
+                "No daily build update details.</p>");
         });
     }
 

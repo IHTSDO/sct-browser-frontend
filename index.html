@@ -57,7 +57,7 @@
                 displaySynonyms: true,
                 selectedView: "inferred",
                 displayChildren: false,
-                langRefset: "900000000000509007",
+                langRefset: ["900000000000509007"],
                 closeButton: false,
                 collapseButton: false,
                 linkerButton: true,
@@ -82,19 +82,20 @@
             };
 
             var manifests;
-            var xhrM = $.ajax(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
-                // nothing
-            }).done(function (result) {
-                manifests = result;
-//                console.log(result);
-            }).fail(function(){
-                $.notify("Error Terminology server not accessible!", {
-                    autoHide: false,
-                    className: "error"
+            function loadManifests(){
+                xhrM = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function (result) {
+                    // nothing
+                }).done(function (result) {
+                    manifests = result;
+                    start();
+                }).fail(function () {
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
+                    console.log("fail Manifest");
                 });
-//                alert("Error Terminolgy server not accesed");
-                console.log("fail Manifest");
-            });
+            }
 
             jQuery.get('lastupdated.txt', function(data) {
                 $("#lastUpdatedText").html(data);
@@ -122,6 +123,17 @@
             } ();
 
             function start() {
+                $(function() {
+                    $.extend($.fn.disableTextSelect = function() {
+                        return this.each(function() {
+                            $(this).mousedown(function() {
+                                return false;
+                            });
+                        });
+                    });
+                    $('.noSelect').disableTextSelect(); //No text selection on elements with a class of 'noSelect'
+                });
+
                 // Read parameters
                 if (typeof QueryString.dev != "undefined") {
                     console.log("Using Dev Server...");
@@ -133,7 +145,7 @@
                 }
 
                 if (typeof QueryString.server != "undefined") {
-                    options.serverUrl = QueryString.server + "api/snomed";
+                    options.serverUrl = QueryString.server;
                 }
 
                 var edition = QueryString.edition;
@@ -154,12 +166,19 @@
                 }
                 options.diagrammingMarkupEnabled = diagrammingMarkupEnabled;
 
-                var langRefset = QueryString.langRefset;
-                if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
-                    langRefset = "900000000000509007";
-                }
-                options.langRefset = langRefset;
+//                var langRefset = QueryString.langRefset;
+//                if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
+//                    langRefset = "900000000000509007";
+//                }
+//                options.langRefset = langRefset;
 
+                if (QueryString.langRefset) {
+                    var langRefset = QueryString.langRefset.split(",");
+                    if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
+                        langRefset = options.langRefset;
+                    }
+                    options.langRefset = langRefset;
+                }
 //                $("#editionLabel").html(edition + " " + release);
 
                 if (QueryString.ui_language == "en") {
@@ -203,7 +222,18 @@
                     acceptLicense = false;
                 }
                 options.acceptLicense = (acceptLicense == "true");
-
+                if (QueryString.edition && QueryString.release){
+                    var i = 0;
+                    while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
+                        i++;
+                    }
+                    if (i < manifests.length){
+                        options.manifest = manifests[i];
+                        options.textIndexNormalized = options.manifest.textIndexNormalized;
+//                        console.log(options.textIndexNormalized);
+                        verifyDate(options.manifest.expirationDate);
+                    }
+                }
                 if (QueryString.perspective == "home") {
                     initialize();
                 } else if (QueryString.perspective == "browsing") {
@@ -636,7 +666,7 @@
                 }
                 options.edition = edition;
                 options.release = release;
-                options.langRefset = langRefset;
+                options.langRefset = langRefset.split(",");
                 if (serverUrl){
                     options.serverUrl = serverUrl;
                 }else{
@@ -733,7 +763,7 @@
 			}
         </style>
     </head>
-    <body onLoad="start();" style="height: 100%; display: block;">
+    <body onLoad="loadManifests();" style="height: 100%; display: block;">
         <nav class="navbar navbar-default  navbar-static-top" role="navigation">
             <div>
                 <!-- Brand and toggle get grouped for better mobile display -->
