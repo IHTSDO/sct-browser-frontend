@@ -3,6 +3,7 @@
     <head>
         <title>SNOMED International Browser</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="cache-control" content="no-cache">
         <meta name="viewport" content="width=device-width">
 		<meta name="description" content="SNOMED International SNOMED CT Browser">
 		<meta name="author" content="SNOMED International">
@@ -24,6 +25,7 @@
         <script src="https://cdn.ravenjs.com/3.9.1/raven.min.js"></script>
         <script src="external-libs/excellentexport.min.js"></script>
         <script src="external-libs/notify.js"></script>
+        <script src="external-libs/clipboard.min.js"></script>
         <script src="external-libs/popover-extra-placements.js" type="text/javascript"></script>
 
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
@@ -34,8 +36,8 @@
         <link rel="stylesheet" href="css/popover-extra-placements.css">
         <link rel="stylesheet" href="css/animate.css">
 
-        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.33.2.min.css">
-        <script src="snomed-interaction-components/js/snomed-interaction-components-1.33.2.min.js"></script>
+        <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.35.0.min.css">
+        <script src="snomed-interaction-components/js/snomed-interaction-components-1.35.0.min.js"></script>
         <script src="external-libs/jquery.history.js"></script>
         <script src="external-libs/ZeroClipboard.js"></script>
         <script>Raven.config('https://ac957d034c844e1abd708918a77b7b30@sentry.io/126782').install();</script>
@@ -880,8 +882,10 @@
                                         reloadCurrentPerspective();">Danish Edition 20170331</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('Netherlands Edition 20170331', 'nl-edition', 'v20170331', '31000146106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">NL Edition 20170331</a></li>
-                                <li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20161130', 'se-edition', 'v20161130', '46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                        reloadCurrentPerspective();">Swedish Edition 20161130</a></li>
+                               <!--  <li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20161130', 'se-edition', 'v20161130', '46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Swedish Edition 20161130</a></li>  -->
+                                <li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20170531', 'se-edition', 'v20170531', '46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                                        reloadCurrentPerspective();">Swedish Edition 20170531</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('United Kingdom Edition 20170401', 'uk-edition', 'v20170401', '900000000000508004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">UK Edition 20170401</a></li>
                                 <li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20170301', 'us-edition', 'v20170301', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
@@ -973,7 +977,10 @@
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition</span></a>
                     </p>
                     <p>
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20161130', 'se-edition', 'v20161130', '46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                        <!--  <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20161130', 'se-edition', 'v20161130', '46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                                switchLanguage('se', 'img/flags/se.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition</span></a> -->
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20170531', 'se-edition', 'v20170531', '46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                 switchLanguage('se', 'img/flags/se.png', true);
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition</span></a>
                         <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United Kingdom Edition 20170401', 'uk-edition', 'v20170401', '900000000000508004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
@@ -1030,7 +1037,7 @@
             </div>
             <footer>
                 <p>
-                    <small><b>&copy; SNOMED International 2017</b> v1.33.2</small>
+                    <small><b>&copy; SNOMED International 2017</b> v1.35</small>
                 </p>
             </footer>
 
