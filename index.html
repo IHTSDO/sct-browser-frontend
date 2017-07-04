@@ -222,7 +222,7 @@
                     acceptLicense = false;
                 }
                 options.acceptLicense = (acceptLicense == "true");
-                if (QueryString.edition && QueryString.release){
+//                if (QueryString.edition && QueryString.release){
                     var i = 0;
                     while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))){
                         i++;
@@ -233,7 +233,7 @@
 //                        console.log(options.textIndexNormalized);
                         verifyDate(options.manifest.expirationDate);
                     }
-                }
+//                }
                 if (QueryString.perspective == "home") {
                     initialize();
                 } else if (QueryString.perspective == "browsing") {
