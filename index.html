@@ -290,7 +290,7 @@
                         options.manifest = manifests[i];
                         options.textIndexNormalized = options.manifest.textIndexNormalized;
 //                        console.log(options.textIndexNormalized);
-                        verifyDate(options.manifest.expirationDate);
+//                        verifyDate(options.manifest.expirationDate);
                     }
 //                }
                 if (QueryString.perspective == "home") {
@@ -761,6 +761,7 @@
             //PWI 20161108 This function went missing at some point.  Returning as urgent P1
                     function verifyDate(release) {
                         var now = new Date();
+                        //console.log("releasedate is " + release);
                         //console.log(release.substring(1, 5) + " " +  release.substring(5, 7) + " " +  release.substring(7, 9));
                         var releaseDate = new Date(release.substring(1, 5), release.substring(5, 7) - 1, release.substring(7, 9));
                         if (releaseDate < now) {
