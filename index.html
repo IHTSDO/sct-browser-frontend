@@ -634,7 +634,7 @@
                 var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
                 var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
                 if (enableQueriesInFullPerspective){
-                    if (cdPanel1.options.edition == "en-edition") {
+                    if ((cdPanel1.options.edition == "en-edition") || (cdPanel1.options.edition == "us-edition")) {
                       $("#fh-query_canvas-li").show();
                       var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), fhOptions);
                       cdPanel1.subscribe(qpa);
