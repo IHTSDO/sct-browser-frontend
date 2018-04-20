@@ -85,7 +85,7 @@
 
             var options = {
                 serverUrl: "http://browser.ihtsdotools.org/api/snomed",
-                queryServerUrl: "http://browser.ihtsdotools.org/ecl",
+                queryServerUrl: "http://localhost:8080",
                 queryBranch: "MAIN/2018-01-31",
                 edition: "en-edition",
                 release: "v20180131",
@@ -1231,7 +1231,7 @@
 
             ga('create', 'UA-41892858-7', 'ihtsdotools.org');
             ga('send', 'pageview');
-
+            ga('set', 'anonymizeIP', true);
         </script>
 
         <script>
