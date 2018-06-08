@@ -1,7 +1,0 @@
-{
-  "name": "sct-browser-frontend",
-  "version": "0.0.1",
-  "dependencies": {
-    "bower": "~1.3.5"
-  }
-}

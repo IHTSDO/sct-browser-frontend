@@ -25,3 +25,8 @@ build/Release
 node_modules
 
 .idea
+.DS_Store
+lastupdated.txt
+diff_report*
+yarn.lock
+package-lock.json
