@@ -10,37 +10,37 @@
     <meta name="author" content="SNOMED International">
     <link rel="icon" type="image/png" href="favicon.png">
 
-    <script src="external-libs/jquery-2.1.0.min.js" type="text/javascript"></script>
-    <script src="external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
-    <script src="external-libs/base64.js" type="text/javascript"></script>
-    <script src="external-libs/jquery.svg.js" type="text/javascript"></script>
-    <script src="external-libs/jquery.splitter-0.14.0.js" type="text/javascript"></script>
-    <script src="external-libs/conduit.min.js" type="text/javascript"></script>
-    <script src="external-libs/lodash.js" type="text/javascript"></script>
-    <script src="external-libs/postal.min.js" type="text/javascript"></script>
-    <script src="external-libs/bootstrap-tour.min.js"></script>
-    <script src="external-libs/jquery.i18n.properties-min-1.0.9.js"></script>
-    <script src="external-libs/handlebars-v1.3.0.js"></script>
-    <script src="external-libs/bootstrap.min.js" type="text/javascript"></script>
-    <script src="external-libs/jquery.ui.touch-punch.min.js"></script>
-    <script src="external-libs/excellentexport.min.js"></script>
-    <script src="external-libs/notify.js"></script>
-    <script src="external-libs/clipboard.min.js"></script>
-    <script src="external-libs/popover-extra-placements.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+    <script src="/external-libs/base64.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery.svg.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery.splitter-0.14.0.js" type="text/javascript"></script>
+    <script src="/external-libs/conduit.min.js" type="text/javascript"></script>
+    <script src="/external-libs/lodash.js" type="text/javascript"></script>
+    <script src="/external-libs/postal.min.js" type="text/javascript"></script>
+    <script src="/external-libs/bootstrap-tour.min.js"></script>
+    <script src="/external-libs/jquery.i18n.properties-min-1.0.9.js"></script>
+    <script src="/external-libs/handlebars-v1.3.0.min.js"></script>
+    <script src="/external-libs/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery.ui.touch-punch.min.js"></script>
+    <script src="/external-libs/excellentexport.min.js"></script>
+    <script src="/external-libs/notify.js"></script>
+    <script src="/external-libs/clipboard.min.js"></script>
+    <script src="/external-libs/popover-extra-placements.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/jquery.splitter.css">
-    <link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.base.12.css">
-    <link rel="stylesheet" href="css/bootstrap-tour.css">
-    <link rel="stylesheet" href="css/popover-extra-placements.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/jquery.splitter.css">
+    <link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.base.12.css">
+    <link rel="stylesheet" href="/css/bootstrap-tour.css">
+    <link rel="stylesheet" href="/css/popover-extra-placements.css">
+    <link rel="stylesheet" href="/css/animate.css">
 
-    <link rel="stylesheet" href="snomed-interaction-components/css/snomed-interaction-components-1.37.4.2.min.css">
+    <link rel="stylesheet" href="/snomed-interaction-components/css/snomed-interaction-components-1.37.4.2.min.css">
 
-    <script src="snomed-interaction-components/js/snomed-interaction-components-1.37.4.2.min.js"></script>
-    <script src="external-libs/jquery.history.js"></script>
-    <script src="external-libs/ZeroClipboard.js"></script>
+    <script src="/snomed-interaction-components/js/snomed-interaction-components-1.37.4.2.min.js"></script>
+    <script src="/external-libs/jquery.history.js"></script>
+    <script src="/external-libs/ZeroClipboard.js"></script>
 
     <script type="text/javascript">
         function getCookie(c_name) {
@@ -72,7 +72,7 @@
 
         var enableQueriesInFullPerspective = true;
         var selectedLanguage = 'en_US';
-        var selectedFlag = 'img/flags/us.png';
+        var selectedFlag = '/img/flags/us.png';
         var currentPerspective = "home";
 
         //It can be time consuming to load all the collections into mongo.  If you are only loading one collection
@@ -245,19 +245,19 @@
 
             if (QueryString.ui_language == "en") {
                 selectedLanguage = 'en_US';
-                selectedFlag = 'img/flags/us.png';
+                selectedFlag = '/img/flags/us.png';
             } else if (QueryString.ui_language == "es") {
                 selectedLanguage = 'es';
-                selectedFlag = 'img/flags/es.png';
+                selectedFlag = '/img/flags/es.png';
             } else if (QueryString.ui_language == "se") {
                 selectedLanguage = 'se';
-                selectedFlag = 'img/flags/se.png';
+                selectedFlag = '/img/flags/se.png';
             } else if (QueryString.ui_language == "da") {
                 selectedLanguage = 'da';
-                selectedFlag = 'img/flags/dk.png';
+                selectedFlag = '/img/flags/dk.png';
             } else if (QueryString.ui_language == "pt") {
                 selectedLanguage = 'pt';
-                selectedFlag = 'img/flags/pt.png';
+                selectedFlag = '/img/flags/pt.png';
             }
 
             switchLanguage(selectedLanguage, selectedFlag, false);
@@ -901,7 +901,7 @@
             $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
             jQuery.i18n.properties({
                 name: 'Languages',
-                path: 'i18n/',
+                path: '/i18n/',
                 mode: 'both',
                 language: language
             });
@@ -1029,19 +1029,19 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', 'img/flags/se.png', true);"><img src="img/flags/se.png"> Swedish</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Swedish</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png"> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -1049,7 +1049,7 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology"></a>
+                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology"></a>
                     </li>
                 </ul>
             </div>
@@ -1073,14 +1073,14 @@
                 <h2>International Edition</h2>
                 <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180131', 'en-edition', 'v20180131', '2018-01-31','900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
-                                switchToFullHeight(404684003, 138875005);"><img src="img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2018</span></a>
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2018</span></a>
                 </p>
                 <h2>Other Extensions or Editions</h2>
                 <p>The extensions/editions below have been provided by organizations for information only but have not been quality assured or reviewed by SNOMED International.
                     <br><strong>SNOMED International does not endorse and has not verified any content in any of the extensions below.</strong></p>
                 <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Nebraska Edition 20180125', 'neb-edition', 'v20180125', 'us-edition/2018-01-25','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('en_US', 'img/flags/us.png', true);
+                                switchLanguage('en_US', '/img/flags/us.png', true);
                                 switchToFullHeight(404684003, 138875005);">Go browsing...</span><br><span class="small">Nekraska edition<br>2018-01-25</span></a>
                 </p>
                 <p>Many thanks to the organizations who have provided their extensions in this browser.</p>
@@ -1247,19 +1247,19 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png"> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png"> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png"> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', 'img/flags/se.png', true);"><img src="img/flags/se.png"> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Svenska</a>
                             </li>
                         </ul>
                     </div>
