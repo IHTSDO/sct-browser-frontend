@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>SNOMED International Browser</title>
+    <title>SNOMED International Extension Search</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="cache-control" content="no-cache">
     <meta name="viewport" content="width=device-width">
@@ -36,9 +36,9 @@
     <link rel="stylesheet" href="/css/popover-extra-placements.css">
     <link rel="stylesheet" href="/css/animate.css">
 
-    <link rel="stylesheet" href="/snomed-interaction-components/css/snomed-interaction-components-1.37.4.4.min.css">
+    <link rel="stylesheet" href="/snomed-interaction-components/css/snomed-interaction-components-1.37.4.4-multi.min.css">
 
-    <script src="/snomed-interaction-components/js/snomed-interaction-components-1.37.4.4.min.js"></script>
+    <script src="/snomed-interaction-components/js/snomed-interaction-components-1.37.4.4-multi.min.js"></script>
     <script src="/external-libs/jquery.history.js"></script>
     <script src="/external-libs/ZeroClipboard.js"></script>
 
@@ -85,11 +85,11 @@
         };
 
         var options = {
-            serverUrl: "http://browser.ihtsdotools.org/api/snomed",
+            serverUrl: "https://prod-browser-exten.ihtsdotools.org/api/snomed",
             queryServerUrl: "http://browser.ihtsdotools.org/ecl",
             queryBranch: "MAIN/2018-01-31",
-            edition: "en-edition",
-            release: "v20180131",
+            edition: "beta-edition",
+            release: "v20180731",
             showIds: false,
             hideNotAcceptable: true,
             displayInactiveDescriptions: false,
@@ -107,6 +107,69 @@
             statusSearchFilter: "activeOnly",
             highlightByEffectiveTime: "false"
         };
+
+        options.editionList = [{
+                "edition": "se-edition",
+                "module": "45991000052106",
+                "release": "v20180531",
+                "langRefsetId": "45991000052106",
+                "langRefsetTerm": "Sweden NRC maintained module"
+            }, {
+                "edition": "beta-edition",
+                "module": "900000000000207008",
+                "release": "v20180731",
+                "langRefsetId": "900000000000207008",
+                "langRefsetTerm": "International maintained module"
+            }, {
+                "edition": "us-edition",
+                "module": "731000124108",
+                "release": "v20180301",
+                "langRefsetId": "731000124108",
+                "langRefsetTerm": "USA NRC maintained module"
+            }, {
+                "edition": "be-edition",
+                "module": "11000172109",
+                "release": "v20180315",
+                "langRefsetId": "11000172109",
+                "langRefsetTerm": "Belgian NRC maintained module"
+            }, {
+                "edition": "ca-edition",
+                "module": "22091000087100",
+                "release": "v20180430",
+                "langRefsetId": "19481000087107",
+                "langRefsetTerm": "Canadian NRC maintained module"
+            }, {
+                "edition": "au-edition",
+                "module": "32506021000036107",
+                "release": "v20170930",
+                "langRefsetId": "32506021000036107",
+                "langRefsetTerm": "Australian NRC maintained module"
+            },
+
+            {
+                "edition": "uy-edition",
+                "module": "5631000179106",
+                "release": "v20171215",
+                "langRefsetId": "5631000179106",
+                "langRefsetTerm": "Uruguay NRC maintained module"
+            },
+
+            {
+                "edition": "dk-edition",
+                "module": "554471000005108",
+                "release": "v20180331",
+                "langRefsetId": "554471000005108",
+                "langRefsetTerm": "Danish NRC maintained module"
+            },
+
+            {
+                "edition": "nl-edition",
+                "module": "11000146104",
+                "release": "v20180331",
+                "langRefsetId": "11000146104",
+                "langRefsetTerm": "Dutch NRC maintained module"
+            }
+        ];
 
         options.languageNameOfLangRefset = {
             "20581000087109": "fr-CA",
@@ -140,22 +203,6 @@
                 });
                 //                alert("Error Terminolgy server not accesed");
                 console.log("fail Manifest");
-            });
-            $.when(xhrM).done(function() {
-                xhr = $.getJSON("https://prod-browser-exten.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function(result) {
-                    // nothing
-                }).done(function(result) {
-                    $.each(result, function(i, field) {
-                        manifests.push(field);
-                    });
-                    start();
-                }).fail(function() {
-                    $.notify("Error Terminology server not accessible!", {
-                        autoHide: false,
-                        className: "error"
-                    });
-                    //                console.log("fail Manifest");
-                });
             });
         }
 
@@ -713,11 +760,17 @@
             if (enableQueriesInFullPerspective) {
                 //                if ((cdPanel1.options.edition == "en-edition") || (cdPanel1.options.edition == "us-edition")) {
                 if (cdPanel1.options.edition == "en-edition") {
+                    $("#fh-taxonomy_canvas").show();
                     $("#fh-query_canvas-li").show();
+                    $("#fh-favorites_canvas").show();
+                    $("#fh-refset_canvas").show();
                     var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), fhOptions);
                     cdPanel1.subscribe(qpa);
                 } else {
                     $("#fh-query_canvas-li").hide();
+                    $("#fh-taxonomy_canvas").hide();
+                    $("#fh-favorites_canvas").hide();
+                    $("#fh-refset_canvas").hide();
                 }
             } else {
                 $("#fh-query_canvas-li").hide();
@@ -749,7 +802,7 @@
                     field.loadMarkers();
             });
             switchLanguage(selectedLanguage, selectedFlag, false);
-            $('#fh-tabs li:eq(1) a').tab('show');
+            $('#fh-tabs li:eq(0) a').tab('show');
             $('#fh-search_canvas-searchBox').focus()
         }
 
@@ -980,7 +1033,7 @@
                     </button>
                 <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
                     <strong>
-                            &nbsp;&nbsp;SNOMED International SNOMED CT Browser</strong></a>
+                            &nbsp;&nbsp;SNOMED International SNOMED CT Extension Search</strong></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
@@ -1011,24 +1064,6 @@
                             <li><a href="javascript:void(0);" onclick="switchRelease('Uruguay Edition 20171215', 'uy-edition', 'v20171215', '2017-12-15','5641000179103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">UY Edition 20171215</a></li>
                         </ul>
-                    </li>
-                    <li class="navbar-btn" id="perspective-selector">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
-                            </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:void(0);" onclick="switchToFullHeight(404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_full_perspective">Full</span></a></li>
-                            <!--                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li> -->
-                            <li><a href="javascript:void(0);" onclick="switchToComparingConcepts(404684003, 404684003);"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
-                            <li><a href="javascript:void(0);" onclick="switchToComparingTaxonomies(404684003, 138875005, 138875005);"><span class="i18n" data-i18n-id="i18n_comp_hier_perspective">Comparing hierarchy</span></a></li>
-                            <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>
-                        </ul>
-                    </li>
-                    <li class="navbar-btn feedback-button">
-                        <button type="button" class="btn btn-info" onclick="FreshWidget.show();
-                                    return false;">
-                                <span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
-                            </button>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
@@ -1080,79 +1115,39 @@
         <!-- Welcome Perspective -->
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
-                <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span></h1>
-                <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
-                <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
-                <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="http://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a>                    </p>
-                <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
+                <h1>SNOMED International's SNOMED CT Extension SearchBrowser</h1>
+                <p>This customized version of SNOMED International's SNOMED CT Browser provides a simple seach across all released SNOMED CT National Extensions.</p>
+                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong> </p>
+                <h2><span class="i18n" data-i18n-id="i18n_local_extensions">National Extension Search</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180131', 'en-edition', 'v20180131', '2018-01-31','900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2018</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('es', '/img/flags/es.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español<br>2018-04-30</span></a>
-                </p>
-                <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
-                <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20170930', 'au-edition', 'v20170930', '2017-09-30','32570271000036106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Multi Edition', 'all', 'v20170731', '2017-09-30','32570271000036106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                 switchLanguage('en_US', '/img/flags/au.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition<br>2017-09-30</span></a>
+                                switchToFullHeight(404684003, 138875005);">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">All Editions</span></a>
 
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Belgian Edition 20180315', 'be-edition', 'v20180315', '2018-03-15','21000172104,31000172101,900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                        switchLanguage('en_US', '/img/flags/us.png', true);
-                                        switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Belgian edition<br>2018-03-15</span></a>
+                    <p>
+                        &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
+                        <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
 
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Canadian Edition 20180430', 'ca-edition', 'v20180430', '2018-04-30','19491000087109,20581000087109', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('en_US', '/img/flags/ca.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition<br>2018-04-30</span></a>
+                    <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
+                    <p class="lead">
+                        </img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
+                        <br></img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
+                        <br></img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
+                        <br></img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
+                        <br></img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
+                        <br></img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
+                        <br></img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
+                        <br></img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
+                        <br></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
+                    </p>
 
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20180331', 'dk-edition', 'v20180331', '2018-03-31','554461000005103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('da', '/img/flags/dk.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition<br>2018-03-31</span></a>
-
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20180331', 'nl-edition', 'v20180331', '2018-03-31','31000146106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('en_US', '/img/flags/us.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition<br>2018-03-31</span></a>
-                </p>
-                <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20180531', 'se-edition', 'v20180531', '2018-05-31','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('se', '/img/flags/se.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition<br>2018-05-31</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" href="https://termbrowser.nhs.uk/" target="_blank"></img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20180301', 'us-edition', 'v20180301', 'us-edition/2018-03-01','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('en_US', '/img/flags/us.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition<br>2018-03-01</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Uruguay Edition 20171215', 'uy-edition', 'v20171215', '2017-12-15','5641000179103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                switchLanguage('es', '/img/flags/uy.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Uruguay edition<br>2017-12-15</span></a>
-                </p>
-                <p>
-                    &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
-                    <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
-
-                <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
-                <p class="lead">
-                    </img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
-                    <br></img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
-                    <br></img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
-                    <br></img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
-                    <br></img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
-                    <br></img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                    <br></img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
-                    <br></img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
-                </p>
-
-                <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
+                    <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
             </div>
             <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
             </p>
-            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>                for best results in tablets and phones.</span>
-            </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
             </p>
-            <p> <small><b>&copy; SNOMED International 2018</b> v1.37.4.2<br></small>
+            <p> <small><b>&copy; SNOMED International 2018</b> v1.37.4.4-multi<br></small>
             </p>
         </div>
         <!-- Browsing Perspective -->
@@ -1222,15 +1217,16 @@
                 <div class="a panel panel-default" id="fh-tabs-pane" style="border-radius: 0px;">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" id="fh-tabs">
-                        <li>
+                        <!--                        <li>
                             <a href="#fh-taxonomy_canvas" data-toggle="tab">
                                 <div>
                                     <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
                                 </div>
                             </a>
                         </li>
+                    -->
                         <li class="active"><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
-                        <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
+                        <!--                        <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
                         <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
                         <!--<li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Constraint</span></a></li>-->
                     </ul>
@@ -1329,7 +1325,7 @@
     </div>
     <!-- /.modal -->
 
-    <!-- Using Freshdesk Widget for feedback -->
+    <!-- Using Freshdesk Widget for feedback 
     <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
         FreshWidget.init("", {
@@ -1345,7 +1341,7 @@
             "formHeight": "500px",
             "url": "https://ihtsdo.freshdesk.com"
         });
-    </script>
+    </script> 
 
     <script type="text/javascript">
         var $buoop = {};
@@ -1361,7 +1357,7 @@
             document.body.appendChild(e);
         }
     </script>
-    <!--Start Cookie Script-->
+    <!--Start Cookie Script
     <script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>
     <!--End Cookie Script-->
 
@@ -1403,16 +1399,6 @@
             manualStateChange = true;
         });
     </script>
-    <!-- Start of Rocket.Chat Livechat Script
-        <script type="text/javascript">
-        (function(w, d, s, u) {
-        	w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
-        	var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
-        	j.async = true; j.src = 'https://chat.snomedtools.org/packages/rocketchat_livechat/assets/rocketchat-livechat.min.js?_=201702160944';
-        	h.parentNode.insertBefore(j, h);
-        })(window, document, 'script', 'https://chat.snomedtools.org/livechat');
-        </script>
-        <!-- End of Rocket.Chat Livechat Script -->
 </body>
 
 </html>
