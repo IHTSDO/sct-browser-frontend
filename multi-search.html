@@ -196,6 +196,7 @@
             }).done(function(result) {
                 manifests = result;
                 console.log(result);
+                start();
             }).fail(function() {
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
