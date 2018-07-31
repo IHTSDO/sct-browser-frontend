@@ -87,9 +87,9 @@
         var options = {
             serverUrl: "http://browser.ihtsdotools.org/api/snomed",
             queryServerUrl: "http://browser.ihtsdotools.org/ecl",
-            queryBranch: "MAIN/2018-01-31",
+            queryBranch: "MAIN/2018-07-31",
             edition: "en-edition",
-            release: "v20180131",
+            release: "v20180731",
             showIds: false,
             hideNotAcceptable: true,
             displayInactiveDescriptions: false,
@@ -222,7 +222,7 @@
 
             var release = QueryString.release;
             if (typeof release == "undefined" || release == null || release == "") {
-                release = "v20180131";
+                release = "v20180731";
             }
             options.release = release;
 
@@ -987,11 +987,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="navbar-btn" id="edition-selector">
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180131</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180731</span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180131', 'en-edition', 'v20180131', '2018-01-31', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
-                                        reloadCurrentPerspective();">International Edition 20180131</a></li>
+                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-01-31', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                                        reloadCurrentPerspective();">International Edition 20180731</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Spanish Edition 20180430</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20180630', 'au-edition', 'v20180630','2018-06-30','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
@@ -1087,8 +1087,8 @@
                 <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="http://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a>                    </p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180131', 'en-edition', 'v20180131', '2018-01-31','900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2018</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31','900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                                switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2018</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                 switchLanguage('es', '/img/flags/es.png', true);
                                 switchToFullHeight(404684003, 138875005);"></img src="/img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español<br>2018-04-30</span></a>
