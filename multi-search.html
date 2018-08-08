@@ -87,7 +87,7 @@
         var options = {
             serverUrl: "https://prod-browser-exten.ihtsdotools.org/api/snomed",
             queryServerUrl: "http://browser.ihtsdotools.org/ecl",
-            queryBranch: "MAIN/2018-01-31",
+            queryBranch: "MAIN/2018-07-31",
             edition: "beta-edition",
             release: "v20180731",
             showIds: false,
@@ -269,7 +269,7 @@
 
             var release = QueryString.release;
             if (typeof release == "undefined" || release == null || release == "") {
-                release = "v20180131";
+                release = "v20180731";
             }
             options.release = release;
 
@@ -1040,11 +1040,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="navbar-btn" id="edition-selector">
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180131</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180731</span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180131', 'en-edition', 'v20180131', '2018-01-31', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
-                                        reloadCurrentPerspective();">International Edition 20180131</a></li>
+                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                                        reloadCurrentPerspective();">International Edition 20180731</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Spanish Edition 20180430</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20170930', 'au-edition', 'v20170930','2017-09-30','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
