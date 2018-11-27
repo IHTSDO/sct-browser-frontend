@@ -85,8 +85,8 @@
         };
 
         var options = {
-            serverUrl: "http://prod-browser-exten.ihtsdotools.org/api/snomed",
-            queryServerUrl: "http://browser.ihtsdotools.org/ecl",
+            serverUrl: "https://prod-browser-exten.ihtsdotools.org/api/snomed",
+            queryServerUrl: "https://browser.ihtsdotools.org/ecl",
             queryBranch: "MAIN/2018-07-31",
             edition: "en-edition",
             release: "v20180731",
@@ -142,7 +142,7 @@
                 console.log("fail Manifest");
             });
             $.when(xhrM).done(function() {
-                xhr = $.getJSON("https://prod-browser-exten.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function(result) {
+                xhr = $.getJSON("https://browser.ihtsdotools.org/api-exten/snomed".replace("snomed", "") + "server/releases", function(result) {
                     // nothing
                 }).done(function(result) {
                     $.each(result, function(i, field) {
@@ -990,9 +990,9 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180131</span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
                                         reloadCurrentPerspective();">International Edition 20180731</a></li>
-                            <li><a href="javascript:void(0);" onclick="switchRelease('Nebraska Edition 20181001', 'neb-edition', 'v20181001', '','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                            <li><a href="javascript:void(0);" onclick="switchRelease('Nebraska Edition 20181001', 'neb-edition', 'v20181001', '','900000000000509007', 'https://browser.ihtsdotools.org/api-exten/snomed');
                                         reloadCurrentPerspective();">`Nebraska Edition 20181001</a></li>
                         </ul>
                     </li>
@@ -1072,14 +1072,14 @@
                 </p>
                 <h2>International Edition</h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31','900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31','900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
                                 switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2018</span></a>
                 </p>
                 <h2>Other Extensions or Editions</h2>
                 <p>The extensions/editions below have been provided by organizations for information only but have not been quality assured or reviewed by SNOMED International.
                     <br><strong>SNOMED International does not endorse and has not verified any content in any of the extensions below.</strong></p>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Nebraska Edition 20181001', 'neb-edition', 'v20181001', '','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Nebraska Edition 20181001', 'neb-edition', 'v20181001', '','900000000000509007', 'https://browser.ihtsdotools.org/api-exten/snomed');
                                 switchLanguage('en_US', '/img/flags/us.png', true);
                                 switchToFullHeight(404684003, 138875005);">Go browsing...</span><br><span class="small">Nebraska Extension<br>2018-10-01</span></a>
                 </p>
