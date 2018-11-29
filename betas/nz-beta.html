@@ -36,8 +36,9 @@
     <link rel="stylesheet" href="/css/popover-extra-placements.css">
     <link rel="stylesheet" href="/css/animate.css">
 
-    <link rel="stylesheet" href="/snomed-interaction-components/css/snomed-interaction-components-1.37.3.min.css">
-    <script src="/snomed-interaction-components/js/snomed-interaction-components-1.37.3.min.js"></script>
+    <link rel="stylesheet" href="/snomed-interaction-components/css/snomed-interaction-components-1.37.4.4.min.css">
+
+    <script src="/snomed-interaction-components/js/snomed-interaction-components-1.37.4.4.min.js"></script>
     <script src="/external-libs/jquery.history.js"></script>
     <script src="/external-libs/ZeroClipboard.js"></script>
 
@@ -84,7 +85,7 @@
         };
 
         var options = {
-            serverUrl: "http://browser.ihtsdotools.org/api/v1/snomed",
+            serverUrl: "https://browser.ihtsdotools.org/api/v1/snomed",
             //                queryServerUrl: "http://sct-rest.ihtsdotools.org/api/snomed/",
             edition: "en-edition",
             release: "v20180731",
@@ -144,7 +145,7 @@
                 console.log("fail Manifest");
             });
             $.when(xhrM).done(function() {
-                xhr = $.getJSON("https://prod-browser-exten.ihtsdotools.org/api/snomed".replace("snomed", "") + "server/releases", function(result) {
+                xhr = $.getJSON("https://browser.ihtsdotools.org/api-exten/snomed/".replace("snomed", "") + "server/releases", function(result) {
                     // nothing
                 }).done(function(result) {
                     $.each(result, function(i, field) {
@@ -860,7 +861,7 @@
             if (serverUrl) {
                 options.serverUrl = serverUrl;
             } else {
-                options.serverUrl = "http://browser.ihtsdotools.org/api/snomed";
+                options.serverUrl = "https://browser.ihtsdotools.org/api/snomed";
             }
             $("#perspective-selector").find("button").first().removeClass("disabled");
             $("#editionLabel").html(label);
@@ -981,9 +982,9 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20170131</span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
                                         reloadCurrentPerspective();">International Edition 20180731</a></li>
-                            <li><a href="javascript:void(0);" onclick="switchRelease('NZ Edition 20180801', 'nz-edition', 'v20180801', '271000210107,291000210106,', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                            <li><a href="javascript:void(0);" onclick="switchRelease('NZ Edition 20180801', 'nz-edition', 'v20180801', '271000210107,291000210106,', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                         reloadCurrentPerspective();">NZ Edition 20180801</a></li>
                         </ul>
                     </li>
@@ -1048,13 +1049,13 @@
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
                                 switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July
                                    2018</span></a>
                 </p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('NZ Edition 20180801', 'nz-edition', 'v20180801', '271000210107,291000210106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('NZ Edition 20180801', 'nz-edition', 'v20180801', '271000210107,291000210106', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('en_US', '/img/flags/nz.png', true);
                                 switchToFullHeight(404684003, 138875005);"></img src="/img/flags/nz.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">New Zealand Beta edition<br>August 2018</span></a>
 
@@ -1093,7 +1094,7 @@
         </div>
         <footer>
             <p>
-                <small><b>&copy; SNOMED International 2018</b> v1.37.3</small>
+                <small><b>&copy; SNOMED International 2018</b> v1.37.4.4</small>
             </p>
         </footer>
 

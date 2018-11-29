@@ -85,8 +85,8 @@
         };
 
         var options = {
-            serverUrl: "http://browser.ihtsdotools.org/api/snomed",
-            queryServerUrl: "http://browser.ihtsdotools.org/ecl",
+            serverUrl: "https://browser.ihtsdotools.org/api/snomed",
+            queryServerUrl: "https://browser.ihtsdotools.org/ecl",
             queryBranch: "MAIN/2018-07-31",
             edition: "en-edition",
             release: "v20180731",
@@ -182,7 +182,7 @@
 
         function start() {
             if (!!window.MSInputMethodContext && !!document.documentMode) {
-                window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
+                window.location.replace("https://browser.ihtsdotools.org/index-ie.html");
             }
             // Read parameters
             $(function() {
@@ -869,7 +869,7 @@
             if (serverUrl) {
                 options.serverUrl = serverUrl;
             } else {
-                options.serverUrl = "http://browser.ihtsdotools.org/api/snomed";
+                options.serverUrl = "https://browser.ihtsdotools.org/api/snomed";
             }
             $("#perspective-selector").find("button").first().removeClass("disabled");
             $("#editionLabel").html(label);
@@ -990,7 +990,7 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180731</span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-01-31', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-01-31', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
                                         reloadCurrentPerspective();">International Edition 20180731</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20181031', 'es-edition', 'v20181031', '2018-10-31','450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                         reloadCurrentPerspective();">Spanish Edition 20181031</a></li>
@@ -1033,7 +1033,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="http://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics</a></li>
+                            <li><a href="https://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics</a></li>
                             <li class="divider"></li>
                             <li><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></li>
                             <li class="divider"></li>
@@ -1083,14 +1083,14 @@
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
                 <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span></h1>
-                <p><a href="http://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics - International Edition</a></p>
+                <p><a href="https://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics - International Edition</a></p>
                 <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="http://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a>                    </p>
+                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="https://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a>                    </p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31','900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31','900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
                                 switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2018</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20181031', 'es-edition', 'v20181031', '2018-10-31','450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('es', '/img/flags/es.png', true);
@@ -1133,7 +1133,7 @@ switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                     <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
-                <p>There is also a version of the browser containing other extensions of SNOMED CT which do not originate from Member countries. <a href="http://browser.ihtsdotools.org/other.html">Please see the page here</a>.</p>
+                <p>There is also a version of the browser containing other extensions of SNOMED CT which do not originate from Member countries. <a href="https://browser.ihtsdotools.org/other.html">Please see the page here</a>.</p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
                 <p class="lead">
