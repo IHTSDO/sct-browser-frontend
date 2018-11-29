@@ -85,7 +85,7 @@
         };
 
         var options = {
-            serverUrl: "https://browser.ihtsdotools.org/api/snomed",
+            serverUrl: "https://browser.ihtsdotools.org/api/v1/snomed",
             //                queryServerUrl: "http://sct-rest.ihtsdotools.org/api/snomed/",
             edition: "en-edition",
             release: "v20180731",
@@ -113,16 +113,17 @@
             "21000172104": "fr-BE",
             "31000172101": "nl-BE",
             "900000000000508004": "GB",
+            "21000220103": "IE",
             "900000000000509007": "US",
-            "450828004": "es",
-            "900000701000122101": "es-ES",
+            "450828004": "ES",
             "554461000005103": "DA",
             "46011000052107": "SV",
             "32570271000036106": "AU",
+            "271000210107": "NZ-EN",
+            "291000210106": "NZ-MI",
             //                "999001251000000103":"UK",
             "11000146104": "NL",
-            "61000202103": "NO-NB",
-            "15551000146102": "NL-PF"
+            "15551000146102": "NL-PF",
         };
 
         if (mongoDetails.useMe) {
@@ -889,8 +890,8 @@
         function switchLanguage(language, flagPng, fade) {
             selectedLanguage = language;
             selectedFlag = flagPng;
-            $("#nav-selected-flag").html('<img src="' + flagPng + '">');
-            $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
+            $("#nav-selected-flag").html('</img src="' + flagPng + '">');
+            $("#nav-selected-flag-modal").html('</img src="' + flagPng + '">');
             jQuery.i18n.properties({
                 name: 'Languages',
                 path: '/i18n/',
@@ -972,7 +973,7 @@
                     </button>
                 <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
                     <strong>
-                            &nbsp;&nbsp;Spanish BETA Extension SNOMED CT Browser</strong></a>
+                            &nbsp;&nbsp;SNOMED Ireland BETA Extension SNOMED CT Browser</strong></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
@@ -982,10 +983,10 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20170131</span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20170731', 'en-edition', 'v20170731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
-                                        reloadCurrentPerspective();">International Edition 20170731</a></li>
-                            <li><a href="javascript:void(0);" onclick="switchRelease('Norwegian Beta Edition', 'no-beta-edition', 'v20180315', '61000202103', 'https://browser.ihtsdotools.org/api-exten/snomed/');
-                                        reloadCurrentPerspective();">Norwegian Beta</a></li>
+                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
+                                        reloadCurrentPerspective();">International Edition 20180731</a></li>
+                            <li><a href="javascript:void(0);" onclick="switchRelease('IE Edition 20181115', 'ie-beta-edition', 'v20181115', '21000220103', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                                        reloadCurrentPerspective();">IE Edition 20181115</a></li>
                         </ul>
                     </li>
                     <li class="navbar-btn" id="perspective-selector">
@@ -1019,7 +1020,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"></img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -1027,7 +1028,8 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology"></a>
+                            <a href="http://www.snomed.org" target="_blank"></img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology">
+                            </a>
                     </li>
                 </ul>
             </div>
@@ -1041,21 +1043,22 @@
         <!-- Welcome Perspective -->
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
-                <h1>Spanish Extension BETA SNOMED CT Browser</h1>
+                <h1>Ireland Extension BETA SNOMED CT Browser</h1>
                 <p>SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development
                     partners
                 </p>
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/snomed');
-                                switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2018</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
+                                switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July
+                                   2018</span></a>
                 </p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Beta Edition', 'spain-edition', 'v20181101', '900000701000122101,450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
-                                switchLanguage('es', '/img/flags/es.png', true);
-                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/es.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Spanish Beta edition</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Irish 20181115', 'ie-beta-edition', 'v20181115', '21000220103', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                                switchLanguage('en_US', '/img/flags/ie.png', true);
+                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/nz.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Ireland Beta edition<br>November 2018</span></a>
 
                 </p>
                 <p>
@@ -1063,7 +1066,6 @@
                     <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
-                <p><button class=livechat-room>Chat</button>
             </div>
             <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
             </p>
@@ -1225,19 +1227,19 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"></img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"></img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"></img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"></img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"></img src="/img/flags/se.png"> Svenska</a>
                             </li>
                         </ul>
                     </div>
@@ -1323,16 +1325,6 @@
             manualStateChange = true;
         });
     </script>
-    <!-- Start of Rocket.Chat Livechat Script
-        <script type="text/javascript">
-        (function(w, d, s, u) {
-        	w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
-        	var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
-        	j.async = true; j.src = 'https://chat.snomedtools.org/packages/rocketchat_livechat/assets/rocketchat-livechat.min.js?_=201702160944';
-        	h.parentNode.insertBefore(j, h);
-        })(window, document, 'script', 'https://chat.snomedtools.org/livechat');
-        </script>
-        <!-- End of Rocket.Chat Livechat Script -->
 </body>
 
 </html>
