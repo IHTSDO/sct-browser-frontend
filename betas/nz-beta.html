@@ -889,8 +889,8 @@
         function switchLanguage(language, flagPng, fade) {
             selectedLanguage = language;
             selectedFlag = flagPng;
-            $("#nav-selected-flag").html('</img src="' + flagPng + '">');
-            $("#nav-selected-flag-modal").html('</img src="' + flagPng + '">');
+            $("#nav-selected-flag").html('<img src="' + flagPng + '">');
+            $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
             jQuery.i18n.properties({
                 name: 'Languages',
                 path: '/i18n/',
@@ -1019,7 +1019,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"></img src="/img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -1027,7 +1027,7 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"></img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology">
+                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology">
                             </a>
                     </li>
                 </ul>
@@ -1050,14 +1050,14 @@
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h2>
                 <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July
                                    2018</span></a>
                 </p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('NZ Edition 20180801', 'nz-edition', 'v20180801', '271000210107,291000210106', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('en_US', '/img/flags/nz.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/nz.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">New Zealand Beta edition<br>August 2018</span></a>
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/nz.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">New Zealand Beta edition<br>August 2018</span></a>
 
                 </p>
                 <p>
@@ -1226,19 +1226,19 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"></img src="/img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"></img src="/img/flags/es.png"> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"></img src="/img/flags/dk.png"> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"></img src="/img/flags/pt.png"> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"></img src="/img/flags/se.png"> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Svenska</a>
                             </li>
                         </ul>
                     </div>

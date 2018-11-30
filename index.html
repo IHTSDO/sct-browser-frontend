@@ -897,8 +897,8 @@
         function switchLanguage(language, flagPng, fade) {
             selectedLanguage = language;
             selectedFlag = flagPng;
-            $("#nav-selected-flag").html('</img src="' + flagPng + '">');
-            $("#nav-selected-flag-modal").html('</img src="' + flagPng + '">');
+            $("#nav-selected-flag").html('<img src="' + flagPng + '">');
+            $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
             jQuery.i18n.properties({
                 name: 'Languages',
                 path: '/i18n/',
@@ -994,6 +994,8 @@
                                         reloadCurrentPerspective();">International Edition 20180731</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20181031', 'es-edition', 'v20181031', '2018-10-31','450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                         reloadCurrentPerspective();">Spanish Edition 20181031</a></li>
+                            <li><a href="javascript:void(0);" onclick="switchRelease('Argentinian Edition 20181130', 'ar-edition', 'v20181130', '2018-11-30','450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                                        reloadCurrentPerspective();">Argentinian Edition 20181130</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20180630', 'au-edition', 'v20180630','2018-06-30','46011000052107', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                         reloadCurrentPerspective();">Australian Edition 20180630</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Belgian Edition 20180915', 'be-edition', 'v20180915', '2018-09-15','21000172104,31000172101', 'https://browser.ihtsdotools.org/api-exten/snomed/');
@@ -1047,19 +1049,19 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"></img src="/img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"></img src="/img/flags/es.png"> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"></img src="/img/flags/se.png"> Swedish</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Swedish</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"></img src="/img/flags/dk.png"> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"></img src="/img/flags/pt.png"> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -1067,7 +1069,7 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"></img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology">
+                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology">
                             </a>
                     </li>
                 </ul>
@@ -1091,44 +1093,43 @@
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31','900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2018</span></a>
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2018</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20181031', 'es-edition', 'v20181031', '2018-10-31','450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('es', '/img/flags/es.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español<br>2018-10-31</span></a>
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español<br>2018-10-31</span></a>
                 </p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Argentinian Edition 20181130', 'ar-edition', 'v20181130', '2018-11-30','450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                                switchLanguage('es', '/img/flags/ar.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/ar.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Argentinian edition<br>2018-11-30</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20180630', 'au-edition', 'v20180630', '2018-06-30','32570271000036106', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('en_US', '/img/flags/au.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition<br>2018-06-30</span></a>
-
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition<br>2018-06-30</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Belgian Edition 20180915', 'be-edition', 'v20180915', '2018-09-15','21000172104,31000172101,900000000000509007', 'https://browser.ihtsdotools.org/api-exten/snomed/');
-switchLanguage('en_US', '/img/flags/us.png', true);
-switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Belgian edition<br>2018-09-15</span></a>
-
+                                switchLanguage('en_US', '/img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Belgian edition<br>2018-09-15</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Canadian Edition 20181031', 'ca-edition', 'v20181031', '2018-10-31','19491000087109,20581000087109', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('en_US', '/img/flags/ca.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition<br>2018-10-31</span></a>
-
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition<br>2018-10-31</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20180930', 'dk-edition', 'v20180930', '2018-09-30','554461000005103', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('da', '/img/flags/dk.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition<br>2018-09-30</span></a>
-
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20180930', 'nl-edition', 'v20180930', '2018-09-30','31000146106,15551000146102', 'https://browser.ihtsdotools.org/api-exten/snomed/');
-                                switchLanguage('en_US', '/img/flags/us.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition<br>2018-09-30</span></a>
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition<br>2018-09-30</span></a>
                 </p>
                 <p>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20180930', 'nl-edition', 'v20180930', '2018-09-30','31000146106,15551000146102', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                                switchLanguage('en_US', '/img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition<br>2018-09-30</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20181130', 'se-edition', 'v20181130', '2018-11-30','46011000052107', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('se', '/img/flags/se.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition<br>2018-11-30</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" href="https://termbrowser.nhs.uk/" target="_blank"></img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition<br>2018-11-30</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" href="https://termbrowser.nhs.uk/" target="_blank"><img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20180901', 'us-edition', 'v20180901', 'us-edition/2018-09-01','900000000000509007', 'https://browser.ihtsdotools.org/api-exten/snomed/');
-                    switchLanguage('en_US', '/img/flags/us.png', true);
-                    switchToFullHeight(404684003, 138875005);"></img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition<br>2018-09-01</span></a>
+                                switchLanguage('en_US', '/img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition<br>2018-09-01</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Uruguay Edition 20180615', 'uy-edition', 'v20180615', '2018-06-15','5641000179103', 'https://browser.ihtsdotools.org/api-exten/snomed/');
                                 switchLanguage('es', '/img/flags/uy.png', true);
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Uruguay edition<br>2018-06-15</span></a>
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Uruguay edition<br>2018-06-15</span></a>
                 </p>
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
@@ -1137,15 +1138,16 @@ switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&
 
                 <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
                 <p class="lead">
-                    </img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
-                    <br></img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
-                    <br></img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
-                    <br></img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
-                    <br></img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
-                    <br></img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                    <br></img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
-                    <br></img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
+                    <img src="/img/flags/ar.png">&nbsp;&nbsp;&nbsp;<a href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
+                    <br><img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
+                    <br><img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
+                    <br><img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
+                    <br><img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
+                    <br><img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
+                    <br><img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
+                    <br><img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
+                    <br><img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
+                    <br><img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
                 </p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
@@ -1309,19 +1311,19 @@ switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"></img src="/img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"></img src="/img/flags/es.png"> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"></img src="/img/flags/dk.png"> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"></img src="/img/flags/pt.png"> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"></img src="/img/flags/se.png"> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Svenska</a>
                             </li>
                         </ul>
                     </div>
@@ -1338,13 +1340,14 @@ switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&
         FreshWidget.init("", {
             "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback&submitTitle=Send+Feedback&submitThanks=Thank+you+for+your+feedback&captcha=yes&searchArea=no",
             "utf8": "✓",
+            "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png",
             "widgetType": "popup",
-            "buttonType": "text",
+            "buttonType": "image",
             "buttonText": "Support",
             "buttonColor": "white",
             "buttonBg": "#00aadd",
-            "alignment": "4",
-            "offset": "235px",
+            "alignment": "1",
+            "offset": "-1500px",
             "submitThanks": "Thank you for your feedback",
             "formHeight": "500px",
             "captcha": "yes",
