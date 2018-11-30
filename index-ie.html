@@ -1047,12 +1047,17 @@
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
-                                switchToFullHeight(404684003, 138875005);"><img src="img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July
-                                   2018</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-07-31','900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2018</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20181031', 'es-edition', 'v20181031', '2018-10-31','450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                                switchLanguage('es', 'img/flags/es.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español<br>2018-10-31</span></a>
                 </p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Argentinian Edition 20181130', 'ar-edition', 'v20181130', '2018-11-30','450828004', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                                switchLanguage('es', 'img/flags/ar.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/ar.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Argentinian edition<br>2018-11-30</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20170930', 'au-edition', 'v20170930','32570271000036106', 'https://browser.ihtsdotools.org/api-exten/snomed');
                                     switchLanguage('en_US', 'img/flags/au.png', true);
                                     switchToFullHeight(404684003, 138875005);"><img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition<br>2017-09-30</span></a>
@@ -1068,12 +1073,11 @@
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20180930', 'dk-edition', 'v20180930','554461000005103', 'https://browser.ihtsdotools.org/api-exten/snomed');
                                     switchLanguage('da', 'img/flags/dk.png', true);
                                     switchToFullHeight(404684003, 138875005);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition<br>2018-09-30</span></a>
-
+                </p>
+                <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20180930', 'nl-edition', 'v20180930','31000146106', 'https://browser.ihtsdotools.org/api-exten/snomed');
                                     switchLanguage('en_US', 'img/flags/us.png', true);
                                     switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition<br>2018-09-30</span></a>
-                </p>
-                <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20181130', 'se-edition', 'v20181130','46011000052107', 'https://browser.ihtsdotools.org/api-exten/snomed');
                                     switchLanguage('se', 'img/flags/se.png', true);
                                     switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition<br>2018-05-31</span></a>
@@ -1281,13 +1285,14 @@
         FreshWidget.init("", {
             "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback&submitTitle=Send+Feedback&submitThanks=Thank+you+for+your+feedback&captcha=yes&searchArea=no",
             "utf8": "✓",
+            "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png",
             "widgetType": "popup",
-            "buttonType": "text",
+            "buttonType": "image",
             "buttonText": "Support",
             "buttonColor": "white",
             "buttonBg": "#00aadd",
-            "alignment": "4",
-            "offset": "235px",
+            "alignment": "1",
+            "offset": "-1500px",
             "submitThanks": "Thank you for your feedback",
             "formHeight": "500px",
             "captcha": "yes",
