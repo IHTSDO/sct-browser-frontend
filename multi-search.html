@@ -36,9 +36,9 @@
     <link rel="stylesheet" href="/css/popover-extra-placements.css">
     <link rel="stylesheet" href="/css/animate.css">
 
-    <link rel="stylesheet" href="/snomed-interaction-components/css/snomed-interaction-components-1.37.4.4-multi.min.css">
+    <link rel="stylesheet" href="/snomed-interaction-components/css/snomed-interaction-components-1.37.4.5-multi.min.css">
 
-    <script src="/snomed-interaction-components/js/snomed-interaction-components-1.37.4.4-multi.min.js"></script>
+    <script src="/snomed-interaction-components/js/snomed-interaction-components-1.37.4.5-multi.min.js"></script>
     <script src="/external-libs/jquery.history.js"></script>
     <script src="/external-libs/ZeroClipboard.js"></script>
 
@@ -950,8 +950,8 @@
         function switchLanguage(language, flagPng, fade) {
             selectedLanguage = language;
             selectedFlag = flagPng;
-            $("#nav-selected-flag").html('</img src="' + flagPng + '">');
-            $("#nav-selected-flag-modal").html('</img src="' + flagPng + '">');
+            $("#nav-selected-flag").html('<img src="' + flagPng + '">');
+            $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
             jQuery.i18n.properties({
                 name: 'Languages',
                 path: '/i18n/',
@@ -1080,19 +1080,19 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"></img src="/img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"></img src="/img/flags/es.png"> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"></img src="/img/flags/se.png"> Swedish</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Swedish</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"></img src="/img/flags/dk.png"> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"></img src="/img/flags/pt.png"> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -1100,7 +1100,7 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"></img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology">
+                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology">
                             </a>
                     </li>
                 </ul>
@@ -1130,15 +1130,15 @@
 
                     <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
                     <p class="lead">
-                        </img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
-                        <br></img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
-                        <br></img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
-                        <br></img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
-                        <br></img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
-                        <br></img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                        <br></img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
-                        <br></img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                        <br></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
+                        <img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
+                        <br><img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
+                        <br><img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
+                        <br><img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
+                        <br><img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
+                        <br><img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
+                        <br><img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
+                        <br><img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
+                        <br><img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
                     </p>
 
                     <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
@@ -1147,7 +1147,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
             </p>
-            <p> <small><b>&copy; SNOMED International 2018</b> v1.37.4.4-multi<br></small>
+            <p> <small><b>&copy; SNOMED International 2018</b> v1.37.4.5-multi<br></small>
             </p>
         </div>
         <!-- Browsing Perspective -->
@@ -1301,19 +1301,19 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"></img src="/img/flags/us.png"> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"></img src="/img/flags/es.png"> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"></img src="/img/flags/dk.png"> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"></img src="/img/flags/pt.png"> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"></img src="/img/flags/se.png"> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Svenska</a>
                             </li>
                         </ul>
                     </div>
