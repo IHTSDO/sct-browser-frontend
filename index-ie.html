@@ -1276,20 +1276,21 @@
     </div>
     <!-- /.modal -->
 
-    <!-- Using Freshdesk Widget for feedback -->
-    <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+    <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
         FreshWidget.init("", {
-            "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Application+Feedback%2FIssue+Reporting+(Not+for+Content+Issues)&searchArea=no",
-            "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png",
+            "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback&submitTitle=Send+Feedback&submitThanks=Thank+you+for+your+feedback&captcha=yes&searchArea=no",
+            "utf8": "✓",
             "widgetType": "popup",
-            "buttonType": "image",
+            "buttonType": "text",
             "buttonText": "Support",
             "buttonColor": "white",
-            "buttonBg": "#00AADD",
-            "alignment": "1",
-            "offset": "-1500px",
+            "buttonBg": "#00aadd",
+            "alignment": "4",
+            "offset": "235px",
+            "submitThanks": "Thank you for your feedback",
             "formHeight": "500px",
+            "captcha": "yes",
             "url": "https://ihtsdo.freshdesk.com"
         });
     </script>
@@ -1308,9 +1309,11 @@
             document.body.appendChild(e);
         }
     </script>
+
     <!--Start Cookie Script-->
-    <script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="//cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>
     <!--End Cookie Script-->
+
 
 
     <!-- Google Analytics script -->
