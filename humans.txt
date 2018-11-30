@@ -18,7 +18,7 @@
 
 /* SITE */
 		Domain name: browser.ihtsdotools.org
-		Last update: 2018-06-01
+		Last update: 2018-11-30
 		Language: English
 		Standards: HTML5 CSS3
 		IDE: TextWrangler, Atom, Webstorm, VCS
