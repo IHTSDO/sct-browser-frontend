@@ -4,3 +4,15 @@ User-agent: *
 Allow: /$
 Allow: /index.html
 Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AdsBot-Google
+Disallow: /
+
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Mediapartners-Google
+Disallow: /
