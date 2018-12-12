@@ -143,7 +143,7 @@
                 console.log("fail Manifest");
             });
             $.when(xhrM).done(function() {
-                xhr = $.getJSON("https://browser.ihtsdotools.org/api-exten/snomed/".replace("snomed", "") + "server/releases", function(result) {
+                xhr = $.getJSON("https://prod-browser-exten.ihtsdotools.org/api/snomed/".replace("snomed", "") + "server/releases", function(result) {
                     // nothing
                 }).done(function(result) {
                     $.each(result, function(i, field) {
@@ -982,7 +982,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20170731', 'en-edition', 'v20170731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
                                         reloadCurrentPerspective();">International Edition 20170731</a></li>
-                            <li><a href="javascript:void(0);" onclick="switchRelease('Norwegian Beta Edition', 'no-beta-edition', 'v20180315', '61000202103', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                            <li><a href="javascript:void(0);" onclick="switchRelease('Norwegian Beta Edition', 'no-beta-edition', 'v20180315', '61000202103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
                                         reloadCurrentPerspective();">Norwegian Beta</a></li>
                         </ul>
                     </li>
@@ -1051,7 +1051,7 @@
                 </p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Norwegian Beta Edition', 'no-beta-edition', 'v20180315', '61000202103,900000000000509007', 'https://browser.ihtsdotools.org/api-exten/snomed/');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Norwegian Beta Edition', 'no-beta-edition', 'v20180315', '61000202103,900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
                                 switchLanguage('en_US', 'img/flags/us.png', true);
                                 switchToFullHeight(404684003, 138875005);"><img src="img/flags/no.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Norwegian Beta edition</span></a>
 
