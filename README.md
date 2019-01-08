@@ -107,8 +107,7 @@ Customization points:
 
 ```
 
-URL Shortcuts
--------------
+## URL Shortcuts
 
 The browser includes URL parameters that will act as shorcuts for opening the browser with pre-defined settings or content selections, skipping the need of selecting options from the main view.
 
@@ -128,3 +127,20 @@ conceptIdTx1|any SCTID|Sets the first taxonomy widget to this concept.
 conceptIdTx2|any SCTID|Sets the second taxonomy widget to this concept.
 acceptLicense|true| the SNOMED CT Browser License is automatically accepted without displaying the modal window. This means that you are explicitly accepting the license.
 diagrammingMarkupEnabled|true|SNOMED CT diagramming Markup is enabled.
+
+## Docker
+
+To easily run this front end in a docker instance, do the following to build the docker image:
+
+```bash
+docker build -t snomedstorm-browser-nginx .
+```
+
+and then run the nginx container with:
+
+``` bash
+docker run --name snowstorm-nginx -d -p 80:80 -v /host/pathtofiles:/usr/share/nginx/html:ro snomedstorm-browser-nginx
+```
+
+If you have different locations for the back API then make the necessary changes in the `docker/nginx.conf` file in this repo.
+
