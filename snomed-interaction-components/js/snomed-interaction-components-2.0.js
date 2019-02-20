@@ -581,7 +581,7 @@ function program3(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\" data-module=\""
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.moduleId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" data-concept-id=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" data-term=\""
@@ -600,7 +600,7 @@ function program5(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\" data-module=\""
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.moduleId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" data-concept-id=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" data-term=\""
@@ -693,7 +693,7 @@ function program19(depth0,data) {
   buffer += "\n        </td>\n        <td>\n            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                <table border='1'><tr><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr><tr><td style='padding: 3px;'>"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.effectiveTime)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</td><td style='padding: 3px;'>"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.moduleId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</td></tr></table>\n                \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n            &nbsp;\n            <span class=\"pull-right\">\n                <div class=\"dropdown\">\n                    <button class=\"btn btn-link dropdown-toggle\" type=\"button\" id=\"dropdownMenu1-details\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                        <i class=\"glyphicon glyphicon-export pull-right\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
@@ -760,7 +760,7 @@ function program19(depth0,data) {
   else { helper = (depth0 && depth0.langRefset); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "'></form><br>Copy the concept link (e.g. CTRL-C) to save and share a reference to this concept.-->\n                    <!--\" data-html=\"true\"><i class=\"glyphicon glyphicon-share-alt\"></i></button>-->\n            <span class=\"pull-right\">\n               <div class=\"phoca-flagbox\" style=\"width:40px;height:40px\">\n                   <span class=\"phoca-flag "
-    + escapeExpression((helper = helpers.countryIcon || (depth0 && depth0.countryIcon),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module), options) : helperMissing.call(depth0, "countryIcon", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.module), options)))
+    + escapeExpression((helper = helpers.countryIcon || (depth0 && depth0.countryIcon),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.moduleId), options) : helperMissing.call(depth0, "countryIcon", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.moduleId), options)))
     + "\"></span>\n               </div>\n            </span>\n        </td>\n\n    </tr>\n</table>\n";
   return buffer;
   });
@@ -867,8 +867,8 @@ function program3(depth0,data,depth1) {
   else { helper = (depth0 && depth0.effectiveTime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td><td style='padding: 3px;'>";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td></tr>\n                        </table>\n                        \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                    </td>\n                </tr>\n        ";
   return buffer;
@@ -1001,11 +1001,9 @@ function program30(depth0,data) {
 
 function program32(depth0,data) {
   
-  var buffer = "", stack1, helper;
-  buffer += "\n                        <td>";
-  if (helper = helpers.descriptionId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.descriptionId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+  var buffer = "", stack1;
+  buffer += "\n                        <td>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.concept)),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</td>\n                    ";
   return buffer;
   }
@@ -1185,8 +1183,8 @@ function program6(depth0,data,depth2) {
   else { helper = (depth0 && depth0.effectiveTime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td><td style='padding: 3px;'>";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td></tr>\n                                </table>\n                                \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                </td>\n                </tr>\n            ";
   return buffer;
@@ -1223,8 +1221,8 @@ function program13(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\"  data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1244,8 +1242,8 @@ function program15(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\"  data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1265,8 +1263,8 @@ function program17(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\"  data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1286,8 +1284,8 @@ function program19(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\"  data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1394,8 +1392,8 @@ function program32(depth0,data,depth2) {
   else { helper = (depth0 && depth0.effectiveTime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td><td style='padding: 3px;'>";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td></tr>\n                        </table>\n                        \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                </td>\n                </tr>\n            ";
   return buffer;
@@ -1426,8 +1424,8 @@ function program37(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\" data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1447,8 +1445,8 @@ function program39(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\" data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1514,8 +1512,8 @@ function program45(depth0,data) {
   else { helper = (depth0 && depth0.effectiveTime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td><td style='padding: 3px;'>";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td></tr>\n                        </table>\n                        \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                    </td>\n                </tr>\n            ";
   return buffer;
@@ -2511,40 +2509,28 @@ function program1(depth0,data) {
 function program3(depth0,data,depth1) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n        <tr class=\"member-row\">\n            <td data-concept-id='";
-  if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "' data-term='";
-  if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+  buffer += "\n        <tr class=\"member-row\">\n            <td data-concept-id='"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "' data-term='"
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "'>\n                <span class=\"badge alert-warning\" draggable='true' ondragstart=\"drag(event, '"
     + escapeExpression(((stack1 = (depth1 && depth1.divElementId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "')\" data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" data-concept-id='";
-  if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "' data-term='";
-  if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+    + "\" data-concept-id='"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "' data-term='"
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "'>&nbsp;&nbsp;</span>\n                ";
   stack1 = (helper = helpers.hasCountryIcon || (depth0 && depth0.hasCountryIcon),options={hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.module), options) : helperMissing.call(depth0, "hasCountryIcon", (depth0 && depth0.module), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                ";
-  if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\n            </td>\n            <td>";
-  if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "</td>\n        </tr>\n    ";
+  buffer += "\n                "
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n            </td>\n            <td>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td>\n\n    ";
   return buffer;
   }
 function program4(depth0,data) {
@@ -2590,9 +2576,11 @@ function program8(depth0,data) {
   }
 function program9(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n                <td class=\"text-muted\" class=\"text-center\" colspan=\"2\">"
-    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.details)),stack1 == null || stack1 === false ? stack1 : stack1.total)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+  var buffer = "", stack1, helper;
+  buffer += "\n                <td class=\"text-muted\" class=\"text-center\" colspan=\"2\">";
+  if (helper = helpers.total) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.total); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
     + " <span data-i18n-id=\"i18n_members\" class=\"i18n\">members</span></td>\n            ";
   return buffer;
   }
@@ -2663,7 +2651,7 @@ function program14(depth0,data) {
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.skipTo), 0, options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.skipTo), 0, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n<tbody>\n    ";
-  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.members), {hash:{},inverse:self.noop,fn:self.programWithDepth(3, program3, data, depth0),data:data});
+  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.items), {hash:{},inverse:self.noop,fn:self.programWithDepth(3, program3, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n\n    <tr class=\"more-row\">\n        ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.remaining), "asd", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.remaining), "asd", options));
@@ -4682,28 +4670,20 @@ function program3(depth0,data,depth1) {
   buffer += "\n        <tr class=\"member-concept-row\">\n            <td>\n                <span class=\"badge alert-warning\" draggable='true' ondragstart=\"drag(event, '"
     + escapeExpression(((stack1 = (depth1 && depth1.divElementId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "')\" data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" data-concept-id='";
-  if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "' data-term='";
-  if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+    + "\" data-concept-id='"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "' data-term='"
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "'>&nbsp;&nbsp;</span>\n                ";
   stack1 = (helper = helpers.hasCountryIcon || (depth0 && depth0.hasCountryIcon),options={hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.module), options) : helperMissing.call(depth0, "hasCountryIcon", (depth0 && depth0.module), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                ";
-  if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\n            </td>\n            <td>";
-  if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+  buffer += "\n                "
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n            </td>\n            <td>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.referencedComponent)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</td>\n        </tr>\n    ";
   return buffer;
   }
@@ -4750,9 +4730,11 @@ function program8(depth0,data) {
   }
 function program9(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n                <td class=\"text-muted\" class=\"text-center\" colspan=\"2\">"
-    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.details)),stack1 == null || stack1 === false ? stack1 : stack1.total)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+  var buffer = "", stack1, helper;
+  buffer += "\n                <td class=\"text-muted\" class=\"text-center\" colspan=\"2\">";
+  if (helper = helpers.total) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.total); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
     + " <span data-i18n-id=\"i18n_members\" class=\"i18n\">members</span></td>\n            ";
   return buffer;
   }
@@ -4823,7 +4805,7 @@ function program14(depth0,data) {
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.skipTo), 0, options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.skipTo), 0, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n<tbody>\n    ";
-  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.members), {hash:{},inverse:self.noop,fn:self.programWithDepth(3, program3, data, depth0),data:data});
+  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.items), {hash:{},inverse:self.noop,fn:self.programWithDepth(3, program3, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n\n    <tr class=\"more-row\">\n        ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.remaining), "asd", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.remaining), "asd", options));
@@ -5108,8 +5090,8 @@ function program1(depth0,data,depth1,depth2) {
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "' data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id='";
   if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -5128,8 +5110,8 @@ function program1(depth0,data,depth1,depth2) {
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "' data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id='";
   if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -5140,7 +5122,7 @@ function program1(depth0,data,depth1,depth2) {
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "'>\n            "
-    + escapeExpression(((stack1 = ((stack1 = (depth1 && depth1.result)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + escapeExpression(((stack1 = ((stack1 = (depth1 && depth1.result)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\n        </td>\n    </tr>\n";
   return buffer;
   }
@@ -5251,8 +5233,8 @@ function program1(depth0,data,depth1,depth2) {
   buffer += "\n                <a href='javascript:void(0);' style='color: inherit;text-decoration: inherit;' draggable=\"true\" ondragstart=\"drag(event, '"
     + escapeExpression(((stack1 = (depth2 && depth2.divElementId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "')\" data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id='";
   if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -5267,8 +5249,8 @@ function program1(depth0,data,depth1,depth2) {
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</a>\n            </div>\n        </td>\n        <td class='text-muted small-text col-md-5 result-item' data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id='";
   if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -7433,7 +7415,7 @@ function conceptDetails(divElement, conceptId, options) {
         xhr = $.getJSON(options.serverUrl + "browser/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId, function(result) {
 
         }).done(function(result) {
-        	setDefaultTerm(result);
+            setDefaultTerm(result);
             var firstMatch = result;
             xhr = null;
             panel.attributesPId = divElement.id + "-attributes-panel";
@@ -7835,13 +7817,13 @@ function conceptDetails(divElement, conceptId, options) {
                     allDescriptions: allDescriptions
                 };
 
-				if (panel.options.manifest) {
-					$.each(panel.options.manifest.languageRefsets, function(i, looplr) {
-						if (looplr.conceptId == loopSelectedLangRefset) {
-							context.longLangName = looplr.defaultTerm;
-						}
-					});
-				}
+                if (panel.options.manifest) {
+                    $.each(panel.options.manifest.languageRefsets, function(i, looplr) {
+                        if (looplr.conceptId == loopSelectedLangRefset) {
+                            context.longLangName = looplr.defaultTerm;
+                        }
+                    });
+                }
 
                 allLangsHtml += JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
                 //if (panel.options.displaySynonyms) {
@@ -8410,7 +8392,7 @@ function conceptDetails(divElement, conceptId, options) {
         xhrChildren = $.getJSON(options.serverUrl + "browser/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
-			result.forEach(function(c) {setDefaultTerm(c)});
+            result.forEach(function(c) { setDefaultTerm(c) });
             // load relationships panel
             result.sort(function(a, b) {
                 if (a.defaultTerm.toLowerCase() < b.defaultTerm.toLowerCase())
@@ -8626,7 +8608,7 @@ function conceptDetails(divElement, conceptId, options) {
             //console.log("aborting children call...");
         }
         xhrChildren = $.getJSON(options.serverUrl + "browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
-        	result.forEach(function(c) {setDefaultTerm(c)});
+            result.forEach(function(c) { setDefaultTerm(c) });
             result.sort(function(a, b) {
                 if (a.defaultTerm.toLowerCase() < b.defaultTerm.toLowerCase())
                     return -1;
@@ -8706,7 +8688,7 @@ function conceptDetails(divElement, conceptId, options) {
         xhrParents = $.getJSON(options.serverUrl + "browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
-			result.forEach(function(c) {setDefaultTerm(c)});
+            result.forEach(function(c) { setDefaultTerm(c) });
             result.sort(function(a, b) {
                 if (a.defaultTerm.toLowerCase() < b.defaultTerm.toLowerCase())
                     return -1;
@@ -8773,9 +8755,9 @@ function conceptDetails(divElement, conceptId, options) {
     }
 
     this.loadMembers = function(returnLimit, skipTo, paginate) {
-        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/members?limit=" + returnLimit;
+        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/members?referenceSet=" + panel.conceptId + "&limit=100";
         if (skipTo > 0) {
-            membersUrl = membersUrl + "&skip=" + skipTo;
+            membersUrl = membersUrl + "&offset=" + skipTo;
         } else {
             $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><i class='glyphicon glyphicon-refresh icon-spin'></i></td></tr>");
         }
@@ -8807,7 +8789,7 @@ function conceptDetails(divElement, conceptId, options) {
 
         }).done(function(result) {
             var remaining = "asd";
-            if (typeof total == "undefined") total = result.details.total;
+            if (typeof total == "undefined") total = result.total;
             if (total == skipTo) {
                 remaining = 0;
             } else {
@@ -8860,7 +8842,7 @@ function conceptDetails(divElement, conceptId, options) {
                 else
                     return opts.inverse(this);
             });
-            if (result.members.length != 0) {
+            if (result.total != 0) {
                 $("#" + panel.divElement.id + "-moreMembers").remove();
                 $("#members-" + panel.divElement.id + "-resultsTable").find(".more-row").remove();
                 if (skipTo == 0) {
@@ -10388,7 +10370,7 @@ function searchPanel(divElement, options) {
     this.options = jQuery.extend(true, {}, options);
     var componentLoaded = false;
     panel.shown0 = false;
-    $.each(componentsRegistry, function (i, field) {
+    $.each(componentsRegistry, function(i, field) {
         if (field.divElement.id == panel.divElement.id) {
             componentLoaded = true;
         }
@@ -10401,20 +10383,20 @@ function searchPanel(divElement, options) {
     panel.subscriptionsColor = [];
     this.history = [];
 
-    this.setupCanvas = function () {
+    this.setupCanvas = function() {
         var context = {
             divElementId: panel.divElement.id
         };
         $(divElement).html(JST["views/searchPlugin/aux.hbs"](context));
 
-        $('#' + panel.divElement.id + '-searchBox').keyup(function () {
+        $('#' + panel.divElement.id + '-searchBox').keyup(function() {
             clearTimeout(thread);
             var $this = $(this);
-            thread = setTimeout(function () {
-                panel.search($this.val(),0,100,false);
+            thread = setTimeout(function() {
+                panel.search($this.val(), 0, 100, false);
             }, 500);
         });
-//        $("#" + panel.divElement.id + "-linkerButton").disableTextSelect();
+        //        $("#" + panel.divElement.id + "-linkerButton").disableTextSelect();
         $("#" + panel.divElement.id + "-subscribersMarker").disableTextSelect();
         $("#" + panel.divElement.id + "-configButton").disableTextSelect();
         $("#" + panel.divElement.id + "-historyButton").disableTextSelect();
@@ -10425,7 +10407,7 @@ function searchPanel(divElement, options) {
         $("#" + panel.divElement.id + "-expandButton").hide();
         $("#" + panel.divElement.id + "-subscribersMarker").hide();
 
-        $("#" + panel.divElement.id).find('.semtag-button').click(function (event) {
+        $("#" + panel.divElement.id).find('.semtag-button').click(function(event) {
             //console.log("Semtag click: " + $(this).html());
         });
 
@@ -10434,18 +10416,18 @@ function searchPanel(divElement, options) {
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
         }
 
-        $("#" + panel.divElement.id + "-configButton").click(function (event) {
+        $("#" + panel.divElement.id + "-configButton").click(function(event) {
             panel.setupOptionsPanel();
-//            $("#" + panel.divElement.id + "-searchConfigBar").slideToggle('slow');
+            //            $("#" + panel.divElement.id + "-searchConfigBar").slideToggle('slow');
         });
 
         if (typeof panel.options.closeButton != "undefined" && panel.options.closeButton == false) {
             $("#" + panel.divElement.id + "-closeButton").hide();
         }
 
-//        if (typeof panel.options.linkerButton != "undefined" && panel.options.linkerButton == false) {
-//            $("#" + panel.divElement.id + "-linkerButton").hide();
-//        }
+        //        if (typeof panel.options.linkerButton != "undefined" && panel.options.linkerButton == false) {
+        //            $("#" + panel.divElement.id + "-linkerButton").hide();
+        //        }
 
         if (typeof panel.options.subscribersMarker != "undefined" && panel.options.subscribersMarker == false) {
             $("#" + panel.divElement.id + "-subscribersMarker").remove();
@@ -10456,12 +10438,12 @@ function searchPanel(divElement, options) {
             $("#" + panel.divElement.id + "-collapseButton").hide();
         }
 
-        $("#" + panel.divElement.id + "-expandButton").click(function (event) {
+        $("#" + panel.divElement.id + "-expandButton").click(function(event) {
             $("#" + panel.divElement.id + "-panelBody").slideDown("fast");
             $("#" + panel.divElement.id + "-expandButton").hide();
             $("#" + panel.divElement.id + "-collapseButton").show();
         });
-        $("#" + panel.divElement.id + "-collapseButton").click(function (event) {
+        $("#" + panel.divElement.id + "-collapseButton").click(function(event) {
             $("#" + panel.divElement.id + "-panelBody").slideUp("fast");
             $("#" + panel.divElement.id + "-expandButton").show();
             $("#" + panel.divElement.id + "-collapseButton").hide();
@@ -10471,7 +10453,7 @@ function searchPanel(divElement, options) {
             i18n_panel_options = "Panel options";
         }
         $("#" + panel.divElement.id + "-configButton").tooltip({
-            placement : 'left',
+            placement: 'left',
             trigger: 'hover',
             title: i18n_panel_options,
             animation: true,
@@ -10481,7 +10463,7 @@ function searchPanel(divElement, options) {
             i18n_history = 'History';
         }
         $("#" + panel.divElement.id + "-historyButton").tooltip({
-            placement : 'left',
+            placement: 'left',
             trigger: 'hover',
             title: i18n_history,
             animation: true,
@@ -10490,21 +10472,21 @@ function searchPanel(divElement, options) {
         if (typeof i18n_panel_links == "undefined") {
             i18n_panel_links = 'Panel links';
         }
-//        $("#" + panel.divElement.id + "-linkerButton").tooltip({
-//            placement : 'left',
-//            trigger: 'hover',
-//            title: i18n_panel_links,
-//            animation: true,
-//            delay: 1000
-//        });
-        $("#" + panel.divElement.id + "-apply-button").click(function () {
+        //        $("#" + panel.divElement.id + "-linkerButton").tooltip({
+        //            placement : 'left',
+        //            trigger: 'hover',
+        //            title: i18n_panel_links,
+        //            animation: true,
+        //            delay: 1000
+        //        });
+        $("#" + panel.divElement.id + "-apply-button").click(function() {
             panel.readOptionsPanel();
 
         });
-        $("#" + panel.divElement.id + "-clearButton").click(function () {
+        $("#" + panel.divElement.id + "-clearButton").click(function() {
             panel.options.semTagFilter = "none";
             panel.options.langFilter = "none";
-            panel.options.moduleFilter ="none";
+            panel.options.moduleFilter = "none";
             panel.options.refsetFilter = "none";
             $('#' + panel.divElement.id + '-searchBox').val('');
             $('#' + panel.divElement.id + '-searchFilters').html("");
@@ -10517,24 +10499,24 @@ function searchPanel(divElement, options) {
             $('#' + panel.divElement.id + '-typeIcon').addClass('text-danger');
             lastT = "";
         });
-        $("#" + panel.divElement.id + "-historyButton").click(function (event) {
+        $("#" + panel.divElement.id + "-historyButton").click(function(event) {
             $("#" + panel.divElement.id + "-historyButton").popover({
                 trigger: 'manual',
                 placement: 'bottomRight',
                 html: true,
-                content: function () {
+                content: function() {
                     historyHtml = '<div style="height:100px;overflow:auto;">';
                     if (typeof i18n_no_search_terms == "undefined") {
                         i18n_no_search_terms = "No search terms"
                     }
                     if (panel.history.length == 0) {
-                        historyHtml = historyHtml + '<div class="text-center text-muted" style="width:100%"><em>'+ i18n_no_search_terms + '</span>...</em></div>';
+                        historyHtml = historyHtml + '<div class="text-center text-muted" style="width:100%"><em>' + i18n_no_search_terms + '</span>...</em></div>';
                     }
                     historyHtml = historyHtml + '<table>';
                     var reversedHistory = panel.history.slice(0);
                     reversedHistory.reverse();
                     //console.log(JSON.stringify(reversedHistory));
-                    $.each(reversedHistory, function (i, field) {
+                    $.each(reversedHistory, function(i, field) {
                         var d = new Date();
                         var curTime = d.getTime();
                         var ago = curTime - field.time;
@@ -10569,26 +10551,26 @@ function searchPanel(divElement, options) {
             });
             $("#" + panel.divElement.id + "-historyButton").popover('toggle');
         });
-//        $("#" + panel.divElement.id + "-linkerButton").click(function (event) {
-//            $("#" + panel.divElement.id + "-linkerButton").popover({
-//                trigger: 'manual',
-//                placement: 'bottomRight',
-//                html: true,
-//                content: function () {
-//                    var linkerHtml = '<div class="text-center text-muted"><em><span class="i18n" data-i18n-id="i18n_drag_to_link">Drag to link with other panels</span><br>';
-//                    if (panel.subscriptions.length == 1) {
-//                        linkerHtml = linkerHtml + panel.subscriptions.length + ' link established</em></div>';
-//                    } else {
-//                        linkerHtml = linkerHtml + panel.subscriptions.length + ' links established</em></div>';
-//                    }
-//                    linkerHtml = linkerHtml + '<div class="text-center"><a href="javascript:void(0);" onclick="clearSearchPanelSubscriptions(\'' + panel.divElement.id + '\');"><span class="i18n" data-i18n-id="i18n_clear_links">Clear links</span></a></div>';
-//                    return linkerHtml;
-//                }
-//            });
-//            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
-//        });
+        //        $("#" + panel.divElement.id + "-linkerButton").click(function (event) {
+        //            $("#" + panel.divElement.id + "-linkerButton").popover({
+        //                trigger: 'manual',
+        //                placement: 'bottomRight',
+        //                html: true,
+        //                content: function () {
+        //                    var linkerHtml = '<div class="text-center text-muted"><em><span class="i18n" data-i18n-id="i18n_drag_to_link">Drag to link with other panels</span><br>';
+        //                    if (panel.subscriptions.length == 1) {
+        //                        linkerHtml = linkerHtml + panel.subscriptions.length + ' link established</em></div>';
+        //                    } else {
+        //                        linkerHtml = linkerHtml + panel.subscriptions.length + ' links established</em></div>';
+        //                    }
+        //                    linkerHtml = linkerHtml + '<div class="text-center"><a href="javascript:void(0);" onclick="clearSearchPanelSubscriptions(\'' + panel.divElement.id + '\');"><span class="i18n" data-i18n-id="i18n_clear_links">Clear links</span></a></div>';
+        //                    return linkerHtml;
+        //                }
+        //            });
+        //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
+        //        });
 
-        $("#" + panel.divElement.id + "-fullTextButton").click(function (event) {
+        $("#" + panel.divElement.id + "-fullTextButton").click(function(event) {
             panel.options.searchMode = 'fullText';
             panel.updateSearchLabel();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
@@ -10597,10 +10579,10 @@ function searchPanel(divElement, options) {
                 $("#" + panel.divElement.id + '-searchBox').val(searchTerm.slice(1));
             }
             if (searchTerm.length > 0) {
-                panel.search(searchTerm,0,100,true);
+                panel.search(searchTerm, 0, 100, true);
             }
         });
-        $("#" + panel.divElement.id + "-partialMatchingButton").click(function (event) {
+        $("#" + panel.divElement.id + "-partialMatchingButton").click(function(event) {
             panel.options.searchMode = 'partialMatching';
             panel.updateSearchLabel();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
@@ -10609,10 +10591,10 @@ function searchPanel(divElement, options) {
                 $("#" + panel.divElement.id + '-searchBox').val(searchTerm.slice(1));
             }
             if (searchTerm.length > 0) {
-                panel.search(searchTerm,0,100,true);
+                panel.search(searchTerm, 0, 100, true);
             }
         });
-        $("#" + panel.divElement.id + "-regexButton").click(function (event) {
+        $("#" + panel.divElement.id + "-regexButton").click(function(event) {
             panel.options.searchMode = 'regex';
             panel.updateSearchLabel();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
@@ -10621,56 +10603,56 @@ function searchPanel(divElement, options) {
                 $("#" + panel.divElement.id + '-searchBox').val("^" + searchTerm);
             }
             if (searchTerm.length > 0) {
-                panel.search(searchTerm,0,100,true);
+                panel.search(searchTerm, 0, 100, true);
             }
         });
 
-        $("#" + panel.divElement.id + "-danishLangButton").click(function (event) {
+        $("#" + panel.divElement.id + "-danishLangButton").click(function(event) {
             panel.options.searchLang = 'danish';
             $("#" + panel.divElement.id + '-navLanguageLabel').html(i18n_danish_stemmer);
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             if (searchTerm.length > 0) {
-                panel.search(searchTerm,0,100,true);
+                panel.search(searchTerm, 0, 100, true);
             }
         });
-        $("#" + panel.divElement.id + "-englishLangButton").click(function (event) {
+        $("#" + panel.divElement.id + "-englishLangButton").click(function(event) {
             panel.options.searchLang = 'english';
             $("#" + panel.divElement.id + '-navLanguageLabel').html(i18n_english_stemmer);
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             if (searchTerm.length > 0) {
-                panel.search(searchTerm,0,100,true);
+                panel.search(searchTerm, 0, 100, true);
             }
         });
-        $("#" + panel.divElement.id + "-spanishLangButton").click(function (event) {
+        $("#" + panel.divElement.id + "-spanishLangButton").click(function(event) {
             panel.options.searchLang = 'spanish';
             $("#" + panel.divElement.id + '-navLanguageLabel').html(i18n_spanish_stemmer);
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             if (searchTerm.length > 0) {
-                panel.search(searchTerm,0,100,true);
+                panel.search(searchTerm, 0, 100, true);
             }
         });
-        $("#" + panel.divElement.id + "-swedishLangButton").click(function (event) {
+        $("#" + panel.divElement.id + "-swedishLangButton").click(function(event) {
             panel.options.searchLang = 'swedish';
             $("#" + panel.divElement.id + '-navLanguageLabel').html(i18n_swedish_stemmer);
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             if (searchTerm.length > 0) {
-                panel.search(searchTerm,0,100,true);
+                panel.search(searchTerm, 0, 100, true);
             }
         });
 
         panel.updateStatusFilterLabel();
 
-        $("#" + panel.divElement.id + "-activeOnlyButton").click(function (event) {
+        $("#" + panel.divElement.id + "-activeOnlyButton").click(function(event) {
             panel.options.statusSearchFilter = 'activeOnly';
             panel.updateStatusFilterLabel();
         });
 
-        $("#" + panel.divElement.id + "-activeInactiveButton").click(function (event) {
+        $("#" + panel.divElement.id + "-activeInactiveButton").click(function(event) {
             panel.options.statusSearchFilter = 'activeAndInactive';
             panel.updateStatusFilterLabel();
         });
 
-        $("#" + panel.divElement.id + "-inactiveOnlyButton").click(function (event) {
+        $("#" + panel.divElement.id + "-inactiveOnlyButton").click(function(event) {
             panel.options.statusSearchFilter = 'inactiveOnly';
             panel.updateStatusFilterLabel();
         });
@@ -10680,8 +10662,8 @@ function searchPanel(divElement, options) {
 
     this.setupOptionsPanel = function() {
         var possibleSubscribers = [];
-        $.each(componentsRegistry, function(i, field){
-            if (field.divElement.id != panel.divElement.id){
+        $.each(componentsRegistry, function(i, field) {
+            if (field.divElement.id != panel.divElement.id) {
                 var object = {};
                 object.subscriptions = field.subscriptions;
                 object.id = field.divElement.id;
@@ -10689,17 +10671,17 @@ function searchPanel(divElement, options) {
             }
         });
         var aux = false;
-        $.each(possibleSubscribers, function(i, field){
+        $.each(possibleSubscribers, function(i, field) {
             aux = false;
-            $.each(panel.subscriptions, function(j, subscription){
-                if (field.id == subscription.topic){
+            $.each(panel.subscriptions, function(j, subscription) {
+                if (field.id == subscription.topic) {
                     aux = true;
                 }
             });
             field.subscribed = aux;
             aux = false;
-            $.each(field.subscriptions, function(i, subscription){
-                if (subscription.topic == panel.divElement.id){
+            $.each(field.subscriptions, function(i, subscription) {
+                if (subscription.topic == panel.divElement.id) {
                     aux = true;
                 }
             });
@@ -10714,27 +10696,27 @@ function searchPanel(divElement, options) {
     }
 
     this.readOptionsPanel = function() {
-        $.each(panel.options.possibleSubscribers, function (i, field){
+        $.each(panel.options.possibleSubscribers, function(i, field) {
             field.subscribed = $("#" + panel.divElement.id + "-subscribeTo-" + field.id).is(':checked');
             field.subscriptor = $("#" + panel.divElement.id + "-subscriptor-" + field.id).is(':checked');
             var panelToSubscribe = {};
-            $.each(componentsRegistry, function(i, panelS){
-                if (panelS.divElement.id == field.id){
+            $.each(componentsRegistry, function(i, panelS) {
+                if (panelS.divElement.id == field.id) {
                     panelToSubscribe = panelS;
                 }
             });
-            if (field.subscribed){
+            if (field.subscribed) {
                 panel.subscribe(panelToSubscribe);
-            }else{
+            } else {
                 panel.unsubscribe(panelToSubscribe);
             }
-            if (field.subscriptor){
+            if (field.subscriptor) {
                 panelToSubscribe.subscribe(panel);
-            }else{
+            } else {
                 panelToSubscribe.unsubscribe(panel);
             }
         });
-        $.each(componentsRegistry, function (i, field){
+        $.each(componentsRegistry, function(i, field) {
             if (field.loadMarkers)
                 field.loadMarkers();
         });
@@ -10763,11 +10745,11 @@ function searchPanel(divElement, options) {
         }
         var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
         if (searchTerm.length > 0) {
-            panel.search(searchTerm,0,100,true);
+            panel.search(searchTerm, 0, 100, true);
         }
     }
 
-    this.search = function (t, skipTo, returnLimit, forceSearch) {
+    this.search = function(t, skipTo, returnLimit, forceSearch) {
         if (typeof panel.options.searchMode == "undefined") {
             panel.options.searchMode = "partialMatching";
         }
@@ -10777,13 +10759,13 @@ function searchPanel(divElement, options) {
         if (typeof panel.options.langFilter == "undefined") {
             panel.options.langFilter = "none";
         }
-        if (typeof panel.options.moduleFilter == "undefined"){
+        if (typeof panel.options.moduleFilter == "undefined") {
             panel.options.moduleFilter = "none";
         }
-        if (typeof panel.options.textIndexNormalized == "undefined"){
+        if (typeof panel.options.textIndexNormalized == "undefined") {
             panel.options.textIndexNormalized = "none";
         }
-        if (typeof panel.options.refsetFilter == "undefined"){
+        if (typeof panel.options.refsetFilter == "undefined") {
             panel.options.refsetFilter = "none";
         }
 
@@ -10813,7 +10795,7 @@ function searchPanel(divElement, options) {
                 //console.log(t);
                 var d = new Date();
                 var time = d.getTime();
-                panel.history.push({searchTerm: t, time: time});
+                panel.history.push({ searchTerm: t, time: time });
                 //t = t.charAt(0).toUpperCase() + t.slice(1);
                 //console.log("Capitalized t: " + t);
                 $('#' + panel.divElement.id + '-searchFilters').html("");
@@ -10833,44 +10815,44 @@ function searchPanel(divElement, options) {
                 if (isNumber(t)) {
                     if (t.substr(-2, 1) == "0") {
                         // Search conceptId
-                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + t,function (result) {
+                        xhr = $.getJSON(options.serverUrl + "/browser/" + options.release + "/concepts/" + t, function(result) {
 
-                        }).done(function (result) {
+                        }).done(function(result) {
                             Handlebars.registerHelper('if_eq', function(a, b, opts) {
                                 if (opts != "undefined") {
-                                    if(a == b)
+                                    if (a == b)
                                         return opts.fn(this);
                                     else
                                         return opts.inverse(this);
                                 }
                             });
-                            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts){
+                            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
                                 if (countryIcons[moduleId])
                                     return opts.fn(this);
                                 else
                                     return opts.inverse(this);
                             });
                             var resDescriptions = [];
-                            $.each(result.descriptions, function (i, field){
+                            $.each(result.descriptions, function(i, field) {
                                 var aux = field;
                                 aux.definitionStatus = result.definitionStatus;
                                 aux.conceptActive = result.active;
                                 if (!aux.active || !aux.conceptActive) {
                                     aux.danger = true;
                                 }
-                                if(field.active){
-                                    if (panel.options.statusSearchFilter=="activeOnly"){
+                                if (field.active) {
+                                    if (panel.options.statusSearchFilter == "activeOnly") {
                                         resDescriptions.push(aux);
                                     }
-                                    if (panel.options.statusSearchFilter=="activeAndInactive"){
+                                    if (panel.options.statusSearchFilter == "activeAndInactive") {
                                         resDescriptions.push(aux);
                                     }
-                                }else{
+                                } else {
                                     aux.danger = true;
-                                    if (panel.options.statusSearchFilter=="inactiveOnly"){
+                                    if (panel.options.statusSearchFilter == "inactiveOnly") {
                                         resDescriptions.push(aux);
                                     }
-                                    if (panel.options.statusSearchFilter=="activeAndInactive"){
+                                    if (panel.options.statusSearchFilter == "activeAndInactive") {
                                         resDescriptions.push(aux);
                                     }
                                 }
@@ -10882,12 +10864,12 @@ function searchPanel(divElement, options) {
                             //console.log(context);
                             $('#' + panel.divElement.id + '-resultsTable').html(JST["views/searchPlugin/body/0.hbs"](context));
                             $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
-                            $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function (event) {
-//                                $.each(panel.subscribers, function (i, field) {
-//                                    //console.log("Notify to " + field.divElement.id + " selected " + $(event.target).attr('data-concept-id'));
-//                                    field.conceptId = $(event.target).attr('data-concept-id');
-//                                    field.updateCanvas();
-//                                });
+                            $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
+                                //                                $.each(panel.subscribers, function (i, field) {
+                                //                                    //console.log("Notify to " + field.divElement.id + " selected " + $(event.target).attr('data-concept-id'));
+                                //                                    field.conceptId = $(event.target).attr('data-concept-id');
+                                //                                    field.updateCanvas();
+                                //                                });
                                 channel.publish(panel.divElement.id, {
                                     term: $(event.target).attr('data-term'),
                                     module: $(event.target).attr("data-module"),
@@ -10895,25 +10877,25 @@ function searchPanel(divElement, options) {
                                     source: panel.divElement.id
                                 });
                             });
-                        }).fail(function(){
+                        }).fail(function() {
                             resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
                             $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                             $('#' + panel.divElement.id + '-searchBar2').html("");
                         });
                     } else if (t.substr(-2, 1) == "1") {
-                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions/" + t,function (result) {
+                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions/" + t, function(result) {
 
-                        }).done(function (result) {
+                        }).done(function(result) {
                             //console.log(result);
                             Handlebars.registerHelper('if_eq', function(a, b, opts) {
                                 if (opts != "undefined") {
-                                    if(a == b)
+                                    if (a == b)
                                         return opts.fn(this);
                                     else
                                         return opts.inverse(this);
                                 }
                             });
-                            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts){
+                            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
                                 if (countryIcons[moduleId])
                                     return opts.fn(this);
                                 else
@@ -10924,12 +10906,12 @@ function searchPanel(divElement, options) {
                             };
                             $('#' + panel.divElement.id + '-resultsTable').html(JST["views/searchPlugin/body/1.hbs"](context));
                             $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
-                            $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function (event) {
-//                                $.each(panel.subscribers, function (i, field) {
-//                                    //console.log("Notify to " + field.divElement.id + " selected " + $(event.target).attr('data-concept-id'));
-//                                    field.conceptId = $(event.target).attr('data-concept-id');
-//                                    field.updateCanvas();
-//                                });
+                            $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
+                                //                                $.each(panel.subscribers, function (i, field) {
+                                //                                    //console.log("Notify to " + field.divElement.id + " selected " + $(event.target).attr('data-concept-id'));
+                                //                                    field.conceptId = $(event.target).attr('data-concept-id');
+                                //                                    field.updateCanvas();
+                                //                                });
                                 channel.publish(panel.divElement.id, {
                                     term: $(event.target).attr('data-term'),
                                     module: $(event.target).attr("data-module"),
@@ -10937,13 +10919,13 @@ function searchPanel(divElement, options) {
                                     source: panel.divElement.id
                                 });
                             });
-                        }).fail(function(){
+                        }).fail(function() {
                             resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
                             $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                             $('#' + panel.divElement.id + '-searchBar2').html("");
                         });
                     } else {
-//                        console.log(t.substr(-2, 1));
+                        //                        console.log(t.substr(-2, 1));
                         resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
                         $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                         $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
@@ -10952,28 +10934,28 @@ function searchPanel(divElement, options) {
                 } else {
                     if (panel.options.searchMode == "partialMatching") {
                         t = t.toLowerCase();
-                        t = t.replace("(","");
-                        t = t.replace(")","");
+                        t = t.replace("(", "");
+                        t = t.replace(")", "");
                     }
                     var startTime = Date.now();
 
                     var conceptActiveParam;
                     if (panel.options.statusSearchFilter == "activeOnly") {
-                    	conceptActiveParam = "true";
+                        conceptActiveParam = "true";
                     } else if (panel.options.statusSearchFilter == "inactiveOnly") {
-                    	conceptActiveParam = "false";
+                        conceptActiveParam = "false";
                     } else {
-                    	conceptActiveParam = "";
+                        conceptActiveParam = "";
                     }
 
                     var searchUrl = options.serverUrl + "browser/" + options.edition + "/" + options.release + "/descriptions?" +
-                    	"term=" + encodeURIComponent(t) +
-                    	"&limit=50" +
-                    	"&searchMode=" + panel.options.searchMode +
-                    	"&lang=" + panel.options.searchLang +
-                    	"&conceptActive=" + conceptActiveParam +
-                    	"&skipTo=" + skipTo +
-                    	"&returnLimit=" + returnLimit;
+                        "term=" + encodeURIComponent(t) +
+                        "&limit=50" +
+                        "&searchMode=" + panel.options.searchMode +
+                        "&lang=" + panel.options.searchLang +
+                        "&conceptActive=" + conceptActiveParam +
+                        "&skipTo=" + skipTo +
+                        "&returnLimit=" + returnLimit;
 
                     if (panel.options.semTagFilter != "none") {
                         searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
@@ -10981,111 +10963,112 @@ function searchPanel(divElement, options) {
                     if (panel.options.langFilter != "none") {
                         searchUrl = searchUrl + "&langFilter=" + panel.options.langFilter;
                     }
-                    if (panel.options.moduleFilter != 'none'){
+                    if (panel.options.moduleFilter != 'none') {
                         searchUrl = searchUrl + "&moduleFilter=" + panel.options.moduleFilter;
                     }
-                    if (panel.options.refsetFilter != 'none'){
+                    if (panel.options.refsetFilter != 'none') {
                         searchUrl = searchUrl + "&refsetFilter=" + panel.options.refsetFilter;
                     }
-                    if (panel.options.textIndexNormalized != "none"){
+                    if (panel.options.textIndexNormalized != "none") {
                         searchUrl = searchUrl + "&normalize=" + panel.options.textIndexNormalized;
                     }
-                    if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")){
+                    if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
                         searchUrl = searchUrl + "&groupByConcept=1";
                     }
                     //console.log(searchUrl);
-                    xhr = $.getJSON(searchUrl,function (result) {
+                    xhr = $.getJSON(searchUrl, function(result) {
 
-                    }).done(function (result) {
+                    }).done(function(result) {
 
-                    	// Convert response format
-                    	result.matches = result.items;
-                    	result.matches.forEach(function(match) {
-                    		match.fsn = match.concept.fsn;
-                    		match.conceptActive = match.concept.active;
-                    		match.conceptId = match.concept.conceptId;
-                    	})
+                        // Convert response format
+                        result.matches = result.items;
+                        result.matches.forEach(function(match) {
+                            match.fsn = match.concept.fsn;
+                            match.conceptActive = match.concept.active;
+                            match.conceptId = match.concept.conceptId;
+                        })
 
-						result.filters = {};
-                    	result.filters.lang = result.buckets.language;
-                    	result.filters.module = result.buckets.module;
-                    	result.filters.refsetId = result.buckets.membership;
-                    	result.filters.semTag = result.buckets.semanticTags;
+                        result.filters = {};
+                        result.filters.lang = result.buckets.language;
+                        result.filters.module = result.buckets.module;
+                        result.filters.refsetId = result.buckets.membership;
+                        result.filters.semTag = result.buckets.semanticTags;
 
                         $('#' + panel.divElement.id + '-resultsTable').find('.more-row').remove();
                         var endTime = Date.now();
-                        var elapsed = (endTime - startTime)/1000;
+                        var elapsed = (endTime - startTime) / 1000;
                         Handlebars.registerHelper('if_eq', function(a, b, opts) {
                             if (opts != "undefined") {
-                                if(a == b)
+                                if (a == b)
                                     return opts.fn(this);
                                 else
                                     return opts.inverse(this);
                             }
                         });
-                        Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts){
+                        Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
                             if (countryIcons[moduleId])
                                 return opts.fn(this);
                             else
                                 return opts.inverse(this);
                         });
-                        Handlebars.registerHelper("first20chars", function(string){
+                        Handlebars.registerHelper("first20chars", function(string) {
                             return (string.substr(0, 18) + "...");
                         });
                         var auxArray = [];
-                        if (result.filters){
-                            if (result.filters.refsetId){
-                                $.each(result.filters.refsetId, function (i, refset){
+                        if (result.filters) {
+                            if (result.filters.refsetId) {
+                                $.each(result.filters.refsetId, function(i, refset) {
                                     var auxObject = {};
-									var bucketTerm = null;
-									if (result.bucketConcepts[i]) {
-										bucketTerm = result.bucketConcepts[i].fsn.term;
-									}
-									auxObject.term = bucketTerm;
-									auxObject.value = i;
-									auxObject.cant = refset;
+                                    var bucketTerm = null;
+                                    if (result.bucketConcepts[i]) {
+                                        bucketTerm = result.bucketConcepts[i].fsn.term;
+                                    }
+                                    auxObject.term = bucketTerm;
+                                    auxObject.value = i;
+                                    auxObject.cant = refset;
                                     auxArray.push(auxObject);
                                 });
                                 result.filters.refsetId = [];
                                 result.filters.refsetId = auxArray;
-                                result.filters.refsetId.sort(function (a, b) {
+                                result.filters.refsetId.sort(function(a, b) {
                                     if (a.cant > b.cant)
                                         return -1;
                                     if (a.cant < b.cant)
                                         return 1;
                                     return 0;
                                 });
-                            }else{
+                            } else {
                                 result.filters.refsetId = [];
                             }
                             auxArray = [];
-                            $.each(result.filters.module, function (i, field){
+                            $.each(result.filters.module, function(i, field) {
                                 var auxObject = {};
-								var bucketTerm = null;
-								if (result.bucketConcepts[i]) {
-									bucketTerm = result.bucketConcepts[i].fsn.term;
-								}
-								auxObject.term = bucketTerm;
-								auxObject.value = i;
-								auxObject.cant = field;
+                                var bucketTerm = null;
+                                if (result.bucketConcepts[i]) {
+                                    bucketTerm = result.bucketConcepts[i].fsn.term;
+                                }
+                                auxObject.term = bucketTerm;
+                                auxObject.value = i;
+                                auxObject.cant = field;
                                 auxArray.push(auxObject);
                             });
                             result.filters.module = [];
                             result.filters.module = auxArray;
-                            result.filters.module.sort(function (a, b) {
+                            result.filters.module.sort(function(a, b) {
                                 if (a.cant > b.cant)
                                     return -1;
                                 if (a.cant < b.cant)
                                     return 1;
                                 return 0;
                             });
-                            if(result.filters.lang && result.filters.semTag){
-                                function sortObject(object){
-                                    var sortable = [], sortedObj = {};
+                            if (result.filters.lang && result.filters.semTag) {
+                                function sortObject(object) {
+                                    var sortable = [],
+                                        sortedObj = {};
                                     for (var attr in object)
                                         sortable.push([attr, object[attr]]);
-                                    sortable.sort(function(a, b) {return b[1] - a[1]});
-                                    $.each(sortable, function (i, field){
+                                    sortable.sort(function(a, b) { return b[1] - a[1] });
+                                    $.each(sortable, function(i, field) {
                                         sortedObj[field[0]] = field[1];
                                     });
                                     return sortedObj;
@@ -11094,15 +11077,15 @@ function searchPanel(divElement, options) {
                                 result.filters.semTag = sortObject(result.filters.semTag);
                             }
                         }
-//                        console.log(auxArray);
-//                        console.log(result.filters.module);
-//                        var ind = 0;
-//                        $.each(result.filters.refsetId, function (i, field){
-//                            ind++;
-//                        });
-//                        if (ind == 0){
-//                            result.filters.refsetId = 0;
-//                        }
+                        //                        console.log(auxArray);
+                        //                        console.log(result.filters.module);
+                        //                        var ind = 0;
+                        //                        $.each(result.filters.refsetId, function (i, field){
+                        //                            ind++;
+                        //                        });
+                        //                        if (ind == 0){
+                        //                            result.filters.refsetId = 0;
+                        //                        }
                         var context = {
                             result: result,
                             elapsed: elapsed,
@@ -11128,66 +11111,66 @@ function searchPanel(divElement, options) {
                             delay: 500
                         });
 
-                        $("#" + panel.divElement.id + '-searchBar2').find('.semtag-link').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar2').find('.semtag-link').click(function(event) {
                             panel.options.semTagFilter = $(event.target).attr('data-semtag');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.module-link').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar2').find('.module-link').click(function(event) {
                             panel.options.moduleFilter = $(event.target).attr('data-module');
                             panel.options.moduleFilterName = $(event.target).attr('data-term');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.lang-link').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar2').find('.lang-link').click(function(event) {
                             panel.options.langFilter = $(event.target).attr('data-lang');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.refset-link').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar2').find('.refset-link').click(function(event) {
                             panel.options.refsetFilter = $(event.target).attr('data-refset');
                             panel.options.refsetFilterName = $(event.target).attr('data-term');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.remove-semtag').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar2').find('.remove-semtag').click(function(event) {
                             panel.options.semTagFilter = "none";
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.remove-lang').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar2').find('.remove-lang').click(function(event) {
                             panel.options.langFilter = "none";
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.remove-module').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar2').find('.remove-module').click(function(event) {
                             panel.options.moduleFilter = "none";
                             panel.options.moduleFilterName = null;
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.remove-refset').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar2').find('.remove-refset').click(function(event) {
                             panel.options.refsetFilter = "none";
                             panel.options.refsetFilterName = null;
                             panel.search(t, 0, returnLimit, true);
                         });
 
                         //original filter
-                        $("#" + panel.divElement.id + '-searchBar').find('.semtag-link').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar').find('.semtag-link').click(function(event) {
                             panel.options.semTagFilter = $(event.target).attr('data-semtag');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar').find('.module-link').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar').find('.module-link').click(function(event) {
                             panel.options.moduleFilter = $(event.target).attr('data-module');
                             panel.options.moduleFilterName = $(event.target).attr('data-term');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar').find('.lang-link').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar').find('.lang-link').click(function(event) {
                             panel.options.langFilter = $(event.target).attr('data-lang');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar').find('.remove-semtag').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar').find('.remove-semtag').click(function(event) {
                             panel.options.semTagFilter = "none";
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar').find('.remove-lang').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar').find('.remove-lang').click(function(event) {
                             panel.options.langFilter = "none";
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar').find('.remove-module').click(function (event) {
+                        $("#" + panel.divElement.id + '-searchBar').find('.remove-module').click(function(event) {
                             panel.options.moduleFilter = "none";
                             panel.options.moduleFilterName = null;
                             panel.search(t, 0, returnLimit, true);
@@ -11201,7 +11184,7 @@ function searchPanel(divElement, options) {
                         var remaining = result.totalElements - (skipTo + returnLimit);
 
                         if (panel.options.searchMode == "regex") {
-                            result.matches.sort(function (a, b) {
+                            result.matches.sort(function(a, b) {
                                 if (a.term.length < b.term.length)
                                     return -1;
                                 if (a.term.length > b.term.length)
@@ -11211,41 +11194,41 @@ function searchPanel(divElement, options) {
                         }
                         Handlebars.registerHelper('if_eq', function(a, b, opts) {
                             if (opts != "undefined") {
-                                if(a == b)
+                                if (a == b)
                                     return opts.fn(this);
                                 else
                                     return opts.inverse(this);
                             }
                         });
-                        Handlebars.registerHelper('if_gr', function(a,b, opts) {
-                            if (a){
-                                if(a > parseInt(b))
+                        Handlebars.registerHelper('if_gr', function(a, b, opts) {
+                            if (a) {
+                                if (a > parseInt(b))
                                     return opts.fn(this);
                                 else
                                     return opts.inverse(this);
                             }
                         });
-                        Handlebars.registerHelper('if_gre', function(a,b, opts) {
-                            if (a){
-                                if(parseInt(a) >= b)
+                        Handlebars.registerHelper('if_gre', function(a, b, opts) {
+                            if (a) {
+                                if (parseInt(a) >= b)
                                     return opts.fn(this);
                                 else
                                     return opts.inverse(this);
                             }
                         });
-                        Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts){
+                        Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
                             if (countryIcons[moduleId])
                                 return opts.fn(this);
                             else
                                 return opts.inverse(this);
                         });
 
-                        Handlebars.registerHelper('hasFilters', function(options, opts){
+                        Handlebars.registerHelper('hasFilters', function(options, opts) {
                             if (options.semTagFilter != "none" ||
                                 options.langFilter != "none" ||
                                 options.moduleFilter != "none" ||
                                 options.refsetFilter != "none") {
-                                return  opts.fn(this);;
+                                return opts.fn(this);;
                             } else {
                                 return opts.inverse(this);
                             }
@@ -11263,11 +11246,11 @@ function searchPanel(divElement, options) {
                         } else {
                             $('#' + panel.divElement.id + '-resultsTable').append(JST["views/searchPlugin/body/default.hbs"](context));
                         }
-                        $("#" + panel.divElement.id + "-groupConcept").click(function(){
+                        $("#" + panel.divElement.id + "-groupConcept").click(function() {
                             panel.search(t, parseInt(skipTo), returnLimit, true);
                         });
                         $("#" + panel.divElement.id + "-remove-all-filters").unbind();
-                        $("#" + panel.divElement.id + "-remove-all-filters").click(function (event) {
+                        $("#" + panel.divElement.id + "-remove-all-filters").click(function(event) {
                             panel.options.semTagFilter = "none";
                             panel.options.langFilter = "none";
                             panel.options.moduleFilter = "none";
@@ -11275,10 +11258,10 @@ function searchPanel(divElement, options) {
                             panel.search(t, 0, returnLimit, true);
                         });
                         $("#" + panel.divElement.id + "-more").unbind();
-                        $("#" + panel.divElement.id + "-more").click(function (event) {
+                        $("#" + panel.divElement.id + "-more").click(function(event) {
                             panel.search(t, (parseInt(skipTo) + parseInt(returnLimit)), returnLimit, true);
                         });
-                        $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function (event) {
+                        $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
                             channel.publish(panel.divElement.id, {
                                 term: $(event.target).attr("data-term"),
                                 module: $(event.target).attr("data-module"),
@@ -11294,16 +11277,16 @@ function searchPanel(divElement, options) {
                             delay: 500
                         });
 
-                        $("[draggable='true']").mouseover(function(e){
-//                console.log(e);
+                        $("[draggable='true']").mouseover(function(e) {
+                            //                console.log(e);
                             var term = $(e.target).attr("data-term");
-                            if (typeof term == "undefined"){
+                            if (typeof term == "undefined") {
                                 term = $($(e.target).parent()).attr("data-term");
                             }
                             icon = iconToDrag(term);
                         });
 
-                    }).fail(function () {
+                    }).fail(function() {
                         resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
                         $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                         $('#' + panel.divElement.id + '-searchBar2').html("");
@@ -11315,7 +11298,7 @@ function searchPanel(divElement, options) {
 
 
     this.getNextMarkerColor = function(color) {
-//console.log(color);
+        //console.log(color);
         var returnColor = 'black';
         if (color == 'black') {
             returnColor = 'green';
@@ -11328,7 +11311,7 @@ function searchPanel(divElement, options) {
         } else if (color == 'blue') {
             returnColor = 'green';
         }
-//console.log(returnColor);
+        //console.log(returnColor);
         globalMarkerColor = returnColor;
         return returnColor;
     }
@@ -11337,16 +11320,16 @@ function searchPanel(divElement, options) {
     // Subscription methods
     this.subscribe = function(panelToSubscribe) {
         var panelId = panelToSubscribe.divElement.id;
-//        console.log('Subscribing to id: ' + panelId);
+        //        console.log('Subscribing to id: ' + panelId);
         var alreadySubscribed = false;
-        $.each(panel.subscriptionsColor, function(i, field){
-            if (field == panelToSubscribe.markerColor){
+        $.each(panel.subscriptionsColor, function(i, field) {
+            if (field == panelToSubscribe.markerColor) {
                 alreadySubscribed = true;
             }
         });
         if (!alreadySubscribed) {
             var subscription = channel.subscribe(panelId, function(data, envelope) {
-//                console.log("listening in " + panel.divElement.id);
+                //                console.log("listening in " + panel.divElement.id);
                 panel.options.searchMode = "fullText";
                 panel.search(data.conceptId, 0, 100, false);
                 $('#' + panel.divElement.id + '-searchBox').val(data.term);
@@ -11361,77 +11344,83 @@ function searchPanel(divElement, options) {
     }
 
     this.unsubscribe = function(panelToUnsubscribe) {
-        var aux = [], colors = [], unsubscribed = true;
-        $.each(panel.subscriptionsColor, function(i, field){
-            if (field != panelToUnsubscribe.markerColor){
+        var aux = [],
+            colors = [],
+            unsubscribed = true;
+        $.each(panel.subscriptionsColor, function(i, field) {
+            if (field != panelToUnsubscribe.markerColor) {
                 colors.push(field);
-            }else{
+            } else {
                 unsubscribed = false;
             }
         });
-        if (!unsubscribed){
+        if (!unsubscribed) {
             panel.subscriptionsColor = colors;
-//            console.log(panel.divElement.id);
-//            console.log(panel.subscriptionsColor);
+            //            console.log(panel.divElement.id);
+            //            console.log(panel.subscriptionsColor);
             colors = [];
-            $.each(panelToUnsubscribe.subscribers, function(i, field){
-                if (field != panel.divElement.id){
+            $.each(panelToUnsubscribe.subscribers, function(i, field) {
+                if (field != panel.divElement.id) {
                     aux.push(field);
                 }
             });
             panelToUnsubscribe.subscribers = aux;
-            $.each(panelToUnsubscribe.subscriptionsColor, function(i, field){
+            $.each(panelToUnsubscribe.subscriptionsColor, function(i, field) {
                 colors.push(field);
             });
-            if (panelToUnsubscribe.subscribers.length == 0){
-                if (panelToUnsubscribe.subscriptions.length == 0){
+            if (panelToUnsubscribe.subscribers.length == 0) {
+                if (panelToUnsubscribe.subscriptions.length == 0) {
                     $("#" + panelToUnsubscribe.divElement.id + "-subscribersMarker").hide();
                 }
-            }else{
-//                colors.push(panelToUnsubscribe.markerColor);
+            } else {
+                //                colors.push(panelToUnsubscribe.markerColor);
             }
             panelToUnsubscribe.subscriptionsColor = colors;
-//            console.log(panelToUnsubscribe.divElement.id);
-//            console.log(panelToUnsubscribe.subscriptionsColor);
+            //            console.log(panelToUnsubscribe.divElement.id);
+            //            console.log(panelToUnsubscribe.subscriptionsColor);
             aux = [];
-            $.each(panel.subscriptions, function(i, field){
-                if (panelToUnsubscribe.divElement.id == field.topic){
+            $.each(panel.subscriptions, function(i, field) {
+                if (panelToUnsubscribe.divElement.id == field.topic) {
                     field.unsubscribe();
-                }else{
+                } else {
                     aux.push(field);
                 }
             });
             panel.subscriptions = aux;
-            if (panel.subscriptions.length == 0 && panel.subscribers.length == 0){
+            if (panel.subscriptions.length == 0 && panel.subscribers.length == 0) {
                 $("#" + panel.divElement.id + "-subscribersMarker").hide();
             }
         }
     }
 
-    this.loadMarkers = function (){
-        var auxMarker = "", right = 0, top = 0, aux = false, visible = false;
-        $.each(componentsRegistry, function(i, field){
+    this.loadMarkers = function() {
+        var auxMarker = "",
+            right = 0,
+            top = 0,
+            aux = false,
+            visible = false;
+        $.each(componentsRegistry, function(i, field) {
             var panelId = field.divElement.id;
-            if ($("#" + panelId + "-subscribersMarker").is(':visible')){
+            if ($("#" + panelId + "-subscribersMarker").is(':visible')) {
                 visible = true;
             }
         });
-        if (panel.subscribers.length == 0){
+        if (panel.subscribers.length == 0) {
             right = 14;
             $("#" + panel.divElement.id + "-ownMarker").hide();
-        }else{
-            if (!visible){
+        } else {
+            if (!visible) {
                 $("#" + panel.divElement.id + "-ownMarker").hide();
             }
             aux = true;
         }
-        if ($("#" + panel.divElement.id + "-subscribersMarker").is(':visible')){
+        if ($("#" + panel.divElement.id + "-subscribersMarker").is(':visible')) {
             $("#" + panel.divElement.id + "-panelTitle").html($("#" + panel.divElement.id + "-panelTitle").html().replace(/&nbsp;/g, ''));
-            if (aux){
+            if (aux) {
                 $("#" + panel.divElement.id + "-panelTitle").html("&nbsp&nbsp&nbsp&nbsp" + $("#" + panel.divElement.id + "-panelTitle").html());
             }
-            $.each(panel.subscriptionsColor, function(i, field){
-                auxMarker = auxMarker + "<i class='glyphicon glyphicon-bookmark' style='color: "+ field +"; top:" + top + "px; right: " + right + "px;'></i>";
+            $.each(panel.subscriptionsColor, function(i, field) {
+                auxMarker = auxMarker + "<i class='glyphicon glyphicon-bookmark' style='color: " + field + "; top:" + top + "px; right: " + right + "px;'></i>";
                 $("#" + panel.divElement.id + "-panelTitle").html("&nbsp&nbsp" + $("#" + panel.divElement.id + "-panelTitle").html());
                 top = top + 5;
                 right = right + 10;
@@ -11440,7 +11429,7 @@ function searchPanel(divElement, options) {
         }
     }
 
-    this.updateSearchLabel = function () {
+    this.updateSearchLabel = function() {
         if (typeof panel.options.searchMode == "undefined") {
             panel.options.searchMode = "partialMatching";
         }
@@ -11464,16 +11453,16 @@ function searchPanel(divElement, options) {
         }
         if (panel.options.searchMode == "regex") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
-            $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_1'>" + i18n_search_examp_1  +  "</span> ");
-            $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode  +  "</span>");
+            $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_1'>" + i18n_search_examp_1 + "</span> ");
+            $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
         } else if (panel.options.searchMode == "fullText") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_full_text_search_mode'>" + i18n_full_text_search_mode + "</span>");
-            $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_2'>" + i18n_search_examp_2  +  "</em></span> ");
-            $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_full_text_search_mode'>" + i18n_full_text_search_mode  +  "</span>");
+            $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_2'>" + i18n_search_examp_2 + "</em></span> ");
+            $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_full_text_search_mode'>" + i18n_full_text_search_mode + "</span>");
         } else if (panel.options.searchMode == "partialMatching") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>" + i18n_partial_match_search_mode + "</span>");
-            $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_3'>" + i18n_search_examp_3  +  "</span> ");
-            $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>" + i18n_partial_match_search_mode  +  "</span>");
+            $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_3'>" + i18n_search_examp_3 + "</span> ");
+            $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>" + i18n_partial_match_search_mode + "</span>");
         }
 
         if (typeof panel.options.searchLang == "undefined") {
@@ -11489,11 +11478,11 @@ function searchPanel(divElement, options) {
             i18n_spanish_stemmer = 'Spanish Stemmer';
         }
         if (panel.options.searchLang == "danish") {
-            $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_danish_stemmer'>" + i18n_danish_stemmer  +  "</span>");
+            $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_danish_stemmer'>" + i18n_danish_stemmer + "</span>");
         } else if (panel.options.searchLang == "english") {
-            $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_english_stemmer'>" + i18n_english_stemmer  +  "</span>");
+            $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_english_stemmer'>" + i18n_english_stemmer + "</span>");
         } else if (panel.options.searchLang == "spanish") {
-            $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_spanish_stemmer'>" + i18n_spanish_stemmer  +  "</span>");
+            $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_spanish_stemmer'>" + i18n_spanish_stemmer + "</span>");
         }
 
     }
@@ -11519,17 +11508,17 @@ function clearSearchPanelSubscriptions(divElementId1) {
 }
 
 function searchInPanel(divElementId, searchTerm) {
-    $.each(componentsRegistry, function (i, field) {
-//console.log(field.divElement.id + ' == ' + divElementId);
+    $.each(componentsRegistry, function(i, field) {
+        //console.log(field.divElement.id + ' == ' + divElementId);
         if (field.divElement.id == divElementId) {
             $('#' + divElementId + '-searchBox').val(searchTerm);
-            field.search(searchTerm,0,100,false);
+            field.search(searchTerm, 0, 100, false);
         }
     });
     $('.history-button').popover('hide');
 }
 
-$(document).keypress(function (event) {
+$(document).keypress(function(event) {
     if (event.which == '13') {
         event.preventDefault();
     }
@@ -11542,7 +11531,6 @@ $(document).keypress(function (event) {
         });
     };
 }(jQuery));
-
 /*
 
  * To change this license header, choose License Headers in Project Properties.
@@ -12697,7 +12685,7 @@ function refsetPanel(divElement, options) {
     }
     panel.markerColor = panel.getNextMarkerColor(globalMarkerColor);
 
-    this.setUpPanel = function (){
+    this.setUpPanel = function() {
         var context = {
             divElementId: panel.divElement.id
         }
@@ -12705,10 +12693,10 @@ function refsetPanel(divElement, options) {
     }
     panel.setUpPanel();
 
-    this.loadRefsets = function(){
-//        console.log(panel.options.manifest);
-        if (panel.options.manifest){
-            panel.options.manifest.refsets.sort(function (a, b) {
+    this.loadRefsets = function() {
+        //        console.log(panel.options.manifest);
+        if (panel.options.manifest) {
+            panel.options.manifest.refsets.sort(function(a, b) {
                 if (a.type == "daily-build" && a.type != b.type)
                     return -1;
                 if (a.type < b.type)
@@ -12726,7 +12714,7 @@ function refsetPanel(divElement, options) {
                 refsets: panel.options.manifest.refsets
             }
             $("#" + panel.divElement.id + "-panelBody").html(JST["views/refsetPlugin/body.hbs"](context));
-            $('#' + panel.divElement.id + '-panelBody').find(".refset-item").click(function (event) {
+            $('#' + panel.divElement.id + '-panelBody').find(".refset-item").click(function(event) {
                 panel.loadMembers($(event.target).attr('data-concept-id'), $(event.target).attr('data-term'), 100, 0);
                 channel.publish(panel.divElement.id, {
                     term: $(event.target).attr('data-term'),
@@ -12735,65 +12723,65 @@ function refsetPanel(divElement, options) {
                     source: panel.divElement.id
                 });
             });
-        }else{
+        } else {
             $("#" + panel.divElement.id + "-panelBody").html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
         }
     }
     panel.loadRefsets();
 
-    this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate){
-        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/members?limit=" + returnLimit;
-        if (skipTo > 0){
-            membersUrl = membersUrl + "&skip=" + skipTo;
-        }else{
+    this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate) {
+        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/members?referenceSet=" + conceptId + "&limit=100";
+        if (skipTo > 0) {
+            membersUrl = membersUrl + "&offset=" + skipTo;
+        } else {
             $("#" + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><i class='glyphicon glyphicon-refresh icon-spin'></i></td></tr>");
         }
         var total;
-        if (panel.options.manifest){
-            $.each(panel.options.manifest.refsets, function (i, field){
-                if (field.conceptId == panel.conceptId){
-                    if (field.count){
+        if (panel.options.manifest) {
+            $.each(panel.options.manifest.refsets, function(i, field) {
+                if (field.conceptId == panel.conceptId) {
+                    if (field.count) {
                         total = field.count;
                     }
                 }
             });
         }
-        if (typeof total != "undefined"){
+        if (typeof total != "undefined") {
             //if (total < 25000){
-                paginate = 1;
-                membersUrl = membersUrl + "&paginate=1";
+            paginate = 1;
+            membersUrl = membersUrl + "&paginate=1";
             //}
 
         }
-//        console.log(membersUrl);
+        //        console.log(membersUrl);
         if (xhrMembers != null) {
             xhrMembers.abort();
             //console.log("aborting call...");
         }
-        xhrMembers = $.getJSON(membersUrl, function(result){
+        xhrMembers = $.getJSON(membersUrl, function(result) {
 
-        }).done(function(result){
+        }).done(function(result) {
             var remaining = "asd";
-            if (typeof total == "undefined") total = result.details.total;
-            if (total == skipTo){
+            if (typeof total == "undefined") total = result.total;
+            if (total == skipTo) {
                 remaining = 0;
-            }else{
-                if (total > (skipTo + returnLimit)){
+            } else {
+                if (total > (skipTo + returnLimit)) {
                     remaining = total - (skipTo + returnLimit);
-                }else{
-//                        if (result.details.total < returnLimit && skipTo != 0){
+                } else {
+                    //                        if (result.details.total < returnLimit && skipTo != 0){
                     remaining = 0;
-//                        }else{
-//                            remaining = result.details.total;
-//                        }
+                    //                        }else{
+                    //                            remaining = result.details.total;
+                    //                        }
                 }
             }
-            if (remaining < returnLimit){
+            if (remaining < returnLimit) {
                 var returnLimit2 = remaining;
-            }else{
-                if (remaining != 0){
+            } else {
+                if (remaining != 0) {
                     var returnLimit2 = returnLimit;
-                }else{
+                } else {
                     var returnLimit2 = 0;
                 }
             }
@@ -12808,68 +12796,68 @@ function refsetPanel(divElement, options) {
             };
             Handlebars.registerHelper('if_eq', function(a, b, opts) {
                 if (opts != "undefined") {
-                    if(a == b)
+                    if (a == b)
                         return opts.fn(this);
                     else
                         return opts.inverse(this);
                 }
             });
-            Handlebars.registerHelper('if_gr', function(a,b, opts) {
-                if (a){
-                    if(a > b)
+            Handlebars.registerHelper('if_gr', function(a, b, opts) {
+                if (a) {
+                    if (a > b)
                         return opts.fn(this);
                     else
                         return opts.inverse(this);
                 }
             });
-            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts){
+            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
                 if (countryIcons[moduleId])
                     return opts.fn(this);
                 else
                     return opts.inverse(this);
             });
-            if (result.members.length != 0){
+            if (result.total != 0) {
                 $("#" + panel.divElement.id + "-moreMembers").remove();
                 $("#" + panel.divElement.id + "-resultsTable").find(".more-row").remove();
                 if (skipTo == 0) {
                     $('#' + panel.divElement.id + "-resultsTable").html(JST["views/refsetPlugin/members.hbs"](context));
-                }else{
+                } else {
                     $('#' + panel.divElement.id + "-resultsTable").append(JST["views/refsetPlugin/members.hbs"](context));
                 }
-                $("#" + panel.divElement.id + "-moreMembers").click(function(){
+                $("#" + panel.divElement.id + "-moreMembers").click(function() {
                     $("#" + panel.divElement.id + "-moreMembers").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                     skipTo = skipTo + returnLimit;
-                    panel.loadMembers(conceptId, term, returnLimit2, skipTo , paginate);
+                    panel.loadMembers(conceptId, term, returnLimit2, skipTo, paginate);
                 });
                 $("#" + panel.divElement.id + "-sort").unbind();
-                $("#" + panel.divElement.id + "-sort").click(function(){
+                $("#" + panel.divElement.id + "-sort").click(function() {
                     $("#" + panel.divElement.id + "-sort").blur();
                     panel.loadMembers(conceptId, term, returnLimit2, 0, 1);
                 });
-            }else{
-                if (skipTo != 0){
+            } else {
+                if (skipTo != 0) {
                     $("#" + panel.divElement.id + "-moreMembers").remove();
                     $("#" + panel.divElement.id + "-resultsTable").find(".more-row").remove();
                     if (skipTo == 0) {
                         $('#' + panel.divElement.id + "-resultsTable").html(JST["views/refsetPlugin/members.hbs"](context));
-                    }else{
+                    } else {
                         $('#' + panel.divElement.id + "-resultsTable").append(JST["views/refsetPlugin/members.hbs"](context));
                     }
-                    $("#" + panel.divElement.id + "-moreMembers").click(function(){
+                    $("#" + panel.divElement.id + "-moreMembers").click(function() {
                         $("#" + panel.divElement.id + "-moreMembers").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                         skipTo = skipTo + returnLimit;
                         panel.loadMembers(conceptId, term, returnLimit2, skipTo, paginate);
                     });
                     $("#" + panel.divElement.id + "-sort").unbind();
-                    $("#" + panel.divElement.id + "-sort").click(function(){
+                    $("#" + panel.divElement.id + "-sort").click(function() {
                         $("#" + panel.divElement.id + "-sort").blur();
                         panel.loadMembers(conceptId, term, returnLimit2, 0, 1);
                     });
-                }else{
+                } else {
                     $("#" + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>This concept has no members</span></td></tr>");
                 }
             }
-            $('#' + panel.divElement.id + '-resultsTable').find(".member-concept-row").click(function (event) {
+            $('#' + panel.divElement.id + '-resultsTable').find(".member-concept-row").click(function(event) {
                 var clickedBadge = $(event.target).closest(".member-concept-row").find(".badge");
                 channel.publish(panel.divElement.id, {
                     term: clickedBadge.attr('data-term'),
@@ -12878,13 +12866,12 @@ function refsetPanel(divElement, options) {
                     source: panel.divElement.id
                 });
             });
-        }).fail(function(err){
+        }).fail(function(err) {
             if (xhrMembers.status === 0) {
-                if (xhrMembers.statusText === 'abort') {
-                }else{
+                if (xhrMembers.statusText === 'abort') {} else {
                     $("#" + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>This concept has no members</span></td></tr>");
                 }
-            }else{
+            } else {
                 $("#" + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>This concept has no members</span></td></tr>");
             }
         });
