@@ -26,6 +26,7 @@ node_modules
 
 .idea
 .DS_Store
+.vscode
 lastupdated.txt
 diff_report*
 yarn.lock
