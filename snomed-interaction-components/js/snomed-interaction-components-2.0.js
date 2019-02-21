@@ -7744,20 +7744,22 @@ function conceptDetails(divElement, conceptId, options) {
                 var auxDescriptions = [];
                 $.each(allDescriptions, function(i, description) {
                     var included = false;
-                    if (description.langMemberships) {
-                        $.each(description.langMemberships, function(i, langMembership) {
-                            if (langMembership.refset.conceptId == loopSelectedLangRefset) {
+                    if (description.acceptabilityMap) {
+                        $.each(description.acceptabilityMap, function(langref, acceptability) {
+                            acceptabilityPair = description.acceptabilityMap[i];
+                            if (langref == loopSelectedLangRefset) {
                                 included = true;
-                                if (langMembership.acceptability.conceptId == "900000000000548007") {
+                                if (acceptability == "PREFERRED") {
                                     description.preferred = true;
                                 } else {
-                                    if (langMembership.acceptability.conceptId == "900000000000549004") {
+                                    if (acceptability == "ACCEPTABLE") {
                                         description.acceptable = true;
                                     }
                                 }
                             }
                         });
                     }
+
                     if (included) {
                         auxDescriptions.push(description);
                     } else {
@@ -8918,10 +8920,12 @@ function conceptDetails(divElement, conceptId, options) {
     //    }
 
     this.removeSemtag = function(term) {
-        if (term.lastIndexOf("(") > 0) {
-            return term.substr(0, term.lastIndexOf("(") - 1)
-        } else {
-            return term;
+        if (term) {
+            if (term.lastIndexOf("(") > 0) {
+                return term.substr(0, term.lastIndexOf("(") - 1)
+            } else {
+                return term;
+            }
         }
     }
 
