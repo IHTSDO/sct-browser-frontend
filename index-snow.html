@@ -38,7 +38,7 @@
 
     <link rel="stylesheet" type="text/css" href="../snomed-interaction-components/css/snomed-interaction-components-2.0.css">
 
-    <script src="/snomed-interaction-components/js/snomed-interaction-components-2.0.js"></script>
+    <script src="/snomed-interaction-components/js/snomed-interaction-components-2.1.js"></script>
     <script src="/external-libs/jquery.history.js"></script>
     <script src="/external-libs/ZeroClipboard.js"></script>
 
@@ -79,7 +79,7 @@
             serverUrl: "http://localhost/ecl/",
             queryServerUrl: "https://snowstorm-alpha.ihtsdotools.org/snowstorm/snomed-ct/v2/",
             queryBranch: "MAIN/2019-01-31",
-            edition: "en-edition",
+            edition: "",
             release: "v20180731",
             showIds: false,
             hideNotAcceptable: true,
@@ -121,6 +121,7 @@
             }).done(function(result) {
                 manifests = result;
                 console.log(result);
+                start();
             }).fail(function() {
                 $.notify("Error Terminology server not accessible!", {
                     autoHide: false,
@@ -187,9 +188,9 @@
             }
 
             var edition = QueryString.edition;
-            if (typeof edition == "undefined" || edition == null || edition == "") {
-                edition = "en-edition";
-            }
+            // if (typeof edition == "undefined" || edition == null || edition == "") {
+            //     edition = "en-edition";
+            // }
             options.edition = edition;
 
             var release = QueryString.release;
@@ -912,7 +913,7 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
-        
+
         .ribbon span {
             border: 1px solid #faa;
             color: #fff;
@@ -923,11 +924,11 @@
             text-align: center;
             text-decoration: none;
         }
-        
+
         .navbar-brand {
             margin-top: 4px;
         }
-        
+
         .navbar .navbar-btn {
             margin-left: 10px;
         }
@@ -1337,7 +1338,7 @@ switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&
     <script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>
     <!--End Cookie Script-->
 
-    <!-- Google Analytics script 
+    <!-- Google Analytics script
     <script>
         (function(i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
