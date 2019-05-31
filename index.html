@@ -869,7 +869,7 @@
             $("#nav-selected-flag-modal").html('</img src="' + flagPng + '">');
             jQuery.i18n.properties({
                 name: 'Languages',
-                path: '/i18n/',
+                path: '/i18n/browser/',
                 mode: 'both',
                 language: language
             });
@@ -1302,7 +1302,7 @@ switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&
     <!-- /.modal -->
 
     <!-- Using Freshdesk Widget for feedback -->
-    <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+    <script type="text/javascript" src="https://assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
         FreshWidget.init("", {
             "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Application+Feedback%2FIssue+Reporting+(Not+for+Content+Issues)&searchArea=no",
@@ -1335,7 +1335,9 @@ switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&
     </script>
 
     <!--Start Cookie Script-->
-    <script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>
+    <!--<script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>-->
+    <script src="/external-libs/cookie-script.js" type="text/javascript" charset="UTF-8"></script>
+
     <!--End Cookie Script-->
 
     <!-- Google Analytics script
