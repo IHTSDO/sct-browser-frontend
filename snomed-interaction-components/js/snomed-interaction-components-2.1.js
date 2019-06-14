@@ -8423,7 +8423,7 @@ function conceptDetails(divElement, conceptId, options) {
                 firstMatch: firstMatch,
                 axioms: axioms
             };
-            
+
             $('#home-parents-' + panel.divElement.id).html(JST["views/conceptDetailsPlugin/tabs/home/parents.hbs"](context));
             if (!panel.options.diagrammingMarkupEnabled) {
                 $('#home-parents-' + panel.divElement.id).html(panel.stripDiagrammingMarkup($('#home-parents-' + panel.divElement.id).html()));
@@ -11480,7 +11480,7 @@ function searchPanel(divElement, options) {
                         "&limit=50" +
                         "&searchMode=" + panel.options.searchMode +
                         "&lang=" + panel.options.searchLang +
-                        "&conceptActive=" + conceptActiveParam +
+                        "&active=" + conceptActiveParam +
                         "&skipTo=" + skipTo +
                         "&returnLimit=" + returnLimit;
 

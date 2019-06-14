@@ -80,6 +80,8 @@
             queryServerUrl: "https://dev-snowstorm.ihtsdotools.org/snowstorm",
             queryBranch: "MAIN/2019-07-31",
             edition: "",
+            task: "",
+            project: "",
             release: "v2019-07-31",
             showIds: false,
             hideNotAcceptable: true,
@@ -152,6 +154,16 @@
             }
             return query_string;
         }();
+
+        function projectChanged(a, b) {
+            console.log('PROJECT CHANGED A: ', a);
+            console.log('PROJECT CHANGED B: ', b);
+        }
+
+        function taskChanged(a, b) {
+            console.log('TASK CHANGED A: ', a);
+            console.log('TASK CHANGED B: ', b);
+        }
 
         function start() {
             if (!!window.MSInputMethodContext && !!document.documentMode) {
@@ -300,6 +312,99 @@
 
 
             //                verifyDate(release)
+
+            // PROJECT DROPDOWN HANDLER
+            $.getJSON("/authoring-services/projects").done(function(result) {
+                var $projectDdl = $('#projectDdl');
+
+                var projectsInDateFormat = [];
+                var projectsInStringFormat = [];
+                result.forEach(function(item) {
+                    var strArray = item.key.split('-');
+                    if (!isNaN(strArray[0])) {
+                        projectsInDateFormat.push(item);
+                    } else {
+                        projectsInStringFormat.push(item);
+                    }
+                });
+
+                projectsInStringFormat.sort(function(a,b) {
+                    return a.key.localeCompare(b.key);
+                });
+
+                projectsInDateFormat.sort(function(a,b) {
+                    return b.key.localeCompare(a.key);
+                });
+                result.items = projectsInStringFormat.concat(projectsInDateFormat);
+
+                $.each(result.items, function() {
+                    var relativePath = this.branchPath.substring("MAIN/".length);
+                    $('<option>').val(this.branchPath).text(this.name).appendTo($projectDdl);
+                });
+                var projectChanged = function(){
+                    getTaskList();
+                    var branchPath = $('#projectDdl').val();
+                    options.release = branchPath;
+                    options.branch = branchPath;
+                    options.task = "";
+                    var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
+                    var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
+                    var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
+
+                    cdPanel.subscribe(tpt);
+                    cdPanel.subscribe(searchP);
+                    cdPanel.setupCanvas();
+                }
+                $("#projectDdl").on("change", function(event) {
+                    projectChanged(this, event);
+                });
+
+                if(options.branch) {
+                    $("#projectDdl").val(options.branch).change();
+                    if(originalTask) {
+                        options.task = originalTask;
+                        options.release = originalTask;
+                    }
+                } else {
+                    $("#projectDdl").val(options.release).change();
+                }
+            });
+
+            // TASK DROPDOWN HANDLER
+            var getTaskList = function () {
+                $.getJSON("/authoring-services/projects/" + $('#projectDdl').val() + "/tasks").done(function (result) {
+                    var $taskDdl = $('#taskDdl');
+                    $taskDdl.html("");
+                    $('<option>').val("None").text("None").appendTo($taskDdl);
+                    result.items = groupTaskList(result);
+                    $.each(result, function () {
+                        var relativePath = this.path.substring("MAIN/".length);
+                        $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
+                    });
+                    if (options.task) {
+                        $("#taskDdl").val(options.task).change();
+                    }
+                    var taskChanged = function () {
+                        var branchPath = $('#taskDdl').val();
+                        //If no task selected in the task dropdown, use the project
+                        if (branchPath == "None") {
+                            branchPath = $('#projectDdl').val();
+                        }
+                        options.release = branchPath;
+                        options.task = branchPath;
+                        var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
+                        var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
+                        var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
+
+                        cdPanel.subscribe(tpt);
+                        cdPanel.subscribe(searchP);
+                        cdPanel.setupCanvas();
+                    }
+                    $("#taskDdl").on("change", function (event) {
+                        taskChanged(this, event);
+                    });
+                });
+            }
         }
 
         function initTour() {
@@ -940,6 +1045,14 @@
         <div>
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
+                <!--<span style="margin-left:10px">Project:</span>-->
+                <!--<select style="margin-top:18px; margin-left:2px;" id="projectDdl" on-change="projectChanged()">-->
+                    <!--<option value="MAIN">MAIN</option>-->
+                <!--</select>-->
+                <!--<span style="margin-left:10px">Task:</span>-->
+                <!--<select style="margin-top:18px; margin-left:2px;" id="taskDdl" on-change="taskChanged()">-->
+                    <!--<option value="None">None</option>-->
+                <!--</select>-->
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
@@ -980,18 +1093,19 @@
                                         reloadCurrentPerspective();">UY Edition 20180615</a></li>
                         </ul>
                     </li>
+                    <!--
                     <li class="navbar-btn" id="perspective-selector">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0);" onclick="switchToFullHeight(404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_full_perspective">Full</span></a></li>
-                            <!--                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li> -->
                             <li><a href="javascript:void(0);" onclick="switchToComparingConcepts(404684003, 404684003);"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
                             <li><a href="javascript:void(0);" onclick="switchToComparingTaxonomies(404684003, 138875005, 138875005);"><span class="i18n" data-i18n-id="i18n_comp_hier_perspective">Comparing hierarchy</span></a></li>
                             <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>
                         </ul>
                     </li>
+                    -->
                     <li class="navbar-btn feedback-button">
                         <button type="button" class="btn btn-info" onclick="FreshWidget.show();
                                     return false;">
