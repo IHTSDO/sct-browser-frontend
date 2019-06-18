@@ -7514,6 +7514,9 @@ function conceptDetails(divElement, conceptId, options) {
     panel.subscriptionsColor = [];
     panel.subscriptions = [];
     panel.subscribers = [];
+    if(options.release === undefined){
+        options.release = '';
+    }
 
     componentLoaded = false;
     $.each(componentsRegistry, function(i, field) {
@@ -7780,7 +7783,10 @@ function conceptDetails(divElement, conceptId, options) {
             xhr.abort();
             //console.log("aborting call...");
         }
-        xhr = $.getJSON(options.serverUrl + "/browser/" + options.release + "/concepts/" + panel.conceptId, function(result) {
+        if(options.release === undefined){
+            options.release = '';
+        }
+        xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + panel.conceptId, function(result) {
 
         }).done(function(result) {
             setDefaultTerm(result);
@@ -10931,6 +10937,9 @@ function searchPanel(divElement, options) {
         var context = {
             divElementId: panel.divElement.id
         };
+        if(options.release === undefined){
+            options.release = '';
+        }
         $(divElement).html(JST["views/searchPlugin/aux.hbs"](context));
 
         $('#' + panel.divElement.id + '-searchBox').keyup(function() {
@@ -11359,7 +11368,7 @@ function searchPanel(divElement, options) {
                 if (isNumber(t)) {
                     if (t.substr(-2, 1) == "0") {
                         // Search conceptId
-                        xhr = $.getJSON(options.serverUrl + "/browser/" + options.release + "/concepts/" + t, function(result) {
+                        xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + t, function(result) {
 
                         }).done(function(result) {
                             Handlebars.registerHelper('if_eq', function(a, b, opts) {
@@ -12318,8 +12327,12 @@ function taxonomyPanel(divElement, conceptId, options) {
     panel.subscriptions = [];
     panel.subscriptionsColor = [];
     this.history = [];
+    if(options.release === undefined){
+        options.release = '';
+    }
 
     if (!options.rootConceptDescendants) {
+        console.log(options);
         $.ajax({
             type: "GET",
             url: options.serverUrl + options.edition + "/" + options.release + "/concepts",
@@ -13275,6 +13288,9 @@ function refsetPanel(divElement, options) {
     panel.loadRefsets();
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate) {
+        if(options.release === undefined){
+            options.release = '';
+        }
         var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/members?referenceSet=" + conceptId + "&limit=100";
         if (skipTo > 0) {
             membersUrl = membersUrl + "&offset=" + skipTo;
@@ -13556,6 +13572,9 @@ function queryComputerPanel(divElement, options) {
     this.type = "query-computer";
     panel.subscribers = [];
     panel.totalResults = [];
+    if(options.release === undefined){
+        options.release = '';
+    }
 
     if (!componentsRegistry) {
         componentsRegistry = [];
