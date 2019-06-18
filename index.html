@@ -80,8 +80,8 @@
             serverUrl: "https://dev-snowstorm.ihtsdotools.org/snowstorm/snomed-ct/v2/",
             queryServerUrl: "https://dev-snowstorm.ihtsdotools.org/snowstorm/snomed-ct/v2/",
             queryBranch: "MAIN/2019-07-31",
-            edition: "",
-            release: "v2019-07-31",
+            edition: "MAIN/2019-07-31",
+            release: "",
             showIds: false,
             hideNotAcceptable: true,
             displayInactiveDescriptions: false,
@@ -206,7 +206,7 @@
 
             var release = QueryString.release;
             if (typeof release == "undefined" || release == null || release == "") {
-                release = "v20180731";
+                //release = "v20180731";
             }
             options.release = release;
 
@@ -376,7 +376,7 @@
 
                 var projectChanged = function(){
                     // getTaskList();
-                    options.queryBranch = $('#projectDdl').val();
+                    options.edition = $('#projectDdl').val();
                     var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
                     var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
                     var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
@@ -391,11 +391,11 @@
 
                 console.log('PRE-END: ', result);
 
-                if(options.queryBranch) {
-                    $("#projectDdl").val(options.queryBranch).change();
+                if(options.edition) {
+                    $("#projectDdl").val(options.edition).change();
                     if(originalTask) {
                         options.task = originalTask;
-                        options.release = originalTask;
+                        //options.release = originalTask;
                     }
                 } else {
                     $("#projectDdl").val(options.release).change();
@@ -968,8 +968,8 @@
                 //                        console.log(options.textIndexNormalized);
             }
             options.edition = edition;
-            options.release = release;
-            options.queryBranch = "MAIN/" + queryRelease;
+            //options.release = release;
+            //options.queryBranch = "MAIN/" + queryRelease;
             options.langRefset = langRefset.split(",");
             if (serverUrl) {
                 options.serverUrl = serverUrl;

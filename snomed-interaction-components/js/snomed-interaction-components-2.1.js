@@ -12322,7 +12322,7 @@ function taxonomyPanel(divElement, conceptId, options) {
     if (!options.rootConceptDescendants) {
         $.ajax({
             type: "GET",
-            url: options.serverUrl + options.queryBranch + "/concepts",
+            url: options.serverUrl + options.edition + "/" + options.release + "/concepts",
 			data: {
 				ecl: "< 138875005|SNOMED CT Concept|",
 				offset: 0,
@@ -13186,7 +13186,6 @@ function historyInTaxPanel(divElementId, conceptId) {
         });
     };
 }(jQuery));
-
 /**
  * Created by termmed on 9/2/14.
  */
@@ -14271,7 +14270,7 @@ function queryComputerPanel(divElement, options) {
             panel.execute("inferred", expression, true);
             /* } else {
                       alertEvent("Invalid Expression", "error")
-                  }
+                  } 
               }).fail(function(err) {
                   //console.log(err);
               }).always(function() { */
@@ -14862,7 +14861,6 @@ function queryComputerPanel(divElement, options) {
             xhrExecute = xhrExecute2;
     }
 }
-
 /**
  * Created by alo on 7/18/14.
  */
