@@ -75,13 +75,12 @@
         var selectedFlag = '/img/flags/us.png';
         var currentPerspective = "home";
 
+        var originalTask = '';
         var options = {
             serverUrl: "https://dev-snowstorm.ihtsdotools.org/snowstorm/snomed-ct/v2/",
             queryServerUrl: "https://dev-snowstorm.ihtsdotools.org/snowstorm/snomed-ct/v2/",
             queryBranch: "MAIN/2019-07-31",
             edition: "",
-            task: "",
-            project: "",
             release: "v2019-07-31",
             showIds: false,
             hideNotAcceptable: true,
@@ -313,6 +312,38 @@
 
             //                verifyDate(release)
 
+
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
+                    }
+                }
+            };
+            var focusConcept = 138875005;
+            if(getUrlParameter('branch'))
+            {
+                options.release = getUrlParameter('branch');
+                var variables = options.release.split('/');
+                options.branch = "MAIN/" + variables[1];
+                if(variables.length > 2) {
+                    originalTask = options.release;
+                }
+            }
+            if(getUrlParameter('concept'))
+            {
+                focusConcept = getUrlParameter('concept');
+            }
+
+
+
             // PROJECT DROPDOWN HANDLER
             $.getJSON("/authoring-services/projects").done(function(result) {
                 var $projectDdl = $('#projectDdl');
@@ -337,16 +368,15 @@
                 });
                 result.items = projectsInStringFormat.concat(projectsInDateFormat);
 
+
                 $.each(result.items, function() {
                     var relativePath = this.branchPath.substring("MAIN/".length);
-                    $('<option>').val(this.branchPath).text(this.name).appendTo($projectDdl);
+                    $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
                 });
+
                 var projectChanged = function(){
-                    getTaskList();
-                    var branchPath = $('#projectDdl').val();
-                    options.release = branchPath;
-                    options.branch = branchPath;
-                    options.task = "";
+                    // getTaskList();
+                    options.queryBranch = $('#projectDdl').val();
                     var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
                     var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
                     var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
@@ -359,8 +389,10 @@
                     projectChanged(this, event);
                 });
 
-                if(options.branch) {
-                    $("#projectDdl").val(options.branch).change();
+                console.log('PRE-END: ', result);
+
+                if(options.queryBranch) {
+                    $("#projectDdl").val(options.queryBranch).change();
                     if(originalTask) {
                         options.task = originalTask;
                         options.release = originalTask;
@@ -371,40 +403,40 @@
             });
 
             // TASK DROPDOWN HANDLER
-            var getTaskList = function () {
-                $.getJSON("/authoring-services/projects/" + $('#projectDdl').val() + "/tasks").done(function (result) {
-                    var $taskDdl = $('#taskDdl');
-                    $taskDdl.html("");
-                    $('<option>').val("None").text("None").appendTo($taskDdl);
-                    result.items = groupTaskList(result);
-                    $.each(result, function () {
-                        var relativePath = this.path.substring("MAIN/".length);
-                        $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
-                    });
-                    if (options.task) {
-                        $("#taskDdl").val(options.task).change();
-                    }
-                    var taskChanged = function () {
-                        var branchPath = $('#taskDdl').val();
-                        //If no task selected in the task dropdown, use the project
-                        if (branchPath == "None") {
-                            branchPath = $('#projectDdl').val();
-                        }
-                        options.release = branchPath;
-                        options.task = branchPath;
-                        var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
-                        var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-                        var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
-
-                        cdPanel.subscribe(tpt);
-                        cdPanel.subscribe(searchP);
-                        cdPanel.setupCanvas();
-                    }
-                    $("#taskDdl").on("change", function (event) {
-                        taskChanged(this, event);
-                    });
-                });
-            }
+            // var getTaskList = function () {
+            //     $.getJSON("/authoring-services/projects/" + $('#projectDdl').val() + "/tasks").done(function (result) {
+            //         var $taskDdl = $('#taskDdl');
+            //         $taskDdl.html("");
+            //         $('<option>').val("None").text("None").appendTo($taskDdl);
+            //         result.items = groupTaskList(result);
+            //         $.each(result, function () {
+            //             var relativePath = this.path.substring("MAIN/".length);
+            //             $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
+            //         });
+            //         if (options.task) {
+            //             $("#taskDdl").val(options.task).change();
+            //         }
+            //         var taskChanged = function () {
+            //             var branchPath = $('#taskDdl').val();
+            //             //If no task selected in the task dropdown, use the project
+            //             if (branchPath == "None") {
+            //                 branchPath = $('#projectDdl').val();
+            //             }
+            //             options.release = branchPath;
+            //             options.task = branchPath;
+            //             var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
+            //             var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
+            //             var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
+            //
+            //             cdPanel.subscribe(tpt);
+            //             cdPanel.subscribe(searchP);
+            //             cdPanel.setupCanvas();
+            //         }
+            //         $("#taskDdl").on("change", function (event) {
+            //             taskChanged(this, event);
+            //         });
+            //     });
+            // }
         }
 
         function initTour() {
@@ -1045,10 +1077,10 @@
         <div>
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <!--<span style="margin-left:10px">Project:</span>-->
-                <!--<select style="margin-top:18px; margin-left:2px;" id="projectDdl" on-change="projectChanged()">-->
-                    <!--<option value="MAIN">MAIN</option>-->
-                <!--</select>-->
+                <span style="margin-left:10px">Project:</span>
+                <select style="margin-top:18px; margin-left:2px;" id="projectDdl" on-change="projectChanged()">
+                    <option value="MAIN">MAIN</option>
+                </select>
                 <!--<span style="margin-left:10px">Task:</span>-->
                 <!--<select style="margin-top:18px; margin-left:2px;" id="taskDdl" on-change="taskChanged()">-->
                     <!--<option value="None">None</option>-->
