@@ -9396,20 +9396,19 @@ function drawConceptDiagram (concept, div, options, panel) {
     var rect1 = drawSctBox(svg, x, y, concept.fsn, concept.conceptId, sctClass);
     x = x + 90;
     y = y + rect1.getBBox().height + 40;
-    if(options.selectedView === 'stated' && svgIsaModel && svgIsaModel.length > 0){
+    if(options.selectedView === 'stated' && svgIsaModel && svgIsaModel.length > 0 || options.selectedView != 'stated'){
         var circle1;
-    if (concept.definitionStatus == "PRIMITIVE") {
-        console.log('drawing 1');
-        circle1 = drawSubsumedByNode(svg, x, y);
-    } else {
-        circle1 = drawEquivalentNode(svg, x, y);
-    }
-    connectElements(svg, rect1, circle1, 'bottom-50', 'left');
-    x = x + 55;
-    var circle2 = drawConjunctionNode(svg, x, y);
-    connectElements(svg, circle1, circle2, 'right', 'left', 'LineMarker');
-    x = x + 40;
-    y = y - 18;
+        if (concept.definitionStatus == "PRIMITIVE") {
+            circle1 = drawSubsumedByNode(svg, x, y);
+        } else {
+            circle1 = drawEquivalentNode(svg, x, y);
+        }
+        connectElements(svg, rect1, circle1, 'bottom-50', 'left');
+        x = x + 55;
+        var circle2 = drawConjunctionNode(svg, x, y);
+        connectElements(svg, circle1, circle2, 'right', 'left', 'LineMarker');
+        x = x + 40;
+        y = y - 18;
     }
     
     
