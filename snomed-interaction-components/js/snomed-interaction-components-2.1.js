@@ -8771,7 +8771,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren.abort();
             //console.log("aborting children call...");
         }
-        xhrChildren = $.getJSON(options.serverUrl + "browser/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
+        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
             result.forEach(function(c) { setDefaultTerm(c) });
@@ -8989,7 +8989,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren.abort();
             //console.log("aborting children call...");
         }
-        xhrChildren = $.getJSON(options.serverUrl + "browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
+        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
             result.forEach(function(c) { setDefaultTerm(c) });
             result.sort(function(a, b) {
                 if (a.defaultTerm.toLowerCase() < b.defaultTerm.toLowerCase())
@@ -9067,7 +9067,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrParents.abort();
             //console.log("aborting children call...");
         }
-        xhrParents = $.getJSON(options.serverUrl + "browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
+        xhrParents = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
             result.forEach(function(c) { setDefaultTerm(c) });
@@ -11492,7 +11492,7 @@ function searchPanel(divElement, options) {
                         conceptActiveParam = "";
                     }
 
-                    var searchUrl = options.serverUrl + "browser/" + options.edition + "/" + options.release + "/descriptions?" +
+                    var searchUrl = options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/descriptions?" +
                         "term=" + encodeURIComponent(t) +
                         "&limit=50" +
                         "&searchMode=" + panel.options.searchMode +
@@ -12323,7 +12323,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         console.log(options);
         $.ajax({
             type: "GET",
-            url: options.serverUrl + options.edition + "/" + options.release + "/concepts",
+            url: options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts",
 			data: {
 				ecl: "< 138875005|SNOMED CT Concept|",
 				offset: 0,
@@ -12760,7 +12760,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         else $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: Off");
 
 
-        $.getJSON(options.serverUrl + "browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
+        $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
             if (result && result[0] && typeof result[0].statedDescendants == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
             result.forEach(function(c) {setDefaultTerm(c)});
             result.sort(function(a, b) {
@@ -14385,7 +14385,7 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-exportXls').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         xhrTotal = $.ajax({
             type: "POST",
-            url: options.serverUrl.replace("snomed", "expressions/") + options.edition + "/" + options.release + "/execute/brief",
+            url: options.serverUrl.replace("snomed", "expressions/") + "/" + options.edition + "/" + options.release + "/execute/brief",
             data: panel.lastRequest,
             dataType: "json",
             success: function(result) {
