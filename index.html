@@ -154,16 +154,6 @@
             return query_string;
         }();
 
-        function projectChanged(a, b) {
-            console.log('PROJECT CHANGED A: ', a);
-            console.log('PROJECT CHANGED B: ', b);
-        }
-
-        function taskChanged(a, b) {
-            console.log('TASK CHANGED A: ', a);
-            console.log('TASK CHANGED B: ', b);
-        }
-
         function start() {
             if (!!window.MSInputMethodContext && !!document.documentMode) {
                 window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
@@ -368,10 +358,16 @@
                 });
                 result.items = projectsInStringFormat.concat(projectsInDateFormat);
 
+                $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
 
                 $.each(result.items, function() {
                     var relativePath = this.branchPath.substring("MAIN/".length);
                     $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
+                });
+
+                $(function() {
+                    var temp="MAIN";
+                    $("#projectDdl").val(temp);
                 });
 
                 var projectChanged = function(){
@@ -388,8 +384,6 @@
                 $("#projectDdl").on("change", function(event) {
                     projectChanged(this, event);
                 });
-
-                console.log('PRE-END: ', result);
 
                 if(options.edition) {
                     $("#projectDdl").val(options.edition).change();
@@ -437,6 +431,14 @@
             //         });
             //     });
             // }
+
+            var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
+            var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
+            var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
+
+            cdPanel.subscribe(tpt);
+            cdPanel.subscribe(searchP);
+            cdPanel.setupCanvas();
         }
 
         function initTour() {
@@ -1079,7 +1081,7 @@
             <div class="navbar-header">
                 <span style="margin-left:10px">Project:</span>
                 <select style="margin-top:18px; margin-left:2px;" id="projectDdl" on-change="projectChanged()">
-                    <option value="MAIN">MAIN</option>
+                    <!--<option value="MAIN">MAIN</option>-->
                 </select>
                 <!--<span style="margin-left:10px">Task:</span>-->
                 <!--<select style="margin-top:18px; margin-left:2px;" id="taskDdl" on-change="taskChanged()">-->
@@ -1103,7 +1105,7 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20180731</span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '2018-01-31', '900000000000509007', 'http://browser.ihtsdotools.org/api/v1/snomed');
+                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 2019-07-31', 'en-edition', 'MAIN/2019-07-31', '2019-07-31', '900000000000509007', '/snowstorm/snomed-ct/v2/');
                                         reloadCurrentPerspective();">International Edition 20180731</a></li>
                             <li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                         reloadCurrentPerspective();">Spanish Edition 20180430</a></li>
@@ -1204,7 +1206,7 @@
                 <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="http://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a>                    </p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', '', 'MAIN/2019-07-31', '2019-07-31','900000000000509007', '/snowstorm/snomed-ct/v2/');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', 'en-edition', 'MAIN/2019-07-31', '2019-07-31','900000000000509007', '/snowstorm/snomed-ct/v2/');
                                 switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2019</span></a>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                 switchLanguage('es', '/img/flags/es.png', true);
