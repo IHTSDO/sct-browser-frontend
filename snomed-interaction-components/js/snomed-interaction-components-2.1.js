@@ -5185,7 +5185,7 @@ function program14(depth0,data) {
 this["JST"]["views/searchPlugin/aux.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
   buffer += "<div style='margin: 5px; height:95%;' class='panel panel-default'>\n    <div class='panel-heading'>\n        <button id='";
@@ -5240,11 +5240,65 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-panelBody'>\n        <div style=\"display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; \">\n            <div id=\"";
+    + "-panelBody'>\n        <div style=\"display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; \">\n            <h4><span>Options</span></h4>\n            <div id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-searchBar2\"></div>\n        </div>\n        <div style=\"display: inline; width: 66%; float: right; padding: 5px;\">\n            <form>\n                <div class=\"form-group\" style=\"margin-bottom: 2px;\">\n                    <label for=\"";
+    + "-searchConfigBar' style='margin-bottom: 10px;'>\n                <div style=\"margin-top: 20px\" class=\"btn-group\">\n                    <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                        <span class='i18n' data-i18n-id='i18n_search_mode'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_search_mode", "Search Mode", options) : helperMissing.call(depth0, "i18n", "i18n_search_mode", "Search Mode", options)))
+    + "</span>: <span id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-searchMode\"></span>&nbsp;<span class=\"caret\"></span>\n                    </button>\n                    <ul class=\"dropdown-menu\" role=\"menu\">\n                        <li>\n                            <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-fullTextButton'><span class='i18n' data-i18n-id='i18n_full_text_search_mode'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_full_text_search_mode", "Full text search mode", options) : helperMissing.call(depth0, "i18n", "i18n_full_text_search_mode", "Full text search mode", options)))
+    + "</span></a>\n                        </li>\n                        <li>\n                            <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-partialMatchingButton'><span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_partial_match_search_mode", "Partial matching search mode", options) : helperMissing.call(depth0, "i18n", "i18n_partial_match_search_mode", "Partial matching search mode", options)))
+    + "</span></a>\n                        </li>\n                        <li>\n                            <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-regexButton'><span class='i18n' data-i18n-id='i18n_regex_search_mode'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_regex_search_mode", "Regular Expressions search mode", options) : helperMissing.call(depth0, "i18n", "i18n_regex_search_mode", "Regular Expressions search mode", options)))
+    + "</span></a>\n                        </li>\n                    </ul>\n                </div>\n                <div style=\"margin-top: 5px\" class=\"btn-group\">\n                    <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                        <span class='i18n' data-i18n-id='i18n_status'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_status", "Status", options) : helperMissing.call(depth0, "i18n", "i18n_status", "Status", options)))
+    + "</span>: <span id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-searchStatus\"></span>&nbsp;<span class=\"caret\"></span>\n                    </button>\n                    <ul class=\"dropdown-menu\" role=\"menu\">\n                        <li>\n                            <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-activeOnlyButton' data-i18n-id='i18n_active_only'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_active_only", "Active components only", options) : helperMissing.call(depth0, "i18n", "i18n_active_only", "Active components only", options)))
+    + "</a>\n                        </li>\n                        <li>\n                            <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-activeInactiveButton' data-i18n-id='i18n_active_and_inactive'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_active_and_inactive", "Active and inactive components", options) : helperMissing.call(depth0, "i18n", "i18n_active_and_inactive", "Active and inactive components", options)))
+    + "</a>\n                        </li>\n                        <li>\n                            <a href=\"#\"id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-inactiveOnlyButton' data-i18n-id='i18n_inactive_only'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_inactive_only", "Inactive components only", options) : helperMissing.call(depth0, "i18n", "i18n_inactive_only", "Inactive components only", options)))
+    + "</a>\n                        </li>\n                    </ul>\n                </div>\n                <div style=\"margin-top: 5px; \" class=\"checkbox\">\n                    <label>\n                        <input id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-groupConcept\" type=\"checkbox\"><span class='i18n' data-i18n-id='i18n_group_by_concept'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_group_by_concept", "Group by concept", options) : helperMissing.call(depth0, "i18n", "i18n_group_by_concept", "Group by concept", options)))
+    + "</span>\n                    </label>\n                </div>\n            </div>\n        </div>\n        <div style=\"display: inline; width: 66%; float: right; padding: 5px;\">\n            <form>\n                <div class=\"form-group\" style=\"margin-bottom: 2px;\">\n                    <label for=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6386,7 +6440,7 @@ function program2(depth0,data,depth1,depth2) {
   if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "' data-term='";
+    + "' data-term=\"";
   if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6394,7 +6448,7 @@ function program2(depth0,data,depth1,depth2) {
   if (helper = helpers.statedDescendants) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.statedDescendants); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "' class='treeLabel'>\n                <button class='btn btn-link btn-xs treeButton' style='padding:2px'>\n                    <i class='glyphicon glyphicon-";
+    + "\" class='treeLabel'>\n                <button class='btn btn-link btn-xs treeButton' style='padding:2px'>\n                    <i class='glyphicon glyphicon-";
   stack1 = (helper = helpers.if_eq || (depth2 && depth2.if_eq),options={hash:{},inverse:self.program(8, program8, data),fn:self.program(3, program3, data),data:data},helper ? helper.call(depth0, (depth2 && depth2.selectedView), "inferred", options) : helperMissing.call(depth0, "if_eq", (depth2 && depth2.selectedView), "inferred", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " treeButton' id='"
@@ -11122,7 +11176,7 @@ function searchPanel(divElement, options) {
                         "&limit=50" +
                         "&searchMode=" + panel.options.searchMode +
                         "&lang=" + panel.options.searchLang +
-                        "&active=" + conceptActiveParam +
+                        "&active=" + "true" +
                         "&skipTo=" + skipTo +
                         "&returnLimit=" + returnLimit;
 
@@ -11155,6 +11209,7 @@ function searchPanel(divElement, options) {
                             match.fsn = match.concept.fsn;
                             match.conceptActive = match.concept.active;
                             match.conceptId = match.concept.conceptId;
+                            match.definitionStatus = match.concept.definitionStatus;
                         })
 
                         result.filters = {};
