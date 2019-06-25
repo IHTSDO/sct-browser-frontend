@@ -5265,31 +5265,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-searchConfigBar' style='margin-bottom: 10px;'>\n                <div style=\"margin-top: 20px\" class=\"btn-group\">\n                    <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                        <span class='i18n' data-i18n-id='i18n_search_mode'>"
-    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_search_mode", "Search Mode", options) : helperMissing.call(depth0, "i18n", "i18n_search_mode", "Search Mode", options)))
-    + "</span>: <span id=\"";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "-searchMode\"></span>&nbsp;<span class=\"caret\"></span>\n                    </button>\n                    <ul class=\"dropdown-menu\" role=\"menu\">\n                        <li>\n                            <a href=\"#\" id='";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "-fullTextButton'><span class='i18n' data-i18n-id='i18n_full_text_search_mode'>"
-    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_full_text_search_mode", "Full text search mode", options) : helperMissing.call(depth0, "i18n", "i18n_full_text_search_mode", "Full text search mode", options)))
-    + "</span></a>\n                        </li>\n                        <li>\n                            <a href=\"#\" id='";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "-partialMatchingButton'><span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>"
-    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_partial_match_search_mode", "Partial matching search mode", options) : helperMissing.call(depth0, "i18n", "i18n_partial_match_search_mode", "Partial matching search mode", options)))
-    + "</span></a>\n                        </li>\n                        <li>\n                            <a href=\"#\" id='";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "-regexButton'><span class='i18n' data-i18n-id='i18n_regex_search_mode'>"
-    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_regex_search_mode", "Regular Expressions search mode", options) : helperMissing.call(depth0, "i18n", "i18n_regex_search_mode", "Regular Expressions search mode", options)))
-    + "</span></a>\n                        </li>\n                    </ul>\n                </div>\n                <div style=\"margin-top: 5px\" class=\"btn-group\">\n                    <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                        <span class='i18n' data-i18n-id='i18n_status'>"
+    + "-searchConfigBar' style='margin-bottom: 10px;'>\n                <div style=\"margin-top: 5px\" class=\"btn-group\">\n                    <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                        <span class='i18n' data-i18n-id='i18n_status'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_status", "Status", options) : helperMissing.call(depth0, "i18n", "i18n_status", "Status", options)))
     + "</span>: <span id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -5597,7 +5573,7 @@ function program2(depth0,data) {
 function program4(depth0,data) {
   
   var stack1, helper, options;
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.conceptActive), false, options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.conceptActive), false, options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.concept)),stack1 == null || stack1 === false ? stack1 : stack1.active), false, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.concept)),stack1 == null || stack1 === false ? stack1 : stack1.active), false, options));
   if(stack1 || stack1 === 0) { return stack1; }
   else { return ''; }
   }
@@ -11107,11 +11083,12 @@ function searchPanel(divElement, options) {
                             $.each(result.descriptions, function(i, field) {
                                 var aux = field;
                                 aux.definitionStatus = result.definitionStatus;
-                                aux.conceptActive = result.active;
+                                aux.conceptActive = result.concept.active;
                                 if (!aux.active || !aux.conceptActive) {
                                     aux.danger = true;
                                 }
-                                if (field.active) {
+                                console.log(panel.options.statusSearchFilter);
+                                if (field.active && field.concept.active) {
                                     if (panel.options.statusSearchFilter == "activeOnly") {
                                         resDescriptions.push(aux);
                                     }
@@ -11250,9 +11227,34 @@ function searchPanel(divElement, options) {
                     xhr = $.getJSON(searchUrl, function(result) {
 
                     }).done(function(result) {
+                        var resDescriptions = [];
+                        $.each(result.items, function(i, field) {
+                            var aux = field;
+                            aux.definitionStatus = result.definitionStatus;
+                            aux.conceptActive = field.concept.active;
+                            if (!aux.active || !aux.conceptActive) {
+                                aux.danger = true;
+                            }
+                            if (field.active && field.concept.active) {
+                                if (panel.options.statusSearchFilter == "activeOnly") {
+                                    resDescriptions.push(aux);
+                                }
+                                if (panel.options.statusSearchFilter == "activeAndInactive") {
+                                    resDescriptions.push(aux);
+                                }
+                            } else {
+                                aux.danger = true;
+                                if (panel.options.statusSearchFilter == "inactiveOnly") {
+                                    resDescriptions.push(aux);
+                                }
+                                if (panel.options.statusSearchFilter == "activeAndInactive") {
+                                    resDescriptions.push(aux);
+                                }
+                            }
+                        });
 
                         // Convert response format
-                        result.matches = result.items;
+                        result.matches = resDescriptions;
                         result.matches.forEach(function(match) {
                             match.fsn = match.concept.fsn;
                             match.conceptActive = match.concept.active;
