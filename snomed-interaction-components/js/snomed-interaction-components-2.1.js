@@ -11227,7 +11227,7 @@ function searchPanel(divElement, options) {
                         xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions/" + t, function(result) {
 
                         }).done(function(result) {
-                            //console.log(result);
+                            console.log(result);
                             Handlebars.registerHelper('if_eq', function(a, b, opts) {
                                 if (opts != "undefined") {
                                     if (a == b)
@@ -11242,8 +11242,11 @@ function searchPanel(divElement, options) {
                                 else
                                     return opts.inverse(this);
                             });
+                            var tempResults = {};
+                            tempResults.matches = [];
+                            tempResults.matches.push(result);
                             var context = {
-                                result: result
+                                result: tempResults
                             };
                             $('#' + panel.divElement.id + '-resultsTable').html(JST["views/searchPlugin/body/1.hbs"](context));
                             $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
