@@ -1159,7 +1159,7 @@ function program8(depth0,data,depth2) {
   else { helper = (depth0 && depth0.groupId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\n                            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(21, program21, data),fn:self.program(19, program19, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.charType)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "900000000000010007", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.charType)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "900000000000010007", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(21, program21, data),fn:self.program(19, program19, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.characteristicType), "STATED_RELATIONSHIP", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.characteristicType), "STATED_RELATIONSHIP", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                    <tr><td style='padding: 3px;'>"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1283,7 +1283,7 @@ function program21(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\n                                ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(24, program24, data),fn:self.program(22, program22, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.charType)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "900000000000011006", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.charType)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "900000000000011006", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(24, program24, data),fn:self.program(22, program22, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.characteristicType), "INFERRED_RELATIONSHIP", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.characteristicType), "INFERRED_RELATIONSHIP", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                            ";
   return buffer;
@@ -7559,10 +7559,12 @@ function conceptDetails(divElement, conceptId, options) {
                 if(axiom.active){
                     axiom.relationships.forEach(function(rel) {
                         if(rel.active && rel.type.conceptId === "116680003"){
+                            rel.effectiveTime = axiom.effectiveTime;
                             panel.statedParentsFromAxioms.push(rel);
                         }
                         else if(rel.active){
                             rel.axiomId = axiom.axiomId;
+                            rel.effectiveTime = axiom.effectiveTime;
                             panel.attributesFromAxioms.push(rel);
                         }
                     });
@@ -7574,7 +7576,12 @@ function conceptDetails(divElement, conceptId, options) {
                     axiom.relationships.forEach(function(rel) {
                         if(rel.active && rel.type.conceptId !== "116680003"){
                             rel.axiomId = axiom.axiomId;
+                            rel.effectiveTime = axiom.effectiveTime;
                             panel.attributesFromAxioms.push(rel);
+                        }
+                        else if(rel.active){
+                            rel.axiomId = axiom.axiomId;
+                            rel.effectiveTime = axiom.effectiveTime;
                         }
                     });
                 }
@@ -11324,6 +11331,12 @@ function searchPanel(divElement, options) {
                         "&active=" + "true" +
                         "&skipTo=" + skipTo +
                         "&returnLimit=" + returnLimit;
+                    if (panel.options.statusSearchFilter == "activeOnly") {
+                        searchUrl = searchUrl + "&conceptActive=true"
+                    }
+                    if (panel.options.statusSearchFilter == "inactiveOnly") {
+                        searchUrl = searchUrl + "&conceptActive=false"
+                    }
 
                     if (panel.options.semTagFilter != "none") {
                         searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
