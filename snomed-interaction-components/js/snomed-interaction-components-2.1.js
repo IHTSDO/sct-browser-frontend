@@ -11323,6 +11323,7 @@ function searchPanel(divElement, options) {
                         xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + t, function(result) {
 
                         }).done(function(result) {
+                            console.log(result);
                             Handlebars.registerHelper('if_eq', function(a, b, opts) {
                                 if (opts != "undefined") {
                                     if (a == b)
@@ -11341,12 +11342,10 @@ function searchPanel(divElement, options) {
                             $.each(result.descriptions, function(i, field) {
                                 var aux = field;
                                 aux.definitionStatus = result.definitionStatus;
-                                aux.conceptActive = result.concept.active;
-                                if (!aux.active || !aux.conceptActive) {
+                                if (!aux.active) {
                                     aux.danger = true;
                                 }
-                                console.log(panel.options.statusSearchFilter);
-                                if (field.active && field.concept.active) {
+                                if (field.active) {
                                     if (panel.options.statusSearchFilter == "activeOnly") {
                                         resDescriptions.push(aux);
                                     }
