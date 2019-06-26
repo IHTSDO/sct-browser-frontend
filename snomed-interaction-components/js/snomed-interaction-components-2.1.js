@@ -3011,7 +3011,7 @@ function program28(depth0,data) {
 function program30(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n            <div>Gci</div>\n            ";
+  buffer += "\n            <div>GCI</div>\n            ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.relationships), {hash:{},inverse:self.noop,fn:self.program(18, program18, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            </div>\n        ";
