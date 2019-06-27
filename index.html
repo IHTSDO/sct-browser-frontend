@@ -155,9 +155,9 @@
         }();
 
         function start() {
-            if (!!window.MSInputMethodContext && !!document.documentMode) {
-                window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
-            }
+            //if (!!window.MSInputMethodContext && !!document.documentMode) {
+            //    window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
+            //}
             // Read parameters
             $(function() {
                 $.extend($.fn.disableTextSelect = function() {
@@ -192,16 +192,16 @@
             // if (typeof edition == "undefined" || edition == null || edition == "") {
             //     edition = "en-edition";
             // }
-            if(typeof edition != "undefined"){
+            if (typeof edition != "undefined") {
                 options.edition = edition;
             }
-            
+
 
             var release = QueryString.release;
             if (typeof release == "undefined" || release == null || release == "") {
                 //release = "v20180731";
             }
-            if(typeof release != "undefined"){
+            if (typeof release != "undefined") {
                 options.release = release;
             }
 
@@ -323,17 +323,15 @@
                 }
             };
             var focusConcept = 138875005;
-            if(getUrlParameter('branch'))
-            {
+            if (getUrlParameter('branch')) {
                 options.release = getUrlParameter('branch');
                 var variables = options.release.split('/');
                 options.branch = "MAIN/" + variables[1];
-                if(variables.length > 2) {
+                if (variables.length > 2) {
                     originalTask = options.release;
                 }
             }
-            if(getUrlParameter('concept'))
-            {
+            if (getUrlParameter('concept')) {
                 focusConcept = getUrlParameter('concept');
             }
 
@@ -985,7 +983,7 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
-
+        
         .ribbon span {
             border: 1px solid #faa;
             color: #fff;
@@ -996,11 +994,11 @@
             text-align: center;
             text-decoration: none;
         }
-
+        
         .navbar-brand {
             margin-top: 4px;
         }
-
+        
         .navbar .navbar-btn {
             margin-left: 10px;
         }
@@ -1020,7 +1018,7 @@
                     </button>
                 <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
                     <strong>
-                            &nbsp;&nbsp;SNOMED CT International Browser</strong></a>
+                            &nbsp;&nbsp;SNOMED CT International Member's Release Browser</strong></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
@@ -1102,35 +1100,12 @@
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
                 <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span></h1>
-                <p><a href="http://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics - International Edition</a></p>
-                <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
-                <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
-                <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong>             </p>
-                <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
+                <h2>International Edition, Member's Release - July 2019</h2>
                 <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', '', 'MAIN/2019-07-31', '2019-07-31','900000000000509007', '/snowstorm/snomed-ct/v2');
-                                switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July 2019</span></a>
-                </p>
-                <p>
-                    &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
-                    <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
-                <p>There is also a version of the browser containing other extensions of SNOMED CT which do not originate from Member countries. <a href="http://browser.ihtsdotools.org/other.html">Please see the page here</a>>.</p>
-
-                <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
-                <p class="lead">
-                    </img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
-                    <br></img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
-                    <br></img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
-                    <br></img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
-                    <br></img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
-                    <br></img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                    <br></img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
-                    <br></img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
+                                switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>Member's Release<br>July 2019</span></a>
                 </p>
 
-                <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
             </div>
             <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
             </p>
@@ -1138,7 +1113,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong> <span id="csconsentlink">Cookie Settings</span></small>
             </p>
-            <p> <small><b>&copy; SNOMED International 2019</b> v1.37.4.4<br></small>
+            <p> <small><b>&copy; SNOMED International 2019</b> v2.1<br></small>
             </p>
         </div>
         <!-- Browsing Perspective -->
@@ -1216,14 +1191,14 @@
                             </a>
                         </li>
                         <li class="active"><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
-<!--                        <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>-->
+                        <!--                        <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>-->
                         <!--<li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>-->
                         <!--<li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Constraint</span></a></li>-->
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
                         <div class="tab-pane active" id="fh-search_canvas" style="padding: 0px;margin: 0;"></div>
-<!--                        <div class="tab-pane" id="fh-favorites_canvas" style="padding: 0px;margin: 0;"></div>-->
+                        <!--                        <div class="tab-pane" id="fh-favorites_canvas" style="padding: 0px;margin: 0;"></div>-->
                         <div class="tab-pane" id="fh-refset_canvas" style="padding: 0px;margin: 0;"></div>
                         <!--<div class="tab-pane" id="fh-query_canvas" style="padding: 0px;margin: 0;"></div>-->
                     </div>
