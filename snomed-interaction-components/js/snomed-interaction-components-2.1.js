@@ -11326,7 +11326,6 @@ function searchPanel(divElement, options) {
                     var searchUrl = options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/descriptions?" +
                         "term=" + encodeURIComponent(t) +
                         "&limit=50" +
-                        "&searchMode=" + panel.options.searchMode +
                         "&lang=" + panel.options.searchLang +
                         "&active=" + "true" +
                         "&skipTo=" + skipTo +
