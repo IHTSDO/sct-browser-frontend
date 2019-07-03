@@ -32,3 +32,4 @@ diff_report*
 yarn.lock
 package-lock.json
 
+bin
