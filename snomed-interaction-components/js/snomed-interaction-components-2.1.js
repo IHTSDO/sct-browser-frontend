@@ -6147,7 +6147,7 @@ function program5(depth0,data) {
   stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.matches), {hash:{},inverse:self.noop,fn:self.programWithDepth(6, program6, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        ";
-  stack1 = (helper = helpers.if_gr || (depth0 && depth0.if_gr),options={hash:{},inverse:self.program(22, program22, data),fn:self.program(20, program20, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.remaining), 0, options) : helperMissing.call(depth0, "if_gr", (depth0 && depth0.remaining), 0, options));
+  stack1 = (helper = helpers.if_gr || (depth0 && depth0.if_gr),options={hash:{},inverse:self.program(26, program26, data),fn:self.program(24, program24, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.remaining), 0, options) : helperMissing.call(depth0, "if_gr", (depth0 && depth0.remaining), 0, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    ";
   return buffer;
@@ -6204,11 +6204,10 @@ function program6(depth0,data,depth1) {
   if (helper = helpers.term) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "'>";
-  if (helper = helpers.fsn) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.fsn); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\n                </td>\n            </tr>\n        ";
+    + "'>\n                    ";
+  stack1 = helpers['if'].call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.concept)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), {hash:{},inverse:self.program(22, program22, data),fn:self.program(20, program20, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n                </td>\n            </tr>\n        ";
   return buffer;
   }
 function program7(depth0,data) {
@@ -6308,6 +6307,26 @@ function program18(depth0,data) {
 
 function program20(depth0,data) {
   
+  var buffer = "", stack1;
+  buffer += "\n                        "
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.concept)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n                    ";
+  return buffer;
+  }
+
+function program22(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "\n                        ";
+  if (helper = helpers.fsn) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.fsn); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\n                    ";
+  return buffer;
+  }
+
+function program24(depth0,data) {
+  
   var buffer = "", stack1, helper, options;
   buffer += "\n            <tr class='more-row'><td colspan='2' class='text-center'><button class='btn btn-link' id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -6331,7 +6350,7 @@ function program20(depth0,data) {
   return buffer;
   }
 
-function program22(depth0,data) {
+function program26(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\n            <tr class='more-row'><td colspan='2' class='text-center text-muted'><span data-i18n-id=\"i18n_all_res\" class=\"i18n\">"
@@ -6344,18 +6363,18 @@ function program22(depth0,data) {
   return buffer;
   }
 
-function program24(depth0,data) {
+function program28(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\n    <tr><td class='text-muted'><span data-i18n-id=\"i18n_no_results\" class=\"i18n\">"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_no_results", "No results", options) : helperMissing.call(depth0, "i18n", "i18n_no_results", "No results", options)))
     + "</span></td></tr>\n    ";
-  stack1 = (helper = helpers.hasFilters || (depth0 && depth0.hasFilters),options={hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.options), options) : helperMissing.call(depth0, "hasFilters", (depth0 && depth0.options), options));
+  stack1 = (helper = helpers.hasFilters || (depth0 && depth0.hasFilters),options={hash:{},inverse:self.noop,fn:self.program(29, program29, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.options), options) : helperMissing.call(depth0, "hasFilters", (depth0 && depth0.options), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
   return buffer;
   }
-function program25(depth0,data) {
+function program29(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\n        <tr><td class='text-center'><span data-i18n-id=\"i18n_remove_filters\" class=\"i18n\">\n            "
@@ -6368,7 +6387,7 @@ function program25(depth0,data) {
   return buffer;
   }
 
-  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.matches), {hash:{},inverse:self.program(24, program24, data),fn:self.program(1, program1, data),data:data});
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.matches), {hash:{},inverse:self.program(28, program28, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
   return buffer;
@@ -11410,30 +11429,41 @@ function searchPanel(divElement, options) {
                         t = t.replace(")", "");
                     }
                     var startTime = Date.now();
-
-                    var conceptActiveParam;
-                    if (panel.options.statusSearchFilter == "activeOnly") {
-                        conceptActiveParam = "true";
-                    } else if (panel.options.statusSearchFilter == "inactiveOnly") {
-                        conceptActiveParam = "false";
-                    } else {
-                        conceptActiveParam = "";
-                    }
-
+https://dev-bb18-ms-authoring.ihtsdotools.org/snowowl/snomed-ct/v2/browser/MAIN/descriptions?query=ham&preferredDescriptionType=FSN&limit=50
                     var searchUrl = options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/descriptions?" +
-                        "term=" + encodeURIComponent(t) +
-                        "&limit=50" +
-                        "&lang=" + panel.options.searchLang +
-                        "&active=" + "true" +
-                        "&skipTo=" + skipTo +
-                        "&returnLimit=" + returnLimit;
-                    if (panel.options.statusSearchFilter == "activeOnly") {
-                        searchUrl = searchUrl + "&conceptActive=true"
+                        "&limit=50";
+                    if (panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowstorm')) {
+                        searchUrl = searchUrl + "term=" + encodeURIComponent(t);
+                        searchUrl = searchUrl + "&conceptActive=true";
+                        searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
+                        searchUrl = searchUrl + "&skipTo=" + skipTo;
+                        searchUrl = searchUrl + "&returnLimit=" + returnLimit;
+                        searchUrl = searchUrl + "&conceptActive=" + 'true';
                     }
-                    if (panel.options.statusSearchFilter == "inactiveOnly") {
-                        searchUrl = searchUrl + "&conceptActive=false"
+                    else if(panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowowl')) {
+                        searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
                     }
-
+                    if (panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowstorm')) {
+                        searchUrl = searchUrl + "term=" + encodeURIComponent(t);
+                        searchUrl = searchUrl + "&conceptActive=true";
+                        searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
+                        searchUrl = searchUrl + "&skipTo=" + skipTo;
+                        searchUrl = searchUrl + "&returnLimit=" + returnLimit;
+                        searchUrl = searchUrl + "&conceptActive=" + 'false';
+                    }
+                    else if(panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowowl')) {
+                        searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
+                    }
+                    if (panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowstorm')) {
+                        searchUrl = searchUrl + "term=" + encodeURIComponent(t);
+                        searchUrl = searchUrl + "&conceptActive=true";
+                        searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
+                        searchUrl = searchUrl + "&skipTo=" + skipTo;
+                        searchUrl = searchUrl + "&returnLimit=" + returnLimit;
+                    }
+                    else if(panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowowl')) {
+                        searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
+                    }
                     if (panel.options.semTagFilter != "none") {
                         searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
                     }
