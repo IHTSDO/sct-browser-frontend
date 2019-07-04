@@ -122,11 +122,25 @@
             }).done(function(result) {
                 options.serverUrl = "/snowstorm/snomed-ct/v2";
                 options.queryServerUrl = "/snowstorm/snomed-ct/v2";
-                start();
+                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {
+                }).done(function(result) {
+                    options.imsUrl = result.endpoints.imsEndpoint;
+                    start();
+                }).fail(function() {
+                    options.imsUrl = null;
+                    start();
+                });
             }).fail(function() {
                 options.serverUrl = "/snowowl/snomed-ct/v2";
                 options.queryServerUrl = "/snowowl/snomed-ct/v2";
-                start();
+                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {
+                }).done(function(result) {
+                    options.imsUrl = result.endpoints.imsEndpoint;
+                    start();
+                }).fail(function() {
+                    options.imsUrl = null;
+                    start();
+                });
             });
         }
 
@@ -156,6 +170,13 @@
             //    window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
             //}
             // Read parameters
+            $.ajaxSetup({
+                  "error":function(jqXHR, textStatus, errorThrown) { 
+                      if (options.imsUrl && jqXHR.status == 403) {
+                            window.location = decodeURIComponent(options.imsUrl + 'login' + '?serviceReferer=' + window.location.href);
+                        } 
+                  }
+            });
             $(function() {
                 $.extend($.fn.disableTextSelect = function() {
                     return this.each(function() {
