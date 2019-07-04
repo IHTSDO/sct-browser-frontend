@@ -12978,7 +12978,10 @@ function taxonomyPanel(divElement, conceptId, options) {
             if (conceptId == 138875005) statedDescendants = options.rootConceptDescendants;
             if (typeof term == "undefined" || typeof statedDescendants == "undefined") {
                 $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(res) {
-                    term = res.fsn.term;
+                    if( typeof(res.fsn) == 'object'){
+                       term = res.fsn.term; 
+                    }
+                    
                     if (typeof res.statedDescendants == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
                     statedDescendants = res.statedDescendants;
                     panel.setupParents(result, { conceptId: conceptId, defaultTerm: term, definitionStatus: definitionStatus, module: module, statedDescendants: statedDescendants });
