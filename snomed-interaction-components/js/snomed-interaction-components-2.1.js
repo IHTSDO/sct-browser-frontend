@@ -9712,7 +9712,14 @@ function drawConceptDiagram (concept, div, options, panel) {
         sctClass = "sct-defined-concept";
     }
     //console.log("In draw: " + concept.defaultTerm + " " + concept.conceptId + " " + sctClass);
-    var rect1 = drawSctBox(svg, x, y, concept.fsn, concept.conceptId, sctClass);
+    var fsn = '';
+    if(concept.fsn.term){
+        fsn = concept.fsn.term;
+    }
+    else{
+        fsn = concept.fsn;
+    }
+    var rect1 = drawSctBox(svg, x, y, fsn, concept.conceptId, sctClass);
     x = x + 90;
     y = y + rect1.getBBox().height + 40;
     if(options.selectedView === 'stated' && svgIsaModel && svgIsaModel.length > 0 || options.selectedView != 'stated'){
