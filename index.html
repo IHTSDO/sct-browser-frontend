@@ -118,7 +118,7 @@
 
         function determineServer() {
             xhr = $.getJSON("/snowstorm/snomed-ct/v2/codesystems", function(result) {
-                
+
             }).done(function(result) {
                 options.serverUrl = "/snowstorm/snomed-ct/v2";
                 options.queryServerUrl = "/snowstorm/snomed-ct/v2";
@@ -171,10 +171,10 @@
             //}
             // Read parameters
             $.ajaxSetup({
-                  "error":function(jqXHR, textStatus, errorThrown) { 
+                  "error":function(jqXHR, textStatus, errorThrown) {
                       if (options.imsUrl && jqXHR.status == 403) {
                             window.location = decodeURIComponent(options.imsUrl + 'login' + '?serviceReferer=' + window.location.href);
-                        } 
+                        }
                   }
             });
             $(function() {
@@ -352,7 +352,7 @@
             if (getUrlParameter('concept')) {
                 focusConcept = getUrlParameter('concept');
             }
-/*
+
             // PROJECT DROPDOWN HANDLER
             $.getJSON("/authoring-services/projects").done(function(result) {
                 var $projectDdl = $('#projectDdl');
@@ -377,24 +377,27 @@
                 });
                 result.items = projectsInStringFormat.concat(projectsInDateFormat);
 
-                $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
+                if($('<option>').val('MAIN')) {
+                    $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
 
-                $.each(result.items, function() {
-                    var relativePath = this.branchPath.substring("MAIN/".length);
-                    $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
-                });
+                    $.each(result.items, function() {
+                        var relativePath = this.branchPath.substring("MAIN/".length);
+                        $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
+                    });
 
-                $(function() {
-                    var temp="MAIN";
-                    $("#projectDdl").val(temp);
-                });
+                    $(function() {
+                        var temp="MAIN";
+                        $("#projectDdl").val(temp);
+                    });
+                }
 
                 var projectChanged = function(){
-                    // getTaskList();
+                    getTaskList();
+                    options.release = '';
                     options.edition = $('#projectDdl').val();
-                    var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
-                    var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-                    var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
+                    var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
+                    var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
+                    var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
 
                     cdPanel.subscribe(tpt);
                     cdPanel.subscribe(searchP);
@@ -415,46 +418,94 @@
                 }
             });
 
-*/
             // TASK DROPDOWN HANDLER
-            // var getTaskList = function () {
-            //     $.getJSON("/authoring-services/projects/" + $('#projectDdl').val() + "/tasks").done(function (result) {
-            //         var $taskDdl = $('#taskDdl');
-            //         $taskDdl.html("");
-            //         $('<option>').val("None").text("None").appendTo($taskDdl);
-            //         result.items = groupTaskList(result);
-            //         $.each(result, function () {
-            //             var relativePath = this.path.substring("MAIN/".length);
-            //             $('<option>').val(this.path).text(this.name).appendTo($taskDdl);
-            //         });
-            //         if (options.task) {
-            //             $("#taskDdl").val(options.task).change();
-            //         }
-            //         var taskChanged = function () {
-            //             var branchPath = $('#taskDdl').val();
-            //             //If no task selected in the task dropdown, use the project
-            //             if (branchPath == "None") {
-            //                 branchPath = $('#projectDdl').val();
-            //             }
-            //             options.release = branchPath;
-            //             options.task = branchPath;
-            //             var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
-            //             var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-            //             var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
-            //
-            //             cdPanel.subscribe(tpt);
-            //             cdPanel.subscribe(searchP);
-            //             cdPanel.setupCanvas();
-            //         }
-            //         $("#taskDdl").on("change", function (event) {
-            //             taskChanged(this, event);
-            //         });
-            //     });
-            // }
+            var getTaskList = function () {
+                var project = $('#projectDdl').val();
+                project = project.substring(project.indexOf("/") + 1);
 
-            var tpt = new taxonomyPanel(document.getElementById("bp-taxonomy_canvas"), focusConcept, options);
-            var searchP = new searchPanel(document.getElementById("bp-search_canvas"), options);
-            var cdPanel = new conceptDetails(document.getElementById("bp-cd1_canvas"), focusConcept, options);
+                $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function (result) {
+                    var $taskDdl = $('#taskDdl');
+                    $taskDdl.html("");
+                    $('<option>').val("None").text("None").appendTo($taskDdl);
+                    result.items = groupTaskList(result);
+                    $.each(result, function () {
+                        // var relativePath = this.path.substring("MAIN/".length);
+                        $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
+                    });
+                    if (options.task) {
+                        $("#taskDdl").val(options.task).change();
+                    }
+                    var taskChanged = function () {
+                        // var branchPath = $('#taskDdl').val();
+                        //If no task selected in the task dropdown, use the project
+                        // if (branchPath == "None") {
+                        //     branchPath = $('#projectDdl').val();
+                        // }
+                        options.edition = $('#projectDdl').val();
+                        options.release = $('#taskDdl').val();
+
+                        var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
+                        var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
+                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
+
+                        cdPanel.subscribe(tpt);
+                        cdPanel.subscribe(searchP);
+                        cdPanel.setupCanvas();
+                    }
+                    $("#taskDdl").on("change", function (event) {
+                        taskChanged(this, event);
+                    });
+                });
+            }
+
+            var groupTaskList  = function (taskList) {
+                //return b.baseTimestamp - a.baseTimestamp;
+                var map = {};
+                for (var i = 0; i < taskList.length; i++) {
+                    var task = taskList[i];
+                    var strArray = task.key.split('-');
+                    var items = [];
+                    if (strArray.length === 2 && !isNaN(strArray[1])) {
+                        if (strArray[0] in map) {
+                            items = map[strArray[0]];
+                        }
+                        items.push(task);
+                        items.sort(function(a,b) {
+                            var strArrayA = a.key.split('-');
+                            var strArrayB = b.key.split('-');
+                            if(strArrayA[0] > strArrayB[0]) {
+                                return -1;
+                            } else if(strArrayA[0] < strArrayB[0]) {
+                                return 1;
+                            } else if (strArrayA.length > 1 && strArrayB.length > 1){
+                                return parseInt(strArrayB[1]) - parseInt(strArrayA[1]);
+                            } else {
+                                return b.key.localeCompare(a.key);
+                            }
+                        });
+                        map[strArray[0]] = items;
+                    } else {
+                        items.push(task);
+                        map[task.key]	= items;
+                    }
+                }
+
+                var keys = Object.keys(map);
+                keys.sort(function (a, b) {
+                    return a.localeCompare(b);
+                });
+
+                var result = [];
+                for (var i = 0; i < keys.length; i++) {
+                    result = result.concat(map[keys[i]]);
+                }
+                return result;
+
+            };
+
+            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
+            var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
+            var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
 
             cdPanel.subscribe(tpt);
             cdPanel.subscribe(searchP);
@@ -1100,13 +1151,13 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <span style="margin-left:10px">Project:</span>
-                <select style="margin-top:18px; margin-left:2px;" id="projectDdl" on-change="projectChanged()">
+                <select style="margin-top:18px; margin-left:2px;" id="projectDdl">
                     <!--<option value="MAIN">MAIN</option>-->
                 </select>
-                <!--<span style="margin-left:10px">Task:</span>-->
-                <!--<select style="margin-top:18px; margin-left:2px;" id="taskDdl" on-change="taskChanged()">-->
+                <span style="margin-left:10px">Task:</span>
+                <select style="margin-top:18px; margin-left:2px;" id="taskDdl">
                     <!--<option value="None">None</option>-->
-                <!--</select>-->
+                </select>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
