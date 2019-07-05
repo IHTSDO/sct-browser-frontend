@@ -14,11 +14,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "')\" ondragleave=\"removeHighlight();\" ondragover=\"allowDrop(event)\">\n        <button id='";
+    + "')\" ondragleave=\"removeHighlight();\" ondragover=\"allowDrop(event)\">\n        <!--<button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>\n        <button id='";
+    + "-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>-->\n        <button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -254,7 +254,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>\n            </div>\n        </div>\n    </div>\n</div>\n        ";
+    + "-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>\n            </div>\n        </div>\n    </div>\n</div>\n";
   return buffer;
   });
 
@@ -5363,11 +5363,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  buffer += "<div style='margin: 5px; height:95%;' class='panel panel-default'>\n    <div class='panel-heading'>\n        <button id='";
+  buffer += "<div style='margin: 5px; height:95%;' class='panel panel-default'>\n    <div class='panel-heading'>\n        <!--<button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>\n        <button id='";
+    + "-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>-->\n        <button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -5443,13 +5443,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += escapeExpression(stack1)
     + "-inactiveOnlyButton' data-i18n-id='i18n_inactive_only'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_inactive_only", "Inactive components only", options) : helperMissing.call(depth0, "i18n", "i18n_inactive_only", "Inactive components only", options)))
-    + "</a>\n                        </li>\n                    </ul>\n                </div>\n                <!--<div style=\"margin-top: 5px; \" class=\"checkbox\">\n                    <label>\n                        <input id=\"";
+    + "</a>\n                        </li>\n                    </ul>\n                </div>\n                <div style=\"margin-top: 5px; \" class=\"checkbox\">\n                    <label>\n                        <input id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-groupConcept\" type=\"checkbox\"><span class='i18n' data-i18n-id='i18n_group_by_concept'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_group_by_concept", "Group by concept", options) : helperMissing.call(depth0, "i18n", "i18n_group_by_concept", "Group by concept", options)))
-    + "</span>\n                    </label>\n                </div>-->\n            </div>\n        </div>\n        <div style=\"display: inline; width: 66%; float: right; padding: 5px;\">\n            <form>\n                <div class=\"form-group\" style=\"margin-bottom: 2px;\">\n                    <label for=\"";
+    + "</span>\n                    </label>\n                </div>\n            </div>\n        </div>\n        <div style=\"display: inline; width: 66%; float: right; padding: 5px;\">\n            <form>\n                <div class=\"form-group\" style=\"margin-bottom: 2px;\">\n                    <label for=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6421,11 +6421,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div style='margin: 5px; height:95%;' class='panel panel-default'>\n    <div class='panel-heading'>\n        <button id='";
+  buffer += "<div style='margin: 5px; height:95%;' class='panel panel-default'>\n    <div class='panel-heading'>\n        <!--<button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>\n        <button id='";
+    + "-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>-->\n        <button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -6581,7 +6581,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n        ";
+    + "-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
   return buffer;
   });
 
@@ -7009,11 +7009,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-panelHeading'>\n        <button id='";
+    + "-panelHeading'>\n        <!--<button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>\n        <button id='";
+    + "-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>-->\n        <button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -7117,7 +7117,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>\n            </div>\n        </div>\n    </div>\n</div>";
+    + "-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>\n            </div>\n        </div>\n    </div>\n</div>\n";
   return buffer;
   });
 
@@ -7655,7 +7655,7 @@ function conceptDetails(divElement, conceptId, options) {
             panel.inferredRoles = [];
             panel.statedParentsFromAxioms = [];
             panel.attributesFromAxioms = [];
-            
+
             firstMatch.relationships.forEach(function(loopRel) {
                 if (loopRel.characteristicType == "INFERRED_RELATIONSHIP" && loopRel.active && loopRel.type.conceptId != "116680003") {
                     panel.inferredRoles.push(loopRel);
@@ -7670,7 +7670,7 @@ function conceptDetails(divElement, conceptId, options) {
                     panel.statedRoles.push(loopRel);
                 }
             });
-            
+
             function sortAxiomRelationships (relationships){
                 relationships.sort(function(a, b) {
                     if (a.groupId < b.groupId) {
@@ -7692,7 +7692,7 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 });
             };
-            
+
             firstMatch.classAxioms.forEach(function(axiom) {
                 if(axiom.active){
                     axiom.relationships.forEach(function(rel) {
@@ -7725,7 +7725,7 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 sortAxiomRelationships(axiom.relationships);
             });
-            
+
             if (firstMatch.statedDescendants) {
                 firstMatch.statedDescendantsString = firstMatch.statedDescendants.toLocaleString();
             }
@@ -8223,7 +8223,7 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 });
             }
-            
+
             if (firstMatch.statedRelationships) {
                 firstMatch.statedRelationships.sort(function(a, b) {
                     if (a.groupId < b.groupId) {
@@ -8296,7 +8296,7 @@ function conceptDetails(divElement, conceptId, options) {
                     return 1;
                 return 0;
             });
-            
+
             panel.statedParentsFromAxioms.sort(function(a, b) {
                 if (a.target.defaultTerm < b.target.defaultTerm)
                     return -1;
@@ -8304,7 +8304,7 @@ function conceptDetails(divElement, conceptId, options) {
                     return 1;
                 return 0;
             });
-            
+
             panel.attributesFromAxioms.sort(function(a, b) {
                 if (a.target.axiomId < b.target.axiomId)
                     return -1;
@@ -9346,9 +9346,9 @@ function conceptDetails(divElement, conceptId, options) {
             panelToSubscribe.subscribers.push(panel.divElement.id);
             panel.subscriptionsColor.push(panelToSubscribe.markerColor);
         }
-        $("#" + panelId + "-ownMarker").show();
+        // $("#" + panelId + "-ownMarker").show();
         $("#" + panel.divElement.id + "-subscribersMarker").show();
-        $("#" + panelId + "-ownMarker").show();
+        // $("#" + panelId + "-ownMarker").show();
     }
 
     this.unsubscribe = function(panelToUnsubscribe) {
@@ -11900,7 +11900,7 @@ https://dev-bb18-ms-authoring.ihtsdotools.org/snowowl/snomed-ct/v2/browser/MAIN/
             panelToSubscribe.subscribers.push(panel.divElement.id);
             panel.subscriptionsColor.push(panelToSubscribe.markerColor);
         }
-        $("#" + panelId + "-ownMarker").show();
+        // $("#" + panelId + "-ownMarker").show();
         $("#" + panel.divElement.id + "-subscribersMarker").show();
         $("#" + panelId + "-subscribersMarker").show();
     }
@@ -13008,9 +13008,9 @@ function taxonomyPanel(divElement, conceptId, options) {
             if (typeof term == "undefined" || typeof statedDescendants == "undefined") {
                 $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(res) {
                     if( typeof(res.fsn) == 'object'){
-                       term = res.fsn.term; 
+                       term = res.fsn.term;
                     }
-                    
+
                     if (typeof res.statedDescendants == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
                     statedDescendants = res.statedDescendants;
                     panel.setupParents(result, { conceptId: conceptId, defaultTerm: term, definitionStatus: definitionStatus, module: module, statedDescendants: statedDescendants });
@@ -13042,7 +13042,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             panelToSubscribe.subscribers.push(panel.divElement.id);
             panel.subscriptionsColor.push(panelToSubscribe.markerColor);
         }
-        $("#" + panelId + "-ownMarker").show();
+        // $("#" + panelId + "-ownMarker").show();
         $("#" + panel.divElement.id + "-subscribersMarker").show();
         $("#" + panelId + "-subscribersMarker").show();
     }
@@ -13212,6 +13212,7 @@ function historyInTaxPanel(divElementId, conceptId) {
         });
     };
 }(jQuery));
+
 /**
  * Created by termmed on 9/2/14.
  */
@@ -13633,9 +13634,9 @@ function queryComputerPanel(divElement, options) {
                 }
             });
         }
-        $("#" + panelId + "-ownMarker").show();
+        // $("#" + panelId + "-ownMarker").show();
         $("#" + panel.divElement.id + "-subscribersMarker").show();
-        $("#" + panelId + "-ownMarker").show();
+        // $("#" + panelId + "-ownMarker").show();
     }
 
     this.setUpPanel = function() {
@@ -14296,7 +14297,7 @@ function queryComputerPanel(divElement, options) {
             panel.execute("inferred", expression, true);
             /* } else {
                       alertEvent("Invalid Expression", "error")
-                  } 
+                  }
               }).fail(function(err) {
                   //console.log(err);
               }).always(function() { */
@@ -14887,6 +14888,7 @@ function queryComputerPanel(divElement, options) {
             xhrExecute = xhrExecute2;
     }
 }
+
 /**
  * Created by alo on 7/18/14.
  */

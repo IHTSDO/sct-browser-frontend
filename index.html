@@ -92,7 +92,7 @@
             closeButton: false,
             collapseButton: false,
             linkerButton: true,
-            subscribersMarker: true,
+            subscribersMarker: false,
             searchMode: "partialMatching",
             searchLang: "english",
             diagrammingMarkupEnabled: false,
@@ -1171,33 +1171,33 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="navbar-btn" id="edition-selector">
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20190731</span> <span class="caret"></span>
-                            </button>
-                        <!--<ul class="dropdown-menu" role="menu">-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('International Edition 2019-07-31', 'en-edition', 'MAIN/2019-07-31', '2019-07-31', '900000000000509007', '/snowstorm/snomed-ct/v2/');-->
-                                        <!--reloadCurrentPerspective();">International Edition 20180731</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">Spanish Edition 20180430</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20180630', 'au-edition', 'v20180630','2018-06-30','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">Australian Edition 20180630</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('Belgian Edition 20180915', 'be-edition', 'v20180915', '2018-09-15','21000172104,31000172101', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">Belgian Edition 20180915</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('Canadian Edition 20180430', 'ca-edition', 'v20180430', '2018-04-30','19491000087109,20581000087109', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">Canadian Edition 20180430</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20180930', 'dk-edition', 'v20180930', '2018-09-30','554461000005103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">Danish Edition 20180930</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('Netherlands Edition 20180930', 'nl-edition', 'v20180930', '2018-09-30','31000146106,15551000146102', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">NL Edition 20180930</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20180531', 'se-edition', 'v20180531', '2018-05-31','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">Swedish Edition 20180531</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20180901', 'us-edition', 'v20180901', '2018-09-01','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">US Edition 20180901</a></li>-->
-                            <!--<li><a href="javascript:void(0);" onclick="switchRelease('Uruguay Edition 20180615', 'uy-edition', 'v20180615', '2018-06-15','5641000179103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                        <!--reloadCurrentPerspective();">UY Edition 20180615</a></li>-->
-                        <!--</ul>-->
-                    </li>
+                    <!--<li class="navbar-btn" id="edition-selector">-->
+                        <!--<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">-->
+                                <!--<span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20190731</span> <span class="caret"></span>-->
+                            <!--</button>-->
+                        <!--&lt;!&ndash;<ul class="dropdown-menu" role="menu">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('International Edition 2019-07-31', 'en-edition', 'MAIN/2019-07-31', '2019-07-31', '900000000000509007', '/snowstorm/snomed-ct/v2/');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">International Edition 20180731</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">Spanish Edition 20180430</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('Australian Edition 20180630', 'au-edition', 'v20180630','2018-06-30','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">Australian Edition 20180630</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('Belgian Edition 20180915', 'be-edition', 'v20180915', '2018-09-15','21000172104,31000172101', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">Belgian Edition 20180915</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('Canadian Edition 20180430', 'ca-edition', 'v20180430', '2018-04-30','19491000087109,20581000087109', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">Canadian Edition 20180430</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('Danish Edition 20180930', 'dk-edition', 'v20180930', '2018-09-30','554461000005103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">Danish Edition 20180930</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('Netherlands Edition 20180930', 'nl-edition', 'v20180930', '2018-09-30','31000146106,15551000146102', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">NL Edition 20180930</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('Swedish Edition 20180531', 'se-edition', 'v20180531', '2018-05-31','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">Swedish Edition 20180531</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20180901', 'us-edition', 'v20180901', '2018-09-01','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">US Edition 20180901</a></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li><a href="javascript:void(0);" onclick="switchRelease('Uruguay Edition 20180615', 'uy-edition', 'v20180615', '2018-06-15','5641000179103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');&ndash;&gt;-->
+                                        <!--&lt;!&ndash;reloadCurrentPerspective();">UY Edition 20180615</a></li>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                    <!--</li>-->
                     <!--
                     <li class="navbar-btn" id="perspective-selector">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
