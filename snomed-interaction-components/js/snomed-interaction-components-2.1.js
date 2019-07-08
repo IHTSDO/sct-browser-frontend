@@ -8009,6 +8009,7 @@ function conceptDetails(divElement, conceptId, options) {
             // START FOR
             var allLangsHtml = "";
             $.each(panel.options.langRefset, function(i, loopSelectedLangRefset) {
+                loopSelectedLangRefset = loopSelectedLangRefset.replace (/\//g, "");
                 var allDescriptions = firstMatch.descriptions.slice(0);
                 var homeDescriptionsHtml = "";
                 $.each(allDescriptions, function(i, field) {
