@@ -5443,13 +5443,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += escapeExpression(stack1)
     + "-inactiveOnlyButton' data-i18n-id='i18n_inactive_only'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_inactive_only", "Inactive components only", options) : helperMissing.call(depth0, "i18n", "i18n_inactive_only", "Inactive components only", options)))
-    + "</a>\n                        </li>\n                    </ul>\n                </div>\n                <div style=\"margin-top: 5px; \" class=\"checkbox\">\n                    <label>\n                        <input id=\"";
+    + "</a>\n                        </li>\n                    </ul>\n                </div>\n                <!--<div style=\"margin-top: 5px; \" class=\"checkbox\">\n                    <label>\n                        <input id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-groupConcept\" type=\"checkbox\"><span class='i18n' data-i18n-id='i18n_group_by_concept'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_group_by_concept", "Group by concept", options) : helperMissing.call(depth0, "i18n", "i18n_group_by_concept", "Group by concept", options)))
-    + "</span>\n                    </label>\n                </div>\n            </div>\n        </div>\n        <div style=\"display: inline; width: 66%; float: right; padding: 5px;\">\n            <form>\n                <div class=\"form-group\" style=\"margin-bottom: 2px;\">\n                    <label for=\"";
+    + "</span>\n                    </label>\n                </div>-->\n            </div>\n        </div>\n        <div style=\"display: inline; width: 66%; float: right; padding: 5px;\">\n            <form>\n                <div class=\"form-group\" style=\"margin-bottom: 2px;\">\n                    <label for=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -8737,8 +8737,12 @@ function conceptDetails(divElement, conceptId, options) {
         if (xhrChildren != null) {
             xhrChildren.abort();
             //console.log("aborting children call...");
-        }
-        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
+        };
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
             result.forEach(function(c) { setDefaultTerm(c) });
@@ -8862,8 +8866,12 @@ function conceptDetails(divElement, conceptId, options) {
         if (xhrReferences != null) {
             xhrReferences.abort();
             //console.log("aborting references call...");
-        }
-        xhrReferences = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/references?form=" + panel.options.selectedView, function(result) {
+        };
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        xhrReferences = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId + "/references?form=" + panel.options.selectedView, function(result) {
 
         }).done(function(result) {
             Handlebars.registerHelper('if_gr', function(a, b, opts) {
@@ -8955,8 +8963,12 @@ function conceptDetails(divElement, conceptId, options) {
         if (xhrChildren != null) {
             xhrChildren.abort();
             //console.log("aborting children call...");
-        }
-        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
+        };
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
             result.forEach(function(c) { setDefaultTerm(c) });
             result.sort(function(a, b) {
                 if (a.defaultTerm.toLowerCase() < b.defaultTerm.toLowerCase())
@@ -9033,8 +9045,12 @@ function conceptDetails(divElement, conceptId, options) {
         if (xhrParents != null) {
             xhrParents.abort();
             //console.log("aborting children call...");
-        }
-        xhrParents = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
+        };
+        var branch = "" + options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        xhrParents = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
             result.forEach(function(c) { setDefaultTerm(c) });
@@ -9104,7 +9120,11 @@ function conceptDetails(divElement, conceptId, options) {
     }
 
     this.loadMembers = function(returnLimit, skipTo, paginate) {
-        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/members?referenceSet=" + panel.conceptId + "&limit=100";
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + panel.conceptId + "&limit=100";
         if (skipTo > 0) {
             membersUrl = membersUrl + "&offset=" + skipTo;
         } else {
@@ -11400,7 +11420,11 @@ function searchPanel(divElement, options) {
                             $('#' + panel.divElement.id + '-searchBar2').html("");
                         });
                     } else if (t.substr(-2, 1) == "1") {
-                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/descriptions/" + t, function(result) {
+                        var branch = options.edition;
+                        if(options.release.length < 0){
+                            branch = branch + "/" + options.release;
+                        };
+                        xhr = $.getJSON(options.serverUrl + "/" + branch + "/descriptions/" + t, function(result) {
 
                         }).done(function(result) {
                             console.log(result);
@@ -11459,7 +11483,11 @@ function searchPanel(divElement, options) {
                     }
                     var startTime = Date.now();
 https://dev-bb18-ms-authoring.ihtsdotools.org/snowowl/snomed-ct/v2/browser/MAIN/descriptions?query=ham&preferredDescriptionType=FSN&limit=50
-                    var searchUrl = options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/descriptions?" +
+                    var branch = options.edition;
+                    if(options.release.length < 0){
+                        branch = branch + "/" + options.release;
+                    };
+                    var searchUrl = options.serverUrl + "/browser/" + branch + "/descriptions?" +
                         "&limit=50";
                     if (panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowstorm')) {
                         searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
@@ -12339,9 +12367,13 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     if (!options.rootConceptDescendants) {
         console.log(options);
+        var branch = "" + options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
         $.ajax({
             type: "GET",
-            url: options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts",
+            url: options.serverUrl + "/" + branch + "/concepts",
 			data: {
 				ecl: "< 138875005|SNOMED CT Concept|",
 				offset: 0,
@@ -12706,8 +12738,12 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var statedDescendants = $(event.target).attr('data-statedDescendants');
                 var inferredDescendants = $(event.target).attr('data-inferredDescendants');
                 panel.history.push({ term: selectedLabel, conceptId: selectedId, time: time });
+                var branch = options.edition;
+                if(options.release.length < 0){
+                    branch = branch + "/" + options.release;
+                };
                 if (typeof selectedId != "undefined") {
-                    $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
+                    $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
                         // done
                     }).done(function(result) {
                         panel.setupParents(result, { conceptId: selectedId, defaultTerm: selectedLabel, definitionStatus: "PRIMITIVE", module: selectedModule, statedDescendants: statedDescendants, inferredDescendants: inferredDescendants });
@@ -12777,8 +12813,11 @@ function taxonomyPanel(divElement, conceptId, options) {
         if (panel.options.descendantsCount == true) $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: On");
         else $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: Off");
 
-
-        $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
             if (result && result[0] && typeof result[0].statedDescendants == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
             result.forEach(function(c) {setDefaultTerm(c)});
             result.sort(function(a, b) {
@@ -12879,7 +12918,11 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.wrapInParents = function(conceptId, liItem) {
         var topUl = $("#" + panel.divElement.id + "-panelBody").find('ul:first');
-        $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
             // done
         }).done(function(parents) {
             if (parents.length > 0) {
@@ -12994,7 +13037,11 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.setToConcept = function(conceptId, term, definitionStatus, module, statedDescendants) {
         $("#" + panel.divElement.id + "-panelBody").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
             $.each(result, function(i, item) {
                 if (typeof item.defaultTerm == "undefined") {
                     item.defaultTerm = item.fsn.term;
@@ -13006,7 +13053,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             }
             if (conceptId == 138875005) statedDescendants = options.rootConceptDescendants;
             if (typeof term == "undefined" || typeof statedDescendants == "undefined") {
-                $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(res) {
+                $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId, function(res) {
                     if( typeof(res.fsn) == 'object'){
                        term = res.fsn.term;
                     }
@@ -13168,7 +13215,11 @@ function taxonomyPanel(divElement, conceptId, options) {
             xhr.abort();
             //console.log("aborting call...");
         }
-        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId, function(result) {
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        xhr = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId, function(result) {
             if (typeof result.statedDescendants == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
         }).done(function(result) {
             if (panel.options.selectedView == 'stated') {
@@ -13302,7 +13353,11 @@ function refsetPanel(divElement, options) {
     panel.loadRefsets();
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate) {
-        var membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/members?referenceSet=" + conceptId + "&limit=100";
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
+        var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + conceptId + "&limit=100";
         if (skipTo > 0) {
             membersUrl = membersUrl + "&offset=" + skipTo;
         } else {
@@ -13813,9 +13868,13 @@ function queryComputerPanel(divElement, options) {
         });
 
         if (!panel.typeArray || !panel.typeArray.length) {
+            var branch = options.edition;
+            if(options.release.length < 0){
+                branch = branch + "/" + options.release;
+            };
             $.ajax({
                 type: "POST",
-                url: options.serverUrl.replace("snomed", "expressions/") + options.edition + "/" + options.release + "/execute/brief",
+                url: options.serverUrl.replace("snomed", "expressions/") + branch + "/execute/brief",
                 data: {
                     expression: "< 410662002|Concept model attribute (attribute)|",
                     limit: 5000,
@@ -14409,9 +14468,13 @@ function queryComputerPanel(divElement, options) {
         panel.lastRequest.skip = 0;
         panel.lastRequest.limit = panel.lastTotalValues + 1;
         $('#' + panel.divElement.id + '-exportXls').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+        var branch = options.edition;
+        if(options.release.length < 0){
+            branch = branch + "/" + options.release;
+        };
         xhrTotal = $.ajax({
             type: "POST",
-            url: options.serverUrl.replace("snomed", "expressions/") + "/" + options.edition + "/" + options.release + "/execute/brief",
+            url: options.serverUrl.replace("snomed", "expressions/") + "/" + branch + "/execute/brief",
             data: panel.lastRequest,
             dataType: "json",
             success: function(result) {

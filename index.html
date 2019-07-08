@@ -421,7 +421,9 @@
             // TASK DROPDOWN HANDLER
             var getTaskList = function () {
                 var project = $('#projectDdl').val();
-                project = project.substring(project.indexOf("/") + 1);
+                console.log($('#projectDdl').val());
+                project = project.substring(project.lastIndexOf("/") + 1);
+                console.log(project);
 
                 $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function (result) {
                     var $taskDdl = $('#taskDdl');
