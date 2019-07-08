@@ -341,13 +341,13 @@
                 }
             };
             var focusConcept = 138875005;
-            if (getUrlParameter('branch')) {
-                options.release = getUrlParameter('branch');
-                var variables = options.release.split('/');
-                options.branch = "MAIN/" + variables[1];
-                if (variables.length > 2) {
-                    originalTask = options.release;
-                }
+            if (getUrlParameter('edition')) {
+                options.edition = getUrlParameter('edition');
+                $("#projectDdl").val(options.edition).change();
+            }
+            if (getUrlParameter('release')) {
+                options.release = getUrlParameter('release');
+                $("#taskDdl").val(options.release).change();
             }
             if (getUrlParameter('concept')) {
                 focusConcept = getUrlParameter('concept');
@@ -388,12 +388,14 @@
                     $(function() {
                         var temp="MAIN";
                         $("#projectDdl").val(temp);
+                        if(options.edition.length > 0){
+                            $("#projectDdl").val(options.edition);
+                        }
                     });
                 }
 
                 var projectChanged = function(){
                     getTaskList();
-                    options.release = '';
                     options.edition = $('#projectDdl').val();
                     var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                     var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
@@ -421,9 +423,7 @@
             // TASK DROPDOWN HANDLER
             var getTaskList = function () {
                 var project = $('#projectDdl').val();
-                console.log($('#projectDdl').val());
                 project = project.substring(project.lastIndexOf("/") + 1);
-                console.log(project);
 
                 $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function (result) {
                     var $taskDdl = $('#taskDdl');
@@ -434,8 +434,9 @@
                         // var relativePath = this.path.substring("MAIN/".length);
                         $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
                     });
-                    if (options.task) {
-                        $("#taskDdl").val(options.task).change();
+                    
+                    if (options.release) {
+                        $("#taskDdl").val(options.release).change();
                     }
                     var taskChanged = function () {
                         // var branchPath = $('#taskDdl').val();
