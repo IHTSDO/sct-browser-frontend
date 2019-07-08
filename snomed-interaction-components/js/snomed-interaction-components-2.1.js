@@ -5573,7 +5573,7 @@ function program1(depth0,data,depth1,depth2) {
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "'>\n            "
-    + escapeExpression(((stack1 = ((stack1 = (depth1 && depth1.result)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth1 && depth1.result)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\n        </td>\n    </tr>\n";
   return buffer;
   }
