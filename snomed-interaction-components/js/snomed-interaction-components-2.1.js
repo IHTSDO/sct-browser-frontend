@@ -7625,7 +7625,7 @@ function conceptDetails(divElement, conceptId, options) {
             //console.log("aborting call...");
         }
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId, function(result) {
@@ -8738,7 +8738,7 @@ function conceptDetails(divElement, conceptId, options) {
             //console.log("aborting children call...");
         };
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
@@ -8867,7 +8867,7 @@ function conceptDetails(divElement, conceptId, options) {
             //console.log("aborting references call...");
         };
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         xhrReferences = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId + "/references?form=" + panel.options.selectedView, function(result) {
@@ -8964,7 +8964,7 @@ function conceptDetails(divElement, conceptId, options) {
             //console.log("aborting children call...");
         };
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
@@ -9046,7 +9046,7 @@ function conceptDetails(divElement, conceptId, options) {
             //console.log("aborting children call...");
         };
         var branch = "" + options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         xhrParents = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
@@ -9120,7 +9120,7 @@ function conceptDetails(divElement, conceptId, options) {
 
     this.loadMembers = function(returnLimit, skipTo, paginate) {
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + panel.conceptId + "&limit=100";
@@ -11354,7 +11354,7 @@ function searchPanel(divElement, options) {
                         var branch = options.edition;
                         console.log(options.release);
                         console.log(options.release.length);
-                        if(options.release.length > 0){
+                        if(options.release.length > 0 && options.release !== 'None'){
                             branch = branch + "/" + options.release;
                         };
                         xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + t, function(result) {
@@ -11428,7 +11428,7 @@ function searchPanel(divElement, options) {
                         var branch = options.edition;
                         console.log(options.release);
                         console.log(options.release.length);
-                        if(options.release.length > 0){
+                        if(options.release.length > 0 && options.release !== 'None'){
                             branch = branch + "/" + options.release;
                         };
                         xhr = $.getJSON(options.serverUrl + "/" + branch + "/descriptions/" + t, function(result) {
@@ -11492,7 +11492,7 @@ function searchPanel(divElement, options) {
                     var branch = options.edition;
                     console.log(options.release);
                         console.log(options.release.length);
-                    if(options.release.length > 0){
+                    if(options.release.length > 0 && options.release !== 'None'){
                         branch = branch + "/" + options.release;
                     };
                     var searchUrl = options.serverUrl + "/browser/" + branch + "/descriptions?" +
@@ -12376,7 +12376,7 @@ function taxonomyPanel(divElement, conceptId, options) {
     if (!options.rootConceptDescendants) {
         console.log(options);
         var branch = "" + options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         $.ajax({
@@ -12747,7 +12747,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var inferredDescendants = $(event.target).attr('data-inferredDescendants');
                 panel.history.push({ term: selectedLabel, conceptId: selectedId, time: time });
                 var branch = options.edition;
-                if(options.release.length > 0){
+                if(options.release.length > 0 && options.release !== 'None'){
                     branch = branch + "/" + options.release;
                 };
                 if (typeof selectedId != "undefined") {
@@ -12822,7 +12822,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         else $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: Off");
 
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
@@ -12927,7 +12927,7 @@ function taxonomyPanel(divElement, conceptId, options) {
     this.wrapInParents = function(conceptId, liItem) {
         var topUl = $("#" + panel.divElement.id + "-panelBody").find('ul:first');
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(parents) {
@@ -13046,7 +13046,7 @@ function taxonomyPanel(divElement, conceptId, options) {
     this.setToConcept = function(conceptId, term, definitionStatus, module, statedDescendants) {
         $("#" + panel.divElement.id + "-panelBody").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
@@ -13224,7 +13224,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             //console.log("aborting call...");
         }
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         xhr = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId, function(result) {
@@ -13362,7 +13362,7 @@ function refsetPanel(divElement, options) {
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate) {
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + conceptId + "&limit=100";
@@ -13877,7 +13877,7 @@ function queryComputerPanel(divElement, options) {
 
         if (!panel.typeArray || !panel.typeArray.length) {
             var branch = options.edition;
-            if(options.release.length > 0){
+            if(options.release.length > 0 && options.release !== 'None'){
                 branch = branch + "/" + options.release;
             };
             $.ajax({
@@ -14477,7 +14477,7 @@ function queryComputerPanel(divElement, options) {
         panel.lastRequest.limit = panel.lastTotalValues + 1;
         $('#' + panel.divElement.id + '-exportXls').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         var branch = options.edition;
-        if(options.release.length > 0){
+        if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
         xhrTotal = $.ajax({

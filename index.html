@@ -81,7 +81,7 @@
             queryServerUrl: "",
             queryBranch: "MAIN/2019-07-31",
             edition: "MAIN",
-            release: "2019-07-31",
+            release: "",
             showIds: false,
             hideNotAcceptable: true,
             displayInactiveDescriptions: false,
@@ -397,6 +397,9 @@
                 var projectChanged = function(){
                     getTaskList();
                     options.edition = $('#projectDdl').val();
+                    if(!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))){
+                        options.release = "None";
+                    }
                     var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                     var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
                     var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
@@ -1325,7 +1328,7 @@
                     on July 31, 2019.</p>
                 <h3><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h3>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', '', 'MAIN/2019-07-31', '2019-07-31','900000000000509007/', options.queryServerUrl);
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', '', 'MAIN/2019-07-31', '','900000000000509007/', options.queryServerUrl);
                                 switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>Members release<br><br>July 2019</span></a>
                 </p>
 
