@@ -1150,7 +1150,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-inferred-button-d\">Inferred</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div id=\"";
+    + "-inferred-button-d\">Inferred</button>\r\n                </div>\r\n                <button id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-download-svg-button\" type=\"button\" class=\"btn btn-primary btn-sm disabled\" style=\"display: block;\">Download SVG</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -10009,6 +10013,17 @@ function drawConceptDiagram (concept, div, options, panel) {
         svgCode.substr(svgCode.indexOf("svg") + 4)
     svgCode = svgCode.replace('width="1000px" height="2000px"', 'width="' + maxX + '" height="' + y + '"');
     var b64 = Base64.encode(svgCode);
+
+    $("#" + div.attr('id') + "-download-svg-button").disableTextSelect();
+    $("#" + div.attr('id') + "-download-svg-button").removeClass('disabled');
+    $("#" + div.attr('id') + "-download-svg-button").unbind().click(function(event) { 
+        var downloadLink = document.createElement("a");
+        downloadLink.href = 'data:image/svg+xml;base64,\n' + b64;
+        downloadLink.download = "diagram.svg";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    });
 
     $("#" + div.attr('id') + "-download-button").disableTextSelect();
     $("#" + div.attr('id') + "-progress-button").disableTextSelect();
