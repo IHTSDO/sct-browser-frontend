@@ -81,7 +81,7 @@
             queryServerUrl: "",
             queryBranch: "MAIN/2019-07-31",
             edition: "MAIN",
-            release: "2019-07-31",
+            release: "",
             showIds: false,
             hideNotAcceptable: true,
             displayInactiveDescriptions: false,
@@ -341,13 +341,13 @@
                 }
             };
             var focusConcept = 138875005;
-            if (getUrlParameter('branch')) {
-                options.release = getUrlParameter('branch');
-                var variables = options.release.split('/');
-                options.branch = "MAIN/" + variables[1];
-                if (variables.length > 2) {
-                    originalTask = options.release;
-                }
+            if (getUrlParameter('edition')) {
+                options.edition = getUrlParameter('edition');
+                $("#projectDdl").val(options.edition).change();
+            }
+            if (getUrlParameter('release')) {
+                options.release = getUrlParameter('release');
+                $("#taskDdl").val(options.release).change();
             }
             if (getUrlParameter('concept')) {
                 focusConcept = getUrlParameter('concept');
@@ -388,13 +388,18 @@
                     $(function() {
                         var temp="MAIN";
                         $("#projectDdl").val(temp);
+                        if(options.edition.length > 0){
+                            $("#projectDdl").val(options.edition);
+                        }
                     });
                 }
 
                 var projectChanged = function(){
                     getTaskList();
-                    options.release = '';
                     options.edition = $('#projectDdl').val();
+                    if(!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))){
+                        options.release = "None";
+                    }
                     var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                     var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
                     var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
@@ -421,7 +426,7 @@
             // TASK DROPDOWN HANDLER
             var getTaskList = function () {
                 var project = $('#projectDdl').val();
-                project = project.substring(project.indexOf("/") + 1);
+                project = project.substring(project.lastIndexOf("/") + 1);
 
                 $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function (result) {
                     var $taskDdl = $('#taskDdl');
@@ -432,8 +437,9 @@
                         // var relativePath = this.path.substring("MAIN/".length);
                         $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
                     });
-                    if (options.task) {
-                        $("#taskDdl").val(options.task).change();
+                    
+                    if (options.release) {
+                        $("#taskDdl").val(options.release).change();
                     }
                     var taskChanged = function () {
                         // var branchPath = $('#taskDdl').val();
@@ -1154,11 +1160,11 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <span style="margin-left:10px">Project:</span>
-                <select style="margin-top:18px; margin-left:2px;" id="projectDdl">
+                <select style="margin-top:18px; margin-left:2px; width:110px;" id="projectDdl">
                     <!--<option value="MAIN">MAIN</option>-->
                 </select>
                 <span style="margin-left:10px">Task:</span>
-                <select style="margin-top:18px; margin-left:2px;" id="taskDdl">
+                <select style="margin-top:18px; margin-left:2px; width:110px;" id="taskDdl">
                     <!--<option value="None">None</option>-->
                 </select>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -1169,7 +1175,7 @@
                     </button>
                 <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
                     <strong>
-                            &nbsp;&nbsp;SNOMED CT International Member's Release Browser</strong></a>
+                            &nbsp;&nbsp;SNOMED CT International Browser</strong></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
@@ -1320,12 +1326,10 @@
                                 <!--switchLanguage('es', '/img/flags/uy.png', true);-->
                                 <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Uruguay edition<br>2018-06-15</span></a>-->
                 <!--</p>-->
-                <h2>International Edition, Member's Release - July 2019</h2>
-                <p>This is a temporary instance of the SNOMED CT Browser for the July 2019 Member Release which displays axioms for the stated view of the terminology. The public browser will incporate this functionality when the public release is published
-                    on July 31, 2019.</p>
+                <h2>International Edition - July 2019</h2>
                 <h3><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h3>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', '', 'MAIN/2019-07-31', '2019-07-31','900000000000509007/', options.queryServerUrl);
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', '', 'MAIN/2019-07-31', '','900000000000509007/', options.queryServerUrl);
                                 switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>Members release<br><br>July 2019</span></a>
                 </p>
 
