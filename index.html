@@ -437,7 +437,13 @@
             var getTaskList = function () {
                 var project = $('#projectDdl').val();
                 project = project.substring(project.lastIndexOf("/") + 1);
-
+				if (project === 'MAIN') {
+				var $taskDdl = $('#taskDdl');
+                    $taskDdl.html("");
+                    $('<option>').val("None").text("None").appendTo($taskDdl);
+					
+					return;
+				}
                 $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function (result) {
                     var $taskDdl = $('#taskDdl');
                     $taskDdl.html("");
@@ -901,15 +907,15 @@
                 "display": "none"
             });
             $("#perspectiveLabel").html("Full");
-            var fhOptions = jQuery.extend(true, {}, options);
-            fhOptions.subscribersMarker = false;
-            fhOptions.linkerButton = false;
-            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, fhOptions);
-            //var fav = new favoritePanel(document.getElementById("fh-favorites_canvas"), fhOptions);
-            var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), fhOptions);
-            var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
-            var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
-            var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), fhOptions);
+            //var fhOptions = jQuery.extend(true, {}, options);
+            options.subscribersMarker = false;
+            options.linkerButton = false;
+            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, options);
+            var fav = new favoritePanel(document.getElementById("fh-favorites_canvas"), options);
+            var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
+            var spa = new searchPanel(document.getElementById("fh-search_canvas"), options);
+            var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, options);
+            var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), options);
             // if (enableQueriesInFullPerspective) {
             //     //                if ((cdPanel1.options.edition == "en-edition") || (cdPanel1.options.edition == "us-edition")) {
             //     if (cdPanel1.options.edition == "en-edition") {
@@ -926,7 +932,7 @@
             cdPanel1.subscribe(qpa);
             cdPanel1.subscribe(tpt);
             cdPanel1.subscribe(spa);
-            //cdPanel1.subscribe(fav);
+            cdPanel1.subscribe(fav);
             cdPanel1.subscribe(ref);
             cdPanel1.setupCanvas();
             if (window.screen.width > 1500) {
@@ -1410,14 +1416,14 @@
                             </a>
                         </li>
                         <li class="active"><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
-                        <!--                        <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>-->
+                        <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
                         <!--<li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>-->
                         <!--<li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Constraint</span></a></li>-->
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
                         <div class="tab-pane active" id="fh-search_canvas" style="padding: 0px;margin: 0;"></div>
-                        <!--                        <div class="tab-pane" id="fh-favorites_canvas" style="padding: 0px;margin: 0;"></div>-->
+                        <div class="tab-pane" id="fh-favorites_canvas" style="padding: 0px;margin: 0;"></div>
                         <div class="tab-pane" id="fh-refset_canvas" style="padding: 0px;margin: 0;"></div>
                         <!--<div class="tab-pane" id="fh-query_canvas" style="padding: 0px;margin: 0;"></div>-->
                     </div>
