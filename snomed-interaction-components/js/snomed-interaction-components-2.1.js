@@ -42,7 +42,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-historyButton' class='btn btn-link history-button' style='padding:2px'><i class='glyphicon glyphicon-time'></i></button>\r\n                <!--<button id='";
+    + "-historyButton' class='btn btn-link history-button' style='padding:2px'><i class='glyphicon glyphicon-time'></i></button>\r\n                <button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -50,7 +50,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-configModal'><i class='glyphicon glyphicon-cog'></i></button>-->\r\n                <button id='";
+    + "-configModal'><i class='glyphicon glyphicon-cog'></i></button>\r\n                <button id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -246,11 +246,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-configModal'>\r\n    <div class='modal-dialog'>\r\n        <div class='modal-content'>\r\n            <div class='modal-header'>\r\n                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>\r\n                <h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span> (";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + ")</h4>\r\n            </div>\r\n            <div class='modal-body' id='";
+    + "-configModal'>\r\n    <div class='modal-dialog'>\r\n        <div class='modal-content'>\r\n            <div class='modal-header'>\r\n                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>\r\n                <h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span></h4>\r\n            </div>\r\n            <div class='modal-body' id='";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -427,46 +423,7 @@ function program29(depth0,data) {
   return "\r\n                <option value=\"inferred\">Inferred</option>\r\n            ";
   }
 
-function program31(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"all\" selected>All</option>\r\n            ";
-  }
-
-function program33(depth0,data) {
-  
-  
-  return "\r\n                <option value=\"all\">All</option>\r\n            ";
-  }
-
-function program35(depth0,data,depth1) {
-  
-  var buffer = "", stack1;
-  buffer += "\r\n            ";
-  stack1 = helpers.each.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.manifest)),stack1 == null || stack1 === false ? stack1 : stack1.languageRefsets), {hash:{},inverse:self.noop,fn:self.programWithDepth(36, program36, data, depth1),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        ";
-  return buffer;
-  }
-function program36(depth0,data,depth2) {
-  
-  var buffer = "", stack1, helper, options;
-  buffer += "\r\n                <div class=\"checkbox\">\r\n                    <label>\r\n                        <input class=\"langOption\" type=\"checkbox\" value=\"";
-  if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" ";
-  stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.conceptId), ((stack1 = (depth2 && depth2.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", (depth0 && depth0.conceptId), ((stack1 = (depth2 && depth2.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "> ";
-  if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\r\n                    </label>\r\n                </div>\r\n            ";
-  return buffer;
-  }
-
-function program38(depth0,data,depth1) {
+function program31(depth0,data,depth1) {
   
   var buffer = "", stack1, helper;
   buffer += "-->\r\n                    <!--<tr>-->\r\n                        <!--<td>";
@@ -535,16 +492,20 @@ function program38(depth0,data,depth1) {
   buffer += "\r\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(29, program29, data),fn:self.program(27, program27, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "inferred", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "inferred", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(33, program33, data),fn:self.program(31, program31, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "all", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "all", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n        </select>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <label><span class=\"i18n\" data-i18n-id=\"i18n_language_refset\">"
+  buffer += "           \r\n        </select>\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <label for=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-langRefsetOption\"><span class=\"i18n\" data-i18n-id=\"i18n_language_refset\">"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_language_refset", "Language Refset", options) : helperMissing.call(depth0, "i18n", "i18n_language_refset", "Language Refset", options)))
-    + "</span></label>\r\n\r\n        ";
-  stack1 = helpers['if'].call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.manifest)),stack1 == null || stack1 === false ? stack1 : stack1.languageRefsets), {hash:{},inverse:self.noop,fn:self.programWithDepth(35, program35, data, depth0),data:data});
+    + "</span></label>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000509007\" ";
+  stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, "900000000000509007", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", "900000000000509007", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n    </div>\r\n    <!--<div class=\"form-group\">-->\r\n        <!--<table class='table table-bordered table-hover'>-->\r\n            <!--<thead>-->\r\n                <!--<tr>-->\r\n                    <!--<th>Panel</th>-->\r\n                    <!--<th>Subscribed</th>-->\r\n                    <!--<th>Subscriptor</th>-->\r\n                <!--</tr>-->\r\n            <!--</thead>-->\r\n            <!--<tbody>-->\r\n                <!--";
-  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(38, program38, data, depth0),data:data});
+  buffer += "> United States of America English language reference set (foundation metadata concept)\r\n            </label>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n            <label>\r\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000508004\" ";
+  stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, "900000000000508004", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", "900000000000508004", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">Great Britain English language reference set (foundation metadata concept)\r\n            </label>\r\n        </div>        \r\n    </div>\r\n    <!--<div class=\"form-group\">-->\r\n        <!--<table class='table table-bordered table-hover'>-->\r\n            <!--<thead>-->\r\n                <!--<tr>-->\r\n                    <!--<th>Panel</th>-->\r\n                    <!--<th>Subscribed</th>-->\r\n                    <!--<th>Subscriptor</th>-->\r\n                <!--</tr>-->\r\n            <!--</thead>-->\r\n            <!--<tbody>-->\r\n                <!--";
+  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(31, program31, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "-->\r\n            <!--</tbody>-->\r\n        <!--</table>-->\r\n    <!--</div>-->\r\n</form>";
   return buffer;
@@ -862,29 +823,15 @@ function program2(depth0,data) {
 this["JST"]["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helper, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, functionType="function", self=this;
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
 function program1(depth0,data) {
-  
-  var helper, options;
-  return escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.longLangName), options) : helperMissing.call(depth0, "removeSemtag", (depth0 && depth0.longLangName), options)));
-  }
-
-function program3(depth0,data) {
-  
-  var stack1, helper;
-  if (helper = helpers.lang) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.lang); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  return escapeExpression(stack1);
-  }
-
-function program5(depth0,data) {
   
   
   return "\r\n                <th>SCTID</th>\r\n            ";
   }
 
-function program7(depth0,data) {
+function program3(depth0,data) {
   
   var stack1, helper;
   if (helper = helpers.languageName) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -892,44 +839,52 @@ function program7(depth0,data) {
   return escapeExpression(stack1);
   }
 
-function program9(depth0,data,depth1) {
+function program5(depth0,data) {
+  
+  var stack1, helper;
+  if (helper = helpers.lang) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.lang); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  return escapeExpression(stack1);
+  }
+
+function program7(depth0,data,depth1) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\r\n            <tr class='";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(12, program12, data),fn:self.program(10, program10, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000003001", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000003001", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(10, program10, data),fn:self.program(8, program8, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000003001", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000003001", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.active), {hash:{},inverse:self.program(16, program16, data),fn:self.program(14, program14, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.active), {hash:{},inverse:self.program(14, program14, data),fn:self.program(12, program12, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(18, program18, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.effectiveTime), ((stack1 = (depth1 && depth1.options)),stack1 == null || stack1 === false ? stack1 : stack1.highlightByEffectiveTime), options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.effectiveTime), ((stack1 = (depth1 && depth1.options)),stack1 == null || stack1 === false ? stack1 : stack1.highlightByEffectiveTime), options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(16, program16, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.effectiveTime), ((stack1 = (depth1 && depth1.options)),stack1 == null || stack1 === false ? stack1 : stack1.highlightByEffectiveTime), options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.effectiveTime), ((stack1 = (depth1 && depth1.options)),stack1 == null || stack1 === false ? stack1 : stack1.highlightByEffectiveTime), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "'>\r\n                    <td>\r\n                        ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(22, program22, data),fn:self.program(20, program20, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000003001", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000003001", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(20, program20, data),fn:self.program(18, program18, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000003001", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000003001", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n                        ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.preferred), {hash:{},inverse:self.program(33, program33, data),fn:self.program(28, program28, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.preferred), {hash:{},inverse:self.program(31, program31, data),fn:self.program(26, program26, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                        &nbsp;&nbsp;&nbsp;";
   if (helper = helpers.term) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\r\n                    ";
-  stack1 = helpers['if'].call(depth0, ((stack1 = (depth1 && depth1.options)),stack1 == null || stack1 === false ? stack1 : stack1.showIds), {hash:{},inverse:self.noop,fn:self.program(38, program38, data),data:data});
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth1 && depth1.options)),stack1 == null || stack1 === false ? stack1 : stack1.showIds), {hash:{},inverse:self.noop,fn:self.program(36, program36, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n                    <td>\r\n                        ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.preferred), {hash:{},inverse:self.program(42, program42, data),fn:self.program(40, program40, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.preferred), {hash:{},inverse:self.program(40, program40, data),fn:self.program(38, program38, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                        <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\r\n                        <table border='1'><tr><th style='padding: 3px;'>DescriptionId</th><th style='padding: 3px;'>Type</th><th style='padding: 3px;'>Language</th><th style='padding: 3px;'>Case Significance</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\r\n                                <tr><td style='padding: 3px;'>";
   if (helper = helpers.descriptionId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.descriptionId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td><td style='padding: 3px;'>"
-    + escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options) : helperMissing.call(depth0, "removeSemtag", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options)))
+    + escapeExpression((helper = helpers.parseCS || (depth0 && depth0.parseCS),options={hash:{},data:data},helper ? helper.call(depth0, "_", " ", (depth0 && depth0.type), options) : helperMissing.call(depth0, "parseCS", "_", " ", (depth0 && depth0.type), options)))
     + "</td><td style='padding: 3px;'>";
   if (helper = helpers.lang) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.lang); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td><td style='padding: 3px;'>"
-    + escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.ics)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options) : helperMissing.call(depth0, "removeSemtag", ((stack1 = (depth0 && depth0.ics)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options)))
+    + escapeExpression((helper = helpers.parseCS || (depth0 && depth0.parseCS),options={hash:{},data:data},helper ? helper.call(depth0, "_", " ", (depth0 && depth0.caseSignificance), options) : helperMissing.call(depth0, "parseCS", "_", " ", (depth0 && depth0.caseSignificance), options)))
     + "</td><td style='padding: 3px;'>";
   if (helper = helpers.effectiveTime) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.effectiveTime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
@@ -941,37 +896,37 @@ function program9(depth0,data,depth1) {
     + "</td></tr>\r\n                        </table>\r\n                        \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\r\n                    </td>\r\n                </tr>\r\n        ";
   return buffer;
   }
-function program10(depth0,data) {
+function program8(depth0,data) {
   
   
   return " fsn-row";
   }
 
-function program12(depth0,data) {
+function program10(depth0,data) {
   
   
   return " synonym-row";
   }
 
-function program14(depth0,data) {
+function program12(depth0,data) {
   
   var buffer = "";
   return buffer;
   }
 
-function program16(depth0,data) {
+function program14(depth0,data) {
   
   
   return " danger";
   }
 
-function program18(depth0,data) {
+function program16(depth0,data) {
   
   
   return " highlightEffectiveTime";
   }
 
-function program20(depth0,data) {
+function program18(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                            <span rel=\"tooltip-right\" title=\""
@@ -980,16 +935,16 @@ function program20(depth0,data) {
   return buffer;
   }
 
-function program22(depth0,data) {
+function program20(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\r\n                            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(25, program25, data),fn:self.program(23, program23, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000013009", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000013009", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(23, program23, data),fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000013009", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000013009", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                        ";
   return buffer;
   }
-function program23(depth0,data) {
+function program21(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                                <span rel=\"tooltip-right\" title=\""
@@ -998,16 +953,16 @@ function program23(depth0,data) {
   return buffer;
   }
 
-function program25(depth0,data) {
+function program23(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\r\n                                ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000550004", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000550004", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(24, program24, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000550004", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000550004", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                            ";
   return buffer;
   }
-function program26(depth0,data) {
+function program24(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                                    <span rel=\"tooltip-right\" title=\""
@@ -1016,16 +971,16 @@ function program26(depth0,data) {
   return buffer;
   }
 
-function program28(depth0,data) {
+function program26(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\r\n                            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(31, program31, data),fn:self.program(29, program29, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000003001", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000003001", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(29, program29, data),fn:self.program(27, program27, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.typeId), "900000000000003001", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.typeId), "900000000000003001", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                        ";
   return buffer;
   }
-function program29(depth0,data) {
+function program27(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                                &nbsp;<span class=\"glyphicon glyphicon-star-empty\" rel=\"tooltip-right\" title=\""
@@ -1034,7 +989,7 @@ function program29(depth0,data) {
   return buffer;
   }
 
-function program31(depth0,data) {
+function program29(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                                &nbsp;<span class=\"glyphicon glyphicon-star\" rel=\"tooltip-right\" title=\""
@@ -1043,16 +998,16 @@ function program31(depth0,data) {
   return buffer;
   }
 
-function program33(depth0,data) {
+function program31(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\r\n                            ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.acceptable), {hash:{},inverse:self.program(36, program36, data),fn:self.program(34, program34, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.acceptable), {hash:{},inverse:self.program(34, program34, data),fn:self.program(32, program32, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                        ";
   return buffer;
   }
-function program34(depth0,data) {
+function program32(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                                &nbsp;<span rel=\"tooltip-right\" title=\""
@@ -1061,22 +1016,24 @@ function program34(depth0,data) {
   return buffer;
   }
 
-function program36(depth0,data) {
+function program34(depth0,data) {
   
   
   return "\r\n                                &nbsp;&nbsp;&nbsp;\r\n                            ";
   }
 
-function program38(depth0,data) {
+function program36(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\r\n                        <td>"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.concept)),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+  var buffer = "", stack1, helper;
+  buffer += "\r\n                        <td>";
+  if (helper = helpers.descriptionId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.descriptionId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
     + "</td>\r\n                    ";
   return buffer;
   }
 
-function program40(depth0,data) {
+function program38(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                            <span class='i18n' data-i18n-id='i18n_preferred'>"
@@ -1085,16 +1042,16 @@ function program40(depth0,data) {
   return buffer;
   }
 
-function program42(depth0,data) {
+function program40(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\r\n                            ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.acceptable), {hash:{},inverse:self.program(45, program45, data),fn:self.program(43, program43, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.acceptable), {hash:{},inverse:self.program(43, program43, data),fn:self.program(41, program41, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                        ";
   return buffer;
   }
-function program43(depth0,data) {
+function program41(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                                <span class='i18n' data-i18n-id='i18n_acceptable'>"
@@ -1103,7 +1060,7 @@ function program43(depth0,data) {
   return buffer;
   }
 
-function program45(depth0,data) {
+function program43(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                                <span class='i18n' data-i18n-id='i18n_not_acceptable'>"
@@ -1117,16 +1074,17 @@ function program45(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-descriptions-panel-table'>\r\n    <thead>\r\n        <tr>\r\n           <th colspan=\"2\" class=\"text-center\">";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.languageName), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</th>\r\n        </tr>\r\n        <tr>\r\n            <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>\r\n            ";
-  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.showIds), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  if (helper = helpers.longLangName) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.longLangName); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</th>\r\n        </tr>\r\n        <tr>\r\n            <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>\r\n            ";
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.showIds), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n            <th><span class='i18n' data-i18n-id='i18n_acceptability'>Acceptability</span>&nbsp;&nbsp;";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.languageName), {hash:{},inverse:self.program(3, program3, data),fn:self.program(7, program7, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.languageName), {hash:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        ";
-  stack1 = helpers.each.call(depth0, (depth0 && depth0.allDescriptions), {hash:{},inverse:self.noop,fn:self.programWithDepth(9, program9, data, depth0),data:data});
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.allDescriptions), {hash:{},inverse:self.noop,fn:self.programWithDepth(7, program7, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n    </tbody>\r\n</table>";
   return buffer;
@@ -7258,6 +7216,11 @@ function conceptDetails(divElement, conceptId, options) {
         "11000146104": "NL"
     };
 
+    var longLanguageNameOfLangRefset = {
+        "900000000000509007": "United States of America English language reference set",
+        "900000000000508004": "Great Britain English language reference set"
+    };
+
     if (options.languageNameOfLangRefset)
         languageNameOfLangRefset = options.languageNameOfLangRefset;
 
@@ -7581,6 +7544,11 @@ function conceptDetails(divElement, conceptId, options) {
                     else
                         return opts.inverse(this);
                 }
+            });
+            Handlebars.registerHelper('parseCS', function (search, replacement, string) {
+                var str = string.split(search).join(replacement).toLowerCase();
+
+                return str.charAt(0).toUpperCase() + str.slice(1);
             });
             panel.statedParents = [];
             panel.inferredParents = [];
@@ -8019,11 +7987,11 @@ function conceptDetails(divElement, conceptId, options) {
                             return -1;
                         if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
                             return 1;
-                        if (a.type.conceptId < b.type.conceptId)
+                        if (a.typeId < b.typeId)
                             return -1;
-                        if (a.type.conceptId > b.type.conceptId)
+                        if (a.typeId > b.typeId)
                             return 1;
-                        if (a.type.conceptId == b.type.conceptId) {
+                        if (a.typeId == b.typeId) {
                             if (a.preferred && !b.preferred)
                                 return -1;
                             if (!a.preferred && b.preferred)
@@ -8043,18 +8011,18 @@ function conceptDetails(divElement, conceptId, options) {
                 var context = {
                     options: panel.options,
                     languageName: "(" + languageNameOfLangRefset[loopSelectedLangRefset] + ")",
-                    longLangName: loopSelectedLangRefset,
+                    longLangName: longLanguageNameOfLangRefset[loopSelectedLangRefset],
                     divElementId: panel.divElement.id,
                     allDescriptions: allDescriptions
                 };
 
-                if (panel.options.manifest) {
+                /*if (panel.options.manifest) {
                     $.each(panel.options.manifest.languageRefsets, function(i, looplr) {
                         if (looplr.conceptId == loopSelectedLangRefset) {
                             context.longLangName = looplr.defaultTerm;
                         }
                     });
-                }
+                }*/
 
                 allLangsHtml += JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
                 //if (panel.options.displaySynonyms) {
@@ -9524,7 +9492,7 @@ function conceptDetails(divElement, conceptId, options) {
         //    field.subscriptor = aux;
         //});
         //panel.options.possibleSubscribers = possibleSubscribers;
-        if (!panel.options.manifest) {
+        /*if (!panel.options.manifest) {
             $("#" + panel.divElement.id + "-modal-body").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
             xhr = $.getJSON(options.serverUrl.replace("snomed", "") + "server/releases", function(result) {
                 // nothing
@@ -9555,7 +9523,7 @@ function conceptDetails(divElement, conceptId, options) {
                 });
                 $("#" + panel.divElement.id + "-modal-body").html(JST["views/conceptDetailsPlugin/options.hbs"](context));
             });
-        } else {
+        } else {*/
             var context = {
                 options: panel.options,
                 divElementId: panel.divElement.id
@@ -9575,7 +9543,7 @@ function conceptDetails(divElement, conceptId, options) {
                 return options.inverse(this);
             });
             $("#" + panel.divElement.id + "-modal-body").html(JST["views/conceptDetailsPlugin/options.hbs"](context));
-        }
+        //}
     }
 
     this.readOptionsPanel = function() {
