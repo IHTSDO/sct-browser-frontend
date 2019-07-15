@@ -412,10 +412,12 @@
                     }
                     var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                     var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-                    var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
+					var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
+                    var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);					
 
                     cdPanel.subscribe(tpt);
                     cdPanel.subscribe(searchP);
+					cdPanel.subscribe(refP);					
                     cdPanel.setupCanvas();
                 }
                 $("#projectDdl").on("change", function(event) {
@@ -468,10 +470,12 @@
 
                         var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                         var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
+						var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
                         var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
 
                         cdPanel.subscribe(tpt);
                         cdPanel.subscribe(searchP);
+						cdPanel.subscribe(refP);
                         cdPanel.setupCanvas();
                     }
                     $("#taskDdl").on("change", function (event) {
@@ -1417,7 +1421,7 @@
                         </li>
                         <li class="active"><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
                         <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
-                        <!--<li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>-->
+                        <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
                         <!--<li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Constraint</span></a></li>-->
                     </ul>
                     <div class="tab-content">
