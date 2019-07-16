@@ -5407,13 +5407,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += escapeExpression(stack1)
     + "-inactiveOnlyButton' data-i18n-id='i18n_inactive_only'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_inactive_only", "Inactive components only", options) : helperMissing.call(depth0, "i18n", "i18n_inactive_only", "Inactive components only", options)))
-    + "</a>\n                        </li>\n                    </ul>\n                </div>\n                <!--<div style=\"margin-top: 5px; \" class=\"checkbox\">\n                    <label>\n                        <input id=\"";
+    + "</a>\n                        </li>\n                    </ul>\n                </div>\n                <div style=\"margin-top: 5px; \" class=\"checkbox\">\n                    <label>\n                        <input id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-groupConcept\" type=\"checkbox\"><span class='i18n' data-i18n-id='i18n_group_by_concept'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_group_by_concept", "Group by concept", options) : helperMissing.call(depth0, "i18n", "i18n_group_by_concept", "Group by concept", options)))
-    + "</span>\n                    </label>\n                </div>-->\n            </div>\n            <div id=\"";
+    + "</span>\n                    </label>\n                </div>\n            </div>\n            <div id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -11914,8 +11914,8 @@ function searchPanel(divElement, options) {
                                     bucketTerm = result.bucketConcepts[i].fsn.term;
                                 }
                                 auxObject.term = bucketTerm;
-                                auxObject.value = i;
-                                auxObject.cant = field;
+                                auxObject.value = field;
+                                auxObject.cant = i;
                                 auxArray.push(auxObject);
                             });
                             result.buckets.module = [];
