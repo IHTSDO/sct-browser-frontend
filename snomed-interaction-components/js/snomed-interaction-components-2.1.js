@@ -1100,7 +1100,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-download-svg-button\" type=\"button\" class=\"btn btn-primary btn-sm disabled\" style=\"display: block;\">Download SVG</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div id=\"";
+    + "-download-button\" type=\"button\" class=\"btn btn-primary btn-sm disabled\" style=\"display: block;\">Download</button>                \r\n                <button id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-png-button\" type=\"button\" class=\"btn btn-success btn-sm\" style=\"display: none;\"><span class=\"glyphicon glyphicon-picture\"></span> PNG</button>\r\n                <button id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-svg-button\" type=\"button\" class=\"btn btn-success btn-sm\" style=\"display: none;\"><span class=\"glyphicon glyphicon-tint\"></span> SVG</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -10042,85 +10050,37 @@ function drawConceptDiagram (concept, div, options, panel) {
         }
     });
 
-
     var svgCode = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' + parentDiv.html();
     svgCode = svgCode.substr(0, svgCode.indexOf("svg") + 4) +
         ' xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" ' +
         svgCode.substr(svgCode.indexOf("svg") + 4)
     svgCode = svgCode.replace('width="1000px" height="2000px"', 'width="' + maxX + '" height="' + y + '"');
-    var b64 = Base64.encode(svgCode);
+    var b64 = Base64.encode(svgCode);    
 
-    $("#" + div.attr('id') + "-download-svg-button").disableTextSelect();
-    $("#" + div.attr('id') + "-download-svg-button").removeClass('disabled');
-    $("#" + div.attr('id') + "-download-svg-button").unbind().click(function(event) { 
-        var downloadLink = document.createElement("a");
-        downloadLink.href = 'data:image/svg+xml;base64,\n' + b64;
-        downloadLink.download = "diagram.svg";
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-    });
-
-    $("#" + div.attr('id') + "-download-button").disableTextSelect();
-    $("#" + div.attr('id') + "-progress-button").disableTextSelect();
+    $("#" + div.attr('id') + "-download-button").disableTextSelect();    
     $("#" + div.attr('id') + "-png-button").disableTextSelect();
     $("#" + div.attr('id') + "-svg-button").disableTextSelect();
     $("#" + div.attr('id') + "-download-button").removeClass('disabled');
     $("#" + div.attr('id') + "-download-button").unbind().click(function(event) {
         $("#" + div.attr('id') + "-download-button").hide();
-        $("#" + div.attr('id') + "-progress-button").show();
-        $.post(options.serverUrl.replace("snomed", "") + "util/svg2png", { svgContent: svgCode}).done(function( response ) {
-            //console.log(response);
-            $("#" + div.attr('id') + "-progress-button").hide();
-            $("#" + div.attr('id') + "-png-button").show();
-            $("#" + div.attr('id') + "-svg-button").show();
+        $("#" + div.attr('id') + "-png-button").show();
+        $("#" + div.attr('id') + "-svg-button").show();
 
-            $("#" + div.attr('id') + "-png-button").unbind().click(function(event) {
-                window.open(options.serverUrl.replace("snomed", "") + response);
-            });
-            $("#" + div.attr('id') + "-svg-button").unbind().click(function(event) {
-                window.open(options.serverUrl.replace("snomed", "") + response.replace(".png", ".svg"));
-            });
-
-            //$(div).prepend($("<a href-lang='image/svg+xml' href=options.serverUrl.replace("snomed", "")+response+"' download='diagram.png'>Download as PNG</a>&nbsp;&nbsp;&nbsp;"));
-        }).fail(function() {
-            //console.log("Error");
+        $("#" + div.attr('id') + "-png-button").unbind().click(function(event) {
+            saveAsPng(svgCode,concept.conceptId);
+        });
+        $("#" + div.attr('id') + "-svg-button").unbind().click(function(event) {
+            var downloadLink = document.createElement("a");
+            downloadLink.href = 'data:image/svg+xml;base64,\n' + b64;
+            downloadLink.download = "diagram-"+ concept.conceptId +".svg";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
         });
     });
-    if (panel.options.selectedView == "stated") {
-        $("#" + div.attr('id') + '-stated-button-d').unbind();
-        $("#" + div.attr('id') + '-inferred-button-d').unbind();
-        $("#" + div.attr('id') + '-stated-button-d').addClass("btn-primary");
-        $("#" + div.attr('id') + '-stated-button-d').removeClass("btn-default");
-        $("#" + div.attr('id') + '-inferred-button-d').addClass("btn-default");
-        $("#" + div.attr('id') + '-inferred-button-d').removeClass("btn-primary");
-        $("#" + div.attr('id') + '-inferred-button-d').click(function (event) {
-            panel.options.selectedView = "inferred";
-            panel.updateCanvas();
-        });
-    } else {
-        $("#" + div.attr('id') + '-stated-button-d').unbind();
-        $("#" + div.attr('id') + '-inferred-button-d').unbind();
-        $("#" + div.attr('id') + '-inferred-button-d').addClass("btn-primary");
-        $("#" + div.attr('id') + '-inferred-button-d').removeClass("btn-default");
-        $("#" + div.attr('id') + '-stated-button-d').addClass("btn-default");
-        $("#" + div.attr('id') + '-stated-button-d').removeClass("btn-primary");
-        $("#" + div.attr('id') + '-stated-button-d').click(function (event) {
-            panel.options.selectedView = "stated";
-            panel.updateCanvas();
-        });
-    }
-
-
-
-    //$(div).prepend($("<a href-lang='image/svg+xml' href='data:image/svg+xml;base64,\n"+b64+"' download='diagram.svg'>Download as SVG</a>"));
-
-
-
-
 }
 
-function saveAsPng(svg) {
+function saveAsPng(svg, conceptId) {
     //Create PNG Image
     //Get the svg
     //Create the canvas element
@@ -10132,7 +10092,7 @@ function saveAsPng(svg) {
     canvg(document.getElementById('canvas'), svg);
 
     //Save the svg to png
-    Canvas2Image.saveAsPNG(canvas);
+    Canvas2Image.saveAsPNG(canvas, null, null, "diagram-" + conceptId);
 
     //Clear the canvas
     canvas.width = canvas.width;
