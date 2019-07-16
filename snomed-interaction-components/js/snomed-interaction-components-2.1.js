@@ -8752,7 +8752,7 @@ function conceptDetails(divElement, conceptId, options) {
                     JST["views/conceptDetailsPlugin/tabs/product.hbs"](context));
             } else {
                 $("#product-details-tab").hide();
-                $('#details-tabs-' + panel.divElement.id + ' a:first').tab('show')
+                //$('#details-tabs-' + panel.divElement.id + ' a:first').tab('show')
             }
 
             $('.more-fields-button').disableTextSelect();
