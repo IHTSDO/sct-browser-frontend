@@ -8759,8 +8759,10 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#product-details-' + panel.divElement.id).html(
                     JST["views/conceptDetailsPlugin/tabs/product.hbs"](context));
             } else {
-                $("#product-details-tab").hide();
-                //$('#details-tabs-' + panel.divElement.id + ' a:first').tab('show')
+                if ($("#product-details-tab").hasClass("active")) {
+                    $('#details-tabs-' + panel.divElement.id + ' a:first').tab('show');
+                }
+                $("#product-details-tab").hide();            
             }
 
             $('.more-fields-button').disableTextSelect();
