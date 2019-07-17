@@ -355,14 +355,32 @@
             if (getUrlParameter('concept')) {
                 focusConcept = getUrlParameter('concept');
             }
+//            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131', '2019-01-31', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+//                                        reloadCurrentPerspective();">International Edition 20190131</a></li>
 
             // PROJECT DROPDOWN HANDLER
             if(options.releases){
                 var $releaseSwitcher = $('#releaseSwitcher');
                 for (let i = 0; i < options.releases.items.length; ++i) {
-                    var $li = $('<li>').attr("shortName",options.releases.items[i].shortName).append("Release: " + options.releases.items[i].shortName);
-                    $li.attr("href", "_none");
-                    $li.click(switchRelease(options.releases.items[i].shortName));
+                    var $li = $('<li>')
+                    var $a = $('<a>').attr("shortName",options.releases.items[i].shortName).append(options.releases.items[i].name + " : " + options.releases.items[i].latestVersion.version);
+                    $a.attr("href", "javascript:void(0);");
+                    $a.on("click", function(){
+                        postal.unsubscribeFor();
+                        if (typeof componentsRegistry != "undefined") {
+                            $.each(componentsRegistry, function(i, field) {
+                                field = null;
+                            });
+                            componentsRegistry = [];
+                        }
+                        options.edition = options.releases.items[i].branchPath;
+                        options.release = '';
+                        options.languages = options.releases.items[i].languages;
+                        $("#editionLabel").html(options.releases.items[i].name + " : " + options.releases.items[i].latestVersion.version);
+                        reloadCurrentPerspective();
+                        
+                    });
+                    $li.append($a);
                     $releaseSwitcher.append($li);
                 }
             }
@@ -1046,43 +1064,8 @@
         }
 
         function switchRelease(label) {
-            //                verifyDate(release);
-//            if (langRefset == "31000146106") {
-//                options.hideNotAcceptable = false;
-//            }
-//            postal.unsubscribeFor();
-//            if (typeof componentsRegistry != "undefined") {
-//                $.each(componentsRegistry, function(i, field) {
-//                    field = null;
-//                });
-//                componentsRegistry = [];
-//            }
-//            var i = 0;
-////            while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))) {
-////                i++;
-////            }
-////            i = Math.min(i, manifests.length - 1); //fix array out of bounds causing NPE.
-////
-////            //                console.log(manifests[i].databaseName);
-////            //                console.log(manifests[i].effectiveTime);
-////
-////            if (i < manifests.length) {
-////                options.manifest = manifests[i];
-////                options.textIndexNormalized = options.manifest.textIndexNormalized;
-////                //                        console.log(options.textIndexNormalized);
-////            }
-//            //options.edition = edition;
-//            //options.release = release;
-//            //options.queryBranch = "MAIN/" + queryRelease;
-//            options.langRefset = langRefset.split(",");
-//            if (serverUrl) {
-//                options.serverUrl = serverUrl;
-//            } else {
-//                options.serverUrl = "http://browser.ihtsdotools.org/api/snomed";
-//            }
-            console.log('release switched');
-            $("#perspective-selector").find("button").first().removeClass("disabled");
-            $("#editionLabel").html(label);
+            
+            
         }
         //PWI 20161108 This function went missing at some point.  Returning as urgent P1
         function verifyDate(release) {
@@ -1204,8 +1187,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="navbar-btn" id="edition-selector">
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">-->
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20190731</span> <span class="caret"></span>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel"></span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" id="releaseSwitcher" role="menu">
                             
