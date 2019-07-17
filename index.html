@@ -442,7 +442,7 @@
                 var project = $('#projectDdl').val();
                 project = project.substring(project.lastIndexOf("/") + 1);
 				if (project === 'MAIN') {
-				var $taskDdl = $('#taskDdl');
+					var $taskDdl = $('#taskDdl');
                     $taskDdl.html("");
                     $('<option>').val("None").text("None").appendTo($taskDdl);
 					
@@ -1211,7 +1211,7 @@
                             
                         </ul>
                     </li>
-                    <!--
+                    
                     <li class="navbar-btn" id="perspective-selector">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
@@ -1223,7 +1223,7 @@
                             <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>
                         </ul>
                     </li>
-                    -->
+                
                     <li class="navbar-btn feedback-button">
                         <button type="button" class="btn btn-info" onclick="FreshWidget.show();
                                     return false;">
