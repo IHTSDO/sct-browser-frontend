@@ -90,7 +90,8 @@
             displaySynonyms: true,
             selectedView: "inferred",
             displayChildren: false,
-            langRefset: ["900000000000509007"],
+            languages: ["en"],
+            languagesArray: {'en': 'English'},
             closeButton: false,
             collapseButton: false,
             linkerButton: true,
@@ -201,8 +202,8 @@
                 //options.serverUrl = "http://107.170.33.116/api";
             }
 
-            if (typeof QueryString.langRefset != "undefined") {
-                options.langRefset = QueryString.langRefset;
+            if (typeof QueryString.languages != "undefined") {
+                options.languages = QueryString.languages;
             }
 
             if (typeof QueryString.server != "undefined") {
@@ -233,12 +234,12 @@
             options.diagrammingMarkupEnabled = diagrammingMarkupEnabled;
 
             //                var langRefset = QueryString.langRefset;
-            if (QueryString.langRefset) {
-                var langRefset = QueryString.langRefset.split(",");
-                if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
-                    langRefset = options.langRefset;
+            if (QueryString.languages) {
+                var languages = QueryString.languages.split(",");
+                if (typeof languages == "undefined" || languages == null || languages == "") {
+                    languages = options.languages;
                 }
-                options.langRefset = langRefset;
+                options.languages = languages;
             }
 
             $("#editionLabel").html(options.edition + " " + options.release);
@@ -373,9 +374,16 @@
                             });
                             componentsRegistry = [];
                         }
+                        var parsedLanguages = "";
+                        for (var language in options.releases.items[i].languages) {
+                            console.log(language);
+                              parsedLanguages = parsedLanguages + language + ',';
+                            }
+                        parsedLanguages = parsedLanguages.slice(0, -1);
                         options.edition = options.releases.items[i].branchPath;
                         options.release = '';
-                        options.languages = options.releases.items[i].languages;
+                        options.languages = parsedLanguages;
+                        options.languageObject = options.releases.items[i].languages;
                         $("#editionLabel").html(options.releases.items[i].name + " : " + options.releases.items[i].latestVersion.version);
                         reloadCurrentPerspective();
                         
