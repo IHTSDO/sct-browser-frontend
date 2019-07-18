@@ -86,7 +86,6 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-<<<<<<< HEAD
     + "\"><span class=\"i18n\" data-i18n-id=\"i18n_diagram\">Diagram</span></a></li>\n            <li id=\"expression-tab\"><a href=\"#expression-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
@@ -96,9 +95,6 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">Expression</a></li>\n            <li id=\"product-details-tab\" style=\"display: none;\"><a id=\"product-details-tab-link-";
-=======
-    + "\"><span class=\"i18n\" data-i18n-id=\"i18n_diagram\">Diagram</span></a></li>\n            <li id=\"product-details-tab\" style=\"display: none;\"><a id=\"product-details-tab-link-";
->>>>>>> OWLAP-355 - updated url param from languageRefset to languages, implemented across application for search and description display
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -138,11 +134,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-<<<<<<< HEAD
     + "\" style=\"padding: 5px;\">\n                <div style=\"max-height: 300px; overflow: auto; margin-left: 0%; margin-bottom: 10px; margin-top: 10px; width: 80%;border: 2px solid #357ebd; border-radius: 4px; padding: 5px;\">\n                    <div class=\"panel-heading\">\n                        <h4><span data-i18n-id=\"i18n_parents\" class=\"i18n\">Parents</span></h4>\n                    </div>\n                    <div class=\"panel-body\" id=\"home-parents-";
-=======
-    + "\" style=\"padding: 5px;\">                \n                <div style=\"max-height: 300px; overflow: auto; margin-left: 0%; margin-bottom: 10px; margin-top: 10px; width: 80%;border: 2px solid #357ebd; border-radius: 4px; padding: 5px;\">\n                    <div class=\"panel-heading\">\n                        <h4><span data-i18n-id=\"i18n_parents\" class=\"i18n\">Parents</span></h4>\n                    </div>\n                    <div class=\"panel-body\" id=\"home-parents-";
->>>>>>> OWLAP-355 - updated url param from languageRefset to languages, implemented across application for search and description display
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -174,11 +166,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-<<<<<<< HEAD
     + "\">\n                <div id='";
-=======
-    + "\">                \n                <div id='";
->>>>>>> OWLAP-355 - updated url param from languageRefset to languages, implemented across application for search and description display
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -508,23 +496,7 @@ function program31(depth0,data,depth1) {
   buffer += "\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(29, program29, data),fn:self.program(27, program27, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "inferred", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "inferred", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-<<<<<<< HEAD
-  buffer += "           \n        </select>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "-langRefsetOption\"><span class=\"i18n\" data-i18n-id=\"i18n_language_refset\">"
-    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_language_refset", "Language Refset", options) : helperMissing.call(depth0, "i18n", "i18n_language_refset", "Language Refset", options)))
-    + "</span></label>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000509007\" ";
-  stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, "900000000000509007", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", "900000000000509007", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "> United States of America English language reference set (foundation metadata concept)\n            </label>\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input class=\"langOption\" type=\"checkbox\" value=\"900000000000508004\" ";
-  stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, "900000000000508004", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", "900000000000508004", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += ">Great Britain English language reference set (foundation metadata concept)\n            </label>\n        </div>        \n    </div>\n    <!--<div class=\"form-group\">-->\n        <!--<table class='table table-bordered table-hover'>-->\n            <!--<thead>-->\n                <!--<tr>-->\n                    <!--<th>Panel</th>-->\n                    <!--<th>Subscribed</th>-->\n                    <!--<th>Subscriptor</th>-->\n                <!--</tr>-->\n            <!--</thead>-->\n            <!--<tbody>-->\n                <!--";
-=======
   buffer += "           \n        </select>\n    </div>\n    <!--<div class=\"form-group\">-->\n        <!--<table class='table table-bordered table-hover'>-->\n            <!--<thead>-->\n                <!--<tr>-->\n                    <!--<th>Panel</th>-->\n                    <!--<th>Subscribed</th>-->\n                    <!--<th>Subscriptor</th>-->\n                <!--</tr>-->\n            <!--</thead>-->\n            <!--<tbody>-->\n                <!--";
->>>>>>> OWLAP-355 - updated url param from languageRefset to languages, implemented across application for search and description display
   stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(31, program31, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "-->\n            <!--</tbody>-->\n        <!--</table>-->\n    <!--</div>-->\n</form>";
@@ -1960,7 +1932,6 @@ function program2(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-<<<<<<< HEAD
     + "-copy-axiom-expression\" data-clipboard-text=\""
     + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
     + "\"></i></small></p>\n        <div class=\"expression-code\" style=\"margin-top: 10px; padding: 10px;\">";
@@ -1974,17 +1945,6 @@ function program4(depth0,data) {
   
   var buffer = "", stack1, helper;
   buffer += "\n    <p class=\"\" style=\"margin-top: 20px;\">Expression from Stated Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export clip-btn-exp\" id=\"";
-=======
-    + "-copy-pre-coordinated-expression\"  data-clipboard-text=\"";
-  if (helper = helpers.plainPreCoordinatedExpression) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.plainPreCoordinatedExpression); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\"></i></small></p>\n<div class=\"expression-code\" style=\"margin-top: 10px; padding: 10px;\">";
-  if (helper = helpers.preCoordinatedExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.preCoordinatedExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n<p class=\"\" style=\"margin-top: 20px;\">Expression from Stated Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export clip-btn-exp\" id=\"";
->>>>>>> OWLAP-355 - updated url param from languageRefset to languages, implemented across application for search and description display
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1992,7 +1952,6 @@ function program4(depth0,data) {
   if (helper = helpers.plainStatedExpression) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.plainStatedExpression); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-<<<<<<< HEAD
     + "\"></i></small></p>\n    <div class=\"expression-code\" style=\"margin-top: 10px; padding: 10px;\">";
   if (helper = helpers.statedExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.statedExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
@@ -2017,13 +1976,6 @@ function program4(depth0,data) {
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.axiomList), {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n<p class=\"\" style=\"margin-top: 20px;\">Expression from Inferred Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export clip-btn-exp\" id=\"";
-=======
-    + "\"></i></small></p>\n<div class=\"expression-code\" style=\"margin-top: 10px; padding: 10px;\">";
-  if (helper = helpers.statedExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.statedExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n<p class=\"\" style=\"margin-top: 20px;\">Expression from Inferred Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export clip-btn-exp\" id=\"";
->>>>>>> OWLAP-355 - updated url param from languageRefset to languages, implemented across application for search and description display
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -2035,11 +1987,7 @@ function program4(depth0,data) {
   if (helper = helpers.inferredExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.inferredExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-<<<<<<< HEAD
   buffer += "</div>\n<br><br>\n<div class=\"well small\">\n    <p>(*) The expressions are generated according to the ABNF syntax found in the \"SNOMED CT Compositional Grammar Specification and Guide\" (<a href=\"http://snomed.org/compgrammar\" target=\"_blank\">http://snomed.org/compgrammar</a>)</p>\n    <p>SNOMED CT Compositional Grammar is a lightweight syntax for the representation of SNOMED CT expressions. SNOMED CT expressions are used in Electronic Health Records (EHRs) to represent clinical meanings in a way that enables automatic interpretation. They are also carried in messages, used to define precoordinated concepts and used to represent links between SNOMED CT and other terminologies.</p>\n    <p>These expressions are generated as an example from the published concept definition, a Pre-coordinated Expression is direct reference to the concept, and Post-coordinated expressions are generated from the stated or inferred relationships. In a Sufficiently Defined concept, all three will be equivalent.</p>\n</div>\n";
-=======
-  buffer += "</div>\n<br><br>\n<div class=\"well small\">\n    <p>(*) The expressions are generated according to the ABNF syntax found in the \"SNOMED CT Compositional Grammar Specification and Guide\" (<a href=\"http://snomed.org/compgrammar\" target=\"_blank\">http://snomed.org/compgrammar</a>)</p>\n    <p>SNOMED CT Compositional Grammar is a lightweight syntax for the representation of SNOMED CT expressions. SNOMED CT expressions are used in Electronic Health Records (EHRs) to represent clinical meanings in a way that enables automatic interpretation. They are also carried in messages, used to define precoordinated concepts and used to represent links between SNOMED CT and other terminologies.</p>\n    <p>These expressions are generated as an example from the published concept definition, a Pre-coordinated Expression is direct reference to the concept, and Post-coordinated expressions are generated from the stated or inferred relationships. In a Sufficiently Defined concept, all three will be equivalent.</p>\n</div>";
->>>>>>> OWLAP-355 - updated url param from languageRefset to languages, implemented across application for search and description display
   return buffer;
   });
 
