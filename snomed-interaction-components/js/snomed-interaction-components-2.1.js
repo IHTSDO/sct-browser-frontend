@@ -114,7 +114,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" data-toggle=\"tab\" style=\"padding-top: 3px; padding-bottom:3px;\"><span class=\"i18n\" data-i18n-id=\"i18n_members\">Members</span></a></li>\r\n            <div class=\"pull-right\">\r\n                <div class=\"btn-group\" style=\"margin:3px\" role=\"group\" aria-label=\"...\">\r\n                    <button type=\"button\"  class=\"btn btn-default\" id=\"home-";
+    + "\" data-toggle=\"tab\" style=\"padding-top: 3px; padding-bottom:3px;\"><span class=\"i18n\" data-i18n-id=\"i18n_members\">Members</span></a></li>\r\n            <li id=\"references-tab\"><a id=\"references-tab-link-";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" href=\"#references-";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" data-toggle=\"tab\" style=\"padding-top: 3px; padding-bottom:3px;\"><span class=\"i18n\" data-i18n-id=\"i18n_references\">References</span></a></li>\r\n            <div class=\"pull-right\">\r\n                <div class=\"btn-group\" style=\"margin:3px\" role=\"group\" aria-label=\"...\">\r\n                    <button type=\"button\"  class=\"btn btn-default\" id=\"home-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -3780,21 +3788,19 @@ function program1(depth0,data) {
     + "\">\r\n                    <span id=\"references-"
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "-span\" class=\"references glyphicon glyphicon-";
-  stack1 = (helper = helpers.if_gr || (depth0 && depth0.if_gr),options={hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.length), 10, options) : helperMissing.call(depth0, "if_gr", (depth0 && depth0.length), 10, options));
+  stack1 = (helper = helpers.if_gr || (depth0 && depth0.if_gr),options={hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.referencingConcepts)),stack1 == null || stack1 === false ? stack1 : stack1.length), 10, options) : helperMissing.call(depth0, "if_gr", ((stack1 = (depth0 && depth0.referencingConcepts)),stack1 == null || stack1 === false ? stack1 : stack1.length), 10, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\"></span>\r\n                </a>&nbsp;"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0[0])),stack1 == null || stack1 === false ? stack1 : stack1.relationship)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " (";
-  if (helper = helpers.length) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.length); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.referenceType)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + " ("
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.referencingConcepts)),stack1 == null || stack1 === false ? stack1 : stack1.length)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + ")\r\n            </h3>\r\n        </div>\r\n        <div id=\"references-"
     + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" class=\"panel-collapse collapse ";
-  stack1 = (helper = helpers.if_gr || (depth0 && depth0.if_gr),options={hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.length), 10, options) : helperMissing.call(depth0, "if_gr", (depth0 && depth0.length), 10, options));
+  stack1 = (helper = helpers.if_gr || (depth0 && depth0.if_gr),options={hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.referencingConcepts)),stack1 == null || stack1 === false ? stack1 : stack1.length), 10, options) : helperMissing.call(depth0, "if_gr", ((stack1 = (depth0 && depth0.referencingConcepts)),stack1 == null || stack1 === false ? stack1 : stack1.length), 10, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\">\r\n            <div class=\"panel-body\">\r\n                <table class=\"table table-hover table-bordered\">\r\n                    <thead>\r\n                    <tr>\r\n                        <th>Term</th>\r\n                        <th>ConceptId</th>\r\n                    </tr>\r\n                    </thead>\r\n                    <tbody>\r\n                    ";
-  stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.programWithDepth(10, program10, data, depth0),data:data});
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.referencingConcepts), {hash:{},inverse:self.noop,fn:self.programWithDepth(10, program10, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                    </tbody>\r\n                </table>\r\n            </div>\r\n        </div>\r\n    </div>\r\n";
   return buffer;
@@ -3829,24 +3835,20 @@ function program10(depth0,data,depth1) {
   buffer += "\r\n                        <tr>\r\n                            <td>\r\n                                <span class=\"badge alert-warning\" draggable='true' ondragstart=\"drag(event, '"
     + escapeExpression(((stack1 = (depth1 && depth1.divElementId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "')\" data-module=\"";
-  if (helper = helpers.module) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.module); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" data-concept-id='";
   if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "' data-term='";
-  if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+    + "' data-term='"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "'>&nbsp;&nbsp;</span>\r\n                                ";
-  stack1 = (helper = helpers.hasCountryIcon || (depth0 && depth0.hasCountryIcon),options={hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.module), options) : helperMissing.call(depth0, "hasCountryIcon", (depth0 && depth0.module), options));
+  stack1 = (helper = helpers.hasCountryIcon || (depth0 && depth0.hasCountryIcon),options={hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.moduleId), options) : helperMissing.call(depth0, "hasCountryIcon", (depth0 && depth0.moduleId), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n                                ";
-  if (helper = helpers.defaultTerm) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.defaultTerm); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
+  buffer += "\r\n                                "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\r\n                            </td>\r\n                            <td>";
   if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
@@ -3858,7 +3860,7 @@ function program11(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\r\n                                    <div class=\"phoca-flagbox\" style=\"width:22px;height:22px\">\r\n                                        <span class=\"phoca-flag "
-    + escapeExpression((helper = helpers.countryIcon || (depth0 && depth0.countryIcon),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.module), options) : helperMissing.call(depth0, "countryIcon", (depth0 && depth0.module), options)))
+    + escapeExpression((helper = helpers.countryIcon || (depth0 && depth0.countryIcon),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.moduleId), options) : helperMissing.call(depth0, "countryIcon", (depth0 && depth0.moduleId), options)))
     + "\"></span>\r\n                                    </div>\r\n                                ";
   return buffer;
   }
@@ -3918,7 +3920,7 @@ function program16(depth0,data) {
   return buffer;
   }
 
-  stack1 = helpers.each.call(depth0, (depth0 && depth0.groups), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.result)),stack1 == null || stack1 === false ? stack1 : stack1.referencesByType), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n<!--<thead>-->\r\n    <!--<tr>-->\r\n        <!--<th>Term</th>-->\r\n        <!--<th>ConceptId</th>-->\r\n        <!--<th>Relationships Type</th>-->\r\n    <!--</tr>-->\r\n<!--</thead>-->\r\n<!--<tbody>-->\r\n    <!--";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.result), {hash:{},inverse:self.noop,fn:self.programWithDepth(13, program13, data, depth0),data:data});
@@ -9375,13 +9377,13 @@ function conceptDetails(divElement, conceptId, options) {
         //console.log(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + conceptId + "/references");
         if (xhrReferences != null) {
             xhrReferences.abort();
-            //console.log("aborting references call...");
+            xhrReferences = null;
         };
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
-        xhrReferences = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId + "/references?form=" + panel.options.selectedView, function(result) {
+        xhrReferences = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId + "/references?stated=" + (panel.options.selectedView === 'stated') + '&offset=0&limit=10000', function(result) {
 
         }).done(function(result) {
             Handlebars.registerHelper('if_gr', function(a, b, opts) {
@@ -9392,50 +9394,37 @@ function conceptDetails(divElement, conceptId, options) {
                         return opts.inverse(this);
                 }
             });
-            $.each(result, function(i, field) {
-                if (field.statedRelationships) {
-                    field.relationship = field.statedRelationships[0].type.defaultTerm;
-                } else {
-                    field.relationship = field.relationships[0].type.defaultTerm;
-                }
-            });
-            result.sort(function(a, b) {
-                if (a.relationship < b.relationship)
-                    return -1;
-                if (a.relationship > b.relationship)
+            
+            result.referencesByType.sort(function(a, b) {
+                if (a.referenceType.id === '116680003' || b.referenceType.id === '116680003') {
+                    return -1; 
+                }                                 
+                if (a.referenceType.fsn.term >  b.referenceType.fsn.term) {
                     return 1;
-                if (a.relationship == b.relationship) {
-                    if (a.defaultTerm < b.defaultTerm)
-                        return -1;
-                    if (a.defaultTerm > b.defaultTerm)
-                        return 1;
+                }                    
+                if (a.referenceType.fsn.term <  b.referenceType.fsn.term) {
+                    return -1;
                 }
+                   
                 return 0;
             });
-            result.groups = [];
-            var lastR = "",
-                auxArray = [];
-            $.each(result, function(i, field) {
-                if (lastR == "") {
-                    auxArray.push(field);
-                    lastR = field.relationship;
-                } else {
-                    if (lastR == field.relationship) {
-                        auxArray.push(field);
-                    } else {
-                        result.groups.push(auxArray);
-                        auxArray = [];
-                        auxArray.push(field);
-                        lastR = field.relationship;
+           
+            result.referencesByType.forEach(function(item) {
+                item.referencingConcepts.sort(function(a, b) {
+                    if (a.fsn.term >  b.fsn.term) {
+                        return 1;
                     }
-                }
+                    if (a.fsn.term <  b.fsn.term) {
+                        return -1;
+                    }
+
+                    return 0;
+                });
             });
-            result.groups.push(auxArray);
-            //            console.log(result.groups);
+
             var context = {
                 divElementId: panel.divElement.id,
-                result: result,
-                groups: result.groups
+                result: result                
             };
             //            $("#references-" + panel.divElement.id + "-total").html(result.length  + " references");
             $("#references-" + panel.divElement.id + "-accordion").html(JST["views/conceptDetailsPlugin/tabs/references.hbs"](context));
