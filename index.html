@@ -346,7 +346,7 @@
                 var $releaseSwitcher = $('#releaseSwitcher');
                 for (let i = 0; i < options.releases.items.length; ++i) {
                     var $li = $('<li>')
-                    var $a = $('<a>').attr("shortName",options.releases.items[i].shortName).append(options.releases.items[i].name + " : " + options.releases.items[i].latestVersion.version);
+                    var $a = $('<a>').attr("shortName",options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
                     $a.attr("href", "javascript:void(0);");
                     $a.on("click", function(){
                         postal.unsubscribeFor();
