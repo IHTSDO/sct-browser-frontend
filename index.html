@@ -233,7 +233,6 @@
             }
             options.diagrammingMarkupEnabled = diagrammingMarkupEnabled;
 
-            //                var langRefset = QueryString.langRefset;
             if (QueryString.languages) {
                 var languages = QueryString.languages.split(",");
                 if (typeof languages == "undefined" || languages == null || languages == "") {
@@ -241,8 +240,6 @@
                 }
                 options.languages = languages;
             }
-
-            $("#editionLabel").html(options.edition + " " + options.release);
 
             if (QueryString.ui_language == "en") {
                 selectedLanguage = 'en_US';
@@ -288,18 +285,9 @@
                 acceptLicense = false;
             }
             options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
-            //                if (QueryString.edition && QueryString.release){
+           
             var i = 0;
-//            while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))) {
-//                i++;
-//            }
-//            if (i < manifests.length) {
-//                options.manifest = manifests[i];
-//                options.textIndexNormalized = options.manifest.textIndexNormalized;
-//                //                        console.log(options.textIndexNormalized);
-//                //                        verifyDate(options.manifest.expirationDate);
-//            }
-            //                }
+
             if (QueryString.perspective == "home") {
                 initialize();
             } else if (QueryString.perspective == "browsing") {
@@ -323,13 +311,7 @@
             if (!options.acceptLicense) {
                 $('#license-modal').modal('show');
             }
-            //                console.log(manifests);
-
-
-
-            //                verifyDate(release)
-
-
+            
             var getUrlParameter = function getUrlParameter(sParam) {
                 var sPageURL = decodeURIComponent(window.location.search.substring(1)),
                     sURLVariables = sPageURL.split('&'),
@@ -383,14 +365,20 @@
                         options.release = '';
                         options.languages = parsedLanguages;
                         options.languageObject = options.releases.items[i].languages;
-                        $("#editionLabel").html(options.releases.items[i].name + " : " + options.releases.items[i].latestVersion.version);
+                        $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
                         console.log(parsedLanguages);
                         switchLanguage(parsedLanguages.substr(0,2), '/img/flags/' + parsedLanguages.substr(3,60) + '.png', false);
                         reloadCurrentPerspective();
                     });
                     $li.append($a);
                     $releaseSwitcher.append($li);
+                    
+                    // set default selection for release 
+                    if (options.edition && options.releases.items[i].branchPath === options.edition) {
+                        $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                    } 
                 }
+                              
             }
             $.getJSON("/authoring-services/projects").done(function(result) {
                 var $projectDdl = $('#projectDdl');
