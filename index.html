@@ -350,7 +350,13 @@
                     }
                 }
             };
-            var focusConcept = 138875005;
+            var focusConcept = '';
+            if (getUrlParameter('conceptId1')) {
+                focusConcept = getUrlParameter('conceptId1');
+            }
+            else{
+                focusConcept = 138875005;
+            }
             if (getUrlParameter('edition')) {
                 options.edition = getUrlParameter('edition');
                 $("#projectDdl").val(options.edition).change();
@@ -358,9 +364,6 @@
             if (getUrlParameter('release')) {
                 options.release = getUrlParameter('release');
                 $("#taskDdl").val(options.release).change();
-            }
-            if (getUrlParameter('concept')) {
-                focusConcept = getUrlParameter('concept');
             }
 //            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131', '2019-01-31', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
 //                                        reloadCurrentPerspective();">International Edition 20190131</a></li>
@@ -1063,10 +1066,25 @@
         }
 
         function reloadCurrentPerspective() {
-            var cdValue1 = 404684003;
-            var cdValue2 = 404684003;
-            var txValue1 = 138875005;
-            var txValue2 = 138875005;
+            var cdValue1 = QueryString.conceptId1;
+            if (typeof cdValue1 == "undefined" || cdValue1 == null || cdValue1 == "") {
+                cdValue1 = 404684003;
+            }
+
+            var cdValue2 = QueryString.conceptId2;
+            if (typeof cdValue2 == "undefined" || cdValue2 == null || cdValue2 == "") {
+                cdValue2 = 404684003;
+            }
+
+            var txValue1 = QueryString.conceptIdTx1;
+            if (typeof txValue1 == "undefined" || txValue1 == null || txValue1 == "") {
+                txValue1 = 138875005;
+            }
+
+            var txValue2 = QueryString.conceptIdTx2;
+            if (typeof txValue2 == "undefined" || txValue2 == null || txValue2 == "") {
+                txValue2 = 138875005;
+            }
             if (currentPerspective == "home") {
                 initialize();
             } else if (currentPerspective == "browsing") {
