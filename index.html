@@ -129,6 +129,30 @@
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {
                 }).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
+                    var $header = $('#header-nav');
+                    var $projectSpan = $('<span>');
+                    $projectSpan.css('margin-left', '10px');
+                    $projectSpan.html('Project');
+                    $header.append($projectSpan);
+                    
+                    var $projectSelect = $('<select>');
+                    $projectSelect.css('margin-top', '18px');
+                    $projectSelect.css('margin-left', '2px');
+                    $projectSelect.css('width', '110px');
+                    $projectSelect.attr('id', 'projectDdl');
+                    $header.append($projectSelect);
+                    
+                    var $taskSpan = $('<span>');
+                    $taskSpan.css('margin-left', '10px');
+                    $taskSpan.html('Task');
+                    $header.append($taskSpan);
+                    
+                    var $taskSelect = $('<select>');
+                    $taskSelect.css('margin-top', '18px');
+                    $taskSelect.css('margin-left', '2px');
+                    $taskSelect.css('width', '110px');
+                    $taskSelect.attr('id', 'taskDdl');
+                    $header.append($taskSelect);
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
@@ -1160,15 +1184,7 @@
     <nav class="navbar navbar-default  navbar-static-top" role="navigation">
         <div>
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <span style="margin-left:10px">Project:</span>
-                <select style="margin-top:18px; margin-left:2px; width:110px;" id="projectDdl">
-                    <!--<option value="MAIN">MAIN</option>-->
-                </select>
-                <span style="margin-left:10px">Task:</span>
-                <select style="margin-top:18px; margin-left:2px; width:110px;" id="taskDdl">
-                    <!--<option value="None">None</option>-->
-                </select>
+            <div class="navbar-header" id="header-nav">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
