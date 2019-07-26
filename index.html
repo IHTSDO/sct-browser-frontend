@@ -264,6 +264,12 @@
                 }
                 options.languages = languages;
             }
+            
+            for (let i = 0; i < options.releases.items.length; ++i) {
+                if(options.releases.items[i].branchPath === options.edition){
+                    options.languageObject = options.releases.items[i].languages;
+                }
+            }
 
             if (QueryString.ui_language == "en") {
                 selectedLanguage = 'en_US';
@@ -393,7 +399,6 @@
                         options.languages = parsedLanguages;
                         options.languageObject = options.releases.items[i].languages;
                         $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                        console.log(parsedLanguages);
                         switchLanguage(parsedLanguages.substr(0,2), '/img/flags/' + parsedLanguages.substr(3,60) + '.png', false);
                         reloadCurrentPerspective();
                     });
