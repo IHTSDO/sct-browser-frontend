@@ -404,124 +404,126 @@
                 }
                               
             }
-            $.getJSON("/authoring-services/projects").done(function(result) {
-                var $projectDdl = $('#projectDdl');
+            if(options.imsUrl !== null){
+                $.getJSON("/authoring-services/projects").done(function(result) {
+                    var $projectDdl = $('#projectDdl');
 
-                var projectsInDateFormat = [];
-                var projectsInStringFormat = [];
-                result.forEach(function(item) {
-                    var strArray = item.key.split('-');
-                    if (!isNaN(strArray[0])) {
-                        projectsInDateFormat.push(item);
-                    } else {
-                        projectsInStringFormat.push(item);
-                    }
-                });
-
-                projectsInStringFormat.sort(function(a,b) {
-                    return a.key.localeCompare(b.key);
-                });
-
-                projectsInDateFormat.sort(function(a,b) {
-                    return b.key.localeCompare(a.key);
-                });
-                result.items = projectsInStringFormat.concat(projectsInDateFormat);
-
-                if($('<option>').val('MAIN')) {
-                    $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
-
-                    $.each(result.items, function() {
-                        var relativePath = this.branchPath.substring("MAIN/".length);
-                        $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
-                    });
-
-                    $(function() {
-                        var temp="MAIN";
-                        $("#projectDdl").val(temp);
-                        if(options.edition.length > 0){
-                            $("#projectDdl").val(options.edition);
+                    var projectsInDateFormat = [];
+                    var projectsInStringFormat = [];
+                    result.forEach(function(item) {
+                        var strArray = item.key.split('-');
+                        if (!isNaN(strArray[0])) {
+                            projectsInDateFormat.push(item);
+                        } else {
+                            projectsInStringFormat.push(item);
                         }
                     });
-                }
 
-                var projectChanged = function(){
-                    getTaskList();
-                    options.edition = $('#projectDdl').val();
-                    if(!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))){
-                        options.release = "None";
-                    }
-                    var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-                    var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-					var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-                    var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);					
-
-                    cdPanel.subscribe(tpt);
-                    cdPanel.subscribe(searchP);
-					cdPanel.subscribe(refP);					
-                    cdPanel.setupCanvas();
-                }
-                $("#projectDdl").on("change", function(event) {
-                    projectChanged(this, event);
-                });
-
-                if(options.edition) {
-                    $("#projectDdl").val(options.edition).change();
-                    if(originalTask) {
-                        options.task = originalTask;
-                        //options.release = originalTask;
-                    }
-                } else {
-                    $("#projectDdl").val(options.release).change();
-                }
-            });
-
-            // TASK DROPDOWN HANDLER
-            var getTaskList = function () {
-                var project = $('#projectDdl').val();
-                project = project.substring(project.lastIndexOf("/") + 1);
-				if (project === 'MAIN') {
-					var $taskDdl = $('#taskDdl');
-                    $taskDdl.html("");
-                    $('<option>').val("None").text("None").appendTo($taskDdl);
-					
-					return;
-				}
-                $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function (result) {
-                    var $taskDdl = $('#taskDdl');
-                    $taskDdl.html("");
-                    $('<option>').val("None").text("None").appendTo($taskDdl);
-                    result.items = groupTaskList(result);
-                    $.each(result, function () {
-                        // var relativePath = this.path.substring("MAIN/".length);
-                        $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
+                    projectsInStringFormat.sort(function(a,b) {
+                        return a.key.localeCompare(b.key);
                     });
-                    
-                    if (options.release) {
-                        $("#taskDdl").val(options.release).change();
-                    }
-                    var taskChanged = function () {
-                        // var branchPath = $('#taskDdl').val();
-                        //If no task selected in the task dropdown, use the project
-                        // if (branchPath == "None") {
-                        //     branchPath = $('#projectDdl').val();
-                        // }
-                        options.edition = $('#projectDdl').val();
-                        options.release = $('#taskDdl').val();
 
+                    projectsInDateFormat.sort(function(a,b) {
+                        return b.key.localeCompare(a.key);
+                    });
+                    result.items = projectsInStringFormat.concat(projectsInDateFormat);
+
+                    if($('<option>').val('MAIN')) {
+                        $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
+
+                        $.each(result.items, function() {
+                            var relativePath = this.branchPath.substring("MAIN/".length);
+                            $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
+                        });
+
+                        $(function() {
+                            var temp="MAIN";
+                            $("#projectDdl").val(temp);
+                            if(options.edition.length > 0){
+                                $("#projectDdl").val(options.edition);
+                            }
+                        });
+                    }
+
+                    var projectChanged = function(){
+                        getTaskList();
+                        options.edition = $('#projectDdl').val();
+                        if(!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))){
+                            options.release = "None";
+                        }
                         var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                         var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-						var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
+                        var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
+                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);					
 
                         cdPanel.subscribe(tpt);
                         cdPanel.subscribe(searchP);
-						cdPanel.subscribe(refP);
+                        cdPanel.subscribe(refP);					
                         cdPanel.setupCanvas();
                     }
-                    $("#taskDdl").on("change", function (event) {
-                        taskChanged(this, event);
+                    $("#projectDdl").on("change", function(event) {
+                        projectChanged(this, event);
                     });
+
+                    if(options.edition) {
+                        $("#projectDdl").val(options.edition).change();
+                        if(originalTask) {
+                            options.task = originalTask;
+                            //options.release = originalTask;
+                        }
+                    } else {
+                        $("#projectDdl").val(options.release).change();
+                    }
                 });
+
+                // TASK DROPDOWN HANDLER
+                var getTaskList = function () {
+                    var project = $('#projectDdl').val();
+                    project = project.substring(project.lastIndexOf("/") + 1);
+                    if (project === 'MAIN') {
+                        var $taskDdl = $('#taskDdl');
+                        $taskDdl.html("");
+                        $('<option>').val("None").text("None").appendTo($taskDdl);
+
+                        return;
+                    }
+                    $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function (result) {
+                        var $taskDdl = $('#taskDdl');
+                        $taskDdl.html("");
+                        $('<option>').val("None").text("None").appendTo($taskDdl);
+                        result.items = groupTaskList(result);
+                        $.each(result, function () {
+                            // var relativePath = this.path.substring("MAIN/".length);
+                            $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
+                        });
+
+                        if (options.release) {
+                            $("#taskDdl").val(options.release).change();
+                        }
+                        var taskChanged = function () {
+                            // var branchPath = $('#taskDdl').val();
+                            //If no task selected in the task dropdown, use the project
+                            // if (branchPath == "None") {
+                            //     branchPath = $('#projectDdl').val();
+                            // }
+                            options.edition = $('#projectDdl').val();
+                            options.release = $('#taskDdl').val();
+
+                            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
+                            var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
+                            var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
+                            var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
+
+                            cdPanel.subscribe(tpt);
+                            cdPanel.subscribe(searchP);
+                            cdPanel.subscribe(refP);
+                            cdPanel.setupCanvas();
+                        }
+                        $("#taskDdl").on("change", function (event) {
+                            taskChanged(this, event);
+                        });
+                    });
+                }
             }
 
             var groupTaskList  = function (taskList) {
