@@ -6409,8 +6409,8 @@ function program33(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\r\n                        <li class=\"list-group-item\">\r\n                            <span class=\"badge\">";
-  if (helper = helpers.cant) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.cant); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.value) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.value); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</span>\r\n                            <a class='module-link' href='javascript:void(0);' data-term=\"";
   if (helper = helpers.term) { stack1 = helper.call(depth0, {hash:{},data:data}); }
