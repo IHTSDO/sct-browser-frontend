@@ -191,7 +191,7 @@
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
                 
-                var $img = $('<img>').attr("src",release.countryCode !== '' ? "/img/flags/" + release.countryCode + ".png" :"/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
+                var $img = $('<img>').attr("src",release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" :"/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
                 
                 var $span1 = $('<span>').attr("class","i18n").attr("data-i18n-id","i18n_go_browsing");
                 $span1.text("Go browsing...");
