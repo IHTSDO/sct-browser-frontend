@@ -164,7 +164,7 @@
                 var localReleases = [];
                 for (let i = 0; i < options.releases.items.length; ++i) {
                     var release = options.releases.items[i];
-                    if (release.branchPath === 'MAIN') {
+                    if (release.shortName === 'SNOMEDCT' || release.shortName === 'SNOMEDCT-ES') {
                         internationalReleases.push(release);
                     }
                     else {
@@ -1387,7 +1387,9 @@
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="international_editions"></p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
-                <p id="local_editions"></p>
+                <p id="local_editions">
+                    <a class="btn btn-primary btn-lg" role="button" href="https://termbrowser.nhs.uk/" target="_blank"></img src="/browser/img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
+                </p>
             </div>
             <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
             </p>
