@@ -162,6 +162,16 @@
                 // dynamic extension links
                 var internationalReleases = [];
                 var localReleases = [];
+
+                // Add GB extension
+                var gbExtension = {};
+                gbExtension.name = 'United Kingdom edition';
+                gbExtension.countryCode = 'gb';
+                gbExtension.latestVersion = {};
+                gbExtension.latestVersion.version = '(hosted by the UK)';
+                gbExtension.href = 'https://termbrowser.nhs.uk/';
+                localReleases.push(gbExtension);
+
                 for (let i = 0; i < options.releases.items.length; ++i) {
                     var release = options.releases.items[i];
                     if (release.shortName === 'SNOMEDCT' || release.shortName === 'SNOMEDCT-ES') {
@@ -170,8 +180,22 @@
                     else {
                         localReleases.push(release);
                     }            
-                }
-                addEditionLinks($('#international_editions'),internationalReleases);
+                }               
+                
+                // sort extensions
+                internationalReleases.sort(function(a,b) {
+                    if (b.shortName === 'SNOMEDCT'){
+                        return 1;
+                    } else {
+                        return a.name.localeCompare(b.name);
+                    }
+                });
+                addEditionLinks($('#international_editions'),internationalReleases);               
+                
+                // sort extensions
+                localReleases.sort(function(a,b) {
+                    return a.name.localeCompare(b.name);
+                });
                 addEditionLinks($('#local_editions'),localReleases);
             }).fail(function() {
                 options.serverUrl = "/snowowl/snomed-ct/v2";
@@ -194,37 +218,42 @@
                 var $img = $('<img>').attr("src",release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" :"/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
                 
                 var $span1 = $('<span>').attr("class","i18n").attr("data-i18n-id","i18n_go_browsing");
-                $span1.text("Go browsing...");
-                
+                $span1.text("Go browsing...");                
                 var $span2 = $('<span>').attr("class","small");
                 $span2.append(release.name + "<br>" + release.latestVersion.version);
 
-                var $a = $('<a>').attr("class","btn btn-primary btn-lg").attr("role","button");
-                $a.attr("href", "javascript:void(0);");                   
+                var $a = $('<a>').attr("class","btn btn-primary btn-lg").attr("role","button");                                  
                 $a.append($img);
                 $a.append("&nbsp;&nbsp;&nbsp;");
                 $a.append($span1);
                 $a.append("<br>");
                 $a.append($span2);
+                
+                if (release.href) {
+                    $a.attr("href", release.href);
+                    $a.attr("target", "_blank");
+                }
+                else {
+                    $a.attr("href", "javascript:void(0);"); 
+                    $a.on("click", function() {                    
+                        var parsedLanguages = "";
+                        for (var language in release.languages) {
+                                parsedLanguages = parsedLanguages + language + ',';
+                            }
+                        parsedLanguages = parsedLanguages.slice(0, -1);
+                        options.edition = release.branchPath;
+                        options.release = '';
+                        options.languages = parsedLanguages;
+                        options.languageObject = release.languages;
+                        $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                        
+                        let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0,2); 
+                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
-                $a.on("click", function() {                    
-                    var parsedLanguages = "";
-                    for (var language in release.languages) {
-                            parsedLanguages = parsedLanguages + language + ',';
-                        }
-                    parsedLanguages = parsedLanguages.slice(0, -1);
-                    options.edition = release.branchPath;
-                    options.release = '';
-                    options.languages = parsedLanguages;
-                    options.languageObject = release.languages;
-                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                    
-                    let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0,2); 
-                    var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
-
-                    switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                    switchToFullHeight(404684003, 138875005);
-                });
+                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                        switchToFullHeight(404684003, 138875005);
+                    });
+                }              
 
                 $releaseSwitcher.append($a);
                 $releaseSwitcher.append("&nbsp;");                  
@@ -1387,9 +1416,7 @@
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="international_editions"></p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
-                <p id="local_editions">
-                    <a class="btn btn-primary btn-lg" role="button" href="https://termbrowser.nhs.uk/" target="_blank"><img src="/browser/img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
-                </p>
+                <p id="local_editions"></p>
             </div>
             <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
             </p>
