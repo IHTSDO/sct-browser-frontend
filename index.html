@@ -74,7 +74,7 @@
 
         var enableQueriesInFullPerspective = true;
         var selectedLanguage = 'en_US';
-        var selectedFlag = '/img/flags/us.png';
+        var selectedFlag = '/browser/img/flags/us.png';
         var currentPerspective = "home";
 
         var originalTask = '';
@@ -273,19 +273,19 @@
 
             if (QueryString.ui_language == "en") {
                 selectedLanguage = 'en_US';
-                selectedFlag = '/img/flags/us.png';
+                selectedFlag = '/browser/img/flags/us.png';
             } else if (QueryString.ui_language == "es") {
                 selectedLanguage = 'es';
-                selectedFlag = '/img/flags/es.png';
+                selectedFlag = '/browser/img/flags/es.png';
             } else if (QueryString.ui_language == "sv") {
                 selectedLanguage = 'sv';
-                selectedFlag = '/img/flags/se.png';
+                selectedFlag = '/browser/img/flags/se.png';
             } else if (QueryString.ui_language == "da") {
                 selectedLanguage = 'da';
-                selectedFlag = '/img/flags/dk.png';
+                selectedFlag = '/browser/img/flags/dk.png';
             } else if (QueryString.ui_language == "pt") {
                 selectedLanguage = 'pt';
-                selectedFlag = '/img/flags/pt.png';
+                selectedFlag = '/browser/img/flags/pt.png';
             }
 
             switchLanguage(selectedLanguage, selectedFlag, false);
@@ -399,7 +399,7 @@
                         options.languages = parsedLanguages;
                         options.languageObject = options.releases.items[i].languages;
                         $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                        switchLanguage(parsedLanguages.substr(0,2), '/img/flags/' + parsedLanguages.substr(3,60) + '.png', false);
+                        switchLanguage(parsedLanguages.substr(0,2), '/browser/img/flags/' + parsedLanguages.substr(3,60) + '.png', false);
                         reloadCurrentPerspective();
                     });
                     $li.append($a);
@@ -1267,19 +1267,19 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/browser/img/flags/us.png', true);"><img src="/browser/img/flags/us.png" /> English</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png" /> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/browser/img/flags/es.png', true);"><img src="/browser/img/flags/es.png" /> Español</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png" /> Swedish</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/browser/img/flags/se.png', true);"><img src="/browser/img/flags/se.png" /> Swedish</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png" /> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/browser/img/flags/dk.png', true);"><img src="/browser/img/flags/dk.png" /> Dansk</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png" /> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/browser/img/flags/pt.png', true);"><img src="/browser/img/flags/pt.png" /> Português</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -1287,7 +1287,7 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology" />
+                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/browser/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology" />
                             </a>
                     </li>
                 </ul>
@@ -1354,7 +1354,7 @@
                 <h3><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h3>
                 <p>
                     <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', '', 'MAIN/2019-07-31', '','900000000000509007/', options.queryServerUrl);
-                                switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>Members release<br><br>July 2019</span></a>
+                                switchToFullHeight(404684003, 138875005);"><img src="/browser/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>Members release<br><br>July 2019</span></a>
                 </p>
 
             </div>
@@ -1517,19 +1517,19 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/browser/img/flags/us.png', true);"><img src="/browser/img/flags/us.png" /> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png" /> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/browser/img/flags/es.png', true);"><img src="/browser/img/flags/es.png" /> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png" /> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/browser/img/flags/dk.png', true);"><img src="/browser/img/flags/dk.png" /> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png" /> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/browser/img/flags/pt.png', true);"><img src="/browser/img/flags/pt.png" /> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png" /> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/browser/img/flags/se.png', true);"><img src="/browser/img/flags/se.png" /> Svenska</a>
                             </li>
                         </ul>
                     </div>
