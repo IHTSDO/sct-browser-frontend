@@ -158,6 +158,21 @@
                     options.imsUrl = null;
                     start();
                 });
+
+                // dynamic extension links
+                var internationalReleases = [];
+                var localReleases = [];
+                for (let i = 0; i < options.releases.items.length; ++i) {
+                    var release = options.releases.items[i];
+                    if (release.branchPath === 'MAIN') {
+                        internationalReleases.push(release);
+                    }
+                    else {
+                        localReleases.push(release);
+                    }            
+                }
+                addEditionLinks($('#international_editions'),internationalReleases);
+                addEditionLinks($('#local_editions'),localReleases);
             }).fail(function() {
                 options.serverUrl = "/snowowl/snomed-ct/v2";
                 options.queryServerUrl = "/snowowl/snomed-ct/v2";
@@ -170,6 +185,74 @@
                     start();
                 });
             });
+        }
+
+        var addEditionLinks = function ($releaseSwitcher, releases) {
+            for (let i = 0; i < releases.length; ++i) {
+                let release = releases[i];
+                
+                var $img = $('<img>').attr("src",release.countryCode !== '' ? "/img/flags/" + release.countryCode + ".png" :"/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
+                
+                var $span1 = $('<span>').attr("class","i18n").attr("data-i18n-id","i18n_go_browsing");
+                $span1.text("Go browsing...");
+                
+                var $span2 = $('<span>').attr("class","small");
+                $span2.append(release.name + "<br>" + release.latestVersion.version);
+
+                var $a = $('<a>').attr("class","btn btn-primary btn-lg").attr("role","button");
+                $a.attr("href", "javascript:void(0);");                   
+                $a.append($img);
+                $a.append("&nbsp;&nbsp;&nbsp;");
+                $a.append($span1);
+                $a.append("<br>");
+                $a.append($span2);
+
+                $a.on("click", function() {                    
+                    var parsedLanguages = "";
+                    for (var language in release.languages) {
+                            parsedLanguages = parsedLanguages + language + ',';
+                        }
+                    parsedLanguages = parsedLanguages.slice(0, -1);
+                    options.edition = release.branchPath;
+                    options.release = '';
+                    options.languages = parsedLanguages;
+                    options.languageObject = release.languages;
+                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                    
+                    let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0,2); 
+                    var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+
+                    switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                    switchToFullHeight(404684003, 138875005);
+                });
+
+                $releaseSwitcher.append($a);
+                $releaseSwitcher.append("&nbsp;");                  
+            }
+        }
+
+        var getSelectedLanguageAndFlag = function(ui_language) {
+            if (ui_language == "en") {
+                selectedLanguage = 'en_US';
+                selectedFlag = '/browser/img/flags/us.png';
+            } else if (ui_language == "es") {
+                selectedLanguage = 'es';
+                selectedFlag = '/browser/img/flags/es.png';
+            } else if (ui_language == "sv") {
+                selectedLanguage = 'sv';
+                selectedFlag = '/browser/img/flags/se.png';
+            } else if (ui_language == "da") {
+                selectedLanguage = 'da';
+                selectedFlag = '/browser/img/flags/dk.png';
+            } else if (ui_language == "pt") {
+                selectedLanguage = 'pt';
+                selectedFlag = '/browser/img/flags/pt.png';
+            } else {
+                selectedLanguage = 'en_US';
+                selectedFlag = '/browser/img/flags/us.png';
+            }
+
+            return {'selectedLanguage' : selectedLanguage, 'selectedFlag' : selectedFlag};
         }
 
         var tours = {};
@@ -271,22 +354,9 @@
                 }
             }
 
-            if (QueryString.ui_language == "en") {
-                selectedLanguage = 'en_US';
-                selectedFlag = '/browser/img/flags/us.png';
-            } else if (QueryString.ui_language == "es") {
-                selectedLanguage = 'es';
-                selectedFlag = '/browser/img/flags/es.png';
-            } else if (QueryString.ui_language == "sv") {
-                selectedLanguage = 'sv';
-                selectedFlag = '/browser/img/flags/se.png';
-            } else if (QueryString.ui_language == "da") {
-                selectedLanguage = 'da';
-                selectedFlag = '/browser/img/flags/dk.png';
-            } else if (QueryString.ui_language == "pt") {
-                selectedLanguage = 'pt';
-                selectedFlag = '/browser/img/flags/pt.png';
-            }
+            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(QueryString.ui_language);
+            selectedLanguage = selectedLanguageAndFlag.selectedLanguage;
+            selectedFlag = selectedLanguageAndFlag.selectedFlag;
 
             switchLanguage(selectedLanguage, selectedFlag, false);
 
@@ -399,7 +469,13 @@
                         options.languages = parsedLanguages;
                         options.languageObject = options.releases.items[i].languages;
                         $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                        switchLanguage(parsedLanguages.substr(0,2), '/browser/img/flags/' + parsedLanguages.substr(3,60) + '.png', false);
+
+                        
+                        let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0,2); 
+                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+
+                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+
                         reloadCurrentPerspective();
                     });
                     $li.append($a);
@@ -1303,60 +1379,15 @@
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
                 <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span></h1>
-                <!--<p><a href="http://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics - International Edition</a></p>-->
-                <!--<p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>-->
-                <!--<p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>-->
-                <!--<p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>-->
-                <!--<p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="http://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a>                    </p>-->
-                <!--<h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>-->
-                <!--<p>-->
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', 'en-edition', 'MAIN/2019-07-31', '2019-07-31','900000000000509007', '/snowstorm/snomed-ct/v2/');-->
-                                <!--switchToFullHeight(404684003, 138875005);"></img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2019</span></a>-->
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20180430', 'es-edition', 'v20180430', '2018-04-30','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                <!--switchLanguage('es', '/img/flags/es.png', true);-->
-                                <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español<br>2018-04-30</span></a>-->
-                <!--</p>-->
-                <!--<h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>-->
-                <!--<p>-->
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20180630', 'au-edition', 'v20180630', '2018-06-30','32570271000036106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                <!--switchLanguage('en_US', '/img/flags/au.png', true);-->
-                                <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition<br>2018-06-30</span></a>-->
-
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Belgian Edition 20180915', 'be-edition', 'v20180915', '2018-09-15','21000172104,31000172101,900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-<!--switchLanguage('en_US', '/img/flags/us.png', true);-->
-<!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Belgian edition<br>2018-09-15</span></a>-->
-
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Canadian Edition 20180430', 'ca-edition', 'v20180430', '2018-04-30','19491000087109,20581000087109', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                <!--switchLanguage('en_US', '/img/flags/ca.png', true);-->
-                                <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition<br>2018-04-30</span></a>-->
-
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20180930', 'dk-edition', 'v20180930', '2018-09-30','554461000005103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                <!--switchLanguage('da', '/img/flags/dk.png', true);-->
-                                <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition<br>2018-09-30</span></a>-->
-
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20180930', 'nl-edition', 'v20180930', '2018-09-30','31000146106,15551000146102', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                <!--switchLanguage('en_US', '/img/flags/us.png', true);-->
-                                <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition<br>2018-09-30</span></a>-->
-                <!--</p>-->
-                <!--<p>-->
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20180531', 'se-edition', 'v20180531', '2018-05-31','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                <!--switchLanguage('se', '/img/flags/se.png', true);-->
-                                <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition<br>2018-05-31</span></a>-->
-                    <!--<a class="btn btn-primary btn-lg" role="button" href="https://termbrowser.nhs.uk/" target="_blank"></img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>-->
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20180901', 'us-edition', 'v20180901', 'us-edition/2018-09-01','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                    <!--switchLanguage('en_US', '/img/flags/us.png', true);-->
-                    <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition<br>2018-09-01</span></a>-->
-                    <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Uruguay Edition 20180615', 'uy-edition', 'v20180615', '2018-06-15','5641000179103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');-->
-                                <!--switchLanguage('es', '/img/flags/uy.png', true);-->
-                                <!--switchToFullHeight(404684003, 138875005);"></img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Uruguay edition<br>2018-06-15</span></a>-->
-                <!--</p>-->
-                <h2>International Edition - July 2019</h2>
-                <h3><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h3>
-                <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 2019-07-31', '', 'MAIN/2019-07-31', '','900000000000509007/', options.queryServerUrl);
-                                switchToFullHeight(404684003, 138875005);"><img src="/browser/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>Members release<br><br>July 2019</span></a>
-                </p>
-
+                <p><a href="http://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics - International Edition</a></p>
+                <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
+                <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
+                <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
+                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="http://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a></p>
+                <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
+                <p id="international_editions"></p>
+                <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
+                <p id="local_editions"></p>
             </div>
             <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
             </p>
