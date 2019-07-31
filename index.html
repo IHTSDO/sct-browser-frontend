@@ -92,6 +92,7 @@
             displayChildren: false,
             languages: ["en"],
             languagesArray: {'en': 'English'},
+            defaultLanguage: 'en',
             closeButton: false,
             collapseButton: false,
             linkerButton: true,
@@ -248,6 +249,7 @@
                         $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                         
                         let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0,2); 
+                        options.defaultLanguage = parsedLanguages.substr(0,2);
                         var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
@@ -501,6 +503,7 @@
 
                         
                         let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0,2); 
+                        options.defaultLanguage = parsedLanguages.substr(0,2);
                         var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
