@@ -7998,6 +7998,23 @@ function conceptDetails(divElement, conceptId, options) {
 
         }).done(function(result) {
             setDefaultTerm(result);
+            var pt = {};
+            $.each(result.descriptions, function(i, description) {
+                if (description.lang == options.defaultLanguage && description.active) {
+                    $.each(description.acceptabilityMap, function(i, map){
+                        if(map == "PREFERRED"){
+                            pt = description;
+                        }
+                    })
+                }
+            });
+            console.log(pt);
+            if(pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && result.fsn.lang != options.defaultLanguage){
+                result.defaultTerm = pt.term;
+            }
+            else{
+                result.defaultTerm = result.fsn.term;
+            }
             var firstMatch = result;
             xhr = null;
             panel.attributesPId = divElement.id + "-attributes-panel";
