@@ -983,8 +983,8 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
                                         reloadCurrentPerspective();">International Edition 20190131</a></li>
-                            <li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20180901', 'us-edition', 'v20180901','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
-                                            reloadCurrentPerspective();">US Edition 20180901</a></li>
+                            <li><a href="javascript:void(0);" onclick="switchRelease('United States Edition 20190301', 'us-edition', 'v20190301','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                            reloadCurrentPerspective();">US Edition 20190301</a></li>
                         </ul>
                     </li>
                     <li class="navbar-btn" id="perspective-selector">
@@ -1041,53 +1041,57 @@
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
                 <h1>SNOMED CT Browser for Internet Explorer Compatibility</h1>
+                <p><strong>This IE compatible page will only be supported until the end of 2019. Please upgrade to a more recent browser and then go to <a href="https://browser.ihtsdotools.org">https://browser.ihtsdotools.org</a>.</strong></p>
                 <p>SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development
                     partners
                 </p>
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
                                 switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>January 2019</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20181031', 'es-edition', 'v20181031','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
-                                switchLanguage('es', 'img/flags/es.png', true);
-                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español<br>2018-10-31</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Spanish Edition 20190430', 'es-edition', 'v20190430','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('es', '/img/flags/es.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/es.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Edición en español<br>2019-04-30</span></a>
                 </p>
                 <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Argentinian Edition 20181130', 'ar-edition', 'v20181130','450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
-                                switchLanguage('es', 'img/flags/ar.png', true);
-                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/ar.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Argentinian edition<br>2018-11-30</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20190131', 'au-edition', 'v20190131','32570271000036106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                    switchLanguage('en_US', 'img/flags/au.png', true);
-                                    switchToFullHeight(404684003, 138875005);"><img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition<br>2019-01-31</span></a>
-
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Belgian Edition 20180915', 'be-edition', 'v20180915','21000172104,31000172101,900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
-                                            switchLanguage('en_US', 'img/flags/us.png', true);
-                                            switchToFullHeight(404684003, 138875005);"><img src="img/flags/be.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Belgian edition<br>2018-09-15</span></a>
-
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Canadian Edition 20181031', 'ca-edition', 'v20181031','19491000087109,20581000087109', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                    switchLanguage('en_US', 'img/flags/ca.png', true);
-                                    switchToFullHeight(404684003, 138875005);"><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition<br>2018-10-31</span></a>
-
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20180930', 'dk-edition', 'v20180930','554461000005103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                    switchLanguage('da', 'img/flags/dk.png', true);
-                                    switchToFullHeight(404684003, 138875005);"><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition<br>2018-09-30</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Argentinian Edition 20190531', 'ar-edition', 'v20190531', '450828004', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('es', '/img/flags/ar.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/ar.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Argentinian edition<br>2018-11-30</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Australian Edition 20190131', 'au-edition', 'v20190131', '32570271000036106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('en_US', '/img/flags/au.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/au.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Australian edition<br>2019-01-31</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Belgian Edition 20190315', 'be-edition', 'v20190315', '21000172104,31000172101,900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('en_US', '/img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/be.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Belgian edition<br>2019-03-15</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Canadian Edition 20190430', 'ca-edition', 'v20190430', '19491000087109,20581000087109', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('en_US', '/img/flags/ca.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/ca.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Canadian edition<br>2019-04-30</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Danish Edition 20190331', 'dk-edition', 'v20190331', '554461000005103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('da', '/img/flags/dk.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/dk.png">&nbsp;&nbsp;&nbsp;G&aring; til browser-siden</span><br><span class="small">Danish edition<br>2019-03-31</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Irish Edition 20190421', 'ie-edition', 'v20190421', '21000220103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('en_US', '/img/flags/ie.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/ie.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Irish edition<br>2019-04-21</span></a>
                 </p>
                 <p>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20180930', 'nl-edition', 'v20180930','31000146106', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                    switchLanguage('en_US', 'img/flags/us.png', true);
-                                    switchToFullHeight(404684003, 138875005);"><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition<br>2018-09-30</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20181130', 'se-edition', 'v20181130','46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                    switchLanguage('se', 'img/flags/se.png', true);
-                                    switchToFullHeight(404684003, 138875005);"><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition<br>2018-11-30</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" href="https://termbrowser.nhs.uk/" target="_blank"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20180901', 'us-edition', 'v20180901','900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                    switchLanguage('en_US', 'img/flags/us.png', true);
-                                    switchToFullHeight(404684003, 138875005);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition<br>2018-09-01</span></a>
-                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Uruguay Edition 20181215', 'uy-edition', 'v20181215','5641000179103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-                                    switchLanguage('es', 'img/flags/uy.png', true);
-                                    switchToFullHeight(404684003, 138875005);"><img src="img/flags/uy.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Uruguay edition<br>2018-12-15</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Netherlands Edition 20190331', 'nl-edition', 'v20190331', '31000146106,15551000146102', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('en_US', '/img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/nl.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Netherlands edition<br>2019-03-31</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Norwegian Edition 20190415', 'no-edition', 'v20190415',  '61000202103,900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('en_US', 'img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="img/flags/no.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Norwegian edition<br>2019-04-15</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Swedish Edition 20190531', 'se-edition', 'v20190531', '46011000052107', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('se', '/img/flags/se.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/se.png">&nbsp;&nbsp;&nbsp;Börja söka...</span><br><span class="small">Swedish edition<br>2019-05-31</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" href="https://termbrowser.nhs.uk/" target="_blank"><img src="/img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('United States Edition 20190301', 'us-edition', 'v20190301', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('en_US', '/img/flags/us.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/us.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">United States edition<br>2019-03-01</span></a>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Uruguay Edition 20190615', 'uy-edition', 'v20190615', '5641000179103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('es', '/img/flags/uy.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/uy.png">&nbsp;&nbsp;&nbsp;Ir al Navegador...</span><br><span class="small">Uruguay edition<br>2018-12-15</span></a>
                 </p>
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
@@ -1234,7 +1238,7 @@
                             <span class="i18n" data-i18n-id="i18n_licence_agreement_3">“SNOMED”, “SNOMED CT” and “SNOMED Clinical Terms” are registered trademarks of the SNOMED International (<a href="http://www.snomed.org">www.snomed.org</a>).</span></p>
                         <p><span class="i18n" data-i18n-id="i18n_licence_agreement_4">Use of SNOMED CT in <strong>SNOMED International SNOMED CT Browser</strong> is governed by the conditions of the following SNOMED CT license issued by the SNOMED International</span>:</p>
                         <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”, “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and “SNOMED CT Content” are as defined in the SNOMED International Affiliate License Agreement (see www.snomed.org/license.pdf)</span>.</p>
-                        <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://www.snomed.org/license">www.snomed.org/license</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://www.snomed.org/license.pdf">www.snomed.org/license.pdf)</a></span>.</p>
+                        <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate)</a></span>.</p>
                         <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://www.snomed.org/members">www.snomed.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
                         <p style="margin-left: 20px;">4. <span class="i18n" data-i18n-id="i18n_licence_agreement_8">End Users, that do not hold an SNOMED International Affiliate License, may access SNOMED CT® using <strong>SNOMED International SNOMED CT Browser</strong> subject to acceptance of and adherence to the following sub-license limitations</span>:</p>
                         <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_9">The sub-licensee is only permitted to access SNOMED CT® using this software (or service) for the purpose of exploring and evaluating the terminology</span>.</p>
@@ -1357,16 +1361,7 @@
             manualStateChange = true;
         });
     </script>
-    <!-- Start of Rocket.Chat Livechat Script
-        <script type="text/javascript">
-        (function(w, d, s, u) {
-        	w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
-        	var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
-        	j.async = true; j.src = 'https://chat.snomedtools.org/packages/rocketchat_livechat/assets/rocketchat-livechat.min.js?_=201702160944';
-        	h.parentNode.insertBefore(j, h);
-        })(window, document, 'script', 'https://chat.snomedtools.org/livechat');
-        </script>
-        <!-- End of Rocket.Chat Livechat Script -->
+
 </body>
 
 </html>
