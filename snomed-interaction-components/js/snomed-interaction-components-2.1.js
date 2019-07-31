@@ -8481,7 +8481,13 @@ function conceptDetails(divElement, conceptId, options) {
                     }
 
                     if (included) {
-                        auxDescriptions.push(description);
+                        if (options.displayInactiveDescriptions) {
+                            auxDescriptions.push(description);
+                        } else {
+                            if (description.active) {
+                                auxDescriptions.push(description);
+                            }
+                        }
                     } else {
                         description.acceptable = false;
                         if (panel.options.hideNotAcceptable) {
