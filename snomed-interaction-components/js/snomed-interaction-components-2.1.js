@@ -12058,14 +12058,12 @@ function searchPanel(divElement, options) {
                         searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
                         searchUrl = searchUrl + "&skipTo=" + skipTo;
                         searchUrl = searchUrl + "&returnLimit=" + returnLimit;
-                        searchUrl = searchUrl + "&conceptActive=" + 'true';
                     }
                     else if(panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowowl')) {
                         searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
                     }
                     if (panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowstorm')) {
                         searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
-                        searchUrl = searchUrl + "&conceptActive=true";
                         searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
                         searchUrl = searchUrl + "&skipTo=" + skipTo;
                         searchUrl = searchUrl + "&returnLimit=" + returnLimit;
@@ -12076,7 +12074,6 @@ function searchPanel(divElement, options) {
                     }
                     if (panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowstorm')) {
                         searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
-                        searchUrl = searchUrl + "&conceptActive=true";
                         searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
                         searchUrl = searchUrl + "&skipTo=" + skipTo;
                         searchUrl = searchUrl + "&returnLimit=" + returnLimit;
