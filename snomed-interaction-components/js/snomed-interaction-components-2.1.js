@@ -7990,7 +7990,7 @@ function conceptDetails(divElement, conceptId, options) {
             branch = branch + "/" + options.release;
         };
         $.ajaxSetup({
-          headers : {   
+          headers : {
             'Accept-Language': options.languages
           }
         });
@@ -8991,12 +8991,12 @@ function conceptDetails(divElement, conceptId, options) {
                     panel.refset[type] = data;
                 }
             });
-            
+
             if (xhrRefsets != null) {
                 xhrRefsets.abort();
-            }          
-            
-            xhrRefsets = $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId, function(result) {           
+            }
+
+            xhrRefsets = $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId, function(result) {
                 }).done(function(result) {
                     var simpleRefsetMembers = [];
                     var simpleMapRefsetMembers = [];
@@ -9023,15 +9023,15 @@ function conceptDetails(divElement, conceptId, options) {
                                 ids.push(item.refsetId);
                             }
                             else if (item.additionalFields.hasOwnProperty('mapTarget')) {
-                                var refset = initializeRefsetMemberByType(item,'mapTarget');                                
+                                var refset = initializeRefsetMemberByType(item,'mapTarget');
                                 simpleMapRefsetMembers.push(refset)
                                 ids.push(item.refsetId);
-                            } 
+                            }
                             else if (item.additionalFields.hasOwnProperty('valueId')) {
                                 var refset = initializeRefsetMemberByType(item,'valueId');
                                 attributeValueRefsetMembers.push(refset)
                                 ids.push(item.refsetId);
-                                ids.push(refset.otherValue);  
+                                ids.push(refset.otherValue);
                             }
                             else if (item.additionalFields.hasOwnProperty('targetComponent') || item.additionalFields.hasOwnProperty('targetComponentId')) {
                                 var refset = {};
@@ -9046,14 +9046,14 @@ function conceptDetails(divElement, conceptId, options) {
 
                                 associationRefsetMembers.push(refset)
                                 ids.push(item.refsetId);
-                                ids.push(refset.otherValue);   
-                            }                             
+                                ids.push(refset.otherValue);
+                            }
                             else {
                                 // do nothing
                             }
                         });
                     }
-                    
+
                     if (ids.length > 0) {
                         Handlebars.registerHelper('if_not_empty', function(list, opts) {
                             if (list) {
@@ -9064,12 +9064,12 @@ function conceptDetails(divElement, conceptId, options) {
                             }
                         });
 
-                        var getConcepts =  function(list) {     
+                        var getConcepts =  function(list) {
 							var dfd = $.Deferred();
 							var result = {concepts: []};
 							for (var i = 0 ; i < list.length; i++) {
 								$.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/' : '') + "concepts/" + list[i], function (concept) {
-								}).done(function (concept) {								    
+								}).done(function (concept) {
 									result.concepts.push(concept)
 									if (result.concepts.length  === list.length) {
 									  dfd.resolve(result);
@@ -9077,10 +9077,10 @@ function conceptDetails(divElement, conceptId, options) {
 								}).fail(function (xhr, textStatus, error) {
 									// do nothing
 								});
-							}							  
+							}
 							return dfd.promise();
 						};
-				
+
 						$.when(getConcepts(ids)).then(
 							function( respone ) {
 								var populateRefsetMember = function (list, type, conceptsMap) {
@@ -9104,17 +9104,17 @@ function conceptDetails(divElement, conceptId, options) {
                                             item.module = concept.moduleId;
                                             item.effectiveTime = concept.effectiveTime;
                                             item.conceptId = concept.conceptId;
-                                            
+
                                             var cidConcept = conceptsMap[item.otherValue];
-                                            var cidValue = {};                                    
+                                            var cidValue = {};
                                             cidValue.module = cidConcept.moduleId;
                                             cidValue.defaultTerm =  cidConcept.pt ? cidConcept.pt.term : cidConcept.fsn.term;
                                             cidValue.conceptId = cidConcept.conceptId;
                                             cidValue.definitionStatus = cidConcept.definitionStatus;
 
-                                            item.cidValue = cidValue;                                            
-                                        });                                        
-                                    } 
+                                            item.cidValue = cidValue;
+                                        });
+                                    }
                                     else {
                                         // do nothing
                                     }
@@ -9135,30 +9135,30 @@ function conceptDetails(divElement, conceptId, options) {
                                     simpleRefsetMembers: simpleRefsetMembers,
                                     simpleMapRefsetMembers: simpleMapRefsetMembers,
                                     attributeValueRefsetMembers: attributeValueRefsetMembers,
-                                    associationRefsetMembers: associationRefsetMembers                        
+                                    associationRefsetMembers: associationRefsetMembers
                                 };
-                                
+
                                 $('#refsets-' + panel.divElement.id).html(JST["views/conceptDetailsPlugin/tabs/refset.hbs"](context));
 							},
 							function( status ) {
 								// do nothing
 							}
-						);                        
+						);
                     } else {
                         var context = {
                             firstMatch : firstMatch,
                             simpleRefsetMembers: [],
                             simpleMapRefsetMembers: [],
                             attributeValueRefsetMembers: [],
-                            associationRefsetMembers: []                        
+                            associationRefsetMembers: []
                         };
-                        
+
                         $('#refsets-' + panel.divElement.id).html(JST["views/conceptDetailsPlugin/tabs/refset.hbs"](context));
-                    }                 
+                    }
                 }).fail(function() {
                     $("#refsets-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
                 }
-            );            
+            );
 
             if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == "references-tab") {
                 $("#references-" + panel.divElement.id + "-resultsTable").html("");
@@ -9264,7 +9264,7 @@ function conceptDetails(divElement, conceptId, options) {
                 if ($("#product-details-tab").hasClass("active")) {
                     $('#details-tabs-' + panel.divElement.id + ' a:first').tab('show');
                 }
-                $("#product-details-tab").hide();            
+                $("#product-details-tab").hide();
             }
 
             $('.more-fields-button').disableTextSelect();
@@ -9331,7 +9331,7 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#' + panel.attributesPId).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
                 $('#' + panel.descsPId).html("");
                 $('#' + panel.relsPId).html("");
-            }            
+            }
         });
         //        if (typeof xhr != "undefined") {
         //            console.log("aborting call...");
@@ -9359,14 +9359,14 @@ function conceptDetails(divElement, conceptId, options) {
             branch = branch + "/" + options.release;
         };
         $.ajaxSetup({
-          headers : {   
+          headers : {
             'Accept-Language': options.languages
           }
         });
         xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
-            result.forEach(function(item) { 
+            result.forEach(function(item) {
                 if(item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                     item.defaultTerm = item.pt.term;
                 }
@@ -9500,7 +9500,7 @@ function conceptDetails(divElement, conceptId, options) {
             branch = branch + "/" + options.release;
         };
         $.ajaxSetup({
-          headers : {   
+          headers : {
             'Accept-Language': options.languages
           }
         });
@@ -9515,21 +9515,21 @@ function conceptDetails(divElement, conceptId, options) {
                         return opts.inverse(this);
                 }
             });
-            
+
             result.referencesByType.sort(function(a, b) {
                 if (a.referenceType.id === '116680003' || b.referenceType.id === '116680003') {
-                    return -1; 
-                }                                 
+                    return -1;
+                }
                 if (a.referenceType.fsn.term >  b.referenceType.fsn.term) {
                     return 1;
-                }                    
+                }
                 if (a.referenceType.fsn.term <  b.referenceType.fsn.term) {
                     return -1;
                 }
-                   
+
                 return 0;
             });
-           
+
             result.referencesByType.forEach(function(item) {
                 item.referencingConcepts.sort(function(a, b) {
                     if (a.fsn.term >  b.fsn.term) {
@@ -9545,7 +9545,7 @@ function conceptDetails(divElement, conceptId, options) {
 
             var context = {
                 divElementId: panel.divElement.id,
-                result: result                
+                result: result
             };
             //            $("#references-" + panel.divElement.id + "-total").html(result.length  + " references");
             $("#references-" + panel.divElement.id + "-accordion").html(JST["views/conceptDetailsPlugin/tabs/references.hbs"](context));
@@ -9589,7 +9589,7 @@ function conceptDetails(divElement, conceptId, options) {
             branch = branch + "/" + options.release;
         };
         $.ajaxSetup({
-          headers : {   
+          headers : {
             'Accept-Language': options.languages
           }
         });
@@ -9676,7 +9676,7 @@ function conceptDetails(divElement, conceptId, options) {
             branch = branch + "/" + options.release;
         };
         $.ajaxSetup({
-          headers : {   
+          headers : {
             'Accept-Language': options.languages
           }
         });
@@ -9684,11 +9684,12 @@ function conceptDetails(divElement, conceptId, options) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
             result.forEach(function(c) {
-                if(item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
-                    item.defaultTerm = item.pt.term;
+                console.log('TURNIP');
+                if(c.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && c.fsn.lang != options.defaultLanguage){
+                    c.defaultTerm = c.pt.term;
                 }
                 else{
-                    item.defaultTerm = item.fsn.term;
+                    c.defaultTerm = c.fsn.term;
                 }
             });
             result.sort(function(a, b) {
@@ -9767,15 +9768,15 @@ function conceptDetails(divElement, conceptId, options) {
         } else {
             $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><i class='glyphicon glyphicon-refresh icon-spin'></i></td></tr>");
         }
-        var total;        
-        if (typeof total != "undefined") {          
+        var total;
+        if (typeof total != "undefined") {
             paginate = 1;
             membersUrl = membersUrl + "&paginate=1";
         }
-        
+
         if (xhrMembers != null) {
             xhrMembers.abort();
-            xhrMembers = null;           
+            xhrMembers = null;
         }
 
         xhrMembers = $.getJSON(membersUrl, function(result) {
@@ -9788,8 +9789,8 @@ function conceptDetails(divElement, conceptId, options) {
             } else {
                 if (total > (skipTo + returnLimit)) {
                     remaining = total - (skipTo + returnLimit);
-                } else {                    
-                    remaining = 0;                    
+                } else {
+                    remaining = 0;
                 }
             }
             if (remaining < returnLimit) {
@@ -9814,12 +9815,12 @@ function conceptDetails(divElement, conceptId, options) {
             var context = {};
             if (isReferenceComponentsOfRefsetNotConcepts) {
                 context = {
-                    result: {'items':[]},                  
+                    result: {'items':[]},
                     divElementId: panel.divElement.id,
                     total: total,
-                    skipTo: 0,                 
+                    skipTo: 0,
                     referenceComponentsOfRefsetAreNotConcepts: true
-                }; 
+                };
             }
             else {
                 context = {
