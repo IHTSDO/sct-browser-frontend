@@ -160,6 +160,19 @@
                     start();
                 });
 
+                const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES'];
+                // sort extensions. International and Spanish Editions are always on Top
+                if (options.releases) {
+                    options.releases.items.sort(function(a,b) {
+                        if (a.shortName === 'SNOMEDCT' && b.shortName === 'SNOMEDCT-ES') { return -1; }
+                        if (b.shortName === 'SNOMEDCT' && a.shortName === 'SNOMEDCT-ES') { return 1; }
+                        if(internationalEditionShortNames.indexOf(a.shortName) > -1) { return -1; }
+                        if(internationalEditionShortNames.indexOf(b.shortName) > -1) { return 1; }
+                        
+                        return a.name.localeCompare(b.name);                      
+                    });
+                }
+
                 // dynamic extension links
                 var internationalReleases = [];
                 var localReleases = [];
@@ -173,27 +186,21 @@
                 gbExtension.href = 'https://termbrowser.nhs.uk/';
                 localReleases.push(gbExtension);
 
-                for (let i = 0; i < options.releases.items.length; ++i) {
-                    var release = options.releases.items[i];
-                    if (release.shortName === 'SNOMEDCT' || release.shortName === 'SNOMEDCT-ES') {
-                        internationalReleases.push(release);
+                if (options.releases) {
+                    for (let i = 0; i < options.releases.items.length; ++i) {
+                        var release = options.releases.items[i];
+                        if(internationalEditionShortNames.indexOf(release.shortName) > -1) {
+                            internationalReleases.push(release);
+                        }
+                        else {
+                            localReleases.push(release);
+                        }            
                     }
-                    else {
-                        localReleases.push(release);
-                    }            
-                }               
-                
-                // sort extensions
-                internationalReleases.sort(function(a,b) {
-                    if (b.shortName === 'SNOMEDCT'){
-                        return 1;
-                    } else {
-                        return a.name.localeCompare(b.name);
-                    }
-                });
+                }
+                              
                 addEditionLinks($('#international_editions'),internationalReleases);               
                 
-                // sort extensions
+                // sort local extensions again
                 localReleases.sort(function(a,b) {
                     return a.name.localeCompare(b.name);
                 });
