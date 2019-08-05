@@ -230,6 +230,7 @@
                 });
                 addEditionLinks($('#local_editions'),localReleases);
             }).fail(function() {
+                console.log('fail');
                 options.serverUrl = "/snowowl/snomed-ct/v2";
                 options.queryServerUrl = "/snowowl/snomed-ct/v2";
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {
