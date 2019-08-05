@@ -9417,7 +9417,7 @@ function conceptDetails(divElement, conceptId, options) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
         }).done(function(result) {
             result.forEach(function(item) {
-                if(item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
+                if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                     item.defaultTerm = item.pt.term;
                 }
                 else{
@@ -13415,7 +13415,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                     };
                     $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView, function(result) {
                         result.forEach(function(item) {
-                            if(item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
+                            if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                                 item.defaultTerm = item.pt.term;
                             }
                             else{
@@ -13505,7 +13505,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
             if (result && result[0] && typeof result[0].statedDescendants == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
             result.forEach(function(item) {
-                if(item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
+                if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                     item.defaultTerm = item.pt.term;
                 }
                 else{
@@ -13750,7 +13750,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
             $.each(result, function(i, item) {
                 if (typeof item.defaultTerm == "undefined") {
-                    if(item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
+                    if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                         item.defaultTerm = item.pt.term;
                     }
                     else{
@@ -13772,8 +13772,12 @@ function taxonomyPanel(divElement, conceptId, options) {
                       }
                     });
                 };
-                $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId, function(res) {
-                    if(res.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && res.fsn.lang != options.defaultLanguage){
+                var urlArgs = '';
+                if(options.serverUrl.includes('snowowl')){
+                    urlArgs = urlArgs + '?expand=fsn()';
+                }
+                $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId + urlArgs, function(res) {
+                    if(res.pt && res.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && res.fsn.lang != options.defaultLanguage){
                         res.defaultTerm = res.pt.term;
                     }
                     else{
@@ -13946,19 +13950,22 @@ function taxonomyPanel(divElement, conceptId, options) {
               }
             });
         };
-        xhr = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId, function(result) {
+        var urlArgs = '';
+        if(options.serverUrl.includes('snowowl')){
+            urlArgs = urlArgs + '?expand=fsn()';
+        }
+        xhr = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId + urlArgs, function(result) {
             if (typeof result.statedDescendants == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
         }).done(function(result) {
-            console.log(options.defaultLanguage);
             if (panel.options.selectedView == 'stated') {
-                if(result.pt.lang === options.defaultLanguage){
+                if(result.pt && result.pt.lang === options.defaultLanguage){
                     panel.setToConcept(conceptId, result.pt.term, result.definitionStatus, result.module, result.statedDescendants);
                 }
                 else{
                     panel.setToConcept(conceptId, result.fsn.term, result.definitionStatus, result.module, result.statedDescendants);
                 }
             } else {
-                if(result.pt.lang === options.defaultLanguage){
+                if(result.pt && result.pt.lang === options.defaultLanguage){
                     panel.setToConcept(conceptId, result.pt.term, result.definitionStatus, result.module, result.statedDescendants);
                 }
                 else{
