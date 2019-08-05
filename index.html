@@ -122,8 +122,9 @@
 
         function determineServer() {
             xhr = $.getJSON("/snowstorm/snomed-ct/v2/codesystems", function(result) {
-
+                console.log(result);
             }).done(function(result) {
+                console.log(result);
                 options.serverUrl = "/snowstorm/snomed-ct/v2";
                 options.queryServerUrl = "/snowstorm/snomed-ct/v2";
                 options.releases = result;
@@ -177,15 +178,38 @@
                 var internationalReleases = [];
                 var localReleases = [];
 
-                // Add GB extension
-                var gbExtension = {};
-                gbExtension.name = 'United Kingdom edition';
-                gbExtension.countryCode = 'gb';
-                gbExtension.latestVersion = {};
-                gbExtension.latestVersion.version = '(hosted by the UK)';
-                gbExtension.href = 'https://termbrowser.nhs.uk/';
-                localReleases.push(gbExtension);
+                    // dynamic extension links
+                    var internationalReleases = [];
+                    var localReleases = [];
 
+                    // Add GB extension
+                    var gbExtension = {};
+                    gbExtension.name = 'United Kingdom edition';
+                    gbExtension.countryCode = 'gb';
+                    gbExtension.latestVersion = {};
+                    gbExtension.latestVersion.version = '(hosted by the UK)';
+                    gbExtension.href = 'https://termbrowser.nhs.uk/';
+                    localReleases.push(gbExtension);
+
+                    for (let i = 0; i < options.releases.items.length; ++i) {
+                        var release = options.releases.items[i];
+                        if (release.shortName === 'SNOMEDCT' || release.shortName === 'SNOMEDCT-ES') {
+                            internationalReleases.push(release);
+                        }
+                        else {
+                            localReleases.push(release);
+                        }            
+                    }               
+
+                    // sort extensions
+                    internationalReleases.sort(function(a,b) {
+                        if (b.shortName === 'SNOMEDCT'){
+                            return 1;
+                        } else {
+                            return a.name.localeCompare(b.name);
+                        }
+                    });
+                    addEditionLinks($('#international_editions'),internationalReleases);   
                 if (options.releases) {
                     for (let i = 0; i < options.releases.items.length; ++i) {
                         var release = options.releases.items[i];
@@ -211,6 +235,37 @@
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {
                 }).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
+                    
+                    //create project/task switcher
+                    var $header = $('#header-nav');
+                    var $projectSpan = $('<span>');
+                    $projectSpan.css('margin-left', '10px');
+                    $projectSpan.html('Project');
+                    $header.append($projectSpan);
+                    
+                    var $projectSelect = $('<select>');
+                    $projectSelect.css('margin-top', '18px');
+                    $projectSelect.css('margin-left', '2px');
+                    $projectSelect.css('width', '110px');
+                    $projectSelect.attr('id', 'projectDdl');
+                    $header.append($projectSelect);
+                    
+                    var $taskSpan = $('<span>');
+                    $taskSpan.css('margin-left', '10px');
+                    $taskSpan.html('Task');
+                    $header.append($taskSpan);
+                    
+                    var $taskSelect = $('<select>');
+                    $taskSelect.css('margin-top', '18px');
+                    $taskSelect.css('margin-left', '2px');
+                    $taskSelect.css('width', '110px');
+                    $taskSelect.attr('id', 'taskDdl');
+                    $header.append($taskSelect);
+                    
+                    //hide release switcher
+                    var $releaseSwitcher = $('#edition-selector');
+                    $releaseSwitcher.css('display', 'none');
+                    
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
@@ -385,10 +440,11 @@
                 }
                 options.languages = languages;
             }
-            
-            for (let i = 0; i < options.releases.items.length; ++i) {
-                if(options.releases.items[i].branchPath === options.edition){
-                    options.languageObject = options.releases.items[i].languages;
+            if(options.releases && options.releases.items && options.releases.items.length > 0){
+                for (let i = 0; i < options.releases.items.length; ++i) {
+                    if(options.releases.items[i].branchPath === options.edition){
+                        options.languageObject = options.releases.items[i].languages;
+                    }
                 }
             }
 
@@ -483,7 +539,7 @@
 //                                        reloadCurrentPerspective();">International Edition 20190131</a></li>
 
             // PROJECT DROPDOWN HANDLER
-            if(options.releases){
+            if(options.releases && options.releases.items){
                 var $releaseSwitcher = $('#releaseSwitcher');
                 for (let i = 0; i < options.releases.items.length; ++i) {
                     var $li = $('<li>')
