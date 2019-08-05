@@ -15605,7 +15605,7 @@ function queryComputerPanel(divElement, options) {
                 if(options.release.length > 0 && options.release !== 'None'){
                     branch = branch + "/" + options.release;
                 };
-        expressionURL = options.serverUrl + "/" + branch + "/concepts?module=900000000000207008&ecl=" + strippedExpression + "&offset=" + skip + "&limit=" + limit + "&expand=fsn()";
+        expressionURL = options.serverUrl + "/" + branch + "/concepts?module=900000000000207008&ecl=" + encodeURIComponent(strippedExpression) + "&offset=" + skip + "&limit=" + limit + "&expand=fsn()";
         console.log("queryURL " + expressionURL);
         if (xhrExecute != null && !onlyTotal)
             xhrExecute.abort();
