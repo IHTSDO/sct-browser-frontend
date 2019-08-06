@@ -27,8 +27,8 @@
     <script src="/browser/external-libs/notify.js"></script>
     <script src="/browser/external-libs/clipboard.min.js"></script>
     <script src="/browser/external-libs/popover-extra-placements.js" type="text/javascript"></script>
-	<script src="/browser/external-libs/canvg.min.js" type="text/javascript"></script>
-	<script src="/browser/external-libs/canvas2image.js" type="text/javascript"></script>	
+    <script src="/browser/external-libs/canvg.min.js" type="text/javascript"></script>
+    <script src="/browser/external-libs/canvas2image.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="/browser/css/jquery.splitter.css">
@@ -91,7 +91,9 @@
             selectedView: "inferred",
             displayChildren: false,
             languages: ["en"],
-            languagesArray: {'en': 'English'},
+            languagesArray: {
+                'en': 'English'
+            },
             defaultLanguage: 'en',
             closeButton: false,
             collapseButton: false,
@@ -128,27 +130,26 @@
                 options.serverUrl = "/snowstorm/snomed-ct/v2";
                 options.queryServerUrl = "/snowstorm/snomed-ct/v2";
                 options.releases = result;
-                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {
-                }).done(function(result) {
+                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
                     var $header = $('#header-nav');
                     var $projectSpan = $('<span>');
                     $projectSpan.css('margin-left', '10px');
                     $projectSpan.html('Project');
                     $header.append($projectSpan);
-                    
+
                     var $projectSelect = $('<select>');
                     $projectSelect.css('margin-top', '18px');
                     $projectSelect.css('margin-left', '2px');
                     $projectSelect.css('width', '110px');
                     $projectSelect.attr('id', 'projectDdl');
                     $header.append($projectSelect);
-                    
+
                     var $taskSpan = $('<span>');
                     $taskSpan.css('margin-left', '10px');
                     $taskSpan.html('Task');
                     $header.append($taskSpan);
-                    
+
                     var $taskSelect = $('<select>');
                     $taskSelect.css('margin-top', '18px');
                     $taskSelect.css('margin-left', '2px');
@@ -164,13 +165,21 @@
                 const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES'];
                 // sort extensions. International and Spanish Editions are always on Top
                 if (options.releases) {
-                    options.releases.items.sort(function(a,b) {
-                        if (a.shortName === 'SNOMEDCT' && b.shortName === 'SNOMEDCT-ES') { return -1; }
-                        if (b.shortName === 'SNOMEDCT' && a.shortName === 'SNOMEDCT-ES') { return 1; }
-                        if(internationalEditionShortNames.indexOf(a.shortName) > -1) { return -1; }
-                        if(internationalEditionShortNames.indexOf(b.shortName) > -1) { return 1; }
-                        
-                        return a.name.localeCompare(b.name);                      
+                    options.releases.items.sort(function(a, b) {
+                        if (a.shortName === 'SNOMEDCT' && b.shortName === 'SNOMEDCT-ES') {
+                            return -1;
+                        }
+                        if (b.shortName === 'SNOMEDCT' && a.shortName === 'SNOMEDCT-ES') {
+                            return 1;
+                        }
+                        if (internationalEditionShortNames.indexOf(a.shortName) > -1) {
+                            return -1;
+                        }
+                        if (internationalEditionShortNames.indexOf(b.shortName) > -1) {
+                            return 1;
+                        }
+
+                        return a.name.localeCompare(b.name);
                     });
                 }
 
@@ -186,64 +195,62 @@
                 gbExtension.latestVersion.version = '(hosted by the UK)';
                 gbExtension.href = 'https://termbrowser.nhs.uk/';
                 localReleases.push(gbExtension);
-                    
+
                 if (options.releases) {
                     for (let i = 0; i < options.releases.items.length; ++i) {
                         var release = options.releases.items[i];
-                        if(internationalEditionShortNames.indexOf(release.shortName) > -1) {
+                        if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
                             internationalReleases.push(release);
-                        }
-                        else {
+                        } else {
                             localReleases.push(release);
-                        }            
+                        }
                     }
                 }
-                              
-                addEditionLinks($('#international_editions'),internationalReleases);               
-                
+
+                addEditionLinks($('#international_editions'), internationalReleases);
+
                 // sort local extensions again
-                localReleases.sort(function(a,b) {
+                localReleases.sort(function(a, b) {
                     return a.name.localeCompare(b.name);
                 });
-                addEditionLinks($('#local_editions'),localReleases);
+                addEditionLinks($('#local_editions'), localReleases);
             }).fail(function() {
                 console.log('fail');
                 options.serverUrl = "/snowowl/snomed-ct/v2";
                 options.queryServerUrl = "/snowowl/snomed-ct/v2";
-                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {
-                }).done(function(result) {
+                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
-                    
+
                     //create project/task switcher
                     var $header = $('#header-nav');
                     var $projectSpan = $('<span>');
                     $projectSpan.css('margin-left', '10px');
                     $projectSpan.html('Project');
                     $header.append($projectSpan);
-                    
+
                     var $projectSelect = $('<select>');
                     $projectSelect.css('margin-top', '18px');
                     $projectSelect.css('margin-left', '2px');
                     $projectSelect.css('width', '110px');
                     $projectSelect.attr('id', 'projectDdl');
                     $header.append($projectSelect);
-                    
+
                     var $taskSpan = $('<span>');
                     $taskSpan.css('margin-left', '10px');
                     $taskSpan.html('Task');
                     $header.append($taskSpan);
-                    
+
                     var $taskSelect = $('<select>');
                     $taskSelect.css('margin-top', '18px');
                     $taskSelect.css('margin-left', '2px');
                     $taskSelect.css('width', '110px');
                     $taskSelect.attr('id', 'taskDdl');
                     $header.append($taskSelect);
-                    
+
                     //hide release switcher
                     var $releaseSwitcher = $('#edition-selector');
                     $releaseSwitcher.css('display', 'none');
-                    
+
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
@@ -252,53 +259,52 @@
             });
         }
 
-        var addEditionLinks = function ($releaseSwitcher, releases) {
+        var addEditionLinks = function($releaseSwitcher, releases) {
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
-                
-                var $img = $('<img>').attr("src",release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" :"/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
-                
-                var $span1 = $('<span>').attr("class","i18n").attr("data-i18n-id","i18n_go_browsing");
-                $span1.text("Go browsing...");                
-                var $span2 = $('<span>').attr("class","small");
+
+                var $img = $('<img>').attr("src", release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" : "/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
+
+                var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
+                $span1.text("Go browsing...");
+                var $span2 = $('<span>').attr("class", "small");
                 $span2.append(release.name + "<br>" + release.latestVersion.version);
 
-                var $a = $('<a>').attr("class","btn btn-primary btn-lg").attr("role","button").attr("style","margin-bottom : 15px");                                  
+                var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
                 $a.append($img);
                 $a.append("&nbsp;&nbsp;&nbsp;");
                 $a.append($span1);
                 $a.append("<br>");
                 $a.append($span2);
-                
+
                 if (release.href) {
                     $a.attr("href", release.href);
                     $a.attr("target", "_blank");
-                }
-                else {
-                    $a.attr("href", "javascript:void(0);"); 
-                    $a.on("click", function() {                    
+                } else {
+                    $a.attr("href", "javascript:void(0);");
+                    $a.on("click", function() {
                         var parsedLanguages = "";
                         for (var language in release.languages) {
-                                parsedLanguages = parsedLanguages + language + ',';
-                            }
+                            parsedLanguages = parsedLanguages + language + ',';
+                        }
                         parsedLanguages = parsedLanguages.slice(0, -1);
                         options.edition = release.branchPath;
                         options.release = '';
                         options.languages = parsedLanguages;
                         options.languageObject = release.languages;
                         $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                        
-                        let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0,2); 
-                        options.defaultLanguage = parsedLanguages.substr(0,2);
+
+                        let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
+                        options.defaultLanguage = parsedLanguages.substr(0, 2);
                         var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                         switchToFullHeight(404684003, 138875005);
                     });
-                }              
+                }
 
                 $releaseSwitcher.append($a);
-                $releaseSwitcher.append("&nbsp;");                  
+                $releaseSwitcher.append("&nbsp;");
             }
         }
 
@@ -323,7 +329,10 @@
                 selectedFlag = '/browser/img/flags/us.png';
             }
 
-            return {'selectedLanguage' : selectedLanguage, 'selectedFlag' : selectedFlag};
+            return {
+                'selectedLanguage': selectedLanguage,
+                'selectedFlag': selectedFlag
+            };
         }
 
         var tours = {};
@@ -353,11 +362,11 @@
             //}
             // Read parameters
             $.ajaxSetup({
-                  "error":function(jqXHR, textStatus, errorThrown) {
-                      if (options.imsUrl && jqXHR.status == 403) {
-                            window.location = decodeURIComponent(options.imsUrl + 'login' + '?serviceReferer=' + window.location.href);
-                        }
-                  }
+                "error": function(jqXHR, textStatus, errorThrown) {
+                    if (options.imsUrl && jqXHR.status == 403) {
+                        window.location = decodeURIComponent(options.imsUrl + 'login' + '?serviceReferer=' + window.location.href);
+                    }
+                }
             });
             $(function() {
                 $.extend($.fn.disableTextSelect = function() {
@@ -418,9 +427,9 @@
                 }
                 options.languages = languages;
             }
-            if(options.releases && options.releases.items && options.releases.items.length > 0){
+            if (options.releases && options.releases.items && options.releases.items.length > 0) {
                 for (let i = 0; i < options.releases.items.length; ++i) {
-                    if(options.releases.items[i].branchPath === options.edition){
+                    if (options.releases.items[i].branchPath === options.edition) {
                         options.languageObject = options.releases.items[i].languages;
                     }
                 }
@@ -457,7 +466,7 @@
                 acceptLicense = false;
             }
             options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
-           
+
             var i = 0;
 
             if (QueryString.perspective == "home") {
@@ -483,7 +492,7 @@
             if (!options.acceptLicense) {
                 $('#license-modal').modal('show');
             }
-            
+
             var getUrlParameter = function getUrlParameter(sParam) {
                 var sPageURL = decodeURIComponent(window.location.search.substring(1)),
                     sURLVariables = sPageURL.split('&'),
@@ -501,8 +510,7 @@
             var focusConcept = '';
             if (getUrlParameter('conceptId1')) {
                 focusConcept = getUrlParameter('conceptId1');
-            }
-            else{
+            } else {
                 focusConcept = 138875005;
             }
             if (getUrlParameter('edition')) {
@@ -513,17 +521,17 @@
                 options.release = getUrlParameter('release');
                 $("#taskDdl").val(options.release).change();
             }
-//            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131', '2019-01-31', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-//                                        reloadCurrentPerspective();">International Edition 20190131</a></li>
+            //            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131', '2019-01-31', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
+            //                                        reloadCurrentPerspective();">International Edition 20190131</a></li>
 
             // PROJECT DROPDOWN HANDLER
-            if(options.releases && options.releases.items){
+            if (options.releases && options.releases.items) {
                 var $releaseSwitcher = $('#releaseSwitcher');
                 for (let i = 0; i < options.releases.items.length; ++i) {
                     var $li = $('<li>')
-                    var $a = $('<a>').attr("shortName",options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                    var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
                     $a.attr("href", "javascript:void(0);");
-                    $a.on("click", function(){
+                    $a.on("click", function() {
                         postal.unsubscribeFor();
                         if (typeof componentsRegistry != "undefined") {
                             $.each(componentsRegistry, function(i, field) {
@@ -533,8 +541,8 @@
                         }
                         var parsedLanguages = "";
                         for (var language in options.releases.items[i].languages) {
-                              parsedLanguages = parsedLanguages + language + ',';
-                            }
+                            parsedLanguages = parsedLanguages + language + ',';
+                        }
                         parsedLanguages = parsedLanguages.slice(0, -1);
                         options.edition = options.releases.items[i].branchPath;
                         options.release = '';
@@ -542,9 +550,9 @@
                         options.languageObject = options.releases.items[i].languages;
                         $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
 
-                        
-                        let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0,2); 
-                        options.defaultLanguage = parsedLanguages.substr(0,2);
+
+                        let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
+                        options.defaultLanguage = parsedLanguages.substr(0, 2);
                         var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
@@ -553,15 +561,15 @@
                     });
                     $li.append($a);
                     $releaseSwitcher.append($li);
-                    
+
                     // set default selection for release 
                     if (options.edition && options.releases.items[i].branchPath === options.edition) {
                         $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                    } 
+                    }
                 }
-                              
+
             }
-            if(options.imsUrl !== null){
+            if (options.imsUrl !== null) {
                 $.getJSON("/authoring-services/projects").done(function(result) {
                     var $projectDdl = $('#projectDdl');
 
@@ -576,16 +584,16 @@
                         }
                     });
 
-                    projectsInStringFormat.sort(function(a,b) {
+                    projectsInStringFormat.sort(function(a, b) {
                         return a.key.localeCompare(b.key);
                     });
 
-                    projectsInDateFormat.sort(function(a,b) {
+                    projectsInDateFormat.sort(function(a, b) {
                         return b.key.localeCompare(a.key);
                     });
                     result.items = projectsInStringFormat.concat(projectsInDateFormat);
 
-                    if($('<option>').val('MAIN')) {
+                    if ($('<option>').val('MAIN')) {
                         $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
 
                         $.each(result.items, function() {
@@ -594,37 +602,37 @@
                         });
 
                         $(function() {
-                            var temp="MAIN";
+                            var temp = "MAIN";
                             $("#projectDdl").val(temp);
-                            if(options.edition.length > 0){
+                            if (options.edition.length > 0) {
                                 $("#projectDdl").val(options.edition);
                             }
                         });
                     }
 
-                    var projectChanged = function(){
+                    var projectChanged = function() {
                         getTaskList();
                         options.edition = $('#projectDdl').val();
-                        if(!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))){
+                        if (!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))) {
                             options.release = "None";
                         }
                         var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                         var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
                         var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);					
+                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
 
                         cdPanel.subscribe(tpt);
                         cdPanel.subscribe(searchP);
-                        cdPanel.subscribe(refP);					
+                        cdPanel.subscribe(refP);
                         cdPanel.setupCanvas();
                     }
                     $("#projectDdl").on("change", function(event) {
                         projectChanged(this, event);
                     });
 
-                    if(options.edition) {
+                    if (options.edition) {
                         $("#projectDdl").val(options.edition).change();
-                        if(originalTask) {
+                        if (originalTask) {
                             options.task = originalTask;
                             //options.release = originalTask;
                         }
@@ -634,7 +642,7 @@
                 });
 
                 // TASK DROPDOWN HANDLER
-                var getTaskList = function () {
+                var getTaskList = function() {
                     var project = $('#projectDdl').val();
                     project = project.substring(project.lastIndexOf("/") + 1);
                     if (project === 'MAIN') {
@@ -644,12 +652,12 @@
 
                         return;
                     }
-                    $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function (result) {
+                    $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function(result) {
                         var $taskDdl = $('#taskDdl');
                         $taskDdl.html("");
                         $('<option>').val("None").text("None").appendTo($taskDdl);
                         result.items = groupTaskList(result);
-                        $.each(result, function () {
+                        $.each(result, function() {
                             // var relativePath = this.path.substring("MAIN/".length);
                             $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
                         });
@@ -657,7 +665,7 @@
                         if (options.release) {
                             $("#taskDdl").val(options.release).change();
                         }
-                        var taskChanged = function () {
+                        var taskChanged = function() {
                             // var branchPath = $('#taskDdl').val();
                             //If no task selected in the task dropdown, use the project
                             // if (branchPath == "None") {
@@ -676,14 +684,14 @@
                             cdPanel.subscribe(refP);
                             cdPanel.setupCanvas();
                         }
-                        $("#taskDdl").on("change", function (event) {
+                        $("#taskDdl").on("change", function(event) {
                             taskChanged(this, event);
                         });
                     });
                 }
             }
 
-            var groupTaskList  = function (taskList) {
+            var groupTaskList = function(taskList) {
                 //return b.baseTimestamp - a.baseTimestamp;
                 var map = {};
                 for (var i = 0; i < taskList.length; i++) {
@@ -695,14 +703,14 @@
                             items = map[strArray[0]];
                         }
                         items.push(task);
-                        items.sort(function(a,b) {
+                        items.sort(function(a, b) {
                             var strArrayA = a.key.split('-');
                             var strArrayB = b.key.split('-');
-                            if(strArrayA[0] > strArrayB[0]) {
+                            if (strArrayA[0] > strArrayB[0]) {
                                 return -1;
-                            } else if(strArrayA[0] < strArrayB[0]) {
+                            } else if (strArrayA[0] < strArrayB[0]) {
                                 return 1;
-                            } else if (strArrayA.length > 1 && strArrayB.length > 1){
+                            } else if (strArrayA.length > 1 && strArrayB.length > 1) {
                                 return parseInt(strArrayB[1]) - parseInt(strArrayA[1]);
                             } else {
                                 return b.key.localeCompare(a.key);
@@ -711,12 +719,12 @@
                         map[strArray[0]] = items;
                     } else {
                         items.push(task);
-                        map[task.key]	= items;
+                        map[task.key] = items;
                     }
                 }
 
                 var keys = Object.keys(map);
-                keys.sort(function (a, b) {
+                keys.sort(function(a, b) {
                     return a.localeCompare(b);
                 });
 
@@ -1258,8 +1266,8 @@
         }
 
         function switchRelease(label) {
-            
-            
+
+
         }
         //PWI 20161108 This function went missing at some point.  Returning as urgent P1
         function verifyDate(release) {
@@ -1332,7 +1340,7 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
-
+        
         .ribbon span {
             border: 1px solid #faa;
             color: #fff;
@@ -1343,11 +1351,11 @@
             text-align: center;
             text-decoration: none;
         }
-
+        
         .navbar-brand {
             margin-top: 4px;
         }
-
+        
         .navbar .navbar-btn {
             margin-left: 10px;
         }
@@ -1377,10 +1385,10 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel"></span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" id="releaseSwitcher" role="menu">
-                            
+
                         </ul>
                     </li>
-                    
+
                     <li class="navbar-btn" id="perspective-selector">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
@@ -1392,7 +1400,7 @@
                             <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>
                         </ul>
                     </li>
-                
+
                     <li class="navbar-btn feedback-button">
                         <button type="button" class="btn btn-info" onclick="FreshWidget.show();
                                     return false;">
@@ -1402,7 +1410,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="http://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics</a></li>
+                            <li><a href="https://prod-browser-exten.ihtsdotools.org/qa/" target=_blank>SNOMED CT Statistics</a></li>
                             <li class="divider"></li>
                             <li><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></li>
                             <li class="divider"></li>
@@ -1452,7 +1460,7 @@
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
                 <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span></h1>
-                <p><a href="http://browser.ihtsdotools.org/qa" target=_blank>SNOMED CT Statistics - International Edition</a></p>
+                <p><a href="https://prod-browser-exten.ihtsdotools.org/qa/" target=_blank>SNOMED CT Statistics - International Edition</a></p>
                 <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
@@ -1477,7 +1485,7 @@
                     <br><img src="/browser/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
                     <br><img src="/browser/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
                     <br><img src="/browser/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br><img src="/browser/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>                    
+                    <br><img src="/browser/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
                 </p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
@@ -1551,7 +1559,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <!-- Full Perspective -->
         <div id="full-height-perspective" class="bperspective">
             <div id="spliter-fh" class="row" style="width:100%; height: 91%; position: absolute;">
@@ -1685,7 +1693,7 @@
             "url": "https://ihtsdo.freshdesk.com"
         });
     </script>
-<!--
+    <!--
     <script type="text/javascript" src="https://assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
         FreshWidget.init("", {
