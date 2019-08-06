@@ -178,38 +178,15 @@
                 var internationalReleases = [];
                 var localReleases = [];
 
-                    // dynamic extension links
-                    var internationalReleases = [];
-                    var localReleases = [];
-
-                    // Add GB extension
-                    var gbExtension = {};
-                    gbExtension.name = 'United Kingdom edition';
-                    gbExtension.countryCode = 'gb';
-                    gbExtension.latestVersion = {};
-                    gbExtension.latestVersion.version = '(hosted by the UK)';
-                    gbExtension.href = 'https://termbrowser.nhs.uk/';
-                    localReleases.push(gbExtension);
-
-                    for (let i = 0; i < options.releases.items.length; ++i) {
-                        var release = options.releases.items[i];
-                        if (release.shortName === 'SNOMEDCT' || release.shortName === 'SNOMEDCT-ES') {
-                            internationalReleases.push(release);
-                        }
-                        else {
-                            localReleases.push(release);
-                        }            
-                    }               
-
-                    // sort extensions
-                    internationalReleases.sort(function(a,b) {
-                        if (b.shortName === 'SNOMEDCT'){
-                            return 1;
-                        } else {
-                            return a.name.localeCompare(b.name);
-                        }
-                    });
-                    addEditionLinks($('#international_editions'),internationalReleases);   
+                // Add GB extension
+                var gbExtension = {};
+                gbExtension.name = 'United Kingdom edition';
+                gbExtension.countryCode = 'gb';
+                gbExtension.latestVersion = {};
+                gbExtension.latestVersion.version = '(hosted by the UK)';
+                gbExtension.href = 'https://termbrowser.nhs.uk/';
+                localReleases.push(gbExtension);
+                    
                 if (options.releases) {
                     for (let i = 0; i < options.releases.items.length; ++i) {
                         var release = options.releases.items[i];
