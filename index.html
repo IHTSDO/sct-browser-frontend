@@ -502,7 +502,14 @@
                 currentPerspective = "responsive";
                 switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
             } else {
-                initialize();
+                if(options.imsUrl != null){
+                    currentPerspective = "full";
+                    switchToFullHeight(cdValue1, txValue1);
+                }
+                else{
+                    initialize();
+                }
+                
             }
             if (!options.acceptLicense) {
                 $('#license-modal').modal('show');
