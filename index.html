@@ -130,6 +130,20 @@
                 options.serverUrl = "/snowstorm/snomed-ct/v2";
                 options.queryServerUrl = "/snowstorm/snomed-ct/v2";
                 options.releases = result;
+                //add refsets tab
+                    
+                var $leftHandTabs = $('#fh-tabs');
+                var $tab = $('<li>');
+                var $link = $('<a>');
+                $link.attr('href', '#fh-refset_canvas');
+                $link.attr('data-toggle', 'tab');
+                var $span = $('<span>');
+                $span.attr('data-i18n-id', 'i18n_refset');
+                $span.addClass('i18n');
+                $link.append($span);
+                $tab.append($link);
+                $leftHandTabs.append($tab);
+                
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
                     var $header = $('#header-nav');
@@ -156,6 +170,7 @@
                     $taskSelect.css('width', '110px');
                     $taskSelect.attr('id', 'taskDdl');
                     $header.append($taskSelect);
+                    
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
@@ -1575,7 +1590,6 @@
                         </li>
                         <li class="active"><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
                         <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
-                        <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
                         <!--<li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Constraint</span></a></li>-->
                     </ul>
                     <div class="tab-content">
