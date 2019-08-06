@@ -13552,6 +13552,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             } else {
                 $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-minus");
             }
+            $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").find("ul").remove();
             $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").append(JST["views/taxonomyPlugin/body/children.hbs"](context));
             if (panel.options.descendantsCount == true) {
                 result.forEach(function(concept) {
