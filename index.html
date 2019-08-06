@@ -372,9 +372,11 @@
         }();
 
         function start() {
-            //if (!!window.MSInputMethodContext && !!document.documentMode) {
-            //    window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
-            //}
+            if(options.imsUrl === null){
+                if (!!window.MSInputMethodContext && !!document.documentMode) {
+                    window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
+                }
+            }
             // Read parameters
             $.ajaxSetup({
                 "error": function(jqXHR, textStatus, errorThrown) {
