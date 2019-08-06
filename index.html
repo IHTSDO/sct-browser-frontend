@@ -235,6 +235,9 @@
                 options.queryServerUrl = "/snowowl/snomed-ct/v2";
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
+                    
+                    options.language = 'en';
+                    options.languageObject = {en: "English"};
 
                     //create project/task switcher
                     var $header = $('#header-nav');
