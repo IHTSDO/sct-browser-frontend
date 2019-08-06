@@ -511,7 +511,7 @@
                 }
                 
             }
-            if (!options.acceptLicense) {
+            if (!options.acceptLicense && options.imsUrl === null) {
                 $('#license-modal').modal('show');
             }
 
