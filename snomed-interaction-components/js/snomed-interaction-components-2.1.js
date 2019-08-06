@@ -600,25 +600,25 @@ function program12(depth0,data) {
 function program14(depth0,data) {
   
   
-  return "\r\n                , <span class='i18n' data-i18n-id='i18n_primitive'>PRIMITIVE</span>\r\n            ";
+  return "\r\n                <span class='i18n' data-i18n-id='i18n_primitive'>PRIMITIVE</span><span>,</span>\r\n            ";
   }
 
 function program16(depth0,data) {
   
   
-  return "\r\n                , <span class='i18n' data-i18n-id='i18n_fully_defined'>Fully defined</span>\r\n            ";
+  return "\r\n                <span class='i18n' data-i18n-id='i18n_fully_defined'>Defined</span><span>,</span>\r\n            ";
   }
 
 function program18(depth0,data) {
   
   
-  return "\r\n                , <span class='i18n' data-i18n-id='i18n_active'>Active</span>\r\n            ";
+  return "\r\n                <span class='i18n' data-i18n-id='i18n_active'>Active</span>\r\n            ";
   }
 
 function program20(depth0,data) {
   
   
-  return "\r\n                , <span class='i18n' data-i18n-id='i18n_inactive'>Inactive</span>\r\n            ";
+  return "\r\n                <span class='i18n' data-i18n-id='i18n_inactive'>Inactive</span>\r\n            ";
   }
 
 function program22(depth0,data) {
@@ -686,10 +686,10 @@ function program30(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n                </span>\r\n            </h4>\r\n            <br>SCTID: "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\r\n\r\n            ";
+    + "<span>,</span>\r\n\r\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(16, program16, data),fn:self.program(14, program14, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n\r\n            ";
+  buffer += "\r\n            \r\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(20, program20, data),fn:self.program(18, program18, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.active), true, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.active), true, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n            ";
@@ -1708,7 +1708,7 @@ function program56(depth0,data) {
 function program58(depth0,data) {
   
   
-  return "\r\n        <p>No GCI's found</p>\r\n    ";
+  return "       \r\n    ";
   }
 
 function program60(depth0,data) {
@@ -1832,7 +1832,7 @@ function program67(depth0,data) {
 function program69(depth0,data) {
   
   
-  return "\r\n        <p>No additional relationships</p>\r\n    ";
+  return "        \r\n    ";
   }
 
 function program71(depth0,data) {
