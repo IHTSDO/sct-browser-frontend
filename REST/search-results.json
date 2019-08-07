@@ -1,0 +1,56 @@
+{
+    "content": [
+        {
+            "term": "Heart",
+            "conceptId": "302509004",
+            "termActive": true,
+            "conceptActive": true,
+            "fsn": "Entire heart (body structure)",
+            "moduleId": "900000000000207008",
+            "definitionStatus": {
+                "preferredTerm": "Primitive",
+                "conceptId": "900000000000074008"
+            },
+        },
+        {
+            "term": "Heart",
+            "conceptId": "80891009",
+            "termActive": true,
+            "conceptActive": true,
+            "fsn": "Heart structure (body structure)",
+            "moduleId": "900000000000207008",
+            "definitionStatus": {
+                "preferredTerm": "Primitive",
+                "conceptId": "900000000000074008"
+            },
+        },
+        {
+            "term": "Heartburn",
+            "conceptId": "16331000",
+            "termActive": true,
+            "conceptActive": true,
+            "fsn": "Heartburn (finding)",
+            "moduleId": "900000000000207008",
+            "definitionStatus": {
+                "preferredTerm": "Primitive",
+                "conceptId": "900000000000074008"
+            },
+        },
+        {
+            "term": "Heart rate",
+            "conceptId": "364075005",
+            "termActive": true,
+            "conceptActive": true,
+            "fsn": "Heart rate (observable entity)",
+            "moduleId": "900000000000207008",
+            "definitionStatus": {
+                "preferredTerm": "Primitive",
+                "conceptId": "900000000000074008"
+            },
+        }
+    ],
+    "size": 4,
+    "number": 0,
+    "totalPages": 2,
+    "totalElements": 7
+}

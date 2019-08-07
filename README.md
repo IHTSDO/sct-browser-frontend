@@ -28,9 +28,9 @@ Backend connection parameters
 The index.html defines the connection parameters that will passed to each of the components on initialization:
 ```javascript
 var options = {
-                serverUrl: "http://162.243.35.127:3000/snomed",
-                edition: "multi-edition",
-                release: "v20140701",
+                serverUrl: "http://browser.ihtsdotools.org/snomed",
+                edition: "en-edition",
+                release: "v20160631",
 ```
 These parameters include the server, the edition and the release,
 
@@ -107,24 +107,40 @@ Customization points:
 
 ```
 
-URL Shortcuts
--------------
+## URL Shortcuts
 
 The browser includes URL parameters that will act as shorcuts for opening the browser with pre-defined settings or content selections, skipping the need of selecting options from the main view.
 
 Use:
-http://browser.ihtsdotools.org/index.html?perspective=full&conceptId1=195967001&edition=en-edition&release=v20140731&langRefset=900000000000509007
+http://browser.ihtsdotools.org/index.html?perspective=full&conceptId1=195967001
 
 Parameter|Example Value|Use
 ---|---|---
 server|HTTP URL for the alternative server|Used to specifed an alternative backend server, other than the default one.
 edition|en-edition, es-edition|Sets the edition that will be browsed, using the edition names defined by the backend.
-release|v20140731|Name of the release, usually the effective time preceded by a "v".
+release|v20160131|Name of the release, usually the effective time preceded by a "v".
 perspective|full,browsing,etc.|Sets the perspective to load.
-ui_language|en, es, da|Sets the UI language.
+ui_language|en, es, da, pt|Sets the UI language.
 conceptId1|any SCTID|Sets the first concept details widget to this concept.
 conceptId2|any SCTID|Sets the second concept details widget to this concept.
 conceptIdTx1|any SCTID|Sets the first taxonomy widget to this concept.
 conceptIdTx2|any SCTID|Sets the second taxonomy widget to this concept.
 acceptLicense|true| the SNOMED CT Browser License is automatically accepted without displaying the modal window. This means that you are explicitly accepting the license.
 diagrammingMarkupEnabled|true|SNOMED CT diagramming Markup is enabled.
+
+## Docker
+
+To easily run this front end in a docker instance, do the following to build the docker image:
+
+```bash
+docker build -t snomedstorm-browser-nginx .
+```
+
+and then run the nginx container with:
+
+``` bash
+docker run --name snowstorm-nginx -d -p 80:80 -v /host/pathtofiles:/usr/share/nginx/html:ro snomedstorm-browser-nginx
+```
+
+If you have different locations for the back API then make the necessary changes in the `docker/nginx.conf` file in this repo.
+
