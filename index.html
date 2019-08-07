@@ -524,15 +524,7 @@
             if (!options.acceptLicense && options.imsUrl === null) {
                 $('#license-modal').modal('show');
             }
-
-            var focusConcept = '';
-            var conceptId1 = QueryString.conceptId1;
             
-            if (conceptId1) {
-                focusConcept = conceptId1;
-            } else {
-                focusConcept = 138875005;
-            }
             if (options.edition) {                
                 $("#projectDdl").val(options.edition).change();
             }
@@ -540,6 +532,8 @@
                 $("#taskDdl").val(options.release).change();
             }
            
+            var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
+
             // PROJECT DROPDOWN HANDLER
             if (options.releases && options.releases.items) {
                 var $releaseSwitcher = $('#releaseSwitcher');
