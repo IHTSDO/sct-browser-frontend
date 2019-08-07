@@ -10,39 +10,36 @@
     <meta name="author" content="SNOMED International">
     <link rel="icon" type="image/png" href="favicon.png">
 
-    <script src="/browser/external-libs/jquery-3.3.1.min.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/base64.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/jquery.svg.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/jquery.splitter-0.14.0.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/conduit.min.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/lodash.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/postal.min.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/bootstrap-tour.min.js"></script>
-    <script src="/browser/external-libs/jquery.i18n.properties-min-1.0.9.js"></script>
-    <script src="/browser/external-libs/handlebars-v1.3.0.min.js"></script>
-    <script src="/browser/external-libs/bootstrap.min.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/jquery.ui.touch-punch.min.js"></script>
-    <script src="/browser/external-libs/excellentexport.min.js"></script>
-    <script src="/browser/external-libs/notify.js"></script>
-    <script src="/browser/external-libs/clipboard.min.js"></script>
-    <script src="/browser/external-libs/popover-extra-placements.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/canvg.min.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/canvas2image.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+    <script src="/external-libs/base64.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery.svg.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery.splitter-0.14.0.js" type="text/javascript"></script>
+    <script src="/external-libs/conduit.min.js" type="text/javascript"></script>
+    <script src="/external-libs/lodash.js" type="text/javascript"></script>
+    <script src="/external-libs/postal.min.js" type="text/javascript"></script>
+    <script src="/external-libs/bootstrap-tour.min.js"></script>
+    <script src="/external-libs/jquery.i18n.properties-min-1.0.9.js"></script>
+    <script src="/external-libs/handlebars-v1.3.0.min.js"></script>
+    <script src="/external-libs/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/external-libs/jquery.ui.touch-punch.min.js"></script>
+    <script src="/external-libs/excellentexport.min.js"></script>
+    <script src="/external-libs/notify.js"></script>
+    <script src="/external-libs/clipboard.min.js"></script>
+    <script src="/external-libs/popover-extra-placements.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="/browser/css/jquery.splitter.css">
-    <link rel="stylesheet" type="text/css" href="/browser/css/jquery-ui-1.10.4.custom.min.css">
-    <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap.min.base.12.css">
-    <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-tour.css">
-    <link rel="stylesheet" type="text/css" href="/browser/css/popover-extra-placements.css">
-    <link rel="stylesheet" type="text/css" href="/browser/css/animate.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/jquery.splitter.css">
+    <link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.base.12.css">
+    <link rel="stylesheet" href="/css/bootstrap-tour.css">
+    <link rel="stylesheet" href="/css/popover-extra-placements.css">
+    <link rel="stylesheet" href="/css/animate.css">
 
-    <link rel="stylesheet" type="text/css" href="/browser/snomed-interaction-components/css/snomed-interaction-components-2.1.css">
-
-    <script src="/browser/snomed-interaction-components/js/snomed-interaction-components-2.1.js"></script>
-    <script src="/browser/external-libs/jquery.history.js"></script>
-    <script src="/browser/external-libs/ZeroClipboard.js"></script>
+    <link rel="stylesheet" href="/snomed-interaction-components/css/snomed-interaction-components-1.37.4.5.min.css">
+    <script src="/snomed-interaction-components/js/snomed-interaction-components-1.37.4.5.min.js"></script>
+    <script src="/external-libs/jquery.history.js"></script>
+    <script src="/external-libs/ZeroClipboard.js"></script>
 
     <script type="text/javascript">
         function getCookie(c_name) {
@@ -72,33 +69,36 @@
             document.cookie = name + "=" + value + expires + "; path=/";
         }
 
-        var enableQueriesInFullPerspective = true;
+        var enableQueriesInFullPerspective = false;
         var selectedLanguage = 'en_US';
-        var selectedFlag = '/browser/img/flags/us.png';
+        var selectedFlag = '/img/flags/ie.png';
         var currentPerspective = "home";
 
-        var originalTask = '';
+        //It can be time consuming to load all the collections into mongo.  If you are only loading one collection
+        //set it here and all GUI elements will use this collection.  Used by switchReleases function
+        var mongoDetails = {
+            useMe: false, //if set to false this is ignored and normal defaults are taken, if true all the parameters are used!
+            database: 'test',
+            collection: 'concepts',
+            mongoRestServer: 'http://localhost:3000/snomed'
+        };
+
         var options = {
-            serverUrl: "",
-            queryServerUrl: "",
-            queryBranch: "MAIN/2019-07-31",
-            edition: "MAIN",
-            release: "",
+            serverUrl: "https://browser.ihtsdotools.org/api/v1/snomed",
+            //                queryServerUrl: "http://sct-rest.ihtsdotools.org/api/snomed/",
+            edition: "en-edition",
+            release: "v20180731",
             showIds: false,
             hideNotAcceptable: true,
             displayInactiveDescriptions: false,
             displaySynonyms: true,
             selectedView: "inferred",
             displayChildren: false,
-            languages: ["en"],
-            languagesArray: {
-                'en': 'English'
-            },
-            defaultLanguage: 'en',
+            langRefset: ["900000000000509007"],
             closeButton: false,
             collapseButton: false,
             linkerButton: true,
-            subscribersMarker: false,
+            subscribersMarker: true,
             searchMode: "partialMatching",
             searchLang: "english",
             diagrammingMarkupEnabled: false,
@@ -109,248 +109,57 @@
         options.languageNameOfLangRefset = {
             "20581000087109": "fr-CA",
             "19491000087109": "en-CA",
+            "21000172104": "fr-BE",
+            "31000172101": "nl-BE",
             "900000000000508004": "GB",
+            "21000220103": "IE",
             "900000000000509007": "US",
             "450828004": "ES",
             "554461000005103": "DA",
             "46011000052107": "SV",
             "32570271000036106": "AU",
+            "271000210107": "NZ-EN",
+            "291000210106": "NZ-MI",
             //                "999001251000000103":"UK",
             "11000146104": "NL",
             "15551000146102": "NL-PF",
         };
 
+        if (mongoDetails.useMe) {
+            options.serverUrl = mongoDetails.mongoRestServer
+        }
         var manifests;
 
-        function determineServer() {
-            xhr = $.getJSON("/snowstorm/snomed-ct/v2/codesystems", function(result) {
-                console.log(result);
+        function loadManifests() {
+            xhrM = $.getJSON(options.serverUrl.replace("/snomed", "") + "/server/releases", function(result) {
+                // nothing
             }).done(function(result) {
-                console.log(result);
-                options.serverUrl = "/snowstorm/snomed-ct/v2";
-                options.queryServerUrl = "/snowstorm/snomed-ct/v2";
-                options.releases = result;
-                //add refsets tab
-                    
-                var $leftHandTabs = $('#fh-tabs');
-                var $tab = $('<li>');
-                var $link = $('<a>');
-                $link.attr('href', '#fh-refset_canvas');
-                $link.attr('data-toggle', 'tab');
-                var $span = $('<span>');
-                $span.attr('data-i18n-id', 'i18n_refset');
-                $span.addClass('i18n');
-                $link.append($span);
-                $tab.append($link);
-                $leftHandTabs.append($tab);
-                
-                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
-                    options.imsUrl = result.endpoints.imsEndpoint;
-                    var $header = $('#header-nav');
-                    var $projectSpan = $('<span>');
-                    $projectSpan.css('margin-left', '10px');
-                    $projectSpan.html('Project');
-                    $header.append($projectSpan);
-
-                    var $projectSelect = $('<select>');
-                    $projectSelect.css('margin-top', '18px');
-                    $projectSelect.css('margin-left', '2px');
-                    $projectSelect.css('width', '110px');
-                    $projectSelect.attr('id', 'projectDdl');
-                    $header.append($projectSelect);
-
-                    var $taskSpan = $('<span>');
-                    $taskSpan.css('margin-left', '10px');
-                    $taskSpan.html('Task');
-                    $header.append($taskSpan);
-
-                    var $taskSelect = $('<select>');
-                    $taskSelect.css('margin-top', '18px');
-                    $taskSelect.css('margin-left', '2px');
-                    $taskSelect.css('width', '110px');
-                    $taskSelect.attr('id', 'taskDdl');
-                    $header.append($taskSelect);
-                    
-                    start();
-                }).fail(function() {
-                    options.imsUrl = null;
-                    start();
-                });
-
-                const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES'];
-                // sort extensions. International and Spanish Editions are always on Top
-                if (options.releases) {
-                    options.releases.items.sort(function(a, b) {
-                        if (a.shortName === 'SNOMEDCT' && b.shortName === 'SNOMEDCT-ES') {
-                            return -1;
-                        }
-                        if (b.shortName === 'SNOMEDCT' && a.shortName === 'SNOMEDCT-ES') {
-                            return 1;
-                        }
-                        if (internationalEditionShortNames.indexOf(a.shortName) > -1) {
-                            return -1;
-                        }
-                        if (internationalEditionShortNames.indexOf(b.shortName) > -1) {
-                            return 1;
-                        }
-
-                        return a.name.localeCompare(b.name);
-                    });
-                }
-
-                // dynamic extension links
-                var internationalReleases = [];
-                var localReleases = [];
-
-                // Add GB extension
-                var gbExtension = {};
-                gbExtension.name = 'United Kingdom edition';
-                gbExtension.countryCode = 'gb';
-                gbExtension.latestVersion = {};
-                gbExtension.latestVersion.version = '(hosted by the UK)';
-                gbExtension.href = 'https://termbrowser.nhs.uk/';
-                localReleases.push(gbExtension);
-
-                if (options.releases) {
-                    for (let i = 0; i < options.releases.items.length; ++i) {
-                        var release = options.releases.items[i];
-                        if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
-                            internationalReleases.push(release);
-                        } else {
-                            localReleases.push(release);
-                        }
-                    }
-                }
-
-                addEditionLinks($('#international_editions'), internationalReleases);
-
-                // sort local extensions again
-                localReleases.sort(function(a, b) {
-                    return a.name.localeCompare(b.name);
-                });
-                addEditionLinks($('#local_editions'), localReleases);
+                manifests = result;
+                //console.log(result);
             }).fail(function() {
-                console.log('fail');
-                options.serverUrl = "/snowowl/snomed-ct/v2";
-                options.queryServerUrl = "/snowowl/snomed-ct/v2";
-                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
-                    options.imsUrl = result.endpoints.imsEndpoint;
-                    
-                    options.language = 'en';
-                    options.languageObject = {en: "English"};
-
-                    //create project/task switcher
-                    var $header = $('#header-nav');
-                    var $projectSpan = $('<span>');
-                    $projectSpan.css('margin-left', '10px');
-                    $projectSpan.html('Project');
-                    $header.append($projectSpan);
-
-                    var $projectSelect = $('<select>');
-                    $projectSelect.css('margin-top', '18px');
-                    $projectSelect.css('margin-left', '2px');
-                    $projectSelect.css('width', '110px');
-                    $projectSelect.attr('id', 'projectDdl');
-                    $header.append($projectSelect);
-
-                    var $taskSpan = $('<span>');
-                    $taskSpan.css('margin-left', '10px');
-                    $taskSpan.html('Task');
-                    $header.append($taskSpan);
-
-                    var $taskSelect = $('<select>');
-                    $taskSelect.css('margin-top', '18px');
-                    $taskSelect.css('margin-left', '2px');
-                    $taskSelect.css('width', '110px');
-                    $taskSelect.attr('id', 'taskDdl');
-                    $header.append($taskSelect);
-
-                    //hide release switcher
-                    var $releaseSwitcher = $('#edition-selector');
-                    $releaseSwitcher.css('display', 'none');
-
+                $.notify("Error Terminology server not accessible!", {
+                    autoHide: false,
+                    className: "error"
+                });
+                //                alert("Error Terminolgy server not accesed");
+                console.log("fail Manifest");
+            });
+            $.when(xhrM).done(function() {
+                xhr = $.getJSON("https://prod-browser-exten.ihtsdotools.org/api/snomed/".replace("snomed", "") + "server/releases", function(result) {
+                    // nothing
+                }).done(function(result) {
+                    $.each(result, function(i, field) {
+                        manifests.push(field);
+                    });
                     start();
                 }).fail(function() {
-                    options.imsUrl = null;
-                    start();
+                    $.notify("Error Terminology server not accessible!", {
+                        autoHide: false,
+                        className: "error"
+                    });
+                    //                console.log("fail Manifest");
                 });
             });
-        }
-
-        var addEditionLinks = function($releaseSwitcher, releases) {
-            for (let i = 0; i < releases.length; ++i) {
-                let release = releases[i];
-
-                var $img = $('<img>').attr("src", release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" : "/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
-
-                var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
-                $span1.text("Go browsing...");
-                var $span2 = $('<span>').attr("class", "small");
-                $span2.append(release.name + "<br>" + release.latestVersion.version);
-
-                var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
-                $a.append($img);
-                $a.append("&nbsp;&nbsp;&nbsp;");
-                $a.append($span1);
-                $a.append("<br>");
-                $a.append($span2);
-
-                if (release.href) {
-                    $a.attr("href", release.href);
-                    $a.attr("target", "_blank");
-                } else {
-                    $a.attr("href", "javascript:void(0);");
-                    $a.on("click", function() {
-                        var parsedLanguages = "";
-                        for (var language in release.languages) {
-                            parsedLanguages = parsedLanguages + language + ',';
-                        }
-                        parsedLanguages = parsedLanguages.slice(0, -1);
-                        options.edition = release.branchPath;
-                        options.release = '';
-                        options.languages = parsedLanguages;
-                        options.languageObject = release.languages;
-                        $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-
-                        let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
-                        options.defaultLanguage = parsedLanguages.substr(0, 2);
-                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
-
-                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                        switchToFullHeight(404684003, 138875005);
-                    });
-                }
-
-                $releaseSwitcher.append($a);
-                $releaseSwitcher.append("&nbsp;");
-            }
-        }
-
-        var getSelectedLanguageAndFlag = function(ui_language) {
-            if (ui_language == "en") {
-                selectedLanguage = 'en_US';
-                selectedFlag = '/browser/img/flags/us.png';
-            } else if (ui_language == "es") {
-                selectedLanguage = 'es';
-                selectedFlag = '/browser/img/flags/es.png';
-            } else if (ui_language == "sv") {
-                selectedLanguage = 'sv';
-                selectedFlag = '/browser/img/flags/se.png';
-            } else if (ui_language == "da") {
-                selectedLanguage = 'da';
-                selectedFlag = '/browser/img/flags/dk.png';
-            } else if (ui_language == "pt") {
-                selectedLanguage = 'pt';
-                selectedFlag = '/browser/img/flags/pt.png';
-            } else {
-                selectedLanguage = 'en_US';
-                selectedFlag = '/browser/img/flags/us.png';
-            }
-
-            return {
-                'selectedLanguage': selectedLanguage,
-                'selectedFlag': selectedFlag
-            };
         }
 
         var tours = {};
@@ -375,19 +184,7 @@
         }();
 
         function start() {
-            if(options.imsUrl === null){
-                if (!!window.MSInputMethodContext && !!document.documentMode) {
-                    window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
-                }
-            }
             // Read parameters
-            $.ajaxSetup({
-                "error": function(jqXHR, textStatus, errorThrown) {
-                    if (options.imsUrl && jqXHR.status == 403) {
-                        window.location = decodeURIComponent(options.imsUrl + 'login' + '?serviceReferer=' + window.location.href);
-                    }
-                }
-            });
             $(function() {
                 $.extend($.fn.disableTextSelect = function() {
                     return this.each(function() {
@@ -409,8 +206,8 @@
                 //options.serverUrl = "http://107.170.33.116/api";
             }
 
-            if (typeof QueryString.languages != "undefined") {
-                options.languages = QueryString.languages;
+            if (typeof QueryString.langRefset != "undefined") {
+                options.langRefset = QueryString.langRefset;
             }
 
             if (typeof QueryString.server != "undefined") {
@@ -418,21 +215,16 @@
             }
 
             var edition = QueryString.edition;
-            // if (typeof edition == "undefined" || edition == null || edition == "") {
-            //     edition = "en-edition";
-            // }
-            if (typeof edition != "undefined") {
-                options.edition = edition;
+            if (typeof edition == "undefined" || edition == null || edition == "") {
+                edition = "en-edition";
             }
-
+            options.edition = edition;
 
             var release = QueryString.release;
             if (typeof release == "undefined" || release == null || release == "") {
-                //release = "v20180731";
+                release = "v20180731";
             }
-            if (typeof release != "undefined") {
-                options.release = release;
-            }
+            options.release = release;
 
             var diagrammingMarkupEnabled = QueryString.diagrammingMarkupEnabled;
             if (typeof diagrammingMarkupEnabled == "undefined" || diagrammingMarkupEnabled == null || diagrammingMarkupEnabled == "") {
@@ -440,24 +232,33 @@
             }
             options.diagrammingMarkupEnabled = diagrammingMarkupEnabled;
 
-            if (QueryString.languages) {
-                var languages = QueryString.languages.split(",");
-                if (typeof languages == "undefined" || languages == null || languages == "") {
-                    languages = options.languages;
+            //                var langRefset = QueryString.langRefset;
+            if (QueryString.langRefset) {
+                var langRefset = QueryString.langRefset.split(",");
+                if (typeof langRefset == "undefined" || langRefset == null || langRefset == "") {
+                    langRefset = options.langRefset;
                 }
-                options.languages = languages;
-            }
-            if (options.releases && options.releases.items && options.releases.items.length > 0) {
-                for (let i = 0; i < options.releases.items.length; ++i) {
-                    if (options.releases.items[i].branchPath === options.edition) {
-                        options.languageObject = options.releases.items[i].languages;
-                    }
-                }
+                options.langRefset = langRefset;
             }
 
-            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(QueryString.ui_language);
-            selectedLanguage = selectedLanguageAndFlag.selectedLanguage;
-            selectedFlag = selectedLanguageAndFlag.selectedFlag;
+            $("#editionLabel").html(edition + " " + release);
+
+            if (QueryString.ui_language == "en") {
+                selectedLanguage = 'en_US';
+                selectedFlag = '/img/flags/us.png';
+            } else if (QueryString.ui_language == "es") {
+                selectedLanguage = 'es';
+                selectedFlag = '/img/flags/es.png';
+            } else if (QueryString.ui_language == "se") {
+                selectedLanguage = 'se';
+                selectedFlag = '/img/flags/se.png';
+            } else if (QueryString.ui_language == "da") {
+                selectedLanguage = 'da';
+                selectedFlag = '/img/flags/dk.png';
+            } else if (QueryString.ui_language == "pt") {
+                selectedLanguage = 'pt';
+                selectedFlag = '/img/flags/pt.png';
+            }
 
             switchLanguage(selectedLanguage, selectedFlag, false);
 
@@ -486,9 +287,18 @@
                 acceptLicense = false;
             }
             options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
-
+            //                if (QueryString.edition && QueryString.release){
             var i = 0;
-
+            while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))) {
+                i++;
+            }
+            if (i < manifests.length) {
+                options.manifest = manifests[i];
+                options.textIndexNormalized = options.manifest.textIndexNormalized;
+                //                        console.log(options.textIndexNormalized);
+                //                        verifyDate(options.manifest.expirationDate);
+            }
+            //                }
             if (QueryString.perspective == "home") {
                 initialize();
             } else if (QueryString.perspective == "browsing") {
@@ -507,269 +317,16 @@
                 currentPerspective = "responsive";
                 switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
             } else {
-                if(options.imsUrl != null){
-                    currentPerspective = "full";
-                    switchToFullHeight(cdValue1, txValue1);
-                }
-                else{
-                    initialize();
-                }
-                
+                initialize();
             }
-            if (!options.acceptLicense && options.imsUrl === null) {
+            if (!options.acceptLicense) {
                 $('#license-modal').modal('show');
             }
-
-            var getUrlParameter = function getUrlParameter(sParam) {
-                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                    sURLVariables = sPageURL.split('&'),
-                    sParameterName,
-                    i;
-
-                for (i = 0; i < sURLVariables.length; i++) {
-                    sParameterName = sURLVariables[i].split('=');
-
-                    if (sParameterName[0] === sParam) {
-                        return sParameterName[1] === undefined ? true : sParameterName[1];
-                    }
-                }
-            };
-            var focusConcept = '';
-            if (getUrlParameter('conceptId1')) {
-                focusConcept = getUrlParameter('conceptId1');
-            } else {
-                focusConcept = 138875005;
-            }
-            if (getUrlParameter('edition')) {
-                options.edition = getUrlParameter('edition');
-                $("#projectDdl").val(options.edition).change();
-            }
-            if (getUrlParameter('release')) {
-                options.release = getUrlParameter('release');
-                $("#taskDdl").val(options.release).change();
-            }
-            //            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131', '2019-01-31', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-            //                                        reloadCurrentPerspective();">International Edition 20190131</a></li>
-
-            // PROJECT DROPDOWN HANDLER
-            if (options.releases && options.releases.items) {
-                var $releaseSwitcher = $('#releaseSwitcher');
-                for (let i = 0; i < options.releases.items.length; ++i) {
-                    var $li = $('<li>')
-                    var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                    $a.attr("href", "javascript:void(0);");
-                    $a.on("click", function() {
-                        postal.unsubscribeFor();
-                        if (typeof componentsRegistry != "undefined") {
-                            $.each(componentsRegistry, function(i, field) {
-                                field = null;
-                            });
-                            componentsRegistry = [];
-                        }
-                        var parsedLanguages = "";
-                        for (var language in options.releases.items[i].languages) {
-                            parsedLanguages = parsedLanguages + language + ',';
-                        }
-                        parsedLanguages = parsedLanguages.slice(0, -1);
-                        options.edition = options.releases.items[i].branchPath;
-                        options.release = '';
-                        options.languages = parsedLanguages;
-                        options.languageObject = options.releases.items[i].languages;
-                        $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+            //                console.log(manifests);
 
 
-                        let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
-                        options.defaultLanguage = parsedLanguages.substr(0, 2);
-                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
-                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-
-                        reloadCurrentPerspective();
-                    });
-                    $li.append($a);
-                    $releaseSwitcher.append($li);
-
-                    // set default selection for release 
-                    if (options.edition && options.releases.items[i].branchPath === options.edition) {
-                        $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                    }
-                }
-
-            }
-            if (options.imsUrl !== null) {
-                $.getJSON("/authoring-services/projects").done(function(result) {
-                    var $projectDdl = $('#projectDdl');
-
-                    var projectsInDateFormat = [];
-                    var projectsInStringFormat = [];
-                    result.forEach(function(item) {
-                        var strArray = item.key.split('-');
-                        if (!isNaN(strArray[0])) {
-                            projectsInDateFormat.push(item);
-                        } else {
-                            projectsInStringFormat.push(item);
-                        }
-                    });
-
-                    projectsInStringFormat.sort(function(a, b) {
-                        return a.key.localeCompare(b.key);
-                    });
-
-                    projectsInDateFormat.sort(function(a, b) {
-                        return b.key.localeCompare(a.key);
-                    });
-                    result.items = projectsInStringFormat.concat(projectsInDateFormat);
-
-                    if ($('<option>').val('MAIN')) {
-                        $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
-
-                        $.each(result.items, function() {
-                            var relativePath = this.branchPath.substring("MAIN/".length);
-                            $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
-                        });
-
-                        $(function() {
-                            var temp = "MAIN";
-                            $("#projectDdl").val(temp);
-                            if (options.edition.length > 0) {
-                                $("#projectDdl").val(options.edition);
-                            }
-                        });
-                    }
-
-                    var projectChanged = function() {
-                        getTaskList();
-                        options.edition = $('#projectDdl').val();
-                        if (!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))) {
-                            options.release = "None";
-                        }
-                        var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-                        var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-                        var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
-
-                        cdPanel.subscribe(tpt);
-                        cdPanel.subscribe(searchP);
-                        cdPanel.subscribe(refP);
-                        cdPanel.setupCanvas();
-                    }
-                    $("#projectDdl").on("change", function(event) {
-                        projectChanged(this, event);
-                    });
-
-                    if (options.edition) {
-                        $("#projectDdl").val(options.edition).change();
-                        if (originalTask) {
-                            options.task = originalTask;
-                            //options.release = originalTask;
-                        }
-                    } else {
-                        $("#projectDdl").val(options.release).change();
-                    }
-                });
-
-                // TASK DROPDOWN HANDLER
-                var getTaskList = function() {
-                    var project = $('#projectDdl').val();
-                    project = project.substring(project.lastIndexOf("/") + 1);
-                    if (project === 'MAIN') {
-                        var $taskDdl = $('#taskDdl');
-                        $taskDdl.html("");
-                        $('<option>').val("None").text("None").appendTo($taskDdl);
-
-                        return;
-                    }
-                    $.getJSON("/authoring-services/projects/" + project + "/tasks").done(function(result) {
-                        var $taskDdl = $('#taskDdl');
-                        $taskDdl.html("");
-                        $('<option>').val("None").text("None").appendTo($taskDdl);
-                        result.items = groupTaskList(result);
-                        $.each(result, function() {
-                            // var relativePath = this.path.substring("MAIN/".length);
-                            $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
-                        });
-
-                        if (options.release) {
-                            $("#taskDdl").val(options.release).change();
-                        }
-                        var taskChanged = function() {
-                            // var branchPath = $('#taskDdl').val();
-                            //If no task selected in the task dropdown, use the project
-                            // if (branchPath == "None") {
-                            //     branchPath = $('#projectDdl').val();
-                            // }
-                            options.edition = $('#projectDdl').val();
-                            options.release = $('#taskDdl').val();
-
-                            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-                            var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-                            var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-                            var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
-
-                            cdPanel.subscribe(tpt);
-                            cdPanel.subscribe(searchP);
-                            cdPanel.subscribe(refP);
-                            cdPanel.setupCanvas();
-                        }
-                        $("#taskDdl").on("change", function(event) {
-                            taskChanged(this, event);
-                        });
-                    });
-                }
-            }
-
-            var groupTaskList = function(taskList) {
-                //return b.baseTimestamp - a.baseTimestamp;
-                var map = {};
-                for (var i = 0; i < taskList.length; i++) {
-                    var task = taskList[i];
-                    var strArray = task.key.split('-');
-                    var items = [];
-                    if (strArray.length === 2 && !isNaN(strArray[1])) {
-                        if (strArray[0] in map) {
-                            items = map[strArray[0]];
-                        }
-                        items.push(task);
-                        items.sort(function(a, b) {
-                            var strArrayA = a.key.split('-');
-                            var strArrayB = b.key.split('-');
-                            if (strArrayA[0] > strArrayB[0]) {
-                                return -1;
-                            } else if (strArrayA[0] < strArrayB[0]) {
-                                return 1;
-                            } else if (strArrayA.length > 1 && strArrayB.length > 1) {
-                                return parseInt(strArrayB[1]) - parseInt(strArrayA[1]);
-                            } else {
-                                return b.key.localeCompare(a.key);
-                            }
-                        });
-                        map[strArray[0]] = items;
-                    } else {
-                        items.push(task);
-                        map[task.key] = items;
-                    }
-                }
-
-                var keys = Object.keys(map);
-                keys.sort(function(a, b) {
-                    return a.localeCompare(b);
-                });
-
-                var result = [];
-                for (var i = 0; i < keys.length; i++) {
-                    result = result.concat(map[keys[i]]);
-                }
-                return result;
-
-            };
-
-            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-            var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-            var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
-
-            cdPanel.subscribe(tpt);
-            cdPanel.subscribe(searchP);
-            cdPanel.setupCanvas();
+            //                verifyDate(release)
         }
 
         function initTour() {
@@ -1145,29 +702,21 @@
                 "display": "none"
             });
             $("#perspectiveLabel").html("Full");
-            //var fhOptions = jQuery.extend(true, {}, options);
-            options.subscribersMarker = false;
-            options.linkerButton = false;
-            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, options);
-            var fav = new favoritePanel(document.getElementById("fh-favorites_canvas"), options);
-            var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-            var spa = new searchPanel(document.getElementById("fh-search_canvas"), options);
-            var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, options);
-            var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), options);
-            // if (enableQueriesInFullPerspective) {
-            //     //                if ((cdPanel1.options.edition == "en-edition") || (cdPanel1.options.edition == "us-edition")) {
-            //     if (cdPanel1.options.edition == "en-edition") {
-            //         $("#fh-query_canvas-li").show();
-            //         var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), fhOptions);
-            //         cdPanel1.subscribe(qpa);
-            //     } else {
-            //         $("#fh-query_canvas-li").hide();
-            //     }
-            // } else {
-            //     $("#fh-query_canvas-li").hide();
-            // }
-            $("#fh-query_canvas-li").show();
-            cdPanel1.subscribe(qpa);
+            var fhOptions = jQuery.extend(true, {}, options);
+            fhOptions.subscribersMarker = false;
+            fhOptions.linkerButton = false;
+            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, fhOptions);
+            var fav = new favoritePanel(document.getElementById("fh-favorites_canvas"), fhOptions);
+            var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), fhOptions);
+            var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
+            var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
+            if (enableQueriesInFullPerspective) {
+                $("#fh-query_canvas-li").show();
+                var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), fhOptions);
+                cdPanel1.subscribe(qpa);
+            } else {
+                $("#fh-query_canvas-li").hide();
+            }
             cdPanel1.subscribe(tpt);
             cdPanel1.subscribe(spa);
             cdPanel1.subscribe(fav);
@@ -1195,8 +744,6 @@
                     field.loadMarkers();
             });
             switchLanguage(selectedLanguage, selectedFlag, false);
-            $('#fh-tabs li:eq(1) a').tab('show');
-            $('#fh-search_canvas-searchBox').focus()
         }
 
         function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
@@ -1255,25 +802,10 @@
         }
 
         function reloadCurrentPerspective() {
-            var cdValue1 = QueryString.conceptId1;
-            if (typeof cdValue1 == "undefined" || cdValue1 == null || cdValue1 == "") {
-                cdValue1 = 404684003;
-            }
-
-            var cdValue2 = QueryString.conceptId2;
-            if (typeof cdValue2 == "undefined" || cdValue2 == null || cdValue2 == "") {
-                cdValue2 = 404684003;
-            }
-
-            var txValue1 = QueryString.conceptIdTx1;
-            if (typeof txValue1 == "undefined" || txValue1 == null || txValue1 == "") {
-                txValue1 = 138875005;
-            }
-
-            var txValue2 = QueryString.conceptIdTx2;
-            if (typeof txValue2 == "undefined" || txValue2 == null || txValue2 == "") {
-                txValue2 = 138875005;
-            }
+            var cdValue1 = 404684003;
+            var cdValue2 = 404684003;
+            var txValue1 = 138875005;
+            var txValue2 = 138875005;
             if (currentPerspective == "home") {
                 initialize();
             } else if (currentPerspective == "browsing") {
@@ -1292,8 +824,47 @@
             }
         }
 
-        function switchRelease(label) {
+        function switchRelease(label, edition, release, langRefset, serverUrl) {
+            if (mongoDetails.useMe) {
+                edition = mongoDetails.database;
+                release = mongoDetails.collection;
+                serverUrl = mongoDetails.mongoRestServer; //serverUrl seems hardcoded in many places throughout the code
+            }
+            //                verifyDate(release);
+            if (langRefset == "31000146106") {
+                options.hideNotAcceptable = false;
+            }
+            postal.unsubscribeFor();
+            if (typeof componentsRegistry != "undefined") {
+                $.each(componentsRegistry, function(i, field) {
+                    field = null;
+                });
+                componentsRegistry = [];
+            }
+            var i = 0;
+            while (i < manifests.length && (manifests[i].databaseName != edition || manifests[i].collectionName != release.substr(1))) {
+                i++;
+            }
+            i = Math.min(i, manifests.length - 1); //fix array out of bounds causing NPE.
 
+            //                console.log(manifests[i].databaseName);
+            //                console.log(manifests[i].effectiveTime);
+
+            if (i < manifests.length) {
+                options.manifest = manifests[i];
+                options.textIndexNormalized = options.manifest.textIndexNormalized;
+                //                        console.log(options.textIndexNormalized);
+            }
+            options.edition = edition;
+            options.release = release;
+            options.langRefset = langRefset.split(",");
+            if (serverUrl) {
+                options.serverUrl = serverUrl;
+            } else {
+                options.serverUrl = "https://browser.ihtsdotools.org/api/snomed";
+            }
+            $("#perspective-selector").find("button").first().removeClass("disabled");
+            $("#editionLabel").html(label);
         }
         //PWI 20161108 This function went missing at some point.  Returning as urgent P1
         function verifyDate(release) {
@@ -1322,7 +893,7 @@
             $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
             jQuery.i18n.properties({
                 name: 'Languages',
-                path: '/browser/i18n/',
+                path: '/i18n/',
                 mode: 'both',
                 language: language
             });
@@ -1388,11 +959,11 @@
     </style>
 </head>
 
-<body onLoad="determineServer();" style="height: 100%; display: block;">
+<body onLoad="loadManifests();" style="height: 100%; display: block;">
     <nav class="navbar navbar-default  navbar-static-top" role="navigation">
         <div>
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header" id="header-nav">
+            <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
@@ -1401,31 +972,34 @@
                     </button>
                 <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
                     <strong>
-                            &nbsp;&nbsp;SNOMED CT Browser</strong></a>
+                            &nbsp;&nbsp;SNOMED Ireland BETA Extension SNOMED CT Browser</strong></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="navbar-btn" id="edition-selector">
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel"></span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20170131</span> <span class="caret"></span>
                             </button>
-                        <ul class="dropdown-menu" id="releaseSwitcher" role="menu">
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
+                                        reloadCurrentPerspective();">International Edition 20180731</a></li>
+                            <li><a href="javascript:void(0);" onclick="switchRelease('IE Edition 20181115', 'ie-beta-edition', 'v20181115', '21000220103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                        reloadCurrentPerspective();">IE Edition 20181115</a></li>
                         </ul>
                     </li>
-
                     <li class="navbar-btn" id="perspective-selector">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0);" onclick="switchToFullHeight(404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_full_perspective">Full</span></a></li>
+                            <!--                                <li><a href="javascript:void(0);" onclick="switchToBrowsing(404684003,404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_browsing_perspective">Browsing</span></a></li> -->
                             <li><a href="javascript:void(0);" onclick="switchToComparingConcepts(404684003, 404684003);"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
                             <li><a href="javascript:void(0);" onclick="switchToComparingTaxonomies(404684003, 138875005, 138875005);"><span class="i18n" data-i18n-id="i18n_comp_hier_perspective">Comparing hierarchy</span></a></li>
                             <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>
                         </ul>
                     </li>
-
                     <li class="navbar-btn feedback-button">
                         <button type="button" class="btn btn-info" onclick="FreshWidget.show();
                                     return false;">
@@ -1435,13 +1009,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="https://prod-browser-exten.ihtsdotools.org/qa/" target=_blank>SNOMED CT Statistics</a></li>
-                            <li class="divider"></li>
-                            <li><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></li>
-                            <li class="divider"></li>
                             <li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>
                             <li class="divider"></li>
-                            <li><a href="https://www.snomed.org/snomed-ct/software-tools" target="_blank">SNOMED International Tooling</a></li>
+                            <li><a href="http://www.ihtsdotools.org" target="_blank">SNOMED International Tooling</a></li>
                             <li><a href="http://www.snomed.org" target="_blank">SNOMED International</a></li>
                         </ul>
                     </li>
@@ -1449,19 +1019,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/browser/img/flags/us.png', true);"><img src="/browser/img/flags/us.png" /> English</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/browser/img/flags/es.png', true);"><img src="/browser/img/flags/es.png" /> Español</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('sv', '/browser/img/flags/se.png', true);"><img src="/browser/img/flags/se.png" /> Swedish</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/browser/img/flags/dk.png', true);"><img src="/browser/img/flags/dk.png" /> Dansk</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/browser/img/flags/pt.png', true);"><img src="/browser/img/flags/pt.png" /> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -1469,7 +1027,7 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/browser/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology" />
+                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="/img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology">
                             </a>
                     </li>
                 </ul>
@@ -1484,44 +1042,33 @@
         <!-- Welcome Perspective -->
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
-                <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span></h1>
-                <p><a href="https://prod-browser-exten.ihtsdotools.org/qa/" target=_blank>SNOMED CT Statistics - International Edition</a></p>
-                <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
+                <h1>Ireland Extension BETA SNOMED CT Browser</h1>
+                <p>SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development
+                    partners
+                </p>
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
-                <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="http://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a></p>
-                <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
-                <p id="international_editions" style="margin-bottom : 0px"></p>
-                <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
-                <p id="local_editions" style="margin-bottom : 0px"></p>
+                <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Edition</span></h2>
+                <p>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20180731', 'en-edition', 'v20180731', '900000000000509007', 'https://browser.ihtsdotools.org/api/v1/snomed');
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small    ">International edition<br>July
+                                   2018</span></a>
+                </p>
+                <h2><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
+                <p>
+                    <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Irish 20181115', 'ie-beta-edition', 'v20181115', '21000220103', 'https://prod-browser-exten.ihtsdotools.org/api/snomed/');
+                                switchLanguage('en_US', '/img/flags/ie.png', true);
+                                switchToFullHeight(404684003, 138875005);"><img src="/img/flags/ie.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Ireland Beta edition<br>November 2018</span></a>
+
+                </p>
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                     <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
-                <p>There is also a version of the browser containing other extensions of SNOMED CT which do not originate from Member countries. <a href="http://browser.ihtsdotools.org/other.html">Please see the page here</a>.</p>
-
-                <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
-                <p class="lead">
-                    <img src="/browser/img/flags/ar.png">&nbsp;&nbsp;&nbsp;<a href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
-                    <br><img src="/browser/img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
-                    <br><img src="/browser/img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
-                    <br><img src="/browser/img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
-                    <br><img src="/browser/img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="http://www.ssi.dk/English/HealthdataandICT/The%20National%20eHealth%20Authority.aspx" target="_blank">The National eHealth Authority, Denmark</a>
-                    <br><img src="/browser/img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nictiz.nl/page/Standaarden/SNOMED-CT" target="_blank">Nictiz, Netherlands</a>
-                    <br><img src="/browser/img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="http://www.socialstyrelsen.se/facksprak" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                    <br><img src="/browser/img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
-                    <br><img src="/browser/img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br><img src="/browser/img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
-                </p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
             </div>
             <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
             </p>
             <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>                for best results in tablets and phones.</span>
-            </p>
-            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong> <span id="csconsentlink">Cookie Settings</span></small>
-            </p>
-            <p> <small><b>&copy; SNOMED International 2019</b> v2.1<br></small>
             </p>
         </div>
         <!-- Browsing Perspective -->
@@ -1546,6 +1093,9 @@
             </div>
         </div>
         <footer>
+            <p>
+                <small><b>&copy; SNOMED International 2019</b> v1.37.4.4</small>
+            </p>
         </footer>
 
         <!-- Comparing concepts -->
@@ -1591,20 +1141,21 @@
                 <div class="a panel panel-default" id="fh-tabs-pane" style="border-radius: 0px;">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" id="fh-tabs">
-                        <li>
+                        <li class="active">
                             <a href="#fh-taxonomy_canvas" data-toggle="tab">
                                 <div>
                                     <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
                                 </div>
                             </a>
                         </li>
-                        <li class="active"><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
+                        <li><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
                         <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
+                        <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
                         <!--<li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Constraint</span></a></li>-->
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
-                        <div class="tab-pane active" id="fh-search_canvas" style="padding: 0px;margin: 0;"></div>
+                        <div class="tab-pane active" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
+                        <div class="tab-pane" id="fh-search_canvas" style="padding: 0px;margin: 0;"></div>
                         <div class="tab-pane" id="fh-favorites_canvas" style="padding: 0px;margin: 0;"></div>
                         <div class="tab-pane" id="fh-refset_canvas" style="padding: 0px;margin: 0;"></div>
                         <!--<div class="tab-pane" id="fh-query_canvas" style="padding: 0px;margin: 0;"></div>-->
@@ -1613,7 +1164,7 @@
                 <div class="a panel panel-default" id="fh-tabs-pane2" style="border-radius: 0px;">
                     <ul class="nav nav-tabs" id="fh-tabs2">
                         <li class="active"><a href="#fh-cd1_canvas-pane" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_concept_details">Concept Details</span></a></li>
-                        <li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Expression Constraint Queries</span></a></li>
+                        <li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Constraint</span></a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="fh-cd1_canvas-pane" style="padding: 0px;margin: 0;">
@@ -1622,7 +1173,9 @@
                         <div class="tab-pane" id="fh-query_canvas" style="padding: 0px;margin: 0;"></div>
                     </div>
                 </div>
-
+                <!--<div class="" id="conceptDetails-fh">-->
+                <!---->
+                <!--</div>-->
             </div>
         </div>
         <!-- Responsive Perspective -->
@@ -1651,7 +1204,7 @@
                             <span class="i18n" data-i18n-id="i18n_licence_agreement_3">“SNOMED”, “SNOMED CT” and “SNOMED Clinical Terms” are registered trademarks of the SNOMED International (<a href="http://www.snomed.org">www.snomed.org</a>).</span></p>
                         <p><span class="i18n" data-i18n-id="i18n_licence_agreement_4">Use of SNOMED CT in <strong>SNOMED International SNOMED CT Browser</strong> is governed by the conditions of the following SNOMED CT license issued by the SNOMED International</span>:</p>
                         <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”, “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and “SNOMED CT Content” are as defined in the SNOMED International Affiliate License Agreement (see www.snomed.org/license.pdf)</span>.</p>
-                        <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate)</a></span>.</p>
+                        <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://www.snomed.org/license">www.snomed.org/license</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://www.snomed.org/license.pdf">www.snomed.org/license.pdf)</a></span>.</p>
                         <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://www.snomed.org/members">www.snomed.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
                         <p style="margin-left: 20px;">4. <span class="i18n" data-i18n-id="i18n_licence_agreement_8">End Users, that do not hold an SNOMED International Affiliate License, may access SNOMED CT® using <strong>SNOMED International SNOMED CT Browser</strong> subject to acceptance of and adherence to the following sub-license limitations</span>:</p>
                         <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_9">The sub-licensee is only permitted to access SNOMED CT® using this software (or service) for the purpose of exploring and evaluating the terminology</span>.</p>
@@ -1673,19 +1226,19 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/browser/img/flags/us.png', true);"><img src="/browser/img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', '/img/flags/us.png', true);"><img src="/img/flags/us.png"> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/browser/img/flags/es.png', true);"><img src="/browser/img/flags/es.png" /> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', '/img/flags/es.png', true);"><img src="/img/flags/es.png"> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/browser/img/flags/dk.png', true);"><img src="/browser/img/flags/dk.png" /> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', '/img/flags/dk.png', true);"><img src="/img/flags/dk.png"> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/browser/img/flags/pt.png', true);"><img src="/browser/img/flags/pt.png" /> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', '/img/flags/pt.png', true);"><img src="/img/flags/pt.png"> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/browser/img/flags/se.png', true);"><img src="/browser/img/flags/se.png" /> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', '/img/flags/se.png', true);"><img src="/img/flags/se.png"> Svenska</a>
                             </li>
                         </ul>
                     </div>
@@ -1717,26 +1270,6 @@
             "url": "https://ihtsdo.freshdesk.com"
         });
     </script>
-    <!--
-    <script type="text/javascript" src="https://assets.freshdesk.com/widget/freshwidget.js"></script>
-    <script type="text/javascript">
-        FreshWidget.init("", {
-            "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback+(Not+for+Content+Issues)&searchArea=no&widgetType=popup&captcha=yes",
-            "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png",
-            "widgetType": "popup",
-            "utf8": "✓",
-            "captcha": "yes",
-            "buttonType": "image",
-            "buttonText": "Support",
-            "buttonColor": "white",
-            "buttonBg": "#00AADD",
-            "alignment": "1",
-            "offset": "-1500px",
-            "formHeight": "500px",
-            "url": "https://ihtsdo.freshdesk.com"
-        });
-    </script>
--->
 
     <script type="text/javascript">
         var $buoop = {};
@@ -1754,9 +1287,10 @@
     </script>
 
     <!--Start Cookie Script-->
-    <!--<script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>-->
-    <script src="/external-libs/cookie-script.js" type="text/javascript" charset="UTF-8"></script>
+    <script type="text/javascript" charset="UTF-8" src="//cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>
     <!--End Cookie Script-->
+
+
 
     <!-- Google Analytics script -->
     <script>
@@ -1771,6 +1305,7 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
         ga('create', 'UA-41892858-7', 'ihtsdotools.org');
         ga('send', 'pageview');
         ga('set', 'anonymizeIP', true);
