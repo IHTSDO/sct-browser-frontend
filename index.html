@@ -413,24 +413,29 @@
                 options.languages = QueryString.languages;
             }
 
-            if (typeof QueryString.server != "undefined") {
-                options.serverUrl = QueryString.server;
-            }
+            //if (typeof QueryString.server != "undefined") {
+            //    options.serverUrl = QueryString.server;
+            //}
 
             var edition = QueryString.edition;
             // if (typeof edition == "undefined" || edition == null || edition == "") {
             //     edition = "en-edition";
-            // }
-            if (typeof edition != "undefined") {
+            // }            
+            if (typeof edition != "undefined" && edition.startsWith('MAIN')) {                
                 options.edition = edition;
             }
 
+            var isTask = function(task) {
+                var strArray = task.split('-');                
+                if (strArray.length === 2 && !isNaN(strArray[1])){
+                    return true;
+                }
 
-            var release = QueryString.release;
-            if (typeof release == "undefined" || release == null || release == "") {
-                //release = "v20180731";
-            }
-            if (typeof release != "undefined") {
+                return false;
+            };
+
+            var release = QueryString.release;            
+            if (typeof release != "undefined" && isTask(release)) {
                 options.release = release;
             }
 
@@ -520,37 +525,21 @@
                 $('#license-modal').modal('show');
             }
 
-            var getUrlParameter = function getUrlParameter(sParam) {
-                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                    sURLVariables = sPageURL.split('&'),
-                    sParameterName,
-                    i;
-
-                for (i = 0; i < sURLVariables.length; i++) {
-                    sParameterName = sURLVariables[i].split('=');
-
-                    if (sParameterName[0] === sParam) {
-                        return sParameterName[1] === undefined ? true : sParameterName[1];
-                    }
-                }
-            };
             var focusConcept = '';
-            if (getUrlParameter('conceptId1')) {
-                focusConcept = getUrlParameter('conceptId1');
+            var conceptId1 = QueryString.conceptId1;
+            
+            if (conceptId1) {
+                focusConcept = conceptId1;
             } else {
                 focusConcept = 138875005;
             }
-            if (getUrlParameter('edition')) {
-                options.edition = getUrlParameter('edition');
+            if (options.edition) {                
                 $("#projectDdl").val(options.edition).change();
             }
-            if (getUrlParameter('release')) {
-                options.release = getUrlParameter('release');
+            if (options.release) {
                 $("#taskDdl").val(options.release).change();
             }
-            //            <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20190131', 'en-edition', 'v20190131', '2019-01-31', '900000000000509007', 'https://prod-browser-exten.ihtsdotools.org/api/snomed');
-            //                                        reloadCurrentPerspective();">International Edition 20190131</a></li>
-
+           
             // PROJECT DROPDOWN HANDLER
             if (options.releases && options.releases.items) {
                 var $releaseSwitcher = $('#releaseSwitcher');
