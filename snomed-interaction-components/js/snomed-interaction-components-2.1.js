@@ -2853,7 +2853,7 @@ function program1(depth0,data) {
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(19, program19, data),fn:self.program(17, program17, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.attributesFromAxioms)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.attributesFromAxioms)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(33, program33, data),fn:self.program(17, program17, data),data:data},helper ? helper.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.gciAxioms)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options) : helperMissing.call(depth0, "if_eq", ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.gciAxioms)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(37, program37, data),fn:self.program(17, program17, data),data:data},helper ? helper.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.gciAxioms)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options) : helperMissing.call(depth0, "if_eq", ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.gciAxioms)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    ";
   return buffer;
@@ -2989,33 +2989,48 @@ function program19(depth0,data) {
   }
 function program20(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n                <div>Axiom</div>\n                <div style=\"border: 1px solid darkgrey; border-radius: 4px; padding: 3px; background-color: white; margin: 5px;\">\n                    ";
-  stack1 = helpers.each.call(depth0, (depth0 && depth0.relationships), {hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data});
+  var buffer = "", stack1, helper, options;
+  buffer += "\n                ";
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(23, program23, data),fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.clinicalFindingRelationships), true, options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.clinicalFindingRelationships), true, options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n                    ";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.relationships), {hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                </span>\n                </div>\n            ";
   return buffer;
   }
 function program21(depth0,data) {
   
+  
+  return "\n                ";
+  }
+
+function program23(depth0,data) {
+  
+  
+  return "\n                    <div>Axiom</div>\n                    <div style=\"border: 1px solid darkgrey; border-radius: 4px; padding: 3px; background-color: white; margin: 5px;\">\n                ";
+  }
+
+function program25(depth0,data) {
+  
   var buffer = "", stack1, helper, options;
   buffer += "\n\n                        ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(24, program24, data),fn:self.program(22, program22, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                    ";
   return buffer;
   }
-function program22(depth0,data) {
+function program26(depth0,data) {
   
   
   return "\n                        ";
   }
 
-function program24(depth0,data) {
+function program28(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\n                            ";
-  stack1 = (helper = helpers.eqLastGroup || (depth0 && depth0.eqLastGroup),options={hash:{},inverse:self.program(27, program27, data),fn:self.program(25, program25, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "eqLastGroup", (depth0 && depth0.groupId), options));
+  stack1 = (helper = helpers.eqLastGroup || (depth0 && depth0.eqLastGroup),options={hash:{},inverse:self.program(31, program31, data),fn:self.program(29, program29, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "eqLastGroup", (depth0 && depth0.groupId), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                            &nbsp;<span draggable = \"true\" ondragstart=\"drag(event, '";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -3030,14 +3045,14 @@ function program24(depth0,data) {
     + "'>"
     + escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options) : helperMissing.call(depth0, "removeSemtag", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options)))
     + "</span>&nbsp;&rarr;&nbsp;\n\n                            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(31, program31, data),fn:self.program(29, program29, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(35, program35, data),fn:self.program(33, program33, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                            "
     + escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options) : helperMissing.call(depth0, "removeSemtag", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options)))
     + "\n                        </span><br>\n                        ";
   return buffer;
   }
-function program25(depth0,data) {
+function program29(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\n                                "
@@ -3050,7 +3065,7 @@ function program25(depth0,data) {
   return buffer;
   }
 
-function program27(depth0,data) {
+function program31(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\n                                <span style='background-color: "
@@ -3059,7 +3074,7 @@ function program27(depth0,data) {
   return buffer;
   }
 
-function program29(depth0,data) {
+function program33(depth0,data) {
   
   var buffer = "", stack1, helper;
   buffer += "\n                            <span draggable = \"true\" ondragstart=\"drag(event, '";
@@ -3076,7 +3091,7 @@ function program29(depth0,data) {
   return buffer;
   }
 
-function program31(depth0,data) {
+function program35(depth0,data) {
   
   var buffer = "", stack1, helper;
   buffer += "\n                            <span draggable = \"true\" ondragstart=\"drag(event, '";
@@ -3093,51 +3108,60 @@ function program31(depth0,data) {
   return buffer;
   }
 
-function program33(depth0,data) {
+function program37(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\n            ";
-  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.gciAxioms), {hash:{},inverse:self.noop,fn:self.program(34, program34, data),data:data});
+  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.gciAxioms), {hash:{},inverse:self.noop,fn:self.program(38, program38, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            </div>\n        ";
-  return buffer;
-  }
-function program34(depth0,data) {
-  
-  var buffer = "", stack1;
-  buffer += "\n                <div>GCI</div>\n                <div style=\"border: 1px solid darkgrey; border-radius: 4px; padding: 3px; background-color: white; margin: 5px;\">\n                    ";
-  stack1 = helpers.each.call(depth0, (depth0 && depth0.relationships), {hash:{},inverse:self.noop,fn:self.program(35, program35, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                </span>\n                </div>\n            ";
-  return buffer;
-  }
-function program35(depth0,data) {
-  
-  var buffer = "", stack1, helper, options;
-  buffer += "\n                        ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(24, program24, data),fn:self.program(22, program22, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                    ";
-  return buffer;
-  }
-
-function program37(depth0,data) {
-  
-  var buffer = "", stack1, helper, options;
-  buffer += "\n        ";
-  stack1 = helpers.each.call(depth0, (depth0 && depth0.inferredRoles), {hash:{},inverse:self.noop,fn:self.program(38, program38, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        </div>\n        ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(47, program47, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.inferredRoles)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.inferredRoles)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    ";
   return buffer;
   }
 function program38(depth0,data) {
   
   var buffer = "", stack1, helper, options;
+  buffer += "\n                ";
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(39, program39, data),fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.clinicalFindingRelationships), true, options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.clinicalFindingRelationships), true, options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n                    ";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.relationships), {hash:{},inverse:self.noop,fn:self.program(41, program41, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n                </span>\n                </div>\n            ";
+  return buffer;
+  }
+function program39(depth0,data) {
+  
+  
+  return "\n                    <div>GCI</div>\n                    <div style=\"border: 1px solid darkgrey; border-radius: 4px; padding: 3px; background-color: white; margin: 5px;\">\n                ";
+  }
+
+function program41(depth0,data) {
+  
+  var buffer = "", stack1, helper, options;
+  buffer += "\n                        ";
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n                    ";
+  return buffer;
+  }
+
+function program43(depth0,data) {
+  
+  var buffer = "", stack1, helper, options;
+  buffer += "\n        ";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.inferredRoles), {hash:{},inverse:self.noop,fn:self.program(44, program44, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n        </div>\n        ";
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(53, program53, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.inferredRoles)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.inferredRoles)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    ";
+  return buffer;
+  }
+function program44(depth0,data) {
+  
+  var buffer = "", stack1, helper, options;
   buffer += "\n            <!--<br>inferred-->\n                    ";
-  stack1 = (helper = helpers.eqLastGroup || (depth0 && depth0.eqLastGroup),options={hash:{},inverse:self.program(41, program41, data),fn:self.program(39, program39, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "eqLastGroup", (depth0 && depth0.groupId), options));
+  stack1 = (helper = helpers.eqLastGroup || (depth0 && depth0.eqLastGroup),options={hash:{},inverse:self.program(47, program47, data),fn:self.program(45, program45, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "eqLastGroup", (depth0 && depth0.groupId), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                    &nbsp;<span style='background-color: "
     + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "get", options) : helperMissing.call(depth0, "lastColor", "get", options)))
@@ -3158,7 +3182,7 @@ function program38(depth0,data) {
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "')\" class='\n                ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(45, program45, data),fn:self.program(43, program43, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(51, program51, data),fn:self.program(49, program49, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                ' data-module=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.module)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -3171,7 +3195,7 @@ function program38(depth0,data) {
     + "</span><br>\n        ";
   return buffer;
   }
-function program39(depth0,data) {
+function program45(depth0,data) {
   
   var buffer = "", stack1, helper, options;
   buffer += "\n                        </div>\n                        "
@@ -3187,7 +3211,7 @@ function program39(depth0,data) {
   return buffer;
   }
 
-function program41(depth0,data) {
+function program47(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\n                        <span style='background-color: "
@@ -3196,19 +3220,19 @@ function program41(depth0,data) {
   return buffer;
   }
 
-function program43(depth0,data) {
+function program49(depth0,data) {
   
   
   return "\n                     sct-primitive-concept-compact\n                ";
   }
 
-function program45(depth0,data) {
+function program51(depth0,data) {
   
   
   return "\n                     sct-defined-concept-compact\n                ";
   }
 
-function program47(depth0,data) {
+function program53(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\n            <span class='i18n text-muted' data-i18n-id='i18n_no_attributes'>"
@@ -3220,7 +3244,7 @@ function program47(depth0,data) {
   buffer += "<div style='line-height: 100%;'>\n    "
     + escapeExpression((helper = helpers.setLastGroup || (depth0 && depth0.setLastGroup),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.null), options) : helperMissing.call(depth0, "setLastGroup", (depth0 && depth0.null), options)))
     + "\n    ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(37, program37, data),fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "stated", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "stated", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(43, program43, data),fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "stated", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "stated", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</div>\n";
   return buffer;
@@ -7817,11 +7841,11 @@ function conceptDetails(divElement, conceptId, options) {
         "900000000000509007": "United States of America English language reference set",
         "900000000000508004": "Great Britain English language reference set"
     };
-    
+
     if (options.languageNameOfLangRefset){
         languageNameOfLangRefset = options.languageNameOfLangRefset;
     }
-    
+
     var panel = this;
     this.type = "concept-details";
     this.conceptId = conceptId;
@@ -7854,7 +7878,7 @@ function conceptDetails(divElement, conceptId, options) {
     panel.subscriptions = [];
     panel.subscribers = [];
     panel.server = "";
-    
+
     if (options.serverUrl.includes('snowowl')){
         panel.server = 'snowowl';
     }
@@ -7908,7 +7932,7 @@ function conceptDetails(divElement, conceptId, options) {
         panel.childrenPId = panel.divElement.id + "-children-panel";
         panel.defaultTerm = "";
         $(divElement).html();
-        
+
         var context = {
             divElementId: panel.divElement.id,
             server: panel.server
@@ -8256,6 +8280,8 @@ function conceptDetails(divElement, conceptId, options) {
             };
 
             firstMatch.classAxioms.forEach(function(axiom) {
+                axiom.clinicalFindingRelationships = true;
+
                 if(axiom.active){
                     axiom.relationships.forEach(function(rel) {
                         if(rel.type.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && rel.type.fsn.lang != options.defaultLanguage){
@@ -8279,11 +8305,16 @@ function conceptDetails(divElement, conceptId, options) {
                             rel.effectiveTime = axiom.effectiveTime;
                             panel.attributesFromAxioms.push(rel);
                         }
+                        if(rel.active && rel.type.conceptId !== "116680003") {
+                            axiom.clinicalFindingRelationships = false;
+                        }
                     });
                 }
                 sortAxiomRelationships(axiom.relationships);
             });
             firstMatch.gciAxioms.forEach(function(axiom) {
+                axiom.clinicalFindingRelationships = true;
+
                 if(axiom.active){
                     axiom.relationships.forEach(function(rel) {
                         if(rel.type.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && rel.type.fsn.lang != options.defaultLanguage){
@@ -8306,6 +8337,9 @@ function conceptDetails(divElement, conceptId, options) {
                         else if(rel.active){
                             rel.axiomId = axiom.axiomId;
                             rel.effectiveTime = axiom.effectiveTime;
+                        }
+                        if(rel.active && rel.type.conceptId !== "116680003") {
+                            axiom.clinicalFindingRelationships = false;
                         }
                     });
                 }
@@ -9671,7 +9705,7 @@ function conceptDetails(divElement, conceptId, options) {
                 }
             });
 
-            result.referencesByType.sort(function(a, b) {                
+            result.referencesByType.sort(function(a, b) {
                 if (a.referenceType.fsn.term >  b.referenceType.fsn.term) {
                     return 1;
                 }
