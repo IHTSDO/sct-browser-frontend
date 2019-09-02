@@ -580,7 +580,7 @@
 
             }
             if (options.imsUrl !== null) {
-                $.getJSON("/authoring-services/projects").done(function(result) {
+                $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
                     var $projectDdl = $('#projectDdl');
 
                     var projectsInDateFormat = [];
