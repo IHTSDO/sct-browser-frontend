@@ -12159,8 +12159,6 @@ function searchPanel(divElement, options) {
                     if (t.substr(-2, 1) == "0") {
                         // Search conceptId
                         var branch = options.edition;
-                        console.log(options.release);
-                        console.log(options.release.length);
                         if(options.release.length > 0 && options.release !== 'None'){
                             branch = branch + "/" + options.release;
                         };
@@ -12174,65 +12172,74 @@ function searchPanel(divElement, options) {
                         xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + t, function(result) {
 
                         }).done(function(result) {
-                            console.log(result);
-                            Handlebars.registerHelper('if_eq', function(a, b, opts) {
-                                if (opts != "undefined") {
-                                    if (a == b)
+                            if(result.active === false && panel.options.statusSearchFilter == "activeOnly"){
+                                resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
+                                $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
+                                $('#' + panel.divElement.id + '-searchBar2').html("");
+                            }
+                            else{
+                                Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                                    if (opts != "undefined") {
+                                        if (a == b)
+                                            return opts.fn(this);
+                                        else
+                                            return opts.inverse(this);
+                                    }
+                                });
+                                Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
+                                    if (countryIcons[moduleId])
                                         return opts.fn(this);
                                     else
                                         return opts.inverse(this);
-                                }
-                            });
-                            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
-                                if (countryIcons[moduleId])
-                                    return opts.fn(this);
-                                else
-                                    return opts.inverse(this);
-                            });
-                            var resDescriptions = [];
-                            $.each(result.descriptions, function(i, field) {
-                                var aux = field;
-                                aux.definitionStatus = result.definitionStatus;
-                                if (!aux.active) {
-                                    aux.danger = true;
-                                }
-                                if (field.active) {
-                                    if (panel.options.statusSearchFilter == "activeOnly") {
-                                        resDescriptions.push(aux);
-                                    }
-                                    if (panel.options.statusSearchFilter == "activeAndInactive") {
-                                        resDescriptions.push(aux);
-                                    }
-                                } else {
-                                    aux.danger = true;
-                                    if (panel.options.statusSearchFilter == "inactiveOnly") {
-                                        resDescriptions.push(aux);
-                                    }
-                                    if (panel.options.statusSearchFilter == "activeAndInactive") {
-                                        resDescriptions.push(aux);
-                                    }
-                                }
-                            });
-                            result.descriptions = resDescriptions;
-                            var context = {
-                                result: result
-                            };
-                            //console.log(context);
-                            $('#' + panel.divElement.id + '-resultsTable').html(JST["views/searchPlugin/body/0.hbs"](context));
-                            $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
-                            $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
-                                //                                $.each(panel.subscribers, function (i, field) {
-                                //                                    //console.log("Notify to " + field.divElement.id + " selected " + $(event.target).attr('data-concept-id'));
-                                //                                    field.conceptId = $(event.target).attr('data-concept-id');
-                                //                                    field.updateCanvas();
-                                //                                });
-                                channel.publish(panel.divElement.id, {
-                                    term: $(event.target).attr('data-term'),
-                                    module: $(event.target).attr("data-module"),
-                                    conceptId: $(event.target).attr('data-concept-id'),
-                                    source: panel.divElement.id
                                 });
-                            });
+                                var resDescriptions = [];
+                                $.each(result.descriptions, function(i, field) {
+                                    var aux = field;
+                                    aux.definitionStatus = result.definitionStatus;
+                                    if (!aux.active) {
+                                        aux.danger = true;
+                                    }
+                                    if (field.active) {
+                                        if (panel.options.statusSearchFilter == "activeOnly") {
+                                            resDescriptions.push(aux);
+                                        }
+                                        if (panel.options.statusSearchFilter == "activeAndInactive") {
+                                            resDescriptions.push(aux);
+                                        }
+                                        if (panel.options.statusSearchFilter == "inactiveOnly") {
+                                            resDescriptions.push(aux);
+                                        }
+                                    } else {
+                                        aux.danger = true;
+                                        if (panel.options.statusSearchFilter == "inactiveOnly") {
+                                            resDescriptions.push(aux);
+                                        }
+                                        if (panel.options.statusSearchFilter == "activeAndInactive") {
+                                            resDescriptions.push(aux);
+                                        }
+                                    }
+                                });
+                                result.descriptions = resDescriptions;
+                                var context = {
+                                    result: result
+                                };
+                                //console.log(context);
+                                $('#' + panel.divElement.id + '-resultsTable').html(JST["views/searchPlugin/body/0.hbs"](context));
+                                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
+                                $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
+                                    //                                $.each(panel.subscribers, function (i, field) {
+                                    //                                    //console.log("Notify to " + field.divElement.id + " selected " + $(event.target).attr('data-concept-id'));
+                                    //                                    field.conceptId = $(event.target).attr('data-concept-id');
+                                    //                                    field.updateCanvas();
+                                    //                                });
+                                    channel.publish(panel.divElement.id, {
+                                        term: $(event.target).attr('data-term'),
+                                        module: $(event.target).attr("data-module"),
+                                        conceptId: $(event.target).attr('data-concept-id'),
+                                        source: panel.divElement.id
+                                    });
+                                });
+                            }
                         }).fail(function() {
                             resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
                             $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
