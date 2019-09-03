@@ -12357,6 +12357,9 @@ function searchPanel(divElement, options) {
                     if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
                         searchUrl = searchUrl + "&groupByConcept=1";
                     }
+                    if(skipTo !== 0){
+                        searchUrl = searchUrl + '&offset=' + skipTo;
+                    }
                     //console.log(searchUrl);
                     $.ajax({
                          url: searchUrl,
