@@ -123,12 +123,12 @@
         var manifests;
 
         function determineServer() {
-            xhr = $.getJSON("/snowstorm/snomed-ct/v2/codesystems", function(result) {
+            xhr = $.getJSON("/snowstorm/snomed-ct/codesystems", function(result) {
                 console.log(result);
             }).done(function(result) {
                 console.log(result);
-                options.serverUrl = "/snowstorm/snomed-ct/v2";
-                options.queryServerUrl = "/snowstorm/snomed-ct/v2";
+                options.serverUrl = "/snowstorm/snomed-ct";
+                options.queryServerUrl = "/snowstorm/snomed-ct";
                 options.releases = result;
                 //add refsets tab
                     
