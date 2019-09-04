@@ -12333,7 +12333,6 @@ function searchPanel(divElement, options) {
                         searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
                     }
                     if (panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowstorm')) {
-                        searchUrl = searchUrl + "&active=true";
                         searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
                         searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
                         searchUrl = searchUrl + "&conceptActive=false";
