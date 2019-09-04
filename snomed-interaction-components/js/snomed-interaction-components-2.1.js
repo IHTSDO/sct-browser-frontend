@@ -9783,7 +9783,14 @@ function conceptDetails(divElement, conceptId, options) {
             });
         };
         xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
-            result.forEach(function(c) { setDefaultTerm(c) });
+            result.forEach(function(item) {
+                if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
+                    item.defaultTerm = item.pt.term;
+                }
+                else{
+                    item.defaultTerm = item.fsn.term;
+                }
+            });
             result.sort(function(a, b) {
                 if (a.defaultTerm.toLowerCase() < b.defaultTerm.toLowerCase())
                     return -1;
