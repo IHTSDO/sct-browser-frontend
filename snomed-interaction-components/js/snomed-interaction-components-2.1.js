@@ -668,7 +668,7 @@ function program28(depth0,data) {
 function program30(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\n            <span class=\"pull-right\">\n                <div class=\"dropdown\">\n                    <button class=\"btn btn-link dropdown-toggle\" type=\"button\" id=\"dropdownMenu1-details\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                        <i class=\"glyphicon glyphicon-plus-sign pull-right\" id=\"";
+  buffer += "\n            <script type=\"text/javascript\" src=\"https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e-CDN/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/2.2.4.7/_/download/batch/com.atlassian.plugins.jquery:jquery/com.atlassian.plugins.jquery:jquery.js?collectorId=bedcc164\"></script><script type=\"text/javascript\" src=\"https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164\"></script>\n\n            <script type=\"text/javascript\">window.ATL_JQ_PAGE_PROPS =  {\n            \"triggerFunction\": function(showCollectorDialog) {\n                //Requires that jQuery is available! \n                jQuery(\"#fh-cd1_canvas-addsyn-sctid-details\").click(function(e) {\n                    e.preventDefault();\n                    showCollectorDialog();\n                });\n            }};</script>\n            <span class=\"pull-right\">\n                <div class=\"dropdown\">\n                    <button class=\"btn btn-link dropdown-toggle\" type=\"button\" id=\"dropdownMenu1-details\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                        <i class=\"glyphicon glyphicon-plus-sign pull-right\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -8511,30 +8511,6 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 }
             }
-
-
-            //Swedish extension; capture synonyms using JIRA issue collector
-            //start
-            var scriptUrl = "https://jira.ihtsdotools.org/s/9152b378d577114d19d6cfdcdfdeb45e-T/en_US-i9n6p8/70120/a1623a9e469981bb7c457209f1507980/2.0.8/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=41bec258";
-
-            $.getScript(scriptUrl);
-
-            window.ATL_JQ_PAGE_PROPS = {
-                "triggerFunction": function(showCollectorDialog) {
-                    //Requires that jQuery is available!
-                    jQuery("#fh-cd1_canvas-addsyn-sctid-details").click(function(e) {
-                        e.preventDefault();
-                        showCollectorDialog();
-                    });
-                },
-
-                fieldValues: {
-                    'summary': 'Förslag på synonymer för begreppet: ' + state.conceptId,
-                    'customfield_10602': state.conceptId,
-                    'customfield_10601': state.name
-                }
-            };
-            //end
 
             $(".glyphicon-star").click(function(e) {
                 var concept = {
