@@ -6339,9 +6339,9 @@ function program11(depth0,data) {
 
 function program13(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, helper, options;
   buffer += "\n        <h3 style=\"margin-top: 5px;\">\n            <span style=\"font-size: 12px; margin-top: 5px;\" class='label label-danger'>"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langFilter)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + escapeExpression((helper = helpers.parseLanguageName || (depth0 && depth0.parseLanguageName),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langFilter), options) : helperMissing.call(depth0, "parseLanguageName", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.langFilter), options)))
     + "&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-lang'>&times;</a></span>\n        </h3>\n    ";
   return buffer;
   }
