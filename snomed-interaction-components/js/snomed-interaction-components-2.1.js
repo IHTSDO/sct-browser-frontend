@@ -12328,7 +12328,7 @@ function searchPanel(divElement, options) {
                         searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
                     }
                     if (panel.options.langFilter != "none") {
-                        searchUrl = searchUrl + "&langFilter=" + panel.options.langFilter;
+                        searchUrl = searchUrl + "&language=" + panel.options.langFilter;
                     }
                     if (panel.options.moduleFilter != 'none') {
                         searchUrl = searchUrl + "&module=" + panel.options.moduleFilter;
