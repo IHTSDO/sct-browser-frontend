@@ -171,6 +171,10 @@
                     $taskSelect.attr('id', 'taskDdl');
                     $header.append($taskSelect);
                     
+                    //hide release switcher in TS environments
+                    var $releaseSwitcher = $('#edition-selector');
+                    $releaseSwitcher.css('display', 'none');
+                    
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
