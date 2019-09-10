@@ -131,7 +131,7 @@
                 options.queryServerUrl = "/snowstorm/snomed-ct/v2";
                 options.releases = result;
                 //add refsets tab
-                    
+
                 var $leftHandTabs = $('#fh-tabs');
                 var $tab = $('<li>');
                 var $link = $('<a>');
@@ -143,7 +143,7 @@
                 $link.append($span);
                 $tab.append($link);
                 $leftHandTabs.append($tab);
-                
+
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
                     var $header = $('#header-nav');
@@ -170,11 +170,11 @@
                     $taskSelect.css('width', '110px');
                     $taskSelect.attr('id', 'taskDdl');
                     $header.append($taskSelect);
-                    
+
                     //hide release switcher in TS environments
                     var $releaseSwitcher = $('#edition-selector');
                     $releaseSwitcher.css('display', 'none');
-                    
+
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
@@ -239,9 +239,11 @@
                 options.queryServerUrl = "/snowowl/snomed-ct/v2";
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
-                    
+
                     options.language = 'en';
-                    options.languageObject = {en: "English"};
+                    options.languageObject = {
+                        en: "English"
+                    };
 
                     //create project/task switcher
                     var $header = $('#header-nav');
@@ -379,7 +381,7 @@
         }();
 
         function start() {
-            if(options.imsUrl === null){
+            if (options.imsUrl === null) {
                 if (!!window.MSInputMethodContext && !!document.documentMode) {
                     window.location.replace("http://browser.ihtsdotools.org/index-ie.html");
                 }
@@ -425,20 +427,20 @@
             // if (typeof edition == "undefined" || edition == null || edition == "") {
             //     edition = "en-edition";
             // }            
-            if (typeof edition != "undefined" && edition.startsWith('MAIN')) {                
+            if (typeof edition != "undefined" && edition.startsWith('MAIN')) {
                 options.edition = edition;
             }
 
             var isTask = function(task) {
-                var strArray = task.split('-');                
-                if (strArray.length === 2 && !isNaN(strArray[1])){
+                var strArray = task.split('-');
+                if (strArray.length === 2 && !isNaN(strArray[1])) {
                     return true;
                 }
 
                 return false;
             };
 
-            var release = QueryString.release;            
+            var release = QueryString.release;
             if (typeof release != "undefined" && isTask(release)) {
                 options.release = release;
             }
@@ -516,26 +518,25 @@
                 currentPerspective = "responsive";
                 switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
             } else {
-                if(options.imsUrl != null){
+                if (options.imsUrl != null) {
                     currentPerspective = "full";
                     switchToFullHeight(cdValue1, txValue1);
-                }
-                else{
+                } else {
                     initialize();
                 }
-                
+
             }
             if (!options.acceptLicense && options.imsUrl === null) {
                 $('#license-modal').modal('show');
             }
-            
-            if (options.edition) {                
+
+            if (options.edition) {
                 $("#projectDdl").val(options.edition).change();
             }
             if (options.release) {
                 $("#taskDdl").val(options.release).change();
             }
-           
+
             var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
 
             // PROJECT DROPDOWN HANDLER
@@ -1476,7 +1477,7 @@
                 <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="http://browser.ihtsdotools.org/index-ie.html">please visit the IE compatibility version here</a></p>
+                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="index-ie.html">please visit the IE compatibility version here</a></p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="international_editions" style="margin-bottom : 0px"></p>
                 <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
@@ -1484,7 +1485,7 @@
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                     <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
-                <p>There is also a version of the browser containing other extensions of SNOMED CT which do not originate from Member countries. <a href="http://browser.ihtsdotools.org/other.html">Please see the page here</a>.</p>
+                <p>There is also a version of the browser containing other extensions of SNOMED CT which do not originate from Member countries. <a href="other.html">Please see the page here</a>.</p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
                 <p class="lead">
