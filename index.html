@@ -82,7 +82,7 @@
             serverUrl: "",
             queryServerUrl: "",
             queryBranch: "MAIN/2019-07-31",
-            edition: "MAIN",
+            edition: "MAIN/2019-07-31",
             release: "",
             showIds: false,
             hideNotAcceptable: true,
@@ -204,6 +204,7 @@
 
                 // dynamic extension links
                 var internationalReleases = [];
+                var dailyBuildReleases = [];
                 var localReleases = [];
 
                 // Add GB extension
@@ -227,6 +228,9 @@
                 }
 
                 addEditionLinks($('#international_editions'), internationalReleases);
+
+                dailybuildReleases = internationalReleases.filter((item)=>{ return item.dailyBuildImported});
+                addEditionLinks($('#dailybuild_editions'), dailybuildReleases);
 
                 // sort local extensions again
                 localReleases.sort(function(a, b) {
@@ -312,7 +316,7 @@
                             parsedLanguages = parsedLanguages + language + ',';
                         }
                         parsedLanguages = parsedLanguages.slice(0, -1);
-                        options.edition = release.branchPath;
+                        options.edition = release.latestVersion.branchPath;
                         options.release = '';
                         options.languages = parsedLanguages;
                         options.languageObject = release.languages;
@@ -426,7 +430,7 @@
             var edition = QueryString.edition;
             // if (typeof edition == "undefined" || edition == null || edition == "") {
             //     edition = "en-edition";
-            // }            
+            // }
             if (typeof edition != "undefined" && edition.startsWith('MAIN')) {
                 options.edition = edition;
             }
@@ -460,7 +464,7 @@
             }
             if (options.releases && options.releases.items && options.releases.items.length > 0) {
                 for (let i = 0; i < options.releases.items.length; ++i) {
-                    if (options.releases.items[i].branchPath === options.edition) {
+                    if (options.releases.items[i].latestVersion.branchPath === options.edition) {
                         options.languageObject = options.releases.items[i].languages;
                     }
                 }
@@ -559,7 +563,7 @@
                             parsedLanguages = parsedLanguages + language + ',';
                         }
                         parsedLanguages = parsedLanguages.slice(0, -1);
-                        options.edition = options.releases.items[i].branchPath;
+                        options.edition = options.releases.items[i].latestVersion.branchPath;
                         options.release = '';
                         options.languages = parsedLanguages;
                         options.languageObject = options.releases.items[i].languages;
@@ -577,8 +581,8 @@
                     $li.append($a);
                     $releaseSwitcher.append($li);
 
-                    // set default selection for release 
-                    if (options.edition && options.releases.items[i].branchPath === options.edition) {
+                    // set default selection for release
+                    if (options.edition && options.releases.items[i].latestVersion.branchPath === options.edition) {
                         $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
                     }
                 }
@@ -931,9 +935,16 @@
             componentsRegistry = [];
             postal.unsubscribeFor();
             currentPerspective = "home";
-            $("#welcome-perspective").css({
-                "display": "block"
-            });
+            if(window.location.hostname.includes('dailybuild')) {
+                $("#welcome-perspective-dailybuild").css({
+                    "display": "block"
+                });
+            }
+            else {
+                $("#welcome-perspective").css({
+                    "display": "block"
+                });
+            }
             $("#browsing-perspective").css({
                 "display": "none"
             });
@@ -963,6 +974,9 @@
                 componentsRegistry = [];
             }
             $("#welcome-perspective").css({
+                "display": "none"
+            });
+            $("#welcome-perspective-dailybuild").css({
                 "display": "none"
             });
             $("#browsing-perspective").css({
@@ -1020,6 +1034,9 @@
             $("#welcome-perspective").css({
                 "display": "none"
             });
+            $("#welcome-perspective-dailybuild").css({
+                "display": "none"
+            });
             $("#browsing-perspective").css({
                 "display": "none"
             });
@@ -1064,6 +1081,9 @@
                 componentsRegistry = [];
             }
             $("#welcome-perspective").css({
+                "display": "none"
+            });
+            $("#welcome-perspective-dailybuild").css({
                 "display": "none"
             });
             $("#browsing-perspective").css({
@@ -1115,6 +1135,9 @@
                 componentsRegistry = [];
             }
             $("#welcome-perspective").css({
+                "display": "none"
+            });
+            $("#welcome-perspective-dailybuild").css({
                 "display": "none"
             });
             $("#browsing-perspective").css({
@@ -1197,6 +1220,9 @@
                 componentsRegistry = [];
             }
             $("#welcome-perspective").css({
+                "display": "none"
+            });
+            $("#welcome-perspective-dailybuild").css({
                 "display": "none"
             });
             $("#browsing-perspective").css({
@@ -1354,7 +1380,7 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
-        
+
         .ribbon span {
             border: 1px solid #faa;
             color: #fff;
@@ -1365,11 +1391,11 @@
             text-align: center;
             text-decoration: none;
         }
-        
+
         .navbar-brand {
             margin-top: 4px;
         }
-        
+
         .navbar .navbar-btn {
             margin-left: 10px;
         }
@@ -1512,6 +1538,49 @@
             <p> <small><b>&copy; SNOMED International 2019</b> v2.1<br></small>
             </p>
         </div>
+
+        <!-- Welcome Perspective DailyBuild -->
+        <div id="welcome-perspective-dailybuild" class="bperspective">
+            <div class="jumbotron">
+                <h1>Daily Build SNOMED CT Browser</h1>
+                <p>This is a browser for the SNOMED CT Daily Build towards the January 2020 release.</p>
+                <p>Statistics on the current authoring cycle can be found on the <strong><a href="https://prod-dailybuild.ihtsdotools.org/qa" target="_blank">Daily Build Statistics site</a></strong>.</p>
+                <h2><span class="text-warning">Warning</span></h2>
+                <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
+                <p>No new concepts or identifiers may be used in clinical systems.</p>
+                <p id="dailybuild_editions" style="margin-bottom : 0px"></p>
+
+                <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20200131', 'en-edition', 'v20200131', '', '900000000000509007', 'https://prod-dailybuild.ihtsdotools.org/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>-->
+                <p>See the work tasks which will appear in the browser since it was updated here - <a href="https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=22319818">https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=22319818</a>
+                    <br>
+                </p>
+                <p id="lastUpdatedText"></p>
+                <h3>Other Daily Builds:</h3>
+                <ul>
+                    <li>
+                        <a href="/dk.html"><img src="img/flags/dk.png"> Denmark</a>
+                    </li>
+                    <li>
+                        <a href="/drugs.html"><img src="img/flags/us.png"> International Drugs</a>
+                    </li>
+                    <li>
+                        <a href="/se.html"><img src="img/flags/se.png"> Sweden</a>
+                    </li>
+                    <li>
+                        <a href="/us.html"><img src="img/flags/us.png"> US</a>
+                    </li>
+                </ul>
+            </div>
+            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
+            </p>
+            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>                for best results in tablets and phones.</span>
+            </p>
+            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
+            </p>
+            <p> <small><b>&copy; SNOMED International 2018</b> v1.37.4.4<br></small>
+            </p>
+        </div>
+
         <!-- Browsing Perspective -->
         <div id="browsing-perspective" class="bperspective">
             <div id="spliter2" class="row" style="width:100%; height: 91%; position: absolute;">
