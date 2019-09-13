@@ -10532,6 +10532,16 @@ Handlebars.registerHelper('countryIcon', function(moduleId) {
     return countryIcons[moduleId];
 });
 function drawConceptDiagram (concept, div, options, panel) {
+    
+    var getDefautTermForRelationShip = function (concept) {
+        if(concept.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && concept.fsn.lang != options.defaultLanguage){
+            return concept.pt.term;
+        }
+        else{
+            return concept.fsn.term;
+        }
+    };
+
     var svgIsaModel = [];
     var svgAttrModel = [];
     var axioms = [];
@@ -10643,17 +10653,24 @@ function drawConceptDiagram (concept, div, options, panel) {
         sctClass = "sct-defined-concept";
     }
     //console.log("In draw: " + concept.defaultTerm + " " + concept.conceptId + " " + sctClass);
-    var fsn = '';
-    if(concept.pt.term){
-        fsn = concept.pt.term;
-    }
-    else if(concept.fsn.term){
-        fsn = concept.fsn.term;
+    var pt = {};
+    $.each(concept.descriptions, function(i, description) {
+        if (description.lang == options.defaultLanguage && description.active) {
+            $.each(description.acceptabilityMap, function(i, map){
+                if(map == "PREFERRED"){
+                    pt = description;
+                }
+            })
+        }
+    });
+    if(pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && concept.fsn.lang != options.defaultLanguage){
+        concept.defaultTerm = pt.term;
     }
     else{
-        fsn = concept.defaultTerm;
+        concept.defaultTerm = concept.fsn.term;
     }
-    var rect1 = drawSctBox(svg, x, y, fsn, concept.conceptId, sctClass);
+   
+    var rect1 = drawSctBox(svg, x, y, concept.defaultTerm, concept.conceptId, sctClass);
     x = x + 90;
     y = y + rect1.getBBox().height + 40;
     if(options.selectedView === 'stated' && svgIsaModel && svgIsaModel.length > 0 || options.selectedView != 'stated'){
@@ -10686,7 +10703,7 @@ function drawConceptDiagram (concept, div, options, panel) {
         } else {
             sctClass = "sct-defined-concept";
         }
-        var rectParent = drawSctBox(svg, x, y, relationship.target.pt.term, relationship.target.conceptId, sctClass);
+        var rectParent = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
         // $("#" + rectParent.id).css({"top":
         // (rectParent.outerHeight()/2) + "px"});
         connectElements(svg, circle2, rectParent, 'center', 'left', 'ClearTriangle');
@@ -10703,9 +10720,9 @@ function drawConceptDiagram (concept, div, options, panel) {
             sctClass = "sct-defined-concept";
         }
         if (relationship.groupId == 0) {
-            var rectAttr = drawSctBox(svg, x, y, relationship.type.pt.term,relationship.type.conceptId, "sct-attribute");
+            var rectAttr = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.type),relationship.type.conceptId, "sct-attribute");
             connectElements(svg, circle2, rectAttr, 'center', 'left');
-            var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, relationship.target.pt.term,relationship.target.conceptId, sctClass);
+            var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, getDefautTermForRelationShip(relationship.target),relationship.target.conceptId, sctClass);
             connectElements(svg, rectAttr, rectTarget, 'right', 'left');
             y = y + rectTarget.getBBox().height + 25;
             maxX = ((maxX < x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50) ? x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50 : maxX);
@@ -10728,9 +10745,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                 } else {
                     sctClass = "sct-defined-concept";
                 }
-                var rectRole = drawSctBox(svg, x + 85, y - 18, relationship.type.pt.term, relationship.type.conceptId,"sct-attribute");
+                var rectRole = drawSctBox(svg, x + 85, y - 18, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId,"sct-attribute");
                 connectElements(svg, conjunctionNode, rectRole, 'center', 'left');
-                var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, relationship.target.pt.term,relationship.target.conceptId, sctClass);
+                var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, getDefautTermForRelationShip(relationship.target),relationship.target.conceptId, sctClass);
                 connectElements(svg, rectRole, rectRole2, 'right', 'left');
                 y = y + rectRole2.getBBox().height + 25;
                 maxX = ((maxX < x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50) ? x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50 : maxX);
@@ -10770,7 +10787,7 @@ function drawConceptDiagram (concept, div, options, panel) {
                 } else {
                     sctClass = "sct-defined-concept";
                 }
-                var rectParent = drawSctBox(svg, x, y, relationship.target.pt.term, relationship.target.conceptId, sctClass);
+                var rectParent = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                 // $("#" + rectParent.id).css({"top":
                 // (rectParent.outerHeight()/2) + "px"});
                 connectElements(svg, circle2, rectParent, 'center', 'left', 'ClearTriangle');
@@ -10784,9 +10801,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                     sctClass = "sct-defined-concept";
                 }
                 if (relationship.groupId === 0) {
-                    var rectAttr = drawSctBox(svg, x, y, relationship.type.pt.term, relationship.type.conceptId, "sct-attribute");
+                    var rectAttr = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId, "sct-attribute");
                     connectElements(svg, circle2, rectAttr, 'center', 'left');
-                    var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, relationship.target.pt.term, relationship.target.conceptId, sctClass);
+                    var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                     connectElements(svg, rectAttr, rectTarget, 'right', 'left');
                     y = y + rectTarget.getBBox().height + 25;
                     maxX = ((maxX < x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50) ? x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50 : maxX);
@@ -10812,9 +10829,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                         "PRIMITIVE") { sctClass = "sct-primitive-concept"; } else {
                         sctClass = "sct-defined-concept";
                     }
-                    var rectRole = drawSctBox(svg, x + 85, y - 18, relationship.type.pt.term, relationship.type.conceptId, "sct-attribute");
+                    var rectRole = drawSctBox(svg, x + 85, y - 18, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId, "sct-attribute");
                     connectElements(svg, conjunctionNode, rectRole, 'center', 'left');
-                    var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, relationship.target.pt.term, relationship.target.conceptId, sctClass);
+                    var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                     connectElements(svg, rectRole, rectRole2, 'right', 'left');
                     y = y + rectRole2.getBBox().height + 25;
                     maxX = ((maxX < x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50) ? x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50 : maxX);
