@@ -1627,7 +1627,11 @@ function program49(depth0,data) {
   buffer += escapeExpression(stack1)
     + "</td>\n                                <td><span class='i18n' data-i18n-id='i18n_stated'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_stated", "Stated", options) : helperMissing.call(depth0, "i18n", "i18n_stated", "Stated", options)))
-    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                    <tr><td style='padding: 3px;'>";
+    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1639,7 +1643,7 @@ function program49(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                                </table>\n                                \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
   return buffer;
   }
 function program50(depth0,data) {
@@ -1795,7 +1799,11 @@ function program64(depth0,data) {
   buffer += escapeExpression(stack1)
     + "</td>\n                                <td><span class='i18n' data-i18n-id='i18n_stated'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_stated", "Stated", options) : helperMissing.call(depth0, "i18n", "i18n_stated", "Stated", options)))
-    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                    <tr><td style='padding: 3px;'>";
+    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1807,7 +1815,7 @@ function program64(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                                </table>\n                                \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
   return buffer;
   }
 function program65(depth0,data) {
@@ -1897,7 +1905,11 @@ function program73(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</td>\n                        <td><span class='i18n' data-i18n-id='i18n_additional'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_additional", "Additional", options) : helperMissing.call(depth0, "i18n", "i18n_additional", "Additional", options)))
-    + "</span>\n                            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                            <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                <tr><td style='padding: 3px;'>";
+    + "</span>\n                            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1909,7 +1921,7 @@ function program73(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                            </table>\n                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                        </td>\n                    </tr>\n                ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                        </td>\n                    </tr>\n                ";
   return buffer;
   }
 function program74(depth0,data) {
