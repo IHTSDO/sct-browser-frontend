@@ -649,24 +649,6 @@ function program24(depth0,data) {
 
 function program26(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n                                "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n                            ";
-  return buffer;
-  }
-
-function program28(depth0,data) {
-  
-  var buffer = "", stack1;
-  buffer += "\n                                "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n                            ";
-  return buffer;
-  }
-
-function program30(depth0,data) {
-  
   var buffer = "", stack1, helper;
   buffer += "\n                <span class=\"pull-right\">\n                    <div class=\"dropdown\">\n                        <button class=\"btn btn-link dropdown-toggle\" type=\"button\" id=\"dropdownMenu1-details\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                            <i class=\"glyphicon glyphicon-plus-sign pull-right\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -722,19 +704,17 @@ function program30(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-copy-term-details\" class=\"clip-btn\" data-clipboard-text=\"\n                            ";
-  stack1 = (helper = helpers.if_undefined || (depth0 && depth0.if_undefined),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options) : helperMissing.call(depth0, "if_undefined", ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                        \">Copy term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
+    + "-copy-term-details\" class=\"clip-btn\" data-clipboard-text=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">Copy Term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-copy-sctid-term-details\" class=\"clip-btn\" data-clipboard-text=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " |\n                            ";
-  stack1 = (helper = helpers.if_undefined || (depth0 && depth0.if_undefined),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options) : helperMissing.call(depth0, "if_undefined", ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                        |\">Copy ConceptId + term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
+    + " |"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "|\">Copy Term and ConceptId</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -743,7 +723,7 @@ function program30(depth0,data) {
   else { helper = (depth0 && depth0.link); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">Copy Link to share</a></li>\n                    </ul>\n                </div>\n            </span>\n            ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.swedishExtension), {hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.swedishExtension), {hash:{},inverse:self.noop,fn:self.program(26, program26, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            <!--<button type=\"button\" id=\"share-link-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -1647,7 +1627,11 @@ function program49(depth0,data) {
   buffer += escapeExpression(stack1)
     + "</td>\n                                <td><span class='i18n' data-i18n-id='i18n_stated'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_stated", "Stated", options) : helperMissing.call(depth0, "i18n", "i18n_stated", "Stated", options)))
-    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                    <tr><td style='padding: 3px;'>";
+    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1659,7 +1643,7 @@ function program49(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                                </table>\n                                \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
   return buffer;
   }
 function program50(depth0,data) {
@@ -1815,7 +1799,11 @@ function program64(depth0,data) {
   buffer += escapeExpression(stack1)
     + "</td>\n                                <td><span class='i18n' data-i18n-id='i18n_stated'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_stated", "Stated", options) : helperMissing.call(depth0, "i18n", "i18n_stated", "Stated", options)))
-    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                    <tr><td style='padding: 3px;'>";
+    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1827,7 +1815,7 @@ function program64(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                                </table>\n                                \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
   return buffer;
   }
 function program65(depth0,data) {
@@ -1917,7 +1905,11 @@ function program73(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</td>\n                        <td><span class='i18n' data-i18n-id='i18n_additional'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_additional", "Additional", options) : helperMissing.call(depth0, "i18n", "i18n_additional", "Additional", options)))
-    + "</span>\n                            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                            <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                <tr><td style='padding: 3px;'>";
+    + "</span>\n                            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1929,7 +1921,7 @@ function program73(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                            </table>\n                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                        </td>\n                    </tr>\n                ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                        </td>\n                    </tr>\n                ";
   return buffer;
   }
 function program74(depth0,data) {
@@ -10532,6 +10524,16 @@ Handlebars.registerHelper('countryIcon', function(moduleId) {
     return countryIcons[moduleId];
 });
 function drawConceptDiagram (concept, div, options, panel) {
+    
+    var getDefautTermForRelationShip = function (concept) {
+        if(concept.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && concept.fsn.lang != options.defaultLanguage){
+            return concept.pt.term;
+        }
+        else{
+            return concept.fsn.term;
+        }
+    };
+
     var svgIsaModel = [];
     var svgAttrModel = [];
     var axioms = [];
@@ -10643,17 +10645,24 @@ function drawConceptDiagram (concept, div, options, panel) {
         sctClass = "sct-defined-concept";
     }
     //console.log("In draw: " + concept.defaultTerm + " " + concept.conceptId + " " + sctClass);
-    var fsn = '';
-    if(concept.pt.term){
-        fsn = concept.pt.term;
-    }
-    else if(concept.fsn.term){
-        fsn = concept.fsn.term;
+    var pt = {};
+    $.each(concept.descriptions, function(i, description) {
+        if (description.lang == options.defaultLanguage && description.active) {
+            $.each(description.acceptabilityMap, function(i, map){
+                if(map == "PREFERRED"){
+                    pt = description;
+                }
+            })
+        }
+    });
+    if(pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && concept.fsn.lang != options.defaultLanguage){
+        concept.defaultTerm = pt.term;
     }
     else{
-        fsn = concept.defaultTerm;
+        concept.defaultTerm = concept.fsn.term;
     }
-    var rect1 = drawSctBox(svg, x, y, fsn, concept.conceptId, sctClass);
+   
+    var rect1 = drawSctBox(svg, x, y, concept.defaultTerm, concept.conceptId, sctClass);
     x = x + 90;
     y = y + rect1.getBBox().height + 40;
     if(options.selectedView === 'stated' && svgIsaModel && svgIsaModel.length > 0 || options.selectedView != 'stated'){
@@ -10686,7 +10695,7 @@ function drawConceptDiagram (concept, div, options, panel) {
         } else {
             sctClass = "sct-defined-concept";
         }
-        var rectParent = drawSctBox(svg, x, y, relationship.target.pt.term, relationship.target.conceptId, sctClass);
+        var rectParent = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
         // $("#" + rectParent.id).css({"top":
         // (rectParent.outerHeight()/2) + "px"});
         connectElements(svg, circle2, rectParent, 'center', 'left', 'ClearTriangle');
@@ -10703,9 +10712,9 @@ function drawConceptDiagram (concept, div, options, panel) {
             sctClass = "sct-defined-concept";
         }
         if (relationship.groupId == 0) {
-            var rectAttr = drawSctBox(svg, x, y, relationship.type.pt.term,relationship.type.conceptId, "sct-attribute");
+            var rectAttr = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.type),relationship.type.conceptId, "sct-attribute");
             connectElements(svg, circle2, rectAttr, 'center', 'left');
-            var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, relationship.target.pt.term,relationship.target.conceptId, sctClass);
+            var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, getDefautTermForRelationShip(relationship.target),relationship.target.conceptId, sctClass);
             connectElements(svg, rectAttr, rectTarget, 'right', 'left');
             y = y + rectTarget.getBBox().height + 25;
             maxX = ((maxX < x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50) ? x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50 : maxX);
@@ -10728,9 +10737,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                 } else {
                     sctClass = "sct-defined-concept";
                 }
-                var rectRole = drawSctBox(svg, x + 85, y - 18, relationship.type.pt.term, relationship.type.conceptId,"sct-attribute");
+                var rectRole = drawSctBox(svg, x + 85, y - 18, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId,"sct-attribute");
                 connectElements(svg, conjunctionNode, rectRole, 'center', 'left');
-                var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, relationship.target.pt.term,relationship.target.conceptId, sctClass);
+                var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, getDefautTermForRelationShip(relationship.target),relationship.target.conceptId, sctClass);
                 connectElements(svg, rectRole, rectRole2, 'right', 'left');
                 y = y + rectRole2.getBBox().height + 25;
                 maxX = ((maxX < x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50) ? x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50 : maxX);
@@ -10770,7 +10779,7 @@ function drawConceptDiagram (concept, div, options, panel) {
                 } else {
                     sctClass = "sct-defined-concept";
                 }
-                var rectParent = drawSctBox(svg, x, y, relationship.target.pt.term, relationship.target.conceptId, sctClass);
+                var rectParent = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                 // $("#" + rectParent.id).css({"top":
                 // (rectParent.outerHeight()/2) + "px"});
                 connectElements(svg, circle2, rectParent, 'center', 'left', 'ClearTriangle');
@@ -10784,9 +10793,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                     sctClass = "sct-defined-concept";
                 }
                 if (relationship.groupId === 0) {
-                    var rectAttr = drawSctBox(svg, x, y, relationship.type.pt.term, relationship.type.conceptId, "sct-attribute");
+                    var rectAttr = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId, "sct-attribute");
                     connectElements(svg, circle2, rectAttr, 'center', 'left');
-                    var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, relationship.target.pt.term, relationship.target.conceptId, sctClass);
+                    var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                     connectElements(svg, rectAttr, rectTarget, 'right', 'left');
                     y = y + rectTarget.getBBox().height + 25;
                     maxX = ((maxX < x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50) ? x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50 : maxX);
@@ -10812,9 +10821,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                         "PRIMITIVE") { sctClass = "sct-primitive-concept"; } else {
                         sctClass = "sct-defined-concept";
                     }
-                    var rectRole = drawSctBox(svg, x + 85, y - 18, relationship.type.pt.term, relationship.type.conceptId, "sct-attribute");
+                    var rectRole = drawSctBox(svg, x + 85, y - 18, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId, "sct-attribute");
                     connectElements(svg, conjunctionNode, rectRole, 'center', 'left');
-                    var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, relationship.target.pt.term, relationship.target.conceptId, sctClass);
+                    var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                     connectElements(svg, rectRole, rectRole2, 'right', 'left');
                     y = y + rectRole2.getBBox().height + 25;
                     maxX = ((maxX < x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50) ? x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50 : maxX);
