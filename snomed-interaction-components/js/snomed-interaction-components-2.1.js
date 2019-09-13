@@ -649,24 +649,6 @@ function program24(depth0,data) {
 
 function program26(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n                                "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n                            ";
-  return buffer;
-  }
-
-function program28(depth0,data) {
-  
-  var buffer = "", stack1;
-  buffer += "\n                                "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n                            ";
-  return buffer;
-  }
-
-function program30(depth0,data) {
-  
   var buffer = "", stack1, helper;
   buffer += "\n                <span class=\"pull-right\">\n                    <div class=\"dropdown\">\n                        <button class=\"btn btn-link dropdown-toggle\" type=\"button\" id=\"dropdownMenu1-details\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                            <i class=\"glyphicon glyphicon-plus-sign pull-right\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -722,19 +704,17 @@ function program30(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-copy-term-details\" class=\"clip-btn\" data-clipboard-text=\"\n                            ";
-  stack1 = (helper = helpers.if_undefined || (depth0 && depth0.if_undefined),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options) : helperMissing.call(depth0, "if_undefined", ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                        \">Copy term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
+    + "-copy-term-details\" class=\"clip-btn\" data-clipboard-text=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">Copy Term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-copy-sctid-term-details\" class=\"clip-btn\" data-clipboard-text=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " |\n                            ";
-  stack1 = (helper = helpers.if_undefined || (depth0 && depth0.if_undefined),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options) : helperMissing.call(depth0, "if_undefined", ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                        |\">Copy ConceptId + term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
+    + " |"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "|\">Copy Term and ConceptId</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -743,7 +723,7 @@ function program30(depth0,data) {
   else { helper = (depth0 && depth0.link); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">Copy Link to share</a></li>\n                    </ul>\n                </div>\n            </span>\n            ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.swedishExtension), {hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.swedishExtension), {hash:{},inverse:self.noop,fn:self.program(26, program26, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            <!--<button type=\"button\" id=\"share-link-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
