@@ -150,32 +150,32 @@ function dailyBuildPanel(divElement, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        console.log("edition = "+panel.options.edition);
-        console.log("release = "+panel.options.release);
-        var diffDir = "diff_reports_"+panel.options.edition+"_"+panel.options.release;
-        console.log("diffDir = "+diffDir);
-        xhr = $.getJSON(diffDir+"/diff_index.json", function( data ) {
+
+        xhr = $.getJSON(options.serverUrl + "/MAIN/authoring-stats", function( data ) {
             var reportsHtml =  '';
-            panel.title = data.title;
-            panel.executionTime = data.executionTime;
-            reportsHtml = reportsHtml + '<div style="margin: 5px">';
-            reportsHtml = reportsHtml + '  <h4>' +  panel.title + '</h4>';
-            reportsHtml = reportsHtml + '  <br>';
-            reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<em class="text-muted pull-right">(last run ' + panel.executionTime + ")</em><br>";
-            reportsHtml = reportsHtml + '</div>';
+            // panel.title = data.title;
+            // panel.executionTime = data.executionTime;
+            // reportsHtml = reportsHtml + '<div style="margin: 5px">';
+            // reportsHtml = reportsHtml + '  <h4>' +  panel.title + '</h4>';
+            // reportsHtml = reportsHtml + '  <br>';
+            // reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<em class="text-muted pull-right">(last run ' + panel.executionTime + ")</em><br>";
+            // reportsHtml = reportsHtml + '</div>';
             reportsHtml = reportsHtml + "<table id='" + panel.divElement.id + "-resultsTable' class='table table-bordered'>";
             reportsHtml = reportsHtml + "<tr><th style='padding: 3px;'>Report</th><th style='padding: 3px;'>Count</th></tr>";
-            $.each( data.reports, function( i, report ) {
-                reportsHtml =  reportsHtml + "<tr class='selectable-row' data-file='" + report.file + "' data-title='" + report.name + "'><td>" + report.name + "</td><td>" + report.count + "</td></tr>" ;
-            });
+            reportsHtml = reportsHtml + "<tr class='selectable-row' data-file='new-concepts' data-title='New Concepts'><td>New Concepts</td><td>" + data.newConceptsCount + "</td></tr>";
+            reportsHtml = reportsHtml + "<tr class='selectable-row' data-file='inactivated-concepts' data-title='Inactivated Concepts'><td>Inactivated Concepts</td><td>" + data.inactivatedConceptsCount + "</td></tr>";
+            reportsHtml = reportsHtml + "<tr class='selectable-row' data-file='reactivated-concepts' data-title='Reactivated Concepts'><td>Reactivated Concepts</td><td>" + data.reactivatedConceptsCount + "</td></tr>";
+            reportsHtml = reportsHtml + "<tr class='selectable-row' data-file='changed-fully-specified-names' data-title='Changed FSNs'><td>Changed FSNs</td><td>" + data.changedFsnCount + "</td></tr>";
+            reportsHtml = reportsHtml + "<tr class='selectable-row' data-file='inactivated-synonyms' data-title='Inactivated descriptions(synonym only)'><td>Inactivated descriptions(synonym only)</td><td>" + data.inactivatedSynonymsCount + "</td></tr>";
+            reportsHtml = reportsHtml + "<tr class='selectable-row' data-file='new-synonyms-on-existing-concepts' data-title='New descriptions (synonyms only) for existing concepts'><td>New descriptions (synonyms only) for existing concepts</td><td>" + data.newSynonymsForExistingConceptsCount + "</td></tr>";
+            reportsHtml = reportsHtml + "<tr class='selectable-row' data-file='reactivated-synonyms' data-title='Reactivated descriptions(synonyms only)'><td>Reactivated descriptions(synonyms only)</td><td>" + data.reactivatedSynonymsCount + "</td></tr>";
             reportsHtml = reportsHtml + "</table>";
             $('#' + panel.divElement.id + '-panelBody').html(reportsHtml);
 
             $('#' + panel.divElement.id + '-panelBody').find('.selectable-row').click(function (event) {
                 panel.reportTitle = $(event.target).closest('tr').attr('data-title');
                 var link = $(event.target).closest('tr').attr('data-file');
-                console.log("diffDir2 = "+diffDir);
-                panel.loadReport(diffDir+"/" + link);
+                panel.loadReport(link);
 //                panel.loadReport("diff_reports/" + link);
             });
 
@@ -191,7 +191,7 @@ function dailyBuildPanel(divElement, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON( link, function( data ) {
+        xhr = $.getJSON(options.serverUrl + "/MAIN/authoring-stats/" + link, function( data ) {
             data.sort(function(a, b) {
                 if (a.term.toLowerCase() < b.term.toLowerCase())
                     return -1;
@@ -202,16 +202,16 @@ function dailyBuildPanel(divElement, options) {
             var reportsHtml =  '';
             reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<a class="back-to-index" href="javascript:void(0);">Back to reports summary</a><br><br>';
             reportsHtml = reportsHtml + '<div style="margin: 5px">';
-            reportsHtml = reportsHtml + '  <h4>' +  panel.title + '</h4>';
-            reportsHtml = reportsHtml + '  <br>';
+            // reportsHtml = reportsHtml + '  <h4>' +  panel.title + '</h4>';
+            // reportsHtml = reportsHtml + '  <br>';
             reportsHtml = reportsHtml + '  <h4> ' + panel.reportTitle + "</h4>";
-            reportsHtml = reportsHtml + '  <br>';
-            reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<em class="text-muted pull-right">(last run ' + panel.executionTime + ")</em><br>";
+            // reportsHtml = reportsHtml + '  <br>';
+            // reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<em class="text-muted pull-right">(last run ' + panel.executionTime + ")</em><br>";
             reportsHtml = reportsHtml + '</div>';
             reportsHtml = reportsHtml + "<table id='" + panel.divElement.id + "-resultsTable' class='table table-bordered'>";
             reportsHtml = reportsHtml + "<tr><th style='padding: 3px;'>Concept</th><th style='padding: 3px;'>SCTID</th></tr>";
             $.each( data, function( i, difference ) {
-                reportsHtml =  reportsHtml + "<tr class='selectable-row' data-concept-id='" + difference.cId + "'><td>" + difference.term + "</td><td>" + difference.cId + "</td></tr>" ;
+                reportsHtml =  reportsHtml + "<tr class='selectable-row' data-concept-id='" + difference.id + "'><td>" + difference.term + "</td><td>" + difference.id + "</td></tr>" ;
             });
             reportsHtml = reportsHtml + "</table>";
             $('#' + panel.divElement.id + '-panelBody').html(reportsHtml);
