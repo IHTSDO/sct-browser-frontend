@@ -743,7 +743,7 @@ function program30(depth0,data) {
   else { helper = (depth0 && depth0.link); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">Copy Link to share</a></li>\n                    </ul>\n                </div>\n            </span>\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.edition), "MAIN/SNOMEDCT-SE", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.edition), "MAIN/SNOMEDCT-SE", options));
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.swedishExtension), {hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            <!--<button type=\"button\" id=\"share-link-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -8382,6 +8382,8 @@ function conceptDetails(divElement, conceptId, options) {
             if (firstMatch.inferredDescendants) {
                 firstMatch.inferredDescendantsString = firstMatch.inferredDescendants.toLocaleString();
             }
+
+            var swedishExtension = options.edition.startsWith('MAIN/SNOMEDCT-SE');
             var context = {
                 options: panel.options,
                 firstMatch: firstMatch,
@@ -8392,11 +8394,12 @@ function conceptDetails(divElement, conceptId, options) {
                 langRefset: panel.options.languages,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages,
                 //                dataContentValue: options.serverUrl.substr(0, options.serverUrl.length - 10)
-                dataContentValue: document.URL.split("?")[0].split("#")[0]
+                dataContentValue: document.URL.split("?")[0].split("#")[0],
+                swedishExtension: swedishExtension
             };
             $('#' + panel.attributesPId).html(JST["views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
-            if (options.edition === "MAIN/SNOMEDCT-SE") {               
+            if (swedishExtension) {               
                 
                 if( $('#' + panel.divElement.id + '-issues-collector').length != 0) {
                     $('#' + panel.divElement.id + '-issues-collector').remove();                   
@@ -8404,7 +8407,7 @@ function conceptDetails(divElement, conceptId, options) {
 
                 var issueCollectorFrame = document.createElement('iframe');
                 issueCollectorFrame.setAttribute('id', panel.divElement.id + '-issues-collector');
-                issueCollectorFrame.setAttribute("style", "width: 100%;position: fixed;height: 1000px;z-index: 0;display: none;");
+                issueCollectorFrame.setAttribute("style", "width: 100%;position: fixed;height: 100%;z-index: 0;display: none;");
                 
                 var firstChildAfterBody = document.body.firstChild;
                 firstChildAfterBody.parentNode.insertBefore(issueCollectorFrame, firstChildAfterBody);
