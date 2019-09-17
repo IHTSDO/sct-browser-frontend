@@ -467,7 +467,7 @@
                 options.languages = languages;
             }
             if (options.releases && options.releases.items && options.releases.items.length > 0) {
-                for (let i = 0; i < options.releases.items.length; ++i) {
+                for (let i = 0; i < options.releases.items.length; i++) {
                     if (options.releases.items[i].latestVersion.branchPath === options.edition) {
                         options.languageObject = options.releases.items[i].languages;
                     }
