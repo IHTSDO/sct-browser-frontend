@@ -146,6 +146,12 @@
                 
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
+                    
+                    options.language = 'en';
+                    options.languageObject = {
+                        en: "English"
+                    };
+                    
                     var $header = $('#header-nav');
                     var $projectSpan = $('<span>');
                     $projectSpan.css('margin-left', '10px');
