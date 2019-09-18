@@ -105,7 +105,7 @@
             diagrammingMarkupEnabled: false,
             statusSearchFilter: "activeOnly",
             highlightByEffectiveTime: "false",
-            dailyBuildBrowser: false
+            dailyBuildBrowser: true
         };
 
         options.languageNameOfLangRefset = {
@@ -125,6 +125,10 @@
         var manifests;
 
         function determineServer() {
+            if(window.location.hostname.includes('dailybuild')) {
+                options.dailyBuildBrowser = true;
+            }
+
             xhr = $.getJSON("/snowstorm/snomed-ct/v2/codesystems", function(result) {
                 console.log(result);
             }).done(function(result) {
@@ -135,12 +139,12 @@
 
                 xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
-                    
+
                     options.language = 'en';
                     options.languageObject = {
                         en: "English"
                     };
-                    
+
                     var $header = $('#header-nav');
                     var $projectSpan = $('<span>');
                     $projectSpan.css('margin-left', '10px');
@@ -280,10 +284,6 @@
                     start();
                 });
             });
-
-            if(window.location.hostname.includes('dailybuild')) {
-                options.dailyBuildBrowser = true;
-            }
 
             if(options.dailyBuildBrowser) {
                 $("#fh-daily_canvas-li").css({
@@ -552,7 +552,7 @@
             }
 
             var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
-
+            
             // PROJECT DROPDOWN HANDLER
             if (options.releases && options.releases.items) {
                 var $releaseSwitcher = $('#releaseSwitcher');
