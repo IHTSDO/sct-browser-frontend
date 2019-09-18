@@ -105,7 +105,7 @@
             diagrammingMarkupEnabled: false,
             statusSearchFilter: "activeOnly",
             highlightByEffectiveTime: "false",
-            dailyBuildBrowser: true
+            dailyBuildBrowser: false
         };
 
         options.languageNameOfLangRefset = {
@@ -203,7 +203,7 @@
 
                 // dynamic extension links
                 var internationalReleases = [];
-                var dailyBuildReleases = [];
+                options.dailyBuildReleases = [];
                 var localReleases = [];
 
                 // Add GB extension
@@ -228,8 +228,8 @@
 
                 addEditionLinks($('#international_editions'), internationalReleases);
 
-                dailyBuildReleases = internationalReleases.filter((item)=>{ return item.dailyBuildAvailable});
-                addEditionLinks($('#dailybuild_editions'), dailyBuildReleases);
+                options.dailyBuildReleases = internationalReleases.filter((item)=>{ return item.dailyBuildAvailable});
+                addEditionLinks($('#dailybuild_editions'), options.dailyBuildReleases);
 
                 // sort local extensions again
                 localReleases.sort(function(a, b) {
@@ -552,52 +552,99 @@
             }
 
             var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
-            
+
             // PROJECT DROPDOWN HANDLER
-            if (options.releases && options.releases.items) {
-                var $releaseSwitcher = $('#releaseSwitcher');
-                for (let i = 0; i < options.releases.items.length; ++i) {
-                    var $li = $('<li>')
-                    var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                    $a.attr("href", "javascript:void(0);");
-                    $a.on("click", function() {
-                        postal.unsubscribeFor();
-                        if (typeof componentsRegistry != "undefined") {
-                            $.each(componentsRegistry, function(i, field) {
-                                field = null;
-                            });
-                            componentsRegistry = [];
+            if(options.dailyBuildBrowser) {
+                if (options.dailyBuildReleases) {
+                    var $releaseSwitcher = $('#releaseSwitcher');
+                    for (let i = 0; i < options.dailyBuildReleases.length; ++i) {
+                        var $li = $('<li>');
+                        var $a = $('<a>').attr("shortName", options.dailyBuildReleases[i].shortName).append(options.dailyBuildReleases[i].name + " " + options.dailyBuildReleases[i].latestVersion.version);
+                        $a.attr("href", "javascript:void(0);");
+                        $a.on("click", function() {
+                            postal.unsubscribeFor();
+                            if (typeof componentsRegistry != "undefined") {
+                                $.each(componentsRegistry, function(i, field) {
+                                    field = null;
+                                });
+                                componentsRegistry = [];
+                            }
+                            var parsedLanguages = "";
+                            for (var language in options.dailyBuildReleases[i].languages) {
+                                parsedLanguages = parsedLanguages + language + ',';
+                            }
+                            parsedLanguages = parsedLanguages.slice(0, -1);
+                            options.edition = options.dailyBuildReleases[i].latestVersion.branchPath;
+                            options.release = '';
+                            options.languages = parsedLanguages;
+                            options.languageObject = options.dailyBuildReleases[i].languages;
+                            $("#editionLabel").html(options.dailyBuildReleases[i].name + " " + options.dailyBuildReleases[i].latestVersion.version);
+
+
+                            let ui_language = options.dailyBuildReleases[i].defaultLanguageCode ? options.dailyBuildReleases[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
+                            options.defaultLanguage = parsedLanguages.substr(0, 2);
+                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+
+                            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+
+                            reloadCurrentPerspective();
+                        });
+                        $li.append($a);
+                        $releaseSwitcher.append($li);
+
+                        // set default selection for release
+                        if (options.edition && options.dailyBuildReleases[i].latestVersion.branchPath === options.edition) {
+                            $("#editionLabel").html(options.dailyBuildReleases[i].name + " " + options.dailyBuildReleases[i].latestVersion.version);
                         }
-                        var parsedLanguages = "";
-                        for (var language in options.releases.items[i].languages) {
-                            parsedLanguages = parsedLanguages + language + ',';
-                        }
-                        parsedLanguages = parsedLanguages.slice(0, -1);
-                        options.edition = options.releases.items[i].latestVersion.branchPath;
-                        options.release = '';
-                        options.languages = parsedLanguages;
-                        options.languageObject = options.releases.items[i].languages;
-                        $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-
-
-                        let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
-                        options.defaultLanguage = parsedLanguages.substr(0, 2);
-                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
-
-                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-
-                        reloadCurrentPerspective();
-                    });
-                    $li.append($a);
-                    $releaseSwitcher.append($li);
-
-                    // set default selection for release
-                    if (options.edition && options.releases.items[i].latestVersion.branchPath === options.edition) {
-                        $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
                     }
                 }
+            } else {
+                if (options.releases && options.releases.items) {
+                    var $releaseSwitcher = $('#releaseSwitcher');
+                    for (let i = 0; i < options.releases.items.length; ++i) {
+                        var $li = $('<li>')
+                        var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                        $a.attr("href", "javascript:void(0);");
+                        $a.on("click", function() {
+                            postal.unsubscribeFor();
+                            if (typeof componentsRegistry != "undefined") {
+                                $.each(componentsRegistry, function(i, field) {
+                                    field = null;
+                                });
+                                componentsRegistry = [];
+                            }
+                            var parsedLanguages = "";
+                            for (var language in options.releases.items[i].languages) {
+                                parsedLanguages = parsedLanguages + language + ',';
+                            }
+                            parsedLanguages = parsedLanguages.slice(0, -1);
+                            options.edition = options.releases.items[i].latestVersion.branchPath;
+                            options.release = '';
+                            options.languages = parsedLanguages;
+                            options.languageObject = options.releases.items[i].languages;
+                            $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
 
+
+                            let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
+                            options.defaultLanguage = parsedLanguages.substr(0, 2);
+                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+
+                            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+
+                            reloadCurrentPerspective();
+                        });
+                        $li.append($a);
+                        $releaseSwitcher.append($li);
+
+                        // set default selection for release
+                        if (options.edition && options.releases.items[i].latestVersion.branchPath === options.edition) {
+                            $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                        }
+                    }
+
+                }
             }
+
             if (options.imsUrl !== null) {
                 $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
                     var $projectDdl = $('#projectDdl');
