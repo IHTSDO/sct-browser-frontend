@@ -649,34 +649,16 @@ function program24(depth0,data) {
 
 function program26(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n                                "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n                            ";
-  return buffer;
-  }
-
-function program28(depth0,data) {
-  
-  var buffer = "", stack1;
-  buffer += "\n                                "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n                            ";
-  return buffer;
-  }
-
-function program30(depth0,data) {
-  
   var buffer = "", stack1, helper;
-  buffer += "\n            <script type=\"text/javascript\" src=\"https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e-CDN/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/2.2.4.7/_/download/batch/com.atlassian.plugins.jquery:jquery/com.atlassian.plugins.jquery:jquery.js?collectorId=bedcc164\"></script><script type=\"text/javascript\" src=\"https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164\"></script>\n\n            <script type=\"text/javascript\">\n                var QueryString = function() {\n                    var query_string = {};\n                    var query = window.location.search.substring(1);\n                    var vars = query.split(\"&\");\n                    for (var i = 0; i < vars.length; i++) {\n                        var pair = vars[i].split(\"=\");\n                        if (typeof query_string[pair[0]] === \"undefined\") {\n                            query_string[pair[0]] = pair[1];\n                        } else if (typeof query_string[pair[0]] === \"string\") {\n                            var arr = [query_string[pair[0]], pair[1]];\n                            query_string[pair[0]] = arr;\n                        } else {\n                            query_string[pair[0]].push(pair[1]);\n                        }\n                    }\n                    return query_string;\n                }();\n                window.ATL_JQ_PAGE_PROPS =  {\n                    \"triggerFunction\": function(showCollectorDialog) {\n                        //Requires that jQuery is available! \n                        jQuery(\"#fh-cd1_canvas-addsyn-sctid-details\").click(function(e) {\n                            e.preventDefault();\n                            showCollectorDialog();\n                        });\n                    },\n\n                    fieldValues: {\n                        'summary': 'Förslag på synonymer för begreppet: ' + QueryString.conceptId1,\n                        'customfield_10602': QueryString.conceptId1\n                    }\n                };\n            </script>\n            <span class=\"pull-right\">\n                <div class=\"dropdown\">\n                    <button class=\"btn btn-link dropdown-toggle\" type=\"button\" id=\"dropdownMenu1-details\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                        <i class=\"glyphicon glyphicon-plus-sign pull-right\" id=\"";
+  buffer += "\n                <span class=\"pull-right\">\n                    <div class=\"dropdown\">\n                        <button class=\"btn btn-link dropdown-toggle\" type=\"button\" id=\"dropdownMenu1-details\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                            <i class=\"glyphicon glyphicon-plus-sign pull-right\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-addsyn-icon-details\"></i>\n                    </button>\n                    <ul class=\"dropdown-menu small pull-right\" role=\"menu\" aria-labelledby=\"dropdownMenu2-details\">\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
+    + "-addsyn-icon-details\"></i>\n                        </button>\n                        <ul class=\"dropdown-menu small pull-right\" role=\"menu\" aria-labelledby=\"dropdownMenu2-details\">\n                            <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-addsyn-sctid-details\">Skicka synonymförslag</a></li>\n                    </ul>\n                </div>\n            </span>\n            ";
+    + "-addsyn-sctid-details\">Skicka synonymförslag</a></li>\n                        </ul>\n                    </div>\n                </span>\n            ";
   return buffer;
   }
 
@@ -722,19 +704,17 @@ function program30(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-copy-term-details\" class=\"clip-btn\" data-clipboard-text=\"\n                            ";
-  stack1 = (helper = helpers.if_undefined || (depth0 && depth0.if_undefined),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options) : helperMissing.call(depth0, "if_undefined", ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                        \">Copy term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
+    + "-copy-term-details\" class=\"clip-btn\" data-clipboard-text=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">Copy Term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-copy-sctid-term-details\" class=\"clip-btn\" data-clipboard-text=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " |\n                            ";
-  stack1 = (helper = helpers.if_undefined || (depth0 && depth0.if_undefined),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options) : helperMissing.call(depth0, "if_undefined", ((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                        |\">Copy ConceptId + term</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
+    + " |"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "|\">Copy Term and ConceptId</a></li>\n                        <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -743,7 +723,7 @@ function program30(depth0,data) {
   else { helper = (depth0 && depth0.link); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">Copy Link to share</a></li>\n                    </ul>\n                </div>\n            </span>\n            ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.edition), "MAIN/SNOMEDCT-SE", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.edition), "MAIN/SNOMEDCT-SE", options));
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.swedishExtension), {hash:{},inverse:self.noop,fn:self.program(26, program26, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            <!--<button type=\"button\" id=\"share-link-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -1126,6 +1106,36 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "-diagram-body\" class=\"row\" style=\"overflow: auto; width: 1000;\"></div>\n</div>";
+  return buffer;
+  });
+
+this["JST"]["views/conceptDetailsPlugin/tabs/details/jira-issues-collector.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div>\n    <script type=\"text/javascript\" src=\"https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e-CDN/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/2.2.4.7/_/download/batch/com.atlassian.plugins.jquery:jquery/com.atlassian.plugins.jquery:jquery.js?collectorId=bedcc164\"></script>\n    <script type=\"text/javascript\" src=\"https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164\"></script>\n\n    <script type=\"text/javascript\">        \n        window.ATL_JQ_PAGE_PROPS =  {\n            \"triggerFunction\": function(showCollectorDialog) {\n                jQuery(\"#";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-addsyn-issue-collector\").click(function(e) {\n                    e.preventDefault();\n                    showCollectorDialog();\n                });\n            },\n\n            fieldValues: {\n                'summary': 'Förslag på synonymer för begreppet: ' + "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + ",\n                'customfield_10602': "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n            }\n        };\n\n        function openJiraIssueCollectorDialog() {\n            var link = document.getElementById('";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-addsyn-issue-collector');\n            link.click();\n            watchIssueCollectorDialogEvents();            \n        }\n\n        function watchIssueCollectorDialogEvents() {\n            //watch if dialog has been loaded completely\n            var issueCollectorDialoglocadingCompleteInterval = setInterval(function() {              \n                var elm = $('#atlwdg-container');                \n                if (elm && elm.length > 0 && !elm[0].classList.contains('atlwdg-hidden')) {\n                    clearInterval(issueCollectorDialoglocadingCompleteInterval);\n                    \n                    //watch if dialog is being got closed\n                    var issueCollectorDialogClosingInterval = setInterval(function() {              \n                        var elm = $('#atlwdg-container');                \n                        if (elm && elm.length > 0 && elm[0].classList.contains('atlwdg-hidden')) {\n                            clearInterval(issueCollectorDialogClosingInterval);\n                            var frame = parent.document.getElementById('";
+  if (helper = helpers.frameId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.frameId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "');\n                            frame.style.display = 'none';\n                            frame.style.zIndex = '0';\n                        }\n                    }, 1000);\n                }\n            }, 1000);\n        }\n\n    </script>\n\n    <button style=\"display: none !important\">\n        <i id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-addsyn-issue-collector\"></i>\n    </button>\n</div>";
   return buffer;
   });
 
@@ -1617,7 +1627,11 @@ function program49(depth0,data) {
   buffer += escapeExpression(stack1)
     + "</td>\n                                <td><span class='i18n' data-i18n-id='i18n_stated'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_stated", "Stated", options) : helperMissing.call(depth0, "i18n", "i18n_stated", "Stated", options)))
-    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                    <tr><td style='padding: 3px;'>";
+    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1629,7 +1643,7 @@ function program49(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                                </table>\n                                \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
   return buffer;
   }
 function program50(depth0,data) {
@@ -1785,7 +1799,11 @@ function program64(depth0,data) {
   buffer += escapeExpression(stack1)
     + "</td>\n                                <td><span class='i18n' data-i18n-id='i18n_stated'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_stated", "Stated", options) : helperMissing.call(depth0, "i18n", "i18n_stated", "Stated", options)))
-    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                    <tr><td style='padding: 3px;'>";
+    + "</span>\n                                    <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1797,7 +1815,7 @@ function program64(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                                </table>\n                                \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                                </td>\n                            </tr>\n                        ";
   return buffer;
   }
 function program65(depth0,data) {
@@ -1887,7 +1905,11 @@ function program73(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</td>\n                        <td><span class='i18n' data-i18n-id='i18n_additional'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_additional", "Additional", options) : helperMissing.call(depth0, "i18n", "i18n_additional", "Additional", options)))
-    + "</span>\n                            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                            <table border='1'><tr><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                <tr><td style='padding: 3px;'>";
+    + "</span>\n                            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</td><td style='padding: 3px;'>";
   if (helper = helpers.modifier) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.modifier); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1899,7 +1921,7 @@ function program73(depth0,data) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                            </table>\n                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                        </td>\n                    </tr>\n                ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                        </td>\n                    </tr>\n                ";
   return buffer;
   }
 function program74(depth0,data) {
@@ -3008,13 +3030,13 @@ function program21(depth0,data) {
 function program23(depth0,data) {
   
   
-  return "\n                    <div>Axiom</div>\n                    <div style=\"border: 1px solid darkgrey; border-radius: 4px; padding: 3px; background-color: white; margin: 5px;\">\n                ";
+  return "\n                    <div>Axiom</div>\n                    <div>\n                ";
   }
 
 function program25(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n\n                        ";
+  buffer += "\n                        ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                    ";
@@ -3032,7 +3054,9 @@ function program28(depth0,data) {
   buffer += "\n                            ";
   stack1 = (helper = helpers.eqLastGroup || (depth0 && depth0.eqLastGroup),options={hash:{},inverse:self.program(31, program31, data),fn:self.program(29, program29, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "eqLastGroup", (depth0 && depth0.groupId), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                            &nbsp;<span draggable = \"true\" ondragstart=\"drag(event, '";
+  buffer += "\n                            &nbsp;<span style='background-color: "
+    + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "get", options) : helperMissing.call(depth0, "lastColor", "get", options)))
+    + "' draggable = \"true\" ondragstart=\"drag(event, '";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -3042,26 +3066,39 @@ function program28(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "' data-term='"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'>"
+    + "'>\n                            "
     + escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options) : helperMissing.call(depth0, "removeSemtag", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options)))
-    + "</span>&nbsp;&rarr;&nbsp;\n\n                            ";
+    + "</span>&nbsp;&rarr;&nbsp;\n                        <span draggable = \"true\" ondragstart=\"drag(event, '";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "')\" class='\n                            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(35, program35, data),fn:self.program(33, program33, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                            "
+  buffer += "\n                            ' data-module=\""
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.module)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" data-concept-id='"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "' data-term='"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "'>\n                            "
     + escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options) : helperMissing.call(depth0, "removeSemtag", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options)))
-    + "\n                        </span><br>\n                        ";
+    + "</span><br>\n                        ";
   return buffer;
   }
 function program29(depth0,data) {
   
-  var buffer = "", helper, options;
-  buffer += "\n                                "
+  var buffer = "", stack1, helper, options;
+  buffer += "\n                                </div>\n                                "
     + escapeExpression((helper = helpers.setLastGroup || (depth0 && depth0.setLastGroup),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "setLastGroup", (depth0 && depth0.groupId), options)))
     + "\n                                "
     + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "random", options) : helperMissing.call(depth0, "lastColor", "random", options)))
-    + "\n                                <span style='background-color: "
+    + "\n                                <div ";
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), 0, options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.groupId), 0, options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">\n                                <span style='background-color: "
     + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "get", options) : helperMissing.call(depth0, "lastColor", "get", options)))
-    + "'></span>\n                            ";
+    + "'></span>\n                                ";
   return buffer;
   }
 
@@ -3076,36 +3113,14 @@ function program31(depth0,data) {
 
 function program33(depth0,data) {
   
-  var buffer = "", stack1, helper;
-  buffer += "\n                            <span draggable = \"true\" ondragstart=\"drag(event, '";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "')\" class='sct-primitive-concept-compact' data-module=\""
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.module)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" data-concept-id='"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "' data-term='"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'>\n                            ";
-  return buffer;
+  
+  return "\n                                sct-primitive-concept-compact\n                            ";
   }
 
 function program35(depth0,data) {
   
-  var buffer = "", stack1, helper;
-  buffer += "\n                            <span draggable = \"true\" ondragstart=\"drag(event, '";
-  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "')\" class='sct-defined-concept-compact' data-module=\""
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.module)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" data-concept-id='"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "' data-term='"
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'>\n                            ";
-  return buffer;
+  
+  return "\n                                sct-defined-concept-compact\n                            ";
   }
 
 function program37(depth0,data) {
@@ -3124,7 +3139,7 @@ function program38(depth0,data) {
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(39, program39, data),fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.clinicalFindingRelationships), true, options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.clinicalFindingRelationships), true, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                    ";
-  stack1 = helpers.each.call(depth0, (depth0 && depth0.relationships), {hash:{},inverse:self.noop,fn:self.program(41, program41, data),data:data});
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.relationships), {hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                </span>\n                </div>\n            ";
   return buffer;
@@ -3132,38 +3147,28 @@ function program38(depth0,data) {
 function program39(depth0,data) {
   
   
-  return "\n                    <div>GCI</div>\n                    <div style=\"border: 1px solid darkgrey; border-radius: 4px; padding: 3px; background-color: white; margin: 5px;\">\n                ";
+  return "\n                    <div>GCI</div>\n                    <div>\n                ";
   }
 
 function program41(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n                        ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(28, program28, data),fn:self.program(26, program26, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId), "116680003", options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                    ";
-  return buffer;
-  }
-
-function program43(depth0,data) {
-  
-  var buffer = "", stack1, helper, options;
-  buffer += "\n        ";
-  stack1 = helpers.each.call(depth0, (depth0 && depth0.inferredRoles), {hash:{},inverse:self.noop,fn:self.program(44, program44, data),data:data});
+  buffer += "\n        \n            ";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.inferredRoles), {hash:{},inverse:self.noop,fn:self.program(42, program42, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        </div>\n        ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(53, program53, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.inferredRoles)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.inferredRoles)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(51, program51, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.inferredRoles)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.inferredRoles)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    ";
   return buffer;
   }
-function program44(depth0,data) {
+function program42(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n            <!--<br>inferred-->\n                    ";
-  stack1 = (helper = helpers.eqLastGroup || (depth0 && depth0.eqLastGroup),options={hash:{},inverse:self.program(47, program47, data),fn:self.program(45, program45, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "eqLastGroup", (depth0 && depth0.groupId), options));
+  buffer += "\n                \n                        ";
+  stack1 = (helper = helpers.eqLastGroup || (depth0 && depth0.eqLastGroup),options={hash:{},inverse:self.program(45, program45, data),fn:self.program(43, program43, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "eqLastGroup", (depth0 && depth0.groupId), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                    &nbsp;<span style='background-color: "
+  buffer += "\n                        &nbsp;<span style='background-color: "
     + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "get", options) : helperMissing.call(depth0, "lastColor", "get", options)))
     + "' draggable = \"true\" ondragstart=\"drag(event, '";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -3175,64 +3180,64 @@ function program44(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "' data-term='"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'>\n                    "
+    + "'>\n                        "
     + escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options) : helperMissing.call(depth0, "removeSemtag", ((stack1 = (depth0 && depth0.type)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options)))
-    + "</span>&nbsp;&rarr;&nbsp;\n            <span draggable = \"true\" ondragstart=\"drag(event, '";
+    + "</span>&nbsp;&rarr;&nbsp;\n                <span draggable = \"true\" ondragstart=\"drag(event, '";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "')\" class='\n                ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(51, program51, data),fn:self.program(49, program49, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options));
+    + "')\" class='\n                    ";
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(49, program49, data),fn:self.program(47, program47, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.definitionStatus), "PRIMITIVE", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                ' data-module=\""
+  buffer += "\n                    ' data-module=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.module)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" data-concept-id='"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "' data-term='"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'>\n                "
+    + "'>\n                    "
     + escapeExpression((helper = helpers.removeSemtag || (depth0 && depth0.removeSemtag),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options) : helperMissing.call(depth0, "removeSemtag", ((stack1 = (depth0 && depth0.target)),stack1 == null || stack1 === false ? stack1 : stack1.defaultTerm), options)))
-    + "</span><br>\n        ";
+    + "</span><br>\n            ";
   return buffer;
   }
-function program45(depth0,data) {
+function program43(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n                        </div>\n                        "
+  buffer += "\n                            </div>\n                            "
     + escapeExpression((helper = helpers.setLastGroup || (depth0 && depth0.setLastGroup),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), options) : helperMissing.call(depth0, "setLastGroup", (depth0 && depth0.groupId), options)))
-    + "\n                        "
+    + "\n                            "
     + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "random", options) : helperMissing.call(depth0, "lastColor", "random", options)))
-    + "\n                        <div ";
+    + "\n                            <div ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.groupId), 0, options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.groupId), 0, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += ">\n                        <span style='background-color: "
+  buffer += ">\n                            <span style='background-color: "
     + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "get", options) : helperMissing.call(depth0, "lastColor", "get", options)))
-    + "'></span>\n                    ";
+    + "'></span>\n                        ";
+  return buffer;
+  }
+
+function program45(depth0,data) {
+  
+  var buffer = "", helper, options;
+  buffer += "\n                            <span style='background-color: "
+    + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "get", options) : helperMissing.call(depth0, "lastColor", "get", options)))
+    + "'></span>\n                        ";
   return buffer;
   }
 
 function program47(depth0,data) {
   
-  var buffer = "", helper, options;
-  buffer += "\n                        <span style='background-color: "
-    + escapeExpression((helper = helpers.lastColor || (depth0 && depth0.lastColor),options={hash:{},data:data},helper ? helper.call(depth0, "get", options) : helperMissing.call(depth0, "lastColor", "get", options)))
-    + "'></span>\n                    ";
-  return buffer;
+  
+  return "\n                         sct-primitive-concept-compact\n                    ";
   }
 
 function program49(depth0,data) {
   
   
-  return "\n                     sct-primitive-concept-compact\n                ";
+  return "\n                         sct-defined-concept-compact\n                    ";
   }
 
 function program51(depth0,data) {
-  
-  
-  return "\n                     sct-defined-concept-compact\n                ";
-  }
-
-function program53(depth0,data) {
   
   var buffer = "", helper, options;
   buffer += "\n            <span class='i18n text-muted' data-i18n-id='i18n_no_attributes'>"
@@ -3244,7 +3249,7 @@ function program53(depth0,data) {
   buffer += "<div style='line-height: 100%;'>\n    "
     + escapeExpression((helper = helpers.setLastGroup || (depth0 && depth0.setLastGroup),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.null), options) : helperMissing.call(depth0, "setLastGroup", (depth0 && depth0.null), options)))
     + "\n    ";
-  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(43, program43, data),fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "stated", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "stated", options));
+  stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(41, program41, data),fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "stated", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "stated", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</div>\n";
   return buffer;
@@ -8352,6 +8357,8 @@ function conceptDetails(divElement, conceptId, options) {
             if (firstMatch.inferredDescendants) {
                 firstMatch.inferredDescendantsString = firstMatch.inferredDescendants.toLocaleString();
             }
+
+            var swedishExtension = options.edition.startsWith('MAIN/SNOMEDCT-SE');
             var context = {
                 options: panel.options,
                 firstMatch: firstMatch,
@@ -8362,10 +8369,45 @@ function conceptDetails(divElement, conceptId, options) {
                 langRefset: panel.options.languages,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages,
                 //                dataContentValue: options.serverUrl.substr(0, options.serverUrl.length - 10)
-                dataContentValue: document.URL.split("?")[0].split("#")[0]
+                dataContentValue: document.URL.split("?")[0].split("#")[0],
+                swedishExtension: swedishExtension
             };
-
             $('#' + panel.attributesPId).html(JST["views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
+            
+            if (swedishExtension) {               
+                
+                if( $('#' + panel.divElement.id + '-issues-collector').length != 0) {
+                    $('#' + panel.divElement.id + '-issues-collector').remove();                   
+                }
+
+                var issueCollectorFrame = document.createElement('iframe');
+                issueCollectorFrame.setAttribute('id', panel.divElement.id + '-issues-collector');
+                issueCollectorFrame.setAttribute("style", "width: 100%;position: fixed;height: 100%;z-index: 0;display: none;");
+                
+                var firstChildAfterBody = document.body.firstChild;
+                firstChildAfterBody.parentNode.insertBefore(issueCollectorFrame, firstChildAfterBody);
+                
+                var context = {                    
+                    firstMatch: firstMatch,
+                    divElementId: panel.divElement.id,
+                    frameId: panel.divElement.id + '-issues-collector'
+                };
+                var issueCollectorFrameHtml = JST["views/conceptDetailsPlugin/tabs/details/jira-issues-collector.hbs"](context);
+                var blob = new Blob([issueCollectorFrameHtml], {type: 'text/html'});
+                issueCollectorFrame.src = URL.createObjectURL(blob);
+
+                $('#' + panel.divElement.id + '-addsyn-sctid-details').click(function(e) {                   
+                    e.preventDefault();
+                    var iframe = $('#' + panel.divElement.id + '-issues-collector');                    
+                    if (iframe) {
+                        $(iframe[0]).css({ "z-index": '10000',"display": 'block'});  
+                        
+                        var iframeContent = (iframe[0].contentWindow || iframe[0].contentDocument);
+                        iframeContent.openJiraIssueCollectorDialog();
+                    }
+                });
+            }            
+
             $('#' + 'share-link-' + panel.divElement.id).disableTextSelect();
             $('#' + 'share-link-' + panel.divElement.id).click(function(event) {
                 setTimeout(function() {
@@ -10465,6 +10507,16 @@ Handlebars.registerHelper('countryIcon', function(moduleId) {
     return countryIcons[moduleId];
 });
 function drawConceptDiagram (concept, div, options, panel) {
+    
+    var getDefautTermForRelationShip = function (concept) {
+        if(concept.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && concept.fsn.lang != options.defaultLanguage){
+            return concept.pt.term;
+        }
+        else{
+            return concept.fsn.term;
+        }
+    };
+
     var svgIsaModel = [];
     var svgAttrModel = [];
     var axioms = [];
@@ -10576,14 +10628,24 @@ function drawConceptDiagram (concept, div, options, panel) {
         sctClass = "sct-defined-concept";
     }
     //console.log("In draw: " + concept.defaultTerm + " " + concept.conceptId + " " + sctClass);
-    var fsn = '';
-    if(concept.fsn.term){
-        fsn = concept.fsn.term;
+    var pt = {};
+    $.each(concept.descriptions, function(i, description) {
+        if (description.lang == options.defaultLanguage && description.active) {
+            $.each(description.acceptabilityMap, function(i, map){
+                if(map == "PREFERRED"){
+                    pt = description;
+                }
+            })
+        }
+    });
+    if(pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && concept.fsn.lang != options.defaultLanguage){
+        concept.defaultTerm = pt.term;
     }
     else{
-        fsn = concept.fsn;
+        concept.defaultTerm = concept.fsn.term;
     }
-    var rect1 = drawSctBox(svg, x, y, fsn, concept.conceptId, sctClass);
+   
+    var rect1 = drawSctBox(svg, x, y, concept.defaultTerm, concept.conceptId, sctClass);
     x = x + 90;
     y = y + rect1.getBBox().height + 40;
     if(options.selectedView === 'stated' && svgIsaModel && svgIsaModel.length > 0 || options.selectedView != 'stated'){
@@ -10616,7 +10678,7 @@ function drawConceptDiagram (concept, div, options, panel) {
         } else {
             sctClass = "sct-defined-concept";
         }
-        var rectParent = drawSctBox(svg, x, y, relationship.target.fsn.term, relationship.target.conceptId, sctClass);
+        var rectParent = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
         // $("#" + rectParent.id).css({"top":
         // (rectParent.outerHeight()/2) + "px"});
         connectElements(svg, circle2, rectParent, 'center', 'left', 'ClearTriangle');
@@ -10633,9 +10695,9 @@ function drawConceptDiagram (concept, div, options, panel) {
             sctClass = "sct-defined-concept";
         }
         if (relationship.groupId == 0) {
-            var rectAttr = drawSctBox(svg, x, y, relationship.type.fsn.term,relationship.type.conceptId, "sct-attribute");
+            var rectAttr = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.type),relationship.type.conceptId, "sct-attribute");
             connectElements(svg, circle2, rectAttr, 'center', 'left');
-            var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, relationship.target.fsn.term,relationship.target.conceptId, sctClass);
+            var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, getDefautTermForRelationShip(relationship.target),relationship.target.conceptId, sctClass);
             connectElements(svg, rectAttr, rectTarget, 'right', 'left');
             y = y + rectTarget.getBBox().height + 25;
             maxX = ((maxX < x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50) ? x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50 : maxX);
@@ -10658,9 +10720,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                 } else {
                     sctClass = "sct-defined-concept";
                 }
-                var rectRole = drawSctBox(svg, x + 85, y - 18, relationship.type.fsn.term, relationship.type.conceptId,"sct-attribute");
+                var rectRole = drawSctBox(svg, x + 85, y - 18, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId,"sct-attribute");
                 connectElements(svg, conjunctionNode, rectRole, 'center', 'left');
-                var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, relationship.target.fsn.term,relationship.target.conceptId, sctClass);
+                var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, getDefautTermForRelationShip(relationship.target),relationship.target.conceptId, sctClass);
                 connectElements(svg, rectRole, rectRole2, 'right', 'left');
                 y = y + rectRole2.getBBox().height + 25;
                 maxX = ((maxX < x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50) ? x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50 : maxX);
@@ -10700,7 +10762,7 @@ function drawConceptDiagram (concept, div, options, panel) {
                 } else {
                     sctClass = "sct-defined-concept";
                 }
-                var rectParent = drawSctBox(svg, x, y, relationship.target.fsn.term, relationship.target.conceptId, sctClass);
+                var rectParent = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                 // $("#" + rectParent.id).css({"top":
                 // (rectParent.outerHeight()/2) + "px"});
                 connectElements(svg, circle2, rectParent, 'center', 'left', 'ClearTriangle');
@@ -10714,9 +10776,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                     sctClass = "sct-defined-concept";
                 }
                 if (relationship.groupId === 0) {
-                    var rectAttr = drawSctBox(svg, x, y, relationship.type.fsn.term, relationship.type.conceptId, "sct-attribute");
+                    var rectAttr = drawSctBox(svg, x, y, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId, "sct-attribute");
                     connectElements(svg, circle2, rectAttr, 'center', 'left');
-                    var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, relationship.target.fsn.term, relationship.target.conceptId, sctClass);
+                    var rectTarget = drawSctBox(svg, x + rectAttr.getBBox().width + 50, y, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                     connectElements(svg, rectAttr, rectTarget, 'right', 'left');
                     y = y + rectTarget.getBBox().height + 25;
                     maxX = ((maxX < x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50) ? x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50 : maxX);
@@ -10742,9 +10804,9 @@ function drawConceptDiagram (concept, div, options, panel) {
                         "PRIMITIVE") { sctClass = "sct-primitive-concept"; } else {
                         sctClass = "sct-defined-concept";
                     }
-                    var rectRole = drawSctBox(svg, x + 85, y - 18, relationship.type.fsn.term, relationship.type.conceptId, "sct-attribute");
+                    var rectRole = drawSctBox(svg, x + 85, y - 18, getDefautTermForRelationShip(relationship.type), relationship.type.conceptId, "sct-attribute");
                     connectElements(svg, conjunctionNode, rectRole, 'center', 'left');
-                    var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, relationship.target.fsn.term, relationship.target.conceptId, sctClass);
+                    var rectRole2 = drawSctBox(svg, x + 85 + rectRole.getBBox().width + 30, y - 18, getDefautTermForRelationShip(relationship.target), relationship.target.conceptId, sctClass);
                     connectElements(svg, rectRole, rectRole2, 'right', 'left');
                     y = y + rectRole2.getBBox().height + 25;
                     maxX = ((maxX < x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50) ? x + 85 + rectRole.getBBox().width + 30 + rectRole2.getBBox().width + 50 : maxX);
