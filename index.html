@@ -105,7 +105,7 @@
             diagrammingMarkupEnabled: false,
             statusSearchFilter: "activeOnly",
             highlightByEffectiveTime: "false",
-            dailyBuildBrowser: false
+            dailyBuildBrowser: true
         };
 
         options.languageNameOfLangRefset = {
@@ -127,6 +127,8 @@
         function determineServer() {
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
+                options.queryBranch = 'MAIN';
+                options.edition = 'MAIN';
             }
 
             xhr = $.getJSON("/snowstorm/snomed-ct/v2/codesystems", function(result) {
@@ -228,14 +230,14 @@
 
                 addEditionLinks($('#international_editions'), internationalReleases);
 
-                options.dailyBuildReleases = internationalReleases.filter((item)=>{ return item.dailyBuildAvailable});
-                addEditionLinks($('#dailybuild_editions'), options.dailyBuildReleases);
-
                 // sort local extensions again
                 localReleases.sort(function(a, b) {
                     return a.name.localeCompare(b.name);
                 });
                 addEditionLinks($('#local_editions'), localReleases);
+
+                options.dailyBuildReleases = internationalReleases.filter((item)=>{ return item.dailyBuildAvailable});
+                addEditionLinks($('#dailybuild_editions'), options.dailyBuildReleases);
             }).fail(function() {
                 console.log('fail');
                 options.serverUrl = "/snowowl/snomed-ct/v2";
@@ -306,7 +308,12 @@
                 var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
                 $span1.text("Go browsing...");
                 var $span2 = $('<span>').attr("class", "small");
-                $span2.append(release.name + "<br>" + release.latestVersion.version);
+                if(options.dailyBuildBrowser) {
+                    $span2.append(release.name + "<br>DAILY BUILD");
+                    $("#editionLabel").html(release.name + " DAILY BUILD");
+                } else {
+                    $span2.append(release.name + "<br>" + release.latestVersion.version);
+                }
 
                 var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
                 $a.append($img);
@@ -326,11 +333,17 @@
                             parsedLanguages = parsedLanguages + language + ',';
                         }
                         parsedLanguages = parsedLanguages.slice(0, -1);
-                        options.edition = release.latestVersion.branchPath;
+                        if(options.dailyBuildBrowser) {
+                            options.edition = release.branchPath;
+                            $("#editionLabel").html(release.name + " DAILY BUILD");
+                        }
+                        else {
+                            options.edition = release.latestVersion.branchPath;
+                            $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                        }
                         options.release = '';
                         options.languages = parsedLanguages;
                         options.languageObject = release.languages;
-                        $("#editionLabel").html(release.name + " " + release.latestVersion.version);
 
                         let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
                         options.defaultLanguage = parsedLanguages.substr(0, 2);
@@ -559,7 +572,7 @@
                     var $releaseSwitcher = $('#releaseSwitcher');
                     for (let i = 0; i < options.dailyBuildReleases.length; ++i) {
                         var $li = $('<li>');
-                        var $a = $('<a>').attr("shortName", options.dailyBuildReleases[i].shortName).append(options.dailyBuildReleases[i].name + " " + options.dailyBuildReleases[i].latestVersion.version);
+                        var $a = $('<a>').attr("shortName", options.dailyBuildReleases[i].shortName).append(options.dailyBuildReleases[i].name + " ").append('<span style="color: dodgerblue;">DAILY BUILD</span>');
                         $a.attr("href", "javascript:void(0);");
                         $a.on("click", function() {
                             postal.unsubscribeFor();
@@ -574,11 +587,11 @@
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
                             parsedLanguages = parsedLanguages.slice(0, -1);
-                            options.edition = options.dailyBuildReleases[i].latestVersion.branchPath;
+                            options.edition = options.dailyBuildReleases[i].branchPath;
                             options.release = '';
                             options.languages = parsedLanguages;
                             options.languageObject = options.dailyBuildReleases[i].languages;
-                            $("#editionLabel").html(options.dailyBuildReleases[i].name + " " + options.dailyBuildReleases[i].latestVersion.version);
+                            $("#editionLabel").html(options.dailyBuildReleases[i].name + " DAILY BUILD");
 
 
                             let ui_language = options.dailyBuildReleases[i].defaultLanguageCode ? options.dailyBuildReleases[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
@@ -593,8 +606,8 @@
                         $releaseSwitcher.append($li);
 
                         // set default selection for release
-                        if (options.edition && options.dailyBuildReleases[i].latestVersion.branchPath === options.edition) {
-                            $("#editionLabel").html(options.dailyBuildReleases[i].name + " " + options.dailyBuildReleases[i].latestVersion.version);
+                        if (options.edition && options.dailyBuildReleases[i].branchPath === options.edition) {
+                            $("#editionLabel").html(options.dailyBuildReleases[i].name + " DAILY BUILD");
                         }
                     }
                 }
