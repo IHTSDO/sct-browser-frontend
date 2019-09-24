@@ -147,6 +147,10 @@
                     options.languageObject = {
                         en: "English"
                     };
+                    if(options.edition === 'MAIN/2019-07-31'){
+                        options.queryBranch = 'MAIN';
+                        options.edition = 'MAIN';
+                    }
 
                     var $header = $('#header-nav');
                     var $projectSpan = $('<span>');
@@ -250,6 +254,11 @@
                     options.languageObject = {
                         en: "English"
                     };
+                    
+                    if(options.edition === 'MAIN/2019-07-31'){
+                        options.queryBranch = 'MAIN';
+                        options.edition = 'MAIN';
+                    }
 
                     //create project/task switcher
                     var $header = $('#header-nav');
