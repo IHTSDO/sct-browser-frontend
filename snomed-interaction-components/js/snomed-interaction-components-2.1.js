@@ -446,6 +446,31 @@ function program29(depth0,data) {
 
 function program31(depth0,data,depth1) {
   
+  var buffer = "", stack1;
+  buffer += "\n        ";
+  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.languageRefsets), {hash:{},inverse:self.noop,fn:self.programWithDepth(32, program32, data, depth1),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    ";
+  return buffer;
+  }
+function program32(depth0,data,depth2) {
+  
+  var buffer = "", stack1, helper, options;
+  buffer += "\n            <div class=\"checkbox\">\n                <label>\n                    <input class=\"langOption\" type=\"checkbox\" value=\"";
+  if (helper = helpers.conceptId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.conceptId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" ";
+  stack1 = (helper = helpers.ifIn || (depth0 && depth0.ifIn),options={hash:{},inverse:self.noop,fn:self.program(21, program21, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.conceptId), ((stack1 = (depth2 && depth2.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options) : helperMissing.call(depth0, "ifIn", (depth0 && depth0.conceptId), ((stack1 = (depth2 && depth2.options)),stack1 == null || stack1 === false ? stack1 : stack1.langRefset), options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "> "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.fsn)),stack1 == null || stack1 === false ? stack1 : stack1.term)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n                </label>\n            </div>\n        ";
+  return buffer;
+  }
+
+function program34(depth0,data,depth1) {
+  
   var buffer = "", stack1, helper;
   buffer += "-->\n                    <!--<tr>-->\n                        <!--<td>";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -513,8 +538,13 @@ function program31(depth0,data,depth1) {
   buffer += "\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(29, program29, data),fn:self.program(27, program27, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "inferred", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "inferred", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "           \n        </select>\n    </div>\n    <!--<div class=\"form-group\">-->\n        <!--<table class='table table-bordered table-hover'>-->\n            <!--<thead>-->\n                <!--<tr>-->\n                    <!--<th>Panel</th>-->\n                    <!--<th>Subscribed</th>-->\n                    <!--<th>Subscriptor</th>-->\n                <!--</tr>-->\n            <!--</thead>-->\n            <!--<tbody>-->\n                <!--";
-  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(31, program31, data, depth0),data:data});
+  buffer += "           \n        </select>\n    </div>\n    \n    <label><span class=\"i18n\" data-i18n-id=\"i18n_language_refset\">"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_language_refset", "Language Refset", options) : helperMissing.call(depth0, "i18n", "i18n_language_refset", "Language Refset", options)))
+    + "</span></label>\n    ";
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.languageRefsets), {hash:{},inverse:self.noop,fn:self.programWithDepth(31, program31, data, depth0),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    <!--<div class=\"form-group\">-->\n        <!--<table class='table table-bordered table-hover'>-->\n            <!--<thead>-->\n                <!--<tr>-->\n                    <!--<th>Panel</th>-->\n                    <!--<th>Subscribed</th>-->\n                    <!--<th>Subscriptor</th>-->\n                <!--</tr>-->\n            <!--</thead>-->\n            <!--<tbody>-->\n                <!--";
+  stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.possibleSubscribers), {hash:{},inverse:self.noop,fn:self.programWithDepth(34, program34, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "-->\n            <!--</tbody>-->\n        <!--</table>-->\n    <!--</div>-->\n</form>";
   return buffer;
@@ -7867,10 +7897,6 @@ function conceptDetails(divElement, conceptId, options) {
         "11000146104": "NL"
     };
 
-    var longLanguageNameOfLangRefset = {
-        "900000000000509007": "United States of America English language reference set",
-        "900000000000508004": "Great Britain English language reference set"
-    };
 
     if (options.languageNameOfLangRefset){
         languageNameOfLangRefset = options.languageNameOfLangRefset;
@@ -7985,10 +8011,6 @@ function conceptDetails(divElement, conceptId, options) {
 
         $("#" + panel.divElement.id + "-closeButton").click(function(event) {
             $(divElement).remove();
-        });
-
-        $("#" + panel.divElement.id + "-configButton").click(function(event) {
-            panel.setupOptionsPanel();
         });
 
         if (typeof panel.options.closeButton != "undefined" && panel.options.closeButton == false) {
@@ -8144,17 +8166,64 @@ function conceptDetails(divElement, conceptId, options) {
         //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
         //        });
 
-        panel.updateCanvas();
+        var branch = options.edition;
+        if(options.release.length > 0 && options.release !== 'None'){
+            branch = branch + "/" + options.release;
+        };
+        if(!options.serverUrl.includes('snowowl')){
+           $.ajaxSetup({
+              headers : {
+                'Accept-Language': options.languages
+              }
+            });
+        };
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {              
+            // do nothing                
+        }).done(function(result) {
+            panel.options.languageRefsets = [];
+            panel.options.langRefset = [];             
+            Object.keys(result.referenceSets).forEach(function(key) {
+                if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                    panel.options.languageRefsets.push(result.referenceSets[key]);                                      
+                }
+            });
+
+            panel.options.languageRefsets.sort(function(a, b) {
+                if (a.conceptId === '900000000000509007'){
+                    return -1;
+                }
+    
+                if (b.conceptId === '900000000000509007'){
+                    return 1;
+                }
+    
+                return a.fsn.term.localeCompare(b.fsn.term);
+            });
+
+            panel.options.languageRefsets.forEach(function(item) {
+                panel.options.langRefset.push(item.id);  
+            });
+
+            $("#" + panel.divElement.id + "-configButton").click(function(event) {
+                panel.setupOptionsPanel();
+            });
+
+            panel.updateCanvas();
+            
+            panel.setupOptionsPanel();
+        });
+        
         channel.publish(panel.divElement.id, {
             term: panel.term,
             module: panel.module,
             conceptId: panel.conceptId,
             source: panel.divElement.id
         });
-        panel.setupOptionsPanel();
+        
         if (panel.subscriptions.length > 0 || panel.subscribers.length > 0) {
             $("#" + panel.divElement.id + "-subscribersMarker").show();
         }
+        
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
     }
 
@@ -8653,24 +8722,7 @@ function conceptDetails(divElement, conceptId, options) {
 
             // load descriptions panel
             panel.descsPId = divElement.id + "-descriptions-panel";
-            var languageName = "";
-//            if (panel.options.langRefset == "900000000000508004") {
-//                languageName = "(GB)";
-//            } else if (panel.options.langRefset == "900000000000509007") {
-//                languageName = "(US)";
-//            } else if (panel.options.langRefset == "450828004") {
-//                languageName = "(ES)";
-//            } else if (panel.options.langRefset == "554461000005103") {
-//                languageName = "(DA)";
-//            } else if (panel.options.langRefset == "46011000052107") {
-//                languageName = "(SV)";
-//            } else if (panel.options.langRefset == "32570271000036106") {
-//                languageName = "(AU)";
-//            } else if (panel.options.langRefset == "999001251000000103") {
-//                languageName = "(UK)";
-//            } else if (panel.options.langRefset == "31000146106") {
-//                languageName = "(NL)";
-//            }
+
             // START FOR
             var allLangsHtml = "";
             firstMatch.descriptions.sort(function(a, b) {
@@ -8680,7 +8732,7 @@ function conceptDetails(divElement, conceptId, options) {
                     return 1;
                 return 0;
             });
-            for (var language in options.languageObject) {
+            $.each(panel.options.langRefset, function(i, loopSelectedLangRefset) {
                 var allDescriptions = firstMatch.descriptions.slice(0);
                 var homeDescriptionsHtml = "";
                 $.each(allDescriptions, function(i, field) {
@@ -8710,13 +8762,12 @@ function conceptDetails(divElement, conceptId, options) {
 
                 var auxDescriptions = [];
                 $.each(allDescriptions, function(i, description) {
-                    var included = false;
-                    if(description.lang === language){
-                        included = true;
-                    }
+                    var included = false;                   
                     if (description.acceptabilityMap) {
                         $.each(description.acceptabilityMap, function(langref, acceptability) {
-                            acceptabilityPair = description.acceptabilityMap[i];
+                            if (langref === loopSelectedLangRefset) {
+                                included = true;
+                                acceptabilityPair = description.acceptabilityMap[i];
                                 if (acceptability == "PREFERRED") {
                                     description.preferred = true;
                                 } else {
@@ -8724,6 +8775,8 @@ function conceptDetails(divElement, conceptId, options) {
                                         description.acceptable = true;
                                     }
                                 }
+                            }
+                            
                         });
                     }
 
@@ -8786,8 +8839,8 @@ function conceptDetails(divElement, conceptId, options) {
 
                 var context = {
                     options: panel.options,
-                    languageName: "(" + language + ")",
-                    longLangName: panel.options.languagesArray[language],
+                    languageName: "(" + languageNameOfLangRefset[loopSelectedLangRefset] + ")",
+                    longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
                     divElementId: panel.divElement.id,
                     server: panel.server,
                     allDescriptions: allDescriptions
@@ -8800,12 +8853,13 @@ function conceptDetails(divElement, conceptId, options) {
                         }
                     });
                 }*/
-
-                allLangsHtml += JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                if (allDescriptions.length != 0) {
+                    allLangsHtml += JST["views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                }                
                 //if (panel.options.displaySynonyms) {
                 $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);
                 //}
-            }
+            });
             // END FOR
             $("#" + panel.descsPId).html(allLangsHtml);
 
@@ -10402,13 +10456,12 @@ function conceptDetails(divElement, conceptId, options) {
         panel.options.diagrammingMarkupEnabled = $("#" + panel.divElement.id + "-diagrammingMarkupEnabledOption").is(':checked');
         panel.options.selectedView = $("#" + panel.divElement.id + "-relsViewOption").val();
 
-        //panel.options.langRefset = [];
-//        $.each($("#" + panel.divElement.id).find(".langOption"), function(i, field) {
-//            if ($(field).is(':checked')) {
-//                panel.options.langRefset.push($(field).val());
-//            }
-//        });
-        //console.log(panel.options.langRefset);
+        panel.options.langRefset = [];
+        $.each($("#" + panel.divElement.id).find(".langOption"), function(i, field) {
+            if ($(field).is(':checked')) {
+                panel.options.langRefset.push($(field).val());
+            }
+        });
         //panel.options.langRefset = $("#" + panel.divElement.id + "-langRefsetOption").val();
 
         panel.options.displayChildren = $("#" + panel.divElement.id + "-displayChildren").is(':checked');
@@ -10493,7 +10546,6 @@ $(document).keypress(function(event) {
         event.preventDefault();
     }
 });
-
 /**
  * Updated by rda on 2017-12-15.
  */
