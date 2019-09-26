@@ -1585,7 +1585,19 @@ function program46(depth0,data) {
 function program47(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n            <b>Axiom</b>\n                <table class='table table-bordered'>\n                    <thead>\n                    <tr>\n                        <th><span class='i18n' data-i18n-id='i18n_type'>"
+  buffer += "\n            <b>Axiom</b>\n            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" style=\"padding-left: 20px; padding-right: 20px; padding-top: 0px; padding-bottom: 0px\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                        <table border='1'><tr><th style='padding: 3px;'>Axiom ID</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                            <tr><td style='padding: 3px;'>";
+  if (helper = helpers.axiomId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.axiomId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td><td style='padding: 3px;'>";
+  if (helper = helpers.effectiveTime) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.effectiveTime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td><td style='padding: 3px;'>";
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td></tr>\n                                        </table>\n                                        \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                <table class='table table-bordered'>\n                    <thead>\n                    <tr>\n                        <th><span class='i18n' data-i18n-id='i18n_type'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_type", "Type", options) : helperMissing.call(depth0, "i18n", "i18n_type", "Type", options)))
     + "</span></th>\n                        <th><span class='i18n' data-i18n-id='i18n_destination'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_destination", "Destination", options) : helperMissing.call(depth0, "i18n", "i18n_destination", "Destination", options)))
@@ -1760,7 +1772,19 @@ function program61(depth0,data) {
 function program62(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n            <b>GCI</b>\n                <table class='table table-bordered'>\n                    <thead>\n                    <tr>\n                        <th><span class='i18n' data-i18n-id='i18n_type'>"
+  buffer += "\n            <b>GCI</b>\n            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" style=\"padding-left: 20px; padding-right: 20px; padding-top: 0px; padding-bottom: 0px\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>Axiom ID</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>";
+  if (helper = helpers.axiomId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.axiomId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td><td style='padding: 3px;'>";
+  if (helper = helpers.effectiveTime) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.effectiveTime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td><td style='padding: 3px;'>";
+  if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                <table class='table table-bordered'>\n                    <thead>\n                    <tr>\n                        <th><span class='i18n' data-i18n-id='i18n_type'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_type", "Type", options) : helperMissing.call(depth0, "i18n", "i18n_type", "Type", options)))
     + "</span></th>\n                        <th><span class='i18n' data-i18n-id='i18n_destination'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_destination", "Destination", options) : helperMissing.call(depth0, "i18n", "i18n_destination", "Destination", options)))
