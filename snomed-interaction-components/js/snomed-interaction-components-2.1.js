@@ -8755,7 +8755,7 @@ function conceptDetails(divElement, conceptId, options) {
                                     auxDescriptions.push(description);
                                 }
                             } else {
-                                if (options.displayInactiveDescriptions) {
+                                if (panel.options.displayInactiveDescriptions) {
                                     auxDescriptions.push(description);
                                 } else {
                                     if (description.active) {
@@ -8878,6 +8878,8 @@ function conceptDetails(divElement, conceptId, options) {
                     loadDesriptionsPanel(firstMatch);
                     
                     $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");
+
+                    panel.setupOptionsPanel();
                 });
             }
             else {
