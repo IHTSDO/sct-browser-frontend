@@ -15997,8 +15997,8 @@ function queryComputerPanel(divElement, options) {
                         }
                     }
                     $.each(data.items, function(i, row) {
-                        $('#' + panel.divElement.id + '-outputBody').append("<tr style='cursor: pointer;' class='conceptResult' data-module='" + row.moduleId + "' data-concept-id='" + row.id + "' data-term='" + row.fsn.term + "'><td>" + row.fsn.term + "</td><td>" + row.id + "</td></tr>");
-                        $('#' + panel.divElement.id + '-outputBody2').append("<tr><td>" + row.fsn.term + "</td><td>" + row.id + "</td></tr>");
+                        $('#' + panel.divElement.id + '-outputBody').append("<tr style='cursor: pointer;' class='conceptResult' data-module='" + row.moduleId + "' data-concept-id='" + row.id + "' data-term='" + row.pt.term + "'><td>" + row.pt.term + "</td><td>" + row.id + "</td></tr>");
+                        $('#' + panel.divElement.id + '-outputBody2').append("<tr><td>" + row.pt.term + "</td><td>" + row.id + "</td></tr>");
                     });
 
                     $('#' + panel.divElement.id + '-outputBody').find(".conceptResult").unbind();
