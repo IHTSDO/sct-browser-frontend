@@ -216,13 +216,13 @@
                 var localReleases = [];
 
                 // Add GB extension
-                var gbExtension = {};
-                gbExtension.name = 'United Kingdom edition';
-                gbExtension.countryCode = 'gb';
-                gbExtension.latestVersion = {};
-                gbExtension.latestVersion.version = '(hosted by the UK)';
-                gbExtension.href = 'https://termbrowser.nhs.uk/';
-                localReleases.push(gbExtension);
+//                var gbExtension = {};
+//                gbExtension.name = 'United Kingdom edition';
+//                gbExtension.countryCode = 'gb';
+//                gbExtension.latestVersion = {};
+//                gbExtension.latestVersion.version = '(hosted by the UK)';
+//                gbExtension.href = 'https://termbrowser.nhs.uk/';
+//                localReleases.push(gbExtension);
 
                 if (options.releases) {
                     for (let i = 0; i < options.releases.items.length; ++i) {
@@ -1599,6 +1599,11 @@
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                     <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
+                <h2 style="margin-top : 2px">
+                    <span>Externally Hosted Extensions</span>
+                </h2>
+                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank"><img src="/browser/img/flags/gb.png" style="">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
+        
                 <p>There is also a version of the browser containing other extensions of SNOMED CT which do not originate from Member countries. <a href="other.html">Please see the page here</a>.</p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
