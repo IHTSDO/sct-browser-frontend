@@ -546,7 +546,7 @@
                 switchToBrowsing(cdValue1, cdValue2, txValue1);
             } else if (QueryString.perspective == "full") {
                 currentPerspective = "full";
-                switchToFullHeight(cdValue1, txValue1);
+                switchToFullHeight(cdValue1, cdValue1);
             } else if (QueryString.perspective == "compare_concepts") {
                 currentPerspective = "compare_concepts";
                 switchToComparingConcepts(cdValue1, cdValue2);
@@ -840,14 +840,6 @@
                 return result;
 
             };
-
-            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-            var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-            var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
-
-            cdPanel.subscribe(tpt);
-            cdPanel.subscribe(searchP);
-            cdPanel.setupCanvas();
         }
 
         function initTour() {
@@ -1381,7 +1373,7 @@
             } else if (currentPerspective == "browsing") {
                 switchToBrowsing(cdValue1, cdValue2, txValue1);
             } else if (currentPerspective == "full") {
-                switchToFullHeight(cdValue1, txValue1);
+                switchToFullHeight(cdValue1, cdValue1);
             } else if (currentPerspective == "compare_concepts") {
                 switchToComparingConcepts(cdValue1, cdValue2);
             } else if (currentPerspective == "compare_hierarchies") {

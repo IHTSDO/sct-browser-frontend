@@ -12114,6 +12114,14 @@ function searchPanel(divElement, options) {
             divElementId: panel.divElement.id,
             server: server
         };
+        Handlebars.registerHelper('if_eq', function(a, b, opts) {
+            if (opts != "undefined") {
+                if (a == b)
+                    return opts.fn(this);
+                else
+                    return opts.inverse(this);
+            }
+        });
         $(divElement).html(JST["views/searchPlugin/aux.hbs"](context));
 
         $('#' + panel.divElement.id + '-searchBox').keyup(function() {
