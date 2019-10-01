@@ -2115,7 +2115,7 @@ function program1(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\n    ";
-  stack1 = helpers.each.call(depth0, (depth0 && depth0.axiomList), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.classAxiomOwlExpressions), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
   return buffer;
@@ -2129,14 +2129,37 @@ function program2(depth0,data) {
   buffer += escapeExpression(stack1)
     + "-copy-axiom-expression\" data-clipboard-text=\""
     + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
-    + "\"></i></small></p>\n        <div class=\"expression-code\" style=\"margin-top: 10px; padding: 10px;\">";
-  stack1 = (typeof depth0 === functionType ? depth0.apply(depth0) : depth0);
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n    ";
+    + "\"></i></small></p>\n        <div class=\"expression-code\" style=\"margin-top: 10px; padding: 10px;\"><pre>"
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "</pre></div>\n    ";
   return buffer;
   }
 
 function program4(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n    ";
+  stack1 = helpers.each.call(depth0, (depth0 && depth0.gciAxiomOwlExpressions), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n";
+  return buffer;
+  }
+function program5(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "\n        <p class=\"\" style=\"margin-top: 20px;\">Expression from GCI Axiom Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export clip-btn-exp\" id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-copy-axiom-expression\" data-clipboard-text=\""
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "\"></i></small></p>\n        <div class=\"expression-code\" style=\"margin-top: 10px; padding: 10px;\"><pre>"
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "</pre></div>\n    ";
+  return buffer;
+  }
+
+function program7(depth0,data) {
   
   var buffer = "", stack1, helper;
   buffer += "\n    <p class=\"\" style=\"margin-top: 20px;\">Expression from Stated Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export clip-btn-exp\" id=\"";
@@ -2151,7 +2174,7 @@ function program4(depth0,data) {
   if (helper = helpers.statedExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.statedExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n";
+  buffer += "</div>    \n";
   return buffer;
   }
 
@@ -2167,8 +2190,14 @@ function program4(depth0,data) {
   if (helper = helpers.preCoordinatedExpressionHtml) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.preCoordinatedExpressionHtml); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.axiomList), {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),data:data});
+  buffer += "</div>\n\n";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.classAxiomOwlExpressions), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.gciAxiomOwlExpressions), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.statedExpressionHtml), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n<p class=\"\" style=\"margin-top: 20px;\">Expression from Inferred Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class=\"glyphicon glyphicon-export clip-btn-exp\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -7880,6 +7909,121 @@ var conceptToPostCoordinatedExpression = function(concept, relsProperty, div, op
     return expression;
 };
 
+function formatOwlAxiomExpression (owlExpression, conceptsMap) {
+    var text = owlExpression;
+    
+    // Add new line char
+    text = text.replace(/\(/g, "(\n");
+    text = text.replace(/\)/g, "\n)\n"); 
+    text = text.replace(/(?<=:\d*)\s/g, "\n");
+    text = text.replace(/(?<=:roleGroup)\s/g, "\n");
+
+    var textArr = text.split("\n");
+    textArr = textArr.filter(function (el) {
+      el = el.trim();
+      return el != '';
+    });
+
+    // Add tab char
+    var tabCount = 0;
+    for (var i = 0 ; i < textArr.length; i++) {        
+      textArr[i] = textArr[i].trim();
+      if (textArr[i].indexOf(')') !== -1) {
+        tabCount--;
+      }
+      if (i !== 0 && tabCount > 0) {
+        for (var j = 0 ; j < tabCount; j++) {
+          textArr[i] = '\t' + textArr[i];
+        }
+      }
+      if (textArr[i].indexOf('(') !== -1) {
+        tabCount++;
+      }
+
+      // Fill FSN
+      textArr[i] = fillConceptFSN(textArr[i], conceptsMap);       
+    }
+    return textArr.join('\n');
+}
+
+function fillConceptFSN (text, conceptsMap) {
+    var tempStr = text.trim();
+    if (tempStr.indexOf(':roleGroup') != -1) {
+      return text.replace(':roleGroup', ':609096000 |Role group (attribute)|');
+    } else {
+      const match = /(^:\d*)/g;
+      if (match.test(tempStr)) {
+        var conceptId = tempStr.substring(1,tempStr.length);
+        if (conceptsMap.hasOwnProperty(conceptId)) {
+          return text + ' |' + conceptsMap[conceptId] + '|';
+        } else {
+          return text;
+        }
+      } else {
+        return text;
+      }
+    }
+}
+
+function renderExpressionForAxioms (concept, members, classAxiomOwlExpressions, gciAxiomOwlExpressions) {
+    var owlAxiomExpressions = {};
+
+    members.forEach(function(item) {
+        if (item.additionalFields.hasOwnProperty('owlExpression')) {                               
+            if(item.memberId){
+                owlAxiomExpressions[item.memberId] = item.additionalFields['owlExpression'];
+            }
+            else{
+                owlAxiomExpressions[item.id] = item.additionalFields['owlExpression'];
+            }                       
+        }
+    });
+
+    var conceptsMap = {};
+    conceptsMap[concept.conceptId] = concept.fsn.term;
+    conceptsMap[609096000] = 'Role group (attribute)';
+    conceptsMap[116680003] = 'Is a (attribute)';
+
+    if(concept.classAxioms && concept.classAxioms.length !== 0) {
+        concept.classAxioms.forEach(function(classAxiom){
+            classAxiom.relationships.forEach(function(relationship){
+                conceptsMap[relationship.type.conceptId] = relationship.type.fsn.term;
+                conceptsMap[relationship.target.conceptId] = relationship.target.fsn.term; 
+        });         
+        });
+    } 
+    
+    if(concept.gciAxioms && concept.gciAxioms.length !== 0) {
+        concept.gciAxioms.forEach(function(classAxiom){
+            classAxiom.relationships.forEach(function(relationship){
+                conceptsMap[relationship.type.conceptId] = relationship.type.fsn.term;
+                conceptsMap[relationship.target.conceptId] = relationship.target.fsn.term; 
+        });         
+        });
+    }
+
+    var owlAxiomExpression = {};
+    for (var key in owlAxiomExpressions) {
+        owlAxiomExpression[key] = formatOwlAxiomExpression(owlAxiomExpressions[key], conceptsMap);
+    }
+
+    if(concept.classAxioms && concept.classAxioms.length !== 0) {
+        concept.classAxioms.forEach(function(classAxiom){
+            if (owlAxiomExpression.hasOwnProperty(classAxiom.axiomId)) {
+                classAxiomOwlExpressions.push(owlAxiomExpression[classAxiom.axiomId]);
+            }
+        });
+    } 
+    
+    if(concept.gciAxioms && concept.gciAxioms.length !== 0) {
+        concept.gciAxioms.forEach(function(classAxiom){
+            if (owlAxiomExpression.hasOwnProperty(classAxiom.axiomId)) {
+                gciAxiomOwlExpressions.push(owlAxiomExpression[classAxiom.axiomId]);
+            }        
+        });
+    }
+}
+  
 var renderExpression = function(concept, inferredConcept, div, options) {
     var preCoordinatedHtml = referenceToExpression(concept);
     var tmp = document.createElement("DIV");
@@ -7887,60 +8031,89 @@ var renderExpression = function(concept, inferredConcept, div, options) {
     var plainPreCoordinatedExpression =  tmp.textContent || tmp.innerText || "";
     plainPreCoordinatedExpression = plainPreCoordinatedExpression.replace(/\s\s+/g, ' ');
 
+    if(concept.classAxioms || concept.gciAxioms) {
+        
+        $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + concept.conceptId + '&active=true', function(result) {
+        }).done(function(result) {
+            var classAxiomOwlExpressions = [];
+            var gciAxiomOwlExpressions = [];           
+            if (result.total > 0) {
+                renderExpressionForAxioms (concept, result.items, classAxiomOwlExpressions, gciAxiomOwlExpressions)
+            }
 
-    if(concept.hasOwnProperty('classAxioms') && concept.classAxioms.length > 0) {
-        var axiomList = [];
-
-        for(var i = 0; concept.classAxioms.length > i; i++) {
-            var statedHtml = conceptToPostCoordinatedExpression(concept, "relationships", div, options);
+            var inferredHtml = conceptToPostCoordinatedExpression(concept, "relationships", div, options);
             var tmp = document.createElement("DIV");
-            tmp.innerHTML = statedHtml;
-            var plainAxiomExpression =  tmp.textContent || tmp.innerText || "";
-            plainAxiomExpression = plainAxiomExpression.replace(/\s\s+/g, ' ');
-            axiomList.push(plainAxiomExpression);
-        }
+            tmp.innerHTML = inferredHtml;
+            var plainInferredExpression =  tmp.textContent || tmp.innerText || "";
+            plainInferredExpression = plainInferredExpression.replace(/\s\s+/g, ' ');
+
+            var context = {
+                divElementId: div.attr('id'),
+                preCoordinatedExpressionHtml: preCoordinatedHtml,
+                statedExpressionHtml: '',
+                inferredExpressionHtml: inferredHtml,
+                plainPreCoordinatedExpression: plainPreCoordinatedExpression,
+                plainStatedExpression: plainStatedExpression,
+                classAxiomOwlExpressions: classAxiomOwlExpressions,
+                gciAxiomOwlExpressions: gciAxiomOwlExpressions,
+                plainInferredExpression: plainInferredExpression
+            };
+            div.html(JST["views/conceptDetailsPlugin/tabs/expression.hbs"](context).trim());
+
+            if (panel.clipboard) panel.clipboard.destroy();
+            panel.clipboard = new Clipboard('.clip-btn-exp');
+            panel.clipboard.on('success', function(e) {
+                // console.info('Action:', e.action);
+                // console.info('Text:', e.text);
+                // console.info('Trigger:', e.trigger);
+                alertEvent("Copied!", "info");
+                e.clearSelection();
+            });
+            panel.clipboard.on('error', function(e) {
+                console.log("Error!");
+                alertEvent("Error", "error");
+            });
+        });
     } else {
         var statedHtml = conceptToPostCoordinatedExpression(concept, "statedRelationships");
         var tmp = document.createElement("DIV");
         tmp.innerHTML = statedHtml;
         var plainStatedExpression =  tmp.textContent || tmp.innerText || "";
         plainStatedExpression = plainStatedExpression.replace(/\s\s+/g, ' ');
-    }
 
+        var inferredHtml = conceptToPostCoordinatedExpression(concept, "relationships", div, options);
+        var tmp = document.createElement("DIV");
+        tmp.innerHTML = inferredHtml;
+        var plainInferredExpression =  tmp.textContent || tmp.innerText || "";
+        plainInferredExpression = plainInferredExpression.replace(/\s\s+/g, ' ');
 
-    var inferredHtml = conceptToPostCoordinatedExpression(concept, "relationships", div, options);
-    var tmp = document.createElement("DIV");
-    tmp.innerHTML = inferredHtml;
-    var plainInferredExpression =  tmp.textContent || tmp.innerText || "";
-    plainInferredExpression = plainInferredExpression.replace(/\s\s+/g, ' ');
+        var context = {
+            divElementId: div.attr('id'),
+            preCoordinatedExpressionHtml: preCoordinatedHtml,
+            statedExpressionHtml: statedHtml,
+            inferredExpressionHtml: inferredHtml,
+            plainPreCoordinatedExpression: plainPreCoordinatedExpression,
+            plainStatedExpression: plainStatedExpression,
+            classAxiomOwlExpressions: [],
+            gciAxiomOwlExpressions: [],
+            plainInferredExpression: plainInferredExpression
+        };
+        div.html(JST["views/conceptDetailsPlugin/tabs/expression.hbs"](context).trim());
 
-    //console.log(div);
-
-    var context = {
-        divElementId: div.attr('id'),
-        preCoordinatedExpressionHtml: preCoordinatedHtml,
-        statedExpressionHtml: statedHtml,
-        inferredExpressionHtml: inferredHtml,
-        plainPreCoordinatedExpression: plainPreCoordinatedExpression,
-        plainStatedExpression: plainStatedExpression,
-        axiomList: axiomList,
-        plainInferredExpression: plainInferredExpression
-    };
-    div.html(JST["views/conceptDetailsPlugin/tabs/expression.hbs"](context).trim());
-
-    if (panel.clipboard) panel.clipboard.destroy();
-    panel.clipboard = new Clipboard('.clip-btn-exp');
-    panel.clipboard.on('success', function(e) {
-        // console.info('Action:', e.action);
-        // console.info('Text:', e.text);
-        // console.info('Trigger:', e.trigger);
-        alertEvent("Copied!", "info");
-        e.clearSelection();
-    });
-    panel.clipboard.on('error', function(e) {
-        console.log("Error!");
-        alertEvent("Error", "error");
-    });
+        if (panel.clipboard) panel.clipboard.destroy();
+        panel.clipboard = new Clipboard('.clip-btn-exp');
+        panel.clipboard.on('success', function(e) {
+            // console.info('Action:', e.action);
+            // console.info('Text:', e.text);
+            // console.info('Trigger:', e.trigger);
+            alertEvent("Copied!", "info");
+            e.clearSelection();
+        });
+        panel.clipboard.on('error', function(e) {
+            console.log("Error!");
+            alertEvent("Error", "error");
+        });
+    }    
 };
 
 $(function() {
