@@ -8031,7 +8031,7 @@ var renderExpression = function(concept, inferredConcept, div, options) {
     var plainPreCoordinatedExpression =  tmp.textContent || tmp.innerText || "";
     plainPreCoordinatedExpression = plainPreCoordinatedExpression.replace(/\s\s+/g, ' ');
 
-    if(concept.classAxioms || concept.gciAxioms) {
+    if((concept.classAxioms && concept.classAxioms.length !== 0) || concept.gciAxioms && concept.gciAxioms.length !== 0) {
         
         $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + concept.conceptId + '&active=true', function(result) {
         }).done(function(result) {
