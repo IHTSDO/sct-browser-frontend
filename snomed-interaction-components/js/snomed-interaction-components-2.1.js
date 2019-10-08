@@ -9121,9 +9121,14 @@ function conceptDetails(divElement, conceptId, options) {
                         return a.fsn.term.localeCompare(b.fsn.term);
                     });
 
-                    panel.options.languageRefsets.forEach(function(item) {
-                        panel.options.langRefset.push(item.id);  
-                    });
+                    if (panel.options.defaultLanguageReferenceSet) {
+                        panel.options.langRefset.push(panel.options.defaultLanguageReferenceSet); 
+                    } 
+                    else {
+                        panel.options.languageRefsets.forEach(function(item) {
+                            panel.options.langRefset.push(item.id);  
+                        });
+                    }                    
                     
                     loadDesriptionsPanel(firstMatch);
                     

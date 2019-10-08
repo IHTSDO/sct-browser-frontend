@@ -357,6 +357,7 @@
                         options.languages = parsedLanguages;
                         options.languageObject = release.languages;
 
+                        options.defaultLanguageReferenceSet = release.defaultLanguageReferenceSet ? release.defaultLanguageReferenceSet : '';
                         let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
                         options.defaultLanguage = parsedLanguages.substr(0, 2);
                         var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
@@ -501,6 +502,7 @@
                 for (let i = 0; i < options.releases.items.length; i++) {
                     if (options.releases.items[i].latestVersion.branchPath === options.edition) {
                         options.languageObject = options.releases.items[i].languages;
+                        options.defaultLanguageReferenceSet = options.releases.items[i].defaultLanguageReferenceSet ? options.releases.items[i].defaultLanguageReferenceSet : '';
                     }
                 }
             }
@@ -604,7 +606,7 @@
                             options.languages = parsedLanguages;
                             options.languageObject = options.dailyBuildReleases[i].languages;
                             $("#editionLabel").html(options.dailyBuildReleases[i].name + " DAILY BUILD");
-
+                            options.defaultLanguageReferenceSet = options.dailyBuildReleases[i].defaultLanguageReferenceSet ? options.dailyBuildReleases[i].defaultLanguageReferenceSet : '';
 
                             let ui_language = options.dailyBuildReleases[i].defaultLanguageCode ? options.dailyBuildReleases[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
                             options.defaultLanguage = parsedLanguages.substr(0, 2);
@@ -648,7 +650,7 @@
                             options.languages = parsedLanguages;
                             options.languageObject = options.releases.items[i].languages;
                             $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-
+                            options.defaultLanguageReferenceSet = options.releases.items[i].defaultLanguageReferenceSet ? options.releases.items[i].defaultLanguageReferenceSet : '';
 
                             let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
                             options.defaultLanguage = parsedLanguages.substr(0, 2);
