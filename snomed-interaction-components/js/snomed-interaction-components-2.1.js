@@ -4933,7 +4933,7 @@ function program1(depth0,data,depth1) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-ExpTab\" style=\"padding: 15px;margin: 0;\">\n          <textarea rows=\"5\" class=\"form-control\" placeholder=\"Expression...\" id=\"";
+    + "-ExpTab\" style=\"padding: 15px;margin: 0;\">\n          <textarea rows=\"5\" ondrop=\"dropE(event);\" class=\"form-control\" placeholder=\"Expression...\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -16561,6 +16561,27 @@ function drag(ev, id) {
     dataText = conceptId + "|" + term;
     ev.dataTransfer.setData("Text", dataText);
     ev.dataTransfer.setData("divElementId", id);
+}
+
+function dropE(ev){
+    $(document).find('.drop-highlighted').removeClass('drop-highlighted');
+    ev.preventDefault();
+    var text = ev.dataTransfer.getData("Text");
+    if (text != "javascript:void(0);"){
+        var i = 0;
+        while (text.charAt(i) != "|" && i < text.length){
+            i++;
+        }
+        var conceptId = ev.dataTransfer.getData("concept-id");
+        if (typeof conceptId == "undefined" && i < text.length){
+            conceptId = text.substr(0, i);
+        }
+        var term = ev.dataTransfer.getData("term");
+        if (typeof term == "undefined"){
+            term = text.substr(i);
+        }
+        $(ev.target).val(ev.target.value + conceptId + " |" + term + "|");        
+    }
 }
 
 function dropS(ev){
