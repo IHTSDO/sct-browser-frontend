@@ -15980,9 +15980,9 @@ function queryComputerPanel(divElement, options) {
                     $("#" + panel.divElement.id + "-waitingSearch-text").html("");
                     //TODO: implement pagination with Ontoserver
                     if (result.totalResults > 100) {
-                        $('#' + panel.divElement.id + '-footer').html("Showing first 100 matches");
+                        $('#' + panel.divElement.id + '-footer').html("Showing first 100 " + panel.options.eclQueryFilter + " matches");
                     } else {
-                        $('#' + panel.divElement.id + '-footer').html("Showing all matches");
+                        $('#' + panel.divElement.id + '-footer').html("Showing all " + panel.options.eclQueryFilter + " matches");
                     }
                     $.each(result.data, function(i, row) {
                         $('#' + panel.divElement.id + '-outputBody').append("<tr style='cursor: pointer;' class='conceptResult' data-module='' data-concept-id='" + row.shortId + "' data-term='" + row.label + "'><td>" + row.label + "</td><td>" + row.shortId + "</td></tr>");
@@ -16488,16 +16488,16 @@ function queryComputerPanel(divElement, options) {
                     if (!data.totalElements) {
                         panel.lastTotalValues = data.total;
                         if (limit + skip < data.total) {
-                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>Show more (viewing " + (limit + skip) + " of " + data.total + " total)</span>");
+                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>Show more (viewing " + (limit + skip) + " " + panel.options.eclQueryFilter + " items of " + data.total + " total)</span>");
                         } else {
-                            $('#' + panel.divElement.id + '-footer').html("Showing all " + data.total + " matches");
+                            $('#' + panel.divElement.id + '-footer').html("Showing all " + data.total + " " + panel.options.eclQueryFilter + " matches");
                         }
                     } else {
                         panel.lastTotalValues = data.totalElements;
                         if (limit + skip < data.totalElements) {
-                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>Show more (viewing " + (limit + (page * limit)) + " of " + data.totalElements + " total)</span>");
+                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>Show more (viewing " + (limit + (page * limit)) + " " + panel.options.eclQueryFilter + " items of " + data.totalElements + " total)</span>");
                         } else {
-                            $('#' + panel.divElement.id + '-footer').html("Showing all " + data.totalElements + " matches");
+                            $('#' + panel.divElement.id + '-footer').html("Showing all " + data.totalElements + " " + panel.options.eclQueryFilter + " matches");
                         }
                     }
 
