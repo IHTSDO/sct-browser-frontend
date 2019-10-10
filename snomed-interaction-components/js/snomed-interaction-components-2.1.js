@@ -9213,8 +9213,8 @@ function conceptDetails(divElement, conceptId, options) {
                         return a.fsn.term.localeCompare(b.fsn.term);
                     });
 
-                    if (panel.options.defaultLanguageReferenceSet) {
-                        panel.options.langRefset.push(panel.options.defaultLanguageReferenceSet); 
+                    if (panel.options.defaultLanguageReferenceSets && panel.options.defaultLanguageReferenceSets.length > 0) {
+                        panel.options.langRefset = panel.options.defaultLanguageReferenceSets;
                     } 
                     else {
                         panel.options.languageRefsets.forEach(function(item) {
