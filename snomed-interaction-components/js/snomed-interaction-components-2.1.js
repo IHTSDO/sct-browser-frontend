@@ -1615,7 +1615,7 @@ function program46(depth0,data) {
 function program47(depth0,data,depth1) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n            <b>Axiom</b>\n            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" style=\"padding-left: 20px; padding-right: 20px; padding-top: 0px; padding-bottom: 0px\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                        <table border='1'><tr><th style='padding: 3px;'>Axiom ID</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                            <tr><td style='padding: 3px;'>";
+  buffer += "\n                <table class='table table-bordered'>\n                    <thead>\n                    <tr>\n                        <th colspan=\"4\" class=\"text-center\">\n                            <span>Axiom</span>\n                            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" style=\"padding-top: 0px; padding-bottom: 0px\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                        <table border='1'><tr><th style='padding: 3px;'>Axiom ID</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                            <tr><td style='padding: 3px;'>";
   if (helper = helpers.axiomId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.axiomId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1627,7 +1627,7 @@ function program47(depth0,data,depth1) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                                        </table>\n                                        \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                <table class='table table-bordered'>\n                    <thead>\n                    <tr>\n                        ";
+    + "</td></tr>\n                                        </table>\n                                        \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                        </th>\n                    </tr>\n                    <tr>\n                        ";
   stack1 = (helper = helpers.if_gr || (depth1 && depth1.if_gr),options={hash:{},inverse:self.program(50, program50, data),fn:self.program(48, program48, data),data:data},helper ? helper.call(depth0, (depth1 && depth1.totalStatedAxioms), 1, options) : helperMissing.call(depth0, "if_gr", (depth1 && depth1.totalStatedAxioms), 1, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                    </tr>\n                    </thead>\n                    <tbody>\n                    ";
@@ -1827,7 +1827,7 @@ function program65(depth0,data) {
 function program66(depth0,data,depth1) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n            <b>GCI</b>\n            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" style=\"padding-left: 20px; padding-right: 20px; padding-top: 0px; padding-bottom: 0px\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>Axiom ID</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>";
+  buffer += "\n                <table class='table table-bordered'>\n                    <thead>\n                    <th colspan=\"4\" class=\"text-center\">\n                        <span>GCI</span>\n                        <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" style=\"padding-top: 0px; padding-bottom: 0px\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                                            <table border='1'><tr><th style='padding: 3px;'>Axiom ID</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>\n                                                <tr><td style='padding: 3px;'>";
   if (helper = helpers.axiomId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.axiomId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1839,7 +1839,7 @@ function program66(depth0,data,depth1) {
   if (helper = helpers.moduleId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.moduleId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                <table class='table table-bordered'>\n                    <thead>\n                    <tr>\n                        ";
+    + "</td></tr>\n                                            </table>\n                                            \" data-html=\"true\"><i class=\"glyphicon glyphicon-info-sign\"></i></button>\n                    </th>\n                    <tr>\n                        ";
   stack1 = (helper = helpers.if_gr || (depth1 && depth1.if_gr),options={hash:{},inverse:self.program(50, program50, data),fn:self.program(67, program67, data),data:data},helper ? helper.call(depth0, (depth1 && depth1.totalStatedAxioms), 1, options) : helperMissing.call(depth0, "if_gr", (depth1 && depth1.totalStatedAxioms), 1, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                    </tr>\n                    </thead>\n                    <tbody>\n                    ";
