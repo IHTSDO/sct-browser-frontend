@@ -10641,8 +10641,8 @@ function conceptDetails(divElement, conceptId, options) {
             var subscription = channel.subscribe(panelId, function(data, envelope) {
                 //                console.log("listening in " + panel.divElement.id);
                 panel.conceptId = data.conceptId;
-                if (data.showConcept) {
-                    $('a[href="#fh-cd1_canvas-pane"]').click();
+                if (data.showConcept && !$('a[href="#' + panel.divElement.id +'-pane"]').parent().hasClass("active")) {
+                    $('a[href="#' + panel.divElement.id +'-pane"]').click();
                 }
                 if ($("#home-children-" + panel.divElement.id + "-body").length > 0) {} else {
                     panel.setupCanvas();
@@ -12785,7 +12785,8 @@ function searchPanel(divElement, options) {
                                         term: $(event.target).attr('data-term'),
                                         module: $(event.target).attr("data-module"),
                                         conceptId: $(event.target).attr('data-concept-id'),
-                                        source: panel.divElement.id
+                                        source: panel.divElement.id,
+                                        showConcept: true
                                     });
                                 });
                             }
@@ -12843,7 +12844,8 @@ function searchPanel(divElement, options) {
                                         term: $(event.target).attr('data-term'),
                                         module: $(event.target).attr("data-module"),
                                         conceptId: $(event.target).attr('data-concept-id'),
-                                        source: panel.divElement.id
+                                        source: panel.divElement.id,
+                                        showConcept: true
                                     });
                                 });
                              }
@@ -13254,7 +13256,8 @@ function searchPanel(divElement, options) {
                                 term: $(event.target).attr("data-term"),
                                 module: $(event.target).attr("data-module"),
                                 conceptId: $(event.target).attr('data-concept-id'),
-                                source: panel.divElement.id
+                                source: panel.divElement.id,
+                                showConcept: true
                             });
                         });
                         $("[draggable='true']").tooltip({
@@ -14195,7 +14198,8 @@ function taxonomyPanel(divElement, conceptId, options) {
                         term: $(event.target).attr('data-term'),
                         module: $(event.target).attr("data-module"),
                         conceptId: selectedId,
-                        source: panel.divElement.id
+                        source: panel.divElement.id,
+                        showConcept: true
                     });
                 }
             }
@@ -14841,7 +14845,8 @@ function refsetPanel(divElement, options) {
                     term: $(event.target).attr('data-term'),
                     module: $(event.target).attr("data-module"),
                     conceptId: $(event.target).attr('data-concept-id'),
-                    source: panel.divElement.id
+                    source: panel.divElement.id,
+                    showConcept: true
                 });
             });
         }).done(function(result) {
@@ -15049,7 +15054,8 @@ function refsetPanel(divElement, options) {
                     term: clickedBadge.attr('data-term'),
                     module: clickedBadge.attr("data-module"),
                     conceptId: clickedBadge.attr('data-concept-id'),
-                    source: panel.divElement.id
+                    source: panel.divElement.id,
+                    showConcept: true
                 });
             });
         }).fail(function(err) {
@@ -15159,7 +15165,8 @@ function favoritePanel(divElement, options) {
                     term: $(event.target).attr('data-term'),
                     module: $(event.target).attr("data-module"),
                     conceptId: $(event.target).attr('data-concept-id'),
-                    source: panel.divElement.id
+                    source: panel.divElement.id,
+                    showConcept: true
                 });
             });
         }
@@ -15995,7 +16002,8 @@ function queryComputerPanel(divElement, options) {
                             term: $(event.target).closest("tr").attr('data-term'),
                             module: $(event.target).closest("tr").attr("data-module"),
                             conceptId: $(event.target).closest("tr").attr('data-concept-id'),
-                            source: panel.divElement.id
+                            source: panel.divElement.id,
+                            showConcept: true
                         });
                     });
                 }).fail(function(err) {
