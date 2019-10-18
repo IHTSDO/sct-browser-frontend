@@ -8007,8 +8007,8 @@ function formatOwlAxiomExpression (owlExpression, conceptsMap) {
     // Add new line char
     text = text.replace(/\(/g, "(\n");
     text = text.replace(/\)/g, "\n)\n"); 
-    text = text.replace(/(?<=:\d*)\s/g, "\n");
-    text = text.replace(/(?<=:roleGroup)\s/g, "\n");
+    text = text.replace(/(:\d*)\s/g, "$&\n");
+    text = text.replace(/(:roleGroup)\s/g, "$&\n");
 
     var textArr = text.split("\n");
     textArr = textArr.filter(function (el) {
