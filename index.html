@@ -296,6 +296,10 @@
                     var $releaseSwitcher = $('#edition-selector');
                     $releaseSwitcher.css('display', 'none');
 
+                    // hile Refset overview tab
+                    $('#fh-refset_canvas').css('display', 'none');
+                    $('#fh-refset_canvas-li').css('display', 'none');
+
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
