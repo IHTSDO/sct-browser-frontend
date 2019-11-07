@@ -446,8 +446,10 @@ function program29(depth0,data) {
 
 function program31(depth0,data,depth1) {
   
-  var buffer = "", stack1;
-  buffer += "\n        ";
+  var buffer = "", stack1, helper, options;
+  buffer += "\n        <label><span class=\"i18n\" data-i18n-id=\"i18n_language_refset\">"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_language_refset", "Language Refset", options) : helperMissing.call(depth0, "i18n", "i18n_language_refset", "Language Refset", options)))
+    + "</span></label>\n        ";
   stack1 = helpers.each.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.languageRefsets), {hash:{},inverse:self.noop,fn:self.programWithDepth(32, program32, data, depth1),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    ";
@@ -538,9 +540,7 @@ function program34(depth0,data,depth1) {
   buffer += "\n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(29, program29, data),fn:self.program(27, program27, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "inferred", options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.selectedView), "inferred", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "           \n        </select>\n    </div>\n    \n    <label><span class=\"i18n\" data-i18n-id=\"i18n_language_refset\">"
-    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_language_refset", "Language Refset", options) : helperMissing.call(depth0, "i18n", "i18n_language_refset", "Language Refset", options)))
-    + "</span></label>\n    ";
+  buffer += "           \n        </select>\n    </div>\n    \n    ";
   stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.languageRefsets), {hash:{},inverse:self.noop,fn:self.programWithDepth(31, program31, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    <!--<div class=\"form-group\">-->\n        <!--<table class='table table-bordered table-hover'>-->\n            <!--<thead>-->\n                <!--<tr>-->\n                    <!--<th>Panel</th>-->\n                    <!--<th>Subscribed</th>-->\n                    <!--<th>Subscriptor</th>-->\n                <!--</tr>-->\n            <!--</thead>-->\n            <!--<tbody>-->\n                <!--";
