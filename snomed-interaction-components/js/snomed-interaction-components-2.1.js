@@ -12952,15 +12952,31 @@ function searchPanel(divElement, options) {
                                         aux.danger = true;
                                     }
                                     if (field.active) {
-                                        if (panel.options.statusSearchFilter == "activeOnly") {
-                                            resDescriptions.push(aux);
-                                        }
-                                        if (panel.options.statusSearchFilter == "activeAndInactive") {
-                                            resDescriptions.push(aux);
-                                        }
-                                        if (panel.options.statusSearchFilter == "inactiveOnly") {
-                                            resDescriptions.push(aux);
-                                        }
+                                        if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
+                                            if (aux.term === result.pt.term && aux.lang == result.pt.lang) {
+                                                if (panel.options.statusSearchFilter == "activeOnly") {
+                                                    resDescriptions.push(aux);
+                                                }
+                                                if (panel.options.statusSearchFilter == "activeAndInactive") {
+                                                    resDescriptions.push(aux);
+                                                }
+                                                if (panel.options.statusSearchFilter == "inactiveOnly") {
+                                                    resDescriptions.push(aux);
+                                                }
+                                            }
+                                            
+                                        } 
+                                        else {
+                                            if (panel.options.statusSearchFilter == "activeOnly") {
+                                                resDescriptions.push(aux);
+                                            }
+                                            if (panel.options.statusSearchFilter == "activeAndInactive") {
+                                                resDescriptions.push(aux);
+                                            }
+                                            if (panel.options.statusSearchFilter == "inactiveOnly") {
+                                                resDescriptions.push(aux);
+                                            }
+                                        }                                        
                                     }
                                 });
                                 result.descriptions = resDescriptions;
@@ -12974,6 +12990,8 @@ function searchPanel(divElement, options) {
                                     result: result
                                 };
                                 //console.log(context);
+                                
+
                                 $('#' + panel.divElement.id + '-resultsTable').html(JST["views/searchPlugin/body/0.hbs"](context));
                                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
                                 $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
@@ -13120,7 +13138,7 @@ function searchPanel(divElement, options) {
                         searchUrl = searchUrl + "&normalize=" + panel.options.textIndexNormalized;
                     }
                     if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
-                        searchUrl = searchUrl + "&groupByConcept=1";
+                        searchUrl = searchUrl + "&groupByConcept=true";
                     }
                     if(skipTo !== 0){
                         searchUrl = searchUrl + '&offset=' + skipTo;
