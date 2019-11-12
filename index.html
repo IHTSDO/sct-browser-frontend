@@ -410,7 +410,7 @@
         var tours = {};
         var tour;
 
-        var QueryString = function() {
+        function queryString() {
             var query_string = {};
             var query = window.location.search.substring(1);
             var vars = query.split("&");
@@ -426,7 +426,9 @@
                 }
             }
             return query_string;
-        }();
+        }
+
+        var QueryString = queryString();
 
         function start() {
             if (options.imsUrl === null) {
@@ -663,10 +665,17 @@
                             let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
                             options.defaultLanguage = parsedLanguages.substr(0, 2);
                             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
-
                             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-
+                            QueryString = queryString();
                             reloadCurrentPerspective();
+
+                            if (QueryString.conceptId1) {
+                                xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
+                                }).done(function(result) {                                                                     
+                                }).fail(function() {
+                                    reloadCurrentPerspective(404684003);                                    
+                                });
+                            }                                                                                    
                         });
                         $li.append($a);
                         $releaseSwitcher.append($li);
@@ -1358,8 +1367,8 @@
             switchLanguage(selectedLanguage, selectedFlag, false);
         }
 
-        function reloadCurrentPerspective() {
-            var cdValue1 = QueryString.conceptId1;
+        function reloadCurrentPerspective(conceptId) {
+            var cdValue1 = conceptId ? conceptId : QueryString.conceptId1;
             if (typeof cdValue1 == "undefined" || cdValue1 == null || cdValue1 == "") {
                 cdValue1 = 404684003;
             }
