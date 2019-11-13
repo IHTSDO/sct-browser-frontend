@@ -4215,8 +4215,11 @@ function program10(depth0,data) {
 
 function program12(depth0,data) {
   
-  
-  return "\n        <tr><td><span class='i18n text-muted' data-i18n-id='i18n_no_memberships'>No memberships</span></td></tr>\n        </tbody>\n    ";
+  var buffer = "", helper, options;
+  buffer += "\n        <tr><td><span class='i18n text-muted' data-i18n-id='i18n_no_memberships'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_no_memberships", "No memberships", options) : helperMissing.call(depth0, "i18n", "i18n_no_memberships", "No memberships", options)))
+    + "</span></td></tr>\n        </tbody>\n    ";
+  return buffer;
   }
 
 function program14(depth0,data) {
@@ -4455,27 +4458,37 @@ function program27(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div style=\"margin: 10px;\">\n    <a class=\"btn btn-primary btn-sm pull-right\" href=\"https://mapping.ihtsdotools.org/#/record/conceptId/"
+  buffer += "<div style=\"margin: 10px;\">\n    <a class=\"btn btn-primary btn-sm pull-right i18n\" href=\"https://mapping.ihtsdotools.org/#/record/conceptId/"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.conceptId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "/autologin?refSetId=P447562003\" target=\"_blank\" role=\"button\">Open maps for this concept</a>\n</div>\n\n<table class='table table-hover'>\n    <thead><tr>\n        <th colspan=\"3\"><span class='i18n' data-i18n-id='i18n_simple_refset_memberships'>Simple Refsets Membership</span></th>\n    </tr></thead>\n<tbody>\n    ";
+    + "/autologin?refSetId=P447562003\" target=\"_blank\" role=\"button\" data-i18n-id='i18n_open_maps_for_concept'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_open_maps_for_concept", "Open maps for this concept", options) : helperMissing.call(depth0, "i18n", "i18n_open_maps_for_concept", "Open maps for this concept", options)))
+    + "</a>\n</div>\n\n<table class='table table-hover'>\n    <thead><tr>\n        <th colspan=\"3\"><span class='i18n' data-i18n-id='i18n_simple_refset_memberships'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_simple_refset_memberships", "Simple Refsets Membership", options) : helperMissing.call(depth0, "i18n", "i18n_simple_refset_memberships", "Simple Refsets Membership", options)))
+    + "</span></th>\n    </tr></thead>\n<tbody>\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.simpleRefsetMembers), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    ";
   stack1 = (helper = helpers.if_not_empty || (depth0 && depth0.if_not_empty),options={hash:{},inverse:self.program(12, program12, data),fn:self.program(10, program10, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.simpleRefsetMembers), options) : helperMissing.call(depth0, "if_not_empty", (depth0 && depth0.simpleRefsetMembers), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</table>\n\n<table class='table table-hover'>\n    <thead><tr>\n        <th colspan=\"3\"><span class='i18n' data-i18n-id='i18n_simple_map_refset_name'>Simple Map Refset name</span></th>\n    </tr></thead>\n<tbody>\n    ";
+  buffer += "\n</table>\n\n<table class='table table-hover'>\n    <thead><tr>\n        <th colspan=\"3\"><span class='i18n' data-i18n-id='i18n_simple_map_refset_name'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_simple_map_refset_name", "Simple Map Refset name", options) : helperMissing.call(depth0, "i18n", "i18n_simple_map_refset_name", "Simple Map Refset name", options)))
+    + "</span></th>\n    </tr></thead>\n<tbody>\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.simpleMapRefsetMembers), {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "    \n    ";
   stack1 = (helper = helpers.if_not_empty || (depth0 && depth0.if_not_empty),options={hash:{},inverse:self.program(12, program12, data),fn:self.program(10, program10, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.simpleMapRefsetMembers), options) : helperMissing.call(depth0, "if_not_empty", (depth0 && depth0.simpleMapRefsetMembers), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</table>\n\n<table class='table table-hover'>\n    <thead><tr>\n        <th colspan=\"3\"><span class='i18n' data-i18n-id='i18n_attribute_value_refset_name'>Attribute Value Refset name</span></th>\n    </tr></thead>\n<tbody>\n\n    ";
+  buffer += "\n</table>\n\n<table class='table table-hover'>\n    <thead><tr>\n        <th colspan=\"3\"><span class='i18n' data-i18n-id='i18n_attribute_value_refset_name'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_attribute_value_refset_name", "Attribute Value Refset name", options) : helperMissing.call(depth0, "i18n", "i18n_attribute_value_refset_name", "Attribute Value Refset name", options)))
+    + "</span></th>\n    </tr></thead>\n<tbody>\n\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.attributeValueRefsetMembers), {hash:{},inverse:self.noop,fn:self.program(19, program19, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    ";
   stack1 = (helper = helpers.if_not_empty || (depth0 && depth0.if_not_empty),options={hash:{},inverse:self.program(12, program12, data),fn:self.program(10, program10, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.attributeValueRefsetMembers), options) : helperMissing.call(depth0, "if_not_empty", (depth0 && depth0.attributeValueRefsetMembers), options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</table>\n\n<table class='table table-hover'>\n    <thead><tr>\n        <th colspan=\"3\"><span class='i18n' data-i18n-id='i18n_association_refset_name'>Association Refset name</span></th>\n    </tr></thead>\n<tbody>\n    ";
+  buffer += "\n</table>\n\n<table class='table table-hover'>\n    <thead><tr>\n        <th colspan=\"3\"><span class='i18n' data-i18n-id='i18n_association_refset_name'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_association_refset_name", "Association Refset name", options) : helperMissing.call(depth0, "i18n", "i18n_association_refset_name", "Association Refset name", options)))
+    + "</span></th>\n    </tr></thead>\n<tbody>\n    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.associationRefsetMembers), {hash:{},inverse:self.noop,fn:self.program(24, program24, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    ";
@@ -5569,12 +5582,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["views/refsetPlugin/body.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = "", stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, functionType="function", self=this;
 
 function program1(depth0,data) {
   
-  
-  return "\n                    <tr>\n                        <td colspan=\"3\">\n                            <span class=\"text-muted\"> No refsets</span>\n                        </td>\n                    </tr>\n                ";
+  var buffer = "", helper, options;
+  buffer += "\n                    <tr>\n                        <td colspan=\"3\">\n                            <span class=\"text-muted i18n\" data-i18n-id='i18n_no_refsets'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_no_refsets", "No refsets", options) : helperMissing.call(depth0, "i18n", "i18n_no_refsets", "No refsets", options)))
+    + "</span>\n                        </td>\n                    </tr>\n                ";
+  return buffer;
   }
 
 function program3(depth0,data) {
@@ -5687,7 +5703,13 @@ function program9(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div style=\"margin-top: 10px\" class=\"panel panel-default\">\n    <div class=\"panel-body\">\n        <div class=\"row container-fluid\" style=\"max-height: 260px; overflow-y: scroll; margin: 10px;\">\n            <table class=\"table table-hover table-bordered\">\n                <thead>\n                    <tr>\n                        <th>Type</th>\n                        <th>Refset</th>\n                        <th>Active Members Count</th>\n                    </tr>\n                </thead>\n                <tbody>\n                ";
+  buffer += "<div style=\"margin-top: 10px\" class=\"panel panel-default\">\n    <div class=\"panel-body\">\n        <div class=\"row container-fluid\" style=\"max-height: 260px; overflow-y: scroll; margin: 10px;\">\n            <table class=\"table table-hover table-bordered\">\n                <thead>\n                    <tr>\n                        <th class=\"i18n\" data-i18n-id='i18n_type'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_type", "Type", options) : helperMissing.call(depth0, "i18n", "i18n_type", "Type", options)))
+    + "</th>\n                        <th class=\"i18n\" data-i18n-id='i18n_refset'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_refset", "Refset", options) : helperMissing.call(depth0, "i18n", "i18n_refset", "Refset", options)))
+    + "</th>\n                        <th class=\"i18n\" data-i18n-id='i18n_active_members_count'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_active_members_count", "Active Members Count", options) : helperMissing.call(depth0, "i18n", "i18n_active_members_count", "Active Members Count", options)))
+    + "</th>\n                    </tr>\n                </thead>\n                <tbody>\n                ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.refsets)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.refsets)),stack1 == null || stack1 === false ? stack1 : stack1.length), 0, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                </tbody>\n            </table>\n        </div>\n        <div class=\"row container-fluid\">\n            <table id=\"";
@@ -5735,12 +5757,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["views/refsetPlugin/members.hbs"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = "", stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, functionType="function", self=this;
 
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n    <thead>\n        <tr>\n            <th colspan=\"2\">Members of ";
+  buffer += "\n    <thead>\n        <tr>\n            <th colspan=\"2\" class=\"i18n\" data-i18n-id=\"i18n_members_of\">"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_members_of", "Members of", options) : helperMissing.call(depth0, "i18n", "i18n_members_of", "Members of", options)))
+    + " ";
   if (helper = helpers.term) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -5817,8 +5841,11 @@ function program8(depth0,data) {
 
 function program10(depth0,data) {
   
-  
-  return "\n            <td class=\"text-muted\" class=\"text-center\" colspan=\"2\">The reference components of these reference set members are not concepts.</span></td>\n        ";
+  var buffer = "", helper, options;
+  buffer += "\n            <td class=\"text-center text-muted i18n\" colspan=\"2\" data-i18n-id=\"i18n_reference_components_are_not_concept\">"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_reference_components_are_not_concept", "The reference components of these reference set members are not concepts", options) : helperMissing.call(depth0, "i18n", "i18n_reference_components_are_not_concept", "The reference components of these reference set members are not concepts", options)))
+    + ".</span></td>\n        ";
+  return buffer;
   }
 
 function program12(depth0,data) {
@@ -5864,12 +5891,14 @@ function program15(depth0,data) {
   }
 function program16(depth0,data) {
   
-  var buffer = "", stack1, helper;
+  var buffer = "", stack1, helper, options;
   buffer += "\n                    <td class=\"text-muted\" class=\"text-center\" colspan=\"2\">";
   if (helper = helpers.total) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.total); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + " <span data-i18n-id=\"i18n_members\" class=\"i18n\">members</span></td>\n                ";
+    + " <span data-i18n-id=\"i18n_members\" class=\"i18n\">"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_members", "members", options) : helperMissing.call(depth0, "i18n", "i18n_members", "members", options)))
+    + "</span></td>\n                ";
   return buffer;
   }
 
