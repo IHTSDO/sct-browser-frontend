@@ -16269,7 +16269,7 @@ function queryComputerPanel(divElement, options) {
                 //alertEvent("Add at least one include", "error");
                 $('#' + panel.divElement.id + '-outputBody').html("");
                 $('#' + panel.divElement.id + '-outputBody2').html("");
-                $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-danger'>Add at least one include</span>");
+                $('#' + panel.divElement.id + '-').html("<span class='text-danger'>Add at least one include</span>");
                 $("#" + panel.divElement.id + "-footer").html("");
                 //$('#' + panel.divElement.id + '-resultInfo').html('ERROR');
             }
@@ -16285,10 +16285,15 @@ function queryComputerPanel(divElement, options) {
                 var encodedGrammar = encodeURIComponent(grammar);
                 var executeUrl = ontoserverUrl + ontoserverConstraintParam + encodedGrammar + ")";
                 panel.currentEx++;
+                var i18n_searching_text = jQuery.i18n.prop('i18n_searching');
+                if (!i18n_searching_text) {
+                    i18n_searching_text = "Searching";
+                }
+
                 $('#' + panel.divElement.id + '-resultInfo').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 $('#' + panel.divElement.id + '-outputBody').html("");
-                $('#' + panel.divElement.id + '-outputBody2').html("");
-                $('#' + panel.divElement.id + '-footer').html('<div class="progress progress-striped active"> <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span>Searching</span></div></div><p id="' + panel.divElement.id + '-waitingSearch-text" class="lead animated"></p>');
+                $('#' + panel.divElement.id + '-outputBody2').html("");                
+                $('#' + panel.divElement.id + '-footer').html('<div class="progress progress-striped active"> <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span>'+i18n_searching_text+'</span></div></div><p id="' + panel.divElement.id + '-waitingSearch-text" class="lead animated"></p>');
                 $("#" + panel.divElement.id + "-waitingSearch-text").html("");
                 $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeInRight");
                 $("#" + panel.divElement.id + "-waitingSearch-text").html("OntoServer is processing your instructions...");
@@ -16296,7 +16301,15 @@ function queryComputerPanel(divElement, options) {
                     //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
                 }).done(function(result) {
                     //console.log(result);
-                    $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'>Found " + result.totalResults + " concepts</span>");
+                    var i18n_found_text = jQuery.i18n.prop('i18n_found');
+                    if (!i18n_found_text) {
+                        i18n_found_text = "Found";
+                    }
+                    var i18n_concepts_text = jQuery.i18n.prop('i18n_concepts');
+                    if (!i18n_concepts_text) {
+                        i18n_concepts_text = "concepts";
+                    }
+                    $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + result.totalResults + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span></span>");
                     $("#" + panel.divElement.id + "-waitingSearch-text").html("");
                     //TODO: implement pagination with Ontoserver
                     if (result.totalResults > 100) {
@@ -16672,10 +16685,18 @@ function queryComputerPanel(divElement, options) {
             limit = 1;
             skip = 0;
         } else {
-            $('#' + panel.divElement.id + '-footer').html('<div class="progress progress-striped active"> <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span>Searching</span></div></div><p id="' + panel.divElement.id + '-waitingSearch-text" class="lead animated"></p>');
+            var i18n_searching_text = jQuery.i18n.prop('i18n_searching');
+            if (!i18n_searching_text) {
+                i18n_searching_text = "Searching";
+            }
+            var i18n_server_is_processing1_text = jQuery.i18n.prop('i18n_server_is_processing1_text');
+            if (!i18n_server_is_processing1_text) {
+                i18n_server_is_processing1_text = "The server is processing your instructions";
+            }
+            $('#' + panel.divElement.id + '-footer').html('<div class="progress progress-striped active"> <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span>'+i18n_searching_text+'</span></div></div><p id="' + panel.divElement.id + '-waitingSearch-text" class="lead animated"></p>');
             $("#" + panel.divElement.id + "-waitingSearch-text").html("");
             $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeInRight");
-            $("#" + panel.divElement.id + "-waitingSearch-text").html("The server is processing your instructions...");
+            $("#" + panel.divElement.id + "-waitingSearch-text").html("<span class='i18n' data-i18n-id='i18n_server_is_processing1_text'>"+i18n_server_is_processing1_text+"</span>...");
             setTimeout(function() {
                 $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeInRight");
             }, 600);
@@ -16684,10 +16705,14 @@ function queryComputerPanel(divElement, options) {
                 if (xhrExecute != null && currentEx == panel.currentEx) {
                     $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeOutLeft");
                     setTimeout(function() {
+                        var i18n_server_is_processing2_text = jQuery.i18n.prop('i18n_server_is_processing2_text');
+                        if (!i18n_server_is_processing2_text) {
+                            i18n_server_is_processing2_text = "The server is still processing your instructions";
+                        }
                         $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeOutLeft");
                         $("#" + panel.divElement.id + "-waitingSearch-text").html("");
-                        $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeInRight");
-                        $("#" + panel.divElement.id + "-waitingSearch-text").html("The server is still processing your instructions...");
+                        $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeInRight");                        
+                        $("#" + panel.divElement.id + "-waitingSearch-text").html("<span class='i18n' data-i18n-id='i18n_server_is_processing2_text'>"+i18n_server_is_processing2_text+"</span>...");
                         setTimeout(function() {
                             $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeInRight");
                         }, 600);
@@ -16698,10 +16723,14 @@ function queryComputerPanel(divElement, options) {
                 if (xhrExecute != null && currentEx == panel.currentEx) {
                     $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeOutLeft");
                     setTimeout(function() {
+                        var i18n_server_is_processing3_text = jQuery.i18n.prop('i18n_server_is_processing3_text');
+                        if (!i18n_server_is_processing3_text) {
+                            i18n_server_is_processing3_text = "This seems to be a complex set of instructions, still processing";
+                        }
                         $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeOutLeft");
                         $("#" + panel.divElement.id + "-waitingSearch-text").html("");
                         $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeInRight");
-                        $("#" + panel.divElement.id + "-waitingSearch-text").html("This seems to be a complex set of instructions, still processing...");
+                        $("#" + panel.divElement.id + "-waitingSearch-text").html("<span class='i18n' data-i18n-id='i18n_server_is_processing3_text'>"+i18n_server_is_processing3_text+"</span>...");
                         setTimeout(function() {
                             $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeInRight");
                         }, 600);
@@ -16712,10 +16741,14 @@ function queryComputerPanel(divElement, options) {
                 if (xhrExecute != null && currentEx == panel.currentEx) {
                     $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeOutLeft");
                     setTimeout(function() {
+                        var i18n_server_is_processing4_text = jQuery.i18n.prop('i18n_server_is_processing4_text');
+                        if (!i18n_server_is_processing4_text) {
+                            i18n_server_is_processing4_text = "The server is processing a complex set of instructions. This action might not be supported in a public server. Some times instructions can be simplified by specifying conditions using concepts closer in the hierarchy to the intended results, avoiding unnecessary selections of large portions of the terminology";
+                        }
                         $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeOutLeft");
                         $("#" + panel.divElement.id + "-waitingSearch-text").html("");
                         $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeInRight");
-                        $("#" + panel.divElement.id + "-waitingSearch-text").html("The server is processing a complex set of instructions. This action might not be supported in a public server. Some times instructions can be simplified by specifying conditions using concepts closer in the hierarchy to the intended results, avoiding unnecessary selections of large portions of the terminology.");
+                        $("#" + panel.divElement.id + "-waitingSearch-text").html("<span class='i18n' data-i18n-id='i18n_server_is_processing4_text'>"+i18n_server_is_processing4_text+"</span>.");
                         setTimeout(function() {
                             $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeInRight");
                         }, 600);
@@ -16776,17 +16809,25 @@ function queryComputerPanel(divElement, options) {
                 //result.computeResponse.matches
                 if (!onlyTotal) {
                     $("#" + panel.divElement.id + "-exportResults").removeClass("disabled");
+                    var i18n_found_text = jQuery.i18n.prop('i18n_found');
+                    if (!i18n_found_text) {
+                        i18n_found_text = "Found";
+                    }
+                    var i18n_concepts_text = jQuery.i18n.prop('i18n_concepts');
+                    if (!i18n_concepts_text) {
+                        i18n_concepts_text = "concepts";
+                    }
                     if (data.performanceCutOff) {
                         if (!data.totalElements) {
-                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'>Found " + data.total + " concepts. <span class='text-danger'>This query cannot be completed in real-time, please schedule a Cloud executions. Results below are incomplete and some conditions were not tested. </span></span>");
+                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.total + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span>. <span class='text-danger'>This query cannot be completed in real-time, please schedule a Cloud executions. Results below are incomplete and some conditions were not tested. </span></span>");
                         } else {
-                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'>Found " + data.totalElements + " concepts. <span class='text-danger'>This query cannot be completed in real-time, please schedule a Cloud executions. Results below are incomplete and some conditions were not tested. </span></span>");
-                        }
+                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.totalElements + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span>. <span class='text-danger'>This query cannot be completed in real-time, please schedule a Cloud executions. Results below are incomplete and some conditions were not tested. </span></span>");
+                        }                        
                     } else {
                         if (!data.totalElements) {
-                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'>Found " + data.total + " concepts</span>");
+                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.total + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span></span>");
                         } else {
-                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'>Found " + data.totalElements + " concepts</span>");
+                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.totalElements + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span></span>");
                         }
                     }
                     $.each(data.items, function(i, row) {
@@ -16806,19 +16847,56 @@ function queryComputerPanel(divElement, options) {
                         });
                     });
 
+                    var i18n_show_text = jQuery.i18n.prop('i18n_show');
+                    if (!i18n_show_text) {
+                        i18n_show_text = "Show";
+                    }
+                    var i18n_more_text = jQuery.i18n.prop('i18n_more');
+                    if (!i18n_more_text) {
+                        i18n_more_text = "more";
+                    }
+                    var i18n_viewing_text = jQuery.i18n.prop('i18n_viewing');
+                    if (!i18n_viewing_text) {
+                        i18n_viewing_text = "viewing";
+                    }
+                    var i18n_items_of_text = jQuery.i18n.prop('i18n_items_of');
+                    if (!i18n_items_of_text) {
+                        i18n_items_of_text = "items of";
+                    } 
+                    var i18n_total_text = jQuery.i18n.prop('i18n_total');
+                    if (!i18n_total_text) {
+                        i18n_total_text = "total";
+                    }
+                    var i18n_showing_all_text = jQuery.i18n.prop('i18n_showing_all');
+                    if (!i18n_showing_all_text) {
+                        i18n_showing_all_text = "Showing all";
+                    }
+                    var i18n_matches_text = jQuery.i18n.prop('i18n_matches');
+                    if (!i18n_matches_text) {
+                        i18n_matches_text = "matches";
+                    }               
+                    
+                    var show_html = "<span class='i18n' data-i18n-id='i18n_show'>"+i18n_show_text+"</span>";
+                    var more_html = "<span class='i18n' data-i18n-id='i18n_more'>"+i18n_more_text+"</span>";
+                    var viewing_html = "<span class='i18n' data-i18n-id='i18n_viewing'>"+i18n_viewing_text+"</span>";
+                    var items_of_html = "<span class='i18n' data-i18n-id='i18n_items_of'>"+i18n_items_of_text+"</span>";
+                    var total_html = "<span class='i18n' data-i18n-id='i18n_total'>"+i18n_total_text+"</span>";
+                    var showing_all_html = "<span class='i18n' data-i18n-id='i18n_showing_all'>"+i18n_showing_all_text+"</span>";
+                    var matches_html = "<span class='i18n' data-i18n-id='i18n_matches'>"+i18n_matches_text+"</span>";
+
                     if (!data.totalElements) {
                         panel.lastTotalValues = data.total;
                         if (limit + skip < data.total) {
-                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>Show more (viewing " + (limit + skip) + " " + panel.options.eclQueryFilter + " items of " + data.total + " total)</span>");
+                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>"+show_html+" "+more_html+" ("+viewing_html+ (limit + skip) + " " + panel.options.eclQueryFilter + " "+items_of_html+" " + data.total + " "+total_html+")</span>");
                         } else {
-                            $('#' + panel.divElement.id + '-footer').html("Showing all " + data.total + " " + panel.options.eclQueryFilter + " matches");
+                            $('#' + panel.divElement.id + '-footer').html(showing_all_html+" " + data.total + " " + panel.options.eclQueryFilter + " "+matches_html);
                         }
                     } else {
                         panel.lastTotalValues = data.totalElements;
                         if (limit + skip < data.totalElements) {
-                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>Show more (viewing " + (limit + (page * limit)) + " " + panel.options.eclQueryFilter + " items of " + data.totalElements + " total)</span>");
+                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>"+show_html+" "+more_html+" ("+viewing_html+ (limit + (page * limit)) + " " + panel.options.eclQueryFilter + " "+items_of_html+" " + data.totalElements + " "+total_html+")</span>");
                         } else {
-                            $('#' + panel.divElement.id + '-footer').html("Showing all " + data.totalElements + " " + panel.options.eclQueryFilter + " matches");
+                            $('#' + panel.divElement.id + '-footer').html(showing_all_html+" " + data.totalElements + " " + panel.options.eclQueryFilter + " "+matches_html);
                         }
                     }
 
