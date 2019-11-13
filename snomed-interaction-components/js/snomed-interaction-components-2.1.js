@@ -5762,9 +5762,9 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper, options;
-  buffer += "\n    <thead>\n        <tr>\n            <th colspan=\"2\" class=\"i18n\" data-i18n-id=\"i18n_members_of\">"
+  buffer += "\n    <thead>\n        <tr>\n            <th colspan=\"2\"><span class=\"i18n\"  data-i18n-id=\"i18n_members_of\">"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_members_of", "Members of", options) : helperMissing.call(depth0, "i18n", "i18n_members_of", "Members of", options)))
-    + " ";
+    + "</span> ";
   if (helper = helpers.term) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.term); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
