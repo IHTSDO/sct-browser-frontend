@@ -667,14 +667,17 @@
                             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
                             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                             QueryString = queryString();
-                            reloadCurrentPerspective();
-
+                            
                             if (QueryString.conceptId1) {
                                 xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
-                                }).done(function(result) {                                                                     
+                                    reloadCurrentPerspective();   
+                                }).done(function(result) {                                             
                                 }).fail(function() {
                                     reloadCurrentPerspective(404684003);                                    
                                 });
+                            }
+                            else {
+                                reloadCurrentPerspective(); 
                             }                                                                                    
                         });
                         $li.append($a);
