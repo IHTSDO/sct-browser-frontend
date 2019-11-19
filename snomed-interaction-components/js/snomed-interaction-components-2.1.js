@@ -651,33 +651,16 @@ function program16(depth0,data) {
 function program18(depth0,data) {
   
   
-  return "\n                <span class='i18n' data-i18n-id='i18n_active'>Active</span>\n            ";
+  return "\n                <span class='i18n' data-i18n-id='i18n_active'>Active</span><span>.</span>\n            ";
   }
 
 function program20(depth0,data) {
   
   
-  return "\n                <span class='i18n' data-i18n-id='i18n_inactive'>Inactive</span>\n            ";
+  return "\n                <span class='i18n' data-i18n-id='i18n_inactive'>Inactive</span><span>.</span>\n            ";
   }
 
 function program22(depth0,data) {
-  
-  
-  return "\n            ";
-  }
-
-function program24(depth0,data) {
-  
-  var buffer = "", stack1;
-  buffer += "\n                . Descendants count, Stated: "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.statedDescendantsString)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " concepts, Inferred: "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.inferredDescendantsString)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " concepts.\n            ";
-  return buffer;
-  }
-
-function program26(depth0,data) {
   
   var buffer = "", stack1, helper;
   buffer += "\n                <span class=\"pull-right\">\n                    <div class=\"dropdown\">\n                        <button class=\"btn btn-link dropdown-toggle\" type=\"button\" id=\"dropdownMenu1-details\" data-toggle=\"dropdown\" aria-expanded=\"true\">\n                            <i class=\"glyphicon glyphicon-plus-sign pull-right\" id=\"";
@@ -713,10 +696,15 @@ function program26(depth0,data) {
   buffer += "\n            \n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(20, program20, data),fn:self.program(18, program18, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.active), true, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.active), true, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            ";
-  stack1 = (helper = helpers.if_undefined || (depth0 && depth0.if_undefined),options={hash:{},inverse:self.program(24, program24, data),fn:self.program(22, program22, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.statedDescendantsString), options) : helperMissing.call(depth0, "if_undefined", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.statedDescendantsString), options));
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        </td>\n        <td>\n            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                <table border='1'><tr><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr><tr><td style='padding: 3px;'>"
+  buffer += "\n            <span>Descendants count, Stated: <span id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-statedDescendantCount\"></span> concepts, Inferred: <span id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-inferredDescendantCount\"></span> concepts.</span>          \n        </td>\n        <td>\n            <button type=\"button\" class=\"btn btn-link unobtrusive-icon more-fields-button pull-right\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"left\" data-content=\"\n                <table border='1'><tr><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr><tr><td style='padding: 3px;'>"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.effectiveTime)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</td><td style='padding: 3px;'>"
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.moduleId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -753,7 +741,7 @@ function program26(depth0,data) {
   else { helper = (depth0 && depth0.link); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">Copy Link to share</a></li>\n                    </ul>\n                </div>\n            </span>\n            ";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.swedishExtension), {hash:{},inverse:self.noop,fn:self.program(26, program26, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.swedishExtension), {hash:{},inverse:self.noop,fn:self.program(22, program22, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n            <!--<button type=\"button\" id=\"share-link-";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
@@ -8923,6 +8911,33 @@ function conceptDetails(divElement, conceptId, options) {
             };
             $('#' + panel.attributesPId).html(JST["views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
+            var branch = options.edition;
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            };
+            
+            // get stated and inferred descendant count for concept detail tab
+            $("#" + panel.divElement.id + "-statedDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+            $("#" + panel.divElement.id+ "-inferredDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+            
+            $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=inferred&includeDescendantCount=true", function(result) {            
+            }).done(function(result) {
+                var inferredDescendantCount = result.length;
+                result.forEach(function(children){
+                    inferredDescendantCount += children.descendantCount;                    
+                });
+                $("#" + panel.divElement.id + "-inferredDescendantCount").html(inferredDescendantCount);               
+            });
+
+            $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=stated&includeDescendantCount=true", function(result) {            
+            }).done(function(result) {
+                var statedDescendantCount = result.length;
+                result.forEach(function(children){
+                    statedDescendantCount += children.descendantCount;                    
+                });
+                $("#" + panel.divElement.id + "-statedDescendantCount").html(statedDescendantCount);              
+            });
+
             if (swedishExtension) {               
                 
                 if( $('#' + panel.divElement.id + '-issues-collector').length != 0) {
@@ -10279,11 +10294,12 @@ function conceptDetails(divElement, conceptId, options) {
         if (xhrChildren != null) {
             xhrChildren.abort();
             xhrChildren = null;
-        }
-
-        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
+        }        
+        
+        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(result) {
             //$.getJSON(panel.url + "rest/browser/concepts/" + panel.conceptId + "/children", function(result) {
-        }).done(function(result) {
+        }).done(function(result) {          
+
             result.forEach(function(item) {
                 if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                     item.defaultTerm = item.pt.term;
