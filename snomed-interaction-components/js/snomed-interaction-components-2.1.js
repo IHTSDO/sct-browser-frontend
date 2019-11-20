@@ -8915,7 +8915,7 @@ function conceptDetails(divElement, conceptId, options) {
             };
             $('#' + panel.attributesPId).html(JST["views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
-            if (result.descendantCount) {
+            if (typeof result.descendantCount !== 'undefined') {
                 var branch = options.edition;
                 if(options.release.length > 0 && options.release !== 'None'){
                     branch = branch + "/" + options.release;
@@ -14458,6 +14458,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                         });
                     };
                     $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(result) {
+                        if (result && result[0] && typeof result[0].descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
                         result.forEach(function(item) {
                             if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                                 item.defaultTerm = item.pt.term;
@@ -14531,10 +14532,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
         } else {
             $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
-        }
-
-        if (panel.options.descendantsCount == true) $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: On");
-        else $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: Off");
+        }        
 
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
@@ -14607,6 +14605,10 @@ function taxonomyPanel(divElement, conceptId, options) {
                         
                     }
                 });
+                $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: On");
+            } 
+            else {
+                $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: Off");
             }
             $(".treeButton").disableTextSelect();
             if (typeof i18n_drag_this == "undefined") {
@@ -14650,7 +14652,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             });
         };
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(parents) {
-            // done
+            if (parents && parents[0] && typeof parents[0].descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
         }).done(function(parents) {
             if (parents.length > 0) {
                 var firstParent = "empty";
@@ -14756,6 +14758,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             });
         };
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(result) {
+            if (result && result[0] && typeof result[0].descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
             $.each(result, function(i, item) {
                 if (typeof item.defaultTerm == "undefined") {
                     if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
@@ -14781,6 +14784,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                     urlArgs = urlArgs + '&expand=fsn()';
                 }
                 $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + urlArgs, function(res) {
+                    if (res &&typeof res.descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
                     if(res.pt && res.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && res.fsn.lang != options.defaultLanguage){
                         res.defaultTerm = res.pt.term;
                     }
@@ -14935,23 +14939,7 @@ function taxonomyPanel(divElement, conceptId, options) {
     panel.markerColor = panel.getNextMarkerColor(globalMarkerColor);
 
 
-    this.setupCanvas();
-
-    var branch = options.edition;
-    if(options.release.length > 0 && options.release !== 'None'){
-        branch = branch + "/" + options.release;
-    };
-    if(!options.serverUrl.includes('snowowl')){
-        $.ajaxSetup({
-            headers : {
-            'Accept-Language': options.languages
-            }
-        });
-    };
-    var urlArgs = '?descendantCountForm=' + panel.options.selectedView;
-    if(options.serverUrl.includes('snowowl')){
-        urlArgs = urlArgs + '&expand=fsn()';
-    }
+    this.setupCanvas();    
     if (!conceptId || conceptId == 138875005) {        
         panel.setToConcept(138875005);       
     } else {
