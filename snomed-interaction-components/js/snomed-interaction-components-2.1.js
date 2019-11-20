@@ -696,7 +696,11 @@ function program22(depth0,data) {
   buffer += "\n            \n            ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.program(20, program20, data),fn:self.program(18, program18, data),data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.active), true, options) : helperMissing.call(depth0, "if_eq", ((stack1 = (depth0 && depth0.firstMatch)),stack1 == null || stack1 === false ? stack1 : stack1.active), true, options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            <span>Descendants count, Stated: <span id=\"";
+  buffer += "\n            <span id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-descendantInfor\">Descendants count, Stated: <span id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -8695,19 +8699,19 @@ function conceptDetails(divElement, conceptId, options) {
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
-        };
+        }
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
                 'Accept-Language': options.languages
               }
             });
-        };
+        }
         if (typeof panel.options.selectedView == "undefined") {
             panel.options.selectedView = "inferred";
         }
 
-        xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId, function(result) {
+        xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "?descendantCountForm=" + panel.options.selectedView, function(result) {
 
         }).done(function(result) {
             setDefaultTerm(result);
@@ -8911,32 +8915,31 @@ function conceptDetails(divElement, conceptId, options) {
             };
             $('#' + panel.attributesPId).html(JST["views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
-            var branch = options.edition;
-            if(options.release.length > 0 && options.release !== 'None'){
-                branch = branch + "/" + options.release;
-            };
-            
-            // get stated and inferred descendant count for concept detail tab
-            $("#" + panel.divElement.id + "-statedDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-            $("#" + panel.divElement.id+ "-inferredDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-            
-            $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=inferred&includeDescendantCount=true", function(result) {            
-            }).done(function(result) {
-                var inferredDescendantCount = result.length;
-                result.forEach(function(children){
-                    inferredDescendantCount += children.descendantCount;                    
-                });
-                $("#" + panel.divElement.id + "-inferredDescendantCount").html(inferredDescendantCount);               
-            });
-
-            $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=stated&includeDescendantCount=true", function(result) {            
-            }).done(function(result) {
-                var statedDescendantCount = result.length;
-                result.forEach(function(children){
-                    statedDescendantCount += children.descendantCount;                    
-                });
-                $("#" + panel.divElement.id + "-statedDescendantCount").html(statedDescendantCount);              
-            });
+            if (result.descendantCount) {
+                var branch = options.edition;
+                if(options.release.length > 0 && options.release !== 'None'){
+                    branch = branch + "/" + options.release;
+                };
+                
+                // get stated and inferred descendant count for concept detail tab
+                $("#" + panel.divElement.id + "-statedDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+                $("#" + panel.divElement.id+ "-inferredDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+                
+                $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "?descendantCountForm=" + (panel.options.selectedView === "inferred" ? "stated" : "inferred"), function(respone) {            
+                }).done(function(respone) {
+                    if (panel.options.selectedView === "inferred") {
+                        $("#" + panel.divElement.id + "-inferredDescendantCount").html(result.descendantCount);       
+                        $("#" + panel.divElement.id + "-statedDescendantCount").html(respone.descendantCount);
+                    }
+                    else {
+                        $("#" + panel.divElement.id + "-inferredDescendantCount").html(respone.descendantCount);       
+                        $("#" + panel.divElement.id + "-statedDescendantCount").html(result.descendantCount);
+                    }                            
+                });                
+            } 
+            else {
+                $("#" + panel.divElement.id + "-descendantInfor").hide();
+            }          
 
             if (swedishExtension) {               
                 
