@@ -6101,7 +6101,29 @@ function program3(depth0,data) {
   buffer += escapeExpression(stack1)
     + "-inactiveOnlyButton' data-i18n-id='i18n_inactive_only'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_inactive_only", "Inactive components only", options) : helperMissing.call(depth0, "i18n", "i18n_inactive_only", "Inactive components only", options)))
-    + "</a>\n                            </li>\n                        </ul>\n                    </div>\n                    ";
+    + "</a>\n                            </li>\n                        </ul>\n                    </div>\n                    <div style=\"margin-top: 5px\" class=\"btn-group\">\n                        <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                            <span class='i18n' data-i18n-id='i18n_type'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_type", "Type", options) : helperMissing.call(depth0, "i18n", "i18n_type", "Type", options)))
+    + "</span>: <span id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-searchTypeOpt\"></span>&nbsp;<span class=\"caret\"></span>\n                        </button>\n                        <ul class=\"dropdown-menu\" role=\"menu\">\n                             <li>\n                                <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-allTypeButton'> All </a>\n                            </li>\n                            <li>\n                                <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-noDefTypeButton'>No DEF</a>\n                            </li>\n                            <li>\n                                <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-fsnTypeButton'>FSN</a>\n                            </li>\n                            <li>\n                                <a href=\"#\"id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-preferredTermyButton'>Preferred Term</a>\n                            </li>\n                        </ul>\n                    </div>                  \n                    \n                    ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.server), "snowstorm", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.server), "snowstorm", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                </div>\n            </div>\n            <div id=\"";
@@ -12839,6 +12861,7 @@ function searchPanel(divElement, options) {
         });
 
         panel.updateStatusFilterLabel();
+        panel.updateTypeFilterLabel();
 
         $("#" + panel.divElement.id + "-activeOnlyButton").click(function(event) {
             panel.options.statusSearchFilter = 'activeOnly';
@@ -12854,9 +12877,57 @@ function searchPanel(divElement, options) {
             panel.options.statusSearchFilter = 'inactiveOnly';
             panel.updateStatusFilterLabel();
         });
+        
+        $("#" + panel.divElement.id + "-allTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = '';
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-noDefTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = 'noDef';
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-fsnTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = 'fsn';
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-preferredTermyButton").click(function(event) {
+            panel.options.typeSearchFilter = 'pt';
+            panel.updateTypeFilterLabel();
+        });     
+
+
         $("#" + panel.divElement.id + "-partialMatchingButton").click();
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
+
+        this.getLanguageRefsets();        
     };
+
+    this.getLanguageRefsets = function() {
+        var branch = panel.options.edition;
+        if(panel.options.release.length > 0 && panel.options.release !== 'None'){
+            branch = branch + "/" + panel.options.release;
+        };
+        if(!panel.options.serverUrl.includes('snowowl')){
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': panel.options.languages
+            }
+            });
+        };
+        $.getJSON(panel.options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {              
+            // do nothing                
+        }).done(function(result) {
+            panel.options.languageRefsets = [];        
+            Object.keys(result.referenceSets).forEach(function(key) {
+                if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                    panel.options.languageRefsets.push(result.referenceSets[key]);                                      
+                }
+            });
+        });
+    }
 
     this.setupOptionsPanel = function() {
         var possibleSubscribers = [];
@@ -12941,6 +13012,27 @@ function searchPanel(divElement, options) {
             $("#" + panel.divElement.id + '-searchStatus').html(i18n_active_only);
             $("#" + panel.divElement.id + '-navStatusFilterLabel').html(i18n_active_only);
         }
+        var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
+        if (searchTerm.length > 0) {
+            panel.search(searchTerm, 0, 100, true);
+        }
+    }
+
+    this.updateTypeFilterLabel = function() {        
+        if (panel.options.typeSearchFilter == 'noDef') {
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('No DEF');
+           
+        } else if (panel.options.typeSearchFilter == 'fsn') {
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('FSN');
+           
+        } else if (panel.options.typeSearchFilter == 'pt') {
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('Preferred Term');
+           
+        } else {
+            panel.options.typeSearchFilter = '';
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('All');            
+        }
+
         var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
         if (searchTerm.length > 0) {
             panel.search(searchTerm, 0, 100, true);
@@ -13249,7 +13341,38 @@ function searchPanel(divElement, options) {
                     if(skipTo !== 0){
                         searchUrl = searchUrl + '&offset=' + skipTo;
                     }
-                    //console.log(searchUrl);
+                    if(panel.options.typeSearchFilter) {
+                        var descriptionTypes = [];
+                        const FSN = '900000000000003001';
+                        const SYNONYM = '900000000000013009' ;
+                        
+                        if(panel.options.typeSearchFilter ==='fsn'){
+                            descriptionTypes.push(FSN);
+                        }
+                        else if (panel.options.typeSearchFilter ==='noDef') {
+                            descriptionTypes.push(SYNONYM);
+                            descriptionTypes.push(FSN);
+                        }
+                        else if (panel.options.typeSearchFilter ==='pt') {
+                            descriptionTypes.push(SYNONYM);
+                            
+                            if (panel.options.languageRefsets && panel.options.languageRefsets.length != 0) {
+                                $.each(panel.options.languageRefsets, function(i, concept){
+                                    searchUrl = searchUrl + "&preferredIn=" + concept.conceptId;
+                                });                            
+                            }
+                        }
+                        else {
+                            // do nothing
+                        }
+
+                        if (descriptionTypes.length != 0) {
+                            $.each(descriptionTypes, function(i, type){
+                                searchUrl = searchUrl + "&type=" + type;
+                            });                            
+                        }                                                
+                    }
+                    
                     $.ajax({
                          url: searchUrl,
                          type: "GET",
