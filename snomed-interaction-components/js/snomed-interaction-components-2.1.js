@@ -6123,11 +6123,11 @@ function program3(depth0,data) {
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-preferredTermyButton'>Preferred Term</a>\n                            </li>\n                        </ul>\n                    </div>\n                    <div style=\"margin-top: 5px\" class=\"btn-group dropdown\" id=\"";
+    + "-preferredTermyButton'>Preferred Term</a>\n                            </li>\n                        </ul>\n                    </div>\n                    <br/>\n                    <!--Display a temporary dropdown for Language refset for better view, will remove it after the list of refsets are in place-->\n                    <div style=\"margin-top: 5px\" class=\"btn-group dropdown\" id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "-filterLanguageRefsetOptHidden\">\n                        <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                            <span>Filter by language refset</span>&nbsp;<span class=\"caret\"></span>\n                        </button>                        \n                    </div>                \n                    <div style=\"margin-top: 5px; position: relative\">\n                        <select id=\"";
+    + "-filterLanguageRefsetOptHidden\">\n                        <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                            <span>Language Refsets</span>&nbsp;<span class=\"caret\"></span>\n                        </button>                        \n                    </div>                \n                    <div style=\"margin-top: 5px; position: relative\">\n                        <select id=\"";
   if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -12951,9 +12951,12 @@ function searchPanel(divElement, options) {
         $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect({            
             buttonClass: 'btn btn-success',       
             selectedClass: '',
+            templates: {
+                button: '<button type="button" style="white-space: normal;" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+            },
             buttonText: function(options, select) {
                 if (options.length === 0) {
-                   return 'Filter by language refset';
+                   return 'Language Refsets';
                 }
                 else{
                     var selected = '';
@@ -12961,7 +12964,7 @@ function searchPanel(divElement, options) {
                        var label = ($(this).attr('label') !== undefined) ?  $(this).attr('label'):$(this).html();
                        selected += label + ', ';
                     });
-                    return 'Language Refset: ' + selected.substr(0, selected.length - 2);
+                    return 'Language Refsets: ' + selected.substr(0, selected.length - 2);
                  }
             },          
             onChange: function(option, checked, select) {
