@@ -249,6 +249,7 @@
                 addEditionLinks($('#local_editions'), localReleases);
 
                 options.dailyBuildReleases = internationalReleases.filter((item)=>{ return item.dailyBuildAvailable});
+                option.dailyBuildReleases.push(localReleases.filter((item)=>{ return item.dailyBuildAvailable});)
                 addEditionLinks($('#dailybuild_editions'), options.dailyBuildReleases);
             }).fail(function() {
                 console.log('fail');
