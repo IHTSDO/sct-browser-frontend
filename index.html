@@ -135,7 +135,7 @@
         var manifests;
 
         function determineServer() {
-            if(window.location.hostname.includes('dailybuild')) {
+            if(window.location.hostname.includes('local')) {
                 options.dailyBuildBrowser = true;
                 options.queryBranch = 'MAIN';
                 options.edition = 'MAIN';
@@ -234,6 +234,9 @@
                 if (options.releases) {
                     for (let i = 0; i < options.releases.items.length; ++i) {
                         var release = options.releases.items[i];
+                        if(release.dailyBuildAvailable){
+                            options.dailyBuildReleases.push(release);
+                        }
                         if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
                             internationalReleases.push(release);
                         } else {
@@ -249,9 +252,7 @@
                     return a.name.localeCompare(b.name);
                 });
                 addEditionLinks($('#local_editions'), localReleases);
-
-                options.dailyBuildReleases = internationalReleases.filter((item)=>{ return item.dailyBuildAvailable});
-                option.dailyBuildReleases.push(localReleases.filter((item)=>{ return item.dailyBuildAvailable});)
+                
                 addEditionLinks($('#dailybuild_editions'), options.dailyBuildReleases);
             }).fail(function() {
                 console.log('fail');
