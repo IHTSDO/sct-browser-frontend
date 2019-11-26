@@ -13167,6 +13167,8 @@ function searchPanel(divElement, options) {
                     xhr.abort();
                     //console.log("aborting call...");
                 }
+                
+                $('#' + panel.divElement.id + '-searchBar2').html("");
                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'>Searching..</span>");
                 //console.log("panel.options.searchMode " + panel.options.searchMode);
                 t = t.trim();
