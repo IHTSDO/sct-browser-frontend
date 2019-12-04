@@ -136,7 +136,7 @@
         var manifests;
 
         function determineServer() {
-            if(window.location.hostname.includes('local')) {
+            if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
                 options.queryBranch = 'MAIN';
                 options.edition = 'MAIN';
