@@ -151,7 +151,7 @@ function dailyBuildPanel(divElement, options) {
             console.log("aborting call...");
         }
 
-        xhr = $.getJSON(options.serverUrl + "/MAIN/authoring-stats", function( data ) {
+        xhr = $.getJSON(options.serverUrl + '/' + options.edition + "/authoring-stats", function( data ) {
             var reportsHtml =  '';
             panel.title = data.title;
             panel.executionTime = new Date(data.executionTime).toUTCString();
@@ -191,7 +191,7 @@ function dailyBuildPanel(divElement, options) {
             xhr.abort();
             console.log("aborting call...");
         }
-        xhr = $.getJSON(options.serverUrl + "/MAIN/authoring-stats/" + link, function( data ) {
+        xhr = $.getJSON(options.serverUrl + '/' + options.edition + "/authoring-stats/" + link, function( data ) {
             data.sort(function(a, b) {
                 if (a.term.toLowerCase() < b.term.toLowerCase())
                     return -1;
