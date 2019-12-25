@@ -13090,7 +13090,7 @@ function searchPanel(divElement, options) {
 
     this.updateTypeFilterLabel = function() {        
         if (panel.options.typeSearchFilter == 'noDef') {
-            $("#" + panel.divElement.id + '-searchTypeOpt').html('No DEF');
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('Exclude definitions');
            
         } else if (panel.options.typeSearchFilter == 'fsn') {
             $("#" + panel.divElement.id + '-searchTypeOpt').html('FSN');
