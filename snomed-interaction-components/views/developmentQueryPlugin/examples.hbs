@@ -1,0 +1,10 @@
+{{#each examples}}
+    <br>
+    <div id="{{../divElementId}}-{{@index}}-modal-examples" {{#if_eqInd @index ../examples.length}}style="min-height: 450px;"{{/if_eqInd}}>
+        <h4>{{title}}</h4>
+        <span data-htmlValue="{{htmlValue}}" class="pull-right btn btn-primary btn-xs loadExample" style="padding: 0px; display: inline-block;">Load instructions</span>
+        <br>
+        <div class="contentExamples" style="margin: 10px;">{{{htmlValue}}}</div>
+        <br>
+    </div>
+{{/each}}

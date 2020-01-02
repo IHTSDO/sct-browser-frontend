@@ -1,0 +1,35 @@
+<div style='height:100%;margin: 5px; overflow:auto;' class='panel panel-default' id='{{divElementId}}-mainPanel'>
+    <div ondrop="dropF(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class='panel-heading' id='{{divElementId}}-panelHeading'>
+        <div class='row'>
+            <div class='col-md-6' id='{{divElementId}}-panelTitle'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_favorites'>Favorites</span></strong></div>
+            <!--<div class='col-md-6 text-right'>-->
+                <!--<button id='{{divElementId}}-historyButton' class='btn btn-link history-button' style='padding:2px'><i class='glyphicon glyphicon-time'></i></button>-->
+                <!--<button id='{{divElementId}}-resetButton' class='btn btn-link' data-panel='{{divElementId}}' style='padding:2px'><i class='glyphicon glyphicon-repeat'></i></button>-->
+                <!--&lt;!&ndash;<button id='{{divElementId}}-linkerButton' draggable="true" ondragstart="drag(event, '{{divElementId}}')" class='btn btn-link linker-button' data-panel='{{divElementId}}' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>&ndash;&gt;-->
+                <!--<button id='{{divElementId}}-configButton' class='btn btn-link' data-toggle='modal' style='padding:2px' data-target='#{{divElementId}}-configModal'><i class='glyphicon glyphicon-cog'></i></button>-->
+                <!--<button id='{{divElementId}}-collapseButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-small'></i></button>-->
+                <!--<button id='{{divElementId}}-expandButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-full'></i></button>-->
+                <!--<button id='{{divElementId}}-closeButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-remove'></i></button>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div ondrop="dropF(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class='panel-body' style='height:100%' id='{{divElementId}}-panelBody'>
+    </div>
+</div>
+<!--<div class='modal fade' id='{{divElementId}}-configModal'>-->
+    <!--<div class='modal-dialog'>-->
+        <!--<div class='modal-content'>-->
+            <!--<div class='modal-header'>-->
+                <!--<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>-->
+                <!--<h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span> ({{divElementId}})</h4>-->
+            <!--</div>-->
+            <!--<div class='modal-body' id='{{divElementId}}-modal-body'>-->
+                <!--<p></p>-->
+            <!--</div>-->
+            <!--<div class='modal-footer'>-->
+                <!--<button type='button' class='btn btn-danger' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_cancel'>Cancel</span></button>-->
+                <!--<button id='{{divElementId}}-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->

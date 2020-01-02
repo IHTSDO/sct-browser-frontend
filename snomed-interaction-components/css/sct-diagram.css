@@ -1,0 +1,145 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 3, 2013, 12:07:42 AM
+    Author     : alo
+*/
+
+.sct-primitive-concept
+{
+    position: relative;
+    border: 2px solid #333;
+    background-color: #99ccff;
+    padding: 10px;
+    text-align: left;
+    display: inline-block;
+    border-radius: 0px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: small;
+    /* max-width:250px; */
+    /* word-wrap:break-word; */
+    /* word-break:normal; */
+}
+
+.sct-defined-concept
+{
+    position: relative;
+    border: 1px solid #333;
+    background-color: #ccccff;
+    padding: 10px;
+    text-align: left;
+    display: inline-block;
+    border-radius: 0px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: small;
+    /* max-width:250px; */
+    /* word-wrap:break-word; */
+    box-shadow:
+        0 0 0 2px hsl(0, 0%, 80%),
+        0 0 0 3px #333;
+}
+
+.sct-attribute
+{
+    position: relative;
+    border: 1px solid #333;
+    background-color: #ffffcc;
+    padding: 10px;
+    text-align: left;
+    display: inline-block;
+    border-radius: 25px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: small;
+    /* max-width:250px;  */
+    /* word-wrap:break-word; */
+    box-shadow:
+        0 0 0 2px hsl(0, 0%, 80%),
+        0 0 0 3px #333;
+}
+
+.sct-primitive-concept-compact
+{
+    position: relative;
+    border: 2px solid #333;
+    background-color: #99ccff;
+    padding: 3px;
+    margin: 5px;
+    text-align: left;
+    display: inline-block;
+    border-radius: 0px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: small;
+    /* max-width:250px; */
+    /* word-wrap:break-word; */
+    /* word-break:normal; */
+}
+
+.sct-defined-concept-compact
+{
+    position: relative;
+    border: 1px solid #333;
+    background-color: #ccccff;
+    padding: 3px;
+    margin: 5px;
+    text-align: left;
+    display: inline-block;
+    border-radius: 0px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: small;
+    /* max-width:250px; */
+    /* word-wrap:break-word; */
+    box-shadow:
+        0 0 0 2px hsl(0, 0%, 80%),
+        0 0 0 3px #333;
+}
+
+.sct-attribute-compact
+{
+    position: relative;
+    border: 1px solid #333;
+    background-color: #ffffcc;
+    padding: 3px;
+    margin: 5px;
+    text-align: left;
+    display: inline-block;
+    border-radius: 25px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: small;
+    /* max-width:250px;  */
+    /* word-wrap:break-word; */
+    box-shadow:
+        0 0 0 2px hsl(0, 0%, 80%),
+        0 0 0 3px #333;
+}
+
+.sct-slot
+{
+    position: relative;
+    border: 2px solid #333;
+    background-color: #ff9999;
+    padding: 10px;
+    text-align: left;
+    display: inline-block;
+    border-radius: 0px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: small;
+    /* max-width:250px;  */
+    /* word-wrap:break-word; */
+    -moz-transform: skewX(-15deg);
+    -webkit-transform: skewX(-15deg);
+    -o-transform: skewX(-15deg);
+    -ms-transform: skewX(-15deg);
+    transform: skewX(-15deg);
+}
+
+.sct-slot-straighten-text {
+    -moz-transform: skewX(15deg);
+    -webkit-transform: skewX(15deg);
+    -o-transform: skewX(15deg);
+    -ms-transform: skewX(15deg);
+    transform: skewX(15deg);
+}
+

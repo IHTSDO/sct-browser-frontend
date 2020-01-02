@@ -1,0 +1,54 @@
+<h4 data-droppable="true" ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">
+    <span class="pull-right">
+        <div class="dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style="padding: 0px;">
+                <i class="glyphicon glyphicon-export pull-right" style="color: white;" id="{{divElementId}}-copy-icon"></i>
+            </button>
+            <ul class="dropdown-menu small" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-sctid" class="clip-btn" data-clipboard-text="{{firstMatch.conceptId}}">Copy ConceptId</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-term" class="clip-btn" data-clipboard-text="{{firstMatch.defaultTerm}}">Copy term</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-sctid-term" class="clip-btn" data-clipboard-text="{{firstMatch.conceptId}} |{{firstMatch.defaultTerm}}|">Copy ConceptId + term</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-link" class="clip-btn" data-clipboard-text="{{link}}">Copy Link to share</a></li>
+            </ul>
+        </div>
+    </span>
+    <span class="pull-right">
+        <a href="javascript:void(0);" style="font-size: 20px; color: white; padding: 5px;">
+            <span data-conceptId="{{firstMatch.conceptId}}" class="glyphicon glyphicon-star{{#if_fav firstMatch.conceptId}}{{else}}-empty{{/if_fav}}"></span>
+        </a>
+    </span>
+        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"  draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{firstMatch.module}}" data-concept-id="{{firstMatch.conceptId}}" data-term="{{#if_undefined firstMatch.fsn.term}}
+            {{firstMatch.fsn}}
+        {{else}}
+            {{firstMatch.defaultTerm}}
+        {{/if_undefined}}" 
+       data-def-status="{{firstMatch.definitionStatus}}">
+        <span class="badge alert-warning">
+        {{#if_eq firstMatch.definitionStatus "PRIMITIVE"}}
+            &nbsp;&nbsp;
+        {{else}}
+            &equiv;
+        {{/if_eq}}
+        </span>
+    </a>
+    &nbsp;&nbsp;
+    {{#if_undefined firstMatch.fsn.term}}
+        {{firstMatch.fsn}}
+    {{else}}
+        {{firstMatch.defaultTerm}}
+    {{/if_undefined}}
+    <span class="pull-right">
+       <div class="phoca-flagbox" style="width:40px;height:40px">
+           <span class="phoca-flag {{countryIcon firstMatch.moduleId}}"></span>
+       </div>
+    </span>
+</h4>
+
+<h5>SCTID: {{firstMatch.conceptId}}<br><br><div id="copy-content-custom">{{firstMatch.conceptId}} | 
+    {{#if_undefined firstMatch.fsn.term}}
+        {{firstMatch.fsn}}
+    {{else}}
+        {{firstMatch.defaultTerm}}
+    {{/if_undefined}} |</div></h5>
+
+<div id="home-descriptions-{{divElementId}}"></div>

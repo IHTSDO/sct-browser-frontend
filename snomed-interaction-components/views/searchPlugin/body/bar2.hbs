@@ -1,0 +1,107 @@
+{{#if_eq server 'snowstorm'}}
+    {{#if_eq options.moduleFilter "none"}}
+    {{else}}
+        <h3 style="margin-top: 5px;">
+            <span id="{{divElementId}}-moduleResumed" style="font-size: 12px;white-space: normal" class='label label-danger' data-name="{{#if options.moduleFilterName}}{{options.moduleFilterName}}{{else}}{{options.moduleFilter}}{{/if}}">{{#if options.moduleFilterName}}{{first20chars options.moduleFilterName}}{{else}}{{first20chars options.moduleFilter}}{{/if}} &nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-module'>&times;</a></span>
+        </h3>
+    {{/if_eq}}
+    {{#if_eq options.langFilter "none"}}
+    {{else}}
+        <h3 style="margin-top: 5px;">
+            <span style="font-size: 12px; margin-top: 5px;" class='label label-danger'>{{parseLanguageName options.langFilter}}&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-lang'>&times;</a></span>
+        </h3>
+    {{/if_eq}}
+    {{#if_eq options.semTagFilter "none"}}
+    {{else}}
+        <h3 style="margin-top: 5px;">
+            <span style="font-size: 12px; margin-top: 5px;" class='label label-danger'>{{options.semTagFilter}}&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-semtag'>&times;</a></span>
+        </h3>
+    {{/if_eq}}
+    {{#if_eq options.refsetFilter "none"}}
+    {{else}}
+        <h3 style="margin-top: 5px;">
+            <span id="{{divElementId}}-refsetResumed" style="font-size: 12px; margin-top: 5px;" class='label label-danger' data-name="{{#if options.refsetFilterName}}{{options.refsetFilterName}}{{else}}{{options.refsetFilter}}{{/if}}">{{#if options.refsetFilterName}}{{first20chars options.refsetFilterName}}{{else}}{{first20chars options.refsetFilter}}{{/if}} &nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-refset'>&times;</a></span>
+        </h3>
+    {{/if_eq}}
+    {{#if_eq result.details.total 0}}
+    {{else}}
+        {{#if_eq options.langFilter "none"}}
+            <div style="margin-top: 10px" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{i18n "i18n_filters_language" "Filter results by Language"}}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {{#each result.buckets.language}}
+                            <li class="list-group-item">
+                                <span class="badge">{{this}}</span>
+                                <a class='lang-link' href='javascript:void(0);' data-lang='{{@key}}'>{{parseLanguageName @key}}</a>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/if_eq}}
+        {{#if_eq options.semTagFilter "none"}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{i18n "i18n_filters_semtag" "Filter results by Semantic Tag"}}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {{#each result.buckets.semanticTags}}
+                            <li class="list-group-item">
+                                <span class="badge">{{this}}</span>
+                                <a class='semtag-link' href='javascript:void(0);' data-semtag='{{@key}}'>{{@key}}</a>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/if_eq}}
+        {{#if_eq options.moduleFilter "none"}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{i18n "i18n_filters_module" "Filter results by Module"}}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {{#each result.buckets.module}}
+                            <li class="list-group-item">
+                                <span class="badge">{{value}}</span>
+                                <a class='module-link' href='javascript:void(0);' data-term="{{term}}" data-module='{{id}}'>{{#if term}}{{term}}{{else}}{{value}}{{/if}}
+                                    {{#hasCountryIcon id}}
+                                        <div class="phoca-flagbox" style="width:26px;height:26px">
+                                            <span class="phoca-flag {{countryIcon id}}"></span>
+                                        </div>
+                                    {{/hasCountryIcon}}
+                                </a>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/if_eq}}
+        {{#if_eq options.refsetFilter "none"}}
+            {{#if_eq result.filters.refsetId.length 0}}
+            {{else}}
+                <div style="margin-top: 10px" class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{i18n "i18n_filters_refset" "Filter results by Refset"}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            {{#each result.buckets.membership}}
+                                <li class="list-group-item">
+                                    <span class="badge">{{value}}</span>
+                                    <a class='refset-link' href='javascript:void(0);' data-term="{{term}}" data-refset='{{id}}'>{{#if term}}{{term}}{{else}}{{value}}{{/if}}</a>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            {{/if_eq}}
+        {{/if_eq}}
+    {{/if_eq}}
+{{else}}
+{{/if_eq}}

@@ -1,0 +1,57 @@
+{{#if result.totalElements}}
+    <span class='text-muted'>{{result.totalElements}} matches found in {{elapsed}} seconds.</span>
+{{/if}}
+<!--<span class='pull right'>-->
+<!--<a class='btm btn-xs' style='margin: 3px; color: #777; background-color: #fff; border: 1px #ccc solid; margin-left: 25px;' data-toggle='collapse' href='#{{divElementId}}-searchFiltersPanel'>-->
+    <!--<span class='i18n' data-i18n-id='i18n_filters'>{{i18n "i18n_filters" "Filters"}}</span>-->
+<!--</a>-->
+<!--{{#if_eq options.semTagFilter "none"}}-->
+<!--{{else}}-->
+    <!--&nbsp;&nbsp;<span class='label label-danger'>{{options.semTagFilter}}&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-semtag'>&times;</a></span>&nbsp;&nbsp;-->
+<!--{{/if_eq}}-->
+<!--{{#if_eq options.langFilter "none"}}-->
+<!--{{else}}-->
+    <!--&nbsp;&nbsp;<span class='label label-danger'>{{options.langFilter}}&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-lang'>&times;</a></span>&nbsp;&nbsp;-->
+<!--{{/if_eq}}-->
+<!--{{#if_eq options.moduleFilter "none"}}-->
+<!--{{else}}-->
+    <!--&nbsp;&nbsp;<span class='label label-danger'>{{#if options.moduleFilterName}}{{options.moduleFilterName}}{{else}}{{options.moduleFilter}}{{/if}} &nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-module'>&times;</a></span>&nbsp;&nbsp;-->
+<!--{{/if_eq}}-->
+<!--</span>-->
+<!--<div id='{{divElementId}}-searchFiltersPanel' class='panel-collapse collapse'>-->
+    <!--<div class='tree'>-->
+        <!--<ul>-->
+            <!--<li><a><span data-i18n-id="i18n_filters_language" class="i18n">{{i18n "i18n_filters_language" "Filter results by Language"}}</span></a>-->
+                <!--<ul>-->
+                    <!--{{#each result.filters.lang}}-->
+                        <!--<li><a class='lang-link' href='javascript:void(0);' data-lang='{{@key}}'>{{@key}} ({{this}})</a></li>-->
+                    <!--{{/each}}-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<ul>-->
+            <!--<li><a><span data-i18n-id="i18n_filters_semtag" class="i18n">{{i18n "i18n_filters_semtag" "Filter results by Semantic Tag"}}</span></a>-->
+                <!--<ul>-->
+                    <!--{{#each result.filters.semTag}}-->
+                        <!--<li><a class='semtag-link' href='javascript:void(0);' data-semtag='{{@key}}'>{{@key}} ({{this}})</a></li>-->
+                    <!--{{/each}}-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<ul>-->
+            <!--<li><a><span data-i18n-id="i18n_filters_module" class="i18n">{{i18n "i18n_filters_module" "Filter results by Module"}}</span></a>-->
+                <!--<ul>-->
+                    <!--{{#each result.filters.module}}-->
+                        <!--<li><a class='module-link' href='javascript:void(0);' data-term="{{term}}" data-module='{{value}}'>{{#if term}}{{term}}{{else}}{{value}}{{/if}} ({{cant}})-->
+                        <!--{{#hasCountryIcon value}}-->
+                            <!--<div class="phoca-flagbox" style="width:26px;height:26px">-->
+                                <!--<span class="phoca-flag {{countryIcon value}}"></span>-->
+                            <!--</div>-->
+                        <!--{{/hasCountryIcon}}-->
+                        <!--</a></li>-->
+                    <!--{{/each}}-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->

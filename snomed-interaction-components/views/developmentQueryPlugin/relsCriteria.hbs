@@ -1,0 +1,18 @@
+<li data-modifier="{{modifier}}" data-criteria="{{criteria}}" data-type-id="{{typeId}}" data-type-term="{{typeTerm}}" data-target-term="{{targetTerm}}" data-target-id="{{targetId}}" data-form="{{form}}" class="list-group-item clearfix query-condition">
+    <span class="text-muted line-number" style="font-size: 200%;"></span>&nbsp;&nbsp;
+    <span style="position: relative; top: -5px;">
+        {{modifier}}, {{criteria}}&nbsp;
+        <span style="color: forestgreen;">{{typeId}}</span>&nbsp;
+        |
+        <span style="color: firebrick;">{{isEmptyString typeTerm "Any"}}</span>
+        |
+        &nbsp;->&nbsp;
+        <span style="color: forestgreen;">{{targetId}}</span>&nbsp;
+        |
+        <span style="color: firebrick;">{{isEmptyString targetTerm "Any"}}</span>
+        |&nbsp;&nbsp;{{form}}
+    </span>
+    <button class='pull-right btn btn-link removeLi' style="position: relative; top: 3px;">
+        <i class='glyphicon glyphicon-remove'></i>
+    </button>
+ </li>

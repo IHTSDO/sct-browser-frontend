@@ -1,0 +1,133 @@
+<div style='margin: 5px; height:95%;' class='panel panel-default'>
+    <div class='panel-heading'>
+        <!--<button id='{{divElementId}}-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>-->
+        <button id='{{divElementId}}-subscribersMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 15px;'><i class='glyphicon glyphicon-bookmark'></i></button>
+        <div class='row'>
+            <div class='col-md-8' id='{{divElementId}}-panelTitle'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_search'>Search</span></span></strong></div>
+            <div class='col-md-4 text-right'>
+                <!--<button id='{{divElementId}}-linkerButton' draggable="true" ondragstart="drag(event, '{{divElementId}}')" class='btn btn-link linker-button' data-panel='{{divElementId}}' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>-->
+                <button id='{{divElementId}}-historyButton' class='btn btn-link history-button' style='padding:2px'><i class='glyphicon glyphicon-time'></i></button>
+                <!--<button id='{{divElementId}}-configButton' class='btn btn-link' data-toggle='modal' style='padding:2px' data-target='#{{divElementId}}-configModal'><i class='glyphicon glyphicon-cog'></i></button>-->
+                <button id='{{divElementId}}-collapseButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-small'></i></button>
+                <button id='{{divElementId}}-expandButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-full'></i></button>
+                <button id='{{divElementId}}-closeButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-remove'></i></button>
+            </div>
+        </div>
+    </div>
+    <div class='panel-body' style='height:86%' id='{{divElementId}}-panelBody'>
+        <div style="display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; ">
+            <h4><span>Options</span></h4>
+            <div id='{{divElementId}}-searchConfigBar' style='margin-bottom: 10px;'>
+                <div style="margin-top: 15px">
+                    {{#if_eq server 'snowstorm'}}
+                        <div style="margin-top: 5px" class="btn-group">
+                            <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class='i18n' data-i18n-id='i18n_search_mode'>{{i18n "i18n_search_mode" "Search Mode" }}</span>: <span id="{{divElementId}}-searchMode"></span>&nbsp;<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#" id='{{divElementId}}-fullTextButton'><span class='i18n' data-i18n-id='i18n_full_text_search_mode'>{{i18n "i18n_full_text_search_mode" "Full text search mode" }}</span></a>
+                                </li>
+                                <li>
+                                    <a href="#" id='{{divElementId}}-partialMatchingButton'><span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>{{i18n "i18n_partial_match_search_mode" "Partial matching search mode"}}</span></a>
+                                </li>
+                                <li>
+                                    <a href="#" id='{{divElementId}}-regexButton'><span class='i18n' data-i18n-id='i18n_regex_search_mode'>{{i18n "i18n_regex_search_mode" "Regular Expressions search mode"}}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    {{/if_eq}}
+                    <div style="margin-top: 5px" class="btn-group">
+                        <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <span class='i18n' data-i18n-id='i18n_status'>{{i18n "i18n_status" "Status" }}</span>: <span id="{{divElementId}}-searchStatus"></span>&nbsp;<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#" id='{{divElementId}}-activeOnlyButton' data-i18n-id='i18n_active_only'>{{i18n "i18n_active_only" "Active components only"}}</a>
+                            </li>
+                            <li>
+                                <a href="#" id='{{divElementId}}-activeInactiveButton' data-i18n-id='i18n_active_and_inactive'>{{i18n "i18n_active_and_inactive" "Active and inactive components"}}</a>
+                            </li>
+                            <li>
+                                <a href="#"id='{{divElementId}}-inactiveOnlyButton' data-i18n-id='i18n_inactive_only'>{{i18n "i18n_inactive_only" "Inactive components only"}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="margin-top: 5px" class="btn-group dropdown">
+                        <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <span class='i18n' data-i18n-id='i18n_description_type'>{{i18n "i18n_description_type" "Description type" }}</span>: <span id="{{divElementId}}-searchTypeOpt"></span>&nbsp;<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#" id='{{divElementId}}-allTypeButton'> All </a>
+                            </li>
+                            <li>
+                                <a href="#" id='{{divElementId}}-noDefTypeButton'>Exclude definitions</a>
+                            </li>
+                            <li>
+                                <a href="#" id='{{divElementId}}-fsnTypeButton'>FSN</a>
+                            </li>
+                            <li>
+                                <a href="#"id='{{divElementId}}-preferredTermyButton'>Preferred Term</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <br/>
+                    <!--Display a temporary dropdown for Language refset for better view, will remove it after the list of refsets are in place-->
+                    <div style="margin-top: 5px" class="btn-group dropdown" id="{{divElementId}}-filterLanguageRefsetOptHidden">
+                        <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <span>Language Refsets</span>&nbsp;<span class="caret"></span>
+                        </button>                        
+                    </div>                
+                    <div style="margin-top: 5px; position: relative">
+                        <select id="{{divElementId}}-filterLanguageRefsetOpt" multiple="multiple" style="display: none"></select>
+                    </div>
+                     
+                    {{#if_eq server 'snowstorm'}}
+                        <div style="margin-top: 5px; " class="checkbox">
+                            <label>
+                                <input id="{{divElementId}}-groupConcept" type="checkbox"><span class='i18n' data-i18n-id='i18n_group_by_concept'>{{i18n "i18n_group_by_concept" "Group by concept"}}</span>
+                            </label>
+                        </div>
+                    {{/if_eq}}
+                </div>
+            </div>
+            <div id="{{divElementId}}-searchBar2"></div>
+        </div>
+        <div style="display: inline; width: 66%; float: right; padding: 5px;">
+            <form>
+                <div class="form-group" style="margin-bottom: 2px;">
+                    <label for="{{divElementId}}-searchBox">
+                        <span class="i18n" data-i18n-id="i18n_type_3_chars">Type at least 3 characters</span> <i class="glyphicon glyphicon-remove text-danger" id="{{divElementId}}-typeIcon"></i> <span id="{{divElementId}}-searchExample"></span></label>
+                    <br><div class="btn-group" style="width: 100%;"><input data-droppable="true" ondrop="dropS(event);" ondragover="removeHighlight();" ondragstart="allowDrop(event);" class="form-control" id="{{divElementId}}-searchBox" placeholder="Search..." autocomplete="off">
+                    <span id="{{divElementId}}-clearButton" class="searchclear glyphicon glyphicon-remove-circle"></span></div>
+                </div>
+            </form>
+            <div class='panel panel-default' style='height:70%;overflow:auto;margin-bottom: 15px;min-height: 300px;' id='{{divElementId}}-resultsScrollPane'>
+                <div id="{{divElementId}}-searchBar"></div>
+                <div id="{{divElementId}}-searchFilters"></div>
+                <table class='table table-bordered'>
+                    <tbody id='{{divElementId}}-resultsTable'>
+                    </tbody>
+                </table>
+            </div>
+            <div class='modal fade' id='{{divElementId}}-configModal'>
+                <div class='modal-dialog'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            <h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span> ({{divElementId}})</h4>
+                        </div>
+                        <div class='modal-body' id='{{divElementId}}-modal-body'>
+                            <p></p>
+                        </div>
+                        <div class='modal-footer'>
+                            <button type='button' class='btn btn-danger' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_cancel'>Cancel</span></button>
+                            <button id='{{divElementId}}-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

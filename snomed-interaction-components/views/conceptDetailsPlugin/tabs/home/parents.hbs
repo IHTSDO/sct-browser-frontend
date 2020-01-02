@@ -1,0 +1,117 @@
+{{#if_eq options.selectedView "stated"}}
+    {{#if_eq statedParents.length 0}}
+        {{#if_eq statedParentsFromAxioms.length 0}}
+            <span class='text-muted'>No parents</span>
+        {{/if_eq}}
+    {{else}}
+        <ul style='list-style-type: none; padding-left: 2px;'>
+            {{#each statedParents}}
+                <li class="treeLabel" data-concept-id='{{target.conceptId}}'>
+                    <!--<span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='text-warning' data-module="{{target.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>-->
+                        <!--{{#if_gr type.defaultTerm 0}}-->
+                    <!--{{substr type.defaultTerm 0}}-->
+                        <!--{{else}}-->
+                    <!--{{type.defaultTerm}}-->
+                        <!--{{/if_gr}}-->
+                    <!--</span>&nbsp;&rArr;&nbsp;-->
+                    <button class='btn btn-link btn-xs treeButton' style='padding:2px'><i class='glyphicon glyphicon-{{#if_eq target.conceptId "138875005"}}minus{{else}}{{#if_eq target.conceptId "9999999999"}}minus{{else}}chevron-right{{/if_eq}}{{/if_eq}} treeButton' data-first="true" data-ind="{{@index}}"></i></button>
+                    {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                        <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    {{else}}
+                        <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{#hasCountryIcon moduleId}}
+                        <div class="phoca-flagbox" style="width:26px;height:26px">
+                            <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                        </div>
+                    {{/hasCountryIcon}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
+                        {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                        <span id='{{@index}}{{../../../divElementId}}-treeicon-{{target.conceptId}}' class='sct-primitive-concept-compact' data-module="{{moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                        {{else}}
+                        <span id='{{@index}}{{../../../divElementId}}-treeicon-{{target.conceptId}}' class='sct-defined-concept-compact' data-module="{{moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                        {{/if_eq}}
+                        {{target.defaultTerm}}
+                    </span>
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if_eq}}
+    {{#if_eq statedParentsFromAxioms.length 0}}
+    {{else}}
+        <ul style='list-style-type: none; padding-left: 2px;'>
+            {{#each statedParentsFromAxioms}}
+                <li class="treeLabel" data-concept-id='{{target.conceptId}}'>
+                    <!--<span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='text-warning' data-module="{{target.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>-->
+                        <!--{{#if_gr type.defaultTerm 0}}-->
+                    <!--{{substr type.defaultTerm 0}}-->
+                        <!--{{else}}-->
+                    <!--{{type.defaultTerm}}-->
+                        <!--{{/if_gr}}-->
+                    <!--</span>&nbsp;&rArr;&nbsp;-->
+                    <button class='btn btn-link btn-xs treeButton' style='padding:2px'><i class='glyphicon glyphicon-{{#if_eq target.conceptId "138875005"}}minus{{else}}{{#if_eq target.conceptId "9999999999"}}minus{{else}}chevron-right{{/if_eq}}{{/if_eq}} treeButton' data-first="true" data-ind="{{@index}}"></i></button>
+                    {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                        <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    {{else}}
+                        <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{#hasCountryIcon moduleId}}
+                        <div class="phoca-flagbox" style="width:26px;height:26px">
+                            <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                        </div>
+                    {{/hasCountryIcon}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
+                        {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                        <span id='{{@index}}{{../../../divElementId}}-treeicon-{{target.conceptId}}' class='sct-primitive-concept-compact' data-module="{{moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                        {{else}}
+                        <span id='{{@index}}{{../../../divElementId}}-treeicon-{{target.conceptId}}' class='sct-defined-concept-compact' data-module="{{moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                        {{/if_eq}}
+                        {{target.defaultTerm}}
+                    </span>
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if_eq}}
+{{else}}
+    {{#if_eq inferredParents.length 0}}
+        <span class='text-muted'>No parents</span>
+    {{else}}
+        <ul style='list-style-type: none; padding-left: 2px; padding-top: 0px;'>
+            {{#each inferredParents}}
+                <li class="treeLabel" data-concept-id='{{target.conceptId}}'>
+                    <!--<span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='text-warning' data-module="{{target.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>-->
+                    <!--{{type.defaultTerm}}-->
+                    <!--</span>&nbsp;&rArr;&nbsp;-->
+                    <button class='btn btn-link btn-xs treeButton' style='padding:2px'><i class='glyphicon glyphicon-{{#if_eq target.conceptId "138875005"}}minus{{else}}{{#if_eq target.conceptId "9999999999"}}minus{{else}}chevron-right{{/if_eq}}{{/if_eq}} treeButton' data-first="true" data-ind="{{@index}}"></i></button>
+                    {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                        <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    {{else}}
+                        <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{#hasCountryIcon moduleId}}
+                        <div class="phoca-flagbox" style="width:26px;height:26px">
+                            <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                        </div>
+                    {{/hasCountryIcon}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
+                        {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                        <span id='{{@index}}{{../../../divElementId}}-treeicon-{{target.conceptId}}' class='sct-primitive-concept-compact' data-module="{{moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                        {{else}}
+                        <span id='{{@index}}{{../../../divElementId}}-treeicon-{{target.conceptId}}' class='sct-defined-concept-compact' data-module="{{moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                        {{/if_eq}}
+                        {{target.defaultTerm}}
+                    </span>
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if_eq}}
+{{/if_eq}}
+
+
+
+
+
+

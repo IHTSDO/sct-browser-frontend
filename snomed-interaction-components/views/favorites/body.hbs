@@ -1,0 +1,69 @@
+<div style="margin-top: 10px" class="panel panel-default">
+    <div class="panel-body">
+        <table id="tableFavs" style="display: none;">
+            <thead>
+                <tr>
+                    <td>Term</td>
+                    <td>Concept ID</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each concepts}}
+                    <tr>
+                        <td>{{defaultTerm}}</td>
+                        <td>{{conceptId}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <table id="" class="table table-hover table-bordered">
+            <tbody>
+            {{#if_eq concepts.length 0}}
+                <tr>
+                    <td>
+                        <span class="text-muted"> No favorites</span>
+                    </td>
+                </tr>
+            {{else}}
+                {{#each concepts}}
+                    <tr>
+                        <td>
+                            {{#if_eq definitionStatus "FULLY_DEFINED"}}
+                                <a class="fav-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                    <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&equiv;</span>
+                                    {{#hasCountryIcon module}}
+                                        <div class="phoca-flagbox" style="width:22px;height:22px">
+                                            <span class="phoca-flag {{countryIcon module}}"></span>
+                                        </div>
+                                    {{/hasCountryIcon}}
+                                    <span draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>
+                                        {{defaultTerm}}
+                                    </span>
+                                    
+                                </a>
+                            {{else}}
+                                <a class="fav-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                    <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&nbsp;&nbsp;</span>
+                                    {{#hasCountryIcon module}}
+                                        <div class="phoca-flagbox" style="width:22px;height:22px">
+                                            <span class="phoca-flag {{countryIcon module}}"></span>
+                                        </div>
+                                    {{/hasCountryIcon}}
+                                    <span draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>
+                                        {{defaultTerm}}
+                                    </span>
+                                </a>
+                            {{/if_eq}}
+                        </td>
+                        <td>{{conceptId}}
+                            <a href="javascript:void(0);" style="text-decoration: inherit;">
+                                <span data-concept-id='{{conceptId}}' class="pull-right glyphicon glyphicon-remove-circle"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {{/each}}
+            {{/if_eq}}
+            </tbody>
+        </table>
+    </div>
+</div>

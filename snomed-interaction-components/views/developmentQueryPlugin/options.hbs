@@ -1,0 +1,28 @@
+<form role="form" id="{{divElementId}}-options-form">
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                {{#if options.displayPreferredTerm}}
+                    <input type="checkbox" id="{{divElementId}}-displayPreferredTermOption" checked> <span class="i18n" data-i18n-id="i18n_display_pt_ECL_results_title">{{i18n "i18n_display_pt_ECL_results_title" "Display preferred terms in ECL query results"}}</span>
+                {{else}}
+                    <input type="checkbox" id="{{divElementId}}-displayPreferredTermOption"> <span class="i18n" data-i18n-id="i18n_display_pt_ECL_results_title">{{i18n "i18n_display_pt_ECL_results_title" "Display preferred terms in ECL query results"}}</span>
+                {{/if}}
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="selectedRelsView"><span class="i18n" data-i18n-id="i18n_ECL_results_filter_title">{{i18n "i18n_ECL_results_filter_title" "ECL query results filtered by relationship view"}}</span></label>
+        <select class="form-control" id="{{divElementId}}-relsTypeFilterOption">
+            {{#if_eq options.eclQueryFilter "stated"}}
+                <option value="stated" selected><span class='i18n' data-i18n-id='i18n_stated'>{{i18n "i18n_stated" "Stated"}}</span></option>
+            {{else}}
+                <option value="stated"><span class='i18n' data-i18n-id='i18n_stated'>{{i18n "i18n_stated" "Stated"}}</span></option>
+            {{/if_eq}}
+            {{#if_eq options.eclQueryFilter "inferred"}}
+                <option value="inferred" selected><span class='i18n' data-i18n-id='i18n_inferred'>{{i18n "i18n_inferred" "Inferred"}}</span></option>
+            {{else}}
+                <option value="inferred"><span class='i18n' data-i18n-id='i18n_inferred'>{{i18n "i18n_inferred" "Inferred"}}</span></option>
+            {{/if_eq}}           
+        </select>
+    </div>   
+</form>
