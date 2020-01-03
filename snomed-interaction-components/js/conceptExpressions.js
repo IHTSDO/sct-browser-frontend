@@ -18,10 +18,10 @@ var referenceToExpression = function(conceptReference) {
 var conceptToPostCoordinatedExpression = function(concept, relsProperty, div, options) {
     var expression = "";
     var tab = "&nbsp;&nbsp;&nbsp;&nbsp;";
-    if (concept.definitionStatus == "Fully defined" || concept.definitionStatus == "Sufficiently defined") {
-        expression += "<span class='exp-operators'>===</span> ";
+    if (concept.definitionStatus == "PRIMITIVE") {
+        expression += "<span class='exp-operators'>&lt;&lt;&lt;</span> ";        
     } else {
-        expression += "<span class='exp-operators'>&lt;&lt;&lt;</span> ";
+        expression += "<span class='exp-operators'>===</span> "; 
     }
     if (concept[relsProperty] && concept[relsProperty].length > 0) {
         //expression += ' <span class="exp-brackets">{</span>';
@@ -243,7 +243,7 @@ var renderExpression = function(concept, inferredConcept, div, options) {
                 alertEvent("Error", "error");
             });
         });
-    } else {
+    } else {        
         var statedHtml = conceptToPostCoordinatedExpression(concept, "statedRelationships");
         var tmp = document.createElement("DIV");
         tmp.innerHTML = statedHtml;
