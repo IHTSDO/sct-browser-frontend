@@ -694,7 +694,11 @@ function searchPanel(divElement, options) {
 
                         }).done(function(result) {
                             if(result.active === false && panel.options.statusSearchFilter == "activeOnly"){
-                                resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
+                                var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
+                                if (!i18n_no_results_text) {
+                                    i18n_no_results_text = "No results";
+                                }
+                                resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                                 $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                                 $('#' + panel.divElement.id + '-searchBar2').html("");
                             }
@@ -782,7 +786,11 @@ function searchPanel(divElement, options) {
                                 });
                             }
                         }).fail(function() {
-                            resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
+                            var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
+                            if (!i18n_no_results_text) {
+                                i18n_no_results_text = "No results";
+                            }
+                            resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                             $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                             $('#' + panel.divElement.id + '-searchBar2').html("");
                         });
@@ -849,7 +857,11 @@ function searchPanel(divElement, options) {
                           });
                     } else {
                         //                        console.log(t.substr(-2, 1));
-                        resultsHtml = resultsHtml + "<tr><td class='text-muted'>No results</td></tr>";
+                        var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
+                        if (!i18n_no_results_text) {
+                            i18n_no_results_text = "No results";
+                        }
+                        resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                         $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                         $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
                         $('#' + panel.divElement.id + '-searchBar2').html("");
