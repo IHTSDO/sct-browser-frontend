@@ -28,7 +28,7 @@ function taxonomyPanel(divElement, conceptId, options) {
     });
     if (componentLoaded == false) {
         componentsRegistry.push(panel);
-    }
+    }    
     panel.default = {};
     panel.default.conceptId = conceptId;
     panel.subscribers = [];
@@ -212,9 +212,15 @@ function taxonomyPanel(divElement, conceptId, options) {
         //            });
         //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
         //        });
-        
+        if (typeof(Storage) !== "undefined") {
+            panel.options.descendantsCount = localStorage.getItem("descendantsCountFlag") !== 'undefined' ? (localStorage.getItem("descendantsCountFlag") == 'true') : false;
+        }
+
         $("#" + panel.divElement.id + "-descendantsCountTrue").click(function(event) {
             panel.options.descendantsCount = true;
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("descendantsCountFlag", true);
+            }
             $("#" + panel.divElement.id + '-txViewLabel2').html("Descendants Count: On");
             if (panel.default && panel.default.conceptId) {
                 panel.setToConcept(panel.default.conceptId);
@@ -227,6 +233,9 @@ function taxonomyPanel(divElement, conceptId, options) {
 
         $("#" + panel.divElement.id + "-descendantsCountFalse").click(function(event) {
             panel.options.descendantsCount = false;
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("descendantsCountFlag", false);
+            }
             $("#" + panel.divElement.id + '-txViewLabel2').html("Descendants Count: Off");
             if (panel.default && panel.default.conceptId) {
                 panel.setToConcept(panel.default.conceptId);

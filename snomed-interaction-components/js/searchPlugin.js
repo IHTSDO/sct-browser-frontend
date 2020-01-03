@@ -237,6 +237,9 @@ function searchPanel(divElement, options) {
 
         $("#" + panel.divElement.id + "-fullTextButton").click(function(event) {
             panel.options.searchMode = 'fullText';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchMode", panel.options.searchMode);
+            }
             panel.updateSearchLabel();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').show();
@@ -249,6 +252,9 @@ function searchPanel(divElement, options) {
         });
         $("#" + panel.divElement.id + "-partialMatchingButton").click(function(event) {
             panel.options.searchMode = 'partialMatching';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchMode", panel.options.searchMode);
+            }
             panel.updateSearchLabel();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
@@ -261,6 +267,9 @@ function searchPanel(divElement, options) {
         });
         $("#" + panel.divElement.id + "-regexButton").click(function(event) {
             panel.options.searchMode = 'regex';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchMode", panel.options.searchMode);
+            }
             panel.updateSearchLabel();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
@@ -303,47 +312,105 @@ function searchPanel(divElement, options) {
             if (searchTerm.length > 0) {
                 panel.search(searchTerm, 0, 100, true);
             }
-        });
-
-        panel.updateStatusFilterLabel();
-        panel.updateTypeFilterLabel();
+        });        
 
         $("#" + panel.divElement.id + "-activeOnlyButton").click(function(event) {
             panel.options.statusSearchFilter = 'activeOnly';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchStatus", panel.options.statusSearchFilter);
+            }
             panel.updateStatusFilterLabel();
         });
 
         $("#" + panel.divElement.id + "-activeInactiveButton").click(function(event) {
             panel.options.statusSearchFilter = 'activeAndInactive';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchStatus", panel.options.statusSearchFilter);
+            }
             panel.updateStatusFilterLabel();
         });
 
         $("#" + panel.divElement.id + "-inactiveOnlyButton").click(function(event) {
             panel.options.statusSearchFilter = 'inactiveOnly';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchStatus", panel.options.statusSearchFilter);
+            }
             panel.updateStatusFilterLabel();
         });
         
         $("#" + panel.divElement.id + "-allTypeButton").click(function(event) {
             panel.options.typeSearchFilter = '';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchType", panel.options.typeSearchFilter);
+            }
             panel.updateTypeFilterLabel();
         });
 
         $("#" + panel.divElement.id + "-noDefTypeButton").click(function(event) {
             panel.options.typeSearchFilter = 'noDef';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchType", panel.options.typeSearchFilter);
+            }
             panel.updateTypeFilterLabel();
         });
 
         $("#" + panel.divElement.id + "-fsnTypeButton").click(function(event) {
             panel.options.typeSearchFilter = 'fsn';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchType", panel.options.typeSearchFilter);
+            }
             panel.updateTypeFilterLabel();
         });
 
         $("#" + panel.divElement.id + "-preferredTermyButton").click(function(event) {
             panel.options.typeSearchFilter = 'pt';
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchType", panel.options.typeSearchFilter);
+            }
             panel.updateTypeFilterLabel();
         });
+       
+        if (typeof(Storage) !== "undefined") {
+            if (localStorage.getItem("searchType") !== 'undefined') {
+                panel.options.typeSearchFilter = localStorage.getItem("searchType");
+                panel.updateTypeFilterLabel();
+            }
+            else {
+                panel.updateTypeFilterLabel();
+            }
 
-        $("#" + panel.divElement.id + "-partialMatchingButton").click();
+            if (localStorage.getItem("searchStatus") !== 'undefined') {
+                panel.options.statusSearchFilter = localStorage.getItem("searchStatus");
+                panel.updateStatusFilterLabel();
+            }
+            else {
+                panel.updateStatusFilterLabel();
+            }
+
+            if (localStorage.getItem("searchMode") !== 'undefined') {
+                panel.options.searchMode = localStorage.getItem("searchMode");
+                switch(panel.options.searchMode) {
+                    case 'fullText':
+                        $("#" + panel.divElement.id + "-fullTextButton").click();
+                        break;
+                    case 'regex':
+                        $("#" + panel.divElement.id + "-regexButton").click();
+                        break;
+                    default:
+                        $("#" + panel.divElement.id + "-partialMatchingButton").click();
+                  }
+            }
+            else {
+                $("#" + panel.divElement.id + "-partialMatchingButton").click(); 
+            }
+            
+        }
+        else {
+            panel.updateStatusFilterLabel();
+            panel.updateTypeFilterLabel();
+            $("#" + panel.divElement.id + "-partialMatchingButton").click();
+        }        
+        
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
 
         this.getLanguageRefsets();        
