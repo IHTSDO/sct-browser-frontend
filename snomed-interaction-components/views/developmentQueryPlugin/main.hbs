@@ -1,7 +1,7 @@
 <div style='height:100%;margin: 5px; overflow:auto;' class='panel panel-default' id='{{divElementId}}-mainPanel'>
   <div class='panel-heading' id='{{divElementId}}-panelHeading'>
     <div class='row'>
-      <div class='col-md-6' id='{{divElementId}}-panelTitle'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<strong class="i18n" data-i18n-id="i18n_terminology_content_selection">{{i18n "i18n_terminology_content_selection" "Terminology content selections"}}</strong></div>
+      <div class='col-md-6' id='{{divElementId}}-panelTitle'></div>
       <div class='col-md-6 text-right'>
         <!--<a class="btn btn-link" href="help/topics/creating-queries.html" target="_blank" title="Help" role="button"><i class='glyphicon glyphicon-question-sign'></i></a>-->
         <button id='{{divElementId}}-configButton' class='btn btn-link' data-toggle='modal' style='padding:2px' data-target='#{{divElementId}}-configModal'><i class='glyphicon glyphicon-cog'></i></button>
@@ -18,7 +18,7 @@
     </div>
     <div>
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#{{divElementId}}-ExpTab" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_enter_an_existing_expression">{{i18n "i18n_enter_an_existing_expression" "Enter an existing expression"}}</span></a></li>
+        <li class="active"><a href="#{{divElementId}}-ExpTab" data-toggle="tab"><span class="i18n" data-i18n-id="i18n__enter_an_expression">{{i18n "i18n__enter_an_expression" "Enter an expression"}}</span></a></li>
         <!--                <li><a href="#{{divElementId}}-BuilderTab" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_builder">Build a simple expression</span></a></li>
 -->
       </ul>
@@ -182,7 +182,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title i18n" data-i18n-id="i18n_terminology_content_selections_help">{{i18n "i18n_terminology_content_selections_help" "Terminology content selections help"}}</h4>
+          <h4 class="modal-title i18n" data-i18n-id="i18n_Help">{{i18n "i18n_Help" "Help"}}</h4>
         </div>
         <div class="modal-body" style="max-height: 450px; overflow: auto;">
           <h2 class="i18n" data-i18n-id="i18n_snomed_ecl_title">{{i18n "i18n_snomed_ecl_title" "SNOMED CT Expression Constraint Language"}}</h2>
@@ -214,10 +214,10 @@
                   <p class="c3"><span class="c2">&lt; </span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Descendant of</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name1">Descendant of</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">The set of all subtypes of the given concept</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary1">The set of all subtypes of the given concept</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&lt; 404684003 |Clinical finding|</span></p>
@@ -228,10 +228,10 @@
                   <p class="c3"><span class="c2">&lt;&lt; </span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Descendant or self of</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name2">Descendant or self of</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">The set of all subtypes of the given concept plus the concept itself</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary2">The set of all subtypes of the given concept plus the concept itself</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c23">&lt;&lt; </span><span class="c20">73211009 |Diabetes mellitus|</span></p>
@@ -242,10 +242,10 @@
                   <p class="c3"><span class="c2">&gt; </span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Ancestor of</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name3">Ancestor of</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">The set of all supertypes of the given concept</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary3">The set of all supertypes of the given concept</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&gt; 40541001 |Acute pulmonary edema|</span></p>
@@ -256,10 +256,10 @@
                   <p class="c3"><span class="c2">&gt;&gt; </span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Ancestor or self of</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name4">Ancestor or self of</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">The set of all supertypes of the given concept plus the concept itself</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary4">The set of all supertypes of the given concept plus the concept itself</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&gt;&gt; 40541001 |Acute pulmonary edema|</span></p>
@@ -270,10 +270,10 @@
                   <p class="c3"><span class="c2">&lt;!</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Child of</span></p>  
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name5">Child of</span></p>  
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">The set of all children of the given concept</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary5">The set of all children of the given concept</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">! 195967001 |Asthma|</span></p>
@@ -284,10 +284,10 @@
                   <p class="c3"><span class="c2">^</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Member of</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name6">Member of</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">The set of referenced components in the given reference set</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary6">The set of referenced components in the given reference set</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">^ 733990004 |Nursing activities reference set|</span></p>
@@ -298,10 +298,10 @@
                   <p class="c3"><span class="c2">*</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Any</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name7">Any</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Any concept in the given SNOMED CT edition</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary7">Any concept in the given SNOMED CT edition</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c5">*</span></p>
@@ -312,10 +312,10 @@
                   <p class="c3"><span class="c2">:</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Refinement</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name8">Refinement</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Only those concepts whose defining relationships match the given attribute value pairs</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary8">Only those concepts whose defining relationships match the given attribute value pairs</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&lt; 404684003 |clinical finding|: 116676008 |associated morphology| = *</span></p>
@@ -326,10 +326,10 @@
                   <p class="c3"><span class="c2">AND</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Conjunction</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name9">Conjunction</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Only those concepts in both sets</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary9">Only those concepts in both sets</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&lt; 19829001 |disorder of lung| AND &lt; 301867009 |edema of trunk|</span></p>
@@ -340,10 +340,10 @@
                   <p class="c3"><span class="c2">OR</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Disjunction</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name10">Disjunction</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Any concept that belongs to either set</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary10">Any concept that belongs to either set</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&lt; 19829001 |disorder of lung| OR &lt; 301867009 |edema of trunk|</span></p>
@@ -354,10 +354,10 @@
                   <p class="c3"><span class="c2">MINUS</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Exclusion</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name11">Exclusion</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Concepts in the first set that do not belong to the second set</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary11">Concepts in the first set that do not belong to the second set</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&lt; 19829001 |disorder of lung| MINUS &lt; 301867009 |edema of trunk|</span></p>
@@ -368,10 +368,10 @@
                   <p class="c3"><span class="c2">[x..y]</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Cardinality</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name12">Cardinality</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Only those concepts with at least x and at most y relationships that match the following attribute value pair</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary12">Only those concepts with at least x and at most y relationships that match the following attribute value pair</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&lt; 373873005 |Pharmaceutical / biologic product|: [1..3] 127489000 |Has active ingredient| = &lt; 105590001 |Substance|</span></p>
@@ -382,10 +382,10 @@
                   <p class="c3"><span class="c2">R</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Reverse attribute</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name13">Reverse attribute</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">The set of attribute values (target concepts) for the given attribute and source concept</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary13">The set of attribute values (target concepts) for the given attribute and source concept</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&lt; 91723000 |Anatomical structure|: R 363698007 |Finding site| = &lt; 125605004 |Fracture of bone|</span></p>
@@ -397,10 +397,10 @@
                   <p class="c3"><span class="c2">.</span></p>
                 </td>
                 <td class="c11" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">Dotted attribute</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name14">Dotted attribute</span></p>
                 </td>
                 <td class="c13" colspan="1" rowspan="1">
-                  <p class="c3"><span class="c5">The set of attribute values (target concepts) for the given attribute and source concept</span></p>
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary13">The set of attribute values (target concepts) for the given attribute and source concept</span></p>
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">&lt; 125605004 |Fracture of bone|. 363698007 |Finding site|</span></p>
