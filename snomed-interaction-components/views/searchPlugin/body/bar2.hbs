@@ -23,7 +23,7 @@
             <span id="{{divElementId}}-refsetResumed" style="font-size: 12px; margin-top: 5px;" class='label label-danger' data-name="{{#if options.refsetFilterName}}{{options.refsetFilterName}}{{else}}{{options.refsetFilter}}{{/if}}">{{#if options.refsetFilterName}}{{first20chars options.refsetFilterName}}{{else}}{{first20chars options.refsetFilter}}{{/if}} &nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-refset'>&times;</a></span>
         </h3>
     {{/if_eq}}
-    {{#if_eq result.details.total 0}}
+    {{#if_eq result.totalElements 0}}
     {{else}}
         {{#if_eq options.langFilter "none"}}
             <div style="margin-top: 10px" class="panel panel-default">
