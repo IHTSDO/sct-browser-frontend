@@ -2801,7 +2801,7 @@ function conceptDetails(divElement, conceptId, options) {
         });
         //panel.options.langRefset = $("#" + panel.divElement.id + "-langRefsetOption").val();
 
-        panel.options.displayChildren = $("#" + panel.divElement.id + "-displayChildren").is(':checked');
+        //panel.options.displayChildren = $("#" + panel.divElement.id + "-displayChildren").is(':checked');
         //$.each(panel.options.possibleSubscribers, function (i, field){
         //    field.subscribed = $("#" + panel.divElement.id + "-subscribeTo-" + field.id).is(':checked');
         //    field.subscriptor = $("#" + panel.divElement.id + "-subscriptor-" + field.id).is(':checked');
