@@ -213,7 +213,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
         //        });
         if (typeof(Storage) !== "undefined") {
-            panel.options.descendantsCount = localStorage.getItem("descendantsCountFlag") !== 'undefined' ? (localStorage.getItem("descendantsCountFlag") == 'true') : false;
+            panel.options.descendantsCount = localStorage.getItem("descendantsCountFlag") ? (localStorage.getItem("descendantsCountFlag") === 'true') : false;
         }
 
         $("#" + panel.divElement.id + "-descendantsCountTrue").click(function(event) {

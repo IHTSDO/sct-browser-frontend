@@ -371,7 +371,7 @@ function searchPanel(divElement, options) {
         });
        
         if (typeof(Storage) !== "undefined") {
-            if (localStorage.getItem("searchType") !== 'undefined') {
+            if (localStorage.getItem("searchType")) {
                 panel.options.typeSearchFilter = localStorage.getItem("searchType");
                 panel.updateTypeFilterLabel();
             }
@@ -379,7 +379,7 @@ function searchPanel(divElement, options) {
                 panel.updateTypeFilterLabel();
             }
 
-            if (localStorage.getItem("searchStatus") !== 'undefined') {
+            if (localStorage.getItem("searchStatus")) {
                 panel.options.statusSearchFilter = localStorage.getItem("searchStatus");
                 panel.updateStatusFilterLabel();
             }
@@ -387,7 +387,7 @@ function searchPanel(divElement, options) {
                 panel.updateStatusFilterLabel();
             }
 
-            if (localStorage.getItem("searchMode") !== 'undefined') {
+            if (localStorage.getItem("searchMode")) {
                 panel.options.searchMode = localStorage.getItem("searchMode");
                 switch(panel.options.searchMode) {
                     case 'fullText':

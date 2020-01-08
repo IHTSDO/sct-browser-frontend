@@ -304,6 +304,30 @@ function conceptDetails(divElement, conceptId, options) {
         //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
         //        });
         
+        if (typeof(Storage) !== "undefined") {            
+            if (localStorage.getItem("conceptDetailOptions_displaySynonyms")) {
+                panel.options.displaySynonyms = localStorage.getItem("conceptDetailOptions_displaySynonyms") === 'true';
+            }
+            if (localStorage.getItem("conceptDetailOptions_showIds")) {
+                panel.options.showIds = localStorage.getItem("conceptDetailOptions_showIds") === 'true';
+            }
+            if (localStorage.getItem("conceptDetailOptions_displayInactiveDescriptions")) {
+                panel.options.displayInactiveDescriptions = localStorage.getItem("conceptDetailOptions_displayInactiveDescriptions") === 'true';
+            }
+            if (localStorage.getItem("conceptDetailOptions_hideNotAcceptable")) {
+                panel.options.hideNotAcceptable = localStorage.getItem("conceptDetailOptions_hideNotAcceptable") === 'true';
+            }
+            if (localStorage.getItem("conceptDetailOptions_diagrammingMarkupEnabled")) {
+                panel.options.diagrammingMarkupEnabled = localStorage.getItem("conceptDetailOptions_diagrammingMarkupEnabled") === 'true';
+            }
+            if (localStorage.getItem("conceptDetailOptions_displayChildren")) {
+                panel.options.displayChildren = localStorage.getItem("conceptDetailOptions_displayChildren") === 'true';
+            }
+            if (localStorage.getItem("conceptDetailOptions_selectedView")) {
+                panel.options.selectedView = localStorage.getItem("conceptDetailOptions_selectedView");
+            }
+        }
+
         panel.updateCanvas();
 
         channel.publish(panel.divElement.id, {
@@ -2758,6 +2782,16 @@ function conceptDetails(divElement, conceptId, options) {
         panel.options.displayInactiveDescriptions = $("#" + panel.divElement.id + "-displayInactiveDescriptionsOption").is(':checked');
         panel.options.diagrammingMarkupEnabled = $("#" + panel.divElement.id + "-diagrammingMarkupEnabledOption").is(':checked');
         panel.options.selectedView = $("#" + panel.divElement.id + "-relsViewOption").val();
+
+        if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("conceptDetailOptions_displaySynonyms", panel.options.displaySynonyms);
+            localStorage.setItem("conceptDetailOptions_showIds", panel.options.showIds);
+            localStorage.setItem("conceptDetailOptions_displayInactiveDescriptions", panel.options.displayInactiveDescriptions);
+            localStorage.setItem("conceptDetailOptions_hideNotAcceptable", panel.options.hideNotAcceptable);
+            localStorage.setItem("conceptDetailOptions_diagrammingMarkupEnabled", panel.options.diagrammingMarkupEnabled);
+            localStorage.setItem("conceptDetailOptions_displayChildren", panel.options.displayChildren);
+            localStorage.setItem("conceptDetailOptions_selectedView", panel.options.selectedView);
+        }
 
         panel.options.langRefset = [];
         $.each($("#" + panel.divElement.id).find(".langOption"), function(i, field) {
