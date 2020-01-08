@@ -961,7 +961,7 @@ function searchPanel(divElement, options) {
                     if (panel.options.languageRefsetSearchFilter && panel.options.languageRefsetSearchFilter.length !== 0){
                         searchUrl = searchUrl + (searchUrl.includes('&type') ? '' : '&type=900000000000013009');
                         $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
-                            searchUrl = searchUrl + "&preferredIn=" + languageRefsetId;
+                            searchUrl = searchUrl + "&preferredOrAcceptableIn=" + languageRefsetId;
                         });
                     }
                     $.ajax({
