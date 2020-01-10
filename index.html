@@ -167,6 +167,17 @@
 
         var manifests;
 
+        function getCopyrightYear() {
+            $.ajax({ 
+                type: 'GET', 
+                url:'/', 
+                success: function(data, textStatus, response){ 
+                    //alert(new Date(response.getResponseHeader('Date')).getFullYear());
+                    $('#copyright_year').text(new Date(response.getResponseHeader('Date')).getFullYear())
+                }
+            });
+        }        
+
         function determineServer() {
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
@@ -1550,7 +1561,7 @@
     </style>
 </head>
 
-<body onLoad="determineServer();" style="height: 100%; display: block;">
+<body onLoad="getCopyrightYear(); determineServer();" style="height: 100%; display: block;">
     <nav class="navbar navbar-default  navbar-static-top" role="navigation">
         <div>
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -1688,7 +1699,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong> <span id="csconsentlink">Cookie Settings</span></small>
             </p>
-            <p> <small><b>&copy; SNOMED International 2019</b> v2.1<br></small>
+            <p> <small><b>&copy; SNOMED International <span id="copyright_year"/></b> v<span>project_version</span><br></small>
             </p>
         </div>
 
