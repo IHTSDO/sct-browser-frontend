@@ -153,11 +153,16 @@ function searchPanel(divElement, options) {
             panel.options.langFilter = "none";
             panel.options.moduleFilter = "none";
             panel.options.refsetFilter = "none";
+            panel.options.semTagsFilter = [];
             $('#' + panel.divElement.id + '-searchBox').val('');
             $('#' + panel.divElement.id + '-searchFilters').html("");
             $('#' + panel.divElement.id + '-resultsTable').html("");
             $('#' + panel.divElement.id + '-searchBar').html("");
             $('#' + panel.divElement.id + '-searchBar2').html("");
+            $('#' + panel.divElement.id + '-searchBar3').html("");
+            $('#' + panel.divElement.id + '-searchBar4').html("");
+            $('#' + panel.divElement.id + '-searchBar5').html("");
+            $('#' + panel.divElement.id + '-searchBar6').html("");
             $('#' + panel.divElement.id + '-typeIcon').removeClass('glyphicon-ok');
             $('#' + panel.divElement.id + '-typeIcon').removeClass('text-success');
             $('#' + panel.divElement.id + '-typeIcon').addClass('glyphicon-remove');
@@ -611,7 +616,7 @@ function searchPanel(divElement, options) {
         }
     }
 
-    this.search = function(t, skipTo, returnLimit, forceSearch) {
+    this.search = function(t, skipTo, returnLimit, forceSearch, skipSemtagFilter) {
         if (typeof panel.options.searchMode == "undefined") {
             panel.options.searchMode = "partialMatching";
         }
@@ -673,6 +678,13 @@ function searchPanel(divElement, options) {
                 }
                 
                 $('#' + panel.divElement.id + '-searchBar2').html("");
+                $('#' + panel.divElement.id + '-searchBar3').html("");
+                if (!skipSemtagFilter) {
+                    panel.options.semTagsFilter = [];
+                    $('#' + panel.divElement.id + '-searchBar4').html("");                    
+                }
+                $('#' + panel.divElement.id + '-searchBar5').html("");
+                $('#' + panel.divElement.id + '-searchBar6').html("");
                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'>Searching..</span>");
                 //console.log("panel.options.searchMode " + panel.options.searchMode);
                 t = t.trim();
@@ -701,6 +713,10 @@ function searchPanel(divElement, options) {
                                 resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                                 $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                                 $('#' + panel.divElement.id + '-searchBar2').html("");
+                                $('#' + panel.divElement.id + '-searchBar3').html("");
+                                $('#' + panel.divElement.id + '-searchBar4').html("");
+                                $('#' + panel.divElement.id + '-searchBar5').html("");
+                                $('#' + panel.divElement.id + '-searchBar6').html("");
                             }
                             else{
                                 Handlebars.registerHelper('if_eq', function(a, b, opts) {
@@ -793,6 +809,11 @@ function searchPanel(divElement, options) {
                             resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                             $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                             $('#' + panel.divElement.id + '-searchBar2').html("");
+                            $('#' + panel.divElement.id + '-searchBar3').html("");
+                            $('#' + panel.divElement.id + '-searchBar4').html("");
+                            $('#' + panel.divElement.id + '-searchBar5').html("");
+                            $('#' + panel.divElement.id + '-searchBar6').html("");
+
                         });
                     } else if (t.substr(-2, 1) == "1") {
                         var branch = options.edition;
@@ -865,6 +886,10 @@ function searchPanel(divElement, options) {
                         $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                         $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
                         $('#' + panel.divElement.id + '-searchBar2').html("");
+                        $('#' + panel.divElement.id + '-searchBar3').html("");
+                        $('#' + panel.divElement.id + '-searchBar4').html("");
+                        $('#' + panel.divElement.id + '-searchBar5').html("");
+                        $('#' + panel.divElement.id + '-searchBar6').html("");
                     }
                 } else {
                     if (panel.options.searchMode == "partialMatching") {
@@ -874,8 +899,7 @@ function searchPanel(divElement, options) {
                     }
                     var startTime = Date.now();
                     var branch = options.edition;
-                    console.log(options.release);
-                        console.log(options.release.length);
+                    
                     if(options.release.length > 0 && options.release !== 'None'){
                         branch = branch + "/" + options.release;
                     };
@@ -908,6 +932,11 @@ function searchPanel(divElement, options) {
                     }
                     if (panel.options.semTagFilter != "none") {
                         searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
+                    }
+                    if (panel.options.semTagsFilter && panel.options.semTagsFilter.length !== 0){                        
+                        $.each(panel.options.semTagsFilter, function(i, semTag){
+                            searchUrl = searchUrl + "&semanticTags=" + semTag;
+                        });
                     }
                     if (panel.options.langFilter != "none") {
                         searchUrl = searchUrl + "&language=" + panel.options.langFilter;
@@ -1128,6 +1157,12 @@ function searchPanel(divElement, options) {
                         };
                         $('#' + panel.divElement.id + '-searchBar').html(JST["snomed-interaction-components/views/searchPlugin/body/bar.hbs"](context));
                         $('#' + panel.divElement.id + '-searchBar2').html(JST["snomed-interaction-components/views/searchPlugin/body/bar2.hbs"](context));
+                        $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
+                        if (!skipSemtagFilter) {
+                            $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
+                        }                        
+                        $('#' + panel.divElement.id + '-searchBar5').html(JST["snomed-interaction-components/views/searchPlugin/body/bar5.hbs"](context));
+                        $('#' + panel.divElement.id + '-searchBar6').html(JST["snomed-interaction-components/views/searchPlugin/body/bar6.hbs"](context));
 
                         $('#' + panel.divElement.id + '-moduleResumed').tooltip({
                             placement: 'left auto',
@@ -1145,20 +1180,33 @@ function searchPanel(divElement, options) {
                             delay: 500
                         });
 
-                        $("#" + panel.divElement.id + '-searchBar2').find('.semtag-link').click(function(event) {
+                        if (!skipSemtagFilter) {
+                            $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox').click(function(event) {                            
+                                var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');
+                                var semTagsFilter = [];
+                                for (var i = 0; i < checkboxes.length; i++) {
+                                    if (checkboxes[i].checked) {
+                                        semTagsFilter.push($(checkboxes[i]).attr('data-semtag'));
+                                    }
+                                }
+                                panel.options.semTagsFilter = semTagsFilter;
+                                panel.search(t, 0, returnLimit, true, true);
+                            });
+                        }
+                        $("#" + panel.divElement.id + '-searchBar4').find('.semtag-link').click(function(event) {
                             panel.options.semTagFilter = $(event.target).attr('data-semtag');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.module-link').click(function(event) {
+                        $("#" + panel.divElement.id + '-searchBar5').find('.module-link').click(function(event) {
                             panel.options.moduleFilter = $(event.target).attr('data-module');
                             panel.options.moduleFilterName = $(event.target).attr('data-term');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.lang-link').click(function(event) {
+                        $("#" + panel.divElement.id + '-searchBar3').find('.lang-link').click(function(event) {
                             panel.options.langFilter = $(event.target).attr('data-lang');
                             panel.search(t, 0, returnLimit, true);
                         });
-                        $("#" + panel.divElement.id + '-searchBar2').find('.refset-link').click(function(event) {
+                        $("#" + panel.divElement.id + '-searchBar6').find('.refset-link').click(function(event) {
                             panel.options.refsetFilter = $(event.target).attr('data-refset');
                             panel.options.refsetFilterName = $(event.target).attr('data-term');
                             panel.search(t, 0, returnLimit, true);

@@ -1,0 +1,26 @@
+{{#if_eq server 'snowstorm'}}
+    {{#if_eq result.totalElements 0}}
+    {{else}}        
+        {{#if_eq options.refsetFilter "none"}}
+            {{#if_eq result.filters.refsetId.length 0}}
+            {{else}}
+                <div style="margin-top: 10px" class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{i18n "i18n_filters_refset" "Filter results by Refset"}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            {{#each result.buckets.membership}}
+                                <li class="list-group-item">
+                                    <span class="badge">{{value}}</span>
+                                    <a class='refset-link' href='javascript:void(0);' data-term="{{term}}" data-refset='{{id}}'>{{#if term}}{{term}}{{else}}{{value}}{{/if}}</a>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            {{/if_eq}}
+        {{/if_eq}}
+    {{/if_eq}}
+{{else}}
+{{/if_eq}}

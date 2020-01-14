@@ -1,0 +1,29 @@
+{{#if_eq server 'snowstorm'}}    
+    {{#if_eq result.totalElements 0}}
+    {{else}}        
+        {{#if_eq options.moduleFilter "none"}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{i18n "i18n_filters_module" "Filter results by Module"}}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {{#each result.buckets.module}}
+                            <li class="list-group-item">
+                                <span class="badge">{{value}}</span>
+                                <a class='module-link' href='javascript:void(0);' data-term="{{term}}" data-module='{{id}}'>{{#if term}}{{term}}{{else}}{{value}}{{/if}}
+                                    {{#hasCountryIcon id}}
+                                        <div class="phoca-flagbox" style="width:26px;height:26px">
+                                            <span class="phoca-flag {{countryIcon id}}"></span>
+                                        </div>
+                                    {{/hasCountryIcon}}
+                                </a>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/if_eq}}        
+    {{/if_eq}}
+{{else}}
+{{/if_eq}}

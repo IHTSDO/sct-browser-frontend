@@ -1,0 +1,24 @@
+{{#if_eq server 'snowstorm'}}    
+    {{#if_eq result.totalElements 0}}
+    {{else}}        
+        {{#if_eq options.semTagFilter "none"}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{i18n "i18n_filters_semtag" "Filter results by Semantic Tag"}}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {{#each result.buckets.semanticTags}}
+                            <li class="list-group-item">
+                                <input type="checkbox" class="semtag-checkbox" style="margin: 0" data-semtag='{{@key}}'>
+                                <span class="badge">{{this}}</span>
+                                <a class='semtag-link' style="margin-left: 5px" href='javascript:void(0);' data-semtag='{{@key}}'>{{@key}}</a>                                
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        {{/if_eq}}        
+    {{/if_eq}}
+{{else}}
+{{/if_eq}}
