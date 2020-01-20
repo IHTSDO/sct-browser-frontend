@@ -379,61 +379,62 @@
         var addEditionLinks = function($releaseSwitcher, releases) {
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
+                if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser) {
+                    var $img = $('<img>').attr("src", release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" : "/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
 
-                var $img = $('<img>').attr("src", release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" : "/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
+                    var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
+                    $span1.text("Go browsing...");
+                    var $span2 = $('<span>').attr("class", "small");
+                    if(options.dailyBuildBrowser) {
+                        $span2.append(release.name + "<br>DAILY BUILD");
+                        $("#editionLabel").html(release.name + " DAILY BUILD");
+                    } else {                    
+                        $span2.append(release.name + "<br>" + release.latestVersion.version);                                       
+                    }
 
-                var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
-                $span1.text("Go browsing...");
-                var $span2 = $('<span>').attr("class", "small");
-                if(options.dailyBuildBrowser) {
-                    $span2.append(release.name + "<br>DAILY BUILD");
-                    $("#editionLabel").html(release.name + " DAILY BUILD");
-                } else {
-                    $span2.append(release.name + "<br>" + release.latestVersion.version);
-                }
+                    var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
+                    $a.append($img);
+                    $a.append("&nbsp;&nbsp;&nbsp;");
+                    $a.append($span1);
+                    $a.append("<br>");
+                    $a.append($span2);
 
-                var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
-                $a.append($img);
-                $a.append("&nbsp;&nbsp;&nbsp;");
-                $a.append($span1);
-                $a.append("<br>");
-                $a.append($span2);
+                    if (release.href) {
+                        $a.attr("href", release.href);
+                        $a.attr("target", "_blank");
+                    } else {
+                        $a.attr("href", "javascript:void(0);");
+                        $a.on("click", function() {
+                            var parsedLanguages = "";
+                            for (var language in release.languages) {
+                                parsedLanguages = parsedLanguages + language + ',';
+                            }
+                            parsedLanguages = parsedLanguages.slice(0, -1);
+                            if(options.dailyBuildBrowser) {
+                                options.edition = release.branchPath;
+                                $("#editionLabel").html(release.name + " DAILY BUILD");
+                            }
+                            else {                            
+                                options.edition = release.latestVersion.branchPath;
+                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);                                                    
+                            }
+                            options.release = '';
+                            options.languages = parsedLanguages;
+                            options.languageObject = release.languages;
 
-                if (release.href) {
-                    $a.attr("href", release.href);
-                    $a.attr("target", "_blank");
-                } else {
-                    $a.attr("href", "javascript:void(0);");
-                    $a.on("click", function() {
-                        var parsedLanguages = "";
-                        for (var language in release.languages) {
-                            parsedLanguages = parsedLanguages + language + ',';
-                        }
-                        parsedLanguages = parsedLanguages.slice(0, -1);
-                        if(options.dailyBuildBrowser) {
-                            options.edition = release.branchPath;
-                            $("#editionLabel").html(release.name + " DAILY BUILD");
-                        }
-                        else {
-                            options.edition = release.latestVersion.branchPath;
-                            $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                        }
-                        options.release = '';
-                        options.languages = parsedLanguages;
-                        options.languageObject = release.languages;
+                            options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
+                            options.defaultLanguage = parsedLanguages.substr(0, 2);
+                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
-                        options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
-                        let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
-                        options.defaultLanguage = parsedLanguages.substr(0, 2);
-                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+                            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                            switchToFullHeight(404684003, 138875005);
+                        });
+                    }
 
-                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                        switchToFullHeight(404684003, 138875005);
-                    });
-                }
-
-                $releaseSwitcher.append($a);
-                $releaseSwitcher.append(" ");
+                    $releaseSwitcher.append($a);
+                    $releaseSwitcher.append(" ");
+                }                
             }
         }
 
@@ -567,7 +568,7 @@
             }
             if (options.releases && options.releases.items && options.releases.items.length > 0) {
                 for (let i = 0; i < options.releases.items.length; i++) {
-                    if (options.releases.items[i].latestVersion.branchPath === options.edition) {
+                    if (typeof options.releases.items[i].latestVersion !== "undefined" && options.releases.items[i].latestVersion.branchPath === options.edition) {
                         options.languageObject = options.releases.items[i].languages;
                         options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
                     }
@@ -696,54 +697,56 @@
                 if (options.releases && options.releases.items) {
                     var $releaseSwitcher = $('#releaseSwitcher');
                     for (let i = 0; i < options.releases.items.length; ++i) {
-                        var $li = $('<li>')
-                        var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                        $a.attr("href", "javascript:void(0);");
-                        $a.on("click", function() {
-                            postal.unsubscribeFor();
-                            if (typeof componentsRegistry != "undefined") {
-                                $.each(componentsRegistry, function(i, field) {
-                                    field = null;
-                                });
-                                componentsRegistry = [];
-                            }
-                            var parsedLanguages = "";
-                            for (var language in options.releases.items[i].languages) {
-                                parsedLanguages = parsedLanguages + language + ',';
-                            }
-                            parsedLanguages = parsedLanguages.slice(0, -1);
-                            options.edition = options.releases.items[i].latestVersion.branchPath;
-                            options.release = '';
-                            options.languages = parsedLanguages;
-                            options.languageObject = options.releases.items[i].languages;
-                            $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                            options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
+                        if (typeof options.releases.items[i].latestVersion !== "undefined") {
+                            var $li = $('<li>')
+                            var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                            $a.attr("href", "javascript:void(0);");
+                            $a.on("click", function() {
+                                postal.unsubscribeFor();
+                                if (typeof componentsRegistry != "undefined") {
+                                    $.each(componentsRegistry, function(i, field) {
+                                        field = null;
+                                    });
+                                    componentsRegistry = [];
+                                }
+                                var parsedLanguages = "";
+                                for (var language in options.releases.items[i].languages) {
+                                    parsedLanguages = parsedLanguages + language + ',';
+                                }
+                                parsedLanguages = parsedLanguages.slice(0, -1);
+                                options.edition = options.releases.items[i].latestVersion.branchPath;
+                                options.release = '';
+                                options.languages = parsedLanguages;
+                                options.languageObject = options.releases.items[i].languages;
+                                $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                                options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
 
-                            let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
-                            options.defaultLanguage = parsedLanguages.substr(0, 2);
-                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
-                            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                            QueryString = queryString();
-                            
-                            if (QueryString.conceptId1) {
-                                xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
-                                    reloadCurrentPerspective();   
-                                }).done(function(result) {                                             
-                                }).fail(function() {
-                                    reloadCurrentPerspective(404684003);                                    
-                                });
-                            }
-                            else {
-                                reloadCurrentPerspective(); 
-                            }                                                                                    
-                        });
-                        $li.append($a);
-                        $releaseSwitcher.append($li);
+                                let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
+                                options.defaultLanguage = parsedLanguages.substr(0, 2);
+                                var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+                                switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                                QueryString = queryString();
+                                
+                                if (QueryString.conceptId1) {
+                                    xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
+                                        reloadCurrentPerspective();   
+                                    }).done(function(result) {                                             
+                                    }).fail(function() {
+                                        reloadCurrentPerspective(404684003);                                    
+                                    });
+                                }
+                                else {
+                                    reloadCurrentPerspective(); 
+                                }                                                                                    
+                            });
+                            $li.append($a);
+                            $releaseSwitcher.append($li);
 
-                        // set default selection for release
-                        if (options.edition && options.releases.items[i].latestVersion.branchPath === options.edition) {
-                            $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                        }
+                            // set default selection for release
+                            if (options.edition && options.releases.items[i].latestVersion.branchPath === options.edition) {
+                                $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                            }
+                        }                        
                     }
 
                 }
