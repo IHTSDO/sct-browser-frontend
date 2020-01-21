@@ -1432,31 +1432,7 @@ function conceptDetails(divElement, conceptId, options) {
                 else
                     return opts.inverse(this);
             });
-
-            var axioms = false;
-
-            if(firstMatch.classAxioms.length > 0 || firstMatch.gciAxioms.length > 0) {
-                axioms = true;
-            } else {
-                axioms = false;
-            }
-
-            var context = {
-                divElementId: panel.divElement.id,
-                server: panel.server,
-                statedParents: panel.statedParents,
-                inferredParents: panel.inferredParents,
-                options: panel.options,
-                firstMatch: firstMatch,
-                statedParentsFromAxioms: panel.statedParentsFromAxioms,
-                attributesFromAxioms : panel.attributesFromAxioms,
-                axioms: axioms
-            };
-
-            $('#home-parents-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/parents.hbs"](context));
-            if (!panel.options.diagrammingMarkupEnabled) {
-                $('#home-parents-' + panel.divElement.id).html(panel.stripDiagrammingMarkup($('#home-parents-' + panel.divElement.id).html()));
-            }
+                        
             $(".treeButton").disableTextSelect();
             $("[draggable='true']").tooltip({
                 placement: 'left auto',
@@ -1474,53 +1450,7 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 icon = iconToDrag(term);
             });
-            $("#home-parents-" + panel.divElement.id).unbind();
-            $("#home-parents-" + panel.divElement.id).click(function(event) {
-                if ($(event.target).hasClass("treeButton")) {
-                    var ev = event.target;
-                    //firefox issue!
-                    if (navigator.userAgent.indexOf("Firefox") > -1) {
-                        ev = $(ev).context.children;
-                    }
-                    var conceptId = $(ev).closest("li").attr('data-concept-id');
-                    event.preventDefault();
-                    if ($(ev).hasClass("glyphicon-chevron-up")) {
-                        $(ev).closest("li").find("ul").remove();
-                        $(ev).removeClass("glyphicon-chevron-up");
-                        $(ev).addClass("glyphicon-chevron-right");
-                    } else if ($(ev).hasClass("glyphicon-chevron-right")) {
-                        $(ev).removeClass("glyphicon-chevron-right");
-                        $(ev).addClass("glyphicon-refresh");
-                        $(ev).addClass("icon-spin");
-                        panel.getParent(conceptId, ev);
-                    } else if ($(ev).hasClass("glyphicon-minus")) {
-                        //                      $("#" + iconId).removeClass("glyphicon-minus");
-                        //                    $("#" + iconId).addClass("glyphicon-chevron-right");
-                    }
-                } else if ($(event.target).hasClass("treeLabel")) {
-                    var selectedId = $(event.target).attr('data-concept-id');
-                    if (typeof selectedId != "undefined") {
-                        channel.publish(panel.divElement.id, {
-                            term: $(event.target).attr('data-term'),
-                            module: $(event.target).attr("data-module"),
-                            conceptId: selectedId,
-                            source: panel.divElement.id
-                        });
-                    }
-                }
-            });
-            $("#home-parents-" + panel.divElement.id).dblclick(function(event) {
-                var conceptId = $(event.target).closest("li").attr('data-concept-id');
-                panel.conceptId = conceptId;
-                panel.updateCanvas();
-                channel.publish(panel.divElement.id, {
-                    term: $(event.target).attr('data-term'),
-                    module: $(event.target).attr("data-module"),
-                    conceptId: conceptId,
-                    source: panel.divElement.id
-                });
-            });
-
+            
             Handlebars.registerHelper('eqLastGroup', function(a, opts) {
                 //                console.log(a, panel.lastGroup);
                 if (panel.lastGroup == null) {
@@ -1952,10 +1882,7 @@ function conceptDetails(divElement, conceptId, options) {
         //        } else {
         //            $("#home-children-" + panel.divElement.id).show();
         //            $('#' + panel.childrenPId).show();
-        if (xhrChildren != null) {
-            xhrChildren.abort();
-            //console.log("aborting children call...");
-        };
+                
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
@@ -1967,6 +1894,87 @@ function conceptDetails(divElement, conceptId, options) {
               }
             });
         };
+
+        if (xhrParents != null) {
+            xhrParents.abort();
+            xhrParents = null;
+        };
+
+        xhrParents = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/parents?form=" + panel.options.selectedView, function(result) {            
+        }).done(function(result) {
+            result.forEach(function(c) {
+                if(c.pt && c.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && c.fsn.lang != options.defaultLanguage){
+                    c.defaultTerm = c.pt.term;
+                }
+                else{
+                    c.defaultTerm = c.fsn.term;
+                }
+            });
+            result.sort(function(a, b) {
+                if (a.defaultTerm.toLowerCase() < b.defaultTerm.toLowerCase())
+                    return -1;
+                if (a.defaultTerm.toLowerCase() > b.defaultTerm.toLowerCase())
+                    return 1;
+                return 0;
+            });
+
+            var context = {
+                divElementId: panel.divElement.id,                    
+                statedParents: panel.options.selectedView === 'stated' ? result : [],
+                inferredParents: panel.options.selectedView === 'inferred' ? result : [],
+                options: panel.options
+            };
+
+            $('#home-parents-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/parents.hbs"](context));
+            if (!panel.options.diagrammingMarkupEnabled) {                   
+                $('#home-parents-' + panel.divElement.id).html(panel.stripDiagrammingMarkup($('#home-parents-' + panel.divElement.id).html()));
+            }
+
+            $("#home-parents-" + panel.divElement.id).unbind();
+            $("#home-parents-" + panel.divElement.id).click(function(event) {
+                if ($(event.target).hasClass("treeButton")) {
+                    var ev = event.target;
+                    //firefox issue!
+                    if (navigator.userAgent.indexOf("Firefox") > -1) {
+                        ev = $(ev).context.children;
+                    }
+                    var conceptId = $(ev).closest("li").attr('data-concept-id');
+                    event.preventDefault();
+                    if ($(ev).hasClass("glyphicon-chevron-up")) {
+                        $(ev).closest("li").find("ul").remove();
+                        $(ev).removeClass("glyphicon-chevron-up");
+                        $(ev).addClass("glyphicon-chevron-right");
+                    } else if ($(ev).hasClass("glyphicon-chevron-right")) {
+                        $(ev).removeClass("glyphicon-chevron-right");
+                        $(ev).addClass("glyphicon-refresh");
+                        $(ev).addClass("icon-spin");
+                        panel.getParent(conceptId, ev);
+                    } else if ($(ev).hasClass("glyphicon-minus")) {                      
+                    }
+                } else if ($(event.target).hasClass("treeLabel")) {
+                    var selectedId = $(event.target).attr('data-concept-id');
+                    if (typeof selectedId != "undefined") {
+                        channel.publish(panel.divElement.id, {
+                            term: $(event.target).attr('data-term'),
+                            module: $(event.target).attr("data-module"),
+                            conceptId: selectedId,
+                            source: panel.divElement.id
+                        });
+                    }
+                }
+            });
+            $("#home-parents-" + panel.divElement.id).dblclick(function(event) {
+                var conceptId = $(event.target).closest("li").attr('data-concept-id');
+                panel.conceptId = conceptId;
+                panel.updateCanvas();
+                channel.publish(panel.divElement.id, {
+                    term: $(event.target).attr('data-term'),
+                    module: $(event.target).attr("data-module"),
+                    conceptId: conceptId,
+                    source: panel.divElement.id
+                });
+            });
+        });
 
         if (xhrChildren != null) {
             xhrChildren.abort();
@@ -2332,22 +2340,22 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 $.each(result, function(i, field) {
                     //                    console.log(field);
-                    auxHtml = auxHtml + "<li class='treeLabel' data-module='" + field.module + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'><button class='btn btn-link btn-xs treeButton' style='padding:2px'>";
+                    auxHtml = auxHtml + "<li class='treeLabel' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'><button class='btn btn-link btn-xs treeButton' style='padding:2px'>";
                     if (field.conceptId == "138875005" || field.conceptId == "9999999999") {
                         auxHtml = auxHtml + "<i class='glyphicon glyphicon-minus treeButton' data-ind='" + ind + "'></i></button>";
                     } else {
                         auxHtml = auxHtml + "<i class='glyphicon glyphicon-chevron-right treeButton' data-ind='" + ind + "'></i></button>";
                     }
                     if (field.definitionStatus == "PRIMITIVE") {
-                        auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.module + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>&nbsp;&nbsp;</span>&nbsp;&nbsp";
+                        auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>&nbsp;&nbsp;</span>&nbsp;&nbsp";
                     } else {
-                        auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.module + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>&equiv;</span>&nbsp;&nbsp";
+                        auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>&equiv;</span>&nbsp;&nbsp";
                     }
-                    if (countryIcons[field.module]) {
-                        auxHtml = auxHtml + "<div class='phoca-flagbox' style='width:26px;height:26px'><span class='phoca-flag " + countryIcons[field.module] + "'></span></div>&nbsp";
+                    if (countryIcons[field.moduleId]) {
+                        auxHtml = auxHtml + "<div class='phoca-flagbox' style='width:26px;height:26px'><span class='phoca-flag " + countryIcons[field.moduleId] + "'></span></div>&nbsp";
                     }
                     auxHtml = auxHtml + "<a id='" + ind + panel.divElement.id + "-treeicon-" + field.conceptId + "' href='javascript:void(0);' style='color: inherit;text-decoration: inherit;'>";
-                    auxHtml = auxHtml + "<span class='treeLabel selectable-row' data-module='" + field.module + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>" + field.defaultTerm + "</span></a></li>";
+                    auxHtml = auxHtml + "<span class='treeLabel selectable-row' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>" + field.defaultTerm + "</span></a></li>";
                 });
                 auxHtml = auxHtml + "</ul>";
             }
