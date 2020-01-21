@@ -324,7 +324,7 @@ function conceptDetails(divElement, conceptId, options) {
                 panel.options.displayChildren = localStorage.getItem("conceptDetailOptions_displayChildren") === 'true';
             }
             if (localStorage.getItem("conceptDetailOptions_selectedView")) {
-                panel.options.selectedView = localStorage.getItem("conceptDetailOptions_selectedView");
+                panel.options.selectedView = localStorage.getItem("conceptDetailOptions_selectedView") === 'stated' ? 'stated' : 'inferred';
             }
         }
 
