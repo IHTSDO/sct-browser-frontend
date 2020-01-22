@@ -775,7 +775,7 @@ function searchPanel(divElement, options) {
                                 
                                 $("#" + panel.divElement.id + "-groupConcept").unbind();
                                 $("#" + panel.divElement.id + "-groupConcept").click(function() {
-                                    panel.search(t, parseInt(skipTo), returnLimit, true);
+                                    panel.search(t, parseInt(skipTo), returnLimit, true, true);
                                 });
 
                                 var context = {
@@ -849,7 +849,7 @@ function searchPanel(divElement, options) {
                                 
                                 $("#" + panel.divElement.id + "-groupConcept").unbind();
                                 $("#" + panel.divElement.id + "-groupConcept").click(function() {
-                                    panel.search(t, parseInt(skipTo), returnLimit, true);
+                                    panel.search(t, parseInt(skipTo), returnLimit, true, true);
                                 });
 
                                 var tempResults = {};
@@ -1193,10 +1193,10 @@ function searchPanel(divElement, options) {
                                 panel.search(t, 0, returnLimit, true, true);
                             });
                         }
-                        $("#" + panel.divElement.id + '-searchBar4').find('.semtag-link').click(function(event) {
-                            panel.options.semTagFilter = $(event.target).attr('data-semtag');
-                            panel.search(t, 0, returnLimit, true);
-                        });
+                        //$("#" + panel.divElement.id + '-searchBar4').find('.semtag-link').click(function(event) {
+                        //   panel.options.semTagFilter = $(event.target).attr('data-semtag');
+                        //    panel.search(t, 0, returnLimit, true);
+                        //});
                         $("#" + panel.divElement.id + '-searchBar5').find('.module-link').click(function(event) {
                             panel.options.moduleFilter = $(event.target).attr('data-module');
                             panel.options.moduleFilterName = $(event.target).attr('data-term');
@@ -1231,10 +1231,10 @@ function searchPanel(divElement, options) {
                         });
 
                         //original filter
-                        $("#" + panel.divElement.id + '-searchBar').find('.semtag-link').click(function(event) {
-                            panel.options.semTagFilter = $(event.target).attr('data-semtag');
-                            panel.search(t, 0, returnLimit, true);
-                        });
+                        //$("#" + panel.divElement.id + '-searchBar').find('.semtag-link').click(function(event) {
+                        //    panel.options.semTagFilter = $(event.target).attr('data-semtag');
+                        //    panel.search(t, 0, returnLimit, true);
+                        //});
                         $("#" + panel.divElement.id + '-searchBar').find('.module-link').click(function(event) {
                             panel.options.moduleFilter = $(event.target).attr('data-module');
                             panel.options.moduleFilterName = $(event.target).attr('data-term');
@@ -1330,7 +1330,7 @@ function searchPanel(divElement, options) {
                         }
                         $("#" + panel.divElement.id + "-groupConcept").unbind();
                         $("#" + panel.divElement.id + "-groupConcept").click(function() {
-                            panel.search(t, parseInt(skipTo), returnLimit, true);
+                            panel.search(t, parseInt(skipTo), returnLimit, true, true);
                         });
                         $("#" + panel.divElement.id + "-remove-all-filters").unbind();
                         $("#" + panel.divElement.id + "-remove-all-filters").click(function(event) {
