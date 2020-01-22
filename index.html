@@ -567,11 +567,29 @@
                 options.languages = languages;
             }
             if (options.releases && options.releases.items && options.releases.items.length > 0) {
+                var branchPathMatched = false;
+                // For Public Browser
                 for (let i = 0; i < options.releases.items.length; i++) {
                     if (typeof options.releases.items[i].latestVersion !== "undefined" && options.releases.items[i].latestVersion.branchPath === options.edition) {
                         options.languageObject = options.releases.items[i].languages;
                         options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
+                        branchPathMatched = true;
+                        break;
                     }
+                }
+
+                // For TS Browser
+                if (!branchPathMatched) {
+                    for (let i = 0; i < options.releases.items.length; i++) {
+                        if (typeof options.releases.items[i].branchPath !== "undefined" 
+                            && options.releases.items[i].branchPath.split('/').length > 1 
+                            && options.edition.split('/').length > 1
+                            && options.edition.includes(options.releases.items[i].branchPath)) {
+                            options.languageObject = options.releases.items[i].languages;
+                            options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];                            
+                            break;
+                        }
+                    }  
                 }
             }
 
