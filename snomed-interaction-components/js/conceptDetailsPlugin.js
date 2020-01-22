@@ -1918,6 +1918,12 @@ function conceptDetails(divElement, conceptId, options) {
                 return 0;
             });
 
+            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
+                if (countryIcons[moduleId])
+                    return opts.fn(this);
+                else
+                    return opts.inverse(this);
+            });
             var context = {
                 divElementId: panel.divElement.id,                    
                 statedParents: panel.options.selectedView === 'stated' ? result : [],
