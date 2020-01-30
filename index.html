@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="SNOMED International SNOMED CT Browser">
     <meta name="author" content="SNOMED International">
-    <link rel="icon" type="image/png" href="favicon.png">
-
+    
     <script src="/browser/external-libs/jquery-3.3.1.min.js" type="text/javascript"></script>
     <script src="/browser/external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
     <script src="/browser/external-libs/base64.js" type="text/javascript"></script>
@@ -29,6 +28,7 @@
     <script src="/browser/external-libs/popover-extra-placements.js" type="text/javascript"></script>
     <script src="/browser/external-libs/canvg.min.js" type="text/javascript"></script>
     <script src="/browser/external-libs/canvas2image.js" type="text/javascript"></script>
+    <script src="/browser/external-libs/bootstrap-multiselect.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="/browser/css/jquery.splitter.css">
@@ -37,13 +37,48 @@
     <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-tour.css">
     <link rel="stylesheet" type="text/css" href="/browser/css/popover-extra-placements.css">
     <link rel="stylesheet" type="text/css" href="/browser/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="/browser/css/snomed-interaction-components.min.css?version=build_version">
 
-    <link rel="stylesheet" type="text/css" href="/browser/snomed-interaction-components/css/snomed-interaction-components-2.1.css?version=build_version">
+    <script src="/browser/internal-libs/snomed-interaction-components.min.js?version=build_version"></script>
+    <script src="/browser/internal-libs/dailyBuildPlugin.js"></script>
 
-    <script src="/browser/snomed-interaction-components/js/snomed-interaction-components-2.1.js?version=build_version"></script>
     <script src="/browser/external-libs/jquery.history.js"></script>
-    <script src="/browser/external-libs/ZeroClipboard.js"></script>
-    <script src="snomed-interaction-components/js/dailyBuildPlugin.js"></script>
+    <script src="/browser/external-libs/ZeroClipboard.js"></script>    
+
+    <script>
+        function changeFavicon(iconPrefix) {
+          var link;
+          link = document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'shortcut icon';
+          link.href = iconPrefix + '-favicon.png';
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
+        
+        function getIconPrefixFromEnv() {
+          const env = window.location.hostname.split(/[.]/)[0];
+          let prefix;
+          if (env === 'local') {
+            prefix = 'loc';
+          }
+          else if (env.startsWith('dev-')) {
+            prefix = 'dev';
+          }
+          else if (env.startsWith('uat-')) {
+            prefix = 'uat';
+          }
+          else if (env.startsWith('training-')) {
+            prefix = 'trn';
+          }
+          else {
+            prefix = 'prd';
+          }
+          return prefix;
+        }
+        
+        changeFavicon(getIconPrefixFromEnv());
+    </script>
 
     <script type="text/javascript">
         function getCookie(c_name) {
@@ -131,6 +166,17 @@
         };
 
         var manifests;
+
+        function getCopyrightYear() {
+            $.ajax({ 
+                type: 'GET', 
+                url:'/', 
+                success: function(data, textStatus, response){ 
+                    //alert(new Date(response.getResponseHeader('Date')).getFullYear());
+                    $('#copyright_year').text(new Date(response.getResponseHeader('Date')).getFullYear())
+                }
+            });
+        }        
 
         function determineServer() {
             if(window.location.hostname.includes('dailybuild')) {
@@ -333,61 +379,62 @@
         var addEditionLinks = function($releaseSwitcher, releases) {
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
+                if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser) {
+                    var $img = $('<img>').attr("src", release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" : "/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
 
-                var $img = $('<img>').attr("src", release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" : "/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
+                    var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
+                    $span1.text("Go browsing...");
+                    var $span2 = $('<span>').attr("class", "small");
+                    if(options.dailyBuildBrowser) {
+                        $span2.append(release.name + "<br>DAILY BUILD");
+                        $("#editionLabel").html(release.name + " DAILY BUILD");
+                    } else {                    
+                        $span2.append(release.name + "<br>" + release.latestVersion.version);                                       
+                    }
 
-                var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
-                $span1.text("Go browsing...");
-                var $span2 = $('<span>').attr("class", "small");
-                if(options.dailyBuildBrowser) {
-                    $span2.append(release.name + "<br>DAILY BUILD");
-                    $("#editionLabel").html(release.name + " DAILY BUILD");
-                } else {
-                    $span2.append(release.name + "<br>" + release.latestVersion.version);
-                }
+                    var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
+                    $a.append($img);
+                    $a.append("&nbsp;&nbsp;&nbsp;");
+                    $a.append($span1);
+                    $a.append("<br>");
+                    $a.append($span2);
 
-                var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
-                $a.append($img);
-                $a.append("&nbsp;&nbsp;&nbsp;");
-                $a.append($span1);
-                $a.append("<br>");
-                $a.append($span2);
+                    if (release.href) {
+                        $a.attr("href", release.href);
+                        $a.attr("target", "_blank");
+                    } else {
+                        $a.attr("href", "javascript:void(0);");
+                        $a.on("click", function() {
+                            var parsedLanguages = "";
+                            for (var language in release.languages) {
+                                parsedLanguages = parsedLanguages + language + ',';
+                            }
+                            parsedLanguages = parsedLanguages.slice(0, -1);
+                            if(options.dailyBuildBrowser) {
+                                options.edition = release.branchPath;
+                                $("#editionLabel").html(release.name + " DAILY BUILD");
+                            }
+                            else {                            
+                                options.edition = release.latestVersion.branchPath;
+                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);                                                    
+                            }
+                            options.release = '';
+                            options.languages = parsedLanguages;
+                            options.languageObject = release.languages;
 
-                if (release.href) {
-                    $a.attr("href", release.href);
-                    $a.attr("target", "_blank");
-                } else {
-                    $a.attr("href", "javascript:void(0);");
-                    $a.on("click", function() {
-                        var parsedLanguages = "";
-                        for (var language in release.languages) {
-                            parsedLanguages = parsedLanguages + language + ',';
-                        }
-                        parsedLanguages = parsedLanguages.slice(0, -1);
-                        if(options.dailyBuildBrowser) {
-                            options.edition = release.branchPath;
-                            $("#editionLabel").html(release.name + " DAILY BUILD");
-                        }
-                        else {
-                            options.edition = release.latestVersion.branchPath;
-                            $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                        }
-                        options.release = '';
-                        options.languages = parsedLanguages;
-                        options.languageObject = release.languages;
+                            options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
+                            options.defaultLanguage = parsedLanguages.substr(0, 2);
+                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
-                        options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
-                        let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
-                        options.defaultLanguage = parsedLanguages.substr(0, 2);
-                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+                            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                            switchToFullHeight(404684003, 138875005);
+                        });
+                    }
 
-                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                        switchToFullHeight(404684003, 138875005);
-                    });
-                }
-
-                $releaseSwitcher.append($a);
-                $releaseSwitcher.append(" ");
+                    $releaseSwitcher.append($a);
+                    $releaseSwitcher.append(" ");
+                }                
             }
         }
 
@@ -520,11 +567,29 @@
                 options.languages = languages;
             }
             if (options.releases && options.releases.items && options.releases.items.length > 0) {
+                var branchPathMatched = false;
+                // For Public Browser
                 for (let i = 0; i < options.releases.items.length; i++) {
-                    if (options.releases.items[i].latestVersion.branchPath === options.edition) {
+                    if (typeof options.releases.items[i].latestVersion !== "undefined" && options.releases.items[i].latestVersion.branchPath === options.edition) {
                         options.languageObject = options.releases.items[i].languages;
                         options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
+                        branchPathMatched = true;
+                        break;
                     }
+                }
+
+                // For TS Browser
+                if (!branchPathMatched) {
+                    for (let i = 0; i < options.releases.items.length; i++) {
+                        if (typeof options.releases.items[i].branchPath !== "undefined" 
+                            && options.releases.items[i].branchPath.split('/').length > 1 
+                            && options.edition.split('/').length > 1
+                            && options.edition.includes(options.releases.items[i].branchPath)) {
+                            options.languageObject = options.releases.items[i].languages;
+                            options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];                            
+                            break;
+                        }
+                    }  
                 }
             }
 
@@ -650,54 +715,56 @@
                 if (options.releases && options.releases.items) {
                     var $releaseSwitcher = $('#releaseSwitcher');
                     for (let i = 0; i < options.releases.items.length; ++i) {
-                        var $li = $('<li>')
-                        var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                        $a.attr("href", "javascript:void(0);");
-                        $a.on("click", function() {
-                            postal.unsubscribeFor();
-                            if (typeof componentsRegistry != "undefined") {
-                                $.each(componentsRegistry, function(i, field) {
-                                    field = null;
-                                });
-                                componentsRegistry = [];
-                            }
-                            var parsedLanguages = "";
-                            for (var language in options.releases.items[i].languages) {
-                                parsedLanguages = parsedLanguages + language + ',';
-                            }
-                            parsedLanguages = parsedLanguages.slice(0, -1);
-                            options.edition = options.releases.items[i].latestVersion.branchPath;
-                            options.release = '';
-                            options.languages = parsedLanguages;
-                            options.languageObject = options.releases.items[i].languages;
-                            $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                            options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
+                        if (typeof options.releases.items[i].latestVersion !== "undefined") {
+                            var $li = $('<li>')
+                            var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                            $a.attr("href", "javascript:void(0);");
+                            $a.on("click", function() {
+                                postal.unsubscribeFor();
+                                if (typeof componentsRegistry != "undefined") {
+                                    $.each(componentsRegistry, function(i, field) {
+                                        field = null;
+                                    });
+                                    componentsRegistry = [];
+                                }
+                                var parsedLanguages = "";
+                                for (var language in options.releases.items[i].languages) {
+                                    parsedLanguages = parsedLanguages + language + ',';
+                                }
+                                parsedLanguages = parsedLanguages.slice(0, -1);
+                                options.edition = options.releases.items[i].latestVersion.branchPath;
+                                options.release = '';
+                                options.languages = parsedLanguages;
+                                options.languageObject = options.releases.items[i].languages;
+                                $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                                options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
 
-                            let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
-                            options.defaultLanguage = parsedLanguages.substr(0, 2);
-                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
-                            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                            QueryString = queryString();
-                            
-                            if (QueryString.conceptId1) {
-                                xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
-                                    reloadCurrentPerspective();   
-                                }).done(function(result) {                                             
-                                }).fail(function() {
-                                    reloadCurrentPerspective(404684003);                                    
-                                });
-                            }
-                            else {
-                                reloadCurrentPerspective(); 
-                            }                                                                                    
-                        });
-                        $li.append($a);
-                        $releaseSwitcher.append($li);
+                                let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
+                                options.defaultLanguage = parsedLanguages.substr(0, 2);
+                                var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+                                switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                                QueryString = queryString();
+                                
+                                if (QueryString.conceptId1) {
+                                    xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
+                                        reloadCurrentPerspective();   
+                                    }).done(function(result) {                                             
+                                    }).fail(function() {
+                                        reloadCurrentPerspective(404684003);                                    
+                                    });
+                                }
+                                else {
+                                    reloadCurrentPerspective(); 
+                                }                                                                                    
+                            });
+                            $li.append($a);
+                            $releaseSwitcher.append($li);
 
-                        // set default selection for release
-                        if (options.edition && options.releases.items[i].latestVersion.branchPath === options.edition) {
-                            $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                        }
+                            // set default selection for release
+                            if (options.edition && options.releases.items[i].latestVersion.branchPath === options.edition) {
+                                $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                            }
+                        }                        
                     }
 
                 }
@@ -1515,7 +1582,7 @@
     </style>
 </head>
 
-<body onLoad="determineServer();" style="height: 100%; display: block;">
+<body onLoad="getCopyrightYear(); determineServer();" style="height: 100%; display: block;">
     <nav class="navbar navbar-default  navbar-static-top" role="navigation">
         <div>
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -1562,8 +1629,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="https://prod-browser-exten.ihtsdotools.org/qa/" target=_blank>SNOMED CT Statistics</a></li>
-                            <li class="divider"></li>
                             <li><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></li>
                             <li class="divider"></li>
                             <li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>
@@ -1612,11 +1677,10 @@
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
                 <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span></h1>
-                <p><a href="https://prod-browser-exten.ihtsdotools.org/qa/" target=_blank>SNOMED CT Statistics - International Edition</a></p>
                 <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer. </br>If you do not have access to Chrome,</strong> <a href="index-ie.html">please visit the IE compatibility version here</a></p>
+                <p>This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong></p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="international_editions" style="margin-bottom : 0px"></p>
                 <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
@@ -1653,7 +1717,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong> <span id="csconsentlink">Cookie Settings</span></small>
             </p>
-            <p> <small><b>&copy; SNOMED International 2019</b> v2.1<br></small>
+            <p> <small><b>&copy; SNOMED International <span id="copyright_year"/></b> v<span>project_version</span><br></small>
             </p>
         </div>
 
@@ -1933,7 +1997,7 @@
 
     <!--Start Cookie Script-->
     <!--<script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>-->
-    <script src="/external-libs/cookie-script.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="/browser/external-libs/cookie-script.js" type="text/javascript" charset="UTF-8"></script>
     <!--End Cookie Script-->
 
     <!-- Google Analytics script -->

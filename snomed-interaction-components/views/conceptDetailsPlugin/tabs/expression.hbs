@@ -1,0 +1,29 @@
+<p class="" style="margin-top: 20px;">Pre-coordinated Expression (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-pre-coordinated-expression"  data-clipboard-text="{{plainPreCoordinatedExpression}}"></i></small></p>
+<div class="expression-code" style="margin-top: 10px; padding: 10px;">{{{preCoordinatedExpressionHtml}}}</div>
+
+{{#if classAxiomOwlExpressions}}
+    {{#each classAxiomOwlExpressions}}
+        <p class="" style="margin-top: 20px;">Expression from Class Axiom Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-axiom-expression" data-clipboard-text="{{this}}"></i></small></p>
+        <div class="expression-code" style="margin-top: 10px; padding: 10px;"><pre>{{this}}</pre></div>
+    {{/each}}
+{{/if}}
+
+{{#if gciAxiomOwlExpressions}}
+    {{#each gciAxiomOwlExpressions}}
+        <p class="" style="margin-top: 20px;">Expression from GCI Axiom Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-axiom-expression" data-clipboard-text="{{this}}"></i></small></p>
+        <div class="expression-code" style="margin-top: 10px; padding: 10px;"><pre>{{this}}</pre></div>
+    {{/each}}
+{{/if}}
+
+{{#if statedExpressionHtml}}
+    <p class="" style="margin-top: 20px;">Expression from Stated Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-stated-expression" data-clipboard-text="{{plainStatedExpression}}"></i></small></p>
+    <div class="expression-code" style="margin-top: 10px; padding: 10px;">{{{statedExpressionHtml}}}</div>    
+{{/if}}
+<p class="" style="margin-top: 20px;">Expression from Inferred Concept Definition (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-inferred-expression" data-clipboard-text="{{plainInferredExpression}}"></i></small></p>
+<div class="expression-code" style="margin-top: 10px; padding: 10px;">{{{inferredExpressionHtml}}}</div>
+<br><br>
+<div class="well small">
+    <p>(*) The expressions are generated according to the ABNF syntax found in the "SNOMED CT Compositional Grammar Specification and Guide" (<a href="http://snomed.org/compgrammar" target="_blank">http://snomed.org/compgrammar</a>)</p>
+    <p>SNOMED CT Compositional Grammar is a lightweight syntax for the representation of SNOMED CT expressions. SNOMED CT expressions are used in Electronic Health Records (EHRs) to represent clinical meanings in a way that enables automatic interpretation. They are also carried in messages, used to define precoordinated concepts and used to represent links between SNOMED CT and other terminologies.</p>
+    <p>These expressions are generated as an example from the published concept definition, a Pre-coordinated Expression is direct reference to the concept, and Post-coordinated expressions are generated from the stated or inferred relationships. In a Sufficiently Defined concept, all three will be equivalent.</p>
+</div>

@@ -1,0 +1,67 @@
+<table class='table table-bordered' id = '{{divElementId}}-descriptions-panel-table'>
+    <thead>
+        <tr>
+           <th colspan="2" class="text-center">{{longLangName}}</th>
+        </tr>
+        <tr>
+            <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>
+            {{#if options.showIds}}
+                <th>SCTID</th>
+            {{/if}}
+            <th><span class='i18n' data-i18n-id='i18n_acceptability'>Acceptability</span>&nbsp;&nbsp;{{#if languageName}}{{languageName}}{{else}}{{lang}}{{/if}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each allDescriptions}}
+            <tr class='{{#if_eq typeId "900000000000003001"}} fsn-row{{else}} synonym-row{{/if_eq}}{{#if active}}{{else}} danger{{/if}}{{#if_eq effectiveTime ../../options.highlightByEffectiveTime}} highlightEffectiveTime{{/if_eq}}'>
+                    <td>
+                        {{#if_eq typeId "900000000000003001"}}
+                            <span rel="tooltip-right" title="{{i18n "i18n_fsn" "FSN"}}">F</span>
+                        {{else}}
+                            {{#if_eq typeId "900000000000013009"}}
+                                <span rel="tooltip-right" title="{{i18n "i18n_synonym" "Synonym"}}">S</span>
+                            {{else}}
+                                {{#if_eq typeId "900000000000550004"}}
+                                    <span rel="tooltip-right" title="{{i18n "i18n_definition" "Definition"}}">D</span>
+                                {{/if_eq}}
+                            {{/if_eq}}
+                        {{/if_eq}}
+
+                        {{#if preferred}}
+                            {{#if_eq typeId "900000000000003001"}}
+                                &nbsp;<span class="glyphicon glyphicon-star-empty" rel="tooltip-right" title="{{i18n "i18n_preferred" "Preferred"}}"></span>
+                            {{else}}
+                                &nbsp;<span class="glyphicon glyphicon-star" rel="tooltip-right" title="{{i18n "i18n_preferred" "Preferred"}}"></span>
+                            {{/if_eq}}
+                        {{else}}
+                            {{#if acceptable}}
+                                &nbsp;<span rel="tooltip-right" title="{{i18n "i18n_acceptable" "Acceptable"}}">&#10004;</span></span>
+                            {{else}}
+                                &nbsp;&nbsp;&nbsp;
+                            {{/if}}
+                        {{/if}}
+                        &nbsp;&nbsp;&nbsp;{{term}}</td>
+                    {{#if ../options.showIds}}
+                        <td>{{descriptionId}}</td>
+                    {{/if}}
+
+                    <td>
+                        {{#if preferred}}
+                            <span class='i18n' data-i18n-id='i18n_preferred'>{{i18n "i18n_preferred" "Preferred"}}</span>
+                        {{else}}
+                            {{#if acceptable}}
+                                <span class='i18n' data-i18n-id='i18n_acceptable'>{{i18n "i18n_acceptable" "Acceptable"}}</span>
+                            {{else}}
+                                <span class='i18n' data-i18n-id='i18n_not_acceptable'>{{i18n "i18n_not_acceptable" "Not acceptable"}}</span>
+                            {{/if}}
+                        {{/if}}
+                        <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="
+                        <table border='1'><tr><th style='padding: 3px;'>DescriptionId</th><th style='padding: 3px;'>Type</th><th style='padding: 3px;'>Language</th><th style='padding: 3px;'>Case Significance</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>
+                                <tr><td style='padding: 3px;'>{{descriptionId}}</td><td style='padding: 3px;'>{{parseCS '_' ' ' type}}</td><td style='padding: 3px;'>{{lang}}</td><td style='padding: 3px;'>{{parseCS '_' ' ' caseSignificance}}</td><td style='padding: 3px;'>{{effectiveTime}}</td><td style='padding: 3px;'>{{moduleId}}</td></tr>
+                        </table>
+                        " data-html="true"><i class="glyphicon glyphicon-info-sign"></i></button>
+                    </td>
+                </tr>
+        {{/each}}
+    </tbody>
+</table>

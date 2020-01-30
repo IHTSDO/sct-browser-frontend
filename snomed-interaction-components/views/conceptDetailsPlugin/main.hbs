@@ -1,0 +1,121 @@
+<div style='margin: 5px; height:98%; overflow:auto;' class='panel panel-default'>
+    <div class='panel-heading' id='{{divElementId}}-panelHeading' ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">
+        <!--<button id='{{divElementId}}-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>-->
+        <button id='{{divElementId}}-subscribersMarker' class='btn btn-link btn-lg' style='padding:2px;position: absolute;top: 1px;'><i class='glyphicon glyphicon-bookmark'></i></button>
+        <div class='row'>
+            <div class='col-md-8' id='{{divElementId}}-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_concept_details'>Concept Details</span></strong></div>
+            <div class='col-md-4 text-right'>
+                <!--<button id='{{divElementId}}-linkerButton' draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" class='btn btn-link linker-button' data-panel='{{divElementId}}' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>-->
+                <button id='{{divElementId}}-historyButton' class='btn btn-link history-button' style='padding:2px'><i class='glyphicon glyphicon-time'></i></button>
+                <button id='{{divElementId}}-configButton' class='btn btn-link' data-toggle='modal' style='padding:2px' data-target='#{{divElementId}}-configModal'><i class='glyphicon glyphicon-cog'></i></button>
+                <button id='{{divElementId}}-collapseButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-small'></i></button>
+                <button id='{{divElementId}}-expandButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-resize-full'></i></button>
+                <button id='{{divElementId}}-closeButton' class='btn btn-link' style='padding:2px'><i class='glyphicon glyphicon-remove'></i></button>
+            </div>
+        </div>
+    </div>
+    <div class='panel-body' id='{{divElementId}}-panelBody' style="width: 98%">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="details-tabs-{{divElementId}}">
+            <li class="active"><a href="#home-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_summary">Summary</span></a></li>
+            <li><a href="#details-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_details">Details</span></a></li>
+            <li id="diagram-tab"><a href="#diagram-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;" id="diagram-tab-link-{{divElementId}}"><span class="i18n" data-i18n-id="i18n_diagram">Diagram</span></a></li>
+            <li id="expression-tab"><a href="#expression-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;" id="expression-tab-link-{{divElementId}}">Expression</a></li>
+            <li id="product-details-tab" style="display: none;"><a id="product-details-tab-link-{{divElementId}}" href="#product-details-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_vcd">CD</span></a></li>
+            <li><a href="#refsets-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_refsets">Refsets</span></a></li>
+            <li id="{{divElementId}}-members-tab"><a href="#members-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_members">Members</span></a></li>
+            {{#if_eq server 'snowstorm'}}
+                <li id="references-tab"><a id="references-tab-link-{{divElementId}}" href="#references-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_references">References</span></a></li>
+            {{/if_eq}}
+            <div class="pull-right">
+                <div class="btn-group" style="margin:3px" role="group" aria-label="...">
+                    <button type="button"  class="btn btn-default" id="home-{{divElementId}}-stated-button">Stated</button>
+                    <button type="button" class="btn btn-default" id="home-{{divElementId}}-inferred-button">Inferred</button>
+                </div>
+                <div><span class="text-muted text-center" id="home-{{divElementId}}-wf-status-label"></span></div>
+            </div>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content" id="details-tab-content-{{divElementId}}">
+            <div class="tab-pane fade in active" id="home-{{divElementId}}" style="padding: 5px;">
+                <div style="max-height: 440px; overflow: auto; margin-left: 0%; margin-bottom: 10px; margin-top: 10px; width: 90%;border: 2px solid #357ebd; border-radius: 4px; padding: 5px; resize: vertical;">
+                    <div class="panel-heading">
+                        <h4><span data-i18n-id="i18n_parents" class="i18n">Parents</span></h4>
+                    </div>
+                    <div class="panel-body" id="home-parents-{{divElementId}}">
+                        <span data-i18n-id="i18n_no_parents" class="i18n">No parents</span>
+                    </div>
+                </div>
+                <div class="row" style="overflow: auto; max-height: 30%;">
+                    <div class="col-md-offset-1 col-md-4" style="color: #ffffff;background-color: #1e90ff;display: inline-block; border: 2px solid #357ebd; border-radius: 4px; padding: 5px;" id="home-attributes-{{divElementId}}">Attributes</div>
+                    <div class="col-md-4" style="background-color: rgba(30, 144, 255, 0.17); display: inline-block; min-height: 100%; margin-left: 10px; border: 2px solid #357ebd; border-radius: 4px; padding: 5px;" id="home-roles-{{divElementId}}">Relationships</div>
+                </div>
+                <div style="max-height: 500px; overflow: auto; margin-left: 0%; margin-bottom: 10px; margin-top: 10px; width: 90%;border: 2px solid #357ebd; border-radius: 4px; padding: 5px; resize: vertical;" id="home-children-{{divElementId}}">
+                    <div class="panel-heading">
+                        <h4><span data-i18n-id="i18n_children" class="i18n">Children</span>&nbsp;<span id="home-children-cant-{{divElementId}}"></span></h4>
+                    </div>
+                    <div class="panel-body" id="home-children-{{divElementId}}-body"></div>
+                </div>
+                <div><span class="text-muted pull-right" id="footer-{{divElementId}}"></span></div>
+            </div>
+            <div class="tab-pane fade" id="details-{{divElementId}}">
+                <div id='{{divElementId}}-attributes-panel' class='panel panel-default'>
+                </div>
+                <div id='{{divElementId}}-descriptions-panel' class='panel panel-default'>
+                </div>
+                <div id='{{divElementId}}-rels-panel' class='panel panel-default'>
+                </div>
+                <!--<div id='{{divElementId}}-children-panel' class='panel panel-default' style='height:100px;overflow:auto;margin-bottom: 15px;'>-->
+                <!--</div>-->
+            </div>
+            <div class="tab-pane fade" id="diagram-{{divElementId}}">
+                <div class="row" style="margin-right: 20px"><span class="pull-right text-muted" id="home-{{divElementId}}-diagram-viewLabel"></span></div>
+                <div id="diagram-canvas-{{divElementId}}"></div>
+            </div>
+            <div class="tab-pane fade" id="expression-{{divElementId}}">
+                <div class="row" style="margin-right: 20px"><span class="pull-right text-muted" id="home-{{divElementId}}-expression-viewLabel"></span></div>
+                <div id="expression-canvas-{{divElementId}}"></div>
+            </div>
+            <div class="tab-pane fade" id="refsets-{{divElementId}}">
+            </div>
+            <div class="tab-pane fade" id="members-{{divElementId}}">
+                <!--<div class="pull-right" style="padding: 5px">-->
+                    <!--<button id="members-{{divElementId}}-sort" class="btn btn-default">Sort results</button>-->
+                    <!--<span class="text-muted">This operation may time-out for large refsets</span>-->
+                <!--</div>-->
+                <!--<br>-->
+                <table id="members-{{divElementId}}-resultsTable" class="table table-hover table-bordered">
+                </table>
+                <!--<button id="members-{{divElementId}}-normal" class="btn btn-default">100 first members</button>-->
+            </div>
+            <div class="tab-pane fade" id="references-{{divElementId}}">
+                <div class="panel-group" id="references-{{divElementId}}-accordion">
+
+                </div>
+                <!--<br>-->
+                <!--<span class="text-muted" style="padding: 5px;" id="references-{{divElementId}}-total"></span>-->
+                <!--<table id="references-{{divElementId}}-resultsTable" class="table table-hover table-bordered">-->
+                <!--</table>-->
+            </div>
+            <div class="tab-pane fade" id="product-details-{{divElementId}}">
+            </div>
+        </div>
+    </div>
+</div>
+<div class='modal fade' id='{{divElementId}}-configModal'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                <h4 class='modal-title'><span class='i18n' data-i18n-id='i18n_options'>Options</span></h4>
+            </div>
+            <div class='modal-body' id='{{divElementId}}-modal-body'>
+                <p></p>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-danger' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_cancel'>Cancel</span></button>
+                <button id='{{divElementId}}-apply-button' type='button' class='btn btn-success' data-dismiss='modal'><span class='i18n' data-i18n-id='i18n_apply_changes'>Apply changes</span></button>
+            </div>
+        </div>
+    </div>
+</div>

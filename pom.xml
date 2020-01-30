@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ihtsdo.otf</groupId>
     <artifactId>sct-browser</artifactId>
-    <version>3.9.1</version>
+    <version>3.9.2-SNAPSHOT</version>
     <name>Snowstorm Browser</name>
     <description>Snomed Snowstorm Terminology Server Browser</description>
     <url>https://term.ihtsdotools.org/</url>
@@ -33,9 +33,51 @@
 								 <token>(build_version)</token>
 								 <value>${project.version}-${BUILD_NUMBER}</value>
 							 </replacement>
+                             <replacement>
+								 <token>(project_version)</token>
+								 <value>${project.version}</value>
+							 </replacement>
 						 </replacements>
 				 </configuration>
-			 </plugin>
+			</plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.8.0</version>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <!-- optional: default phase is "generate-resources" -->
+                        <phase>generate-resources</phase>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt build</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>--verbose</arguments>
+                        </configuration>
+                    </execution>                    
+                </executions>
+                <configuration>
+                    <nodeVersion>v8.5.0</nodeVersion>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.vafer</groupId>
                 <artifactId>jdeb</artifactId>

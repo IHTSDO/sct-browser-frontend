@@ -32,5 +32,16 @@ lastupdated.txt
 diff_report*
 yarn.lock
 package-lock.json
-
+node_modules
+node
+target
 bin
+
+/snomed-interaction-components/sno-interaction-comp/nbproject/private/
+/snomed-interaction-components/target/sct-components/nbproject/private/
+/snomed-interaction-components/*.iml
+/snomed-interaction-components/dist
+/snomed-interaction-components//nbproject/private/
+/snomed-interaction-components/views/compiled/templates.js
+/css/snomed-interaction-components.min.css
+/internal-libs/snomed-interaction-components.min.js

@@ -1,0 +1,18 @@
+<div>
+    <table class='table table-bordered'>
+        <thead>
+        <tr>
+            <th>
+                <span class='i18n' data-i18n-id='i18n_children'>Children</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+</div>
+{{#each childrenResult}}
+    {{#if active}}
+        <tr><td draggable="true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>{{defaultTerm}}</td></tr>
+    {{/if}}
+{{/each}}
+</tbody>
+</table>

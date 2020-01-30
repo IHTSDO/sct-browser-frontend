@@ -1,0 +1,76 @@
+{{#each result.referencesByType}}
+    <div style="margin-top: 10px;" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 style="font-size: 12px" class="panel-title">
+                <a style="text-decoration: inherit;" data-toggle="collapse" data-parent="#references-{{divElementId}}-accordion" href="#references-{{@index}}">
+                    <span id="references-{{@index}}-span" class="references glyphicon glyphicon-{{#if_gr referencingConcepts.length 10}}chevron-right{{else}}chevron-down{{/if_gr}}"></span>
+                </a>&nbsp;{{referenceType.fsn.term}} ({{referencingConcepts.length}})
+            </h3>
+        </div>
+        <div id="references-{{@index}}" class="panel-collapse collapse {{#if_gr referencingConcepts.length 10}}{{else}}in{{/if_gr}}">
+            <div class="panel-body">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>ConceptId</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each referencingConcepts}}
+                        <tr>
+                            <td>
+                                {{#if_eq definitionStatus "PRIMITIVE"}}
+                                    <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{fsn.term}}'>&nbsp;&nbsp;</span>
+                                {{else}}
+                                    <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{fsn.term}}'>&equiv;</span>                                    
+                                {{/if_eq}}
+                                {{#hasCountryIcon moduleId}}
+                                    <div class="phoca-flagbox" style="width:22px;height:22px">
+                                        <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                                    </div>
+                                {{/hasCountryIcon}}
+                                {{fsn.term}}
+                            </td>
+                            <td>{{conceptId}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{{/each}}
+
+<!--<thead>-->
+    <!--<tr>-->
+        <!--<th>Term</th>-->
+        <!--<th>ConceptId</th>-->
+        <!--<th>Relationships Type</th>-->
+    <!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+    <!--{{#each result}}-->
+        <!--<tr>-->
+            <!--<td>-->
+                <!--<span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&nbsp;&nbsp;</span>-->
+                <!--{{#hasCountryIcon module}}-->
+                    <!--<div class="phoca-flagbox" style="width:22px;height:22px">-->
+                        <!--<span class="phoca-flag {{countryIcon module}}"></span>-->
+                    <!--</div>-->
+                <!--{{/hasCountryIcon}}-->
+                <!--{{defaultTerm}}-->
+            <!--</td>-->
+            <!--<td>{{conceptId}}</td>-->
+            <!--<td>-->
+                <!--{{#each relationships}}-->
+                    <!--{{type.defaultTerm}}-->
+                <!--{{/each}}-->
+
+                <!--{{#each statedRelationships}}-->
+                    <!--{{type.defaultTerm}}-->
+                <!--{{/each}}-->
+            <!--</td>-->
+        <!--</tr>-->
+    <!--{{/each}}-->
+</tbody>

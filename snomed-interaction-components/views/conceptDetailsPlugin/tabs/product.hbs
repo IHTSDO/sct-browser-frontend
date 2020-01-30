@@ -1,0 +1,96 @@
+<br>
+<h4>&nbsp;&nbsp;&nbsp;{{productData.defaultTerm}}</h4>
+<br>
+<table class='table table-bordered' id = ''>
+    <thead>
+        <tr><th colspan="2">Dose form</th></tr>
+    </thead>
+    <tbody>
+    {{#each productData.forms}}
+        <tr>
+            <td>
+                {{#if_eq type.definitionStatus "PRIMITIVE"}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                {{else}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                {{/if_eq}}
+                {{type.defaultTerm}}
+            </td>
+            <td>
+                {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{module}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}" data-def-status="{{target.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                {{else}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{module}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}" data-def-status="{{target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                {{/if_eq}}
+                {{target.defaultTerm}}
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+<br>
+<table class='table table-bordered' id = ''>
+    <thead>
+    <tr>
+        <th>Ingredient / BoSS</th>
+        <th colspan="2">Strength Numerator</th>
+        <th colspan="2">Strength Denominator</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each productData.ingredients}}
+        <tr>
+            <td>
+                {{#if_eq ingredient.definitionStatus "PRIMITIVE"}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{ingredient.module}}" data-concept-id="{{ingredient.conceptId}}" data-term="{{ingredient.defaultTerm}}" data-def-status="{{ingredient.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                {{else}}
+                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{ingredient.module}}" data-concept-id="{{ingredient.conceptId}}" data-term="{{ingredient.defaultTerm}}" data-def-status="{{ingredient.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                {{/if_eq}}
+                {{ingredient.defaultTerm}}
+                <br>
+                &nbsp;&nbsp;&nbsp;<span class="text-muted"><em>{{boss.defaultTerm}}</em></span>
+            </td>
+            <td>
+                {{#if numeratorValue}}
+                    {{#if_eq numeratorValue.definitionStatus "PRIMITIVE"}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{numeratorValue.module}}" data-concept-id="{{numeratorValue.conceptId}}" data-term="{{numeratorValue.defaultTerm}}" data-def-status="{{numeratorValue.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                    {{else}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{numeratorValue.module}}" data-concept-id="{{numeratorValue.conceptId}}" data-term="{{numeratorValue.defaultTerm}}" data-def-status="{{numeratorValue.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{removeSemtag numeratorValue.defaultTerm}}
+                {{/if}}
+            </td>
+            <td>
+                {{#if numeratorUnit}}
+                    {{#if_eq numeratorUnit.definitionStatus "PRIMITIVE"}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{numeratorUnit.module}}" data-concept-id="{{numeratorUnit.conceptId}}" data-term="{{numeratorUnit.defaultTerm}}" data-def-status="{{numeratorUnit.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                    {{else}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{numeratorUnit.module}}" data-concept-id="{{numeratorUnit.conceptId}}" data-term="{{numeratorUnit.defaultTerm}}" data-def-status="{{numeratorUnit.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{removeSemtag numeratorUnit.defaultTerm}}
+                {{/if}}
+            </td>
+            <td>
+                {{#if denominatorValue}}
+                    {{#if_eq denominatorValue.definitionStatus "PRIMITIVE"}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{denominatorValue.module}}" data-concept-id="{{denominatorValue.conceptId}}" data-term="{{denominatorValue.defaultTerm}}" data-def-status="{{denominatorValue.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                    {{else}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{denominatorValue.module}}" data-concept-id="{{denominatorValue.conceptId}}" data-term="{{denominatorValue.defaultTerm}}" data-def-status="{{denominatorValue.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{removeSemtag denominatorValue.defaultTerm}}
+                {{/if}}
+            </td>
+            <td>
+                {{#if denominatorUnit}}
+                    {{#if_eq denominatorUnit.definitionStatus "PRIMITIVE"}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{denominatorUnit.module}}" data-concept-id="{{denominatorUnit.conceptId}}" data-term="{{denominatorUnit.defaultTerm}}" data-def-status="{{denominatorUnit.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                    {{else}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{denominatorUnit.module}}" data-concept-id="{{denominatorUnit.conceptId}}" data-term="{{denominatorUnit.defaultTerm}}" data-def-status="{{denominatorUnit.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{removeSemtag denominatorUnit.defaultTerm}}
+                {{/if}}
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

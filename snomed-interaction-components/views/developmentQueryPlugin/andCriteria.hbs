@@ -1,0 +1,42 @@
+<div class="addedCriteria" data-typeSelected="{{#if_eq typeSelected "false"}}Conjunction{{else}}{{typeSelected}}{{/if_eq}}">
+    <div class="form-group text-center" style="width: 75px;">
+        {{#if_eq typeSelected "Conjunction"}}
+            and
+        {{else}}
+            attribute
+        {{/if_eq}}
+    </div>
+    <div data-type-concept-id="false" class="form-group typeCritCombo" {{#if_eq typeSelected "Refinement"}}{{else}}style="display: none;"{{/if_eq}}>
+        <div class="dropdown">
+            <button style="width: 147px;" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span>Select type&nbsp;</span>
+                <span class="caret"></span>
+            </button>
+            <ul style="max-height: 400px; overflow: auto;" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a class="selectTypeOpt" data-id="*" data-term="Any" role="menuitem" tabindex="-1" href="javascript:void(0);">Any</a></li>
+                {{#each types}}
+                    <li role="presentation"><a class="selectTypeOpt" data-id="{{conceptId}}" data-term="{{defaultTerm}}" role="menuitem" tabindex="-1" href="javascript:void(0);">{{defaultTerm}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="dropdown">
+            <button style="width: 147px;" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span class="addSelectCriteria">{{criteria}}</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" data-role="criteria-selector" tabindex="-1" href="javascript:void(0);">descendantOf</a></li>
+                <li role="presentation"><a role="menuitem" data-role="criteria-selector" tabindex="-1" href="javascript:void(0);">descendantOrSelfOf</a></li>
+                <li role="presentation"><a role="menuitem" data-role="criteria-selector" tabindex="-1" href="javascript:void(0);">self</a></li>
+                <li role="presentation"><a role="menuitem" data-role="criteria-selector" tabindex="-1" href="javascript:void(0);">isMemberOf</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="text" data-droppable="true" ondrop="dropField(event)" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="form-control andCriteriaConcept" placeholder="Drag a concept here" readonly>
+    </div>
+    <div class="form-group"><button type="button" class="btn btn-link glyphicon glyphicon-remove removeCriteria" style="text-decoration: none;"></button></div>
+    <div class="form-group"><button type="button" class="btn btn-link glyphicon glyphicon-plus addCriteria" style="text-decoration: none;"></button></div>
+</div>

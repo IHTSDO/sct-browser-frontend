@@ -1,0 +1,49 @@
+<li data-modifier="{{modifier}}" class="list-group-item clearfix query-condition">
+    <span class="text-muted line-number" style="font-size: 200%;"></span>&nbsp;&nbsp;
+    <span style="position: relative; top: -5px;">
+        <div style="width: 45px;display: inline-block;">{{modifier}}:</div>
+        {{#each criterias}}
+            {{#if_eq @index 0}}
+            {{else}}
+                <br>
+                <div style="margin-left: {{#if type.conceptId}}68{{else}}43{{/if}}px; display: inline-block">
+                    {{#if type.conceptId}}{{else}}AND{{/if}}
+                </div>
+            {{/if_eq}}
+            <span class="constraint" data-term="{{term}}" data-criteria="{{criteria}}" data-concept-id="{{conceptId}}" {{#if type.conceptId}}data-type-concept-id="{{type.conceptId}}" data-type-term="{{type.term}}"{{/if}}>
+                <!--{{criteria}}&nbsp;-->
+                {{#if type.conceptId}}
+                    <span style="color: forestgreen;">{{type.conceptId}}</span> |
+                    <span style="color: firebrick;">{{type.term}}</span> | =
+                {{/if}}
+                <div style="display: inline-block;" class="dropdown">
+                    <button style="text-decoration: inherit; color: inherit; display: inline-block; padding: 0px;" class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                        {{criteria}}&nbsp;
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a class="criteriaDropdownOption" role="menuitem" tabindex="-1" href="javascript:void(0);">descendantOf</a></li>
+                        <li role="presentation"><a class="criteriaDropdownOption" role="menuitem" tabindex="-1" href="javascript:void(0);">descendantOrSelfOf</a></li>
+                        <li role="presentation"><a class="criteriaDropdownOption" role="menuitem" tabindex="-1" href="javascript:void(0);">self</a></li>
+                        <li role="presentation"><a class="criteriaDropdownOption" role="menuitem" tabindex="-1" href="javascript:void(0);">isMemberOf</a></li>
+                    </ul>
+                </div>
+                <span style="color: forestgreen;">{{conceptId}}</span>&nbsp;
+                |
+                <span style="color: firebrick;">{{term}}</span>
+                |{{#if ../criterias.1.type.conceptId}}
+                    {{#if_eqInd @index ../../criterias.length}}
+                    {{else}}
+                        {{#if @index}}
+                            ,
+                        {{else}}
+                            :
+                        {{/if}}
+                    {{/if_eqInd}}
+                {{/if}}
+            </span>
+        {{/each}}
+    </span>
+    <button class='pull-right btn btn-link removeLi' style="position: relative; top: 3px;">
+        <i class='glyphicon glyphicon-remove'></i>
+    </button>
+ </li>

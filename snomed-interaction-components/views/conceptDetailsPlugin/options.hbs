@@ -1,0 +1,112 @@
+<form role="form" id="{{divElementId}}-options-form">
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                {{#if options.displaySynonyms}}
+                    <input type="checkbox" id="{{divElementId}}-displaySynonymsOption" checked> <span class="i18n" data-i18n-id="i18n_display_synonyms2">{{i18n "i18n_display_synonyms2" "Display Synonyms along with FSN and preferred terms"}}</span>
+                {{else}}
+                    <input type="checkbox" id="{{divElementId}}-displaySynonymsOption"> <span class="i18n" data-i18n-id="i18n_display_synonyms2">{{i18n "i18n_display_synonyms2" "Display Synonyms along with FSN and preferred terms"}}</span>
+                {{/if}}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                {{#if options.showIds}}
+                    <input type="checkbox" id="{{divElementId}}-displayIdsOption" checked> <span class="i18n" data-i18n-id="i18n_display_ids">{{i18n "i18n_display_ids" "Display Description Ids"}}</span>
+                {{else}}
+                    <input type="checkbox" id="{{divElementId}}-displayIdsOption"> <span class="i18n" data-i18n-id="i18n_display_ids">{{i18n "i18n_display_ids" "Display Description Ids"}}</span>
+                {{/if}}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                {{#if options.displayInactiveDescriptions}}
+                    <input type="checkbox" id="{{divElementId}}-displayInactiveDescriptionsOption" checked> <span class="i18n" data-i18n-id="i18n_display_inactive_descriptions">{{i18n "i18n_display_inactive_descriptions" "Display inactive descriptions"}}</span>
+                {{else}}
+                    <input type="checkbox" id="{{divElementId}}-displayInactiveDescriptionsOption"> <span class="i18n" data-i18n-id="i18n_display_inactive_descriptions">{{i18n "i18n_display_inactive_descriptions" "Display inactive descriptions"}}</span>
+                {{/if}}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                {{#if options.hideNotAcceptable}}
+                    <input type="checkbox" id="{{divElementId}}-hideNotAcceptableOption" checked> <span class="i18n" data-i18n-id="i18n_hide_not_acceptable">{{i18n "i18n_hide_not_acceptable" "Hide descriptions with no acceptability"}}</span>
+                {{else}}
+                    <input type="checkbox" id="{{divElementId}}-hideNotAcceptableOption"> <span class="i18n" data-i18n-id="i18n_hide_not_acceptable">{{i18n "i18n_hide_not_acceptable" "Hide descriptions with no acceptability"}}</span>
+                {{/if}}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                {{#if options.diagrammingMarkupEnabled}}
+                    <input type="checkbox" id="{{divElementId}}-diagrammingMarkupEnabledOption" checked> <span class="i18n" data-i18n-id="i18n_diagramming_markup_enabled">{{i18n "i18n_diagramming_markup_enabled" "Diagramming Guideline colors enabled"}}</span>
+                {{else}}
+                    <input type="checkbox" id="{{divElementId}}-diagrammingMarkupEnabledOption"> <span class="i18n" data-i18n-id="i18n_diagramming_markup_enabled">{{i18n "i18n_diagramming_markup_enabled" "Diagramming Guideline colors enabled"}}</span>
+                {{/if}}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="{{divElementId}}-childrenOption" {{#if options.displayChildren}}checked{{/if}}> <span class="i18n" data-i18n-id="i18n_display_children">{{i18n "i18n_display_children" "Display All Children"}}</span>
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="selectedRelsView"><span class="i18n" data-i18n-id="i18n_rels_view">{{i18n "i18n_rels_view" "Relationships View"}}</span></label>
+        <select class="form-control" id="{{divElementId}}-relsViewOption">
+            {{#if_eq options.selectedView "stated"}}
+                <option value="stated" selected>Stated</option>
+            {{else}}
+                <option value="stated">Stated</option>
+            {{/if_eq}}
+            {{#if_eq options.selectedView "inferred"}}
+                <option value="inferred" selected>Inferred</option>
+            {{else}}
+                <option value="inferred">Inferred</option>
+            {{/if_eq}}           
+        </select>
+    </div>
+    
+    {{#if options.languageRefsets}}
+        <label><span class="i18n" data-i18n-id="i18n_language_refset">{{i18n "i18n_language_refset" "Language Refset"}}</span></label>
+        {{#each options.languageRefsets}}
+            <div class="checkbox">
+                <label>
+                    <input class="langOption" type="checkbox" value="{{conceptId}}" {{#ifIn conceptId ../../options.langRefset }}checked{{/ifIn}}> {{fsn.term}}
+                </label>
+            </div>
+        {{/each}}
+    {{/if}}
+    <!--<div class="form-group">-->
+        <!--<table class='table table-bordered table-hover'>-->
+            <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>Panel</th>-->
+                    <!--<th>Subscribed</th>-->
+                    <!--<th>Subscriptor</th>-->
+                <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+                <!--{{#each options.possibleSubscribers}}-->
+                    <!--<tr>-->
+                        <!--<td>{{id}}</td>-->
+                        <!--<td>-->
+                            <!--<div class="checkbox">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox" id="{{../divElementId}}-subscribeTo-{{id}}" {{#if subscribed}}checked{{/if}}>-->
+                                <!--</label>-->
+                            <!--</div>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<div class="checkbox">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox" id="{{../divElementId}}-subscriptor-{{id}}" {{#if subscriptor}}checked{{/if}}>-->
+                                <!--</label>-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--{{/each}}-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+</form>

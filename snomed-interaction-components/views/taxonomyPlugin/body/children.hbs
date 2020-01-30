@@ -1,0 +1,25 @@
+<ul style='list-style-type: none; padding-left: 15px;'>
+    {{#each result}}
+        {{#if active}}
+            <li data-module="{{module}}" data-concept-id='{{conceptId}}' data-term="{{defaultTerm}} data-descendants='{{descendantCount}}" class='treeLabel'>
+                <button class='btn btn-link btn-xs treeButton' style='padding:2px'>
+                    <i class='glyphicon glyphicon-{{#if_eq ../../selectedView "inferred"}}{{#if_eq isLeafInferred true}}minus{{else}}chevron-right{{/if_eq}}{{else}}{{#if_eq isLeafStated true}}minus{{else}}chevron-right{{/if_eq}}{{/if_eq}} treeButton' id='{{../../divElementId}}-treeicon-{{conceptId}}'></i>
+                </button>
+                {{#if_eq definitionStatus "PRIMITIVE"}}
+                    <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                {{else}}
+                    <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
+                {{/if_eq}}
+                {{#hasCountryIcon module}}
+                    <div class="phoca-flagbox" style="width:26px;height:26px">
+                        <span class="phoca-flag {{countryIcon module}}"></span>
+                    </div>
+                {{/hasCountryIcon}}
+                <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
+                    <span class="treeLabel selectable-row" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-descendants="{{descendantCount}}" id="{{../../divElementId}}-treenode-{{conceptId}}">{{defaultTerm}}</span>
+                </a>
+                {{push conceptId}}
+            </li>
+        {{/if}}
+    {{/each}}
+</ul>

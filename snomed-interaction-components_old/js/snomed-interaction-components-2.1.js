@@ -6101,7 +6101,37 @@ function program3(depth0,data) {
   buffer += escapeExpression(stack1)
     + "-inactiveOnlyButton' data-i18n-id='i18n_inactive_only'>"
     + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_inactive_only", "Inactive components only", options) : helperMissing.call(depth0, "i18n", "i18n_inactive_only", "Inactive components only", options)))
-    + "</a>\n                            </li>\n                        </ul>\n                    </div>\n                    ";
+    + "</a>\n                            </li>\n                        </ul>\n                    </div>\n                    <div style=\"margin-top: 5px\" class=\"btn-group dropdown\">\n                        <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                            <span class='i18n' data-i18n-id='i18n_description_type'>"
+    + escapeExpression((helper = helpers.i18n || (depth0 && depth0.i18n),options={hash:{},data:data},helper ? helper.call(depth0, "i18n_description_type", "Description type", options) : helperMissing.call(depth0, "i18n", "i18n_description_type", "Description type", options)))
+    + "</span>: <span id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-searchTypeOpt\"></span>&nbsp;<span class=\"caret\"></span>\n                        </button>\n                        <ul class=\"dropdown-menu\" role=\"menu\">\n                            <li>\n                                <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-allTypeButton'> All </a>\n                            </li>\n                            <li>\n                                <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-noDefTypeButton'>Exclude definitions</a>\n                            </li>\n                            <li>\n                                <a href=\"#\" id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-fsnTypeButton'>FSN</a>\n                            </li>\n                            <li>\n                                <a href=\"#\"id='";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-preferredTermyButton'>Preferred Term</a>\n                            </li>\n                        </ul>\n                    </div>\n                    <br/>\n                    <!--Display a temporary dropdown for Language refset for better view, will remove it after the list of refsets are in place-->\n                    <div style=\"margin-top: 5px\" class=\"btn-group dropdown\" id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-filterLanguageRefsetOptHidden\">\n                        <button style=\"white-space: normal;\" type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\">\n                            <span>Language Refsets</span>&nbsp;<span class=\"caret\"></span>\n                        </button>                        \n                    </div>                \n                    <div style=\"margin-top: 5px; position: relative\">\n                        <select id=\"";
+  if (helper = helpers.divElementId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.divElementId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "-filterLanguageRefsetOpt\" multiple=\"multiple\" style=\"display: none\"></select>\n                    </div>\n                     \n                    ";
   stack1 = (helper = helpers.if_eq || (depth0 && depth0.if_eq),options={hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.server), "snowstorm", options) : helperMissing.call(depth0, "if_eq", (depth0 && depth0.server), "snowstorm", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                </div>\n            </div>\n            <div id=\"";
@@ -12841,6 +12871,7 @@ function searchPanel(divElement, options) {
         });
 
         panel.updateStatusFilterLabel();
+        panel.updateTypeFilterLabel();
 
         $("#" + panel.divElement.id + "-activeOnlyButton").click(function(event) {
             panel.options.statusSearchFilter = 'activeOnly';
@@ -12856,8 +12887,116 @@ function searchPanel(divElement, options) {
             panel.options.statusSearchFilter = 'inactiveOnly';
             panel.updateStatusFilterLabel();
         });
+        
+        $("#" + panel.divElement.id + "-allTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = '';
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-noDefTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = 'noDef';
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-fsnTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = 'fsn';
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-preferredTermyButton").click(function(event) {
+            panel.options.typeSearchFilter = 'pt';
+            panel.updateTypeFilterLabel();
+        });
+
         $("#" + panel.divElement.id + "-partialMatchingButton").click();
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
+
+        this.getLanguageRefsets();        
+    };
+
+    this.getLanguageRefsets = function() {
+        var branch = panel.options.edition;
+        if(panel.options.release.length > 0 && panel.options.release !== 'None'){
+            branch = branch + "/" + panel.options.release;
+        };
+        if(!panel.options.serverUrl.includes('snowowl')){
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': panel.options.languages
+            }
+            });
+        };
+        $.getJSON(panel.options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {              
+            // do nothing                
+        }).done(function(result) {
+            panel.options.languageRefsets = [];        
+            Object.keys(result.referenceSets).forEach(function(key) {
+                if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                    panel.options.languageRefsets.push(result.referenceSets[key]);
+                }
+            });
+
+            if (panel.options.languageRefsets.length !== 0) {
+                panel.setupLanguageRefsetDropdown();
+            }
+        });
+    }
+
+    this.setupLanguageRefsetDropdown = function() {
+        panel.options.languageRefsets.forEach(function(concept) {
+            // add item to language refset dropdow list
+            var o = new Option(concept.pt.term, concept.id);
+            $(o).html(concept.pt.term);
+            $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').append(o);
+        });
+
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect({            
+            buttonClass: 'btn btn-success',       
+            selectedClass: '',
+            templates: {
+                button: '<button type="button" style="white-space: normal;" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+            },
+            buttonText: function(options, select) {
+                if (options.length === 0) {
+                   return 'Language Refsets';
+                }
+                else{
+                    var selected = '';
+                    options.each(function() {
+                       var label = ($(this).attr('label') !== undefined) ?  $(this).attr('label'):$(this).html();
+                       selected += label + ', ';
+                    });
+                    return 'Language Refsets: ' + selected.substr(0, selected.length - 2);
+                 }
+            },          
+            onChange: function(option, checked, select) {
+                if (typeof panel.options.languageRefsetSearchFilter === 'undefined') {
+                    panel.options.languageRefsetSearchFilter = [];
+                }
+
+                if (checked) {
+                    if (!panel.options.languageRefsetSearchFilter.includes(option.val())) {
+                        panel.options.languageRefsetSearchFilter.push(option.val());
+                    }
+                }
+                else {
+                    panel.options.languageRefsetSearchFilter = panel.options.languageRefsetSearchFilter.filter(function (value) {
+                        return value !== option.val();
+                    });
+                }
+
+                var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
+                if (searchTerm.length > 0) {
+                    panel.search(searchTerm, 0, 100, true);
+                }
+            }
+        });
+
+        // must add a label attribue after muiltiselect initialised
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt option').each(function() {
+            $(this).attr('label', panel.options.languageNameOfLangRefset[$(this).val()]);
+        });
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOptHidden').hide()
     };
 
     this.setupOptionsPanel = function() {
@@ -12949,6 +13088,27 @@ function searchPanel(divElement, options) {
         }
     }
 
+    this.updateTypeFilterLabel = function() {        
+        if (panel.options.typeSearchFilter == 'noDef') {
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('Exclude definitions');
+           
+        } else if (panel.options.typeSearchFilter == 'fsn') {
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('FSN');
+           
+        } else if (panel.options.typeSearchFilter == 'pt') {
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('Preferred Term');
+           
+        } else {
+            panel.options.typeSearchFilter = '';
+            $("#" + panel.divElement.id + '-searchTypeOpt').html('All');            
+        }
+
+        var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
+        if (searchTerm.length > 0) {
+            panel.search(searchTerm, 0, 100, true);
+        }
+    }
+
     this.search = function(t, skipTo, returnLimit, forceSearch) {
         if (typeof panel.options.searchMode == "undefined") {
             panel.options.searchMode = "partialMatching";
@@ -13009,6 +13169,8 @@ function searchPanel(divElement, options) {
                     xhr.abort();
                     //console.log("aborting call...");
                 }
+                
+                $('#' + panel.divElement.id + '-searchBar2').html("");
                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'>Searching..</span>");
                 //console.log("panel.options.searchMode " + panel.options.searchMode);
                 t = t.trim();
@@ -13251,7 +13413,42 @@ function searchPanel(divElement, options) {
                     if(skipTo !== 0){
                         searchUrl = searchUrl + '&offset=' + skipTo;
                     }
-                    //console.log(searchUrl);
+                    if(panel.options.typeSearchFilter) {
+                        var descriptionTypes = [];
+                        const FSN = '900000000000003001';
+                        const SYNONYM = '900000000000013009' ;
+                        
+                        if(panel.options.typeSearchFilter ==='fsn'){
+                            descriptionTypes.push(FSN);
+                        }
+                        else if (panel.options.typeSearchFilter ==='noDef') {
+                            descriptionTypes.push(SYNONYM);
+                            descriptionTypes.push(FSN);
+                        }
+                        else if (panel.options.typeSearchFilter ==='pt') {
+                            descriptionTypes.push(SYNONYM);
+                            
+                            if (panel.options.languageRefsets && panel.options.languageRefsets.length != 0) {
+                                $.each(panel.options.languageRefsets, function(i, concept){
+                                    searchUrl = searchUrl + "&preferredIn=" + concept.conceptId;
+                                });                            
+                            }
+                        }
+                        else {
+                            // do nothing
+                        }
+
+                        if (descriptionTypes.length != 0) {
+                            $.each(descriptionTypes, function(i, type){
+                                searchUrl = searchUrl + "&type=" + type;
+                            });                            
+                        }                                                
+                    }
+                    if (panel.options.languageRefsetSearchFilter && panel.options.languageRefsetSearchFilter.length !== 0){
+                        $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
+                            searchUrl = searchUrl + "&preferredOrAcceptableIn=" + languageRefsetId;
+                        });
+                    }
                     $.ajax({
                          url: searchUrl,
                          type: "GET",

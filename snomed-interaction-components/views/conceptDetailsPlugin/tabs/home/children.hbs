@@ -1,0 +1,61 @@
+{{#if displayChildren}}
+    {{#if_eq childrenResult.length 0}}
+        <span data-i18n-id="i18n_no_children" class="text-muted i18n">{{i18n "i18n_no_children" "No Children"}}</span>
+    {{else}}
+        <ul style='list-style-type: none; padding-left: 15px;'>
+            {{#each childrenResult}}
+                {{#if active}}
+                    <li data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' class='treeLabel'>
+                        <button class='btn btn-link btn-xs treeButton' style='padding:2px'><i class='glyphicon glyphicon-{{#if_eq ../../selectedView "inferred"}}{{#if_eq isLeafInferred true}}minus{{else}}chevron-right{{/if_eq}}{{else}}{{#if_eq isLeafStated true}}minus{{else}}chevron-right{{/if_eq}}{{/if_eq}} treeButton' id='{{../../divElementId}}-treeicon-{{conceptId}}'></i></button>
+                        {{#if_eq definitionStatus "PRIMITIVE"}}
+                            <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                        {{else}}
+                            <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
+                        {{/if_eq}}
+                        {{#hasCountryIcon moduleId}}
+                            <div class="phoca-flagbox" style="width:26px;height:26px">
+                                <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                            </div>
+                        {{/hasCountryIcon}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
+                            <span class="treeLabel selectable-row" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" id="{{../../divElementId}}-treenode-{{conceptId}}">{{defaultTerm}}</span>
+                        </a>
+                    </li>
+                {{/if}}
+            {{/each}}
+        </ul>
+    {{/if_eq}}
+{{else}}
+    {{#if_eq childrenResult.length 0}}
+        <span data-i18n-id="i18n_no_children" class="text-muted i18n">{{i18n "i18n_no_children" "No children"}}</span>
+    {{else}}
+        {{#if_gr childrenResult.length 30}}
+            <button id="{{divElementId}}-showChildren" class="btn btn-link">{{childrenResult.length}} <span data-i18n-id="i18n_children" class="i18n">{{i18n "i18n_children" "children"}}</span></button>
+        {{else}}
+            <ul style='list-style-type: none; padding-left: 15px;'>
+                {{#each childrenResult}}
+                    {{#if active}}
+                        <li data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' class='treeLabel'>
+                            <button class='btn btn-link btn-xs treeButton' style='padding:2px'><i class='glyphicon glyphicon-{{#if_eq ../../selectedView "inferred"}}{{#if_eq isLeafInferred true}}minus{{else}}chevron-right{{/if_eq}}{{else}}{{#if_eq isLeafStated true}}minus{{else}}chevron-right{{/if_eq}}{{/if_eq}} treeButton' id='{{../../divElementId}}-treeicon-{{conceptId}}'></i></button>
+                            {{#if_eq definitionStatus "PRIMITIVE"}}
+                                <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                            {{else}}
+                                <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
+                            {{/if_eq}}
+                            {{#hasCountryIcon moduleId}}
+                                <div class="phoca-flagbox" style="width:26px;height:26px">
+                                    <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                                </div>
+                            {{/hasCountryIcon}}
+                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
+                                <span class="treeLabel selectable-row" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" id="{{../../divElementId}}-treenode-{{conceptId}}">{{defaultTerm}}</span>
+                            </a>
+                        </li>
+                    {{/if}}
+                {{/each}}
+            </ul>
+        {{/if_gr}}
+    {{/if_eq}}
+{{/if}}
+
+

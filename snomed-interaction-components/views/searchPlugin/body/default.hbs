@@ -1,0 +1,54 @@
+{{#if result.matches}}
+    {{#if_gre "0" result.matches.length}}
+        <tr><td class='text-muted'><span data-i18n-id="i18n_no_results" class="i18n">{{i18n "i18n_no_results" "No results"}}</span></td></tr>
+        {{#hasFilters options}}
+            <tr><td class='text-center'><span data-i18n-id="i18n_remove_filters" class="i18n">
+            {{i18n "i18n_remove_filters" "There are filters active, remove them to search again with a broader criteria."}}</span><br>
+            <button class="btn btn-danger btn-sm" id="{{divElementId}}-remove-all-filters"><span data-i18n-id="i18n_remove_filters_button" class="i18n">Remove all filters</span></button>
+        </td></tr>        {{/hasFilters}}
+    {{else}}
+        {{#each result.matches}}
+            <tr class='resultRow selectable-row{{#if_eq active false}} danger{{else}}{{#if_eq conceptActive false}} danger{{/if_eq}}{{/if_eq}}'>
+                <td class='col-md-6'>
+                    <div class='result-item' data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
+                        {{#if_eq definitionStatus "PRIMITIVE"}}
+                            <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                            {{else}}
+                              {{#if_eq definitionStatus "900000000000074008"}}
+                                  <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                                {{else}}
+                                  <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&equiv;</span>&nbsp;&nbsp;
+                                {{/if_eq}}
+                            {{/if_eq}}
+                        {{#hasCountryIcon module}}
+                            <div class="phoca-flagbox" style="width:20px;height:20px">
+                                <span class="phoca-flag {{countryIcon module}}"></span>
+                            </div>
+                        {{/hasCountryIcon}}
+                        <a href='javascript:void(0);' style='color: inherit;text-decoration: inherit; 'draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>{{term}}</a>
+                    </div>
+                </td>
+                <td class='text-muted small-text col-md-6 result-item' data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
+                    {{#if concept.fsn.term}}
+                        {{concept.fsn.term}}
+                    {{else}}
+                        {{fsn}}
+                    {{/if}}
+                </td>
+            </tr>
+        {{/each}}
+        {{#if_gr remaining 0}}
+            <tr class='more-row'><td colspan='2' class='text-center'><button class='btn btn-link' id='{{divElementId}}-more'><span data-i18n-id="i18n_load" class="i18n">{{i18n "i18n_load" "Load"}}</span> {{returnLimit}} <span data-i18n-id="i18n_more" class="i18n">{{i18n "i18n_more" "more"}}</span> ({{remaining}} <span data-i18n-id="i18n_remaining_server" class="i18n">{{i18n "i18n_remaining_server" "remaining on server"}}</span>)</button></td></tr>
+        {{else}}
+            <tr class='more-row'><td colspan='2' class='text-center text-muted'><span data-i18n-id="i18n_all_res" class="i18n">{{i18n "i18n_all_res" "All"}}</span> {{result.details.total}} <span data-i18n-id="i18n_results_displayed" class="i18n">{{i18n "i18n_results_displayed" "results are displayed"}}</span></td></tr>
+        {{/if_gr}}
+    {{/if_gre}}
+{{else}}
+    <tr><td class='text-muted'><span data-i18n-id="i18n_no_results" class="i18n">{{i18n "i18n_no_results" "No results"}}</span></td></tr>
+    {{#hasFilters options}}
+        <tr><td class='text-center'><span data-i18n-id="i18n_remove_filters" class="i18n">
+            {{i18n "i18n_remove_filters" "There are filters active, remove them to search again with a broader criteria."}}</span><br>
+            <button class="btn btn-danger btn-sm" id="{{divElementId}}-remove-all-filters"><span data-i18n-id="i18n_remove_filters_button" class="i18n">Remove all filters</span></button>
+        </td></tr>
+    {{/hasFilters}}
+{{/if}}
