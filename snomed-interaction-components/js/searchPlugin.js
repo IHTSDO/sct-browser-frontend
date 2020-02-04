@@ -1342,7 +1342,7 @@ function searchPanel(divElement, options) {
                         });
                         $("#" + panel.divElement.id + "-more").unbind();
                         $("#" + panel.divElement.id + "-more").click(function(event) {
-                            panel.search(t, (parseInt(skipTo) + parseInt(returnLimit)), returnLimit, true);
+                            panel.search(t, (parseInt(skipTo) + parseInt(returnLimit)), returnLimit, true, true);
                         });
                         $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
                             channel.publish(panel.divElement.id, {
