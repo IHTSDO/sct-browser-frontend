@@ -113,7 +113,6 @@
         var selectedFlag = '/browser/img/flags/us.png';
         var currentPerspective = "home";
 
-        var originalTask = '';
         var options = {
             serverUrl: "",
             queryServerUrl: "",
@@ -165,14 +164,11 @@
             "71000181105": "ET"
         };
 
-        var manifests;
-
         function getCopyrightYear() {
             $.ajax({ 
                 type: 'GET', 
                 url:'/', 
                 success: function(data, textStatus, response){ 
-                    //alert(new Date(response.getResponseHeader('Date')).getFullYear());
                     $('#copyright_year').text(new Date(response.getResponseHeader('Date')).getFullYear())
                 }
             });
@@ -186,7 +182,6 @@
             }
 
             xhr = $.getJSON("/snowstorm/snomed-ct/codesystems", function(result) {
-                console.log(result);
             }).done(function(result) {
                 console.log(result);
                 options.serverUrl = "/snowstorm/snomed-ct";
@@ -267,15 +262,6 @@
                 var dailyBuildInternational = [];
                 var dailyBuildLocal = [];
                 var localReleases = [];
-
-                // Add GB extension
-//                var gbExtension = {};
-//                gbExtension.name = 'United Kingdom edition';
-//                gbExtension.countryCode = 'gb';
-//                gbExtension.latestVersion = {};
-//                gbExtension.latestVersion.version = '(hosted by the UK)';
-//                gbExtension.href = 'https://termbrowser.nhs.uk/';
-//                localReleases.push(gbExtension);
 
                 if (options.releases) {
                     for (let i = 0; i < options.releases.items.length; ++i) {
@@ -513,44 +499,13 @@
                 $('.noSelect').disableTextSelect(); //No text selection on elements with a class of 'noSelect'
             });
 
-            $("#accept-license-button-modal").unbind();
-            $("#accept-license-button-modal").click(function() {
-                createCookie("licenseCookie", "true", 2);
-            });
-
-            if (typeof QueryString.dev != "undefined") {
-                console.log("Using Dev Server...");
-                //options.serverUrl = "http://107.170.33.116/api";
-            }
-
             if (typeof QueryString.languages != "undefined") {
                 options.languages = QueryString.languages;
-            }
+            }           
 
-            //if (typeof QueryString.server != "undefined") {
-            //    options.serverUrl = QueryString.server;
-            //}
-
-            var edition = QueryString.edition;
-            // if (typeof edition == "undefined" || edition == null || edition == "") {
-            //     edition = "en-edition";
-            // }
+            var edition = QueryString.edition;           
             if (typeof edition != "undefined" && edition.startsWith('MAIN')) {
                 options.edition = edition;
-            }
-
-            var isTask = function(task) {
-                var strArray = task.split('-');
-                if (strArray.length === 2 && !isNaN(strArray[1])) {
-                    return true;
-                }
-
-                return false;
-            };
-
-            var release = QueryString.release;
-            if (typeof release != "undefined" && isTask(release)) {
-                options.release = release;
             }
 
             var diagrammingMarkupEnabled = QueryString.diagrammingMarkupEnabled;
@@ -617,56 +572,58 @@
             var txValue2 = QueryString.conceptIdTx2;
             if (typeof txValue2 == "undefined" || txValue2 == null || txValue2 == "") {
                 txValue2 = 138875005;
-            }
+            }                   
 
-            var acceptLicense = QueryString.acceptLicense;
-            if (typeof acceptLicense == "undefined" || acceptLicense == null || acceptLicense == "") {
-                acceptLicense = false;
-            }
-            options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
-
-            var i = 0;
-
-            if (QueryString.perspective == "home") {
-                initialize();
-            } else if (QueryString.perspective == "browsing") {
-                currentPerspective = "browsing";
-                switchToBrowsing(cdValue1, cdValue2, txValue1);
-            } else if (QueryString.perspective == "full") {
+            // For TS Browser
+            if (options.imsUrl) {
                 currentPerspective = "full";
-                switchToFullHeight(cdValue1, cdValue1);
-            } else if (QueryString.perspective == "compare_concepts") {
-                currentPerspective = "compare_concepts";
-                switchToComparingConcepts(cdValue1, cdValue2);
-            } else if (QueryString.perspective == "compare_hierarchies") {
-                currentPerspective = "compare_hierarchies";
-                switchToComparingTaxonomies(cdValue1, txValue1, txValue2);
-            } else if (QueryString.perspective == "responsive") {
-                currentPerspective = "responsive";
-                switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
-            } else {
-                if (options.imsUrl != null) {
+                switchToFullHeight(cdValue1, txValue1);
+
+                initializeTSBrowser();
+            }
+             // For Public Browser
+            else {
+                if (QueryString.perspective == "home") {
+                    initialize();
+                } else if (QueryString.perspective == "browsing") {
+                    currentPerspective = "browsing";
+                    switchToBrowsing(cdValue1, cdValue2, txValue1);
+                } else if (QueryString.perspective == "full") {
                     currentPerspective = "full";
-                    switchToFullHeight(cdValue1, txValue1);
+                    switchToFullHeight(cdValue1, cdValue1);
+                } else if (QueryString.perspective == "compare_concepts") {
+                    currentPerspective = "compare_concepts";
+                    switchToComparingConcepts(cdValue1, cdValue2);
+                } else if (QueryString.perspective == "compare_hierarchies") {
+                    currentPerspective = "compare_hierarchies";
+                    switchToComparingTaxonomies(cdValue1, txValue1, txValue2);
+                } else if (QueryString.perspective == "responsive") {
+                    currentPerspective = "responsive";
+                    switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
                 } else {
                     initialize();
                 }
 
-            }
-            if (!options.acceptLicense && options.imsUrl === null) {
+                initializePublicBrowser();
+            }           
+        }
+
+        function initializePublicBrowser() {
+            var acceptLicense = QueryString.acceptLicense;
+            if (typeof acceptLicense == "undefined" || acceptLicense == null || acceptLicense == "") {
+                acceptLicense = false;
+            }                    
+
+            $("#accept-license-button-modal").unbind();
+            $("#accept-license-button-modal").click(function() {
+                createCookie("licenseCookie", "true", 2);
+            });
+            options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
+            if (!options.acceptLicense) {
                 $('#license-modal').modal('show');
             }
 
-            if (options.edition) {
-                $("#projectDdl").val(options.edition).change();
-            }
-            if (options.release) {
-                $("#taskDdl").val(options.release).change();
-            }
-
-            var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
-
-            // PROJECT DROPDOWN HANDLER
+            // RELEASES DROPDOWN HANDLER for dailay build
             if(options.dailyBuildBrowser) {
                 if (options.dailyBuildReleases) {
                     var $releaseSwitcher = $('#releaseSwitcher');
@@ -711,7 +668,9 @@
                         }
                     }
                 }
-            } else {
+            } 
+            // RELEASES DROPDOWN HANDLER for public browser
+            else {
                 if (options.releases && options.releases.items) {
                     var $releaseSwitcher = $('#releaseSwitcher');
                     for (let i = 0; i < options.releases.items.length; ++i) {
@@ -766,57 +725,172 @@
                             }
                         }                        
                     }
-
                 }
             }
+        }
 
-            if (options.imsUrl !== null) {
-                $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
-                    var $projectDdl = $('#projectDdl');
+        function initializeTSBrowser() {            
+            var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
+            var isTask = function(task) {
+                var strArray = task.split('-');
+                if (strArray.length === 2 && !isNaN(strArray[1])) {
+                    return true;
+                }
 
-                    var projectsInDateFormat = [];
-                    var projectsInStringFormat = [];
-                    result.forEach(function(item) {
-                        var strArray = item.key.split('-');
-                        if (!isNaN(strArray[0])) {
-                            projectsInDateFormat.push(item);
-                        } else {
-                            projectsInStringFormat.push(item);
-                        }
-                    });
+                return false;
+            };
+            var release = QueryString.release;
+            if (typeof release != "undefined" && isTask(release)) {
+                options.release = release;
+            }
 
-                    projectsInStringFormat.sort(function(a, b) {
-                        return a.key.localeCompare(b.key);
-                    });
+            $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
+                var $projectDdl = $('#projectDdl');
 
-                    projectsInDateFormat.sort(function(a, b) {
-                        return b.key.localeCompare(a.key);
-                    });
-                    result.items = projectsInStringFormat.concat(projectsInDateFormat);
+                var projectsInDateFormat = [];
+                var projectsInStringFormat = [];
+                result.forEach(function(item) {
+                    var strArray = item.key.split('-');
+                    if (!isNaN(strArray[0])) {
+                        projectsInDateFormat.push(item);
+                    } else {
+                        projectsInStringFormat.push(item);
+                    }
+                });
 
-                    if ($('<option>').val('MAIN')) {
+                projectsInStringFormat.sort(function(a, b) {
+                    return a.key.localeCompare(b.key);
+                });
+
+                projectsInDateFormat.sort(function(a, b) {
+                    return b.key.localeCompare(a.key);
+                });
+                result.items = projectsInStringFormat.concat(projectsInDateFormat);
+
+                                       
+                $.getJSON("/auth", function(result) {}).done(function(response) {                  
+                    var isManagedServiceUser = response.roles.includes('ROLE_ms-users');
+                    if (!isManagedServiceUser) {
                         $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
+                    }
+                    $.each(result.items, function() {
+                        $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
+                    });                   
 
-                        $.each(result.items, function() {
-                            var relativePath = this.branchPath.substring("MAIN/".length);
-                            $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
-                        });
-
-                        $(function() {
-                            var temp = "MAIN";
-                            $("#projectDdl").val(temp);
-                            if (options.edition.length > 0) {
-                                $("#projectDdl").val(options.edition);
+                    if (options.edition) {
+                        var found = result.items.filter(function(item) {
+                            return item.branchPath === options.edition;
+                        }).length !== 0;
+                        
+                        if (!found) {
+                            if (isManagedServiceUser) {
+                                options.edition = result.items[0].branchPath;
+                                options.release = "None";
                             }
-                        });
+                            else {
+                                options.edition = 'MAIN';
+                            }
+                        } 
+                        else {
+                            $("#projectDdl").val(options.edition);
+                            
+                        }
+                        $("#projectDdl").val(options.edition).change();                                                        
+                    }
+                });                
+
+                var projectChanged = function() {
+                    getTasks();
+                    options.edition = $('#projectDdl').val();
+                    if (!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))) {
+                        options.release = "None";
+                    }
+                    var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
+                    var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
+                    var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
+                    var dai = new dailyBuildPanel(document.getElementById("fh-daily_canvas"), options);
+                    var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
+
+                    cdPanel.subscribe(tpt);
+                    cdPanel.subscribe(searchP);
+                    cdPanel.subscribe(refP);
+                    cdPanel.subscribe(dai);
+                    cdPanel.setupCanvas();
+                }
+
+                $("#projectDdl").on("change", function(event) {
+                    projectChanged(this, event);
+                });                    
+            });
+
+            // TASK DROPDOWN HANDLER
+            function getTasks() {
+                var groupTaskList = function(taskList) {
+                    //return b.baseTimestamp - a.baseTimestamp;
+                    var map = {};
+                    for (var i = 0; i < taskList.length; i++) {
+                        var task = taskList[i];
+                        var strArray = task.key.split('-');
+                        var items = [];
+                        if (strArray.length === 2 && !isNaN(strArray[1])) {
+                            if (strArray[0] in map) {
+                                items = map[strArray[0]];
+                            }
+                            items.push(task);
+                            items.sort(function(a, b) {
+                                var strArrayA = a.key.split('-');
+                                var strArrayB = b.key.split('-');
+                                if (strArrayA[0] > strArrayB[0]) {
+                                    return -1;
+                                } else if (strArrayA[0] < strArrayB[0]) {
+                                    return 1;
+                                } else if (strArrayA.length > 1 && strArrayB.length > 1) {
+                                    return parseInt(strArrayB[1]) - parseInt(strArrayA[1]);
+                                } else {
+                                    return b.key.localeCompare(a.key);
+                                }
+                            });
+                            map[strArray[0]] = items;
+                        } else {
+                            items.push(task);
+                            map[task.key] = items;
+                        }
                     }
 
-                    var projectChanged = function() {
-                        getTaskList();
+                    var keys = Object.keys(map);
+                    keys.sort(function(a, b) {
+                        return a.localeCompare(b);
+                    });
+
+                    var result = [];
+                    for (var i = 0; i < keys.length; i++) {
+                        result = result.concat(map[keys[i]]);
+                    }
+                    return result;
+                };
+
+                var project = $('#projectDdl').val();
+                project = project.substring(project.lastIndexOf("/") + 1);
+                if (project === 'MAIN') {
+                    var $taskDdl = $('#taskDdl');
+                    $taskDdl.html("");
+                    $('<option>').val("None").text("None").appendTo($taskDdl);
+
+                    return;
+                }
+                $.getJSON("/authoring-services/projects/" + project + "/tasks?lightweight=true").done(function(result) {
+                    var $taskDdl = $('#taskDdl');
+                    $taskDdl.html("");
+                    $('<option>').val("None").text("None").appendTo($taskDdl);
+                    result = groupTaskList(result);                    
+                    $.each(result, function() {
+                        $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
+                    });
+                    
+                    var taskChanged = function() {                            
                         options.edition = $('#projectDdl').val();
-                        if (!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))) {
-                            options.release = "None";
-                        }
+                        options.release = $('#taskDdl').val();
+
                         var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                         var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
                         var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
@@ -829,117 +903,22 @@
                         cdPanel.subscribe(dai);
                         cdPanel.setupCanvas();
                     }
-                    $("#projectDdl").on("change", function(event) {
-                        projectChanged(this, event);
+                    
+                    $("#taskDdl").on("change", function(event) {
+                        taskChanged(this, event);
                     });
 
-                    if (options.edition) {
-                        $("#projectDdl").val(options.edition).change();
-                        if (originalTask) {
-                            options.task = originalTask;
-                            //options.release = originalTask;
-                        }
-                    } else {
-                        $("#projectDdl").val(options.release).change();
-                    }
-                });
+                    if (options.release) {
+                        var found = result.filter(function(item) {
+                            return item.key === options.release;
+                        }).length !== 0;
 
-                // TASK DROPDOWN HANDLER
-                var getTaskList = function() {
-                    var project = $('#projectDdl').val();
-                    project = project.substring(project.lastIndexOf("/") + 1);
-                    if (project === 'MAIN') {
-                        var $taskDdl = $('#taskDdl');
-                        $taskDdl.html("");
-                        $('<option>').val("None").text("None").appendTo($taskDdl);
-
-                        return;
-                    }
-                    $.getJSON("/authoring-services/projects/" + project + "/tasks?lightweight=true").done(function(result) {
-                        var $taskDdl = $('#taskDdl');
-                        $taskDdl.html("");
-                        $('<option>').val("None").text("None").appendTo($taskDdl);
-                        result.items = groupTaskList(result);
-                        $.each(result, function() {
-                            // var relativePath = this.path.substring("MAIN/".length);
-                            $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
-                        });
-
-                        if (options.release) {
+                        if(found) {
                             $("#taskDdl").val(options.release).change();
-                        }
-                        var taskChanged = function() {
-                            // var branchPath = $('#taskDdl').val();
-                            //If no task selected in the task dropdown, use the project
-                            // if (branchPath == "None") {
-                            //     branchPath = $('#projectDdl').val();
-                            // }
-                            options.edition = $('#projectDdl').val();
-                            options.release = $('#taskDdl').val();
-
-                            var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-                            var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-                            var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-                            var dai = new dailyBuildPanel(document.getElementById("fh-daily_canvas"), options);
-                            var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
-
-                            cdPanel.subscribe(tpt);
-                            cdPanel.subscribe(searchP);
-                            cdPanel.subscribe(refP);
-                            cdPanel.subscribe(dai);
-                            cdPanel.setupCanvas();
-                        }
-                        $("#taskDdl").on("change", function(event) {
-                            taskChanged(this, event);
-                        });
-                    });
-                }
-            }
-
-            var groupTaskList = function(taskList) {
-                //return b.baseTimestamp - a.baseTimestamp;
-                var map = {};
-                for (var i = 0; i < taskList.length; i++) {
-                    var task = taskList[i];
-                    var strArray = task.key.split('-');
-                    var items = [];
-                    if (strArray.length === 2 && !isNaN(strArray[1])) {
-                        if (strArray[0] in map) {
-                            items = map[strArray[0]];
-                        }
-                        items.push(task);
-                        items.sort(function(a, b) {
-                            var strArrayA = a.key.split('-');
-                            var strArrayB = b.key.split('-');
-                            if (strArrayA[0] > strArrayB[0]) {
-                                return -1;
-                            } else if (strArrayA[0] < strArrayB[0]) {
-                                return 1;
-                            } else if (strArrayA.length > 1 && strArrayB.length > 1) {
-                                return parseInt(strArrayB[1]) - parseInt(strArrayA[1]);
-                            } else {
-                                return b.key.localeCompare(a.key);
-                            }
-                        });
-                        map[strArray[0]] = items;
-                    } else {
-                        items.push(task);
-                        map[task.key] = items;
+                        }                        
                     }
-                }
-
-                var keys = Object.keys(map);
-                keys.sort(function(a, b) {
-                    return a.localeCompare(b);
                 });
-
-                var result = [];
-                for (var i = 0; i < keys.length; i++) {
-                    result = result.concat(map[keys[i]]);
-                }
-                return result;
-
-            };
+            }
         }
 
         function initTour() {
