@@ -1,5 +1,9 @@
 {{#if result.totalElements}}
     <span class='text-muted'>{{result.totalElements}} matches found in {{elapsed}} seconds.</span>
+{{else}}
+    {{#if result.total}}
+        <span class='text-muted'>{{result.total}} matches found in {{elapsed}} seconds.</span>
+    {{/if}}
 {{/if}}
 <!--<span class='pull right'>-->
 <!--<a class='btm btn-xs' style='margin: 3px; color: #777; background-color: #fff; border: 1px #ccc solid; margin-left: 25px;' data-toggle='collapse' href='#{{divElementId}}-searchFiltersPanel'>-->

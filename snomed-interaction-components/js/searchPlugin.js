@@ -240,6 +240,14 @@ function searchPanel(divElement, options) {
         //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
         //        });
 
+        $("#" + panel.divElement.id + "-multiExtensionsSearchCheckbox").click(function(event) {
+            var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
+           
+            if (searchTerm.length > 0) {
+                panel.search(searchTerm, 0, 100, true);
+            }
+        });
+
         $("#" + panel.divElement.id + "-fullTextButton").click(function(event) {
             panel.options.searchMode = 'fullText';
             if (typeof(Storage) !== "undefined") {
@@ -903,8 +911,16 @@ function searchPanel(divElement, options) {
                     if(options.release.length > 0 && options.release !== 'None'){
                         branch = branch + "/" + options.release;
                     };
-                    var searchUrl = options.serverUrl + "/browser/" + branch + "/descriptions?" +
+                    var searchUrl = '';
+                    if ($("#" + panel.divElement.id + "-multiExtensionsSearchCheckbox").is(":checked")) {
+                        searchUrl = options.serverUrl + "/multisearch/descriptions?" +
                         "&limit=100";
+                    }
+                    else {
+                        searchUrl = options.serverUrl + "/browser/" + branch + "/descriptions?" +
+                        "&limit=100";
+                    }
+
                     if (panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowstorm')) {
                         searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
                         searchUrl = searchUrl + "&active=true";
@@ -987,7 +1003,9 @@ function searchPanel(divElement, options) {
                             });                            
                         }                                                
                     }
-                    if (panel.options.languageRefsetSearchFilter && panel.options.languageRefsetSearchFilter.length !== 0){
+                    if (panel.options.languageRefsetSearchFilter 
+                        && panel.options.languageRefsetSearchFilter.length !== 0
+                        && !$("#" + panel.divElement.id + "-multiExtensionsSearchCheckbox").is(":checked")){
                         searchUrl = searchUrl + (searchUrl.includes('&type') ? '' : '&type=900000000000013009');
                         $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
                             searchUrl = searchUrl + "&preferredOrAcceptableIn=" + languageRefsetId;
@@ -1046,6 +1064,7 @@ function searchPanel(divElement, options) {
                             match.conceptActive = match.concept.active;
                             match.conceptId = match.concept.conceptId;
                             match.definitionStatus = match.concept.definitionStatus;
+                            match.branch = match.branchPath
                         })
 
                         $('#' + panel.divElement.id + '-resultsTable').find('.more-row').remove();
@@ -1156,13 +1175,15 @@ function searchPanel(divElement, options) {
                             options: panel.options
                         };
                         $('#' + panel.divElement.id + '-searchBar').html(JST["snomed-interaction-components/views/searchPlugin/body/bar.hbs"](context));
-                        $('#' + panel.divElement.id + '-searchBar2').html(JST["snomed-interaction-components/views/searchPlugin/body/bar2.hbs"](context));
-                        $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
-                        if (!skipSemtagFilter) {
-                            $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
+                        if (!$("#" + panel.divElement.id + "-multiExtensionsSearchCheckbox").is(":checked")) {                           
+                            $('#' + panel.divElement.id + '-searchBar2').html(JST["snomed-interaction-components/views/searchPlugin/body/bar2.hbs"](context));
+                            $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
+                            if (!skipSemtagFilter) {
+                                $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
+                            }                        
+                            $('#' + panel.divElement.id + '-searchBar5').html(JST["snomed-interaction-components/views/searchPlugin/body/bar5.hbs"](context));
+                            $('#' + panel.divElement.id + '-searchBar6').html(JST["snomed-interaction-components/views/searchPlugin/body/bar6.hbs"](context));
                         }                        
-                        $('#' + panel.divElement.id + '-searchBar5').html(JST["snomed-interaction-components/views/searchPlugin/body/bar5.hbs"](context));
-                        $('#' + panel.divElement.id + '-searchBar6').html(JST["snomed-interaction-components/views/searchPlugin/body/bar6.hbs"](context));
 
                         $('#' + panel.divElement.id + '-moduleResumed').tooltip({
                             placement: 'left auto',
@@ -1262,8 +1283,14 @@ function searchPanel(divElement, options) {
                         }
                         xhr = null;
                         var matchedDescriptions = result.matches;
-                        //console.log(JSON.stringify(result));
-                        var remaining = result.totalElements - (skipTo + returnLimit);
+                        
+                        var remaining = 0;
+                        if(result.totalElements) {
+                            remaining = result.totalElements - (skipTo + returnLimit);
+                        }
+                        else if (result.total) {
+                            remaining = result.total - (skipTo + returnLimit);
+                        }
 
                         if (panel.options.searchMode == "regex") {
                             result.matches.sort(function(a, b) {
@@ -1350,7 +1377,8 @@ function searchPanel(divElement, options) {
                                 module: $(event.target).attr("data-module"),
                                 conceptId: $(event.target).attr('data-concept-id'),
                                 source: panel.divElement.id,
-                                showConcept: true
+                                showConcept: true,
+                                branch: $(event.target).attr('data-branch')
                             });
                         });
                         $("[draggable='true']").tooltip({

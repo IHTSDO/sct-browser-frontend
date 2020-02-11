@@ -273,7 +273,7 @@ function conceptDetails(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-apply-button").click(function() {
             //console.log("apply!");
             panel.readOptionsPanel();
-            panel.updateCanvas();
+            panel.updateCanvas(options.currentBranchPath);
         });
 
         //        $("#" + panel.divElement.id + "-linkerButton").click(function(event) {
@@ -344,7 +344,7 @@ function conceptDetails(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
     }
 
-    this.updateCanvas = function() {
+    this.updateCanvas = function(branchPath) {
         //        $("#members-" + panel.divElement.id).html("");
         $("#home-children-cant-" + panel.divElement.id).html("");
         $('.more-fields-button').popover('hide');
@@ -370,7 +370,9 @@ function conceptDetails(divElement, conceptId, options) {
             xhr = null;
             //console.log("aborting call...");
         }
-        var branch = options.edition;
+        var currentBranchChanged = options.currentBranchPath !== branchPath;
+        options.currentBranchPath = branchPath;
+        var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         }
@@ -590,7 +592,7 @@ function conceptDetails(divElement, conceptId, options) {
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
             if (typeof result.descendantCount !== 'undefined') {
-                var branch = options.edition;
+                var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
                 if(options.release.length > 0 && options.release !== 'None'){
                     branch = branch + "/" + options.release;
                 };
@@ -1146,8 +1148,8 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#' + panel.descsPId).find("[rel=tooltip-right]").tooltip({ placement: 'right' });
             };
             
-            if (!panel.options.languageRefsets || panel.options.languageRefsets.length === 0) {
-                var branch = options.edition;
+            if (!panel.options.languageRefsets || panel.options.languageRefsets.length === 0 || currentBranchChanged) {
+                var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
                 if(options.release.length > 0 && options.release !== 'None'){
                     branch = branch + "/" + options.release;
                 };
@@ -1226,7 +1228,7 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#home-' + panel.divElement.id + '-inferred-button').click(function(event) {
                     panel.options.selectedView = "inferred";
                     panel.setupOptionsPanel();
-                    panel.updateCanvas();
+                    panel.updateCanvas(options.currentBranchPath);
                 });               
             } else {
                 //$('#home-' + panel.divElement.id + '-viewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
@@ -1246,7 +1248,7 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#home-' + panel.divElement.id + '-stated-button').click(function(event) {
                     panel.options.selectedView = "stated";
                     panel.setupOptionsPanel();
-                    panel.updateCanvas();
+                    panel.updateCanvas(options.currentBranchPath);
                 });                
             }
 
@@ -1534,7 +1536,7 @@ function conceptDetails(divElement, conceptId, options) {
                 xhrRefsets = null;
             }
 
-            xhrRefsets = $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId + '&active=true', function(result) {
+            xhrRefsets = $.getJSON(options.serverUrl + "/" + (options.currentBranchPath ? options.currentBranchPath : options.edition) + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId + '&active=true', function(result) {
                 }).done(function(result) {
                     var simpleRefsetMembers = [];
                     var simpleMapRefsetMembers = [];
@@ -1606,7 +1608,7 @@ function conceptDetails(divElement, conceptId, options) {
 							var dfd = $.Deferred();
 							var result = {concepts: []};
 							for (var i = 0 ; i < list.length; i++) {
-								$.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/' : '') + "concepts/" + list[i], function (concept) {
+								$.getJSON(options.serverUrl + "/browser/" + (options.currentBranchPath ? options.currentBranchPath : options.edition) + "/" + ((options.release && options.release !== 'None') ? options.release + '/' : '') + "concepts/" + list[i], function (concept) {
 								}).done(function (concept) {
 									result.concepts.push(concept)
 									if (result.concepts.length  === list.length) {
@@ -1883,7 +1885,7 @@ function conceptDetails(divElement, conceptId, options) {
         //            $("#home-children-" + panel.divElement.id).show();
         //            $('#' + panel.childrenPId).show();
                 
-        var branch = options.edition;
+        var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
@@ -1972,12 +1974,13 @@ function conceptDetails(divElement, conceptId, options) {
             $("#home-parents-" + panel.divElement.id).dblclick(function(event) {
                 var conceptId = $(event.target).closest("li").attr('data-concept-id');
                 panel.conceptId = conceptId;
-                panel.updateCanvas();
+                panel.updateCanvas(options.currentBranchPath);
                 channel.publish(panel.divElement.id, {
                     term: $(event.target).attr('data-term'),
                     module: $(event.target).attr("data-module"),
                     conceptId: conceptId,
-                    source: panel.divElement.id
+                    source: panel.divElement.id,
+                    branch: options.currentBranchPath
                 });
             });
         });
@@ -2085,12 +2088,13 @@ function conceptDetails(divElement, conceptId, options) {
             $("#home-children-" + panel.divElement.id + "-body").dblclick(function(event) {
                 var conceptId = $(event.target).closest("li").attr('data-concept-id');
                 panel.conceptId = conceptId;
-                panel.updateCanvas();
+                panel.updateCanvas(options.currentBranchPath);
                 channel.publish(panel.divElement.id, {
                     term: $(event.target).attr('data-term'),
                     module: $(event.target).attr("data-module"),
                     conceptId: conceptId,
-                    source: panel.divElement.id
+                    source: panel.divElement.id,
+                    branch: options.currentBranchPath
                 });
             });
             if (typeof i18n_display_children == "undefined") {
@@ -2105,13 +2109,13 @@ function conceptDetails(divElement, conceptId, options) {
             });
             $("#" + panel.divElement.id + "-showChildren").click(function() {
                 panel.options.displayChildren = true;
-                panel.updateCanvas();
+                panel.updateCanvas(options.currentBranchPath);
             });
         }).fail(function() {
             $('#' + panel.childrenPId).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
         });
         //    }
-        panel.loadMembers(100, 0);
+        panel.loadMembers(100, 0, null);
     }
 
     this.getReferences = function(conceptId) {
@@ -2210,7 +2214,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren.abort();
             //console.log("aborting children call...");
         };
-        var branch = options.edition;
+        var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
@@ -2307,7 +2311,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrParents.abort();
             //console.log("aborting children call...");
         };
-        var branch = "" + options.edition;
+        var branch = options.currentBranchPath ? options.currentBranchPath : "" + options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
@@ -2395,7 +2399,7 @@ function conceptDetails(divElement, conceptId, options) {
     }
 
     this.loadMembers = function(returnLimit, skipTo, paginate) {
-        var branch = options.edition;
+        var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
@@ -2540,7 +2544,7 @@ function conceptDetails(divElement, conceptId, options) {
                 //var clickedTerm = $(e.target).data("term");
                 panel.conceptId = clickedConceptId;
                 $('#details-tabs-' + panel.divElement.id + ' a:first').tab('show');
-                panel.updateCanvas();
+                panel.updateCanvas(options.currentBranchPath);
             });
         }).fail(function() {
             $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>This concept has no members</span></td></tr>");
@@ -2639,7 +2643,7 @@ function conceptDetails(divElement, conceptId, options) {
                         panel.loadMarkers();
                 }
                 panel.readOptionsPanel();
-                panel.updateCanvas();
+                panel.updateCanvas(data.branch);
                 //            This creates a cycle
                 //            channel.publish(panel.divElement.id, {
                 //                term: data.term,

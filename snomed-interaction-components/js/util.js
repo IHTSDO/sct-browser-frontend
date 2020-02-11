@@ -120,6 +120,7 @@ function iconToDrag(text){
 function drag(ev, id) {
     var dataText = "";
     var term = "", conceptId = "";
+    var branch = "";
     $.each(ev.target.attributes, function (){
         if (this.name.substr(0, 4) == "data"){
             ev.dataTransfer.setData(this.name.substr(5), this.value);
@@ -128,6 +129,9 @@ function drag(ev, id) {
             }
             if (this.name.substr(5) == "term"){
                 term = this.value;
+            }
+            if (this.name.substr(5) == "branch"){
+                branch = this.value;
             }
         }
     });
@@ -142,6 +146,7 @@ function drag(ev, id) {
     dataText = conceptId + "|" + term;
     ev.dataTransfer.setData("Text", dataText);
     ev.dataTransfer.setData("divElementId", id);
+    ev.dataTransfer.setData("branch", branch);
 }
 
 function dropE(ev){
@@ -278,6 +283,7 @@ function dropT(ev, id) {
         var divElementId = id;
         var panel;
         var conceptId = ev.dataTransfer.getData("concept-id");
+        var branch = ev.dataTransfer.getData("branch");        
         if (typeof conceptId == "undefined" && i < text.length){
             conceptId = text.substr(0, i);
         }
@@ -303,11 +309,12 @@ function dropT(ev, id) {
                 var time = d.getTime();
                 panel.default.conceptId = conceptId;
                 panel.history.push({term: term, conceptId: conceptId, time: time});
-                panel.setToConcept(conceptId);
+                panel.setToConcept(conceptId,null,null,null,null,branch);
                 channel.publish(panel.divElement.id, {
                     term: term,
                     conceptId: conceptId,
-                    source: panel.divElement.id
+                    source: panel.divElement.id,
+                    branch: branch
                 });
             }
         }
