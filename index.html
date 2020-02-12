@@ -140,7 +140,8 @@
             statusSearchFilter: "activeOnly",
             // highlightByEffectiveTime: "false",
             highlightByEffectiveTime: "20200131",
-            dailyBuildBrowser: false
+            dailyBuildBrowser: false,
+            multiExtensionSearch: false
         };
 
         options.languageNameOfLangRefset = {
@@ -232,6 +233,9 @@
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
+                    if (!options.dailyBuildBrowser) {
+                        options.multiExtensionSearch = true;
+                    }                    
                     start();
                 });
 

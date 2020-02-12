@@ -2115,7 +2115,7 @@ function conceptDetails(divElement, conceptId, options) {
             $('#' + panel.childrenPId).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
         });
         //    }
-        panel.loadMembers(100, 0, null);
+        panel.loadMembers(100, 0);
     }
 
     this.getReferences = function(conceptId) {

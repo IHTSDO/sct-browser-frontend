@@ -42,7 +42,8 @@ function searchPanel(divElement, options) {
         };
         var context = {
             divElementId: panel.divElement.id,
-            server: server
+            server: server,
+            options: panel.options
         };
         Handlebars.registerHelper('if_eq', function(a, b, opts) {
             if (opts != "undefined") {
@@ -240,20 +241,13 @@ function searchPanel(divElement, options) {
         //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
         //        });
 
-        $("#" + panel.divElement.id + "-multiExtensionsSearchCheckbox").click(function(event) {
-            var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
-           
-            if (searchTerm.length > 0) {
-                panel.search(searchTerm, 0, 100, true);
-            }
-        });
-
         $("#" + panel.divElement.id + "-fullTextButton").click(function(event) {
             panel.options.searchMode = 'fullText';
             if (typeof(Storage) !== "undefined") {
                 localStorage.setItem("searchMode", panel.options.searchMode);
             }
             panel.updateSearchLabel();
+            panel.updateSearchOptions();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').show();
             if (searchTerm.charAt(0) != "^") {
@@ -269,10 +263,12 @@ function searchPanel(divElement, options) {
                 localStorage.setItem("searchMode", panel.options.searchMode);
             }
             panel.updateSearchLabel();
+            panel.updateSearchOptions();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
             if (searchTerm.charAt(0) == "^") {
-                $("#" + panel.divElement.id + '-searchBox').val(searchTerm.slice(1));
+                searchTerm = searchTerm.slice(1);
+                $("#" + panel.divElement.id + '-searchBox').val(searchTerm);
             }
             if (searchTerm.length > 0) {
                 panel.search(searchTerm, 0, 100, true);
@@ -284,11 +280,29 @@ function searchPanel(divElement, options) {
                 localStorage.setItem("searchMode", panel.options.searchMode);
             }
             panel.updateSearchLabel();
+            panel.updateSearchOptions();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
             if (searchTerm.charAt(0) != "^") {
                 $("#" + panel.divElement.id + '-searchBox').val("^" + searchTerm);
             }
+            if (searchTerm.length > 0) {
+                panel.search(searchTerm, 0, 100, true);
+            }
+        });
+        $("#" + panel.divElement.id + "-multiExtensionButton").click(function(event) {
+            panel.options.searchMode = 'multiExtension';
+            $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("searchMode", panel.options.searchMode);
+            }
+            panel.updateSearchLabel();
+            panel.updateSearchOptions();
+            var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
+            if (searchTerm.charAt(0) == "^") {
+                searchTerm = searchTerm.slice(1);
+                $("#" + panel.divElement.id + '-searchBox').val(searchTerm);                
+            }       
             if (searchTerm.length > 0) {
                 panel.search(searchTerm, 0, 100, true);
             }
@@ -408,6 +422,9 @@ function searchPanel(divElement, options) {
                         break;
                     case 'regex':
                         $("#" + panel.divElement.id + "-regexButton").click();
+                        break;
+                    case 'multiExtension':
+                        $("#" + panel.divElement.id + "-multiExtensionButton").click();
                         break;
                     default:
                         $("#" + panel.divElement.id + "-partialMatchingButton").click();
@@ -912,105 +929,104 @@ function searchPanel(divElement, options) {
                         branch = branch + "/" + options.release;
                     };
                     var searchUrl = '';
-                    if ($("#" + panel.divElement.id + "-multiExtensionsSearchCheckbox").is(":checked")) {
-                        searchUrl = options.serverUrl + "/multisearch/descriptions?" +
-                        "&limit=100";
+                    if (panel.options.searchMode === 'multiExtension') {
+                        searchUrl = options.serverUrl + "/multisearch/descriptions?&limit=100&active=true&conceptActive=true&term=" + encodeURIComponent(t);                        
                     }
                     else {
                         searchUrl = options.serverUrl + "/browser/" + branch + "/descriptions?" +
                         "&limit=100";
-                    }
 
-                    if (panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowstorm')) {
-                        searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
-                        searchUrl = searchUrl + "&active=true";
-                        searchUrl = searchUrl + "&conceptActive=true";
-                        searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
-                    }
-                    else if(panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowowl')) {
-                        searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
-                    }
-                    if (panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowstorm')) {
-                        searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
-                        searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
-                        searchUrl = searchUrl + "&conceptActive=false";
-                    }
-                    else if(panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowowl')) {
-                        searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
-                    }
-                    if (panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowstorm')) {
-                        searchUrl = searchUrl + "&active=true";
-                        searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
-                        searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
-                    }
-                    else if(panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowowl')) {
-                        searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
-                    }
-                    if (panel.options.semTagFilter != "none") {
-                        searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
-                    }
-                    if (panel.options.semTagsFilter && panel.options.semTagsFilter.length !== 0){                        
-                        $.each(panel.options.semTagsFilter, function(i, semTag){
-                            searchUrl = searchUrl + "&semanticTags=" + semTag;
-                        });
-                    }
-                    if (panel.options.langFilter != "none") {
-                        searchUrl = searchUrl + "&language=" + panel.options.langFilter;
-                    }
-                    if (panel.options.moduleFilter != 'none') {
-                        searchUrl = searchUrl + "&module=" + panel.options.moduleFilter;
-                    }
-                    if (panel.options.refsetFilter != 'none') {
-                        searchUrl = searchUrl + "&conceptRefset=" + panel.options.refsetFilter;
-                    }
-                    if (panel.options.textIndexNormalized != "none") {
-                        searchUrl = searchUrl + "&normalize=" + panel.options.textIndexNormalized;
-                    }
-                    if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
-                        searchUrl = searchUrl + "&groupByConcept=true";
-                    }
-                    if(skipTo !== 0){
-                        searchUrl = searchUrl + '&offset=' + skipTo;
-                    }
-                    if(panel.options.typeSearchFilter) {
-                        var descriptionTypes = [];
-                        const FSN = '900000000000003001';
-                        const SYNONYM = '900000000000013009' ;
-                        
-                        if(panel.options.typeSearchFilter ==='fsn'){
-                            descriptionTypes.push(FSN);
+                        if (panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowstorm')) {
+                            searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
+                            searchUrl = searchUrl + "&active=true";
+                            searchUrl = searchUrl + "&conceptActive=true";
+                            searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
                         }
-                        else if (panel.options.typeSearchFilter ==='noDef') {
-                            descriptionTypes.push(SYNONYM);
-                            descriptionTypes.push(FSN);
+                        else if(panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowowl')) {
+                            searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
                         }
-                        else if (panel.options.typeSearchFilter ==='pt') {
-                            descriptionTypes.push(SYNONYM);
+                        if (panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowstorm')) {
+                            searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
+                            searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
+                            searchUrl = searchUrl + "&conceptActive=false";
+                        }
+                        else if(panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowowl')) {
+                            searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
+                        }
+                        if (panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowstorm')) {
+                            searchUrl = searchUrl + "&active=true";
+                            searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
+                            searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
+                        }
+                        else if(panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowowl')) {
+                            searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
+                        }
+                        if (panel.options.semTagFilter != "none") {
+                            searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
+                        }
+                        if (panel.options.semTagsFilter && panel.options.semTagsFilter.length !== 0){                        
+                            $.each(panel.options.semTagsFilter, function(i, semTag){
+                                searchUrl = searchUrl + "&semanticTags=" + semTag;
+                            });
+                        }
+                        if (panel.options.langFilter != "none") {
+                            searchUrl = searchUrl + "&language=" + panel.options.langFilter;
+                        }
+                        if (panel.options.moduleFilter != 'none') {
+                            searchUrl = searchUrl + "&module=" + panel.options.moduleFilter;
+                        }
+                        if (panel.options.refsetFilter != 'none') {
+                            searchUrl = searchUrl + "&conceptRefset=" + panel.options.refsetFilter;
+                        }
+                        if (panel.options.textIndexNormalized != "none") {
+                            searchUrl = searchUrl + "&normalize=" + panel.options.textIndexNormalized;
+                        }
+                        if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
+                            searchUrl = searchUrl + "&groupByConcept=true";
+                        }
+                        if(skipTo !== 0){
+                            searchUrl = searchUrl + '&offset=' + skipTo;
+                        }
+                        if(panel.options.typeSearchFilter) {
+                            var descriptionTypes = [];
+                            const FSN = '900000000000003001';
+                            const SYNONYM = '900000000000013009' ;
                             
-                            if (panel.options.languageRefsets && panel.options.languageRefsets.length != 0) {
-                                $.each(panel.options.languageRefsets, function(i, concept){
-                                    searchUrl = searchUrl + "&preferredIn=" + concept.conceptId;
-                                });                            
+                            if(panel.options.typeSearchFilter ==='fsn'){
+                                descriptionTypes.push(FSN);
                             }
+                            else if (panel.options.typeSearchFilter ==='noDef') {
+                                descriptionTypes.push(SYNONYM);
+                                descriptionTypes.push(FSN);
+                            }
+                            else if (panel.options.typeSearchFilter ==='pt') {
+                                descriptionTypes.push(SYNONYM);
+                                
+                                if (panel.options.languageRefsets && panel.options.languageRefsets.length != 0) {
+                                    $.each(panel.options.languageRefsets, function(i, concept){
+                                        searchUrl = searchUrl + "&preferredIn=" + concept.conceptId;
+                                    });                            
+                                }
+                            }
+                            else {
+                                // do nothing
+                            }
+    
+                            if (descriptionTypes.length != 0) {
+                                $.each(descriptionTypes, function(i, type){
+                                    searchUrl = searchUrl + "&type=" + type;
+                                });                            
+                            }                                                
                         }
-                        else {
-                            // do nothing
+                        if (panel.options.languageRefsetSearchFilter 
+                            && panel.options.languageRefsetSearchFilter.length !== 0){
+                            searchUrl = searchUrl + (searchUrl.includes('&type') ? '' : '&type=900000000000013009');
+                            $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
+                                searchUrl = searchUrl + "&preferredOrAcceptableIn=" + languageRefsetId;
+                            });
                         }
-
-                        if (descriptionTypes.length != 0) {
-                            $.each(descriptionTypes, function(i, type){
-                                searchUrl = searchUrl + "&type=" + type;
-                            });                            
-                        }                                                
                     }
-                    if (panel.options.languageRefsetSearchFilter 
-                        && panel.options.languageRefsetSearchFilter.length !== 0
-                        && !$("#" + panel.divElement.id + "-multiExtensionsSearchCheckbox").is(":checked")){
-                        searchUrl = searchUrl + (searchUrl.includes('&type') ? '' : '&type=900000000000013009');
-                        $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
-                            searchUrl = searchUrl + "&preferredOrAcceptableIn=" + languageRefsetId;
-                        });
-                    }
+                    
                     $.ajax({
                          url: searchUrl,
                          type: "GET",
@@ -1175,7 +1191,7 @@ function searchPanel(divElement, options) {
                             options: panel.options
                         };
                         $('#' + panel.divElement.id + '-searchBar').html(JST["snomed-interaction-components/views/searchPlugin/body/bar.hbs"](context));
-                        if (!$("#" + panel.divElement.id + "-multiExtensionsSearchCheckbox").is(":checked")) {                           
+                        if (panel.options.searchMode !== 'multiExtension') {                           
                             $('#' + panel.divElement.id + '-searchBar2').html(JST["snomed-interaction-components/views/searchPlugin/body/bar2.hbs"](context));
                             $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
                             if (!skipSemtagFilter) {
@@ -1559,6 +1575,9 @@ function searchPanel(divElement, options) {
         if (typeof i18n_full_text_search_mode == "undefined") {
             i18n_full_text_search_mode = 'Full';
         }
+        if (typeof i18n_multi_extension_search_mode == "undefined") {
+            i18n_multi_extension_search_mode = 'Multi Extension';
+        }
         if (panel.options.searchMode == "regex") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
             $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_1'>" + i18n_search_examp_1 + "</span> ");
@@ -1571,6 +1590,10 @@ function searchPanel(divElement, options) {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>" + i18n_partial_match_search_mode + "</span>");
             $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_3'>" + i18n_search_examp_3 + "</span> ");
             $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>" + i18n_partial_match_search_mode + "</span>");
+        } else if (panel.options.searchMode == "multiExtension") {
+            $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_multi_extension_search_mode'>" + i18n_multi_extension_search_mode + "</span>");
+            $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_3'>" + i18n_search_examp_3 + "</span> ");
+            $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_multi_extension_search_mode'>" + i18n_multi_extension_search_mode + "</span>");
         }
 
         if (typeof panel.options.searchLang == "undefined") {
@@ -1595,8 +1618,24 @@ function searchPanel(divElement, options) {
 
     }
 
+    this.updateSearchOptions = function() {               
+        if (panel.options.searchMode == "multiExtension") {
+            $("#" + panel.divElement.id + '-searchStatusSection').hide();
+            $("#" + panel.divElement.id + '-searchTypeSection').hide();
+            $("#" + panel.divElement.id + '-searchGroupByConceptSection').hide();
+            $("#" + panel.divElement.id + '-filterLanguageRefsetSection').hide();            
+
+        } else {
+            $("#" + panel.divElement.id + '-searchStatusSection').show();
+            $("#" + panel.divElement.id + '-searchTypeSection').show();
+            $("#" + panel.divElement.id + '-searchGroupByConceptSection').show();
+            $("#" + panel.divElement.id + '-filterLanguageRefsetSection').show();
+        }
+    }
+
     this.setupCanvas();
     this.updateSearchLabel();
+    this.updateSearchOptions();
 
 }
 
