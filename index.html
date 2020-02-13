@@ -605,9 +605,6 @@
 
             // For TS Browser
             if (options.imsUrl) {
-                currentPerspective = "full";
-                switchToFullHeight(cdValue1, txValue1);
-
                 initializeTSBrowser();
             }
              // For Public Browser
@@ -758,8 +755,7 @@
             }
         }
 
-        function initializeTSBrowser() {            
-            var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
+        function initializeTSBrowser() {
             var isTask = function(task) {
                 var strArray = task.split('-');
                 if (strArray.length === 2 && !isNaN(strArray[1])) {
@@ -773,87 +769,114 @@
                 options.release = release;
             }
 
-            $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
-                var $projectDdl = $('#projectDdl');
-
-                var projectsInDateFormat = [];
-                var projectsInStringFormat = [];
-                result.forEach(function(item) {
-                    var strArray = item.key.split('-');
-                    if (!isNaN(strArray[0])) {
-                        projectsInDateFormat.push(item);
-                    } else {
-                        projectsInStringFormat.push(item);
-                    }
-                });
-
-                projectsInStringFormat.sort(function(a, b) {
-                    return a.key.localeCompare(b.key);
-                });
-
-                projectsInDateFormat.sort(function(a, b) {
-                    return b.key.localeCompare(a.key);
-                });
-                result.items = projectsInStringFormat.concat(projectsInDateFormat);
-
-                                       
-                $.getJSON("/auth", function(result) {}).done(function(response) {                  
-                    var isManagedServiceUser = response.roles.includes('ROLE_ms-users');
-                    if (!isManagedServiceUser) {
-                        $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
-                    }
-                    $.each(result.items, function() {
-                        $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
-                    });                   
-
-                    if (options.edition) {
-                        var found = result.items.filter(function(item) {
-                            return item.branchPath === options.edition;
+            getProjects().then(function() {
+                getTasks().then(function(results) {
+                    if (options.release) {
+                        var found = results.filter(function(item) {
+                            return item.key === options.release;
                         }).length !== 0;
-                        
-                        if (!found) {
-                            if (isManagedServiceUser) {
-                                options.edition = result.items[0].branchPath;
-                                options.release = "None";
-                            }
-                            else {
-                                options.edition = 'MAIN';
-                            }
-                        } 
-                        else {
-                            $("#projectDdl").val(options.edition);
-                            
-                        }
-                        $("#projectDdl").val(options.edition).change();                                                        
-                    }
-                });                
 
-                var projectChanged = function() {
-                    getTasks();
-                    options.edition = $('#projectDdl').val();
-                    if (!options.edition.includes(options.release.substring(0, options.release.lastIndexOf("-")))) {
+                        if(!found) {
+                            options.release = "None";
+                        }                     
+                    }
+                    else {
                         options.release = "None";
                     }
-                    var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-                    var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-                    var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-                    var dai = new dailyBuildPanel(document.getElementById("fh-daily_canvas"), options);
-                    var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
-
-                    cdPanel.subscribe(tpt);
-                    cdPanel.subscribe(searchP);
-                    cdPanel.subscribe(refP);
-                    cdPanel.subscribe(dai);
-                    cdPanel.setupCanvas();
-                }
-
-                $("#projectDdl").on("change", function(event) {
-                    projectChanged(this, event);
-                });                    
+                    
+                    $("#taskDdl").val(options.release);
+                    var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
+                    switchToFullHeight(focusConcept,focusConcept);
+                }); 
             });
+
+            function getProjects(){
+                var dfd = $.Deferred();
+                $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
+                    var $projectDdl = $('#projectDdl');
+
+                    var projectsInDateFormat = [];
+                    var projectsInStringFormat = [];
+                    result.forEach(function(item) {
+                        var strArray = item.key.split('-');
+                        if (!isNaN(strArray[0])) {
+                            projectsInDateFormat.push(item);
+                        } else {
+                            projectsInStringFormat.push(item);
+                        }
+                    });
+
+                    projectsInStringFormat.sort(function(a, b) {
+                        return a.key.localeCompare(b.key);
+                    });
+
+                    projectsInDateFormat.sort(function(a, b) {
+                        return b.key.localeCompare(a.key);
+                    });
+                    result.items = projectsInStringFormat.concat(projectsInDateFormat);
+
+                                        
+                    $.getJSON("/auth", function(result) {}).done(function(response) {                  
+                        var isManagedServiceUser = response.roles.includes('ROLE_ms-users');
+                        if (!isManagedServiceUser) {
+                            $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
+                        }
+                        $.each(result.items, function() {
+                            $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
+                        });                   
+
+                        if (options.edition) {
+                            var found = result.items.filter(function(item) {
+                                return item.branchPath === options.edition;
+                            }).length !== 0;
+                            
+                            if (!found) {
+                                if (isManagedServiceUser) {
+                                    options.edition = result.items[0].branchPath;
+                                    options.release = "None";
+                                }
+                                else {
+                                    options.edition = 'MAIN';
+                                }
+                            }
+                            $("#projectDdl").val(options.edition);                                                                   
+                        }
+                        else {
+                            console.error('Edition is not specified.')
+                        }
+                    });                
+
+                    var projectChanged = function() {
+                        options.edition = $('#projectDdl').val();                                                
+                        options.release = "None";
+                        getTasks();
+                        
+                        var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
+                        var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
+                        var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
+                        var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);                    
+                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
+
+                        cdPanel.subscribe(tpt);
+                        cdPanel.subscribe(searchP);
+                        cdPanel.subscribe(refP);
+                        cdPanel.setupCanvas();                                           
+                    }
+
+                    $("#projectDdl").on("change", function(event) {
+                        projectChanged(this, event);
+                    });
+
+                    dfd.resolve();                    
+                });
+
+                return dfd.promise();
+            }
 
             // TASK DROPDOWN HANDLER
             function getTasks() {
+                var dfd = $.Deferred();
+                
                 var groupTaskList = function(taskList) {
                     //return b.baseTimestamp - a.baseTimestamp;
                     var map = {};
@@ -898,14 +921,14 @@
                     return result;
                 };
 
-                var project = $('#projectDdl').val();
-                project = project.substring(project.lastIndexOf("/") + 1);
+                var project = options.edition.substring(options.edition.lastIndexOf("/") + 1);
                 if (project === 'MAIN') {
                     var $taskDdl = $('#taskDdl');
+                    options.release = "None";
                     $taskDdl.html("");
                     $('<option>').val("None").text("None").appendTo($taskDdl);
 
-                    return;
+                    dfd.resolve([]);
                 }
                 $.getJSON("/authoring-services/projects/" + project + "/tasks?lightweight=true").done(function(result) {
                     var $taskDdl = $('#taskDdl');
@@ -916,20 +939,18 @@
                         $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
                     });
                     
-                    var taskChanged = function() {                            
-                        options.edition = $('#projectDdl').val();
+                    var taskChanged = function() {
                         options.release = $('#taskDdl').val();
 
+                        var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
                         var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                         var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-                        var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-                        var dai = new dailyBuildPanel(document.getElementById("fh-daily_canvas"), options);
+                        var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);                        
                         var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
 
                         cdPanel.subscribe(tpt);
                         cdPanel.subscribe(searchP);
                         cdPanel.subscribe(refP);
-                        cdPanel.subscribe(dai);
                         cdPanel.setupCanvas();
                     }
                     
@@ -937,17 +958,11 @@
                         taskChanged(this, event);
                     });
 
-                    if (options.release) {
-                        var found = result.filter(function(item) {
-                            return item.key === options.release;
-                        }).length !== 0;
-
-                        if(found) {
-                            $("#taskDdl").val(options.release).change();
-                        }                        
-                    }
+                    dfd.resolve(result);                   
                 });
-            }
+
+                return dfd.promise()
+            }            
         }
 
         function initTour() {
