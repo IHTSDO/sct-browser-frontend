@@ -50,19 +50,6 @@ function drawConceptDiagram (concept, div, options, panel) {
                     }
                 }
             });
-            $.each(concept.gciAxioms, function (i, axiom) {
-                var axiomToPush = {};
-                axiomToPush.relationships = [];
-                axiomToPush.type = 'gci';
-                $.each(axiom.relationships, function (i, field) {
-                    if (field.type.conceptId === '116680003') {
-                        axiomToPush.relationships.push(field);
-                    } else {
-                        axiomToPush.relationships.push(field);
-                    }
-                });
-                axioms.push(axiomToPush);
-            });
             $.each(concept.classAxioms, function (i, axiom) {
                 var axiomToPush = {
                     relationships : [],
@@ -78,6 +65,19 @@ function drawConceptDiagram (concept, div, options, panel) {
                 });
                 axioms.push(axiomToPush);
             });
+            $.each(concept.gciAxioms, function (i, axiom) {
+                var axiomToPush = {};
+                axiomToPush.relationships = [];
+                axiomToPush.type = 'gci';
+                $.each(axiom.relationships, function (i, field) {
+                    if (field.type.conceptId === '116680003') {
+                        axiomToPush.relationships.push(field);
+                    } else {
+                        axiomToPush.relationships.push(field);
+                    }
+                });
+                axioms.push(axiomToPush);
+            });            
         } else {
             if (concept.relationships) {
                 $.each(concept.relationships, function (i, field) {
