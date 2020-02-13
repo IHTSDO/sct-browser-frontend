@@ -790,7 +790,7 @@
                 }); 
             });
 
-            function getProjects(){
+            function getProjects() {
                 var dfd = $.Deferred();
                 $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
                     var $projectDdl = $('#projectDdl');
@@ -850,7 +850,7 @@
                         options.edition = $('#projectDdl').val();                                                
                         options.release = "None";
                         getTasks();
-                        
+                        QueryString = queryString();
                         var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
                         var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                         var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
@@ -942,6 +942,7 @@
                     var taskChanged = function() {
                         options.release = $('#taskDdl').val();
 
+                        QueryString = queryString();
                         var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
                         var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
                         var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
