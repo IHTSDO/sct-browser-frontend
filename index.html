@@ -184,171 +184,6 @@
                 options.edition = 'MAIN';
             }
 
-            xhr = $.getJSON("/snowstorm/snomed-ct/codesystems", function(result) {
-            }).done(function(result) {
-                console.log(result);
-                options.serverUrl = "/snowstorm/snomed-ct";
-                options.queryServerUrl = "/snowstorm/snomed-ct";
-                options.releases = result;
-
-                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
-                    options.imsUrl = result.endpoints.imsEndpoint;
-
-                    options.language = 'en';
-                    options.languageObject = {
-                        en: "English"
-                    };
-                    if(options.edition === 'MAIN/2019-07-31'){
-                        options.queryBranch = 'MAIN';
-                        options.edition = 'MAIN';
-                    }
-
-                    var $header = $('#header-nav');
-                    var $projectSpan = $('<span>');
-                    $projectSpan.css('margin-left', '10px');
-                    $projectSpan.html('Project');
-                    $header.append($projectSpan);
-
-                    var $projectSelect = $('<select>');
-                    $projectSelect.css('margin-top', '18px');
-                    $projectSelect.css('margin-left', '2px');
-                    $projectSelect.css('width', '110px');
-                    $projectSelect.attr('id', 'projectDdl');
-                    $header.append($projectSelect);
-
-                    var $taskSpan = $('<span>');
-                    $taskSpan.css('margin-left', '10px');
-                    $taskSpan.html('Task');
-                    $header.append($taskSpan);
-
-                    var $taskSelect = $('<select>');
-                    $taskSelect.css('margin-top', '18px');
-                    $taskSelect.css('margin-left', '2px');
-                    $taskSelect.css('width', '110px');
-                    $taskSelect.attr('id', 'taskDdl');
-                    $header.append($taskSelect);
-
-                    start();
-                }).fail(function() {
-                    options.imsUrl = null;
-                    $('#edition-selector').css('display', 'block');
-                    if (!options.dailyBuildBrowser) {
-                        options.multiExtensionSearch = true;
-                    }                    
-                    start();
-                });
-
-                const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES'];
-                // sort extensions. International and Spanish Editions are always on Top
-                if (options.releases) {
-                    options.releases.items.sort(function(a, b) {
-                        if (a.shortName === 'SNOMEDCT' && b.shortName === 'SNOMEDCT-ES') {
-                            return -1;
-                        }
-                        if (b.shortName === 'SNOMEDCT' && a.shortName === 'SNOMEDCT-ES') {
-                            return 1;
-                        }
-                        if (internationalEditionShortNames.indexOf(a.shortName) > -1) {
-                            return -1;
-                        }
-                        if (internationalEditionShortNames.indexOf(b.shortName) > -1) {
-                            return 1;
-                        }
-
-                        return a.name.localeCompare(b.name);
-                    });
-                }
-
-                // dynamic extension links
-                var internationalReleases = [];
-                options.dailyBuildReleases = [];
-                var dailyBuildInternational = [];
-                var dailyBuildLocal = [];
-                var localReleases = [];
-
-                if (options.releases) {
-                    for (let i = 0; i < options.releases.items.length; ++i) {
-                        var release = options.releases.items[i];
-                        if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
-                            internationalReleases.push(release);
-                            if(release.dailyBuildAvailable){
-                                options.dailyBuildReleases.push(release);
-                                dailyBuildInternational.push(release);
-                            }
-                        } else {
-                            localReleases.push(release);
-                            if(release.dailyBuildAvailable){
-                                options.dailyBuildReleases.push(release);
-                                dailyBuildLocal.push(release);
-                            }
-                        }
-                    }
-                }
-
-                addEditionLinks($('#international_editions'), internationalReleases);
-
-                // sort local extensions again
-                localReleases.sort(function(a, b) {
-                    return a.name.localeCompare(b.name);
-                });
-                addEditionLinks($('#local_editions'), localReleases);
-                
-                addEditionLinks($('#dailybuild_editions'), dailyBuildInternational);
-                addEditionLinks($('#dailybuild_local_editions'), dailyBuildLocal);
-            }).fail(function() {
-                console.log('fail');
-                options.serverUrl = "/snowowl/snomed-ct/v2";
-                options.queryServerUrl = "/snowowl/snomed-ct/v2";
-                xhr = $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
-                    options.imsUrl = result.endpoints.imsEndpoint;
-
-                    options.language = 'en';
-                    options.languageObject = {
-                        en: "English"
-                    };
-                    
-                    if(options.edition === 'MAIN/2019-07-31'){
-                        options.queryBranch = 'MAIN';
-                        options.edition = 'MAIN';
-                    }
-
-                    //create project/task switcher
-                    var $header = $('#header-nav');
-                    var $projectSpan = $('<span>');
-                    $projectSpan.css('margin-left', '10px');
-                    $projectSpan.html('Project');
-                    $header.append($projectSpan);
-
-                    var $projectSelect = $('<select>');
-                    $projectSelect.css('margin-top', '18px');
-                    $projectSelect.css('margin-left', '2px');
-                    $projectSelect.css('width', '110px');
-                    $projectSelect.attr('id', 'projectDdl');
-                    $header.append($projectSelect);
-
-                    var $taskSpan = $('<span>');
-                    $taskSpan.css('margin-left', '10px');
-                    $taskSpan.html('Task');
-                    $header.append($taskSpan);
-
-                    var $taskSelect = $('<select>');
-                    $taskSelect.css('margin-top', '18px');
-                    $taskSelect.css('margin-left', '2px');
-                    $taskSelect.css('width', '110px');
-                    $taskSelect.attr('id', 'taskDdl');
-                    $header.append($taskSelect);
-                   
-                    // hile Refset overview tab
-                    $('#fh-refset_canvas').css('display', 'none');
-                    $('#fh-refset_canvas-li').css('display', 'none');
-
-                    start();
-                }).fail(function() {
-                    options.imsUrl = null;
-                    start();
-                });
-            });
-
             if(options.dailyBuildBrowser) {
                 $("#fh-daily_canvas-li").css({
                     "display": "block"
@@ -359,6 +194,150 @@
                     "display": "none"
                 });
             }
+
+            var getCodeSystems = function() {
+                var dfd = $.Deferred();
+
+                $.getJSON("/snowstorm/snomed-ct/codesystems", function(result) {
+                }).done(function(result) {
+                    console.log(result);
+                    options.serverUrl = "/snowstorm/snomed-ct";
+                    options.queryServerUrl = "/snowstorm/snomed-ct";
+                    options.releases = result;
+
+                    const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES'];
+                    // sort extensions. International and Spanish Editions are always on Top
+                    if (options.releases) {
+                        options.releases.items.sort(function(a, b) {
+                            if (a.shortName === 'SNOMEDCT' && b.shortName === 'SNOMEDCT-ES') {
+                                return -1;
+                            }
+                            if (b.shortName === 'SNOMEDCT' && a.shortName === 'SNOMEDCT-ES') {
+                                return 1;
+                            }
+                            if (internationalEditionShortNames.indexOf(a.shortName) > -1) {
+                                return -1;
+                            }
+                            if (internationalEditionShortNames.indexOf(b.shortName) > -1) {
+                                return 1;
+                            }
+
+                            return a.name.localeCompare(b.name);
+                        });
+                    }
+
+                    // dynamic extension links
+                    var internationalReleases = [];
+                    options.dailyBuildReleases = [];
+                    var dailyBuildInternational = [];
+                    var dailyBuildLocal = [];
+                    var localReleases = [];
+
+                    if (options.releases) {
+                        for (let i = 0; i < options.releases.items.length; ++i) {
+                            var release = options.releases.items[i];
+                            if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
+                                internationalReleases.push(release);
+                                if(release.dailyBuildAvailable){
+                                    options.dailyBuildReleases.push(release);
+                                    dailyBuildInternational.push(release);
+                                }
+                            } else {
+                                localReleases.push(release);
+                                if(release.dailyBuildAvailable){
+                                    options.dailyBuildReleases.push(release);
+                                    dailyBuildLocal.push(release);
+                                }
+                            }
+                        }
+                    }
+
+                    // sort local extensions again
+                    localReleases.sort(function(a, b) {
+                        return a.name.localeCompare(b.name);
+                    });
+                    
+                    addEditionLinks($('#international_editions'), internationalReleases);
+                    addEditionLinks($('#local_editions'), localReleases);                
+                    addEditionLinks($('#dailybuild_editions'), dailyBuildInternational);
+                    addEditionLinks($('#dailybuild_local_editions'), dailyBuildLocal);
+
+                    dfd.resolve();
+                }).fail(function() {
+                    console.log('fail');
+                    options.serverUrl = "/snowowl/snomed-ct/v2";
+                    options.queryServerUrl = "/snowowl/snomed-ct/v2";
+                    
+                    dfd.resolve();
+                });
+
+                return dfd.promise();
+            };
+
+            var getUIConfiguration = function() {
+                var dfd = $.Deferred();
+
+                $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
+                    options.imsUrl = result.endpoints.imsEndpoint;
+
+                    options.language = 'en';
+                    options.languageObject = {
+                        en: "English"
+                    };
+                    if(options.edition === 'MAIN/2019-07-31'){
+                        options.queryBranch = 'MAIN';
+                        options.edition = 'MAIN';
+                    }
+
+                    var $header = $('#header-nav');
+                    var $projectSpan = $('<span>');
+                    $projectSpan.css('margin-left', '10px');
+                    $projectSpan.html('Project');
+                    $header.append($projectSpan);
+
+                    var $projectSelect = $('<select>');
+                    $projectSelect.css('margin-top', '18px');
+                    $projectSelect.css('margin-left', '2px');
+                    $projectSelect.css('width', '110px');
+                    $projectSelect.attr('id', 'projectDdl');
+                    $header.append($projectSelect);
+
+                    var $taskSpan = $('<span>');
+                    $taskSpan.css('margin-left', '10px');
+                    $taskSpan.html('Task');
+                    $header.append($taskSpan);
+
+                    var $taskSelect = $('<select>');
+                    $taskSelect.css('margin-top', '18px');
+                    $taskSelect.css('margin-left', '2px');
+                    $taskSelect.css('width', '110px');
+                    $taskSelect.attr('id', 'taskDdl');
+                    $header.append($taskSelect);
+                    
+                    dfd.resolve();
+                }).fail(function() {
+                    options.imsUrl = null;
+                    dfd.resolve();
+                })
+
+                return dfd.promise();
+            };
+            
+            $.when(getCodeSystems(), getUIConfiguration()).then(function() {
+                if(options.imsUrl == null) {
+                    $('#edition-selector').css('display', 'block');
+                    if (!options.dailyBuildBrowser) {
+                        options.multiExtensionSearch = true;
+                    }
+                }
+                else {
+                    if(options.serverUrl === '/snowowl/snomed-ct/v2') {
+                        $('#fh-refset_canvas').css('display', 'none');
+                        $('#fh-refset_canvas-li').css('display', 'none');
+                    }
+                }
+                start();
+            });
         }
 
         var addEditionLinks = function($releaseSwitcher, releases) {
@@ -922,7 +901,7 @@
                     $taskDdl.html("");
                     $('<option>').val("None").text("None").appendTo($taskDdl);
 
-                    dfd.resolve([]);
+                    return dfd.resolve([]);                    
                 }
                 $.getJSON("/authoring-services/projects/" + project + "/tasks?lightweight=true").done(function(result) {
                     var $taskDdl = $('#taskDdl');
