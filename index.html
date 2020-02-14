@@ -180,8 +180,9 @@
         function determineServer() {
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
-                options.queryBranch = 'MAIN';
-                options.edition = 'MAIN';
+            }
+            else if(window.location.hostname.includes('browser')) {
+                options.publicBrowser = true;
             }
 
             if(options.dailyBuildBrowser) {
@@ -277,7 +278,7 @@
             var getUIConfiguration = function() {
                 var dfd = $.Deferred();
 
-                if (options.dailyBuildBrowser) {
+                if (options.dailyBuildBrowser || options.publicBrowser) {
                     options.imsUrl = null;
                     return dfd.resolve();
                 }
@@ -289,11 +290,7 @@
                     options.languageObject = {
                         en: "English"
                     };
-                    if(options.edition === 'MAIN/2019-07-31'){
-                        options.queryBranch = 'MAIN';
-                        options.edition = 'MAIN';
-                    }
-
+                    
                     var $header = $('#header-nav');
                     var $projectSpan = $('<span>');
                     $projectSpan.css('margin-left', '10px');
