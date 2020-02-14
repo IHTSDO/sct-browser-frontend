@@ -507,36 +507,6 @@
                 options.languages = QueryString.languages;
             }           
 
-            var edition = QueryString.edition;           
-            if (typeof edition != "undefined" && edition.startsWith('MAIN')) {
-                // check valid edition against public browser or daily build
-                if (options.imsUrl === null) {
-                    if (options.dailyBuildBrowser) {
-                        if (options.dailyBuildReleases.filter(function(release) {
-                                return release.branchPath === edition;
-                            }).length !== 0) {
-                            options.edition = edition;
-                        }
-                        else {
-                            options.edition = 'MAIN';
-                        }                        
-                    }
-                    else {
-                        if (options.releases.items.filter(function(release) {
-                                return (typeof release.latestVersion !== "undefined") && release.latestVersion.branchPath === edition;
-                            }).length !== 0) {
-                            options.edition = edition;
-                        }
-                        else {
-                            options.edition = options.releases.items[0].latestVersion.branchPath;
-                        }                  
-                    }
-                }
-                else {
-                    options.edition = edition;
-                }
-            }            
-
             var diagrammingMarkupEnabled = QueryString.diagrammingMarkupEnabled;
             if (typeof diagrammingMarkupEnabled == "undefined" || diagrammingMarkupEnabled == null || diagrammingMarkupEnabled == "") {
                 diagrammingMarkupEnabled = false;
@@ -550,38 +520,73 @@
                 }
                 options.languages = languages;
             }
-            if (options.releases && options.releases.items && options.releases.items.length > 0) {
-                var branchPathMatched = false;
-                // For Public Browser
-                for (let i = 0; i < options.releases.items.length; i++) {
-                    if (typeof options.releases.items[i].latestVersion !== "undefined" && options.releases.items[i].latestVersion.branchPath === options.edition) {
-                        options.languageObject = options.releases.items[i].languages;
-                        options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
-                        branchPathMatched = true;
-                        break;
-                    }
-                }
-
-                // For TS Browser
-                if (!branchPathMatched) {
-                    for (let i = 0; i < options.releases.items.length; i++) {
-                        if (typeof options.releases.items[i].branchPath !== "undefined" 
-                            && options.releases.items[i].branchPath.split('/').length > 1 
-                            && options.edition.split('/').length > 1
-                            && options.edition.includes(options.releases.items[i].branchPath)) {
-                            options.languageObject = options.releases.items[i].languages;
-                            options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];                            
-                            break;
-                        }
-                    }  
-                }
-            }
-
+            
             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(QueryString.ui_language);
             selectedLanguage = selectedLanguageAndFlag.selectedLanguage;
             selectedFlag = selectedLanguageAndFlag.selectedFlag;
 
             switchLanguage(selectedLanguage, selectedFlag, false);
+            
+            // For TS Browser
+            if (options.imsUrl) {
+                initializeTSBrowser();
+            }
+             // For Public Browser
+            else {
+               initializePublicBrowser();
+            }           
+        }
+
+        function initializePublicBrowser() {
+            var edition = QueryString.edition;           
+            if (options.dailyBuildBrowser) {
+                if (options.dailyBuildReleases.filter(function(release) {
+                        return release.branchPath === edition;
+                    }).length !== 0) {
+                    options.edition = edition;
+                }
+                else {
+                    options.edition = 'MAIN';
+                }
+
+                if (options.dailyBuildReleases &&  options.dailyBuildReleases.length > 0) {
+                    for (let i = 0; i < options.dailyBuildReleases.length; i++) {
+                        let release = options.dailyBuildReleases[i];
+                        if (release.branchPath === options.edition) {
+                            options.languageObject = release.languages;
+                            options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            break;
+                        }
+                    }                    
+                }                       
+            }
+            else {
+                if (options.releases.items.filter(function(release) {
+                        return (typeof release.latestVersion !== "undefined") && release.latestVersion.branchPath === edition;
+                    }).length !== 0) {
+                    options.edition = edition;
+                }
+                else {
+                    for (let i = 0; i < options.releases.items.length; i++) {
+                        let release = options.releases.items[i];
+                        if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath) {
+                            options.edition = release.latestVersion.branchPath;
+                            break;
+                        }
+                    }                    
+                }
+
+                if (options.releases && options.releases.items && options.releases.items.length > 0) {
+                    for (let i = 0; i < options.releases.items.length; i++) {
+                        let release = options.releases.items[i];
+                        if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === options.edition) {
+                            options.languageObject = release.languages;
+                            options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            break;
+                        }
+                    }                    
+                }                  
+            }
 
             var cdValue1 = QueryString.conceptId1;
             if (typeof cdValue1 == "undefined" || cdValue1 == null || cdValue1 == "") {
@@ -601,40 +606,28 @@
             var txValue2 = QueryString.conceptIdTx2;
             if (typeof txValue2 == "undefined" || txValue2 == null || txValue2 == "") {
                 txValue2 = 138875005;
-            }                   
-
-            // For TS Browser
-            if (options.imsUrl) {
-                initializeTSBrowser();
             }
-             // For Public Browser
-            else {
-                if (QueryString.perspective == "home") {
-                    initialize();
-                } else if (QueryString.perspective == "browsing") {
-                    currentPerspective = "browsing";
-                    switchToBrowsing(cdValue1, cdValue2, txValue1);
-                } else if (QueryString.perspective == "full") {
-                    currentPerspective = "full";
-                    switchToFullHeight(cdValue1, cdValue1);
-                } else if (QueryString.perspective == "compare_concepts") {
-                    currentPerspective = "compare_concepts";
-                    switchToComparingConcepts(cdValue1, cdValue2);
-                } else if (QueryString.perspective == "compare_hierarchies") {
-                    currentPerspective = "compare_hierarchies";
-                    switchToComparingTaxonomies(cdValue1, txValue1, txValue2);
-                } else if (QueryString.perspective == "responsive") {
-                    currentPerspective = "responsive";
-                    switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
-                } else {
-                    initialize();
-                }
 
-                initializePublicBrowser();
-            }           
-        }
-
-        function initializePublicBrowser() {
+            if (QueryString.perspective == "home") {
+                initialize();
+            } else if (QueryString.perspective == "browsing") {
+                currentPerspective = "browsing";
+                switchToBrowsing(cdValue1, cdValue2, txValue1);
+            } else if (QueryString.perspective == "full") {
+                currentPerspective = "full";
+                switchToFullHeight(cdValue1, cdValue1);
+            } else if (QueryString.perspective == "compare_concepts") {
+                currentPerspective = "compare_concepts";
+                switchToComparingConcepts(cdValue1, cdValue2);
+            } else if (QueryString.perspective == "compare_hierarchies") {
+                currentPerspective = "compare_hierarchies";
+                switchToComparingTaxonomies(cdValue1, txValue1, txValue2);
+            } else if (QueryString.perspective == "responsive") {
+                currentPerspective = "responsive";
+                switchToResponsiveLayout(cdValue1, cdValue2, txValue1)
+            } else {
+                initialize();
+            }
             var acceptLicense = QueryString.acceptLicense;
             if (typeof acceptLicense == "undefined" || acceptLicense == null || acceptLicense == "") {
                 acceptLicense = false;
@@ -654,30 +647,24 @@
                 if (options.dailyBuildReleases) {
                     var $releaseSwitcher = $('#releaseSwitcher');
                     for (let i = 0; i < options.dailyBuildReleases.length; ++i) {
+                        let release = options.dailyBuildReleases[i];
                         var $li = $('<li>');
-                        var $a = $('<a>').attr("shortName", options.dailyBuildReleases[i].shortName).append(options.dailyBuildReleases[i].name + " ").append('<span style="color: dodgerblue;">DAILY BUILD</span>');
+                        var $a = $('<a>').attr("shortName", release.shortName).append(release.name + " ").append('<span style="color: dodgerblue;">DAILY BUILD</span>');
                         $a.attr("href", "javascript:void(0);");
                         $a.on("click", function() {
-                            postal.unsubscribeFor();
-                            if (typeof componentsRegistry != "undefined") {
-                                $.each(componentsRegistry, function(i, field) {
-                                    field = null;
-                                });
-                                componentsRegistry = [];
-                            }
                             var parsedLanguages = "";
-                            for (var language in options.dailyBuildReleases[i].languages) {
+                            for (var language in release.languages) {
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
                             parsedLanguages = parsedLanguages.slice(0, -1);
-                            options.edition = options.dailyBuildReleases[i].branchPath;
+                            options.edition = release.branchPath;
                             options.release = '';
                             options.languages = parsedLanguages;
-                            options.languageObject = options.dailyBuildReleases[i].languages;
-                            $("#editionLabel").html(options.dailyBuildReleases[i].name + " DAILY BUILD");
-                            options.defaultLanguageReferenceSets = options.dailyBuildReleases[i].defaultLanguageReferenceSets ? options.dailyBuildReleases[i].defaultLanguageReferenceSets : [];
+                            options.languageObject = release.languages;
+                            $("#editionLabel").html(release.name + " DAILY BUILD");
+                            options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
 
-                            let ui_language = options.dailyBuildReleases[i].defaultLanguageCode ? options.dailyBuildReleases[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
+                            let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
                             options.defaultLanguage = parsedLanguages.substr(0, 2);
                             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
 
@@ -689,8 +676,8 @@
                         $releaseSwitcher.append($li);
 
                         // set default selection for release
-                        if (options.edition && options.dailyBuildReleases[i].branchPath === options.edition) {
-                            $("#editionLabel").html(options.dailyBuildReleases[i].name + " DAILY BUILD");
+                        if (options.edition && release.branchPath === options.edition) {
+                            $("#editionLabel").html(release.name + " DAILY BUILD");
                         }
                     }
                 }
@@ -700,31 +687,25 @@
                 if (options.releases && options.releases.items) {
                     var $releaseSwitcher = $('#releaseSwitcher');
                     for (let i = 0; i < options.releases.items.length; ++i) {
-                        if (typeof options.releases.items[i].latestVersion !== "undefined") {
+                        let release = options.releases.items[i];
+                        if (typeof release.latestVersion !== "undefined") {
                             var $li = $('<li>')
-                            var $a = $('<a>').attr("shortName", options.releases.items[i].shortName).append(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                            var $a = $('<a>').attr("shortName", release.shortName).append(release.name + " " + release.latestVersion.version);
                             $a.attr("href", "javascript:void(0);");
                             $a.on("click", function() {
-                                postal.unsubscribeFor();
-                                if (typeof componentsRegistry != "undefined") {
-                                    $.each(componentsRegistry, function(i, field) {
-                                        field = null;
-                                    });
-                                    componentsRegistry = [];
-                                }
                                 var parsedLanguages = "";
-                                for (var language in options.releases.items[i].languages) {
+                                for (var language in release.languages) {
                                     parsedLanguages = parsedLanguages + language + ',';
                                 }
                                 parsedLanguages = parsedLanguages.slice(0, -1);
-                                options.edition = options.releases.items[i].latestVersion.branchPath;
+                                options.edition = release.latestVersion.branchPath;
                                 options.release = '';
                                 options.languages = parsedLanguages;
-                                options.languageObject = options.releases.items[i].languages;
-                                $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
-                                options.defaultLanguageReferenceSets = options.releases.items[i].defaultLanguageReferenceSets ? options.releases.items[i].defaultLanguageReferenceSets : [];
+                                options.languageObject = release.languages;
+                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
 
-                                let ui_language = options.releases.items[i].defaultLanguageCode ? options.releases.items[i].defaultLanguageCode : parsedLanguages.substr(0, 2);
+                                let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
                                 options.defaultLanguage = parsedLanguages.substr(0, 2);
                                 var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
                                 switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
@@ -746,8 +727,8 @@
                             $releaseSwitcher.append($li);
 
                             // set default selection for release
-                            if (options.edition && options.releases.items[i].latestVersion.branchPath === options.edition) {
-                                $("#editionLabel").html(options.releases.items[i].name + " " + options.releases.items[i].latestVersion.version);
+                            if (options.edition && release.latestVersion.branchPath === options.edition) {
+                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                             }
                         }                        
                     }
@@ -764,15 +745,49 @@
 
                 return false;
             };
+            options.edition = QueryString.edition;
             var release = QueryString.release;
             if (typeof release != "undefined" && isTask(release)) {
                 options.release = release;
             }
 
-            getProjects().then(function() {
-                getTasks().then(function(results) {
+            $.when(getAuth(), getProjects()).then(function(roles, projects) {
+                var $projectDdl = $('#projectDdl');
+                if (!options.managedServiceUser) {
+                    $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
+                }
+                else {
+                    if (options.projectMainlinePath) {
+                        $('<option>').val(options.projectMainlinePath).text(options.projectMainlineText).appendTo($projectDdl);
+                    }
+                }
+                $.each(projects, function() {
+                    $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
+                });                   
+
+                var found = projects.filter(function(item) {
+                    return item.branchPath === options.edition;
+                }).length !== 0;
+                
+                if (!found || !options.edition) {
+                    if (options.managedServiceUser) {
+                        if (options.projectMainlinePath) {
+                            options.edition = options.projectMainlinePath;
+                        }
+                        else {
+                            options.edition = projects[0].branchPath;
+                        }
+                    }
+                    else {
+                        options.edition = 'MAIN';
+                    }
+                }
+
+                $("#projectDdl").val(options.edition);
+
+                getTasks().then(function(tasks) {
                     if (options.release) {
-                        var found = results.filter(function(item) {
+                        var found = tasks.filter(function(item) {
                             return item.key === options.release;
                         }).length !== 0;
 
@@ -790,11 +805,20 @@
                 }); 
             });
 
+            function getAuth() {
+                var dfd = $.Deferred();
+
+                $.getJSON("/auth", function() {}).done(function(response) {
+                    options.managedServiceUser = response.roles.includes('ROLE_ms-users');
+                    dfd.resolve(response.roles);
+                });
+
+                return dfd.promise();
+            }
+
             function getProjects() {
                 var dfd = $.Deferred();
                 $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
-                    var $projectDdl = $('#projectDdl');
-
                     var projectsInDateFormat = [];
                     var projectsInStringFormat = [];
                     result.forEach(function(item) {
@@ -815,59 +839,34 @@
                     });
                     result.items = projectsInStringFormat.concat(projectsInDateFormat);
 
-                                        
-                    $.getJSON("/auth", function(result) {}).done(function(response) {                  
-                        var isManagedServiceUser = response.roles.includes('ROLE_ms-users');
-                        if (!isManagedServiceUser) {
-                            $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
+                    if (options.releases && options.releases.items && options.releases.items.length > 0 && result.items.length !== 0) {                    
+                        for (let i = 0; i < options.releases.items.length; i++) {
+                            let release = options.releases.items[i];                            
+                            if (typeof release.branchPath !== "undefined" 
+                                && release.branchPath.split('/').length > 1 
+                                && result.items[0].branchPath.split('/').length > 1
+                                && result.items[0].branchPath.includes(release.branchPath)) {
+                                options.languageObject = release.languages;
+                                options.projectMainlinePath = release.branchPath;
+                                options.projectMainlineText = release.shortName;
+                                options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                                break;
+                            } 
                         }
-                        $.each(result.items, function() {
-                            $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
-                        });                   
-
-                        if (options.edition) {
-                            var found = result.items.filter(function(item) {
-                                return item.branchPath === options.edition;
-                            }).length !== 0;
-                            
-                            if (!found) {
-                                if (isManagedServiceUser) {
-                                    options.edition = result.items[0].branchPath;
-                                    options.release = "None";
-                                }
-                                else {
-                                    options.edition = 'MAIN';
-                                }
-                            }
-                            $("#projectDdl").val(options.edition);                                                                   
-                        }
-                        else {
-                            console.error('Edition is not specified.')
-                        }
-                    });                
+                    }              
 
                     var projectChanged = function() {
                         options.edition = $('#projectDdl').val();                                                
                         options.release = "None";
-                        getTasks();
-                        QueryString = queryString();
-                        var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
-                        var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-                        var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-                        var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);                    
-                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
-
-                        cdPanel.subscribe(tpt);
-                        cdPanel.subscribe(searchP);
-                        cdPanel.subscribe(refP);
-                        cdPanel.setupCanvas();                                           
+                        reloadCurrentPerspective();
+                        getTasks();                        
                     }
 
                     $("#projectDdl").on("change", function(event) {
                         projectChanged(this, event);
                     });
 
-                    dfd.resolve();                    
+                    dfd.resolve(result.items.length !== 0 ? result.items : []);                    
                 });
 
                 return dfd.promise();
@@ -922,7 +921,7 @@
                 };
 
                 var project = options.edition.substring(options.edition.lastIndexOf("/") + 1);
-                if (project === 'MAIN') {
+                if (project === 'MAIN' || (options.projectMainlinePath && options.projectMainlinePath === options.edition)) {
                     var $taskDdl = $('#taskDdl');
                     options.release = "None";
                     $taskDdl.html("");
@@ -941,18 +940,7 @@
                     
                     var taskChanged = function() {
                         options.release = $('#taskDdl').val();
-
-                        QueryString = queryString();
-                        var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
-                        var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), focusConcept, options);
-                        var searchP = new searchPanel(document.getElementById("fh-search_canvas"), options);
-                        var refP = new refsetPanel(document.getElementById("fh-refset_canvas"), options);                        
-                        var cdPanel = new conceptDetails(document.getElementById("fh-cd1_canvas"), focusConcept, options);
-
-                        cdPanel.subscribe(tpt);
-                        cdPanel.subscribe(searchP);
-                        cdPanel.subscribe(refP);
-                        cdPanel.setupCanvas();
+                        reloadCurrentPerspective();
                     }
                     
                     $("#taskDdl").on("change", function(event) {
@@ -963,7 +951,8 @@
                 });
 
                 return dfd.promise()
-            }            
+            }
+
         }
 
         function initTour() {
@@ -1473,6 +1462,7 @@
         }
 
         function reloadCurrentPerspective(conceptId) {
+            QueryString = queryString();
             var cdValue1 = conceptId ? conceptId : QueryString.conceptId1;
             if (typeof cdValue1 == "undefined" || cdValue1 == null || cdValue1 == "") {
                 cdValue1 = 404684003;
@@ -1783,7 +1773,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
             </p>
-            <p> <small><b>&copy; SNOMED International 2018</b> v1.37.4.4<br></small>
+            <p> <small><b>&copy; SNOMED International <span id="copyright_year"/></b> v<span>project_version</span><br></small>
             </p>
         </div>
 
