@@ -481,7 +481,58 @@
 
             if (typeof QueryString.languages != "undefined") {
                 options.languages = QueryString.languages;
+            }
+
+            //if (typeof QueryString.server != "undefined") {
+            //    options.serverUrl = QueryString.server;
+            //}
+
+            var edition = QueryString.edition;
+            // if (typeof edition == "undefined" || edition == null || edition == "") {
+            //     edition = "en-edition";
+            // }
+            if (typeof edition != "undefined" && edition.startsWith('MAIN')) {
+                // check valid edition against public browser or daily build
+                if (options.imsUrl === null) {
+                    if (options.dailyBuildBrowser) {
+                        if (options.dailyBuildReleases.filter(function(release) {
+                                return release.branchPath === edition;
+                            }).length !== 0) {
+                            options.edition = edition;
+                        }
+                        else {
+                            options.edition = 'MAIN';
+                        }                        
+                    }
+                    else {
+                        if (options.releases.items.filter(function(release) {
+                                return (typeof release.latestVersion !== "undefined") && release.latestVersion.branchPath === edition;
+                            }).length !== 0) {
+                            options.edition = edition;
+                        }
+                        else {
+                            options.edition = options.releases.items[0].latestVersion.branchPath;
+                        }                  
+                    }
+                }
+                else {
+                    options.edition = edition;
+                }
             }           
+
+            var isTask = function(task) {
+                var strArray = task.split('-');
+                if (strArray.length === 2 && !isNaN(strArray[1])) {
+                    return true;
+                }
+
+                return false;
+            };
+
+            var release = QueryString.release;
+            if (typeof release != "undefined" && isTask(release)) {
+                options.release = release;
+            }
 
             var diagrammingMarkupEnabled = QueryString.diagrammingMarkupEnabled;
             if (typeof diagrammingMarkupEnabled == "undefined" || diagrammingMarkupEnabled == null || diagrammingMarkupEnabled == "") {
