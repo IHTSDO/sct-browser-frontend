@@ -169,8 +169,10 @@
             $.ajax({ 
                 type: 'GET', 
                 url:'/', 
-                success: function(data, textStatus, response){ 
-                    $('#copyright_year').text(new Date(response.getResponseHeader('Date')).getFullYear())
+                success: function(data, textStatus, response){
+                    let copyrightYear = new Date(response.getResponseHeader('Date')).getFullYear();
+                    $('#daily_build_copyright_year').text(copyrightYear);
+                    $('#browser_copyright_year').text(copyrightYear);
                 }
             });
         }        
@@ -226,13 +228,10 @@
                     $taskSelect.attr('id', 'taskDdl');
                     $header.append($taskSelect);
 
-                    //hide release switcher in TS environments
-                    var $releaseSwitcher = $('#edition-selector');
-                    $releaseSwitcher.css('display', 'none');
-
                     start();
                 }).fail(function() {
                     options.imsUrl = null;
+                    $('#edition-selector').css('display', 'block');
                     if (!options.dailyBuildBrowser) {
                         options.multiExtensionSearch = true;
                     }                    
@@ -338,11 +337,7 @@
                     $taskSelect.css('width', '110px');
                     $taskSelect.attr('id', 'taskDdl');
                     $header.append($taskSelect);
-
-                    //hide release switcher
-                    var $releaseSwitcher = $('#edition-selector');
-                    $releaseSwitcher.css('display', 'none');
-
+                   
                     // hile Refset overview tab
                     $('#fh-refset_canvas').css('display', 'none');
                     $('#fh-refset_canvas-li').css('display', 'none');
@@ -1617,7 +1612,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="navbar-btn" id="edition-selector">
+                    <li class="navbar-btn" id="edition-selector" style="display: none">
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel"></span> <span class="caret"></span>
                             </button>
@@ -1734,7 +1729,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong> <span id="csconsentlink">Cookie Settings</span></small>
             </p>
-            <p> <small><b>&copy; SNOMED International <span id="copyright_year"/></b> v<span>project_version</span><br></small>
+            <p> <small><b>&copy; SNOMED International <span id="browser_copyright_year"/></b> v<span>project_version</span><br></small>
             </p>
         </div>
 
@@ -1776,7 +1771,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
             </p>
-            <p> <small><b>&copy; SNOMED International <span id="copyright_year"/></b> v<span>project_version</span><br></small>
+            <p> <small><b>&copy; SNOMED International <span id="daily_build_copyright_year"/></b> v<span>project_version</span><br></small>
             </p>
         </div>
 
