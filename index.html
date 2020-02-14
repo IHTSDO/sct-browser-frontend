@@ -858,7 +858,7 @@
                     var projectChanged = function() {
                         options.edition = $('#projectDdl').val();                                                
                         options.release = "None";
-                        reloadCurrentPerspective();
+                        reloadCurrentPerspective(null,false);
                         getTasks();                        
                     }
 
@@ -940,7 +940,7 @@
                     
                     var taskChanged = function() {
                         options.release = $('#taskDdl').val();
-                        reloadCurrentPerspective();
+                        reloadCurrentPerspective(null,false);
                     }
                     
                     $("#taskDdl").on("change", function(event) {
@@ -1316,7 +1316,7 @@
             switchLanguage(selectedLanguage, selectedFlag, false);
         }
 
-        function switchToFullHeight(cd1Value, txValue1) {
+        function switchToFullHeight(cd1Value, txValue1, focusSearchTab) {
             currentPerspective = "full";
             postal.unsubscribeFor();
             if (typeof componentsRegistry != "undefined") {
@@ -1399,8 +1399,11 @@
                     field.loadMarkers();
             });
             switchLanguage(selectedLanguage, selectedFlag, false);
-            $('#fh-tabs li:eq(1) a').tab('show');
-            $('#fh-search_canvas-searchBox').focus()
+            
+            if (typeof focusSearchTab === "undefined" || focusSearchTab) {
+                $('#fh-tabs li:eq(1) a').tab('show');
+                $('#fh-search_canvas-searchBox').focus();
+            }            
         }
 
         function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
@@ -1461,7 +1464,7 @@
             switchLanguage(selectedLanguage, selectedFlag, false);
         }
 
-        function reloadCurrentPerspective(conceptId) {
+        function reloadCurrentPerspective(conceptId, focusSearchTab) {
             QueryString = queryString();
             var cdValue1 = conceptId ? conceptId : QueryString.conceptId1;
             if (typeof cdValue1 == "undefined" || cdValue1 == null || cdValue1 == "") {
@@ -1487,7 +1490,7 @@
             } else if (currentPerspective == "browsing") {
                 switchToBrowsing(cdValue1, cdValue2, txValue1);
             } else if (currentPerspective == "full") {
-                switchToFullHeight(cdValue1, cdValue1);
+                switchToFullHeight(cdValue1, cdValue1, focusSearchTab);
             } else if (currentPerspective == "compare_concepts") {
                 switchToComparingConcepts(cdValue1, cdValue2);
             } else if (currentPerspective == "compare_hierarchies") {
