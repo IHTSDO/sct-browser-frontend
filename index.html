@@ -277,6 +277,11 @@
             var getUIConfiguration = function() {
                 var dfd = $.Deferred();
 
+                if (options.dailyBuildBrowser) {
+                    options.imsUrl = null;
+                    return dfd.resolve();
+                }
+                
                 $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
 
@@ -313,7 +318,7 @@
                     $taskSelect.css('width', '110px');
                     $taskSelect.attr('id', 'taskDdl');
                     $header.append($taskSelect);
-                    
+
                     dfd.resolve();
                 }).fail(function() {
                     options.imsUrl = null;
