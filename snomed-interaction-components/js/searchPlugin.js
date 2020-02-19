@@ -826,6 +826,7 @@ function searchPanel(divElement, options) {
                                     });
                                 });
                             }
+                            xhr = null;
                         }).fail(function() {
                             var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
                             if (!i18n_no_results_text) {
@@ -838,7 +839,7 @@ function searchPanel(divElement, options) {
                             $('#' + panel.divElement.id + '-searchBar4').html("");
                             $('#' + panel.divElement.id + '-searchBar5').html("");
                             $('#' + panel.divElement.id + '-searchBar6').html("");
-
+                            xhr = null;
                         });
                     } else if (t.substr(-2, 1) == "1") {
                         var branch = options.edition;
@@ -847,7 +848,7 @@ function searchPanel(divElement, options) {
                         if(options.release.length > 0 && options.release !== 'None'){
                             branch = branch + "/" + options.release;
                         };
-                        $.ajax({
+                        xhr = $.ajax({
                              url: options.serverUrl + "/" + branch + "/descriptions/" + t,
                              type: "GET",
                              beforeSend: function(xhr){
@@ -899,6 +900,7 @@ function searchPanel(divElement, options) {
                                         showConcept: true
                                     });
                                 });
+                                xhr = null;
                              }
                           });
                     } else {
@@ -1027,7 +1029,7 @@ function searchPanel(divElement, options) {
                         }
                     }
                     
-                    $.ajax({
+                    xhr = $.ajax({
                          url: searchUrl,
                          type: "GET",
                          beforeSend: function(xhr){
@@ -1296,8 +1298,7 @@ function searchPanel(divElement, options) {
                         });
                         if (result.details) {
                             var searchComment = "<span class='text-muted'>" + result.details.total + " matches found in " + elapsed + " seconds.</span>";
-                        }
-                        xhr = null;
+                        }                        
                         var matchedDescriptions = result.matches;
                         
                         var remaining = 0;
@@ -1413,7 +1414,7 @@ function searchPanel(divElement, options) {
                             }
                             icon = iconToDrag(term);
                         });
-
+                        xhr = null;
                     }});
                 }
             }
