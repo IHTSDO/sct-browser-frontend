@@ -18,9 +18,16 @@
                 {{#if active}}
                     {{#if_eq characteristicType "INFERRED_RELATIONSHIP"}}
                         <tr class='inferred-rel
-                            {{#if_eq effectiveTime ../../options.highlightByEffectiveTime}}
-                                 highlightEffectiveTime
-                            {{/if_eq}}
+                            {{#if ../../../options.dailyBuildBrowser}}                                
+                                {{#if_eq effectiveTime ../../../../options.highlightByEffectiveTime}}
+                                    highlightEffectiveTime
+                                {{/if_eq}}
+                            {{/if}}
+                            {{#if ../../../options.tsBrowser}}
+                                {{#if_eq effectiveTime null}}
+                                    highlightEffectiveTime
+                                {{/if_eq}}
+                            {{/if}}
                             '>
                             <td>
                                 {{#if_eq type.definitionStatus "PRIMITIVE"}}
@@ -144,7 +151,8 @@
                     <tbody>
                     {{#each relationships}}
                         {{#if active}}
-                            <tr class='{{#if_eq effectiveTime ../../options.highlightByEffectiveTime}}highlightEffectiveTime{{/if_eq}}'>
+                            <tr class='{{#if ../../../options.dailyBuildBrowser}}{{#if_eq ../effectiveTime ../../../../options.highlightByEffectiveTime}}highlightEffectiveTime{{/if_eq}}{{/if}}
+                                       {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}'>
                                 <td>
                                     {{#if_eq type.definitionStatus "PRIMITIVE"}}
                                         <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
@@ -207,7 +215,8 @@
                     <tbody>
                     {{#each relationships}}
                         {{#if active}}
-                            <tr class='{{#if_eq effectiveTime ../../options.highlightByEffectiveTime}}highlightEffectiveTime{{/if_eq}}'>
+                            <tr class='{{#if ../../../options.dailyBuildBrowser}}{{#if_eq ../effectiveTime ../../../../options.highlightByEffectiveTime}}highlightEffectiveTime{{/if_eq}}{{/if}}
+                                       {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}'>
                                 <td>
                                     {{#if_eq type.definitionStatus "PRIMITIVE"}}
                                         <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;

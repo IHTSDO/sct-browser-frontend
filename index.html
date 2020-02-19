@@ -116,8 +116,8 @@
         var options = {
             serverUrl: "",
             queryServerUrl: "",
-            queryBranch: "MAIN/2019-07-31",
-            edition: "MAIN/2019-07-31",
+            queryBranch: "",
+            edition: "",
             release: "",
             showIds: false,
             hideNotAcceptable: true,
@@ -138,9 +138,10 @@
             searchLang: "english",
             diagrammingMarkupEnabled: false,
             statusSearchFilter: "activeOnly",
-            // highlightByEffectiveTime: "false",
-            highlightByEffectiveTime: "20200131",
+            highlightByEffectiveTime: "false",         
             dailyBuildBrowser: false,
+            publicBrowser: false,
+            tsBrowser: false,
             multiExtensionSearch: false
         };
 
@@ -285,6 +286,7 @@
                 
                 $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
+                    options.tsBrowser = true;
 
                     options.language = 'en';
                     options.languageObject = {
@@ -510,7 +512,7 @@
         }
 
         function initializePublicBrowser() {
-            var edition = QueryString.edition;           
+            var edition = QueryString.edition;  
             if (options.dailyBuildBrowser) {
                 if (options.dailyBuildReleases.filter(function(release) {
                         return release.branchPath === edition;
@@ -527,6 +529,10 @@
                         if (release.branchPath === options.edition) {
                             options.languageObject = release.languages;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            if (typeof release.latestVersion !== "undefined") {
+                                options.highlightByEffectiveTime = release.latestVersion.effectiveDate;
+                            }                            
+
                             break;
                         }
                     }                    
