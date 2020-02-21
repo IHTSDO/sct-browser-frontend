@@ -245,42 +245,42 @@ function queryComputerPanel(divElement, options) {
             });
         });
 
-        if (!panel.typeArray || !panel.typeArray.length) {
-            var branch = options.edition;
-            if(options.release.length > 0 && options.release !== 'None'){
-                branch = branch + "/" + options.release;
-            };
-            $.ajax({
-                type: "POST",
-                url: options.serverUrl.replace("snomed", "expressions/") + branch + "/execute/brief",
-                data: {
-                    expression: "< 410662002|Concept model attribute (attribute)|",
-                    limit: 5000,
-                    skip: 0,
-                    form: "inferred"
-                },
-                dataType: "json",
-                //timeout: 300000,
-                success: function(result) {
-                    //console.log(result);
-                    //console.log(result.computeResponse.matches);
-                    result.computeResponse.matches.push({ conceptId: "<< 47429007", defaultTerm: "Associated with (attribute) [<<]" });
-                    result.computeResponse.matches.push({ conceptId: "<< 405815000", defaultTerm: "Procedure device (attribute) [<<]" });
-                    result.computeResponse.matches.push({ conceptId: "<< 405816004", defaultTerm: "Procedure morphology (attribute) [<<]" });
-                    result.computeResponse.matches.push({ conceptId: "<< 363704007", defaultTerm: "Procedure site (attribute) [<<]" });
-                    panel.typeArray = result.computeResponse.matches;
-                    panel.typeArray.sort(function(a, b) {
-                        if (a.defaultTerm < b.defaultTerm)
-                            return -1;
-                        if (a.defaultTerm > b.defaultTerm)
-                            return 1;
-                        return 0;
-                    });
-                }
-            }).done(function(result) {
+        // if (!panel.typeArray || !panel.typeArray.length) {
+        //     var branch = options.edition;
+        //     if(options.release.length > 0 && options.release !== 'None'){
+        //         branch = branch + "/" + options.release;
+        //     };
+        //     $.ajax({
+        //         type: "POST",
+        //         url: options.serverUrl.replace("snomed", "expressions/") + branch + "/execute/brief",
+        //         data: {
+        //             expression: "< 410662002|Concept model attribute (attribute)|",
+        //             limit: 5000,
+        //             skip: 0,
+        //             form: "inferred"
+        //         },
+        //         dataType: "json",
+        //         //timeout: 300000,
+        //         success: function(result) {
+        //             //console.log(result);
+        //             //console.log(result.computeResponse.matches);
+        //             result.computeResponse.matches.push({ conceptId: "<< 47429007", defaultTerm: "Associated with (attribute) [<<]" });
+        //             result.computeResponse.matches.push({ conceptId: "<< 405815000", defaultTerm: "Procedure device (attribute) [<<]" });
+        //             result.computeResponse.matches.push({ conceptId: "<< 405816004", defaultTerm: "Procedure morphology (attribute) [<<]" });
+        //             result.computeResponse.matches.push({ conceptId: "<< 363704007", defaultTerm: "Procedure site (attribute) [<<]" });
+        //             panel.typeArray = result.computeResponse.matches;
+        //             panel.typeArray.sort(function(a, b) {
+        //                 if (a.defaultTerm < b.defaultTerm)
+        //                     return -1;
+        //                 if (a.defaultTerm > b.defaultTerm)
+        //                     return 1;
+        //                 return 0;
+        //             });
+        //         }
+        //     }).done(function(result) {
 
-            });
-        }
+        //     });
+        // }
 
         //$.getJSON(options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/410662002/children?form=inferred").done(function(result) {
         //    //console.log(result);
@@ -868,40 +868,40 @@ function queryComputerPanel(divElement, options) {
     };
 
     this.getTotalResults = function(callback) {
-        if (xhrTotal != null) {
-            xhrTotal.abort();
-        }
-        panel.lastRequest.skip = 0;
-        panel.lastRequest.limit = panel.lastTotalValues + 1;
-        $('#' + panel.divElement.id + '-exportXls').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        var branch = options.edition;
-        if(options.release.length > 0 && options.release !== 'None'){
-            branch = branch + "/" + options.release;
-        };
-        xhrTotal = $.ajax({
-            type: "POST",
-            url: options.serverUrl.replace("snomed", "expressions/") + "/" + branch + "/execute/brief",
-            data: panel.lastRequest,
-            dataType: "json",
-            success: function(result) {
-                xhrTotal = null;
-                panel.allResults = result.computeResponse.matches;
-                var rowsHtml = "";
-                if (panel.allResults && panel.allResults.length) {
-                    $.each(panel.allResults, function(i, field) {
-                        rowsHtml += "<tr><td>" + field.defaultTerm + "</td><td>" + field.conceptId + "</td></tr>";
-                    });
-                }
-                $("#" + panel.divElement.id + "-outputBody2").html(rowsHtml);
-                $('#' + panel.divElement.id + '-exportXls').html('Download XLS <img style="height: 23px;" src="img/excel.png">');
-                if (callback)
-                    callback();
-            }
-        }).always(function(result) {
-            xhrTotal = null;
-        }).fail(function() {
-            alertEvent("Failed!", "error");
-        });
+        // if (xhrTotal != null) {
+        //     xhrTotal.abort();
+        // }
+        // panel.lastRequest.skip = 0;
+        // panel.lastRequest.limit = panel.lastTotalValues + 1;
+        // $('#' + panel.divElement.id + '-exportXls').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+        // var branch = options.edition;
+        // if(options.release.length > 0 && options.release !== 'None'){
+        //     branch = branch + "/" + options.release;
+        // };
+        // xhrTotal = $.ajax({
+        //     type: "POST",
+        //     url: options.serverUrl.replace("snomed", "expressions/") + "/" + branch + "/execute/brief",
+        //     data: panel.lastRequest,
+        //     dataType: "json",
+        //     success: function(result) {
+        //         xhrTotal = null;
+        //         panel.allResults = result.computeResponse.matches;
+        //         var rowsHtml = "";
+        //         if (panel.allResults && panel.allResults.length) {
+        //             $.each(panel.allResults, function(i, field) {
+        //                 rowsHtml += "<tr><td>" + field.defaultTerm + "</td><td>" + field.conceptId + "</td></tr>";
+        //             });
+        //         }
+        //         $("#" + panel.divElement.id + "-outputBody2").html(rowsHtml);
+        //         $('#' + panel.divElement.id + '-exportXls').html('Download XLS <img style="height: 23px;" src="img/excel.png">');
+        //         if (callback)
+        //             callback();
+        //     }
+        // }).always(function(result) {
+        //     xhrTotal = null;
+        // }).fail(function() {
+        //     alertEvent("Failed!", "error");
+        // });
 
         //xhrTotal = $.post(panel.lastUrl, panel.lastRequest).done(function(data){
         //    xhrTotal = null;
