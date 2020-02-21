@@ -283,7 +283,6 @@ function dropT(ev, id) {
         var divElementId = id;
         var panel;
         var conceptId = ev.dataTransfer.getData("concept-id");
-        var branch = ev.dataTransfer.getData("branch");        
         if (typeof conceptId == "undefined" && i < text.length){
             conceptId = text.substr(0, i);
         }
@@ -309,12 +308,11 @@ function dropT(ev, id) {
                 var time = d.getTime();
                 panel.default.conceptId = conceptId;
                 panel.history.push({term: term, conceptId: conceptId, time: time});
-                panel.setToConcept(conceptId,null,null,null,null,branch);
+                panel.setToConcept(conceptId);
                 channel.publish(panel.divElement.id, {
                     term: term,
                     conceptId: conceptId,
-                    source: panel.divElement.id,
-                    branch: branch
+                    source: panel.divElement.id
                 });
             }
         }

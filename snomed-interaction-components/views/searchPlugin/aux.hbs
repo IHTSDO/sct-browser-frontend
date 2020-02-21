@@ -15,7 +15,9 @@
         </div>
     </div>
     <div class='panel-body' style='height:86%' id='{{divElementId}}-panelBody'>
-        <div style="display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; ">
+        {{#if options.multiExtensionSearch}}
+        {{else}}
+        <div style="display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; ">            
             <h4><span>Options</span></h4>
             <div id='{{divElementId}}-searchConfigBar' style='margin-bottom: 10px;'>
                 <div style="margin-top: 15px">
@@ -33,12 +35,7 @@
                                 </li>
                                 <li>
                                     <a href="#" id='{{divElementId}}-regexButton'><span class='i18n' data-i18n-id='i18n_regex_search_mode'>{{i18n "i18n_regex_search_mode" "Regular Expressions search mode"}}</span></a>
-                                </li>
-                                {{#if options.multiExtensionSearch}}
-                                    <li>
-                                        <a href="#" id='{{divElementId}}-multiExtensionButton'><span class='i18n' data-i18n-id='i18n_multi_extension_search_mode'>{{i18n "i18n_multi_extension_search_mode" "Multi Extension search mode"}}</span></a>
-                                    </li>
-                                {{/if}}
+                                </li>                                
                             </ul>
                         </div>
                     {{/if_eq}}
@@ -103,9 +100,10 @@
             <div id="{{divElementId}}-searchBar3"></div>
             <div id="{{divElementId}}-searchBar4"></div>
             <div id="{{divElementId}}-searchBar5"></div>
-            <div id="{{divElementId}}-searchBar6"></div>
+            <div id="{{divElementId}}-searchBar6"></div>            
         </div>
-        <div style="display: inline; width: 66%; float: right; padding: 5px;">
+        {{/if}}
+        <div style="display: inline; width: {{#if options.multiExtensionSearch}}100%{{else}}66%{{/if}}; float: right; padding: 5px;">
             <form>
                 <div class="form-group" style="margin-bottom: 2px;">
                     <label for="{{divElementId}}-searchBox">

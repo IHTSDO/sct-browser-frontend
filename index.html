@@ -141,8 +141,7 @@
             highlightByEffectiveTime: "false",         
             dailyBuildBrowser: false,
             publicBrowser: false,
-            tsBrowser: false,
-            multiExtensionSearch: false
+            tsBrowser: false
         };
 
         options.languageNameOfLangRefset = {
@@ -331,7 +330,7 @@
                 if(options.imsUrl == null) {
                     $('#edition-selector').css('display', 'block');
                     if (!options.dailyBuildBrowser) {
-                        options.multiExtensionSearch = true;
+                        $('#multi-extension-search').css('display', 'block');                        
                     }
                 }
                 else {
@@ -1680,6 +1679,9 @@
                 <p id="international_editions" style="margin-bottom : 0px"></p>
                 <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p id="local_editions" style="margin-bottom : 0px"></p>
+                <p id="multi-extension-search" style="display: none">
+                    <a class="btn btn-primary btn-lg" role="button" onclick="window.location.href='/multi-extension-search.html'" style="height: 80px; width: 160px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">All Editions</span></a>
+                </p>
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                     <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>

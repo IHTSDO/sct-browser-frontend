@@ -247,7 +247,6 @@ function searchPanel(divElement, options) {
                 localStorage.setItem("searchMode", panel.options.searchMode);
             }
             panel.updateSearchLabel();
-            panel.updateSearchOptions();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').show();
             if (searchTerm.charAt(0) != "^") {
@@ -263,7 +262,6 @@ function searchPanel(divElement, options) {
                 localStorage.setItem("searchMode", panel.options.searchMode);
             }
             panel.updateSearchLabel();
-            panel.updateSearchOptions();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
             if (searchTerm.charAt(0) == "^") {
@@ -280,7 +278,6 @@ function searchPanel(divElement, options) {
                 localStorage.setItem("searchMode", panel.options.searchMode);
             }
             panel.updateSearchLabel();
-            panel.updateSearchOptions();
             var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
             $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
             if (searchTerm.charAt(0) != "^") {
@@ -290,24 +287,7 @@ function searchPanel(divElement, options) {
                 panel.search(searchTerm, 0, 100, true);
             }
         });
-        $("#" + panel.divElement.id + "-multiExtensionButton").click(function(event) {
-            panel.options.searchMode = 'multiExtension';
-            $("#" + panel.divElement.id + '-navLanguageLabel').closest('a').hide();
-            if (typeof(Storage) !== "undefined") {
-                localStorage.setItem("searchMode", panel.options.searchMode);
-            }
-            panel.updateSearchLabel();
-            panel.updateSearchOptions();
-            var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
-            if (searchTerm.charAt(0) == "^") {
-                searchTerm = searchTerm.slice(1);
-                $("#" + panel.divElement.id + '-searchBox').val(searchTerm);                
-            }       
-            if (searchTerm.length > 0) {
-                panel.search(searchTerm, 0, 100, true);
-            }
-        });
-
+        
         $("#" + panel.divElement.id + "-danishLangButton").click(function(event) {
             panel.options.searchLang = 'danish';
             $("#" + panel.divElement.id + '-navLanguageLabel').html(i18n_danish_stemmer);
@@ -422,10 +402,7 @@ function searchPanel(divElement, options) {
                         break;
                     case 'regex':
                         $("#" + panel.divElement.id + "-regexButton").click();
-                        break;
-                    case 'multiExtension':
-                        $("#" + panel.divElement.id + "-multiExtensionButton").click();
-                        break;
+                        break;                    
                     default:
                         $("#" + panel.divElement.id + "-partialMatchingButton").click();
                   }
@@ -713,7 +690,7 @@ function searchPanel(divElement, options) {
                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'>Searching..</span>");
                 //console.log("panel.options.searchMode " + panel.options.searchMode);
                 t = t.trim();
-                if (isNumber(t)) {
+                if (isNumber(t) && !panel.options.multiExtensionSearch) {
                     if (t.substr(-2, 1) == "0") {
                         // Search conceptId
                         var branch = options.edition;
@@ -918,25 +895,25 @@ function searchPanel(divElement, options) {
                         $('#' + panel.divElement.id + '-searchBar5').html("");
                         $('#' + panel.divElement.id + '-searchBar6').html("");
                     }
-                } else {
-                    if (panel.options.searchMode == "partialMatching") {
-                        t = t.toLowerCase();
-                        t = t.replace("(", "");
-                        t = t.replace(")", "");
-                    }
-                    var startTime = Date.now();
-                    var branch = options.edition;
-                    
-                    if(options.release.length > 0 && options.release !== 'None'){
-                        branch = branch + "/" + options.release;
-                    };
+                } else {                    
                     var searchUrl = '';
-                    if (panel.options.searchMode === 'multiExtension') {
+                    if (panel.options.multiExtensionSearch) {
                         searchUrl = options.serverUrl + "/multisearch/descriptions?&limit=100&active=true&conceptActive=true&term=" + encodeURIComponent(t);                        
                     }
                     else {
-                        searchUrl = options.serverUrl + "/browser/" + branch + "/descriptions?" +
-                        "&limit=100";
+                        if (panel.options.searchMode == "partialMatching") {
+                            t = t.toLowerCase();
+                            t = t.replace("(", "");
+                            t = t.replace(")", "");
+                        }
+                        var startTime = Date.now();
+                        var branch = options.edition;
+                        
+                        if(options.release.length > 0 && options.release !== 'None'){
+                            branch = branch + "/" + options.release;
+                        };
+
+                        searchUrl = options.serverUrl + "/browser/" + branch + "/descriptions?" + "&limit=100";
 
                         if (panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowstorm')) {
                             searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
@@ -1192,16 +1169,14 @@ function searchPanel(divElement, options) {
                             divElementId: panel.divElement.id,
                             options: panel.options
                         };
-                        $('#' + panel.divElement.id + '-searchBar').html(JST["snomed-interaction-components/views/searchPlugin/body/bar.hbs"](context));
-                        if (panel.options.searchMode !== 'multiExtension') {                           
-                            $('#' + panel.divElement.id + '-searchBar2').html(JST["snomed-interaction-components/views/searchPlugin/body/bar2.hbs"](context));
-                            $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
-                            if (!skipSemtagFilter) {
-                                $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
-                            }                        
-                            $('#' + panel.divElement.id + '-searchBar5').html(JST["snomed-interaction-components/views/searchPlugin/body/bar5.hbs"](context));
-                            $('#' + panel.divElement.id + '-searchBar6').html(JST["snomed-interaction-components/views/searchPlugin/body/bar6.hbs"](context));
+                        $('#' + panel.divElement.id + '-searchBar').html(JST["snomed-interaction-components/views/searchPlugin/body/bar.hbs"](context));                                                  
+                        $('#' + panel.divElement.id + '-searchBar2').html(JST["snomed-interaction-components/views/searchPlugin/body/bar2.hbs"](context));
+                        $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
+                        if (!skipSemtagFilter) {
+                            $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
                         }                        
+                        $('#' + panel.divElement.id + '-searchBar5').html(JST["snomed-interaction-components/views/searchPlugin/body/bar5.hbs"](context));
+                        $('#' + panel.divElement.id + '-searchBar6').html(JST["snomed-interaction-components/views/searchPlugin/body/bar6.hbs"](context));                                              
 
                         $('#' + panel.divElement.id + '-moduleResumed').tooltip({
                             placement: 'left auto',
@@ -1397,6 +1372,10 @@ function searchPanel(divElement, options) {
                                 showConcept: true,
                                 branch: $(event.target).attr('data-branch')
                             });
+
+                            if ($(event.target).attr('data-branch') && typeof options.updateReleaseSwitcher !== 'undefined') {
+                                options.updateReleaseSwitcher($(event.target).attr('data-branch'), $(event.target).attr('data-concept-id'));
+                            }
                         });
                         $("[draggable='true']").tooltip({
                             placement: 'left auto',
@@ -1575,10 +1554,7 @@ function searchPanel(divElement, options) {
         }
         if (typeof i18n_full_text_search_mode == "undefined") {
             i18n_full_text_search_mode = 'Full';
-        }
-        if (typeof i18n_multi_extension_search_mode == "undefined") {
-            i18n_multi_extension_search_mode = 'Multi Extension';
-        }
+        }        
         if (panel.options.searchMode == "regex") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
             $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_1'>" + i18n_search_examp_1 + "</span> ");
@@ -1591,10 +1567,8 @@ function searchPanel(divElement, options) {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>" + i18n_partial_match_search_mode + "</span>");
             $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_3'>" + i18n_search_examp_3 + "</span> ");
             $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>" + i18n_partial_match_search_mode + "</span>");
-        } else if (panel.options.searchMode == "multiExtension") {
-            $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_multi_extension_search_mode'>" + i18n_multi_extension_search_mode + "</span>");
-            $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_3'>" + i18n_search_examp_3 + "</span> ");
-            $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_multi_extension_search_mode'>" + i18n_multi_extension_search_mode + "</span>");
+        } else {
+            // do nothing
         }
 
         if (typeof panel.options.searchLang == "undefined") {
@@ -1619,25 +1593,8 @@ function searchPanel(divElement, options) {
 
     }
 
-    this.updateSearchOptions = function() {               
-        if (panel.options.searchMode == "multiExtension") {
-            $("#" + panel.divElement.id + '-searchStatusSection').hide();
-            $("#" + panel.divElement.id + '-searchTypeSection').hide();
-            $("#" + panel.divElement.id + '-searchGroupByConceptSection').hide();
-            $("#" + panel.divElement.id + '-filterLanguageRefsetSection').hide();            
-
-        } else {
-            $("#" + panel.divElement.id + '-searchStatusSection').show();
-            $("#" + panel.divElement.id + '-searchTypeSection').show();
-            $("#" + panel.divElement.id + '-searchGroupByConceptSection').show();
-            $("#" + panel.divElement.id + '-filterLanguageRefsetSection').show();
-        }
-    }
-
     this.setupCanvas();
     this.updateSearchLabel();
-    this.updateSearchOptions();
-
 }
 
 function isNumber(n) {

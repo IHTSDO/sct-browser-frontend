@@ -223,10 +223,10 @@ function taxonomyPanel(divElement, conceptId, options) {
             }
             $("#" + panel.divElement.id + '-txViewLabel2').html("Descendants Count: On");
             if (panel.default && panel.default.conceptId) {
-                panel.setToConcept(panel.default.conceptId,null,null,null,null,options.currentBranchPath);
+                panel.setToConcept(panel.default.conceptId);
             }
             else {
-                panel.setToConcept(138875005,null,null,null,null,options.currentBranchPath); // root concept
+                panel.setToConcept(138875005); // root concept
             }
             
         });
@@ -238,10 +238,10 @@ function taxonomyPanel(divElement, conceptId, options) {
             }
             $("#" + panel.divElement.id + '-txViewLabel2').html("Descendants Count: Off");
             if (panel.default && panel.default.conceptId) {
-                panel.setToConcept(panel.default.conceptId,null,null,null,null,options.currentBranchPath);
+                panel.setToConcept(panel.default.conceptId);
             }
             else {
-                panel.setToConcept(138875005,null,null,null,null,options.currentBranchPath); // root concept
+                panel.setToConcept(138875005); // root concept
             }            
         });
 
@@ -249,10 +249,10 @@ function taxonomyPanel(divElement, conceptId, options) {
             panel.options.selectedView = 'inferred';
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
             if (panel.default && panel.default.conceptId) {
-                panel.setToConcept(panel.default.conceptId,null,null,null,null,options.currentBranchPath);
+                panel.setToConcept(panel.default.conceptId);
             }
             else {
-                panel.setToConcept(138875005,null,null,null,null,options.currentBranchPath); // root concept
+                panel.setToConcept(138875005); // root concept
             }            
         });
 
@@ -260,10 +260,10 @@ function taxonomyPanel(divElement, conceptId, options) {
             panel.options.selectedView = 'stated';
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
             if (panel.default && panel.default.conceptId) {
-                panel.setToConcept(panel.default.conceptId,null,null,null,null,options.currentBranchPath);
+                panel.setToConcept(panel.default.conceptId);
             }
             else {
-                panel.setToConcept(138875005,null,null,null,null,options.currentBranchPath); // root concept
+                panel.setToConcept(138875005); // root concept
             }
             
         });
@@ -397,7 +397,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var selectedLabel = $(event.target).attr('data-term');
                 var definitionStatus = $(event.target).attr('data-definition-status');
                 panel.history.push({ term: selectedLabel, conceptId: selectedId, time: time });
-                var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
+                var branch = options.edition;
                 if(options.release.length > 0 && options.release !== 'None'){
                     branch = branch + "/" + options.release;
                 };
@@ -460,8 +460,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                         module: $(event.target).attr("data-module"),
                         conceptId: selectedId,
                         source: panel.divElement.id,
-                        showConcept: true,
-                        branch: options.currentBranchPath
+                        showConcept: true
                     });
                 }
             }
@@ -487,7 +486,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
         }        
 
-        var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
+        var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
@@ -593,7 +592,7 @@ function taxonomyPanel(divElement, conceptId, options) {
 
     this.wrapInParents = function(conceptId, liItem) {
         var topUl = $("#" + panel.divElement.id + "-panelBody").find('ul:first');
-        var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
+        var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
@@ -696,11 +695,9 @@ function taxonomyPanel(divElement, conceptId, options) {
         }).fail(function() {});
     }
 
-    this.setToConcept = function(conceptId, term, definitionStatus, module, descendantCount, branchPath) {
-        console.log(definitionStatus);
+    this.setToConcept = function(conceptId, term, definitionStatus, module, descendantCount) {
         $("#" + panel.divElement.id + "-panelBody").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        options.currentBranchPath = branchPath;
-        var branch = options.currentBranchPath ? options.currentBranchPath : options.edition;
+        var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };

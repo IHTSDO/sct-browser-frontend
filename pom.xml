@@ -27,7 +27,11 @@
 					 </execution>
 				 </executions>
 				 <configuration>
-					 <file>${basedir}/index.html</file>
+					 <basedir>${basedir}</basedir>
+                     <includes>
+                         <include>index.html</include>
+                         <include>multi-extension-search.html</include>
+                     </includes>
 						 <replacements>
 							 <replacement>
 								 <token>(build_version)</token>
