@@ -330,6 +330,19 @@
                 if(options.imsUrl == null) {
                     $('#edition-selector').css('display', 'block');
                     if (!options.dailyBuildBrowser) {
+                        if (options.releases) {
+                            let count = 0;                           
+                            for (let i = 0; i < options.releases.items.length; i++) {
+                                let release = options.releases.items[i];
+                                if (typeof release.latestVersion !== 'undefined' && release.countryCode) {
+                                    count++;                                    
+                                    $('#extension-flags').append($('<img>').attr("src", "/browser/img/flags/" + release.countryCode + ".png")).append(' ');
+                                    if (count !== 0 && (count%7 === 0)) {
+                                        $('#extension-flags').append('<br>');
+                                    }
+                                }                                
+                            }
+                        }
                         $('#multi-extension-search').css('display', 'block');                        
                     }
                 }
@@ -1679,8 +1692,8 @@
                 <p id="international_editions" style="margin-bottom : 0px"></p>
                 <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p id="local_editions" style="margin-bottom : 0px"></p>
-                <p id="multi-extension-search" style="display: none">
-                    <a class="btn btn-primary btn-lg" role="button" onclick="window.location.href='/multi-extension-search.html'" style="height: 80px; width: 160px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">All Editions</span></a>
+                <p id="multi-extension-search" style="display: none;">
+                    <a class="btn btn-primary btn-lg" role="button" onclick="window.location.href='/multi-extension-search.html'" style="width: 160px;">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">All Editions</span><br><span id="extension-flags" style="font-size: 10px"></span></a>
                 </p>
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
