@@ -149,8 +149,7 @@
             /* New setting for multi Extenstion search */
             multiExtensionSearch: true,
             hideConceptShareLink: true,
-            disableHistoryStateChange: true,
-            showExtensionConceptFlag: true
+            disableHistoryStateChange: true
         };
 
         options.languageNameOfLangRefset = {
@@ -188,7 +187,7 @@
 
         function determineServer() {
             if(!window.location.hostname.includes('browser')) {
-                // return;
+                return;
             }
 
             var getCodeSystems = function() {
