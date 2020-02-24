@@ -59,7 +59,7 @@ function searchPanel(divElement, options) {
             clearTimeout(thread);
             var $this = $(this);
             thread = setTimeout(function() {
-                panel.search($this.val(), 0, 100, false);
+                panel.search($this.val(), 0, 100, false, false, panel.options.semTagsFilter);
             }, 500);
         });
         //        $("#" + panel.divElement.id + "-linkerButton").disableTextSelect();
@@ -618,7 +618,7 @@ function searchPanel(divElement, options) {
         }
     }
 
-    this.search = function(t, skipTo, returnLimit, forceSearch, skipSemtagFilter) {
+    this.search = function(t, skipTo, returnLimit, forceSearch, skipSemtagFilter, semTags) {
         if (typeof panel.options.searchMode == "undefined") {
             panel.options.searchMode = "partialMatching";
         }
@@ -819,9 +819,7 @@ function searchPanel(divElement, options) {
                             xhr = null;
                         });
                     } else if (t.substr(-2, 1) == "1") {
-                        var branch = options.edition;
-                        console.log(options.release);
-                        console.log(options.release.length);
+                        var branch = options.edition;                        
                         if(options.release.length > 0 && options.release !== 'None'){
                             branch = branch + "/" + options.release;
                         };
@@ -947,7 +945,7 @@ function searchPanel(divElement, options) {
                             $.each(panel.options.semTagsFilter, function(i, semTag){
                                 searchUrl = searchUrl + "&semanticTags=" + semTag;
                             });
-                        }
+                        }                        
                         if (panel.options.langFilter != "none") {
                             searchUrl = searchUrl + "&language=" + panel.options.langFilter;
                         }
@@ -1007,14 +1005,58 @@ function searchPanel(divElement, options) {
                     }
                     
                     xhr = $.ajax({
-                         url: searchUrl,
-                         type: "GET",
-                         beforeSend: function(xhr){
-                             if(!options.serverUrl.includes('snowowl')){
-                                xhr.setRequestHeader('Accept-Language', options.languages);
-                             };
-                         },
-                         success: function(result) { 
+                    url: searchUrl,
+                    type: "GET",
+                    beforeSend: function(xhr){
+                        if(!options.serverUrl.includes('snowowl')){
+                            xhr.setRequestHeader('Accept-Language', options.languages);
+                        };
+                    },
+                    success: function(result) { 
+                        
+                        // search again if list of semantic tags provided
+                        if (semTags && semTags.length !== 0) {
+                            var filtered = [];
+                            if (result.buckets && result.buckets.semanticTags) {
+                                $.each(semTags, function(i, semTag){
+                                    if (typeof result.buckets.semanticTags[semTag] !== 'undefined') {
+                                        filtered.push(semTag);
+                                    }
+                                });                                
+                            }
+                            if (filtered.length !== 0) {
+                                $('#' + panel.divElement.id + '-searchBar4').hide();
+                                panel.options.semTagsFilter = filtered;
+                                var server = 'snowstorm';
+                                if(options.serverUrl.includes('snowowl')){
+                                    server = 'snowowl';
+                                };
+                                var context = {
+                                    server: server,
+                                    result: result,                                  
+                                    divElementId: panel.divElement.id,
+                                    options: panel.options
+                                };
+                                $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
+                                $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox').click(function(event) {                            
+                                    var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');
+                                    var semTagsFilter = [];
+                                    for (var i = 0; i < checkboxes.length; i++) {
+                                        if (checkboxes[i].checked) {
+                                            semTagsFilter.push($(checkboxes[i]).attr('data-semtag'));
+                                        }
+                                    }
+                                    panel.options.semTagsFilter = semTagsFilter;
+                                    panel.search(t, 0, returnLimit, true, true);
+                                });
+                                panel.search(t, 0, returnLimit, true, true);
+                                return;
+                            }
+                        }
+                        else {
+                            $('#' + panel.divElement.id + '-searchBar4').show();
+                        }
+
                         var resDescriptions = [];
                         $.each(result.items, function(i, field) {
                             var aux = field;
@@ -1140,21 +1182,6 @@ function searchPanel(divElement, options) {
                                     return 1;
                                 return 0;
                             });
-//                            if (result.filters.lang && result.filters.semTag) {
-//                                function sortObject(object) {
-//                                    var sortable = [],
-//                                        sortedObj = {};
-//                                    for (var attr in object)
-//                                        sortable.push([attr, object[attr]]);
-//                                    sortable.sort(function(a, b) { return b[1] - a[1] });
-//                                    $.each(sortable, function(i, field) {
-//                                        sortedObj[field[0]] = field[1];
-//                                    });
-//                                    return sortedObj;
-//                                }
-//                                result.filters.lang = sortObject(result.filters.lang);
-//                                result.filters.semTag = sortObject(result.filters.semTag);
-//                            }
                         }
                              
                         var server = 'snowstorm';
@@ -1174,6 +1201,17 @@ function searchPanel(divElement, options) {
                         $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
                         if (!skipSemtagFilter) {
                             $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
+                            $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox').click(function(event) {                            
+                                var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');
+                                var semTagsFilter = [];
+                                for (var i = 0; i < checkboxes.length; i++) {
+                                    if (checkboxes[i].checked) {
+                                        semTagsFilter.push($(checkboxes[i]).attr('data-semtag'));
+                                    }
+                                }
+                                panel.options.semTagsFilter = semTagsFilter;
+                                panel.search(t, 0, returnLimit, true, true);
+                            });
                         }                        
                         $('#' + panel.divElement.id + '-searchBar5').html(JST["snomed-interaction-components/views/searchPlugin/body/bar5.hbs"](context));
                         $('#' + panel.divElement.id + '-searchBar6').html(JST["snomed-interaction-components/views/searchPlugin/body/bar6.hbs"](context));                                              
@@ -1194,23 +1232,6 @@ function searchPanel(divElement, options) {
                             delay: 500
                         });
 
-                        if (!skipSemtagFilter) {
-                            $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox').click(function(event) {                            
-                                var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');
-                                var semTagsFilter = [];
-                                for (var i = 0; i < checkboxes.length; i++) {
-                                    if (checkboxes[i].checked) {
-                                        semTagsFilter.push($(checkboxes[i]).attr('data-semtag'));
-                                    }
-                                }
-                                panel.options.semTagsFilter = semTagsFilter;
-                                panel.search(t, 0, returnLimit, true, true);
-                            });
-                        }
-                        //$("#" + panel.divElement.id + '-searchBar4').find('.semtag-link').click(function(event) {
-                        //   panel.options.semTagFilter = $(event.target).attr('data-semtag');
-                        //    panel.search(t, 0, returnLimit, true);
-                        //});
                         $("#" + panel.divElement.id + '-searchBar5').find('.module-link').click(function(event) {
                             panel.options.moduleFilter = $(event.target).attr('data-module');
                             panel.options.moduleFilterName = $(event.target).attr('data-term');
@@ -1245,10 +1266,6 @@ function searchPanel(divElement, options) {
                         });
 
                         //original filter
-                        //$("#" + panel.divElement.id + '-searchBar').find('.semtag-link').click(function(event) {
-                        //    panel.options.semTagFilter = $(event.target).attr('data-semtag');
-                        //    panel.search(t, 0, returnLimit, true);
-                        //});
                         $("#" + panel.divElement.id + '-searchBar').find('.module-link').click(function(event) {
                             panel.options.moduleFilter = $(event.target).attr('data-module');
                             panel.options.moduleFilterName = $(event.target).attr('data-term');
@@ -1271,10 +1288,6 @@ function searchPanel(divElement, options) {
                             panel.options.moduleFilterName = null;
                             panel.search(t, 0, returnLimit, true);
                         });
-                        if (result.details) {
-                            var searchComment = "<span class='text-muted'>" + result.details.total + " matches found in " + elapsed + " seconds.</span>";
-                        }                        
-                        var matchedDescriptions = result.matches;
                         
                         var remaining = 0;
                         if(result.totalElements) {
@@ -1386,7 +1399,6 @@ function searchPanel(divElement, options) {
                         });
 
                         $("[draggable='true']").mouseover(function(e) {
-                            //                console.log(e);
                             var term = $(e.target).attr("data-term");
                             if (typeof term == "undefined") {
                                 term = $($(e.target).parent()).attr("data-term");

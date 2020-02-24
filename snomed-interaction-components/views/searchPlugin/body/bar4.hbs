@@ -10,7 +10,7 @@
                     <ul class="list-group">
                         {{#each result.buckets.semanticTags}}
                             <li class="list-group-item">
-                                <input type="checkbox" class="semtag-checkbox" style="margin: 0" data-semtag='{{@key}}'>
+                                <input type="checkbox" class="semtag-checkbox" style="margin: 0" data-semtag='{{@key}}' {{#ifIn @key ../../options.semTagsFilter }}checked{{/ifIn}}>
                                 <span class="badge">{{this}}</span>
                                 <span class='semtag-link' style="margin-left: 5px" data-semtag='{{@key}}'>{{@key}}</span>                                
                             </li>
