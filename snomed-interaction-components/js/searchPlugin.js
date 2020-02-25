@@ -1014,6 +1014,12 @@ function searchPanel(divElement, options) {
                     },
                     success: function(result) { 
                         
+                        Handlebars.registerHelper('ifIn', function(elem, list, options) {
+                            if (list.indexOf(elem) > -1) {
+                                return options.fn(this);
+                            }
+                            return options.inverse(this);
+                        });
                         // search again if list of semantic tags provided
                         if (semTags && semTags.length !== 0) {
                             var filtered = [];
