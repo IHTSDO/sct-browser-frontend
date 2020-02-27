@@ -586,15 +586,15 @@ function searchPanel(divElement, options) {
             i18n_active_only = 'Active Only';
         }
         if (panel.options.statusSearchFilter == 'activeAndInactive') {
-            $("#" + panel.divElement.id + '-searchStatus').html(i18n_active_and_inactive);
-            $("#" + panel.divElement.id + '-navStatusFilterLabel').html(i18n_active_and_inactive);
+            $("#" + panel.divElement.id + '-searchStatus').html("<span class='i18n' data-i18n-id='i18n_active_and_inactive'>"+i18n_active_and_inactive+"</span>");
+            $("#" + panel.divElement.id + '-navStatusFilterLabel').html("<span class='i18n' data-i18n-id='i18n_active_and_inactive'>"+i18n_active_and_inactive+"</span>");
         } else if (panel.options.statusSearchFilter == 'inactiveOnly') {
-            $("#" + panel.divElement.id + '-searchStatus').html(i18n_inactive_only);
-            $("#" + panel.divElement.id + '-navStatusFilterLabel').html(i18n_inactive_only);
+            $("#" + panel.divElement.id + '-searchStatus').html("<span class='i18n' data-i18n-id='i18n_inactive_only'>"+i18n_inactive_only+"</span>");
+            $("#" + panel.divElement.id + '-navStatusFilterLabel').html("<span class='i18n' data-i18n-id='i18n_inactive_only'>"+i18n_inactive_only+"</span>");
         } else {
             panel.options.statusSearchFilter = 'activeOnly';
-            $("#" + panel.divElement.id + '-searchStatus').html(i18n_active_only);
-            $("#" + panel.divElement.id + '-navStatusFilterLabel').html(i18n_active_only);
+            $("#" + panel.divElement.id + '-searchStatus').html("<span class='i18n' data-i18n-id='i18n_active_only'>"+i18n_active_only+"</span>");
+            $("#" + panel.divElement.id + '-navStatusFilterLabel').html("<span class='i18n' data-i18n-id='i18n_active_only'>"+i18n_active_only+"</span>");
         }
         var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
         if (searchTerm.length > 0) {
