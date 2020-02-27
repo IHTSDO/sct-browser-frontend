@@ -708,7 +708,12 @@ function searchPanel(divElement, options) {
                 }
                 $('#' + panel.divElement.id + '-searchBar5').html("");
                 $('#' + panel.divElement.id + '-searchBar6').html("");
-                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'>Searching..</span>");
+                
+                var i18n_searching = jQuery.i18n.prop('i18n_searching');                        
+                if (!i18n_searching) {
+                    i18n_searching = 'Searching';
+                }
+                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted i18n' data-i18n-id='i18n_searching'>"+i18n_searching+"...</span>");
                 //console.log("panel.options.searchMode " + panel.options.searchMode);
                 t = t.trim();
                 if (isNumber(t) && !panel.options.multiExtensionSearch) {

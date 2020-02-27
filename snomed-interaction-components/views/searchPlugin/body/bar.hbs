@@ -1,8 +1,8 @@
 {{#if result.totalElements}}
-    <span class='text-muted'>{{result.totalElements}} matches found in {{elapsed}} seconds.</span>
+    <span class='text-muted'>{{result.totalElements}} <span class='i18n' data-i18n-id='i18n_matches_found_in'>{{i18n "i18n_matches_found_in" "matches found in"}}</span> {{elapsed}} <span class='i18n' data-i18n-id='i18n_seconds'>{{i18n "i18n_seconds" "seconds"}}</span>.</span>
 {{else}}
     {{#if result.total}}
-        <span class='text-muted'>{{result.total}} matches found in {{elapsed}} seconds.</span>
+        <span class='text-muted'>{{result.total}} <span class='i18n' data-i18n-id='i18n_matches_found_in'>{{i18n "i18n_matches_found_in" "matches found in"}}</span> {{elapsed}} <span class='i18n' data-i18n-id='i18n_seconds'>{{i18n "i18n_seconds" "seconds"}}</span>.</span>
     {{/if}}
 {{/if}}
 <!--<span class='pull right'>-->
