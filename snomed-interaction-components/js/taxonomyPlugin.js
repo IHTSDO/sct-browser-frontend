@@ -221,7 +221,15 @@ function taxonomyPanel(divElement, conceptId, options) {
             if (typeof(Storage) !== "undefined") {
                 localStorage.setItem("descendantsCountFlag", true);
             }
-            $("#" + panel.divElement.id + '-txViewLabel2').html("Descendants Count: On");
+            var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');
+            if (!i18n_descendants_count) {
+                i18n_descendants_count = 'Descendants Count';
+            }
+            var i18n_on = jQuery.i18n.prop('i18n_on');
+            if (!i18n_on) {
+                i18n_on = 'On';
+            }
+            $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_on'>"+i18n_on+"</span>");
             if (panel.default && panel.default.conceptId) {
                 panel.setToConcept(panel.default.conceptId);
             }
@@ -236,7 +244,15 @@ function taxonomyPanel(divElement, conceptId, options) {
             if (typeof(Storage) !== "undefined") {
                 localStorage.setItem("descendantsCountFlag", false);
             }
-            $("#" + panel.divElement.id + '-txViewLabel2').html("Descendants Count: Off");
+            var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');
+            if (!i18n_descendants_count) {
+                i18n_descendants_count = 'Descendants Count';
+            }
+            var i18n_off = jQuery.i18n.prop('i18n_off');
+            if (!i18n_off) {
+                i18n_off = 'Off';
+            }
+            $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_off'>"+i18n_off+"</span>");
             if (panel.default && panel.default.conceptId) {
                 panel.setToConcept(panel.default.conceptId);
             }
@@ -247,7 +263,11 @@ function taxonomyPanel(divElement, conceptId, options) {
 
         $("#" + panel.divElement.id + "-inferredViewButton").click(function(event) {
             panel.options.selectedView = 'inferred';
-            $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
+            var i18n_inferred_view = jQuery.i18n.prop('i18n_inferred_view');
+            if (!i18n_inferred_view) {
+                i18n_inferred_view = 'Inferred view';
+            }
+            $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>"+i18n_inferred_view+"</span>");
             if (panel.default && panel.default.conceptId) {
                 panel.setToConcept(panel.default.conceptId);
             }
@@ -258,7 +278,11 @@ function taxonomyPanel(divElement, conceptId, options) {
 
         $("#" + panel.divElement.id + "-statedViewButton").click(function(event) {
             panel.options.selectedView = 'stated';
-            $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
+            var i18n_stated_view = jQuery.i18n.prop('i18n_stated_view');                        
+            if (!i18n_stated_view) {
+                i18n_stated_view = 'Stated view';
+            }
+            $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>"+i18n_stated_view+"</span>");
             if (panel.default && panel.default.conceptId) {
                 panel.setToConcept(panel.default.conceptId);
             }
@@ -481,9 +505,17 @@ function taxonomyPanel(divElement, conceptId, options) {
         }
 
         if (panel.options.selectedView == "inferred") {
-            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_inferred_view'>Inferred view</span>");
+            var i18n_inferred_view = jQuery.i18n.prop('i18n_inferred_view');                        
+            if (!i18n_inferred_view) {
+                i18n_inferred_view = 'Inferred view';
+            }
+            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_inferred_view'>"+i18n_inferred_view+"</span>");
         } else {
-            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>Stated view</span>");
+            var i18n_stated_view = jQuery.i18n.prop('i18n_stated_view');                        
+            if (!i18n_stated_view) {
+                i18n_stated_view = 'Stated view';
+            }
+            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>"+i18n_stated_view+"</span>");
         }        
 
         var branch = options.edition;
@@ -557,10 +589,26 @@ function taxonomyPanel(divElement, conceptId, options) {
                         
                     }
                 });
-                $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: On");
+                var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');
+                if (!i18n_descendants_count) {
+                    i18n_descendants_count = 'Descendants Count';
+                }
+                var i18n_on = jQuery.i18n.prop('i18n_on');
+                if (!i18n_on) {
+                    i18n_on = 'On';
+                }
+                $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_on'>"+i18n_on+"</span>");
             } 
             else {
-                $("#" + panel.divElement.id + "-txViewLabel2").html("Descendants Count: Off");
+                var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');
+                if (!i18n_descendants_count) {
+                    i18n_descendants_count = 'Descendants Count';
+                }
+                var i18n_off = jQuery.i18n.prop('i18n_off');
+                if (!i18n_off) {
+                    i18n_off = 'Off';
+                }
+                $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_off'>"+i18n_off+"</span>");
             }
             $(".treeButton").disableTextSelect();
             if (typeof i18n_drag_this == "undefined") {

@@ -18,7 +18,7 @@
         {{#if options.multiExtensionSearch}}
         {{else}}
         <div style="display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; ">            
-            <h4><span>Options</span></h4>
+            <h4><span class='i18n' data-i18n-id='i18n_options'>Options</span></h4>
             <div id='{{divElementId}}-searchConfigBar' style='margin-bottom: 10px;'>
                 <div style="margin-top: 15px">
                     {{#if_eq server 'snowstorm'}}
@@ -61,16 +61,16 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a href="#" id='{{divElementId}}-allTypeButton'> All </a>
+                                <a href="#" id='{{divElementId}}-allTypeButton'><span class='i18n' data-i18n-id='i18n_all'>{{i18n "i18n_all" "All" }}</span> </a>
                             </li>
                             <li>
-                                <a href="#" id='{{divElementId}}-noDefTypeButton'>Exclude definitions</a>
+                                <a href="#" id='{{divElementId}}-noDefTypeButton'><span class='i18n' data-i18n-id='i18n_exclude_definitions'>{{i18n "i18n_exclude_definitions" "Exclude definitions" }} </span></a>
                             </li>
                             <li>
-                                <a href="#" id='{{divElementId}}-fsnTypeButton'>FSN</a>
+                                <a href="#" id='{{divElementId}}-fsnTypeButton'><span class='i18n' data-i18n-id='i18n_fsn'>{{i18n "i18n_fsn" "FSN" }}</span> </a>
                             </li>
                             <li>
-                                <a href="#"id='{{divElementId}}-preferredTermyButton'>Preferred Term</a>
+                                <a href="#"id='{{divElementId}}-preferredTermyButton'><span class='i18n' data-i18n-id='i18n_preferred_term'>{{i18n "i18n_preferred_term" "Preferred Term" }}</span></a>
                             </li>
                         </ul>
                     </div>
@@ -82,7 +82,7 @@
                         <!--Display a temporary dropdown for Language refset for better view, will remove it after the list of refsets are in place-->
                         <div style="" class="btn-group dropdown" id="{{divElementId}}-filterLanguageRefsetOptHidden">
                             <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span>Language Refsets</span>&nbsp;<span class="caret"></span>
+                                <span class='i18n' data-i18n-id='i18n_language_refsets'>Language Refsets</span>&nbsp;<span class="caret"></span>
                             </button>                        
                         </div>
                     </div>

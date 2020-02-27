@@ -1233,7 +1233,11 @@
             $("#responsive-perspective").css({
                 "display": "none"
             });
-            $("#perspectiveLabel").html("Comparing concepts");
+            var i18n_comp_concepts_perspective = jQuery.i18n.prop('i18n_comp_concepts_perspective');                        
+            if (!i18n_comp_concepts_perspective) {
+                i18n_comp_concepts_perspective = 'Comparing concepts';
+            }
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_concepts_perspective'>"+i18n_comp_concepts_perspective+"</span>");
             var spa = new searchPanel(document.getElementById("cc-search_canvas"), options);
             var cdPanel1 = new conceptDetails(document.getElementById("cc-cd1_canvas"), cd1Value, options);
             var cdPanel2 = new conceptDetails(document.getElementById("cc-cd2_canvas"), cd2Value, options);
@@ -1282,7 +1286,11 @@
             $("#responsive-perspective").css({
                 "display": "none"
             });
-            $("#perspectiveLabel").html("Comparing taxonomies");
+            var i18n_comp_hier_perspective = jQuery.i18n.prop('i18n_comp_hier_perspective');                        
+            if (!i18n_comp_hier_perspective) {
+                i18n_comp_hier_perspective = 'Comparing taxonomies';
+            }
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_hier_perspective'>"+i18n_comp_hier_perspective+"</span>");
             var tx1 = new taxonomyPanel(document.getElementById("ct-tx1_canvas"), txValue1, options);
             var tx2 = new taxonomyPanel(document.getElementById("ct-tx2_canvas"), txValue2, options);
             var spa = new searchPanel(document.getElementById("ct-search_canvas"), options);
@@ -1336,7 +1344,11 @@
             $("#responsive-perspective").css({
                 "display": "none"
             });
-            $("#perspectiveLabel").html("Full");
+            var i18n_full_perspective = jQuery.i18n.prop('i18n_full_perspective');                        
+            if (!i18n_full_perspective) {
+                i18n_full_perspective = 'Full';
+            }
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_full_perspective'>"+i18n_full_perspective+"</span>");
             //var fhOptions = jQuery.extend(true, {}, options);
             options.subscribersMarker = false;
             options.linkerButton = false;
@@ -1426,7 +1438,11 @@
             $("#responsive-perspective").css({
                 "display": "block"
             });
-            $("#perspectiveLabel").html("Responsive");
+            var i18n_responsive = jQuery.i18n.prop('i18n_responsive');                        
+            if (!i18n_responsive) {
+                i18n_responsive = 'Responsive';
+            }
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_responsive'>"+i18n_responsive+"</span>");
             var tpt = new taxonomyPanel(document.getElementById("rp-taxonomy_canvas"), txValue1, options);
             var spa = new searchPanel(document.getElementById("rp-search_canvas"), options);
             var cdPanel1 = new conceptDetails(document.getElementById("rp-cd1_canvas"), cd1Value, options);

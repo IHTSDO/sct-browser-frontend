@@ -462,12 +462,17 @@ function searchPanel(divElement, options) {
         $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect({            
             buttonClass: 'btn btn-success',       
             selectedClass: '',
+            enableHTML: true,
             templates: {
                 button: '<button type="button" style="white-space: normal;" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
             },
             buttonText: function(options, select) {
+                var i18n_language_refsets = jQuery.i18n.prop('i18n_language_refsets');                        
+                if (!i18n_language_refsets) {
+                    i18n_language_refsets = 'Language Refsets';
+                }
                 if (options.length === 0) {
-                   return 'Language Refsets';
+                   return "<span class='i18n' data-i18n-id='i18n_language_refsets'>"+i18n_language_refsets+"</span>";
                 }
                 else{
                     var selected = '';
@@ -475,7 +480,7 @@ function searchPanel(divElement, options) {
                        var label = ($(this).attr('label') !== undefined) ?  $(this).attr('label'):$(this).html();
                        selected += label + ', ';
                     });
-                    return 'Language Refsets: ' + selected.substr(0, selected.length - 2);
+                    return "<span class='i18n' data-i18n-id='i18n_language_refsets'>"+i18n_language_refsets+"</span>: " + selected.substr(0, selected.length - 2);
                  }
             },          
             onChange: function(option, checked, select) {
@@ -599,17 +604,33 @@ function searchPanel(divElement, options) {
 
     this.updateTypeFilterLabel = function() {        
         if (panel.options.typeSearchFilter == 'noDef') {
-            $("#" + panel.divElement.id + '-searchTypeOpt').html('Exclude definitions');
+            var i18n_exclude_definitions = jQuery.i18n.prop('i18n_exclude_definitions');
+            if (!i18n_exclude_definitions) {
+                i18n_exclude_definitions = 'Exclude definitions';
+            }
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_exclude_definitions'>"+i18n_exclude_definitions+"</span>");
            
         } else if (panel.options.typeSearchFilter == 'fsn') {
-            $("#" + panel.divElement.id + '-searchTypeOpt').html('FSN');
+            var i18n_fsn = jQuery.i18n.prop('i18n_fsn');
+            if (!i18n_fsn) {
+                i18n_fsn = 'FSN';
+            }
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_fsn'>"+i18n_fsn+"</span>");
            
         } else if (panel.options.typeSearchFilter == 'pt') {
-            $("#" + panel.divElement.id + '-searchTypeOpt').html('Preferred Term');
+            var i18n_preferred_term = jQuery.i18n.prop('i18n_preferred_term');
+            if (!i18n_preferred_term) {
+                i18n_preferred_term = 'Preferred Term';
+            }
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_preferred_term'>"+i18n_preferred_term+"</span>");
            
         } else {
+            var i18n_all = jQuery.i18n.prop('i18n_all');
+            if (!i18n_all) {
+                i18n_all = 'All';
+            }
             panel.options.typeSearchFilter = '';
-            $("#" + panel.divElement.id + '-searchTypeOpt').html('All');            
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_all'>"+i18n_all+"</span>");            
         }
 
         var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
