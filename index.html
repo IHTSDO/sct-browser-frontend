@@ -1334,33 +1334,24 @@
                 "display": "none"
             });            
             $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_full_perspective'>"+jQuery.i18n.prop('i18n_full_perspective')+"</span>");
-            //var fhOptions = jQuery.extend(true, {}, options);
+            
             options.subscribersMarker = false;
             options.linkerButton = false;
             var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, options);
             var fav = new favoritePanel(document.getElementById("fh-favorites_canvas"), options);
             var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-            var spa = new searchPanel(document.getElementById("fh-search_canvas"), options);
-            var dai = new dailyBuildPanel(document.getElementById("fh-daily_canvas"), options);
+            var spa = new searchPanel(document.getElementById("fh-search_canvas"), options);            
             var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, options);
             var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), options);
-            // if (enableQueriesInFullPerspective) {
-            //     //                if ((cdPanel1.options.edition == "en-edition") || (cdPanel1.options.edition == "us-edition")) {
-            //     if (cdPanel1.options.edition == "en-edition") {
-            //         $("#fh-query_canvas-li").show();
-            //         var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), fhOptions);
-            //         cdPanel1.subscribe(qpa);
-            //     } else {
-            //         $("#fh-query_canvas-li").hide();
-            //     }
-            // } else {
-            //     $("#fh-query_canvas-li").hide();
-            // }
+            if (options.dailyBuildBrowser) {
+                var dai = new dailyBuildPanel(document.getElementById("fh-daily_canvas"), options);
+                cdPanel1.subscribe(dai);
+            }
+            
             $("#fh-query_canvas-li").show();
             cdPanel1.subscribe(qpa);
             cdPanel1.subscribe(tpt);
-            cdPanel1.subscribe(spa);
-            cdPanel1.subscribe(dai);
+            cdPanel1.subscribe(spa);            
             cdPanel1.subscribe(fav);
             cdPanel1.subscribe(ref);
             cdPanel1.setupCanvas();
