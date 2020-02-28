@@ -109,9 +109,8 @@
         }
 
         var enableQueriesInFullPerspective = true;
-        var selectedLanguage = 'en_US';
-        var selectedFlag = '/browser/img/flags/us.png';
         var currentPerspective = "home";
+        var selectedLanguage = '';
 
         var options = {
             serverUrl: "",
@@ -153,8 +152,7 @@
             "5641000179103": "ES",
             "554461000005103": "DA",
             "46011000052107": "SV",
-            "32570271000036106": "AU",
-            //                "999001251000000103":"UK",
+            "32570271000036106": "AU",            
             "11000146104": "NL",
             "31000146106": "NL",
             "31000172101": "NL",
@@ -178,6 +176,9 @@
         }        
 
         function determineServer() {
+            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
+            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
             }
@@ -356,7 +357,7 @@
             });
         }
 
-        var addEditionLinks = function($releaseSwitcher, releases) {
+        function addEditionLinks($releaseSwitcher, releases) {
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
                 if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser) {
@@ -418,30 +419,32 @@
             }
         }
 
-        var getSelectedLanguageAndFlag = function(ui_language) {
+        function getSelectedLanguageAndFlag(ui_language) {
+            var language = '';
+            var flag = '';
             if (ui_language == "en") {
-                selectedLanguage = 'en_US';
-                selectedFlag = '/browser/img/flags/us.png';
+                language = 'en_US';
+                flag = '/browser/img/flags/us.png';
             } else if (ui_language == "es") {
-                selectedLanguage = 'es';
-                selectedFlag = '/browser/img/flags/es.png';
+                language = 'es';
+                flag = '/browser/img/flags/es.png';
             } else if (ui_language == "sv") {
-                selectedLanguage = 'sv';
-                selectedFlag = '/browser/img/flags/se.png';
+                language = 'sv';
+                flag = '/browser/img/flags/se.png';
             } else if (ui_language == "da") {
-                selectedLanguage = 'da';
-                selectedFlag = '/browser/img/flags/dk.png';
+                language = 'da';
+                flag = '/browser/img/flags/dk.png';
             } else if (ui_language == "pt") {
-                selectedLanguage = 'pt';
-                selectedFlag = '/browser/img/flags/pt.png';
+                language = 'pt';
+                flag = '/browser/img/flags/pt.png';
             } else {
-                selectedLanguage = 'en_US';
-                selectedFlag = '/browser/img/flags/us.png';
+                language = 'en_US';
+                flag = '/browser/img/flags/us.png';
             }
 
             return {
-                'selectedLanguage': selectedLanguage,
-                'selectedFlag': selectedFlag
+                'selectedLanguage': language,
+                'selectedFlag': flag
             };
         }
 
@@ -508,10 +511,7 @@
                     languages = options.languages;
                 }
                 options.languages = languages;
-            }
-            
-            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(QueryString.ui_language);
-            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+            }                       
             
             // For TS Browser
             if (options.imsUrl) {
@@ -1199,8 +1199,7 @@
             });
             $.each(componentsRegistry, function(i, field) {
                 field.loadMarkers();
-            });
-            switchLanguage(selectedLanguage, selectedFlag, false);
+            });            
         }
 
         function switchToComparingConcepts(cd1Value, cd2Value) {
@@ -1233,11 +1232,7 @@
             $("#responsive-perspective").css({
                 "display": "none"
             });
-            var i18n_comp_concepts_perspective = jQuery.i18n.prop('i18n_comp_concepts_perspective');                        
-            if (!i18n_comp_concepts_perspective) {
-                i18n_comp_concepts_perspective = 'Comparing concepts';
-            }
-            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_concepts_perspective'>"+i18n_comp_concepts_perspective+"</span>");
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_concepts_perspective'>"+jQuery.i18n.prop('i18n_comp_concepts_perspective')+"</span>");
             var spa = new searchPanel(document.getElementById("cc-search_canvas"), options);
             var cdPanel1 = new conceptDetails(document.getElementById("cc-cd1_canvas"), cd1Value, options);
             var cdPanel2 = new conceptDetails(document.getElementById("cc-cd2_canvas"), cd2Value, options);
@@ -1252,8 +1247,7 @@
             });
             $.each(componentsRegistry, function(i, field) {
                 field.loadMarkers();
-            });
-            switchLanguage(selectedLanguage, selectedFlag, false);
+            });            
         }
 
         function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
@@ -1285,12 +1279,8 @@
             });
             $("#responsive-perspective").css({
                 "display": "none"
-            });
-            var i18n_comp_hier_perspective = jQuery.i18n.prop('i18n_comp_hier_perspective');                        
-            if (!i18n_comp_hier_perspective) {
-                i18n_comp_hier_perspective = 'Comparing taxonomies';
-            }
-            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_hier_perspective'>"+i18n_comp_hier_perspective+"</span>");
+            });            
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_hier_perspective'>"+jQuery.i18n.prop('i18n_comp_hier_perspective')+"</span>");
             var tx1 = new taxonomyPanel(document.getElementById("ct-tx1_canvas"), txValue1, options);
             var tx2 = new taxonomyPanel(document.getElementById("ct-tx2_canvas"), txValue2, options);
             var spa = new searchPanel(document.getElementById("ct-search_canvas"), options);
@@ -1310,8 +1300,7 @@
             });
             $.each(componentsRegistry, function(i, field) {
                 field.loadMarkers();
-            });
-            switchLanguage(selectedLanguage, selectedFlag, false);
+            });            
         }
 
         function switchToFullHeight(cd1Value, txValue1, focusSearchTab) {
@@ -1343,12 +1332,8 @@
             });
             $("#responsive-perspective").css({
                 "display": "none"
-            });
-            var i18n_full_perspective = jQuery.i18n.prop('i18n_full_perspective');                        
-            if (!i18n_full_perspective) {
-                i18n_full_perspective = 'Full';
-            }
-            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_full_perspective'>"+i18n_full_perspective+"</span>");
+            });            
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_full_perspective'>"+jQuery.i18n.prop('i18n_full_perspective')+"</span>");
             //var fhOptions = jQuery.extend(true, {}, options);
             options.subscribersMarker = false;
             options.linkerButton = false;
@@ -1400,8 +1385,6 @@
                 if (field.loadMarkers)
                     field.loadMarkers();
             });
-            switchLanguage(selectedLanguage, selectedFlag, false);
-            
             if (typeof focusSearchTab === "undefined" || focusSearchTab) {
                 $('#fh-tabs li:eq(1) a').tab('show');
                 $('#fh-search_canvas-searchBox').focus();
@@ -1437,12 +1420,8 @@
             });
             $("#responsive-perspective").css({
                 "display": "block"
-            });
-            var i18n_responsive = jQuery.i18n.prop('i18n_responsive');                        
-            if (!i18n_responsive) {
-                i18n_responsive = 'Responsive';
-            }
-            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_responsive'>"+i18n_responsive+"</span>");
+            });            
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_responsive'>"+jQuery.i18n.prop('i18n_responsive')+"</span>");
             var tpt = new taxonomyPanel(document.getElementById("rp-taxonomy_canvas"), txValue1, options);
             var spa = new searchPanel(document.getElementById("rp-search_canvas"), options);
             var cdPanel1 = new conceptDetails(document.getElementById("rp-cd1_canvas"), cd1Value, options);
@@ -1466,8 +1445,7 @@
             });
             $.each(componentsRegistry, function(i, field) {
                 field.loadMarkers();
-            });
-            switchLanguage(selectedLanguage, selectedFlag, false);
+            });            
         }
 
         function reloadCurrentPerspective(conceptId, focusSearchTab) {
@@ -1509,9 +1487,6 @@
             }
         }
 
-        function switchRelease(label) {
-
-        }
         //PWI 20161108 This function went missing at some point.  Returning as urgent P1
         function verifyDate(release) {
             var now = new Date();
@@ -1533,8 +1508,11 @@
         }
 
         function switchLanguage(language, flagPng, fade) {
+            if (selectedLanguage == language) {
+                return;
+            }
+
             selectedLanguage = language;
-            selectedFlag = flagPng;
             $("#nav-selected-flag").html('<img src="' + flagPng + '">');
             $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
             jQuery.i18n.properties({
@@ -1560,9 +1538,6 @@
             });
 
             var i18n_search_placeholder = jQuery.i18n.prop('i18n_search_placeholder');
-            if (!i18n_search_placeholder) {
-                i18n_search_placeholder = 'Search...';
-            }
             if (fade) {
                 $('#fh-search_canvas-searchBox').fadeOut("slow", function() {
                     $('#fh-search_canvas-searchBox').attr('placeholder',i18n_search_placeholder);

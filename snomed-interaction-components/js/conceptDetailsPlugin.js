@@ -239,37 +239,20 @@ function conceptDetails(divElement, conceptId, options) {
             $("#" + panel.divElement.id + "-historyButton").popover('toggle');
         });
 
-        if (typeof i18n_panel_options == "undefined") {
-            i18n_panel_options = "Panel options";
-        }
         $("#" + panel.divElement.id + "-configButton").tooltip({
             placement: 'left',
             trigger: 'hover',
             title: i18n_panel_options,
             animation: true,
             delay: 1000
-        });
-        if (typeof i18n_history == "undefined") {
-            i18n_history = 'History';
-        }
+        });        
         $("#" + panel.divElement.id + "-historyButton").tooltip({
             placement: 'left',
             trigger: 'hover',
             title: i18n_history,
             animation: true,
             delay: 1000
-        });
-        if (typeof i18n_panel_links == "undefined") {
-            i18n_panel_links = 'Panel links';
-        }
-        //        $("#" + panel.divElement.id + "-linkerButton").tooltip({
-        //            placement : 'left',
-        //            trigger: 'hover',
-        //            title: i18n_panel_links,
-        //            animation: true,
-        //            delay: 1000
-        //        });
-
+        });        
         $("#" + panel.divElement.id + "-apply-button").click(function() {
             //console.log("apply!");
             panel.readOptionsPanel();
@@ -849,10 +832,7 @@ function conceptDetails(divElement, conceptId, options) {
 
             if ($("#" + panel.divElement.id + "-expandButton").is(":visible")) {
                 $("#" + panel.divElement.id + "-panelTitle").html("&nbsp;&nbsp;&nbsp;<strong>Concept Details: " + panel.defaultTerm + "</strong>");
-            }
-            if (typeof i18n_drag_this == "undefined") {
-                i18n_drag_this = "Drag this";
-            }
+            }            
             $("[draggable='true']").tooltip({
                 placement: 'left auto',
                 trigger: 'hover',
@@ -2032,9 +2012,6 @@ function conceptDetails(divElement, conceptId, options) {
             $('#' + panel.childrenPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/children-panel.hbs"](context));
             $("#home-children-" + panel.divElement.id + "-body").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/children.hbs"](context));
             $(".treeButton").disableTextSelect();
-            if (typeof i18n_drag_this == "undefined") {
-                i18n_drag_this = "Drag this";
-            }
             $("[draggable='true']").tooltip({
                 placement: 'left auto',
                 trigger: 'hover',
@@ -2095,10 +2072,7 @@ function conceptDetails(divElement, conceptId, options) {
                     conceptId: conceptId,
                     source: panel.divElement.id
                 });
-            });
-            if (typeof i18n_display_children == "undefined") {
-                i18n_display_children = "Display Children";
-            }
+            });            
             $("#" + panel.divElement.id + "-showChildren").tooltip({
                 placement: 'right',
                 trigger: 'hover',

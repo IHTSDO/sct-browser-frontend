@@ -115,9 +115,6 @@ function searchPanel(divElement, options) {
             $("#" + panel.divElement.id + "-collapseButton").hide();
         });
 
-        if (typeof i18n_panel_options == "undefined") {
-            i18n_panel_options = "Panel options";
-        }
         $("#" + panel.divElement.id + "-configButton").tooltip({
             placement: 'left',
             trigger: 'hover',
@@ -177,9 +174,6 @@ function searchPanel(divElement, options) {
                 html: true,
                 content: function() {
                     historyHtml = '<div style="height:100px;overflow:auto;">';
-                    if (typeof i18n_no_search_terms == "undefined") {
-                        i18n_no_search_terms = "No search terms"
-                    }
                     if (panel.history.length == 0) {
                         historyHtml = historyHtml + '<div class="text-center text-muted" style="width:100%"><em>' + i18n_no_search_terms + '</span>...</em></div>';
                     }
@@ -468,9 +462,6 @@ function searchPanel(divElement, options) {
             },
             buttonText: function(options, select) {
                 var i18n_language_refsets = jQuery.i18n.prop('i18n_language_refsets');                        
-                if (!i18n_language_refsets) {
-                    i18n_language_refsets = 'Language Refsets';
-                }
                 if (options.length === 0) {
                    return "<span class='i18n' data-i18n-id='i18n_language_refsets'>"+i18n_language_refsets+"</span>";
                 }
@@ -576,15 +567,6 @@ function searchPanel(divElement, options) {
     }
 
     this.updateStatusFilterLabel = function() {
-        if (typeof i18n_active_and_inactive == "undefined") {
-            i18n_active_and_inactive = 'Active and Inactive';
-        }
-        if (typeof i18n_inactive_only == "undefined") {
-            i18n_inactive_only = 'Inactive Only';
-        }
-        if (typeof i18n_active_only == "undefined") {
-            i18n_active_only = 'Active Only';
-        }
         if (panel.options.statusSearchFilter == 'activeAndInactive') {
             $("#" + panel.divElement.id + '-searchStatus').html("<span class='i18n' data-i18n-id='i18n_active_and_inactive'>"+i18n_active_and_inactive+"</span>");
             $("#" + panel.divElement.id + '-navStatusFilterLabel').html("<span class='i18n' data-i18n-id='i18n_active_and_inactive'>"+i18n_active_and_inactive+"</span>");
@@ -604,31 +586,19 @@ function searchPanel(divElement, options) {
 
     this.updateTypeFilterLabel = function() {        
         if (panel.options.typeSearchFilter == 'noDef') {
-            var i18n_exclude_definitions = jQuery.i18n.prop('i18n_exclude_definitions');
-            if (!i18n_exclude_definitions) {
-                i18n_exclude_definitions = 'Exclude definitions';
-            }
+            var i18n_exclude_definitions = jQuery.i18n.prop('i18n_exclude_definitions');           
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_exclude_definitions'>"+i18n_exclude_definitions+"</span>");
            
         } else if (panel.options.typeSearchFilter == 'fsn') {
-            var i18n_fsn = jQuery.i18n.prop('i18n_fsn');
-            if (!i18n_fsn) {
-                i18n_fsn = 'FSN';
-            }
+            var i18n_fsn = jQuery.i18n.prop('i18n_fsn');            
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_fsn'>"+i18n_fsn+"</span>");
            
         } else if (panel.options.typeSearchFilter == 'pt') {
-            var i18n_preferred_term = jQuery.i18n.prop('i18n_preferred_term');
-            if (!i18n_preferred_term) {
-                i18n_preferred_term = 'Preferred Term';
-            }
+            var i18n_preferred_term = jQuery.i18n.prop('i18n_preferred_term');            
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_preferred_term'>"+i18n_preferred_term+"</span>");
            
         } else {
-            var i18n_all = jQuery.i18n.prop('i18n_all');
-            if (!i18n_all) {
-                i18n_all = 'All';
-            }
+            var i18n_all = jQuery.i18n.prop('i18n_all');            
             panel.options.typeSearchFilter = '';
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_all'>"+i18n_all+"</span>");            
         }
@@ -710,9 +680,6 @@ function searchPanel(divElement, options) {
                 $('#' + panel.divElement.id + '-searchBar6').html("");
                 
                 var i18n_searching = jQuery.i18n.prop('i18n_searching');                        
-                if (!i18n_searching) {
-                    i18n_searching = 'Searching';
-                }
                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted i18n' data-i18n-id='i18n_searching'>"+i18n_searching+"...</span>");
                 //console.log("panel.options.searchMode " + panel.options.searchMode);
                 t = t.trim();
@@ -734,10 +701,7 @@ function searchPanel(divElement, options) {
 
                         }).done(function(result) {
                             if(result.active === false && panel.options.statusSearchFilter == "activeOnly"){
-                                var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
-                                if (!i18n_no_results_text) {
-                                    i18n_no_results_text = "No results";
-                                }
+                                var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                                
                                 resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                                 $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                                 $('#' + panel.divElement.id + '-searchBar2').html("");
@@ -831,10 +795,7 @@ function searchPanel(divElement, options) {
                             }
                             xhr = null;
                         }).fail(function() {
-                            var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
-                            if (!i18n_no_results_text) {
-                                i18n_no_results_text = "No results";
-                            }
+                            var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                            
                             resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                             $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                             $('#' + panel.divElement.id + '-searchBar2').html("");
@@ -906,10 +867,7 @@ function searchPanel(divElement, options) {
                           });
                     } else {
                         //                        console.log(t.substr(-2, 1));
-                        var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
-                        if (!i18n_no_results_text) {
-                            i18n_no_results_text = "No results";
-                        }
+                        var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                       
                         resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                         $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                         $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
@@ -1580,25 +1538,7 @@ function searchPanel(divElement, options) {
     this.updateSearchLabel = function() {
         if (typeof panel.options.searchMode == "undefined") {
             panel.options.searchMode = "partialMatching";
-        }
-        if (typeof i18n_search_examp_1 == "undefined") {
-            i18n_search_examp_1 = 'Example 1';
-        }
-        if (typeof i18n_search_examp_2 == "undefined") {
-            i18n_search_examp_2 = 'Example 2';
-        }
-        if (typeof i18n_search_examp_3 == "undefined") {
-            i18n_search_examp_3 = 'Example 3';
-        }
-        if (typeof i18n_regex_search_mode == "undefined") {
-            i18n_regex_search_mode = 'Regex';
-        }
-        if (typeof i18n_partial_match_search_mode == "undefined") {
-            i18n_partial_match_search_mode = 'Partial';
-        }
-        if (typeof i18n_full_text_search_mode == "undefined") {
-            i18n_full_text_search_mode = 'Full';
-        }        
+        }       
         if (panel.options.searchMode == "regex") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
             $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_1'>" + i18n_search_examp_1 + "</span> ");
@@ -1614,19 +1554,7 @@ function searchPanel(divElement, options) {
         } else {
             // do nothing
         }
-
-        if (typeof panel.options.searchLang == "undefined") {
-            panel.options.searchLang = "english";
-        }
-        if (typeof i18n_danish_stemmer == "undefined") {
-            i18n_danish_stemmer = 'Danish Stemmer';
-        }
-        if (typeof i18n_english_stemmer == "undefined") {
-            i18n_english_stemmer = 'English Stemmer';
-        }
-        if (typeof i18n_spanish_stemmer == "undefined") {
-            i18n_spanish_stemmer = 'Spanish Stemmer';
-        }
+       
         if (panel.options.searchLang == "danish") {
             $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_danish_stemmer'>" + i18n_danish_stemmer + "</span>");
         } else if (panel.options.searchLang == "english") {
@@ -1634,7 +1562,6 @@ function searchPanel(divElement, options) {
         } else if (panel.options.searchLang == "spanish") {
             $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_spanish_stemmer'>" + i18n_spanish_stemmer + "</span>");
         }
-
     }
 
     this.setupCanvas();
