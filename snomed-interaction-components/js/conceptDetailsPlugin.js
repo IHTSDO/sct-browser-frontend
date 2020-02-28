@@ -1825,10 +1825,7 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 icon = iconToDrag(term);
             });
-
-            if (typeof(switchLanguage) == "function") {
-                switchLanguage(selectedLanguage, selectedFlag, false);
-            }
+           
             conceptRequested = 0;
 
             //            membersUrl = options.serverUrl + "/" + options.edition + "/" + options.release + "/concepts/" + panel.conceptId + "/members";
