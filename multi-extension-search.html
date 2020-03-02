@@ -28,7 +28,6 @@
     <script src="/browser/external-libs/popover-extra-placements.js" type="text/javascript"></script>
     <script src="/browser/external-libs/canvg.min.js" type="text/javascript"></script>
     <script src="/browser/external-libs/canvas2image.js" type="text/javascript"></script>
-    <script src="/browser/external-libs/bootstrap-multiselect.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="/browser/css/jquery.splitter.css">
@@ -40,8 +39,7 @@
     <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-multiselect.css">
     <link rel="stylesheet" type="text/css" href="/browser/css/snomed-interaction-components.min.css?version=build_version">
 
-    <script src="/browser/internal-libs/snomed-interaction-components.min.js?version=build_version"></script>
-    <script src="/browser/internal-libs/dailyBuildPlugin.js"></script>
+    <script src="/browser/internal-libs/snomed-interaction-components.min.js?version=build_version"></script>    
 
     <script src="/browser/external-libs/jquery.history.js"></script>
     <script src="/browser/external-libs/ZeroClipboard.js"></script> 
@@ -115,10 +113,8 @@
             if (!options.acceptLicense) {
                 $('#license-modal').modal('show');
             }
-        }
+        }       
         
-        var selectedLanguage = 'en_US';
-        var selectedFlag = '/browser/img/flags/us.png';
         var defaultConceptId = 404684003;
         
         var options = {
@@ -186,9 +182,8 @@
         };
 
         function determineServer() {
-            if(!window.location.hostname.includes('browser')) {
-                return;
-            }
+            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
+            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);            
 
             var getCodeSystems = function() {
                 var dfd = $.Deferred();
@@ -235,29 +230,31 @@
         }   
         
         function getSelectedLanguageAndFlag(ui_language) {
+            var language = '';
+            var flag = '';
             if (ui_language == "en") {
-                selectedLanguage = 'en_US';
-                selectedFlag = '/browser/img/flags/us.png';
+                language = 'en_US';
+                flag = '/browser/img/flags/us.png';
             } else if (ui_language == "es") {
-                selectedLanguage = 'es';
-                selectedFlag = '/browser/img/flags/es.png';
+                language = 'es';
+                flag = '/browser/img/flags/es.png';
             } else if (ui_language == "sv") {
-                selectedLanguage = 'sv';
-                selectedFlag = '/browser/img/flags/se.png';
+                language = 'sv';
+                flag = '/browser/img/flags/se.png';
             } else if (ui_language == "da") {
-                selectedLanguage = 'da';
-                selectedFlag = '/browser/img/flags/dk.png';
+                language = 'da';
+                flag = '/browser/img/flags/dk.png';
             } else if (ui_language == "pt") {
-                selectedLanguage = 'pt';
-                selectedFlag = '/browser/img/flags/pt.png';
+                language = 'pt';
+                flag = '/browser/img/flags/pt.png';
             } else {
-                selectedLanguage = 'en_US';
-                selectedFlag = '/browser/img/flags/us.png';
+                language = 'en_US';
+                flag = '/browser/img/flags/us.png';
             }
 
             return {
-                'selectedLanguage': selectedLanguage,
-                'selectedFlag': selectedFlag
+                'selectedLanguage': language,
+                'selectedFlag': flag
             };
         } 
 
@@ -291,8 +288,7 @@
                             options.languages = parsedLanguages;
                             options.edition = release.latestVersion.branchPath;                                                      
                             options.languageObject = release.languages;
-                            $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                            options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            $("#editionLabel").html(release.name + " " + release.latestVersion.version);                            
 
                             let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
                             options.defaultLanguage = parsedLanguages.substr(0, 2);
@@ -349,6 +345,11 @@
             cdPanel1.subscribe(fav);
           
             cdPanel1.setupCanvas();
+
+            loadLanguageRefsets().then(function(languageRefsets) {
+                cdPanel1.setLangugeRefsets(languageRefsets);               
+            });
+
             if (window.screen.width > 1500) {
                 $('#spliter-fh').split({
                     orientation: 'vertical',
@@ -365,8 +366,7 @@
             $.each(componentsRegistry, function(i, field) {
                 if (field.loadMarkers)
                     field.loadMarkers();
-            });
-            switchLanguage(selectedLanguage, selectedFlag, false);                    
+            });                               
         }
 
         function reloadCurrentPerspective() {
@@ -383,15 +383,57 @@
             cdPanel1.subscribe(fav);          
             cdPanel1.setupCanvas();
             
+            loadLanguageRefsets().then(function(languageRefsets) {
+                cdPanel1.setLangugeRefsets(languageRefsets);               
+            });
+            
             $.each(componentsRegistry, function(i, field) {
                 if (field.loadMarkers)
                     field.loadMarkers();
             });
         }        
 
-        function switchLanguage(language, flagPng, fade) {
-            selectedLanguage = language;
-            selectedFlag = flagPng;
+        function loadLanguageRefsets () {
+            var dfd = $.Deferred();
+            var branch = options.edition;
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            };
+            if(!options.serverUrl.includes('snowowl')){
+            $.ajaxSetup({
+                headers : {
+                    'Accept-Language': options.languages
+                }
+                });
+            };
+            $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {                 
+            }).done(function(result) {
+                var languageRefsets = [];            
+                Object.keys(result.referenceSets).forEach(function(key) {
+                    if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                        languageRefsets.push(result.referenceSets[key]);                                      
+                    }
+                });
+
+                languageRefsets.sort(function(a, b) {
+                    if (a.conceptId === '900000000000509007'){
+                        return -1;
+                    }    
+                    if (b.conceptId === '900000000000509007'){
+                        return 1;
+                    }    
+                    return a.fsn.term.localeCompare(b.fsn.term);
+                });
+
+                dfd.resolve(languageRefsets);                
+            }).fail(function() {
+                dfd.resolve([]);
+            });
+
+            return dfd.promise();
+        }
+
+        async function switchLanguage(language, flagPng, fade) {
             $("#nav-selected-flag").html('<img src="' + flagPng + '">');
             $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
             jQuery.i18n.properties({
@@ -416,6 +458,16 @@
                 }
             });
             
+            var i18n_search_placeholder = jQuery.i18n.prop('i18n_search_placeholder');
+            if (fade) {
+                $('#fh-search_canvas-searchBox').fadeOut("slow", function() {
+                    $('#fh-search_canvas-searchBox').attr('placeholder',i18n_search_placeholder);
+                    $('#fh-search_canvas-searchBox').fadeIn("slow");
+                });
+            } else {
+                $('#fh-search_canvas-searchBox').attr('placeholder',i18n_search_placeholder);
+            } 
+
             $("#navBarBrand").tooltip().tooltip('destroy');
             $("#navBarBrand").tooltip({
                 placement: 'bottom',
