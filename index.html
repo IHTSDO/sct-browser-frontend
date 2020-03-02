@@ -1586,7 +1586,7 @@
             }
         }
 
-        function switchLanguage(language, flagPng, fade) {
+        async function switchLanguage(language, flagPng, fade) {
             if (selectedLanguage == language) {
                 return;
             }
@@ -1598,7 +1598,6 @@
                 name: 'Languages',
                 path: '/browser/i18n/',
                 mode: 'both',
-                cache: true,
                 language: language
             });
             $(".i18n").each(function(index) {
