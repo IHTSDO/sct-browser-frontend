@@ -49,6 +49,9 @@ function conceptDetails(divElement, conceptId, options) {
     this.panelRefsetsLoaded = false;
     this.panelMembersLoaded = false;
     this.panelReferencesLoaded = false;
+    this.panelDiagramLoaded = false;
+    this.panelExpressionLoaded = false;
+    this.firstMatch = null;
 
     if (options.serverUrl.includes('snowowl')){
         panel.server = 'snowowl';
@@ -277,6 +280,9 @@ function conceptDetails(divElement, conceptId, options) {
         panel.panelRefsetsLoaded = false;
         panel.panelMembersLoaded = false;
         panel.panelReferencesLoaded = false;
+        panel.panelDiagramLoaded = false;
+        panel.panelExpressionLoaded = false;
+        panel.firstMatch = null;
         $("#home-children-" + panel.divElement.id + "-body").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#' + panel.attributesPId).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#home-attributes-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
@@ -331,6 +337,7 @@ function conceptDetails(divElement, conceptId, options) {
                 result.defaultTerm = result.fsn.term;
             }
             var firstMatch = result;
+            panel.firstMatch = result;
             xhr = null;
             panel.attributesPId = divElement.id + "-attributes-panel";
             panel.defaultTerm = firstMatch.defaultTerm;
@@ -766,342 +773,9 @@ function conceptDetails(divElement, conceptId, options) {
 
             // load descriptions panel
             panel.descsPId = divElement.id + "-descriptions-panel";
-            
-            var loadDesriptionsPanel =  function (firstMatch) {
-                var allLangsHtml = "";
-                firstMatch.descriptions.sort(function(a, b) {
-                    if (a.lang == options.defaultLanguage && b.lang != options.defaultLanguage)
-                        return -1;
-                    if (a.lang != options.defaultLanguage && b.lang == options.defaultLanguage)
-                        return 1;
-                    return 0;
-                });
-                if (panel.options.langRefset && panel.options.langRefset.length > 0) {
-                    $.each(panel.options.langRefset, function(i, loopSelectedLangRefset) {
-                        var allDescriptions = firstMatch.descriptions.slice(0);
-                        var homeDescriptionsHtml = "";
-                        $.each(allDescriptions, function(i, field) {
-                            field.included = false;
-                            field.preferred = false;
-                            field.acceptable = false;
-                            if (panel.options.displayInactiveDescriptions || field.active == true) {
-                                if (field.active == true) {
-                                    if (homeDescriptionsHtml != "") {
-                                        homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
-                                    }
-                                    homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
-                                }
-                            }
-                        });
-                        Handlebars.registerHelper('removeSemtag', function(term) {
-                            return panel.removeSemtag(term);
-                        });
-                        Handlebars.registerHelper('if_eq', function(a, b, opts) {
-                            if (opts != "undefined") {
-                                if (a == b)
-                                    return opts.fn(this);
-                                else
-                                    return opts.inverse(this);
-                            }
-                        });
-    
-                        var auxDescriptions = [];
-                        $.each(allDescriptions, function(i, description) {
-                            var included = false;                   
-                            if (description.acceptabilityMap) {
-                                $.each(description.acceptabilityMap, function(langref, acceptability) {
-                                    if (langref === loopSelectedLangRefset) {
-                                        included = true;
-                                        acceptabilityPair = description.acceptabilityMap[i];
-                                        if (acceptability == "PREFERRED") {
-                                            description.preferred = true;
-                                        } else {
-                                            if (acceptability == "ACCEPTABLE") {
-                                                description.acceptable = true;
-                                            }
-                                        }
-                                    }
-                                    
-                                });
-                            }
-    
-                            if (included) {
-                                if (panel.options.displayInactiveDescriptions) {
-                                    auxDescriptions.push(description);
-                                } else {
-                                    if (description.active) {
-                                        auxDescriptions.push(description);
-                                    }
-                                }
-                            } else {
-                                description.acceptable = false;
-                                if (panel.options.hideNotAcceptable) {
-                                    if (panel.options.displayInactiveDescriptions) {
-                                        auxDescriptions.push(description);
-                                    }
-                                } else {
-                                    if (panel.options.displayInactiveDescriptions) {
-                                        auxDescriptions.push(description);
-                                    } else {
-                                        if (description.active) {
-                                            auxDescriptions.push(description);
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                        allDescriptions = auxDescriptions.slice(0);
-                        allDescriptions.sort(function(a, b) {
-                            if (a.active && !b.active)
-                                return -1;
-                            if (!a.active && b.active)
-                                return 1;
-                            if (a.active == b.active) {
-                                if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
-                                    return -1;
-                                if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
-                                    return 1;
-                                if (a.typeId < b.typeId)
-                                    return -1;
-                                if (a.typeId > b.typeId)
-                                    return 1;
-                                if (a.typeId == b.typeId) {
-                                    if (a.preferred && !b.preferred)
-                                        return -1;
-                                    if (!a.preferred && b.preferred)
-                                        return 1;
-                                    if (a.preferred == b.preferred) {
-                                        if (a.term < b.term)
-                                            return -1;
-                                        if (a.term > b.term)
-                                            return 1;
-                                    }
-                                }
-                            }
-    
-                            return 0;
-                        });
-    
-                        var context = {
-                            options: panel.options,
-                            languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
-                            longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
-                            divElementId: panel.divElement.id,
-                            server: panel.server,
-                            allDescriptions: allDescriptions
-                        };
-                        
-                        if (allDescriptions.length != 0) {
-                            allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
-                        }                
-                        
-                        $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);                   
-                    });
-                }
-                else {                    
-                    // START FOR                    
-                    for (var language in options.languageObject) {
-                        var allDescriptions = firstMatch.descriptions.slice(0);
-                        var homeDescriptionsHtml = "";
-                        $.each(allDescriptions, function(i, field) {
-                            field.included = false;
-                            field.preferred = false;
-                            field.acceptable = false;
-                            if (panel.options.displayInactiveDescriptions || field.active == true) {
-                                if (field.active == true) {
-                                    if (homeDescriptionsHtml != "") {
-                                        homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
-                                    }
-                                    homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
-                                }
-                            }
-                        });
-                        Handlebars.registerHelper('removeSemtag', function(term) {
-                            return panel.removeSemtag(term);
-                        });
-                        Handlebars.registerHelper('if_eq', function(a, b, opts) {
-                            if (opts != "undefined") {
-                                if (a == b)
-                                    return opts.fn(this);
-                                else
-                                    return opts.inverse(this);
-                            }
-                        });
 
-                        var auxDescriptions = [];
-                        $.each(allDescriptions, function(i, description) {
-                            var included = false;
-                            if(description.lang === language){
-                                included = true;
-                            }
-                            if (description.acceptabilityMap) {
-                                $.each(description.acceptabilityMap, function(langref, acceptability) {
-                                    acceptabilityPair = description.acceptabilityMap[i];
-                                        if (acceptability == "PREFERRED") {
-                                            description.preferred = true;
-                                        } else {
-                                            if (acceptability == "ACCEPTABLE") {
-                                                description.acceptable = true;
-                                            }
-                                        }
-                                });
-                            }
-
-                            if (included) {
-                                if (panel.options.displayInactiveDescriptions) {
-                                    auxDescriptions.push(description);
-                                } else {
-                                    if (description.active) {
-                                        auxDescriptions.push(description);
-                                    }
-                                }
-                            } else {
-                                description.acceptable = false;
-                                if (panel.options.hideNotAcceptable) {
-                                    if (panel.options.displayInactiveDescriptions) {
-                                        auxDescriptions.push(description);
-                                    }
-                                } else {
-                                    if (options.displayInactiveDescriptions) {
-                                        auxDescriptions.push(description);
-                                    } else {
-                                        if (description.active) {
-                                            auxDescriptions.push(description);
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                        allDescriptions = auxDescriptions.slice(0);
-                        allDescriptions.sort(function(a, b) {
-                            if (a.active && !b.active)
-                                return -1;
-                            if (!a.active && b.active)
-                                return 1;
-                            if (a.active == b.active) {
-                                if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
-                                    return -1;
-                                if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
-                                    return 1;
-                                if (a.typeId < b.typeId)
-                                    return -1;
-                                if (a.typeId > b.typeId)
-                                    return 1;
-                                if (a.typeId == b.typeId) {
-                                    if (a.preferred && !b.preferred)
-                                        return -1;
-                                    if (!a.preferred && b.preferred)
-                                        return 1;
-                                    if (a.preferred == b.preferred) {
-                                        if (a.term < b.term)
-                                            return -1;
-                                        if (a.term > b.term)
-                                            return 1;
-                                    }
-                                }
-                            }
-
-                            return 0;
-                        });
-
-                        var context = {
-                            options: panel.options,
-                            languageName: "(" + language + ")",
-                            longLangName: panel.options.languagesArray[language],
-                            divElementId: panel.divElement.id,
-                            server: panel.server,
-                            allDescriptions: allDescriptions
-                        };                       
-
-                        allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
-                        
-                        $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);                        
-                    }
-                    // END FOR                   
-                }
-                
-                $("#" + panel.descsPId).html(allLangsHtml);
-
-                if (panel.options.displaySynonyms != true) { // hide synonyms
-                    $('#' + panel.descsPId).find('.synonym-row').each(function(i, val) {
-                        $(val).toggle();
-                    });
-                    $(this).toggleClass('glyphicon-plus');
-                    $(this).toggleClass('glyphicon-minus');
-                }
-
-                $("#" + panel.descsPId + "-descButton").disableTextSelect();
-                $("#" + panel.descsPId + "-descButton").click(function() {
-                    table = $(this).closest("table").first();
-                    $(this).toggleClass('glyphicon-plus');
-                    $(this).toggleClass('glyphicon-minus');
-                    table.find('.synonym-row').each(function(i, val) {
-                        $(val).toggle();
-                    });
-                });
-
-                $('#' + panel.descsPId).find("[rel=tooltip-right]").tooltip({ placement: 'right' });
-            };
-            
-            if (!panel.options.languageRefsets || panel.options.languageRefsets.length === 0 || panel.options.branchChanged) {
-                var branch = options.edition;
-                if(options.release.length > 0 && options.release !== 'None'){
-                    branch = branch + "/" + options.release;
-                };
-                if(!options.serverUrl.includes('snowowl')){
-                $.ajaxSetup({
-                    headers : {
-                        'Accept-Language': options.languages
-                    }
-                    });
-                };
-                $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {              
-                    // do nothing                
-                }).done(function(result) {
-                    panel.options.languageRefsets = [];
-                    panel.options.langRefset = [];             
-                    Object.keys(result.referenceSets).forEach(function(key) {
-                        if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
-                            panel.options.languageRefsets.push(result.referenceSets[key]);                                      
-                        }
-                    });
-
-                    panel.options.languageRefsets.sort(function(a, b) {
-                        if (a.conceptId === '900000000000509007'){
-                            return -1;
-                        }
-            
-                        if (b.conceptId === '900000000000509007'){
-                            return 1;
-                        }
-            
-                        return a.fsn.term.localeCompare(b.fsn.term);
-                    });
-
-                    if (panel.options.defaultLanguageReferenceSets && panel.options.defaultLanguageReferenceSets.length > 0) {
-                        panel.options.langRefset = panel.options.defaultLanguageReferenceSets;
-                    } 
-                    else {
-                        panel.options.languageRefsets.forEach(function(item) {
-                            panel.options.langRefset.push(item.id);  
-                        });
-                    }                    
-                    
-                    loadDesriptionsPanel(firstMatch);
-                    
-                    $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");
-
-                    panel.setupOptionsPanel();
-                }).fail(function() {
-                    loadDesriptionsPanel(firstMatch);
-
-                    $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");
-
-                    panel.setupOptionsPanel();
-                });
-            }
-            else {
-                loadDesriptionsPanel(firstMatch);
+            if (panel.options.languageRefsets && panel.options.languageRefsets.length !== 0) {
+                panel.renderDesriptionsPanel(firstMatch);
             }
 
             // load relationships panel and home parents/roles
@@ -1417,11 +1091,13 @@ function conceptDetails(divElement, conceptId, options) {
             
             if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == "diagram-tab") {
                 drawConceptDiagram(firstMatch, $("#diagram-canvas-" + panel.divElement.id), panel.options, panel);
+                panel.panelDiagramLoaded = true;
             }
             else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == "expression-tab") {
                 $("#expression-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 setTimeout(function() {
                     renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), options);
+                    panel.panelExpressionLoaded = true;
                 }, 300);
             }
             else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == (panel.divElement.id + "-refsets-tab")) {                
@@ -1449,8 +1125,10 @@ function conceptDetails(divElement, conceptId, options) {
             
             $("#diagram-tab-link-" + panel.divElement.id).unbind();
             $("#diagram-tab-link-" + panel.divElement.id).click(function(e) {
+                if (panel.panelDiagramLoaded) return;
                 $("#diagram-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 drawConceptDiagram(firstMatch, $("#diagram-canvas-" + panel.divElement.id), panel.options, panel);
+                panel.panelDiagramLoaded = true;                
             });
 
             $("#refsets-tab-link-" + panel.divElement.id).unbind();
@@ -1469,8 +1147,10 @@ function conceptDetails(divElement, conceptId, options) {
 
             $("#expression-tab-link-" + panel.divElement.id).unbind();
             $("#expression-tab-link-" + panel.divElement.id).click(function(e) {
+                if (panel.panelExpressionLoaded) return;
                 $("#expression-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), options);
+                panel.panelExpressionLoaded = true;
             });
 
             if (firstMatch.defaultTerm.endsWith("(clinical drug)")) {
@@ -1689,7 +1369,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren = null;
         }        
         
-        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(result) {
+        xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
         }).done(function(result) {          
 
             result.forEach(function(item) {
@@ -1870,17 +1550,15 @@ function conceptDetails(divElement, conceptId, options) {
                         }
                     });
                 }
-
+                Handlebars.registerHelper('if_not_empty', function(list, opts) {
+                    if (list) {
+                        if (list.length > 0)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                });
                 if (ids.length > 0) {
-                    Handlebars.registerHelper('if_not_empty', function(list, opts) {
-                        if (list) {
-                            if (list.length > 0)
-                                return opts.fn(this);
-                            else
-                                return opts.inverse(this);
-                        }
-                    });
-
                     var getConcepts =  function(list) {
                         var dfd = $.Deferred();
                         var result = {concepts: []};
@@ -2125,6 +1803,14 @@ function conceptDetails(divElement, conceptId, options) {
                         return opts.inverse(this);
                 }
             });
+            Handlebars.registerHelper('if_gr', function(a, b, opts) {
+                if (a) {
+                    if (a > b)
+                        return opts.fn(this);
+                    else
+                        return opts.inverse(this);
+                }
+            });
             Handlebars.registerHelper('push', function(element) {
                 listIconIds.push(element);
             });
@@ -2245,6 +1931,356 @@ function conceptDetails(divElement, conceptId, options) {
                 icon = iconToDrag(term);
             });
         }).fail(function() {});
+    }
+
+    this.renderDesriptionsPanel =  function (firstMatch) {
+        var allLangsHtml = "";
+        firstMatch.descriptions.sort(function(a, b) {
+            if (a.lang == options.defaultLanguage && b.lang != options.defaultLanguage)
+                return -1;
+            if (a.lang != options.defaultLanguage && b.lang == options.defaultLanguage)
+                return 1;
+            return 0;
+        });
+        if (panel.options.langRefset && panel.options.langRefset.length > 0) {
+            $.each(panel.options.langRefset, function(i, loopSelectedLangRefset) {
+                var allDescriptions = firstMatch.descriptions.slice(0);
+                var homeDescriptionsHtml = "";
+                $.each(allDescriptions, function(i, field) {
+                    field.included = false;
+                    field.preferred = false;
+                    field.acceptable = false;
+                    if (panel.options.displayInactiveDescriptions || field.active == true) {
+                        if (field.active == true) {
+                            if (homeDescriptionsHtml != "") {
+                                homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
+                            }
+                            homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
+                        }
+                    }
+                });
+                Handlebars.registerHelper('removeSemtag', function(term) {
+                    return panel.removeSemtag(term);
+                });
+                Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                    if (opts != "undefined") {
+                        if (a == b)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                });
+
+                var auxDescriptions = [];
+                $.each(allDescriptions, function(i, description) {
+                    var included = false;                   
+                    if (description.acceptabilityMap) {
+                        $.each(description.acceptabilityMap, function(langref, acceptability) {
+                            if (langref === loopSelectedLangRefset) {
+                                included = true;
+                                acceptabilityPair = description.acceptabilityMap[i];
+                                if (acceptability == "PREFERRED") {
+                                    description.preferred = true;
+                                } else {
+                                    if (acceptability == "ACCEPTABLE") {
+                                        description.acceptable = true;
+                                    }
+                                }
+                            }
+                            
+                        });
+                    }
+
+                    if (included) {
+                        if (panel.options.displayInactiveDescriptions) {
+                            auxDescriptions.push(description);
+                        } else {
+                            if (description.active) {
+                                auxDescriptions.push(description);
+                            }
+                        }
+                    } else {
+                        description.acceptable = false;
+                        if (panel.options.hideNotAcceptable) {
+                            if (panel.options.displayInactiveDescriptions) {
+                                auxDescriptions.push(description);
+                            }
+                        } else {
+                            if (panel.options.displayInactiveDescriptions) {
+                                auxDescriptions.push(description);
+                            } else {
+                                if (description.active) {
+                                    auxDescriptions.push(description);
+                                }
+                            }
+                        }
+                    }
+                });
+                allDescriptions = auxDescriptions.slice(0);
+                allDescriptions.sort(function(a, b) {
+                    if (a.active && !b.active)
+                        return -1;
+                    if (!a.active && b.active)
+                        return 1;
+                    if (a.active == b.active) {
+                        if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
+                            return -1;
+                        if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
+                            return 1;
+                        if (a.typeId < b.typeId)
+                            return -1;
+                        if (a.typeId > b.typeId)
+                            return 1;
+                        if (a.typeId == b.typeId) {
+                            if (a.preferred && !b.preferred)
+                                return -1;
+                            if (!a.preferred && b.preferred)
+                                return 1;
+                            if (a.preferred == b.preferred) {
+                                if (a.term < b.term)
+                                    return -1;
+                                if (a.term > b.term)
+                                    return 1;
+                            }
+                        }
+                    }
+
+                    return 0;
+                });
+
+                var context = {
+                    options: panel.options,
+                    languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
+                    longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
+                    divElementId: panel.divElement.id,
+                    server: panel.server,
+                    allDescriptions: allDescriptions
+                };
+                
+                if (allDescriptions.length != 0) {
+                    allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                }                
+                
+                $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);                   
+            });
+        }
+        else {                    
+            // START FOR                    
+            for (var language in options.languageObject) {
+                var allDescriptions = firstMatch.descriptions.slice(0);
+                var homeDescriptionsHtml = "";
+                $.each(allDescriptions, function(i, field) {
+                    field.included = false;
+                    field.preferred = false;
+                    field.acceptable = false;
+                    if (panel.options.displayInactiveDescriptions || field.active == true) {
+                        if (field.active == true) {
+                            if (homeDescriptionsHtml != "") {
+                                homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
+                            }
+                            homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
+                        }
+                    }
+                });
+                Handlebars.registerHelper('removeSemtag', function(term) {
+                    return panel.removeSemtag(term);
+                });
+                Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                    if (opts != "undefined") {
+                        if (a == b)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                });
+
+                var auxDescriptions = [];
+                $.each(allDescriptions, function(i, description) {
+                    var included = false;
+                    if(description.lang === language){
+                        included = true;
+                    }
+                    if (description.acceptabilityMap) {
+                        $.each(description.acceptabilityMap, function(langref, acceptability) {
+                            acceptabilityPair = description.acceptabilityMap[i];
+                                if (acceptability == "PREFERRED") {
+                                    description.preferred = true;
+                                } else {
+                                    if (acceptability == "ACCEPTABLE") {
+                                        description.acceptable = true;
+                                    }
+                                }
+                        });
+                    }
+
+                    if (included) {
+                        if (panel.options.displayInactiveDescriptions) {
+                            auxDescriptions.push(description);
+                        } else {
+                            if (description.active) {
+                                auxDescriptions.push(description);
+                            }
+                        }
+                    } else {
+                        description.acceptable = false;
+                        if (panel.options.hideNotAcceptable) {
+                            if (panel.options.displayInactiveDescriptions) {
+                                auxDescriptions.push(description);
+                            }
+                        } else {
+                            if (options.displayInactiveDescriptions) {
+                                auxDescriptions.push(description);
+                            } else {
+                                if (description.active) {
+                                    auxDescriptions.push(description);
+                                }
+                            }
+                        }
+                    }
+                });
+                allDescriptions = auxDescriptions.slice(0);
+                allDescriptions.sort(function(a, b) {
+                    if (a.active && !b.active)
+                        return -1;
+                    if (!a.active && b.active)
+                        return 1;
+                    if (a.active == b.active) {
+                        if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
+                            return -1;
+                        if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
+                            return 1;
+                        if (a.typeId < b.typeId)
+                            return -1;
+                        if (a.typeId > b.typeId)
+                            return 1;
+                        if (a.typeId == b.typeId) {
+                            if (a.preferred && !b.preferred)
+                                return -1;
+                            if (!a.preferred && b.preferred)
+                                return 1;
+                            if (a.preferred == b.preferred) {
+                                if (a.term < b.term)
+                                    return -1;
+                                if (a.term > b.term)
+                                    return 1;
+                            }
+                        }
+                    }
+
+                    return 0;
+                });
+
+                var context = {
+                    options: panel.options,
+                    languageName: "(" + language + ")",
+                    longLangName: panel.options.languagesArray[language],
+                    divElementId: panel.divElement.id,
+                    server: panel.server,
+                    allDescriptions: allDescriptions
+                };                       
+
+                allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                
+                $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);                        
+            }
+            // END FOR                   
+        }
+        
+        $("#" + panel.descsPId).html(allLangsHtml);
+
+        if (panel.options.displaySynonyms != true) { // hide synonyms
+            $('#' + panel.descsPId).find('.synonym-row').each(function(i, val) {
+                $(val).toggle();
+            });
+            $(this).toggleClass('glyphicon-plus');
+            $(this).toggleClass('glyphicon-minus');
+        }
+
+        $("#" + panel.descsPId + "-descButton").disableTextSelect();
+        $("#" + panel.descsPId + "-descButton").click(function() {
+            table = $(this).closest("table").first();
+            $(this).toggleClass('glyphicon-plus');
+            $(this).toggleClass('glyphicon-minus');
+            table.find('.synonym-row').each(function(i, val) {
+                $(val).toggle();
+            });
+        });
+
+        $('#' + panel.descsPId).find("[rel=tooltip-right]").tooltip({ placement: 'right' });
+    }
+
+    this.loadLanguageRefsets = function() {        
+        var branch = options.edition;
+        if(options.release.length > 0 && options.release !== 'None'){
+            branch = branch + "/" + options.release;
+        };
+        if(!options.serverUrl.includes('snowowl')){
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': options.languages
+            }
+            });
+        };
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {              
+            // do nothing                
+        }).done(function(result) {
+            panel.options.languageRefsets = [];
+            panel.options.langRefset = [];             
+            Object.keys(result.referenceSets).forEach(function(key) {
+                if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                    panel.options.languageRefsets.push(result.referenceSets[key]);                                      
+                }
+            });
+
+            panel.options.languageRefsets.sort(function(a, b) {
+                if (a.conceptId === '900000000000509007'){
+                    return -1;
+                }
+    
+                if (b.conceptId === '900000000000509007'){
+                    return 1;
+                }
+    
+                return a.fsn.term.localeCompare(b.fsn.term);
+            });
+
+            if (panel.options.defaultLanguageReferenceSets && panel.options.defaultLanguageReferenceSets.length > 0) {
+                panel.options.langRefset = panel.options.defaultLanguageReferenceSets;
+            } 
+            else {
+                panel.options.languageRefsets.forEach(function(item) {
+                    panel.options.langRefset.push(item.id);  
+                });
+            }                    
+            
+            panel.renderDesriptionsPanel(panel.firstMatch);
+            
+            $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");
+
+            panel.setupOptionsPanel();
+        }).fail(function() {
+            panel.renderDesriptionsPanel(panel.firstMatch);
+            $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");
+            panel.setupOptionsPanel();
+        });       
+    }
+
+    this.setLangugeRefsets = function(langRefsets) {
+        panel.options.languageRefsets = langRefsets;
+        panel.options.langRefset = [];
+        if (panel.options.defaultLanguageReferenceSets && panel.options.defaultLanguageReferenceSets.length > 0) {
+            panel.options.langRefset = panel.options.defaultLanguageReferenceSets;
+        } 
+        else {
+            panel.options.languageRefsets.forEach(function(item) {
+                panel.options.langRefset.push(item.id);  
+            });
+        }                    
+        if (panel.firstMatch) {
+            panel.renderDesriptionsPanel(panel.firstMatch);
+        }                
+        $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");
+        panel.setupOptionsPanel();
     }
 
     this.loadMembers = function(returnLimit, skipTo, paginate) {
@@ -2479,15 +2515,11 @@ function conceptDetails(divElement, conceptId, options) {
                         panel.loadMarkers();
                 }
                 panel.readOptionsPanel();
-                if (data.branch) {
-                    if (data.branch !== options.edition) {
-                        panel.options.branchChanged = true;
-                    }
-                    else {
-                        panel.options.branchChanged = false;
-                    }
+                if (data.branch && data.branch !== options.edition) {
                     options.edition = data.branch;
                     panel.options.edition = data.branch;
+                    panel.options.languageRefsets = [];
+                    panel.loadLanguageRefsets();
                 }
                 panel.updateCanvas();
             });

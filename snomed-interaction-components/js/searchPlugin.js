@@ -216,24 +216,6 @@ function searchPanel(divElement, options) {
             });
             $("#" + panel.divElement.id + "-historyButton").popover('toggle');
         });
-        //        $("#" + panel.divElement.id + "-linkerButton").click(function (event) {
-        //            $("#" + panel.divElement.id + "-linkerButton").popover({
-        //                trigger: 'manual',
-        //                placement: 'bottomRight',
-        //                html: true,
-        //                content: function () {
-        //                    var linkerHtml = '<div class="text-center text-muted"><em><span class="i18n" data-i18n-id="i18n_drag_to_link">Drag to link with other panels</span><br>';
-        //                    if (panel.subscriptions.length == 1) {
-        //                        linkerHtml = linkerHtml + panel.subscriptions.length + ' link established</em></div>';
-        //                    } else {
-        //                        linkerHtml = linkerHtml + panel.subscriptions.length + ' links established</em></div>';
-        //                    }
-        //                    linkerHtml = linkerHtml + '<div class="text-center"><a href="javascript:void(0);" onclick="clearSearchPanelSubscriptions(\'' + panel.divElement.id + '\');"><span class="i18n" data-i18n-id="i18n_clear_links">Clear links</span></a></div>';
-        //                    return linkerHtml;
-        //                }
-        //            });
-        //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
-        //        });
 
         $("#" + panel.divElement.id + "-fullTextButton").click(function(event) {
             panel.options.searchMode = 'fullText';
@@ -412,37 +394,14 @@ function searchPanel(divElement, options) {
             $("#" + panel.divElement.id + "-partialMatchingButton").click();
         }        
         
-        $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
-
-        this.getLanguageRefsets();        
+        $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);       
     };
 
-    this.getLanguageRefsets = function() {
-        var branch = panel.options.edition;
-        if(panel.options.release.length > 0 && panel.options.release !== 'None'){
-            branch = branch + "/" + panel.options.release;
-        };
-        if(!panel.options.serverUrl.includes('snowowl')){
-        $.ajaxSetup({
-            headers : {
-                'Accept-Language': panel.options.languages
-            }
-            });
-        };
-        $.getJSON(panel.options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {              
-            // do nothing                
-        }).done(function(result) {
-            panel.options.languageRefsets = [];        
-            Object.keys(result.referenceSets).forEach(function(key) {
-                if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
-                    panel.options.languageRefsets.push(result.referenceSets[key]);
-                }
-            });
-
-            if (panel.options.languageRefsets.length !== 0) {
-                panel.setupLanguageRefsetDropdown();
-            }
-        });
+    this.setLanguageRefsets = function(languageRefsets) {
+        panel.options.languageRefsets = languageRefsets;
+        if (panel.options.languageRefsets.length !== 0) {
+            panel.setupLanguageRefsetDropdown();
+        }        
     }
 
     this.setupLanguageRefsetDropdown = function() {

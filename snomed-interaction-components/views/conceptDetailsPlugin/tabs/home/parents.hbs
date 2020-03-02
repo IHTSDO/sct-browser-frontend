@@ -4,14 +4,7 @@
     {{else}}
         <ul style='list-style-type: none; padding-left: 2px;'>
             {{#each statedParents}}
-                <li class="treeLabel" data-concept-id='{{conceptId}}'>
-                    <!--<span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='text-warning' data-module="{{target.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>-->
-                        <!--{{#if_gr type.defaultTerm 0}}-->
-                    <!--{{substr type.defaultTerm 0}}-->
-                        <!--{{else}}-->
-                    <!--{{type.defaultTerm}}-->
-                        <!--{{/if_gr}}-->
-                    <!--</span>&nbsp;&rArr;&nbsp;-->
+                <li class="treeLabel" data-concept-id='{{conceptId}}'>                  
                     <button class='btn btn-link btn-xs treeButton' style='padding:2px'><i class='glyphicon glyphicon-{{#if_eq conceptId "138875005"}}minus{{else}}{{#if_eq conceptId "9999999999"}}minus{{else}}chevron-right{{/if_eq}}{{/if_eq}} treeButton' data-first="true" data-ind="{{@index}}"></i></button>
                     {{#if_eq definitionStatus "PRIMITIVE"}}
                         <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;

@@ -58,89 +58,65 @@ function refsetPanel(divElement, options) {
             branch = branch + "/" + options.release;
         };
         if (xhrRefset != null) {
-            xhrChildren.abort();
+            xhrRefset.abort();
             xhrRefset = null;
         };
-        xhrRefset = $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {
-            var refsets = [];
-            var refsetItem = null;
-            Object.keys(result.memberCountsByReferenceSet).forEach(function(key) {
-                refsetItem = {};
-                refsetItem.module = result.referenceSets[key].moduleId;
-                refsetItem.conceptId = key;
-                refsetItem.defaultTerm = result.referenceSets[key].fsn.term;
-                refsetItem.count = result.memberCountsByReferenceSet[key];
-                refsetItem.type = result.referenceSets[key].referenceSetType.pt.term;
-                refsetItem.definitionStatus = result.referenceSets[key].definitionStatus;
-
-                refsets.push(refsetItem);
-            });
-
-            refsets.sort(function(a, b) {
-                if (a.type < b.type)
-                    return -1;
-                if (a.type > b.type)
-                    return 1;
-                if (a.defaultTerm < b.defaultTerm)
-                    return -1;
-                if (a.defaultTerm > b.defaultTerm)
-                    return 1;
-                return 0;
-            });
-
-            var context = {
-                divElementId: panel.divElement.id,
-                refsets: refsets
-            }
-            $("#" + panel.divElement.id + "-panelBody").html(JST["snomed-interaction-components/views/refsetPlugin/body.hbs"](context));
-            $('#' + panel.divElement.id + '-panelBody').find(".refset-item").click(function(event) {
-                panel.loadMembers($(event.target).attr('data-concept-id'), $(event.target).attr('data-term'), 100, 0);
-                channel.publish(panel.divElement.id, {
-                    term: $(event.target).attr('data-term'),
-                    module: $(event.target).attr("data-module"),
-                    conceptId: $(event.target).attr('data-concept-id'),
-                    source: panel.divElement.id,
-                    showConcept: true
-                });
-            });
+        xhrRefset = $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {            
         }).done(function(result) {
-            
+            panel.renderRefsets(result);
         }).fail(function() {
             $("#" + panel.divElement.id + "-panelBody").html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
         });
-        /*if (panel.options.manifest) {
-            panel.options.manifest.refsets.sort(function(a, b) {
-                if (a.type == "daily-build" && a.type != b.type)
-                    return -1;
-                if (a.type < b.type)
-                    return -1;
-                if (a.type > b.type)
-                    return 1;
-                if (a.defaultTerm < b.defaultTerm)
-                    return -1;
-                if (a.defaultTerm > b.defaultTerm)
-                    return 1;
-                return 0;
-            });
-            var context = {
-                divElementId: panel.divElement.id,
-                refsets: panel.options.manifest.refsets
-            }
-            $("#" + panel.divElement.id + "-panelBody").html(JST["snomed-interaction-components/views/refsetPlugin/body.hbs"](context));
-            $('#' + panel.divElement.id + '-panelBody').find(".refset-item").click(function(event) {
-                panel.loadMembers($(event.target).attr('data-concept-id'), $(event.target).attr('data-term'), 100, 0);
-                channel.publish(panel.divElement.id, {
-                    term: $(event.target).attr('data-term'),
-                    module: $(event.target).attr("data-module"),
-                    conceptId: $(event.target).attr('data-concept-id'),
-                    source: panel.divElement.id
-                });
-            });
-        } else {
-            $("#" + panel.divElement.id + "-panelBody").html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
-        }*/
+     
     }
-    panel.loadRefsets();
+
+    if(!options.disableRefsetsInitialLoad) {
+        panel.loadRefsets();
+    }
+    
+    this.renderRefsets = function(data) {
+        var refsets = [];
+        var refsetItem = null;
+        Object.keys(data.memberCountsByReferenceSet).forEach(function(key) {
+            refsetItem = {};
+            refsetItem.module = data.referenceSets[key].moduleId;
+            refsetItem.conceptId = key;
+            refsetItem.defaultTerm = data.referenceSets[key].fsn.term;
+            refsetItem.count = data.memberCountsByReferenceSet[key];
+            refsetItem.type = data.referenceSets[key].referenceSetType.pt.term;
+            refsetItem.definitionStatus = data.referenceSets[key].definitionStatus;
+
+            refsets.push(refsetItem);
+        });
+
+        refsets.sort(function(a, b) {
+            if (a.type < b.type)
+                return -1;
+            if (a.type > b.type)
+                return 1;
+            if (a.defaultTerm < b.defaultTerm)
+                return -1;
+            if (a.defaultTerm > b.defaultTerm)
+                return 1;
+            return 0;
+        });
+
+        var context = {
+            divElementId: panel.divElement.id,
+            refsets: refsets
+        }
+        $("#" + panel.divElement.id + "-panelBody").html(JST["snomed-interaction-components/views/refsetPlugin/body.hbs"](context));
+        $('#' + panel.divElement.id + '-panelBody').find(".refset-item").click(function(event) {
+            panel.loadMembers($(event.target).attr('data-concept-id'), $(event.target).attr('data-term'), 100, 0);
+            channel.publish(panel.divElement.id, {
+                term: $(event.target).attr('data-term'),
+                module: $(event.target).attr("data-module"),
+                conceptId: $(event.target).attr('data-concept-id'),
+                source: panel.divElement.id,
+                showConcept: true
+            });
+        });
+    }
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate) {
         var branch = options.edition;

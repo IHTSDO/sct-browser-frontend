@@ -168,24 +168,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             });
             $("#" + panel.divElement.id + "-historyButton").popover('toggle');
         });
-        //        $("#" + panel.divElement.id + "-linkerButton").click(function(event) {
-        //            $("#" + panel.divElement.id + "-linkerButton").popover({
-        //                trigger: 'manual',
-        //                placement: 'bottomRight',
-        //                html: true,
-        //                content: function() {
-        //                    linkerHtml = '<div class="text-center text-muted"><em>Drag to link with other panels<br>';
-        //                    if (panel.subscriptions.length == 1) {
-        //                        linkerHtml = linkerHtml + panel.subscriptions.length + ' link established</em></div>';
-        //                    } else {
-        //                        linkerHtml = linkerHtml + panel.subscriptions.length + ' links established</em></div>';
-        //                    }
-        //                    linkerHtml = linkerHtml + '<div class="text-center"><a href="javascript:void(0);" onclick="clearTaxonomyPanelSubscriptions(\'' + panel.divElement.id + '\');">Clear links</a></div>';
-        //                    return linkerHtml;
-        //                }
-        //            });
-        //            $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
-        //        });
+    
         if (typeof(Storage) !== "undefined") {
             panel.options.descendantsCount = localStorage.getItem("descendantsCountFlag") ? (localStorage.getItem("descendantsCountFlag") === 'true') : false;
         }
@@ -247,7 +230,33 @@ function taxonomyPanel(divElement, conceptId, options) {
             }
             
         });
-        //$("#" + panel.divElement.id + "-inferredViewButton").click();
+
+        if (typeof panel.options.selectedView == "undefined") {
+            panel.options.selectedView = "inferred";
+        }
+
+        if (panel.options.selectedView == "inferred") {
+            var i18n_inferred_view = jQuery.i18n.prop('i18n_inferred_view');
+            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_inferred_view'>"+i18n_inferred_view+"</span>");
+        } else {
+            var i18n_stated_view = jQuery.i18n.prop('i18n_stated_view');                        
+            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>"+i18n_stated_view+"</span>");
+        }
+
+        if (typeof panel.options.descendantsCount === 'undefined') {
+            panel.options.descendantsCount = false;
+        }
+
+        var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');
+        if (panel.options.descendantsCount) {
+            var i18n_on = jQuery.i18n.prop('i18n_on');               
+            $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_on'>"+i18n_on+"</span>");
+        } 
+        else {            
+            var i18n_off = jQuery.i18n.prop('i18n_off');                
+            $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_off'>"+i18n_off+"</span>");
+        }
+        
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
     }
 
@@ -355,7 +364,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         });
         $("#" + panel.divElement.id + "-panelBody").html(JST["snomed-interaction-components/views/taxonomyPlugin/body/parents.hbs"](context));
         
-        if (panel.options.descendantsCount == true) {            
+        if (panel.options.descendantsCount) {            
             var auxArray = parents;
             auxArray.push(focusConcept);
             auxArray.forEach(function(concept) {
@@ -377,6 +386,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var selectedLabel = $(event.target).attr('data-term');
                 var definitionStatus = $(event.target).attr('data-definition-status');
                 panel.history.push({ term: selectedLabel, conceptId: selectedId, time: time });
+                panel.default.conceptId = selectedId;
                 var branch = options.edition;
                 if(options.release.length > 0 && options.release !== 'None'){
                     branch = branch + "/" + options.release;
@@ -389,8 +399,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                           }
                         });
                     };
-                    $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(result) {
-                        if (result && result[0] && typeof result[0].descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
+                    $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {
                         result.forEach(function(item) {
                             if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                                 item.defaultTerm = item.pt.term;
@@ -456,18 +465,6 @@ function taxonomyPanel(divElement, conceptId, options) {
     };
 
     this.getChildren = function(conceptId) {
-        if (typeof panel.options.selectedView == "undefined") {
-            panel.options.selectedView = "inferred";
-        }
-
-        if (panel.options.selectedView == "inferred") {
-            var i18n_inferred_view = jQuery.i18n.prop('i18n_inferred_view');
-            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_inferred_view'>"+i18n_inferred_view+"</span>");
-        } else {
-            var i18n_stated_view = jQuery.i18n.prop('i18n_stated_view');                        
-            $("#" + panel.divElement.id + "-txViewLabel").html("<span class='i18n' data-i18n-id='i18n_stated_view'>"+i18n_stated_view+"</span>");
-        }        
-
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
@@ -479,8 +476,7 @@ function taxonomyPanel(divElement, conceptId, options) {
               }
             });
         };
-        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(result) {}).done(function(result) {
-            if (result && result[0] && typeof result[0].descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {}).done(function(result) {
             result.forEach(function(item) {
                 if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
                     item.defaultTerm = item.pt.term;
@@ -538,15 +534,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                         $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").find('.selectable-row[data-concept-id="' + concept.conceptId + '"]').append("&nbsp;&nbsp;&nbsp;&nbsp;<span class='text-muted'>" + descedants + "</span>");
                         
                     }
-                });
-                var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');                
-                var i18n_on = jQuery.i18n.prop('i18n_on');               
-                $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_on'>"+i18n_on+"</span>");
-            } 
-            else {
-                var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');                
-                var i18n_off = jQuery.i18n.prop('i18n_off');                
-                $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_off'>"+i18n_off+"</span>");
+                });                
             }
             $(".treeButton").disableTextSelect();
             $("[draggable='true']").tooltip({
@@ -586,8 +574,7 @@ function taxonomyPanel(divElement, conceptId, options) {
               }
             });
         };
-        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(parents) {
-            if (parents && parents[0] && typeof parents[0].descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(parents) {
         }).done(function(parents) {
             if (parents.length > 0) {
                 var firstParent = "empty";
@@ -691,8 +678,7 @@ function taxonomyPanel(divElement, conceptId, options) {
               }
             });
         };
-        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=true", function(result) {
-            if (result && result[0] && typeof result[0].descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {
             $.each(result, function(i, item) {
                 if (typeof item.defaultTerm == "undefined") {
                     if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
@@ -718,7 +704,6 @@ function taxonomyPanel(divElement, conceptId, options) {
                     urlArgs = urlArgs + '&expand=fsn()';
                 }
                 $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + urlArgs, function(res) {
-                    if (res &&typeof res.descendantCount == "undefined") $("#" + panel.divElement.id + "-txViewLabel2").closest("li").hide();
                     if(res.pt && res.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && res.fsn.lang != options.defaultLanguage){
                         res.defaultTerm = res.pt.term;
                     }
@@ -747,8 +732,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             }
         });
         if (!alreadySubscribed) {
-            var subscription = channel.subscribe(panelId, function(data, envelope) {
-                //                console.log("listening in " + panel.divElement.id);
+            var subscription = channel.subscribe(panelId, function(data, envelope) {                
                 panel.default.conceptId = data.conceptId;
                 panel.setToConcept(data.conceptId);
                 
@@ -756,8 +740,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             panel.subscriptions.push(subscription);
             panelToSubscribe.subscribers.push(panel.divElement.id);
             panel.subscriptionsColor.push(panelToSubscribe.markerColor);
-        }
-        // $("#" + panelId + "-ownMarker").show();
+        }        
         $("#" + panel.divElement.id + "-subscribersMarker").show();
         $("#" + panelId + "-subscribersMarker").show();
     }
@@ -799,8 +782,6 @@ function taxonomyPanel(divElement, conceptId, options) {
                 //                colors.push(panelToUnsubscribe.markerColor);
             }
             panelToUnsubscribe.subscriptionsColor = colors;
-            //            console.log(panelToUnsubscribe.divElement.id);
-            //            console.log(panelToUnsubscribe.subscriptionsColor);
             aux = [];
             $.each(panel.subscriptions, function(i, field) {
                 if (panelToUnsubscribe.divElement.id == field.topic) {
@@ -872,17 +853,23 @@ function taxonomyPanel(divElement, conceptId, options) {
     }
     panel.markerColor = panel.getNextMarkerColor(globalMarkerColor);
 
-
-    this.setupCanvas();    
-    if (!conceptId || conceptId == 138875005) {        
-        panel.setToConcept(138875005);       
-    } else {
-        if (xhr != null) {
-            xhr.abort();
-            //console.log("aborting call...");
+    this.updateCanvas = function() {
+        if (!conceptId || conceptId == 138875005) {        
+            panel.setToConcept(138875005);       
+        } else {
+            if (xhr != null) {
+                xhr.abort();
+                //console.log("aborting call...");
+            }
+    
+            panel.setToConcept(conceptId); 
         }
+    }
 
-        panel.setToConcept(conceptId); 
+    this.setupCanvas();
+     
+    if (!panel.options.disableTaxonomyInitialLoad) {
+        panel.updateCanvas();
     }
 }
 
