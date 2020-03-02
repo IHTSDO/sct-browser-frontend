@@ -2420,7 +2420,7 @@ function conceptDetails(divElement, conceptId, options) {
                         panel.loadMembers(returnLimit, 0, 1);
                     });
                 } else {
-                    $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>This concept has no members</span></td></tr>");
+                    $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>"+i18n_no_members+"</span></td></tr>");
                 }
             }
             $('#members-' + panel.divElement.id).find(".member-row").unbind();
@@ -2432,7 +2432,7 @@ function conceptDetails(divElement, conceptId, options) {
             });
             panel.panelMembersLoaded = true;
         }).fail(function() {
-            $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>This concept has no members</span></td></tr>");
+            $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>"+i18n_no_members+"</span></td></tr>");
         });
     };
 
