@@ -111,8 +111,7 @@
         var enableQueriesInFullPerspective = true;
         var currentPerspective = "home";
         var selectedLanguage = '';
-        var taxonomyPanelLoaded = false;
-
+        
         var options = {
             serverUrl: "",
             queryServerUrl: "",
@@ -1352,7 +1351,6 @@
             
             options.subscribersMarker = false;
             options.linkerButton = false;
-            options.disableTaxonomyInitialLoad = true;
             options.disableRefsetsInitialLoad = true;
             var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, options);
             var fav = new favoritePanel(document.getElementById("fh-favorites_canvas"), options);
@@ -1405,21 +1403,7 @@
             if (typeof focusSearchTab === "undefined" || focusSearchTab) {
                 $('#fh-tabs li:eq(1) a').tab('show');
                 $('#fh-search_canvas-searchBox').focus();
-            }
-
-            // Load Taxonomies panel on demand
-            taxonomyPanelLoaded = false;
-            if ($('ul#fh-tabs li.active').attr('id') == 'fh-taxonomies_canvas-li') {
-                taxonomyPanelLoaded = true;
-                tpt.updateCanvas();
-            }
-            $("#fh-taxonomies_canvas-li").unbind();
-            $("#fh-taxonomies_canvas-li").click(function(e) {
-                if(!taxonomyPanelLoaded) {
-                    taxonomyPanelLoaded = true;
-                    tpt.updateCanvas();
-                }
-            });            
+            }                       
         }
 
         function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
@@ -1927,7 +1911,7 @@
                         <li id="fh-taxonomies_canvas-li">
                             <a href="#fh-taxonomy_canvas" data-toggle="tab">
                                 <div>
-                                    <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');taxonomyPanelLoaded = true;" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
+                                    <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
                                 </div>
                             </a>
                         </li>
