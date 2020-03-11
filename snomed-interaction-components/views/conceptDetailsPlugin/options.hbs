@@ -72,7 +72,7 @@
         {{#each options.languageRefsets}}
             <div class="checkbox">
                 <label>
-                    <input class="langOption" type="checkbox" value="{{conceptId}}" {{#ifIn conceptId ../../options.langRefset }}checked{{/ifIn}}> {{fsn.term}}
+                    <input class="langOption" type="checkbox" value="{{conceptId}}" {{#ifIn conceptId ../../options.defaultLanguageReferenceSets }}checked{{/ifIn}}> {{fsn.term}}
                 </label>
             </div>
         {{/each}}
