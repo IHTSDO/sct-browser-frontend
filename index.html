@@ -699,7 +699,7 @@
                                 QueryString = queryString();
                                 
                                 if (QueryString.conceptId1) {
-                                    xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
+                                    xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
                                         reloadCurrentPerspective();
                                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);   
                                     }).done(function(result) {                                             
