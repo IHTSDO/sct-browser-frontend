@@ -694,24 +694,24 @@
                                 $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                                 options.defaultLanguage = parsedLanguages.substr(0, 2);
-                                
+                                let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
+                                var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
                                 QueryString = queryString();
                                 
                                 if (QueryString.conceptId1) {
                                     xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
-                                        reloadCurrentPerspective();   
+                                        reloadCurrentPerspective();
+                                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);   
                                     }).done(function(result) {                                             
                                     }).fail(function() {
-                                        reloadCurrentPerspective(404684003);                                    
+                                        reloadCurrentPerspective(404684003);
+                                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);                                   
                                     });
                                 }
                                 else {
-                                    reloadCurrentPerspective(); 
-                                }
-
-                                let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
-                                var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
-                                switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                                    reloadCurrentPerspective();
+                                    switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                                }                                
                             });
                             $li.append($a);
                             $releaseSwitcher.append($li);
