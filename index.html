@@ -111,7 +111,7 @@
         var enableQueriesInFullPerspective = true;
         var currentPerspective = "home";
         var selectedLanguage = '';
-        
+        var loadedLanguages = [];
         var options = {
             serverUrl: "",
             queryServerUrl: "",
@@ -1598,8 +1598,13 @@
                 name: 'Languages',
                 path: '/browser/i18n/',
                 mode: 'both',
-                language: language
+                language: language,
+                cache: loadedLanguages.includes(language) ? true : false
             });
+            if (!loadedLanguages.includes(language)) {
+                loadedLanguages.push(language);
+            }
+            
             $(".i18n").each(function(index) {
                 var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
                 if (translation != "[" + $(this).attr('data-i18n-id') + "]") {
