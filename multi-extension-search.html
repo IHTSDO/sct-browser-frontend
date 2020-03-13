@@ -116,6 +116,7 @@
         }       
         
         var defaultConceptId = 404684003;
+        var loadedLanguages = [];
         
         var options = {
             serverUrl: "",
@@ -292,20 +293,22 @@
 
                             let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
                             options.defaultLanguage = parsedLanguages.substr(0, 2);
-                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
-                            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);                            
+                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);                                                        
                             
                             if (defaultConceptId) {
-                                xhr = $.getJSON(options.serverUrl + "/browser/" + options.edition + "/concepts/" + defaultConceptId, function(result) {
-                                    reloadCurrentPerspective();   
+                                xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/concepts/" + defaultConceptId, function(result) {
+                                    reloadCurrentPerspective();
+                                    switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);   
                                 }).done(function(result) {                                             
                                 }).fail(function() {
                                     defaultConceptId = 404684003;
-                                    reloadCurrentPerspective();                                    
+                                    reloadCurrentPerspective();
+                                    switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);                                    
                                 });
                             }
                             else {
-                                reloadCurrentPerspective(); 
+                                reloadCurrentPerspective();
+                                switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                             }                                                                                    
                         });
                         $li.append($a);
@@ -440,7 +443,8 @@
                 name: 'Languages',
                 path: '/browser/i18n/',
                 mode: 'both',
-                language: language
+                language: language,
+                cache: loadedLanguages.includes(language) ? true : false
             });
             $(".i18n").each(function(index) {
                 var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
@@ -476,6 +480,18 @@
                 animation: true,
                 delay: 1000
             });
+
+            // Cache language files
+            if (!loadedLanguages.includes(language)) {
+                jQuery.i18n.properties({
+                    name: 'Languages',
+                    path: '/browser/i18n/',
+                    mode: 'both',
+                    language: language,
+                    cache: true
+                });
+                loadedLanguages.push(language);
+            }
         }
     </script>
     <style>
