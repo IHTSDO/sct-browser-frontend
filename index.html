@@ -1587,10 +1587,6 @@
         }
 
         async function switchLanguage(language, flagPng, fade) {
-            if (selectedLanguage == language) {
-                return;
-            }
-
             selectedLanguage = language;
             $("#nav-selected-flag").html('<img src="' + flagPng + '">');
             $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
@@ -1600,11 +1596,7 @@
                 mode: 'both',
                 language: language,
                 cache: loadedLanguages.includes(language) ? true : false
-            });
-            if (!loadedLanguages.includes(language)) {
-                loadedLanguages.push(language);
-            }
-            
+            });            
             $(".i18n").each(function(index) {
                 var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
                 if (translation != "[" + $(this).attr('data-i18n-id') + "]") {
@@ -1640,6 +1632,18 @@
                 animation: true,
                 delay: 1000
             });
+
+            // Cache language files
+            if (!loadedLanguages.includes(language)) {
+                jQuery.i18n.properties({
+                    name: 'Languages',
+                    path: '/browser/i18n/',
+                    mode: 'both',
+                    language: language,
+                    cache: true
+                });
+                loadedLanguages.push(language);
+            }
         }
     </script>
     <style>
