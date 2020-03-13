@@ -681,7 +681,9 @@
                             var $li = $('<li>')
                             var $a = $('<a>').attr("shortName", release.shortName).append(release.name + " " + release.latestVersion.version);
                             $a.attr("href", "javascript:void(0);");
-                            $a.on("click", function() {
+                            $a.on("click", function(event) {
+                                event.stopPropagation();
+
                                 var parsedLanguages = "";
                                 for (var language in release.languages) {
                                     parsedLanguages = parsedLanguages + language + ',';
@@ -690,8 +692,7 @@
                                 options.edition = release.latestVersion.branchPath;
                                 options.release = '';
                                 options.languages = parsedLanguages;
-                                options.languageObject = release.languages;
-                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                options.languageObject = release.languages;                                
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                                 options.defaultLanguage = parsedLanguages.substr(0, 2);
                                 let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
@@ -699,18 +700,33 @@
                                 QueryString = queryString();
                                 
                                 if (QueryString.conceptId1) {
-                                    xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
-                                        reloadCurrentPerspective();
-                                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);   
-                                    }).done(function(result) {                                             
-                                    }).fail(function() {
-                                        reloadCurrentPerspective(404684003);
-                                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);                                   
+                                    var checkConceptExist = function (conceptId) {
+                                        var dfd = $.Deferred();
+                                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
+                                            dfd.resolve(true);
+                                        }).done(function(result) {                                             
+                                        }).fail(function() {
+                                            dfd.resolve(false);                                   
+                                        });
+
+                                        return dfd.promise();
+                                    };
+
+                                    checkConceptExist(QueryString.conceptId1).then(function(result) {
+                                        if (result) {
+                                            reloadCurrentPerspective();
+                                        }
+                                        else {
+                                            reloadCurrentPerspective(404684003);
+                                        }
+                                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                                        $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                                     });
                                 }
                                 else {
                                     reloadCurrentPerspective();
                                     switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                                 }                                
                             });
                             $li.append($a);
