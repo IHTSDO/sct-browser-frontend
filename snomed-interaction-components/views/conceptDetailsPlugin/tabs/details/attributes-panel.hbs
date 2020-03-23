@@ -1,6 +1,6 @@
 <table class='table table-default' >
     <tr
-        {{#if options.dailyBuildBrowser}}{{#if_eq firstMatch.effectiveTime options.highlightByEffectiveTime}} class = 'highlightEffectiveTime' {{/if_eq}}{{/if}}
+        {{#if options.dailyBuildBrowser}}{{#if_eq firstMatch.effectiveTime null}} class = 'highlightEffectiveTime' {{/if_eq}}{{/if}}
         {{#if options.tsBrowser}}{{#if_eq firstMatch.effectiveTime null}} class = 'highlightEffectiveTime' {{/if_eq}}{{/if}}
         >
         <td>

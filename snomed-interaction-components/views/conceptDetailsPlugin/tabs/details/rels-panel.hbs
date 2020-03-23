@@ -19,7 +19,7 @@
                     {{#if_eq characteristicType "INFERRED_RELATIONSHIP"}}
                         <tr class='inferred-rel
                             {{#if ../../../options.dailyBuildBrowser}}                                
-                                {{#if_eq effectiveTime ../../../../options.highlightByEffectiveTime}}
+                                {{#if_eq effectiveTime null}}
                                     highlightEffectiveTime
                                 {{/if_eq}}
                             {{/if}}
@@ -151,7 +151,7 @@
                     <tbody>
                     {{#each relationships}}
                         {{#if active}}
-                            <tr class='{{#if ../../../options.dailyBuildBrowser}}{{#if_eq ../effectiveTime ../../../../options.highlightByEffectiveTime}}highlightEffectiveTime{{/if_eq}}{{/if}}
+                            <tr class='{{#if ../../../options.dailyBuildBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}
                                        {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}'>
                                 <td>
                                     {{#if_eq type.definitionStatus "PRIMITIVE"}}
@@ -215,7 +215,7 @@
                     <tbody>
                     {{#each relationships}}
                         {{#if active}}
-                            <tr class='{{#if ../../../options.dailyBuildBrowser}}{{#if_eq ../effectiveTime ../../../../options.highlightByEffectiveTime}}highlightEffectiveTime{{/if_eq}}{{/if}}
+                            <tr class='{{#if ../../../options.dailyBuildBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}
                                        {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}'>
                                 <td>
                                     {{#if_eq type.definitionStatus "PRIMITIVE"}}
