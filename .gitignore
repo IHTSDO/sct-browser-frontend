@@ -43,8 +43,8 @@ bin
 /snomed-interaction-components/dist
 /snomed-interaction-components//nbproject/private/
 /snomed-interaction-components/views/compiled/templates.js
-/css/snomed-interaction-components.min.css
-/internal-libs/snomed-interaction-components.min.js
+# /css/snomed-interaction-components.min.css
+# /internal-libs/snomed-interaction-components.min.js
 .settings/org.eclipse.m2e.core.prefs
 .settings/org.eclipse.jdt.core.prefs
 .settings/org.eclipse.jdt.apt.core.prefs
