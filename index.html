@@ -758,18 +758,10 @@
             }
 
             $.when(getAuth(), getProjects()).then(function(roles, projects) {
-                var $projectDdl = $('#projectDdl');
-                if (!options.managedServiceUser) {
-                    $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
+                
+                if (options.managedServiceUser) {
+                    findProjectMainline(projects);
                 }
-                else {
-                    if (options.projectMainlinePath) {
-                        $('<option>').val(options.projectMainlinePath).text(options.projectMainlineText).appendTo($projectDdl);
-                    }
-                }
-                $.each(projects, function() {
-                    $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
-                });                   
 
                 var found = projects.filter(function(item) {
                     return item.branchPath === options.edition;
@@ -786,8 +778,23 @@
                     }
                     else {
                         options.edition = 'MAIN';
+                    }                   
+                }
+
+                findDefaultLanguageRefsetsByBranchPath(options.edition);
+
+                var $projectDdl = $('#projectDdl');
+                if (!options.managedServiceUser) {
+                    $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
+                }
+                else {
+                    if (options.projectMainlinePath) {
+                        $('<option>').val(options.projectMainlinePath).text(options.projectMainlineText).appendTo($projectDdl);
                     }
                 }
+                $.each(projects, function() {
+                    $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
+                });
 
                 $("#projectDdl").val(options.edition);
 
@@ -815,7 +822,7 @@
                 var dfd = $.Deferred();
 
                 $.getJSON("/auth", function() {}).done(function(response) {
-                    options.managedServiceUser = response.roles.includes('ROLE_ms-users');
+                    options.managedServiceUser = response.roles.includes('ROLE_ms-users') && !response.roles.includes('ROLE_int-sca-author');
                     dfd.resolve(response.roles);
                 });
 
@@ -843,27 +850,12 @@
                     projectsInDateFormat.sort(function(a, b) {
                         return b.key.localeCompare(a.key);
                     });
-                    result.items = projectsInStringFormat.concat(projectsInDateFormat);
-
-                    if (options.releases && options.releases.items && options.releases.items.length > 0 && result.items.length !== 0) {                    
-                        for (let i = 0; i < options.releases.items.length; i++) {
-                            let release = options.releases.items[i];                            
-                            if (typeof release.branchPath !== "undefined" 
-                                && release.branchPath.split('/').length > 1 
-                                && result.items[0].branchPath.split('/').length > 1
-                                && result.items[0].branchPath.includes(release.branchPath)) {
-                                options.languageObject = release.languages;
-                                options.projectMainlinePath = release.branchPath;
-                                options.projectMainlineText = release.shortName;
-                                options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
-                                break;
-                            } 
-                        }
-                    }              
+                    result.items = projectsInStringFormat.concat(projectsInDateFormat);                                 
 
                     var projectChanged = function() {
                         options.edition = $('#projectDdl').val();                                                
                         options.release = "None";
+                        findDefaultLanguageRefsetsByBranchPath(options.edition);
                         reloadCurrentPerspective(null,false);
                         getTasks();                        
                     }
@@ -957,6 +949,49 @@
                 });
 
                 return dfd.promise()
+            }
+
+            function findDefaultLanguageRefsetsByBranchPath(branchPath) {
+                if (options.releases && options.releases.items && options.releases.items.length > 0) {
+                    let internationalEdition = null;
+                    let found = false;
+                    for (let i = 0; i < options.releases.items.length; i++) {
+                        let release = options.releases.items[i];                           
+                        if (typeof release.branchPath !== "undefined") {
+                            if (release.branchPath === 'MAIN') {
+                                internationalEdition = release;
+                            }
+                            else {
+                                if (branchPath.includes(release.branchPath)) {
+                                    options.languageObject = release.languages;                                
+                                    options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                                    found = true;
+                                    break;
+                                }
+                            }                            
+                        }                            
+                    }
+
+                    if (!found && internationalEdition) {
+                        options.languageObject = internationalEdition.languages;
+                        options.defaultLanguageReferenceSets = [];
+                    }
+                } 
+            }
+
+            function findProjectMainline(projects) {
+                if (options.releases && options.releases.items && options.releases.items.length > 0 && projects.length > 0) {                   
+                    for (let i = 0; i < options.releases.items.length; i++) {
+                        let release = options.releases.items[i];                
+                        if (typeof release.branchPath !== "undefined"
+                            && release.branchPath !== 'MAIN'
+                            && projects[0].branchPath.split('/').length > 1
+                            && projects[0].branchPath.includes(release.branchPath)) {                                
+                            options.projectMainlinePath = release.branchPath;
+                            options.projectMainlineText = release.shortName;
+                        }                                                
+                    }                   
+                }
             }
 
         }
