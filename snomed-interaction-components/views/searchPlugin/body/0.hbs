@@ -16,6 +16,11 @@
             </div>
         </td>
         <td class='text-muted small-text col-md-5 result-item' data-term='{{term}}' data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
+            {{#hasCountryIcon ../result.moduleId}}
+                <div class="phoca-flagbox" style="width:20px;height:20px">
+                    <span class="phoca-flag {{countryIcon ../moduleId}}"></span>
+                </div>
+            {{/hasCountryIcon}}
             {{../result.fsn.term}}
         </td>
     </tr>
