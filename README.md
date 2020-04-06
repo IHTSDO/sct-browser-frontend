@@ -3,14 +3,10 @@ IHTSDO Browser Frontend
 
 This is a generic browser front end project, specific instances used in the IHTSDO browsers are customized in branches of this project.
 
-This project is an HTML / JS application that uses the IHTSDO SNOMED CT Interaction Components (https://github.com/IHTSDO/snomed-interaction-components) to create aa SNOMED CT Browser.
-
-The browser connects to a backend REST API provided by the project: https://github.com/IHTSDO/sct-snapshot-rest-api
+The browser connects to a backend REST API provided by the project: https://github.com/IHTSDO/snowstorm
 
 Project Structure
 -----------------
-
-The browser is a one page HTML/JS app, the components (widgets) used to navigate and display SNOMED CT content are used as an external dependency.
 
 The index.html includes all the logic for rendering the Browser UI, switching between different SNOMED CT releases and UI layouts (perspectives).
 
@@ -22,30 +18,6 @@ The index.html includes all the logic for rendering the Browser UI, switching be
 * i18n: internationalization files for the site and the widgets
 * index.html: one page application
 
-Backend connection parameters
------------------------------
-
-The index.html defines the connection parameters that will passed to each of the components on initialization:
-```javascript
-var options = {
-                serverUrl: "http://browser.ihtsdotools.org/snomed",
-                edition: "en-edition",
-                release: "v20160631",
-```
-These parameters include the server, the edition and the release,
-
-Converting and loading all of the data into the mongo database (for the rest server which serves this UI)
-can be time consuming.  If you choose to only load one country's release you can use the following in index.html
-```javascript
-            //It can be time consuming to load all the collections into mongo.  If you are only loading one collection
-            //set it here and all GUI elements will use this collection.  Used by switchReleases function
-            var mongoDetails = {
-                useMe: true,//if set to false this is ignored and normal defaults are taken
-                database: 'test',
-                collection: 'concepts',
-                mongoRestServer: 'http://localhost:3000/snomed'
-            }
-```
 Internationalization
 --------------------
 
@@ -80,31 +52,53 @@ i18n_perspective = Visning
 i18n_about = Om
 i18n_provide_feedback = Send en kommentar om denne browser
 ```
-Customization of content access links
--------------------------------------
 
-The buttons that link to the browser with specific languages and releases need to be customized on each implementation to match available content.
+## Local configuration, build and run the browser locally
 
-Customization points:
-*Dropdown for Release Selection:
-```javascript
-<li class="navbar-btn" id="edition-selector">
-   <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-            <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">Multi-english Edition 20140604</span> <span class="caret"></span>
-   </button>
-   <ul class="dropdown-menu" role="menu">
-     <li><a href="javascript:void(0);" onclick="switchRelease('Multi-english Edition 20140604', 'multi-edition', 'v20140701', '900000000000509007');reloadCurrentPerspective();">Multi-english Edition 20140604</a></li>
-                                
+Local configuration
+-------------------
+Run `npm install` to make the local application aware of your grunt installation.
+
+
+Build
+-----
+
+The Grunt default task will create all these components, running `grunt` in the root folder of the project will build all widgets and create the distribution files.
+
+- js
+  - internal-libs/snomed-interaction-components.min.js
+- css
+  - css/snomed-interaction-components.min.css
+
+
+Run locally
+-----------
+
+In order to obtain api-endpoint information within the local environment, a configuration similar to the following should be used: 
+
 ```
-*Buttons for Release Selection:
-```javascript
-<div id="welcome-perspective"  class="bperspective">
-     <div class="jumbotron">
-     <h1><span class="i18n" data-i18n-id="i18n_welcome">Welcome</span></h1>
-     <p><span class="i18n" data-i18n-id="i18n_home1">This is a beta... a work in progress of ways to browse and search SNOMED CT as part of development within the IHTSDO Open Tooling Framework, by the IHTSDO and its development partners</span></p>
-     <p><span class="i18n" data-i18n-id="i18n_home2">Please select a SNOMED CT release and a perspective from the top menu to start, or...</span></p>
-      <p><a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Multi-english Edition 20140604', 'multi-edition', 'v20140701', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003, 138875005);"><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;Go browsing...</span><br><span class="small">Multi-English Browser</span></a>
+user 'details here';
+worker_processes  1;
+ 
+events {
+    worker_connections  1024;
+}
+ 
+http {
+	include    mime.types;
+    server {
+		listen		8080;
+		server_name	localhost;
 
+    location / {
+      root /FileLocation/sct-browser-frontend/;
+    }       
+    
+    location /snowstorm/ {
+      proxy_pass https://dev-browser.ihtsdotools.org/snowstorm/;
+    }
+	}	
+}
 ```
 
 ## URL Shortcuts
@@ -116,15 +110,10 @@ http://browser.ihtsdotools.org/index.html?perspective=full&conceptId1=195967001
 
 Parameter|Example Value|Use
 ---|---|---
-server|HTTP URL for the alternative server|Used to specifed an alternative backend server, other than the default one.
-edition|en-edition, es-edition|Sets the edition that will be browsed, using the edition names defined by the backend.
-release|v20160131|Name of the release, usually the effective time preceded by a "v".
+edition|MAIN/SNOMEDCT-ES, MAIN/SNOMEDCT-AU|Sets the edition that will be browsed, using the edition names defined by the backend.
 perspective|full,browsing,etc.|Sets the perspective to load.
-ui_language|en, es, da, pt|Sets the UI language.
+languages|en, es, da, pt|Sets the UI language.
 conceptId1|any SCTID|Sets the first concept details widget to this concept.
-conceptId2|any SCTID|Sets the second concept details widget to this concept.
-conceptIdTx1|any SCTID|Sets the first taxonomy widget to this concept.
-conceptIdTx2|any SCTID|Sets the second taxonomy widget to this concept.
 acceptLicense|true| the SNOMED CT Browser License is automatically accepted without displaying the modal window. This means that you are explicitly accepting the license.
 diagrammingMarkupEnabled|true|SNOMED CT diagramming Markup is enabled.
 
