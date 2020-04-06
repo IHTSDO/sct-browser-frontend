@@ -207,7 +207,7 @@ function drawConceptDiagram (concept, div, options, panel) {
         });
 
         // load ungrouped attributes
-        var maxRoleNumber = 0;
+        var roleGroups = [];
         $.each(svgAttrModel, function(i, relationship) {
             if (relationship.target.definitionStatus == "PRIMITIVE") {
                 sctClass = "sct-primitive-concept";
@@ -239,19 +239,20 @@ function drawConceptDiagram (concept, div, options, panel) {
                     maxX = ((maxX < x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50) ? x + rectAttr.getBBox().width + 50 + rectTarget.getBBox().width + 50 : maxX);
                 }                
             } else {
-                if (relationship.groupId > maxRoleNumber) {
-                    maxRoleNumber = relationship.groupId;
+                if (roleGroups.indexOf(relationship.groupId) === -1) {
+                    roleGroups.push(relationship.groupId);
                 }
             }
         });
         y = y + 15;
-        for (var i = 1; i <= maxRoleNumber; i++) {
+        roleGroups.sort(function(a, b){return a-b});
+        for (var i = 0; i < roleGroups.length; i++) {
             var groupNode = drawAttributeGroupNode(svg, x, y);
             connectElements(svg, circle2, groupNode, 'center', 'left');
             var conjunctionNode = drawConjunctionNode(svg, x + 55, y);
             connectElements(svg, groupNode, conjunctionNode, 'right', 'left');
             $.each(svgAttrModel, function(m, relationship) {
-                if (relationship.groupId == i) {
+                if (relationship.groupId == roleGroups[i]) {
                     if (relationship.target.definitionStatus == "PRIMITIVE") {
                         sctClass = "sct-primitive-concept";
                     } else {
