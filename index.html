@@ -107,11 +107,10 @@
             }
             document.cookie = name + "=" + value + expires + "; path=/";
         }
-
+        var QueryString = queryString();
         var enableQueriesInFullPerspective = true;
         var currentPerspective = "home";
-        var selectedLanguage = '';
-        var loadedLanguages = [];
+        var selectedLanguage = '';        
         var options = {
             serverUrl: "",
             queryServerUrl: "",
@@ -171,23 +170,31 @@
                 url:'/', 
                 success: function(data, textStatus, response){
                     let copyrightYear = new Date(response.getResponseHeader('Date')).getFullYear();
-                    $('#daily_build_copyright_year').text(copyrightYear);
-                    $('#browser_copyright_year').text(copyrightYear);
+                    $('.copyright_year').text(copyrightYear);
                 }
             });
         }        
 
-        function determineServer() {
-            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
-            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+        function setUILanguage() {
+            var ui_language = '';            
+            if (typeof(Storage) !== "undefined") {
+                if (localStorage.getItem("ui_language")) {
+                    ui_language = localStorage.getItem("ui_language");
+                }
+            }
 
+            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language !== '' ? ui_language : options.defaultLanguage);
+            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
+        }
+        
+        function determineServer() {
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
             }
             else if(window.location.hostname.includes('browser')) {
                 options.publicBrowser = true;
             }
-
+            
             if(options.dailyBuildBrowser) {
                 $("#fh-daily_canvas-li").css({
                     "display": "block"
@@ -469,9 +476,7 @@
                 }
             }
             return query_string;
-        }
-
-        var QueryString = queryString();
+        }        
 
         function start() {
             if (options.imsUrl === null) {
@@ -497,7 +502,7 @@
                 });
                 $('.noSelect').disableTextSelect(); //No text selection on elements with a class of 'noSelect'
             });
-
+            
             var diagrammingMarkupEnabled = QueryString.diagrammingMarkupEnabled;
             if (typeof diagrammingMarkupEnabled == "undefined" || diagrammingMarkupEnabled == null || diagrammingMarkupEnabled == "") {
                 diagrammingMarkupEnabled = false;
@@ -516,16 +521,17 @@
             }                       
             
             // For TS Browser
-            if (options.imsUrl) {
+            if (options.imsUrl) {                
                 initializeTSBrowser();
             }
              // For Public Browser
-            else {
-               initializePublicBrowser();
-            }           
+            else {                
+                initializePublicBrowser();
+            }                       
         }
 
         function initializePublicBrowser() {
+            setUILanguage();
             var edition = QueryString.edition;  
             if (options.dailyBuildBrowser) {
                 if (options.dailyBuildReleases.filter(function(release) {
@@ -634,6 +640,9 @@
                 $('#license-modal').modal('show');
             }
 
+            // set language one more time after finishing components initialization
+            setUILanguage();
+
             // RELEASES DROPDOWN HANDLER for dailay build
             if(options.dailyBuildBrowser) {
                 if (options.dailyBuildReleases) {
@@ -741,10 +750,12 @@
                         }                        
                     }
                 }
-            }
+            }            
         }
 
         function initializeTSBrowser() {
+            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
+            switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
             var isTask = function(task) {
                 var strArray = task.split('-');
                 if (strArray.length === 2 && !isNaN(strArray[1])) {
@@ -859,7 +870,9 @@
                         options.release = "None";
                         findDefaultLanguageRefsetsByBranchPath(options.edition);
                         reloadCurrentPerspective(null,false);
-                        getTasks();                        
+                        getTasks();
+                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(selectedLanguage);
+                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);                      
                     }
 
                     $("#projectDdl").on("change", function(event) {
@@ -941,6 +954,8 @@
                     var taskChanged = function() {
                         options.release = $('#taskDdl').val();
                         reloadCurrentPerspective(null,false);
+                        var selectedLanguageAndFlag = getSelectedLanguageAndFlag(selectedLanguage);
+                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                     }
                     
                     $("#taskDdl").on("change", function(event) {
@@ -1623,8 +1638,11 @@
             }
         }
 
-        async function switchLanguage(language, flagPng, fade) {
+        function switchLanguage(language, flagPng, fade) {
             selectedLanguage = language;
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("ui_language", language);
+            }
             $("#nav-selected-flag").html('<img src="' + flagPng + '">');
             $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
             jQuery.i18n.properties({
@@ -1632,7 +1650,7 @@
                 path: '/browser/i18n/',
                 mode: 'both',
                 language: language,
-                cache: loadedLanguages.includes(language) ? true : false
+                cache: true
             });            
             $(".i18n").each(function(index) {
                 var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
@@ -1669,18 +1687,7 @@
                 animation: true,
                 delay: 1000
             });
-
-            // Cache language files
-            if (!loadedLanguages.includes(language)) {
-                jQuery.i18n.properties({
-                    name: 'Languages',
-                    path: '/browser/i18n/',
-                    mode: 'both',
-                    language: language,
-                    cache: true
-                });
-                loadedLanguages.push(language);
-            }
+            
         }
     </script>
     <style>
@@ -1857,7 +1864,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong> <span id="csconsentlink">Cookie Settings</span></small>
             </p>
-            <p> <small><b>&copy; SNOMED International <span id="browser_copyright_year"/></b> v<span>project_version</span><br></small>
+            <p> <small><b>&copy; SNOMED International <span class="copyright_year"/></b> v<span>project_version</span><br></small>
             </p>
         </div>
 
@@ -1876,22 +1883,6 @@
                 <p id="lastUpdatedText"></p>
                 <h3>Other Daily Builds:</h3>
                 <p id="dailybuild_local_editions" style="margin-bottom : 0px"></p>
-<!--
-                <ul>
-                    <li>
-                        <a href="/dk.html"><img src="img/flags/dk.png"> Denmark</a>
-                    </li>
-                    <li>
-                        <a href="/drugs.html"><img src="img/flags/us.png"> International Drugs</a>
-                    </li>
-                    <li>
-                        <a href="/se.html"><img src="img/flags/se.png"> Sweden</a>
-                    </li>
-                    <li>
-                        <a href="/us.html"><img src="img/flags/us.png"> US</a>
-                    </li>
-                </ul>
--->
             </div>
             <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
             </p>
@@ -1899,7 +1890,7 @@
             </p>
             <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
             </p>
-            <p> <small><b>&copy; SNOMED International <span id="daily_build_copyright_year"/></b> v<span>project_version</span><br></small>
+            <p> <small><b>&copy; SNOMED International <span class="copyright_year"/></b> v<span>project_version</span><br></small>
             </p>
         </div>
 
@@ -2099,26 +2090,6 @@
             "url": "https://ihtsdo.freshdesk.com"
         });
     </script>
-    <!--
-    <script type="text/javascript" src="https://assets.freshdesk.com/widget/freshwidget.js"></script>
-    <script type="text/javascript">
-        FreshWidget.init("", {
-            "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback+(Not+for+Content+Issues)&searchArea=no&widgetType=popup&captcha=yes",
-            "backgroundImage": "http://assets.freshdesk.com/widget/help-button.png",
-            "widgetType": "popup",
-            "utf8": "✓",
-            "captcha": "yes",
-            "buttonType": "image",
-            "buttonText": "Support",
-            "buttonColor": "white",
-            "buttonBg": "#00AADD",
-            "alignment": "1",
-            "offset": "-1500px",
-            "formHeight": "500px",
-            "url": "https://ihtsdo.freshdesk.com"
-        });
-    </script>
--->
 
     <script type="text/javascript">
         var $buoop = {};
@@ -2136,7 +2107,6 @@
     </script>
 
     <!--Start Cookie Script-->
-    <!--<script type="text/javascript" charset="UTF-8" src="http://chs02.cookie-script.com/s/b80c8456dc1c3b2bd6652feea1124eb1.js"></script>-->
     <script src="/browser/external-libs/cookie-script.js" type="text/javascript" charset="UTF-8"></script>
     <!--End Cookie Script-->
 
