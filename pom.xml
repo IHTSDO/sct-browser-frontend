@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ihtsdo.otf</groupId>
     <artifactId>sct-browser</artifactId>
-    <version>3.11.1-SNAPSHOT</version>
+    <version>3.11.2-SNAPSHOT</version>
     <name>Snowstorm Browser</name>
     <description>Snomed Snowstorm Terminology Server Browser</description>
     <url>https://term.ihtsdotools.org/</url>
@@ -76,7 +76,7 @@
                         <configuration>
                             <arguments>--verbose</arguments>
                         </configuration>
-                    </execution>                    
+                    </execution>
                 </executions>
                 <configuration>
                     <nodeVersion>v8.5.0</nodeVersion>
