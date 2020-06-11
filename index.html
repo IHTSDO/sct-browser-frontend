@@ -191,7 +191,7 @@
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
             }
-            else if(window.location.hostname.includes('browser')) {
+            else if(window.location.hostname.includes('local')) {
                 options.publicBrowser = true;
             }
             
@@ -248,6 +248,9 @@
                         for (let i = 0; i < options.releases.items.length; ++i) {
                             var release = options.releases.items[i];
                             if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
+                                if(release.shortName === 'SNOMEDCT'){
+                                    release.stats = true;
+                                }
                                 internationalReleases.push(release);
                                 if(release.dailyBuildAvailable){
                                     options.dailyBuildReleases.push(release);
@@ -269,6 +272,9 @@
                     });
                     
                     addEditionLinks($('#international_editions'), internationalReleases);
+                    if(options.publicBrowser){
+                        addStatsLinks($('#international_stats'), internationalReleases);
+                    }
                     addEditionLinks($('#local_editions'), localReleases);                
                     addEditionLinks($('#dailybuild_editions'), dailyBuildInternational);
                     addEditionLinks($('#dailybuild_local_editions'), dailyBuildLocal);
@@ -364,6 +370,24 @@
                 }
                 start();
             });
+        }
+        function addStatsLinks($statsLinks, releases) {
+            for (let i = 0; i < releases.length; ++i) {
+                if(releases[i].stats){
+                    let release = releases[i];
+                    var $span1 = $('<span>');
+                    var $span2 = $('<span>');
+                    $span1.text("Release Stats");
+                    $span2.attr("class", "glyphicon glyphicon-signal").attr("style", "margin-left : 5px;");;
+                    var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -10px; width:165px;");
+                    $a.append($span1);
+                    $a.append($span2);
+                    $a.attr("href", '/qa');
+                    $a.attr("target", "_blank");
+                    $statsLinks.append($a);
+                    $statsLinks.append(" "); 
+                }     
+            }
         }
 
         function addEditionLinks($releaseSwitcher, releases) {
@@ -1836,6 +1860,7 @@
                 <p class="i18n" data-i18n-id="i18n_home9">This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong></p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="international_editions" style="margin-bottom : 0px"></p>
+                <p id="international_stats" style="margin-bottom : 0px"></p>
                 <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p id="local_editions" style="margin-bottom : 0px"></p>
                 <p id="multi-extension-search" style="display: none;">
@@ -1848,6 +1873,11 @@
                     <span class="i18n" data-i18n-id="i18n_home10">Externally Hosted Extensions</span>
                 </h2>
                 <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank"><img src="/browser/img/flags/gb.png" style="">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
+                
+                <h2 style="margin-top : 2px">
+                    <span>Quality Assurance Statistics</span>
+                </h2>
+                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" onclick="window.location.href='/qa'" target="_blank"><img src="/browser/img/logo.png" style="height: 20px;">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">International Edition<br>Statistics</span></a>
         
                 <p class="i18n" data-i18n-id="i18n_home11">There is also a version of the browser containing other extensions of SNOMED CT which do not originate from Member countries. <a href="other.html">Please see the page here</a>.</p>
 
