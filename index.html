@@ -552,7 +552,11 @@
                             if (typeof release.latestVersion !== "undefined") {
                                 options.highlightByEffectiveTime = release.latestVersion.effectiveDate;
                             }                            
-
+                            var parsedLanguages = "";
+                            for (var language in release.languages) {
+                                parsedLanguages = parsedLanguages + language + ',';
+                            }
+                            options.defaultLanguage = parsedLanguages.substr(0, 2);
                             break;
                         }
                     }                    
@@ -580,6 +584,11 @@
                         if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === options.edition) {
                             options.languageObject = release.languages;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            var parsedLanguages = "";
+                            for (var language in release.languages) {
+                                parsedLanguages = parsedLanguages + language + ',';
+                            }
+                            options.defaultLanguage = parsedLanguages.substr(0, 2);
                             break;
                         }
                     }                    
