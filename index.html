@@ -191,7 +191,7 @@
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
             }
-            else if(window.location.hostname.includes('browser')) {
+            else if(window.location.hostname.includes('local')) {
                 options.publicBrowser = true;
             }
             
@@ -379,7 +379,7 @@
                     var $span2 = $('<span>');
                     $span1.text("Release Stats");
                     $span2.attr("class", "glyphicon glyphicon-signal").attr("style", "margin-left : 5px;");;
-                    var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -10px; width:165px;");
+                    var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -8px; width:165px; margin-bottom:10px;");
                     $a.append($span1);
                     $a.append($span2);
                     $a.attr("href", '/qa');
