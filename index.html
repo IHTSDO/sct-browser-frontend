@@ -1015,6 +1015,13 @@
                                 if (branchPath.includes(release.branchPath)) {
                                     options.languageObject = release.languages;                                
                                     options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+
+                                    var parsedLanguages = "";
+                                    for (var language in release.languages) {
+                                        parsedLanguages = parsedLanguages + language + ',';
+                                    }
+                                    options.languages = parsedLanguages;
+                                    options.defaultLanguage = parsedLanguages.substr(0, 2);                                    
                                     found = true;
                                     break;
                                 }
