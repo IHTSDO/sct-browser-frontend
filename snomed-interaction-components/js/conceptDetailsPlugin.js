@@ -623,14 +623,14 @@ function conceptDetails(divElement, conceptId, options) {
                 panel: panel,
                 firstMatch: firstMatch,
                 divElementId: panel.divElement.id,
-                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages,
+                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' ? '&latestRedirect=' + panel.options.latestRedirect : ''),
                 server: panel.server
             };
             $('#home-attributes-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/attributes.hbs"](context));
 
             // Update browser history
             if (!panel.options.disableHistoryStateChange) {
-                var historyUrl = "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + options.edition + "&release=" + options.release + "&languages=" + options.languages;
+                var historyUrl = "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + options.edition + "&release=" + options.release + "&languages=" + options.languages + (typeof panel.options.latestRedirect !== 'undefined' ? '&latestRedirect=' + panel.options.latestRedirect : '');
                 manualStateChange = false;
                 var state = {
                     name: firstMatch.defaultTerm,

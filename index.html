@@ -211,7 +211,6 @@
 
                 $.getJSON("/snowstorm/snomed-ct/codesystems", function(result) {
                 }).done(function(result) {
-                    console.log(result);
                     options.serverUrl = "/snowstorm/snomed-ct";
                     options.queryServerUrl = "/snowstorm/snomed-ct";
                     options.releases = result;
@@ -435,6 +434,7 @@
                             options.release = '';
                             options.languages = parsedLanguages;
                             options.languageObject = release.languages;
+                            delete options.latestRedirect;
 
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
@@ -556,7 +556,12 @@
 
         function initializePublicBrowser() {
             setUILanguage();
-            var edition = QueryString.edition;  
+            var edition = QueryString.edition;
+            var isLatestRedirect  = true; 
+            if (QueryString.latestRedirect) {
+                isLatestRedirect = (QueryString.latestRedirect == 'true') ;
+                options.latestRedirect = isLatestRedirect;
+            }
             if (options.dailyBuildBrowser) {
                 if (options.dailyBuildReleases.filter(function(release) {
                         return release.branchPath === edition;
@@ -587,25 +592,42 @@
                 }                       
             }
             else {
-                if (options.releases.items.filter(function(release) {
-                        return (typeof release.latestVersion !== "undefined") && release.latestVersion.branchPath === edition;
-                    }).length !== 0) {
-                    options.edition = edition;
-                }
-                else {
+                if (!isLatestRedirect) {
+                    var releaseFound = false;
                     for (let i = 0; i < options.releases.items.length; i++) {
                         let release = options.releases.items[i];
-                        if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath) {
-                            options.edition = release.latestVersion.branchPath;
+                        if ((typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === edition)
+                            || release.branchPath === edition) {
+                            options.edition = release.branchPath;
+                            releaseFound = true;
                             break;
                         }
+                    }
+                    if (!releaseFound) {
+                        options.edition = options.releases.items[0].branchPath;
+                    }
+                } 
+                else {
+                    if (options.releases.items.filter(function(release) {
+                        return (typeof release.latestVersion !== "undefined") && release.latestVersion.branchPath === edition;
+                    }).length !== 0) {
+                        options.edition = edition;
+                    }
+                    else {
+                        for (let i = 0; i < options.releases.items.length; i++) {
+                            let release = options.releases.items[i];
+                            if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath) {
+                                options.edition = release.latestVersion.branchPath;
+                                break;
+                            }
+                        }                    
                     }                    
                 }
-
                 if (options.releases && options.releases.items && options.releases.items.length > 0) {
                     for (let i = 0; i < options.releases.items.length; i++) {
                         let release = options.releases.items[i];
-                        if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === options.edition) {
+                        if ((isLatestRedirect && typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === options.edition)
+                            || (!isLatestRedirect && release.branchPath === options.edition)) {
                             options.languageObject = release.languages;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             var parsedLanguages = "";
@@ -615,8 +637,8 @@
                             options.defaultLanguage = parsedLanguages.substr(0, 2);
                             break;
                         }
-                    }                    
-                }                  
+                    }
+                }                                  
             }
 
             var cdValue1 = QueryString.conceptId1;
@@ -735,6 +757,7 @@
                                 parsedLanguages = parsedLanguages.slice(0, -1);
                                 options.edition = release.latestVersion.branchPath;
                                 options.release = '';
+                                delete options.latestRedirect;
                                 options.languages = parsedLanguages;
                                 options.languageObject = release.languages;                                
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
