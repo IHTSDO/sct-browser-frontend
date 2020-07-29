@@ -593,19 +593,12 @@
             }
             else {
                 if (!isLatestRedirect) {
-                    var releaseFound = false;
-                    for (let i = 0; i < options.releases.items.length; i++) {
-                        let release = options.releases.items[i];
-                        if ((typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === edition)
-                            || release.branchPath === edition) {
-                            options.edition = release.branchPath;
-                            releaseFound = true;
-                            break;
-                        }
-                    }
-                    if (!releaseFound) {
-                        options.edition = options.releases.items[0].branchPath;
-                    }
+                    if (typeof edition !== 'undefined') {
+                        options.edition = edition;
+                    } 
+                    else {
+                        console.error('Edition not found');
+                    }                    
                 } 
                 else {
                     if (options.releases.items.filter(function(release) {
@@ -624,10 +617,10 @@
                     }                    
                 }
                 if (options.releases && options.releases.items && options.releases.items.length > 0) {
-                    for (let i = 0; i < options.releases.items.length; i++) {
+                    for (let i = options.releases.items.length - 1; i >= 0; i--) {
                         let release = options.releases.items[i];
                         if ((isLatestRedirect && typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === options.edition)
-                            || (!isLatestRedirect && release.branchPath === options.edition)) {
+                            || (!isLatestRedirect && options.edition.includes(release.branchPath))) {
                             options.languageObject = release.languages;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             var parsedLanguages = "";
