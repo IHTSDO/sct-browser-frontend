@@ -250,6 +250,7 @@
                             if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
                                 if(release.shortName === 'SNOMEDCT'){
                                     release.stats = true;
+                                    release.mrcm = true;
                                 }
                                 internationalReleases.push(release);
                                 if(release.dailyBuildAvailable){
@@ -274,6 +275,7 @@
                     addEditionLinks($('#international_editions'), internationalReleases);
                     if(options.publicBrowser){
                         addStatsLinks($('#international_stats'), internationalReleases);
+                        addMrcmLink($('#international_mrcm'), internationalReleases);
                     }
                     addEditionLinks($('#local_editions'), localReleases);                
                     addEditionLinks($('#dailybuild_editions'), dailyBuildInternational);
@@ -383,6 +385,24 @@
                     $a.append($span1);
                     $a.append($span2);
                     $a.attr("href", '/qa');
+                    $a.attr("target", "_blank");
+                    $statsLinks.append($a);
+                    $statsLinks.append(" "); 
+                }     
+            }
+        }
+        
+        function addMrcmLink($statsLinks, releases) {
+            for (let i = 0; i < releases.length; ++i) {
+                if(releases[i].mrcm){
+                    let release = releases[i];
+                    var $span1 = $('<span>');
+                    var $span2 = $('<span>');
+                    $span1.text("MRCM Browser");
+                    var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -6px; width:165px; margin-bottom:10px;");
+                    $a.append($span1);
+                    $a.append($span2);
+                    $a.attr("href", '/mrcm');
                     $a.attr("target", "_blank");
                     $statsLinks.append($a);
                     $statsLinks.append(" "); 
@@ -1868,6 +1888,7 @@
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="international_editions" style="margin-bottom : 0px"></p>
                 <p id="international_stats" style="margin-bottom : 0px"></p>
+                <p id="international_mrcm" style="margin-bottom : 0px"></p>
                 <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p id="local_editions" style="margin-bottom : 0px"></p>
                 <p id="multi-extension-search" style="display: none;">
