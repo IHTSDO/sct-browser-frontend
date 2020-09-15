@@ -848,7 +848,10 @@ function searchPanel(divElement, options) {
                             t = t.toLowerCase();
                             t = t.replace("(", "");
                             t = t.replace(")", "");
+                        } else if (panel.options.searchMode == "fullText" && !t.endsWith("$")) {
+                            t = t + "$";
                         }
+                        
                         var startTime = Date.now();
                         var branch = options.edition;
                         
@@ -902,6 +905,9 @@ function searchPanel(divElement, options) {
                         }
                         if (panel.options.textIndexNormalized != "none") {
                             searchUrl = searchUrl + "&normalize=" + panel.options.textIndexNormalized;
+                        }
+                        if (panel.options.searchMode === 'regex' || panel.options.searchMode === 'fullText') {
+                            searchUrl = searchUrl + "&searchMode=REGEX";
                         }
                         if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
                             searchUrl = searchUrl + "&groupByConcept=true";
