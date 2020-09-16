@@ -378,9 +378,9 @@ function searchPanel(divElement, options) {
                     case 'fullText':
                         $("#" + panel.divElement.id + "-fullTextButton").click();
                         break;
-                    case 'regex':
-                        $("#" + panel.divElement.id + "-regexButton").click();
-                        break;                    
+                    // case 'regex':
+                    //    $("#" + panel.divElement.id + "-regexButton").click();
+                    //    break;                    
                     default:
                         $("#" + panel.divElement.id + "-partialMatchingButton").click();
                   }
@@ -1505,12 +1505,15 @@ function searchPanel(divElement, options) {
     this.updateSearchLabel = function() {
         if (typeof panel.options.searchMode == "undefined") {
             panel.options.searchMode = "partialMatching";
-        }       
+        }
+        /*       
         if (panel.options.searchMode == "regex") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
             $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_1'>" + i18n_search_examp_1 + "</span> ");
             $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
-        } else if (panel.options.searchMode == "fullText") {
+        } else 
+        */
+        if (panel.options.searchMode == "fullText") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_full_text_search_mode'>" + i18n_full_text_search_mode + "</span>");
             $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_2'>" + i18n_search_examp_2 + "</em></span> ");
             $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_full_text_search_mode'>" + i18n_full_text_search_mode + "</span>");
