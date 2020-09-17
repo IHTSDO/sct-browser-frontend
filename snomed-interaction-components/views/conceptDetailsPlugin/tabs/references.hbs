@@ -13,6 +13,7 @@
                     <thead>
                     <tr>
                         <th><span class='i18n' data-i18n-id='i18n_term'>Term</span></th>
+                        <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_preferred_term" "Preferred Term"}}</span></th>
                         <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_conceptId" "Concept Id"}}</span></th>
                     </tr>
                     </thead>
@@ -31,6 +32,9 @@
                                     </div>
                                 {{/hasCountryIcon}}
                                 {{fsn.term}}
+                            </td>
+                            <td>
+                                {{pt.term}}
                             </td>
                             <td>{{conceptId}}</td>
                         </tr>
