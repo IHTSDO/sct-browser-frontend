@@ -359,8 +359,9 @@ function queryComputerPanel(divElement, options) {
             panel.readOptionsPanel();
             
             var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
+            var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());            
             $('#' + panel.divElement.id + '-computeInferredButton2').addClass("disabled");           
-            panel.execute(panel.options.eclQueryFilter, expression, true);            
+            panel.execute(panel.options.eclQueryFilter, expression, true, null, optionalTermFilter);            
             $('#' + panel.divElement.id + '-computeInferredButton2').removeClass("disabled");
            
         });
@@ -741,11 +742,12 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-computeInferredButton2').disableTextSelect();
         $('#' + panel.divElement.id + '-computeInferredButton2').click(function(e) {
             var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
+            var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
             $('#' + panel.divElement.id + '-computeInferredButton2').addClass("disabled");
             /*  $.post(options.serverUrl.replace("snomed", "expressions/") + "parse/brief", { expression: expression }).done(function(res) {
                   //console.log(res);
                   if (res.validation) { */
-            panel.execute("inferred", expression, true);
+            panel.execute("inferred", expression, true, null, optionalTermFilter);
             /* } else {
                       alertEvent("Invalid Expression", "error")
                   }
@@ -1165,7 +1167,7 @@ function queryComputerPanel(divElement, options) {
         panel.options.eclQueryFilter = $("#" + panel.divElement.id + "-relsTypeFilterOption").val();
     }
 
-    this.execute = function(form, expression, clean, onlyTotal) {
+    this.execute = function(form, expression, clean, onlyTotal, optionalTermFilter) {
         panel.currentEx++;
         var currentEx = panel.currentEx;
         //$('#' + panel.divElement.id + '-footer').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
@@ -1268,7 +1270,7 @@ function queryComputerPanel(divElement, options) {
                 if(options.release.length > 0 && options.release !== 'None'){
                     branch = branch + "/" + options.release;
                 };
-        expressionURL = options.serverUrl + "/" + branch + "/concepts?module=900000000000207008&" + (panel.options.eclQueryFilter === "stated" ? "statedEcl" : "ecl")   + "=" + encodeURIComponent(strippedExpression) + "&offset=" + skip + "&limit=" + limit + "&expand=fsn()";
+        expressionURL = options.serverUrl + "/" + branch + "/concepts?module=900000000000207008&" + (panel.options.eclQueryFilter === "stated" ? "statedEcl" : "ecl")   + "=" + encodeURIComponent(strippedExpression) + "&offset=" + skip + "&limit=" + limit + "&term=" + (typeof optionalTermFilter !== 'undefined' ? optionalTermFilter : '');
         console.log("queryURL " + expressionURL);
         if (xhrExecute != null && !onlyTotal)
             xhrExecute.abort();

@@ -1745,13 +1745,19 @@
             });
 
             var i18n_search_placeholder = jQuery.i18n.prop('i18n_search_placeholder');
+            var i18n_ecl_search_option_placeholder = jQuery.i18n.prop('i18n_ecl_search_option_placeholder');
             if (fade) {
                 $('#fh-search_canvas-searchBox').fadeOut("slow", function() {
                     $('#fh-search_canvas-searchBox').attr('placeholder',i18n_search_placeholder);
                     $('#fh-search_canvas-searchBox').fadeIn("slow");
                 });
+                $('#fh-query_canvas-searchBoxOption').fadeOut("slow", function() {
+                    $('#fh-query_canvas-searchBoxOption').attr('placeholder',i18n_ecl_search_option_placeholder);
+                    $('#fh-query_canvas-searchBoxOption').fadeIn("slow");
+                });
             } else {
                 $('#fh-search_canvas-searchBox').attr('placeholder',i18n_search_placeholder);
+                $('#fh-query_canvas-searchBoxOption').attr('placeholder',i18n_ecl_search_option_placeholder);
             }            
 
             initTour();
