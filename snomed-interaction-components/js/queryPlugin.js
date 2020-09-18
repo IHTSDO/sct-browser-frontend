@@ -5,6 +5,7 @@
 function queryComputerPanel(divElement, options) {
     var panel = this;
     panel.showId = false;
+    var thread = null;
     var limit = 100;
     var skip = 0;
     var xhrTotal = null;
@@ -170,6 +171,19 @@ function queryComputerPanel(divElement, options) {
             //console.log('scrolling...');
             if (!clicked) $('#' + panel.divElement.id + '-mycontent > div > h4').css('padding-top', 0);
             clicked = false;
+        });
+
+        $('#' + panel.divElement.id + '-searchBoxOption').keyup(function() {
+            clearTimeout(thread);
+            var $this = $(this);
+            thread = setTimeout(function() {
+                var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
+                var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
+                if (expression) {
+                    var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
+                    panel.execute("inferred", expression, true, null, optionalTermFilter);
+                }
+            }, 500);
         });
 
         $("#" + panel.divElement.id + "-ExamplesModal").on('shown.bs.modal', function() {

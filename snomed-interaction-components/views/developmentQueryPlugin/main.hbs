@@ -102,7 +102,7 @@
         </div>
         <div class="tab-pane active" id="{{divElementId}}-ExpTab" style="padding: 15px;margin: 0;">
           <textarea rows="5" ondrop="dropE(event);" class="form-control i18n" placeholder="{{i18n "i18n_expression" "Expression"}}..." id="{{divElementId}}-ExpText"></textarea>
-          <input data-droppable="true" ondrop="dropS(event);" ondragover="removeHighlight();" style="width: 50%; margin-top: 5px" ondragstart="allowDrop(event);" class="form-control" id="{{divElementId}}-searchBoxOption" placeholder="" autocomplete="off">
+          <input data-droppable="true" ondrop="dropS(event);" ondragover="removeHighlight();" style="width: 50%; margin-top: 5px" ondragstart="allowDrop(event);" class="form-control" id="{{divElementId}}-searchBoxOption" placeholder="{{i18n "i18n_ecl_search_option_placeholder" "Enter additional term filter (option)"}}" autocomplete="off">
           <div class="btn btn-success i18n" style="margin: 10px;" id='{{divElementId}}-computeInferredButton2' data-i18n-id="i18n_execute">{{i18n "i18n_execute" "Execute"}}</div>
           <div class="btn btn-success" style="display: none; margin: 10px;" id='{{divElementId}}-computeOntoserver2'>Run on Ontoserver</div>
           <br>
