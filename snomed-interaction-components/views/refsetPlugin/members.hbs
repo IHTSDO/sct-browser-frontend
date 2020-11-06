@@ -15,16 +15,29 @@
             <tr class="member-concept-row">
                 <td>
                     {{#if_eq referencedComponent.typeId "900000000000003001"}}
-                        <span rel="tooltip-right" title="{{i18n "i18n_fsn" "FSN"}}">F</span>
+                        <span class="badge" style="color: #333; background-color: #fff;" rel="tooltip-right" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.term}}' title="{{i18n "i18n_fsn" "FSN"}}">F</span>
                     {{else}}
                         {{#if_eq referencedComponent.typeId "900000000000013009"}}
-                            <span rel="tooltip-right" title="{{i18n "i18n_synonym" "Synonym"}}">S</span>
+                            <span class="badge" style="color: #333; background-color: #fff;" rel="tooltip-right" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.term}}' title="{{i18n "i18n_synonym" "Synonym"}}">S</span>
                         {{else}}
                             {{#if_eq referencedComponent.typeId "900000000000550004"}}
-                                <span rel="tooltip-right" title="{{i18n "i18n_definition" "Definition"}}">D</span>
+                                <span class="badge" style="color: #333; background-color: #fff;" rel="tooltip-right" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.term}}' title="{{i18n "i18n_definition" "Definition"}}">D</span>
                             {{/if_eq}}
                         {{/if_eq}}
-                    {{/if_eq}}               
+                    {{/if_eq}}
+                    {{#if referencedComponent.preferred}}
+                            {{#if_eq typeId "900000000000003001"}}
+                                &nbsp;<span class="glyphicon glyphicon-star-empty" rel="tooltip-right" title="{{i18n "i18n_preferred" "Preferred"}}"></span>
+                            {{else}}
+                                &nbsp;<span class="glyphicon glyphicon-star" rel="tooltip-right" title="{{i18n "i18n_preferred" "Preferred"}}"></span>
+                            {{/if_eq}}
+                        {{else}}
+                            {{#if referencedComponent.acceptable}}
+                                &nbsp;<span rel="tooltip-right" title="{{i18n "i18n_acceptable" "Acceptable"}}">&#10004;</span>
+                            {{else}}
+                                &nbsp;&nbsp;&nbsp;
+                            {{/if}}
+                        {{/if}}
                     {{#hasCountryIcon referencedComponent.moduleId}}
                         <div class="phoca-flagbox" style="width:22px;height:22px">
                             <span class="phoca-flag {{countryIcon referencedComponent.moduleId}}"></span>

@@ -187,6 +187,20 @@ function refsetPanel(divElement, options) {
                         return;
                     }
                 });
+                result.items.forEach(function(item){
+                    if (item.referencedComponent.acceptabilityMap) {
+                        $.each(item.referencedComponent.acceptabilityMap, function(langref, acceptability) {
+                            acceptabilityPair = item.referencedComponent.acceptabilityMap[i];
+                                if (acceptability == "PREFERRED") {
+                                    item.referencedComponent.preferred = true;
+                                } else {
+                                    if (acceptability == "ACCEPTABLE") {
+                                        item.referencedComponent.acceptable = true;
+                                    }
+                                }
+                        });
+                    }
+                });
             }
             
             var context = {};
