@@ -27,13 +27,13 @@
                     {{/if_eq}}
                     {{#if referencedComponent.preferred}}
                             {{#if_eq typeId "900000000000003001"}}
-                                &nbsp;<span style="margin-right:5px;" class="glyphicon glyphicon-star-empty" rel="tooltip-right" title="{{i18n "i18n_preferred" "Preferred"}}"></span>
+                                &nbsp;<span style="margin-left:-2px; margin-right:10px;" class="glyphicon glyphicon-star-empty" rel="tooltip-right" title="{{i18n "i18n_preferred" "Preferred"}}"></span>
                             {{else}}
-                                &nbsp;<span style="margin-right:5px;" class="glyphicon glyphicon-star" rel="tooltip-right" title="{{i18n "i18n_preferred" "Preferred"}}"></span>
+                                &nbsp;<span style="margin-left:-2px; margin-right:10px;" class="glyphicon glyphicon-star" rel="tooltip-right" title="{{i18n "i18n_preferred" "Preferred"}}"></span>
                             {{/if_eq}}
                         {{else}}
                             {{#if referencedComponent.acceptable}}
-                                &nbsp;<span style="margin-right:5px;" rel="tooltip-right" title="{{i18n "i18n_acceptable" "Acceptable"}}">&#10004;</span>
+                                &nbsp;<span style="margin-left:-2px; margin-right:10px;" rel="tooltip-right" title="{{i18n "i18n_acceptable" "Acceptable"}}">&#10004;</span>
                             {{else}}
                                 &nbsp;&nbsp;&nbsp;
                             {{/if}}
@@ -60,7 +60,7 @@
                             <span class="phoca-flag {{countryIcon moduleId}}"></span>
                         </div>
                     {{/hasCountryIcon}}
-                    {{referencedComponent.fsn.term}}
+                    <span style="margin-left:12px;">{{referencedComponent.fsn.term}}</span>
                 </td>
                 <td>{{referencedComponent.conceptId}}</td>
             </tr>
