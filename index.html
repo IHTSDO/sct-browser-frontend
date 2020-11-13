@@ -455,6 +455,7 @@
                             options.release = '';
                             options.languages = parsedLanguages;
                             options.languageObject = release.languages;
+                            options.editionShortname = release.shortName;
                             delete options.latestRedirect;
 
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
@@ -598,6 +599,7 @@
                         let release = options.dailyBuildReleases[i];
                         if (release.branchPath === options.edition) {
                             options.languageObject = release.languages;
+                            options.editionShortname = release.shortName;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             if (typeof release.latestVersion !== "undefined") {
                                 options.highlightByEffectiveTime = release.latestVersion.effectiveDate;
@@ -643,6 +645,7 @@
                         if ((isLatestRedirect && typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === options.edition)
                             || (!isLatestRedirect && options.edition.includes(release.branchPath))) {
                             options.languageObject = release.languages;
+                            options.editionShortname = release.shortName;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             var parsedLanguages = "";
                             for (var language in release.languages) {
@@ -731,6 +734,7 @@
                             options.release = '';
                             options.languages = parsedLanguages;
                             options.languageObject = release.languages;
+                            options.editionShortname = release.shortName;
                             $("#editionLabel").html(release.name + " DAILY BUILD");
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             
@@ -773,7 +777,8 @@
                                 options.release = '';
                                 delete options.latestRedirect;
                                 options.languages = parsedLanguages;
-                                options.languageObject = release.languages;                                
+                                options.languageObject = release.languages;
+                                options.editionShortname = release.shortName;                                
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                                 options.defaultLanguage = parsedLanguages.substr(0, 2);
                                 let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
@@ -844,6 +849,10 @@
                 
                 if (options.managedServiceUser) {
                     findProjectMainline(projects);
+                } else {
+                    if (options.releases && options.releases.items && options.releases.items.length > 0) {
+                        options.editionShortname = options.releases.items[0].shortName;
+                    }                    
                 }
 
                 var found = projects.filter(function(item) {
@@ -1083,6 +1092,7 @@
                             && projects[0].branchPath.includes(release.branchPath)) {                                
                             options.projectMainlinePath = release.branchPath;
                             options.projectMainlineText = release.shortName;
+                            options.editionShortname = release.shortName;
                         }                                                
                     }                   
                 }

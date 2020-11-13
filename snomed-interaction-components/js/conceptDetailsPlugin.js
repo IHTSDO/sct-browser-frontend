@@ -256,6 +256,12 @@ function conceptDetails(divElement, conceptId, options) {
             if (localStorage.getItem("conceptDetailOptions_selectedView")) {
                 panel.options.selectedView = localStorage.getItem("conceptDetailOptions_selectedView") === 'stated' ? 'stated' : 'inferred';
             }
+            if (localStorage.getItem("conceptDetailOptions_selectedLanguageRefset")) {
+                var selectedLanguageRefset = JSON.parse(localStorage.getItem("conceptDetailOptions_selectedLanguageRefset"));
+                if (selectedLanguageRefset && selectedLanguageRefset.hasOwnProperty(panel.options.editionShortname)) {
+                    panel.options.defaultLanguageReferenceSets = selectedLanguageRefset[panel.options.editionShortname];
+                }                
+            }
         }
 
         panel.updateCanvas();
@@ -2624,6 +2630,12 @@ function conceptDetails(divElement, conceptId, options) {
         panel.options.displayInactiveDescriptions = $("#" + panel.divElement.id + "-displayInactiveDescriptionsOption").is(':checked');
         panel.options.diagrammingMarkupEnabled = $("#" + panel.divElement.id + "-diagrammingMarkupEnabledOption").is(':checked');
         panel.options.selectedView = $("#" + panel.divElement.id + "-relsViewOption").val();
+        panel.options.defaultLanguageReferenceSets = [];
+        $.each($("#" + panel.divElement.id).find(".langOption"), function(i, field) {
+            if ($(field).is(':checked')) {
+                panel.options.defaultLanguageReferenceSets.push($(field).val());
+            }
+        });
 
         if (typeof(Storage) !== "undefined") {
             localStorage.setItem("conceptDetailOptions_displaySynonyms", panel.options.displaySynonyms);
@@ -2633,14 +2645,16 @@ function conceptDetails(divElement, conceptId, options) {
             localStorage.setItem("conceptDetailOptions_diagrammingMarkupEnabled", panel.options.diagrammingMarkupEnabled);
             localStorage.setItem("conceptDetailOptions_displayChildren", panel.options.displayChildren);
             localStorage.setItem("conceptDetailOptions_selectedView", panel.options.selectedView);
+            
+            var selectedLanguageRefset = {};
+            if (typeof (localStorage.getItem("conceptDetailOptions_selectedLanguageRefset")) !== "undefined" && 
+                localStorage.getItem("conceptDetailOptions_selectedLanguageRefset") !== null) {
+                selectedLanguageRefset = JSON.parse(localStorage.getItem("conceptDetailOptions_selectedLanguageRefset"));
+            }
+            selectedLanguageRefset[panel.options.editionShortname] = panel.options.defaultLanguageReferenceSets;
+            localStorage.setItem("conceptDetailOptions_selectedLanguageRefset",JSON.stringify(selectedLanguageRefset));            
         }
 
-        panel.options.defaultLanguageReferenceSets = [];
-        $.each($("#" + panel.divElement.id).find(".langOption"), function(i, field) {
-            if ($(field).is(':checked')) {
-                panel.options.defaultLanguageReferenceSets.push($(field).val());
-            }
-        });       
         $.each(componentsRegistry, function(i, field) {
             if (field.loadMarkers)
                 field.loadMarkers();
