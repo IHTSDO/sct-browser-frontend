@@ -435,6 +435,7 @@ function conceptDetails(divElement, conceptId, options) {
                 });
             };
 
+            firstMatch.classAxioms = firstMatch.classAxioms.filter(function(axiom) { return axiom.active; });
             firstMatch.classAxioms.forEach(function(axiom) {
                 axiom.clinicalFindingRelationships = true;
 
@@ -468,6 +469,8 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 sortAxiomRelationships(axiom.relationships);
             });
+
+            firstMatch.gciAxioms = firstMatch.gciAxioms.filter(function(axiom) { return axiom.active; });
             firstMatch.gciAxioms.forEach(function(axiom) {
                 axiom.clinicalFindingRelationships = true;
 
