@@ -593,8 +593,17 @@ function searchPanel(divElement, options) {
         if (typeof forceSearch == "undefined") {
             forceSearch = false;
         }
+
+        var originalSearchStr = t;
+
+        // omitted the text between the pipe-bars if any
+        var patt = new RegExp('^\\d+\\s\\|.*\\|$');         
+        if (patt.test(t)) {
+            t = t.substring(0, t.indexOf(' '));
+        }
+
         // panel.divElement.id + '-typeIcon
-        if (t != "" && (t != lastT || forceSearch)) {
+        if (t != "" && (originalSearchStr != lastT || forceSearch)) {
             if (t.length < 3) {
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('glyphicon-ok');
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('text-success');
@@ -612,11 +621,11 @@ function searchPanel(divElement, options) {
                 //    panel.options.refsetFilter = "none";
                 //    //panel.options.textIndexNormalized = "none";
                 //}
-                lastT = t;
+                lastT = originalSearchStr;
                 //console.log(t);
                 var d = new Date();
                 var time = d.getTime();
-                panel.history.push({ searchTerm: t, time: time });
+                panel.history.push({ searchTerm: originalSearchStr, time: time });
                 //t = t.charAt(0).toUpperCase() + t.slice(1);
                 //console.log("Capitalized t: " + t);
                 $('#' + panel.divElement.id + '-searchFilters').html("");
