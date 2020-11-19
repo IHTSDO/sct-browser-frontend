@@ -2346,6 +2346,7 @@ function conceptDetails(divElement, conceptId, options) {
             }
 
             var isReferenceComponentsOfRefsetNotConcepts = false;
+            var containingTermOnly = true;
             if (result.items && result.items.length > 0) {
                 result.items.forEach(function(item){
                     if(!item.hasOwnProperty('referencedComponent')){
@@ -2353,7 +2354,17 @@ function conceptDetails(divElement, conceptId, options) {
                         return;
                     }
                 });
+
+                result.items.forEach(function(item){
+                    if(item.hasOwnProperty('referencedComponent')){
+                        var referencedComponent = item['referencedComponent'];
+                        if (referencedComponent.hasOwnProperty('pt') || referencedComponent.hasOwnProperty('fsn'))
+                        containingTermOnly = false;
+                        return;
+                    }
+                });
             }
+            console.log("containingTermOnly : " + containingTermOnly);
             var context = {};
             if (isReferenceComponentsOfRefsetNotConcepts) {
                 context = {
@@ -2362,7 +2373,8 @@ function conceptDetails(divElement, conceptId, options) {
                     server: panel.server,
                     total: total,
                     skipTo: 0,
-                    referenceComponentsOfRefsetAreNotConcepts: true
+                    referenceComponentsOfRefsetAreNotConcepts: true,
+                    containingTermOnly: containingTermOnly
                 };
             }
             else {
@@ -2375,7 +2387,8 @@ function conceptDetails(divElement, conceptId, options) {
                     skipTo: skipTo,
                     panel: panel,
                     total: total,
-                    referenceComponentsOfRefsetAreNotConcepts: false
+                    referenceComponentsOfRefsetAreNotConcepts: false,
+                    containingTermOnly: containingTermOnly
                 };
             }
             Handlebars.registerHelper('if_eq', function(a, b, opts) {
