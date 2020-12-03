@@ -192,12 +192,12 @@
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
             }
-            else if(window.location.hostname.includes('browser')) {
-                options.publicBrowser = true;
-            }
             else if(window.location.hostname.includes('community-browser')) {
                 options.communityBrowser = true;
             } 
+            else if(window.location.hostname.includes('browser')) {
+                options.publicBrowser = true;
+            }
             else {
                 // do nothing
             }
@@ -272,19 +272,23 @@
                                 }
                                 internationalReleases.push(release);
                                 if(release.dailyBuildAvailable){
-                                    options.dailyBuildReleases.push(release);
-                                    dailyBuildInternational.push(release);
                                     if (release.maintainerType === 'Community Content') {
                                         options.communityContentReleases.push(release);
+                                    }
+                                    else {
+                                        options.dailyBuildReleases.push(release);
+                                        dailyBuildInternational.push(release);
                                     }
                                 }
                             } else {
                                 localReleases.push(release);
                                 if(release.dailyBuildAvailable){
-                                    options.dailyBuildReleases.push(release);
-                                    dailyBuildLocal.push(release);
                                     if (release.maintainerType === 'Community Content') {
                                         options.communityContentReleases.push(release);
+                                    }
+                                    else{
+                                        options.dailyBuildReleases.push(release);
+                                        dailyBuildLocal.push(release);
                                     }
                                 }
                             }
