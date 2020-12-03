@@ -22,7 +22,9 @@ module.exports = function(grunt) {
                     'snomed-interaction-components/js/refsetPlugin.js',
                     'snomed-interaction-components/js/favoritesPlugin.js',
                     'snomed-interaction-components/js/queryPlugin.js',
-                    'snomed-interaction-components/js/util.js'
+                    'snomed-interaction-components/js/util.js',
+                    'snomed-interaction-components/js/dailyBuildPlugin.js',
+                    'snomed-interaction-components/js/communityContentPlugin.js'
                 ],
                 dest: 'snomed-interaction-components/dist/js/<%= pkg.name %>.js'
             },
