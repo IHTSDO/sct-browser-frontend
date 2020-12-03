@@ -448,7 +448,7 @@
         function addEditionLinks($releaseSwitcher, releases) {
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
-                if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser) {
+                if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser || options.communityBrowser) {
                     var $img = $('<img>').attr("src", release.countryCode !== '' ? "/browser/img/flags/" + release.countryCode + ".png" : "/browser/img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
 
                     var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
