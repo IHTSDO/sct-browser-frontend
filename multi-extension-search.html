@@ -182,6 +182,10 @@
             }            
         };
 
+        options.setDefaultConceptId = function(conceptId) {            
+            defaultConceptId = conceptId;                       
+        };
+
         function determineServer() {
             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);            
