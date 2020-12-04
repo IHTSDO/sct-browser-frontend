@@ -476,7 +476,9 @@
                     }
 
                     var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
-                    $a.append($img);
+                    if(!options.communityBrowser){
+                        $a.append($img);
+                    }
                     $a.append("&nbsp;&nbsp;&nbsp;");
                     $a.append($span1);
                     $a.append("<br>");
