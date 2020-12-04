@@ -1267,18 +1267,43 @@ function conceptDetails(divElement, conceptId, options) {
            
             conceptRequested = 0;
         }).fail(function(xhr, textStatus, error) {
-            if (textStatus !== 'abort') {
-                panel.relsPId = divElement.id + "-rels-panel";
-                panel.attributesPId = divElement.id + "-attributes-panel";
-                panel.descsPId = divElement.id + "-descriptions-panel";
+            $("#references-tab-link-" + panel.divElement.id).unbind();
+            $("#diagram-tab-link-" + panel.divElement.id).unbind();
+            $("#refsets-tab-link-" + panel.divElement.id).unbind();
+            $("#members-tab-link-" + panel.divElement.id).unbind();
+            $("#expression-tab-link-" + panel.divElement.id).unbind();
+            if (xhr && xhr.status === 404) {
+                var release = null;
+                if (options.releases) {
+                    for (var i = 0; i < options.releases.items.length; i++) {
+                        if (options.releases.items[i].branchPath == options.edition
+                            || (options.releases.items[i].latestVersion && options.releases.items[i].latestVersion.branchPath == options.edition)) {
+                            release = options.releases.items[i];
+                            break;
+                        }
+                    }
+                }                
+                $("#home-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_concept_not_found'>Concept not found</span><span>" + (release != null ? " in " + release.name : "") + "</span></div>");                
+                $("#diagram-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_concept_not_found'>Concept not found</span><span>" + (release != null ? " in " + release.name : "") + "</span></div>");
+                $("#members-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_concept_not_found'>Concept not found</span><span>" + (release != null ? " in " + release.name : "") + "</span></div>");
+                $("#references-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_concept_not_found'>Concept not found</span><span>" + (release != null ? " in " + release.name : "") + "</span></div>");
+                $("#refsets-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_concept_not_found'>Concept not found</span><span>" + (release != null ? " in " + release.name : "") + "</span></div>");
+                $("#expression-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_concept_not_found'>Concept not found</span><span>" + (release != null ? " in " + release.name : "") + "</span></div>");
+                $('#' + panel.attributesPId).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_concept_not_found'>Concept not found</span><span>" + (release != null ? " in " + release.name : "") + "</span></div>");
+                $('#' + panel.descsPId).html("");
+                $('#' + panel.relsPId).html("");
+            } else if (textStatus !== 'abort') {               
                 $("#home-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
                 $("#diagram-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
                 $("#members-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
                 $("#references-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
                 $("#refsets-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
+                $("#expression-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
                 $('#' + panel.attributesPId).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
                 $('#' + panel.descsPId).html("");
                 $('#' + panel.relsPId).html("");
+            } else {
+                // do nothing
             }
         });      
                 

@@ -89,6 +89,9 @@ function favoritePanel(divElement, options) {
                 return ExcellentExport.excel(this, 'tableFavs');
             });
             $('#' + panel.divElement.id + '-panelBody').find(".fav-item").click(function (event) {
+                if (typeof options.setDefaultConceptId !== 'undefined') {
+                    options.setDefaultConceptId($(event.target).attr('data-concept-id'));
+                }
                 channel.publish(panel.divElement.id, {
                     term: $(event.target).attr('data-term'),
                     module: $(event.target).attr("data-module"),
