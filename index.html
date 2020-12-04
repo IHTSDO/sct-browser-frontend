@@ -257,11 +257,11 @@
 
                     // dynamic extension links
                     var internationalReleases = [];
+                    var localReleases = [];
                     options.dailyBuildReleases = [];
                     var dailyBuildInternational = [];
                     var dailyBuildLocal = [];
-                    options.communityContentReleases = [];
-                    var localReleases = [];
+                    options.communityContentReleases = [];                    
 
                     if (options.releases) {
                         for (let i = 0; i < options.releases.items.length; ++i) {
@@ -315,7 +315,7 @@
                         // do nothing
                     }
 
-                    dfd.resolve();
+                    dfd.resolve({internationalReleases: internationalReleases, localReleases: localReleases});
                 }).fail(function() {
                     console.log('fail');
                     options.serverUrl = "/snowowl/snomed-ct/v2";
@@ -378,8 +378,19 @@
                 return dfd.promise();
             };
             
-            $.when(getCodeSystems(), getUIConfiguration()).then(function() {
+            $.when(getCodeSystems(), getUIConfiguration()).then(function(response) {
                 if(options.imsUrl == null) {
+
+                    // Marked as public browser if both daily build and community browser could not be specifed from URL
+                    if (!options.communityBrowser && !options.dailyBuildBrowser && !options.publicBrowser) {
+                        options.publicBrowser = true;
+                        if (response && response.internationalReleases && response.localReleases) {
+                            addEditionLinks($('#international_editions'), response.internationalReleases);
+                            addEditionLinks($('#local_editions'), response.localReleases);
+                            addStatsLinks($('#international_stats'), response.internationalReleases);
+                            addMrcmLink($('#international_mrcm'), response.internationalReleases);
+                        }
+                    }
                     $('#edition-selector').css('display', 'block');
                     if (options.publicBrowser) {
                         if (options.releases) {
