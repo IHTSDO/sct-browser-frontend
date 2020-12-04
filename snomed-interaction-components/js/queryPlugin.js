@@ -177,13 +177,28 @@ function queryComputerPanel(divElement, options) {
             clearTimeout(thread);
             var $this = $(this);
             thread = setTimeout(function() {
-                var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
-                var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
-                if (expression) {
-                    var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
-                    panel.execute("inferred", expression, true, null, optionalTermFilter);
-                }
+                panel.doSearch();
             }, 500);
+        });
+        
+        $("#" + panel.divElement.id + "-noneTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = '';            
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-fsnTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = 'fsn';            
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-synonymTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = 'synonym';            
+            panel.updateTypeFilterLabel();
+        });
+
+        $("#" + panel.divElement.id + "-definitionTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = 'definition';            
+            panel.updateTypeFilterLabel();
         });
 
         $("#" + panel.divElement.id + "-ExamplesModal").on('shown.bs.modal', function() {
@@ -866,6 +881,99 @@ function queryComputerPanel(divElement, options) {
     };
 
     panel.setUpPanel();
+
+    this.doSearch = function() {
+        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
+        var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
+        if (expression) {
+            var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
+            panel.execute("inferred", expression, true, null, optionalTermFilter);
+        }
+    }
+
+    this.setLanguageRefsets = function(languageRefsets) {
+        panel.options.languageRefsets = languageRefsets;
+        if (panel.options.languageRefsets.length !== 0) {
+            panel.setupLanguageRefsetDropdown();
+        }        
+    }
+
+    this.setupLanguageRefsetDropdown = function() {
+        panel.options.languageRefsets.forEach(function(concept) {
+            // add item to language refset dropdow list
+            var o = new Option(concept.pt.term, concept.id);
+            $(o).html(concept.pt.term);
+            $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').append(o);
+        });
+
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect({            
+            buttonClass: 'btn btn-success',       
+            selectedClass: '',
+            enableHTML: true,
+            templates: {
+                button: '<button type="button" style="white-space: normal;" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+            },
+            buttonText: function(options, select) {
+                var i18n_language_refsets = jQuery.i18n.prop('i18n_language_refsets');                        
+                if (options.length === 0) {
+                   return "<span class='i18n' data-i18n-id='i18n_language_refsets'>"+i18n_language_refsets+"</span>";
+                }
+                else{
+                    var selected = '';
+                    options.each(function() {
+                       var label = ($(this).attr('label') !== undefined) ?  $(this).attr('label'):$(this).html();
+                       selected += label + ', ';
+                    });
+                    return "<span class='i18n' data-i18n-id='i18n_language_refsets'>"+i18n_language_refsets+"</span>: " + selected.substr(0, selected.length - 2);
+                 }
+            },          
+            onChange: function(option, checked, select) {
+                if (typeof panel.options.languageRefsetSearchFilter === 'undefined') {
+                    panel.options.languageRefsetSearchFilter = [];
+                }
+
+                if (checked) {
+                    if (!panel.options.languageRefsetSearchFilter.includes(option.val())) {
+                        panel.options.languageRefsetSearchFilter.push(option.val());
+                    }
+                }
+                else {
+                    panel.options.languageRefsetSearchFilter = panel.options.languageRefsetSearchFilter.filter(function (value) {
+                        return value !== option.val();
+                    });
+                }
+
+                panel.doSearch();
+            }
+        });
+
+        // must add a label attribue after muiltiselect initialised
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt option').each(function() {
+            $(this).attr('label', panel.options.languageNameOfLangRefset[$(this).val()]);
+        });
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOptHidden').hide()
+    };
+
+    this.updateTypeFilterLabel = function() {        
+        if (panel.options.typeSearchFilter == 'fsn') {
+            var i18n_fsn = jQuery.i18n.prop('i18n_fsn');           
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_fsn'>"+i18n_fsn+"</span>");
+           
+        } else if (panel.options.typeSearchFilter == 'synonym') {
+            var i18n_synonym = jQuery.i18n.prop('i18n_synonym');            
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_synonym'>"+i18n_synonym+"</span>");
+           
+        } else if (panel.options.typeSearchFilter == 'definition') {
+            var i18n_definition = jQuery.i18n.prop('i18n_definition');            
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_definition'>"+i18n_definition+"</span>");
+           
+        } else {
+            var i18n_none = jQuery.i18n.prop('i18n_none');
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_none'>"+i18n_none+"</span>");            
+        }
+
+        panel.doSearch();
+    };
 
     this.renumLines = function() {
         $('#' + panel.divElement.id + '-listGroup').find(".query-condition").each(function(index) {

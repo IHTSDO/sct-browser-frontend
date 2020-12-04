@@ -103,7 +103,38 @@
         <div class="tab-pane active" id="{{divElementId}}-ExpTab" style="padding: 15px;margin: 0;">
           <textarea rows="5" ondrop="dropE(event);" class="form-control i18n" placeholder="{{i18n "i18n_expression" "Expression"}}..." id="{{divElementId}}-ExpText"></textarea>
           <input data-droppable="true" ondrop="dropS(event);" ondragover="removeHighlight();" style="width: 50%; margin-top: 5px" ondragstart="allowDrop(event);" class="form-control" id="{{divElementId}}-searchBoxOption" placeholder="{{i18n "i18n_ecl_search_option_placeholder" "Enter additional term filter (option)"}}" autocomplete="off">
-          <div class="btn btn-success i18n" style="margin: 10px;" id='{{divElementId}}-computeInferredButton2' data-i18n-id="i18n_execute">{{i18n "i18n_execute" "Execute"}}</div>
+          <div class="btn-group dropdown" id="{{divElementId}}-searchTypeSection">
+            <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <span class='i18n' data-i18n-id='i18n_description_type'>{{i18n "i18n_description_type" "Description type" }}</span>: <span id="{{divElementId}}-searchTypeOpt"></span>&nbsp;<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                    <a href="#" id='{{divElementId}}-noneTypeButton'><span class='i18n' data-i18n-id='i18n_none'>{{i18n "i18n_none" "None" }}</span> </a>
+              </li>    
+              <li>
+                    <a href="#" id='{{divElementId}}-fsnTypeButton'><span class='i18n' data-i18n-id='i18n_fsn'>{{i18n "i18n_fsn" "FSN" }}</span> </a>
+              </li>           
+              <li>
+                  <a href="#" id='{{divElementId}}-synonymTypeButton'><span class='i18n' data-i18n-id='i18n_synonym'>{{i18n "i18n_synonym" "Synonym" }} </span></a>
+              </li>
+              
+              <li>
+                  <a href="#"id='{{divElementId}}-definitionTypeButton'><span class='i18n' data-i18n-id='i18n_definition'>{{i18n "i18n_definition" "Definition" }}</span></a>
+              </li>
+            </ul>
+          </div>
+          <div style="margin-top: 5px; display: inline-block" id="{{divElementId}}-filterLanguageRefsetSection">
+              <select id="{{divElementId}}-filterLanguageRefsetOpt" multiple="multiple" style="display: none"></select>
+              
+              <!--Display a temporary dropdown for Language refset for better view, will remove it after the list of refsets are in place-->
+              <div style="" class="btn-group dropdown" id="{{divElementId}}-filterLanguageRefsetOptHidden">
+                  <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                      <span class='i18n' data-i18n-id='i18n_language_refsets'>Language Refsets</span>&nbsp;<span class="caret"></span>
+                  </button>                        
+              </div>
+          </div>
+          <br>
+          <div class="btn btn-success i18n" style="margin: 10px; position: initial" id='{{divElementId}}-computeInferredButton2' data-i18n-id="i18n_execute">{{i18n "i18n_execute" "Execute"}}</div>
           <div class="btn btn-success" style="display: none; margin: 10px;" id='{{divElementId}}-computeOntoserver2'>Run on Ontoserver</div>
           <br>
         </div>
