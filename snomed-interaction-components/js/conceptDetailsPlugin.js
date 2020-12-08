@@ -1195,9 +1195,9 @@ function conceptDetails(divElement, conceptId, options) {
                         if (loopRel.type.conceptId == "127489000") {
                             loopIngredient.ingredient = loopRel.target;
                         } else if (loopRel.type.conceptId == "732946004") {
-                            loopIngredient.denominatorValue = loopRel.target;
+                            loopIngredient.denominatorValue = loopRel;
                         } else if (loopRel.type.conceptId == "732944001") {
-                            loopIngredient.numeratorValue = loopRel.target;
+                            loopIngredient.numeratorValue = loopRel;
                         } else if (loopRel.type.conceptId == "732943007") {
                             loopIngredient.boss = loopRel.target;
                         } else if (loopRel.type.conceptId == "732947008") {
