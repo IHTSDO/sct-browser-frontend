@@ -514,12 +514,11 @@
                             delete options.latestRedirect;
 
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
-                            let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                                                         
                             switchToFullHeight(404684003, 138875005);
                             
-                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
                             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                         });
                     }
@@ -801,9 +800,8 @@
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
 
                             reloadCurrentPerspective();
-                            
-                            let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
-                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+
+                            var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
                             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                         });
                         $li.append($a);
@@ -842,8 +840,7 @@
                                 options.editionShortname = release.shortName;                                
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                                 options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
-                                let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
-                                var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
+                                var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
                                 QueryString = queryString();
                                 
                                 if (QueryString.conceptId1) {
