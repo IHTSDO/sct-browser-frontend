@@ -20,7 +20,11 @@
             {{else}}
                 <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-defined-concept-compact' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
             {{/if_eq}}
-            {{removeSemtag target.defaultTerm}}
+            {{#if concreteValue.value}}
+                {{concreteValue.value}}
+            {{else}}
+                {{removeSemtag target.defaultTerm}}
+            {{/if}}
             </span><br>
         {{/each}}
         </div>
@@ -58,7 +62,11 @@
                                 sct-defined-concept-compact
                             {{/if_eq}}
                             ' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
-                            {{removeSemtag target.defaultTerm}}</span><br>
+                            {{#if concreteValue.value}}
+                                {{concreteValue.value}}
+                            {{else}}
+                                {{removeSemtag target.defaultTerm}}
+                            {{/if}}</span><br>
                         {{/if_eq}}
                     {{/each}}
                 </span>
@@ -94,7 +102,11 @@
                                 sct-defined-concept-compact
                             {{/if_eq}}
                             ' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
-                            {{removeSemtag target.defaultTerm}}</span><br>
+                            {{#if concreteValue.value}}
+                                {{concreteValue.value}}
+                            {{else}}
+                                {{removeSemtag target.defaultTerm}}
+                            {{/if}}</span><br>
                         {{/if_eq}}
                     {{/each}}
                 </span>
@@ -124,7 +136,11 @@
                          sct-defined-concept-compact
                     {{/if_eq}}
                     ' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
-                    {{removeSemtag target.defaultTerm}}</span><br>
+                    {{#if concreteValue.value}}
+                        {{concreteValue.value}}
+                    {{else}}
+                        {{removeSemtag target.defaultTerm}}
+                    {{/if}}</span><br>
             {{/each}}
         </div>
         {{#if_eq inferredRoles.length 0}}
