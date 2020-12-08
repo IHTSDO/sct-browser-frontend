@@ -181,8 +181,8 @@ function queryComputerPanel(divElement, options) {
             }, 500);
         });
         
-        $("#" + panel.divElement.id + "-noneTypeButton").click(function(event) {
-            panel.options.typeSearchFilter = '';            
+        $("#" + panel.divElement.id + "-allTypeButton").click(function(event) {
+            panel.options.typeSearchFilter = 'all';            
             panel.updateTypeFilterLabel();
         });
 
@@ -968,8 +968,8 @@ function queryComputerPanel(divElement, options) {
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_definition'>"+i18n_definition+"</span>");
            
         } else {
-            var i18n_none = jQuery.i18n.prop('i18n_none');
-            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_none'>"+i18n_none+"</span>");            
+            var i18n_all = jQuery.i18n.prop('i18n_all');
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_all'>"+i18n_all+"</span>");            
         }
 
         panel.doSearch();
@@ -1389,11 +1389,50 @@ function queryComputerPanel(divElement, options) {
         page = skip / limit;
         var expressionURL;
         var branch = options.edition;
-                if(options.release.length > 0 && options.release !== 'None'){
-                    branch = branch + "/" + options.release;
-                };
-        expressionURL = options.serverUrl + "/" + branch + "/concepts?module=900000000000207008&" + (panel.options.eclQueryFilter === "stated" ? "statedEcl" : "ecl")   + "=" + encodeURIComponent(strippedExpression) + "&offset=" + skip + "&limit=" + limit + "&term=" + (typeof optionalTermFilter !== 'undefined' ? optionalTermFilter : '');
-        console.log("queryURL " + expressionURL);
+        if(options.release.length > 0 && options.release !== 'None'){
+            branch = branch + "/" + options.release;
+        };
+
+        const FSN = '900000000000003001';
+        const SYNONYM = '900000000000013009';
+        const DEFINITION = '900000000000550004';
+        var descriptionTypes = [];
+        if (panel.options.typeSearchFilter && panel.options.typeSearchFilter.length !== 0 && panel.options.typeSearchFilter !== 'all') {
+            if(panel.options.typeSearchFilter ==='fsn'){
+                descriptionTypes.push(FSN);
+            }
+            else if (panel.options.typeSearchFilter ==='synonym') {
+                descriptionTypes.push(SYNONYM);
+            }
+            else if (panel.options.typeSearchFilter ==='definition') {
+                descriptionTypes.push(DEFINITION);
+            }
+            else {
+                // do nothing
+            }
+        } else {
+            descriptionTypes.push(FSN);
+            descriptionTypes.push(SYNONYM);
+            descriptionTypes.push(DEFINITION);
+        }
+
+        var params = "module=900000000000207008" + "&offset=" + skip + "&limit=" + limit;
+        params += (panel.options.eclQueryFilter === "stated" ? "&statedEcl" : "&ecl")   + "=" + encodeURIComponent(strippedExpression);
+        if (typeof optionalTermFilter !== 'undefined' && optionalTermFilter.length != 0) {
+            params += "&term=" + optionalTermFilter;
+        }
+        if (descriptionTypes.length != 0) {
+            $.each(descriptionTypes, function(i, type){
+                params += "&descriptionType=" + type;
+            });                            
+        }
+        if (panel.options.languageRefsetSearchFilter 
+            && panel.options.languageRefsetSearchFilter.length !== 0){                
+            $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
+                params += "&preferredOrAcceptableIn=" + languageRefsetId;
+            });
+        }
+        expressionURL = options.serverUrl + "/" + branch + "/concepts?" + params;
         if (xhrExecute != null && !onlyTotal)
             xhrExecute.abort();
         var xhrExecute2 = $.ajax({
@@ -1490,14 +1529,14 @@ function queryComputerPanel(divElement, options) {
             // done
             xhrExecute2 = null;
         }).fail(function(jqXHR) {
-            //console.log(xhrExecute2);
+            console.log(jqXHR);
             if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.computeResponse && jqXHR.responseJSON.computeResponse.message) {
                 $('#' + panel.divElement.id + '-outputBody').html("");
                 $('#' + panel.divElement.id + '-outputBody2').html("");
                 $("#" + panel.divElement.id + "-footer").html("");
                 $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-danger'>" + jqXHR.responseJSON.computeResponse.message + "</span>");
             } 
-            else if (jqXHR && jqXHR.status && jqXHR.status === 500) {
+            else if (jqXHR && jqXHR.status && (jqXHR.status === 500 || jqXHR.status === 422)) {
                 $('#' + panel.divElement.id + '-outputBody').html("");
                 $('#' + panel.divElement.id + '-outputBody2').html("");
                 $("#" + panel.divElement.id + "-footer").html("");
