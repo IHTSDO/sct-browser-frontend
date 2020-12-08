@@ -43,7 +43,12 @@
                                 {{else}}
                                     <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}" data-def-status="{{target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
                                 {{/if_eq}}
-                                {{target.defaultTerm}}</td>
+                                {{#if concreteValue.value}}
+                                    {{concreteValue.value}}
+                                {{else}}
+                                    {{target.defaultTerm}}
+                                {{/if}}
+                            </td>
                             <td>{{groupId}}</td>
                             {{#if_eq characteristicType "STATED_RELATIONSHIP"}}
                             <td><span class='i18n' data-i18n-id='i18n_stated'>{{i18n "i18n_stated" "Stated"}}</span>
@@ -100,7 +105,11 @@
                                         {{else}}
                                             <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}" data-def-status="{{target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
                                         {{/if_eq}}
-                                        {{target.defaultTerm}}
+                                        {{#if concreteValue.value}}
+                                            {{concreteValue.value}}
+                                        {{else}}
+                                            {{target.defaultTerm}}
+                                        {{/if}}
                                     </td>
                                     <td>{{groupId}}</td>
                                     <td><span class='i18n' data-i18n-id='i18n_stated'>{{i18n "i18n_stated" "Stated"}}</span>
@@ -166,7 +175,12 @@
                                     {{else}}
                                         <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}" data-def-status="{{target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
                                     {{/if_eq}}
-                                    {{target.defaultTerm}}</td>
+                                    {{#if concreteValue.value}}
+                                        {{concreteValue.value}}
+                                    {{else}}
+                                        {{target.defaultTerm}}
+                                    {{/if}}
+                                </td>
                                 <td>{{groupId}}</td>
                                 <td><span class='i18n' data-i18n-id='i18n_stated'>{{i18n "i18n_stated" "Stated"}}</span>
                                     <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="
@@ -230,7 +244,12 @@
                                     {{else}}
                                         <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}" data-def-status="{{target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
                                     {{/if_eq}}
-                                    {{target.defaultTerm}}</td>
+                                    {{#if concreteValue.value}}
+                                        {{concreteValue.value}}
+                                    {{else}}
+                                        {{target.defaultTerm}}
+                                    {{/if}}
+                                </td>
                                 <td>{{groupId}}</td>
                                 <td><span class='i18n' data-i18n-id='i18n_stated'>{{i18n "i18n_stated" "Stated"}}</span>
                                     <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="
@@ -275,7 +294,12 @@
                             {{else}}
                                 <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{target.conceptId}}" data-term="{{target.defaultTerm}}" data-def-status="{{target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
                             {{/if_eq}}
-                            {{target.defaultTerm}}</td>
+                            {{#if concreteValue.value}}
+                                {{concreteValue.value}}
+                            {{else}}
+                                {{target.defaultTerm}}
+                            {{/if}}
+                        </td>
                         <td><span class='i18n' data-i18n-id='i18n_additional'>{{i18n "i18n_additional" "Additional"}}</span>
                             <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="
                                             <table border='1'><tr><th style='padding: 3px;'>TypeId</th><th style='padding: 3px;'>TargetId</th><th style='padding: 3px;'>Modifier</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>
