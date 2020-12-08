@@ -515,7 +515,7 @@
 
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
-                            options.defaultLanguage = getDefaultLanguage(options.editionShortname, parsedLanguages);
+                            options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                                                         
                             switchToFullHeight(404684003, 138875005);
                             
@@ -666,7 +666,7 @@
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
                             parsedLanguages = parsedLanguages.slice(0, -1);
-                            options.defaultLanguage = getDefaultLanguage(options.editionShortname, parsedLanguages);
+                            options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                             break;
                         }
                     }                    
@@ -710,7 +710,7 @@
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
                             parsedLanguages = parsedLanguages.slice(0, -1);
-                            options.defaultLanguage = getDefaultLanguage(options.editionShortname, parsedLanguages);
+                            options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                             break;
                         }
                     }
@@ -798,7 +798,7 @@
                             options.editionShortname = release.shortName;
                             $("#editionLabel").html(release.name + (options.dailyBuildBrowser ? " DAILY BUILD" : ' Community Content'));
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
-                            options.defaultLanguage = getDefaultLanguage(options.editionShortname, parsedLanguages);
+                            options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
 
                             reloadCurrentPerspective();
                             
@@ -841,7 +841,7 @@
                                 options.languageObject = release.languages;
                                 options.editionShortname = release.shortName;                                
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
-                                options.defaultLanguage = getDefaultLanguage(options.editionShortname, parsedLanguages);
+                                options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                                 let ui_language = release.defaultLanguageCode ? release.defaultLanguageCode : parsedLanguages.substr(0, 2);
                                 var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language);
                                 QueryString = queryString();
@@ -889,8 +889,8 @@
             }            
         }
 
-        function getDefaultLanguage(editionShortname, parsedLanguages) {
-            return editionShortname === "SNOMEDCT-NZ"? "en" : parsedLanguages.substr(0, 2);
+        function getDefaultLanguage(defaultLanguageCode, parsedLanguages) {
+            return typeof defaultLanguageCode !== 'undefined' ? defaultLanguageCode : parsedLanguages.substr(0, 2);
         }
 
         function initializeTSBrowser() {
