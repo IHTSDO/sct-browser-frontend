@@ -24,6 +24,19 @@ and open the template in the editor.
     /* word-break:normal; */
 }
 
+.concrete-domain
+{
+    position: relative;
+    border: 2px solid #333;
+    background-color: #BAEEC8;
+    padding: 10px;
+    text-align: left;
+    display: inline-block;
+    border-radius: 0px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: small;
+}
+
 .sct-defined-concept
 {
     position: relative;
