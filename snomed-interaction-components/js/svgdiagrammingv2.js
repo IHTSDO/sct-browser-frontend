@@ -40,6 +40,8 @@ function drawSctBox(svg, x, y, label, sctid, cssClass) {
 
     if (cssClass == "sct-primitive-concept") {
         rect = svg.rect(x, y, textWidth + widthPadding, textHeight + heightpadding, {id: 'rect'+idSequence, fill: '#99ccff', stroke: '#333', strokeWidth: 2});
+    } else if (cssClass == "concrete-domain") {
+        rect = svg.rect(x, y, textWidth + widthPadding, textHeight + heightpadding, {id: 'rect'+idSequence, fill: '#BAEEC8', stroke: '#333', strokeWidth: 2});
     } else if (cssClass == "sct-defined-concept") {
         rect = svg.rect(x-2, y-2, textWidth + widthPadding + 4, textHeight + heightpadding + 4, {fill: 'white', stroke: '#333', strokeWidth: 1});
         var innerRect = svg.rect(x, y, textWidth + widthPadding, textHeight + heightpadding, {id: 'rect'+idSequence, fill: '#ccccff', stroke: '#333', strokeWidth: 1});
