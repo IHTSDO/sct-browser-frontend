@@ -34,7 +34,7 @@ function drawSctBox(svg, x, y, label, sctid, cssClass) {
     var widthPadding = 20;
     var heightpadding = 25;
     var concreteWidthPadding = 50; 
-    var concreteHeightPadding = 25;
+    var concreteHeightPadding = 24;
 
     if (!sctid || !label) {
         heightpadding = 15;
@@ -63,7 +63,7 @@ function drawSctBox(svg, x, y, label, sctid, cssClass) {
     }
 
     if(cssClass == "concrete-domain"){
-        svg.text(x + 1 + (((textWidth + concreteWidthPadding)/2) - (textWidth/2)), y + 10 + (((textHeight + concreteHeightPadding)/2) - (textHeight/2)), label, {fontFamily: fontFamily, fontSize: '12', fill: 'black'});
+        svg.text(x + 2 + (((textWidth + concreteWidthPadding)/2) - (textWidth/2)), y + 11 + (((textHeight + concreteHeightPadding)/2) - (textHeight/2)), label, {fontFamily: fontFamily, fontSize: '12', fill: 'black'});
     } else if (sctid && label) {
         svg.text(x + 10, y + 16, sctid.toString(), {fontFamily: fontFamily, fontSize: '10', fill: 'black'});
         svg.text(x + 10, y + 31, label, {fontFamily: fontFamily, fontSize: '12', fill: 'black'});
