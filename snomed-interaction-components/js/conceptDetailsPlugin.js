@@ -1194,9 +1194,9 @@ function conceptDetails(divElement, conceptId, options) {
                     loopGroup.forEach(function(loopRel) {
                         if (loopRel.type.conceptId == "127489000") {
                             loopIngredient.ingredient = loopRel.target;
-                        } else if (loopRel.type.conceptId == "732946004") {
+                        } else if (loopRel.type.conceptId == "732946004" || loopRel.type.conceptId == "3311482005") {
                             loopIngredient.denominatorValue = loopRel;
-                        } else if (loopRel.type.conceptId == "732944001") {
+                        } else if (loopRel.type.conceptId == "732944001" || loopRel.type.conceptId == "3311481003") {
                             loopIngredient.numeratorValue = loopRel;
                         } else if (loopRel.type.conceptId == "732943007") {
                             loopIngredient.boss = loopRel.target;
@@ -1214,6 +1214,7 @@ function conceptDetails(divElement, conceptId, options) {
                 };
                 $('#product-details-' + panel.divElement.id).html(
                     JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/product.hbs"](context));
+                console.log(context.productData);
             } else {
                 if ($("#product-details-tab").hasClass("active")) {
                     $('#details-tabs-' + panel.divElement.id + ' a:first').tab('show');
