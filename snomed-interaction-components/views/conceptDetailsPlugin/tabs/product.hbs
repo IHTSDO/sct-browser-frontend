@@ -52,14 +52,14 @@
             </td>
             <td>
                 {{#if numeratorValue}}
-                    {{#if_eq numeratorValue.target.definitionStatus "PRIMITIVE"}}
-                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{numeratorValue.target.module}}" data-concept-id="{{numeratorValue.target.conceptId}}" data-term="{{numeratorValue.target.defaultTerm}}" data-def-status="{{numeratorValue.target.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
-                    {{else}}
-                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{numeratorValue.target.module}}" data-concept-id="{{numeratorValue.target.conceptId}}" data-term="{{numeratorValue.target.defaultTerm}}" data-def-status="{{numeratorValue.target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
-                    {{/if_eq}}
                     {{#if numeratorValue.concreteValue.value}}
                         {{numeratorValue.concreteValue.value}}
                     {{else}}
+                        {{#if_eq numeratorValue.target.definitionStatus "PRIMITIVE"}}
+                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{numeratorValue.target.module}}" data-concept-id="{{numeratorValue.target.conceptId}}" data-term="{{numeratorValue.target.defaultTerm}}" data-def-status="{{numeratorValue.target.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                        {{else}}
+                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{numeratorValue.target.module}}" data-concept-id="{{numeratorValue.target.conceptId}}" data-term="{{numeratorValue.target.defaultTerm}}" data-def-status="{{numeratorValue.target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                        {{/if_eq}}
                         {{removeSemtag numeratorValue.target.defaultTerm}}
                     {{/if}}
                 {{/if}}
@@ -76,14 +76,14 @@
             </td>
             <td>
                 {{#if denominatorValue}}
-                    {{#if_eq denominatorValue.target.definitionStatus "PRIMITIVE"}}
-                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{denominatorValue.target.module}}" data-concept-id="{{denominatorValue.target.conceptId}}" data-term="{{denominatorValue.target.defaultTerm}}" data-def-status="{{denominatorValue.target.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
-                    {{else}}
-                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{denominatorValue.target.module}}" data-concept-id="{{denominatorValue.target.conceptId}}" data-term="{{denominatorValue.target.defaultTerm}}" data-def-status="{{denominatorValue.target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
-                    {{/if_eq}}
                     {{#if denominatorValue.concreteValue.value}}
                         {{denominatorValue.concreteValue.value}}
                     {{else}}
+                        {{#if_eq denominatorValue.target.definitionStatus "PRIMITIVE"}}
+                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{denominatorValue.target.module}}" data-concept-id="{{denominatorValue.target.conceptId}}" data-term="{{denominatorValue.target.defaultTerm}}" data-def-status="{{denominatorValue.target.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                        {{else}}
+                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{denominatorValue.target.module}}" data-concept-id="{{denominatorValue.target.conceptId}}" data-term="{{denominatorValue.target.defaultTerm}}" data-def-status="{{denominatorValue.target.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                        {{/if_eq}}
                         {{removeSemtag denominatorValue.target.defaultTerm}}
                     {{/if}}
                 {{/if}}
