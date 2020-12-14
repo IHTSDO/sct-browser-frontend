@@ -133,6 +133,7 @@
             searchMode: "partialMatching",
             searchLang: "english",
             diagrammingMarkupEnabled: false,
+            disableTaxonomyInitialLoad: true,
             statusSearchFilter: "activeOnly",
             highlightByEffectiveTime: "false",         
             dailyBuildBrowser: false,
@@ -148,7 +149,7 @@
             "900000000000508004": "GB",
             "900000000000509007": "US",
             "450828004": "ES",
-            "5641000179103": "ES",
+            "5641000179103": "ES-UY",
             "554461000005103": "DA",
             "46011000052107": "SV",
             "32570271000036106": "AU",            
@@ -156,7 +157,8 @@
             "31000146106": "NL",
             "31000172101": "NL",
             "15551000146102": "NL-PF",
-            "61000202103": "NO",
+            "61000202103": "NO-NB",
+            "91000202106": "NO-NN",
             "21000172104": "FR",
             "21000220103": "IE",
             "71000181105": "ET",
@@ -1409,6 +1411,14 @@
             cdPanel1.setupCanvas();
             cdPanel2.subscribe(spa);
             cdPanel2.setupCanvas();
+
+            loadLanguageRefsets().then(function(result) {
+                cdPanel1.setLangugeRefsets(result.languageRefsets);
+                cdPanel2.setLangugeRefsets(result.languageRefsets);
+                spa.setLanguageRefsets(result.languageRefsets);
+                tpt.setLanguageRefsets(result.languageRefsets);
+            });
+
             $('#spliter2').split({
                 orientation: 'vertical',
                 limit: 20,
@@ -1518,7 +1528,7 @@
             $("#responsive-perspective").css({
                 "display": "none"
             });            
-            options.disableTaxonomyInitialLoad = false;
+            
             $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_hier_perspective'>"+jQuery.i18n.prop('i18n_comp_hier_perspective')+"</span>");
             var tx1 = new taxonomyPanel(document.getElementById("ct-tx1_canvas"), txValue1, options);
             var tx2 = new taxonomyPanel(document.getElementById("ct-tx2_canvas"), txValue2, options);
@@ -1531,7 +1541,9 @@
 
             loadLanguageRefsets().then(function(result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);                
-                spa.setLanguageRefsets(result.languageRefsets);                
+                spa.setLanguageRefsets(result.languageRefsets);
+                tx1.setLanguageRefsets(result.languageRefsets);
+                tx2.setLanguageRefsets(result.languageRefsets);                
             });
 
             $('#comparing-taxonomies-wrapper').split({
@@ -1614,6 +1626,7 @@
                 spa.setLanguageRefsets(result.languageRefsets);
                 ref.renderRefsets(result.referenceSets);
                 qpa.setLanguageRefsets(result.languageRefsets);
+                tpt.setLanguageRefsets(result.languageRefsets);
             });            
             
             if (window.screen.width > 1500) {
@@ -1678,7 +1691,7 @@
             $("#responsive-perspective").css({
                 "display": "block"
             });    
-            options.disableTaxonomyInitialLoad = false;        
+                   
             $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_responsive'>"+jQuery.i18n.prop('i18n_responsive')+"</span>");
             var tpt = new taxonomyPanel(document.getElementById("rp-taxonomy_canvas"), txValue1, options);
             var spa = new searchPanel(document.getElementById("rp-search_canvas"), options);
@@ -1692,7 +1705,8 @@
             loadLanguageRefsets().then(function(result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);
                 cdPanel2.setLangugeRefsets(result.languageRefsets);                
-                spa.setLanguageRefsets(result.languageRefsets);                
+                spa.setLanguageRefsets(result.languageRefsets);
+                tpt.setLanguageRefsets(result.languageRefsets);                
             });
 
             $('#spliter2').split({

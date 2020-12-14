@@ -395,13 +395,13 @@ function taxonomyPanel(divElement, conceptId, options) {
                     if(!options.serverUrl.includes('snowowl')){
                        $.ajaxSetup({
                           headers : {
-                            'Accept-Language': options.languages
+                            'Accept-Language': panel.options.acceptLanguageValue
                           }
                         });
                     };
                     $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {
                         result.forEach(function(item) {
-                            if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
+                            if(panel.options.showPreferredTerm){
                                 item.defaultTerm = item.pt.term;
                             }
                             else{
@@ -472,13 +472,13 @@ function taxonomyPanel(divElement, conceptId, options) {
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
-                'Accept-Language': options.languages
+                'Accept-Language': panel.options.acceptLanguageValue
               }
             });
         };
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {}).done(function(result) {
             result.forEach(function(item) {
-                if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
+                if(panel.options.showPreferredTerm){
                     item.defaultTerm = item.pt.term;
                 }
                 else{
@@ -570,7 +570,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
-                'Accept-Language': options.languages
+                'Accept-Language': panel.options.acceptLanguageValue
               }
             });
         };
@@ -674,14 +674,14 @@ function taxonomyPanel(divElement, conceptId, options) {
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
-                'Accept-Language': options.languages
+                'Accept-Language': panel.options.acceptLanguageValue
               }
             });
         };
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {
             $.each(result, function(i, item) {
                 if (typeof item.defaultTerm == "undefined") {
-                    if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
+                    if(panel.options.showPreferredTerm){
                         item.defaultTerm = item.pt.term;
                     }
                     else{
@@ -695,7 +695,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 if(!options.serverUrl.includes('snowowl')){
                    $.ajaxSetup({
                       headers : {
-                        'Accept-Language': options.languages
+                        'Accept-Language': panel.options.acceptLanguageValue
                       }
                     });
                 };
@@ -704,7 +704,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                     urlArgs = urlArgs + '&expand=fsn()';
                 }
                 $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + urlArgs, function(res) {
-                    if(res.pt && res.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && res.fsn.lang != options.defaultLanguage){
+                    if(panel.options.showPreferredTerm){
                         res.defaultTerm = res.pt.term;
                     }
                     else{
@@ -719,6 +719,65 @@ function taxonomyPanel(divElement, conceptId, options) {
         }).fail(function() {
             $("#" + panel.divElement.id + "-panelBody").html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
         });
+    }
+
+    this.setLanguageRefsets = function(languageRefsets) {
+        panel.initialiseLanguageDropdown(languageRefsets);
+    }
+
+    panel.initialiseLanguageDropdown = function(languageRefsets) {
+        const usFSN = {id: '900000000000509007-fsn', label: 'FSN in US', dialectId: "900000000000509007"};
+        const usPT = {id: '900000000000509007-pt', label: 'PT in US', dialectId: "900000000000509007"};
+        var i18n_language = jQuery.i18n.prop('i18n_language');
+        var languageFilter = [];
+        languageFilter.push(usFSN);
+        languageFilter.push(usPT);
+        languageRefsets.forEach(function(languageRefset) {
+            if (languageRefset.conceptId !== '900000000000509007' && languageRefset.conceptId !== '900000000000508004') {
+                var dialect = {id: languageRefset.conceptId, label: 'PT in ' + panel.options.languageNameOfLangRefset[languageRefset.conceptId], dialectId: languageRefset.conceptId};
+                languageFilter.push(dialect);
+            }            
+        });
+        languageFilter.forEach(function(language) {        
+            var li = "<li><button class='btn btn-link' id='" + panel.divElement.id + "-txLangage-" + language['id'] + "'><span>" + language['label'] + "</span></button></li>";
+            $("#" + panel.divElement.id + "-txLanguageMenu").append(li);
+            
+            $("#" + panel.divElement.id + "-txLangage-" + language['id']).unbind("click");
+            $("#" + panel.divElement.id + "-txLangage-" + language['id']).click(function(event) {                
+                $("#" + panel.divElement.id + "-txLanguageSwitcherLabel").html("<span><span class='i18n' data-i18n-id='i18n_language'>" + i18n_language + "</span>: " + language['label'] + "</span>");
+                panel.options.acceptLanguageValue = panel.getAcceptLanguage(language.dialectId);
+                panel.options.showPreferredTerm = language['id'] !== '900000000000509007-fsn';
+                panel.updateCanvas();
+            });
+        });
+
+        var defaultLanguage;
+        panel.options.showPreferredTerm = true;
+        if (languageFilter.length === 2) {
+            defaultLanguage = languageFilter[0];
+            panel.options.showPreferredTerm = false;
+        } else if (languageFilter.length === 3) {
+            defaultLanguage = languageFilter[2];
+        } else {
+            defaultLanguage = languageFilter[1];
+        }
+        
+        $("#" + panel.divElement.id + "-txLanguageSwitcherLabel").html("<span><span class='i18n' data-i18n-id='i18n_language'>" + i18n_language + "</span>: " + defaultLanguage['label'] + "</span>");
+        panel.options.acceptLanguageValue = panel.getAcceptLanguage(defaultLanguage['dialectId']);        
+        panel.updateCanvas();
+    }
+
+    panel.getAcceptLanguage = function(dialectId) {
+        if (dialectId !== "900000000000509007") {
+            if (panel.options.languageNameOfLangRefset[dialectId].includes('-')) {
+                var strArray = panel.options.languageNameOfLangRefset[dialectId].split('-');
+                return strArray[0].toLowerCase() + '-' + strArray[1].toUpperCase() + '-x-' + dialectId + ';q=0.8,en-US;q=0.5';
+            }
+
+            return panel.options.languageNameOfLangRefset[dialectId] + '-' + panel.options.languageNameOfLangRefset[dialectId].toUpperCase() + '-x-' + dialectId + ';q=0.8,en-US;q=0.5';
+        } else {
+            return "en-us;q=0.8,en-gb;q=0.5";
+        }        
     }
 
     // Subscription methods
