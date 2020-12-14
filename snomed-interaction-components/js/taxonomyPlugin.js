@@ -181,12 +181,7 @@ function taxonomyPanel(divElement, conceptId, options) {
             var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');            
             var i18n_on = jQuery.i18n.prop('i18n_on');            
             $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_on'>"+i18n_on+"</span>");
-            if (panel.default && panel.default.conceptId) {
-                panel.setToConcept(panel.default.conceptId);
-            }
-            else {
-                panel.setToConcept(138875005); // root concept
-            }
+            panel.reloadCurrentConcept();
             
         });
 
@@ -198,36 +193,21 @@ function taxonomyPanel(divElement, conceptId, options) {
             var i18n_descendants_count = jQuery.i18n.prop('i18n_descendants_count');           
             var i18n_off = jQuery.i18n.prop('i18n_off');            
             $("#" + panel.divElement.id + '-txViewLabel2').html("<span class='i18n' data-i18n-id='i18n_descendants_count'>"+i18n_descendants_count+"</span>" + ": " + "<span class='i18n' data-i18n-id='i18n_off'>"+i18n_off+"</span>");
-            if (panel.default && panel.default.conceptId) {
-                panel.setToConcept(panel.default.conceptId);
-            }
-            else {
-                panel.setToConcept(138875005); // root concept
-            }            
+            panel.reloadCurrentConcept();           
         });
 
         $("#" + panel.divElement.id + "-inferredViewButton").click(function(event) {
             panel.options.selectedView = 'inferred';
             var i18n_inferred_view = jQuery.i18n.prop('i18n_inferred_view');            
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_inferred_view'>"+i18n_inferred_view+"</span>");
-            if (panel.default && panel.default.conceptId) {
-                panel.setToConcept(panel.default.conceptId);
-            }
-            else {
-                panel.setToConcept(138875005); // root concept
-            }            
+            panel.reloadCurrentConcept();          
         });
 
         $("#" + panel.divElement.id + "-statedViewButton").click(function(event) {
             panel.options.selectedView = 'stated';
             var i18n_stated_view = jQuery.i18n.prop('i18n_stated_view');
             $("#" + panel.divElement.id + '-txViewLabel').html("<span class='i18n' data-i18n-id='i18n_stated_view'>"+i18n_stated_view+"</span>");
-            if (panel.default && panel.default.conceptId) {
-                panel.setToConcept(panel.default.conceptId);
-            }
-            else {
-                panel.setToConcept(138875005); // root concept
-            }
+            panel.reloadCurrentConcept();
             
         });
 
@@ -747,7 +727,8 @@ function taxonomyPanel(divElement, conceptId, options) {
                 $("#" + panel.divElement.id + "-txLanguageSwitcherLabel").html("<span><span class='i18n' data-i18n-id='i18n_language'>" + i18n_language + "</span>: " + language['label'] + "</span>");
                 panel.options.acceptLanguageValue = panel.getAcceptLanguage(language.dialectId);
                 panel.options.showPreferredTerm = language['id'] !== '900000000000509007-fsn';
-                panel.updateCanvas();
+                
+                panel.reloadCurrentConcept();
             });
         });
 
@@ -778,6 +759,15 @@ function taxonomyPanel(divElement, conceptId, options) {
         } else {
             return "en-us;q=0.8,en-gb;q=0.5";
         }        
+    }
+
+    panel.reloadCurrentConcept = function() {
+        if (panel.default && panel.default.conceptId) {
+            panel.setToConcept(panel.default.conceptId);
+        }
+        else {
+            panel.setToConcept(138875005); // root concept
+        }
     }
 
     // Subscription methods
