@@ -61,6 +61,10 @@ function taxonomyPanel(divElement, conceptId, options) {
             //            $("#" + panel.divElement.id + "-taxonomyConfigBar").slideToggle('slow');
         });
 
+        $("#" + panel.divElement.id + "-clearConceptButton").click(function(event) {
+            panel.setToConcept(138875005);
+        });
+
         if (typeof panel.options.closeButton != "undefined" && panel.options.closeButton == false) {
             $("#" + panel.divElement.id + "-closeButton").hide();
         }
@@ -388,8 +392,14 @@ function taxonomyPanel(divElement, conceptId, options) {
                                 item.defaultTerm = item.fsn.term;
                             }
                         });
-                        console.log(result);
                     }).done(function(result) {
+                        if (selectedId === '138875005') {
+                            $("#" + panel.divElement.id + "-selectedConceptSection").hide();
+                        } else {
+                            $("#" + panel.divElement.id + "-selectedConceptTerm").text(selectedLabel);
+                            $("#" + panel.divElement.id + "-selectedConceptSection").show();
+                        }
+
                         panel.setupParents(result, { conceptId: selectedId, defaultTerm: selectedLabel, definitionStatus: definitionStatus, module: selectedModule, descendantCount: descendantCount});
                     }).fail(function() {});
                 }
@@ -646,6 +656,7 @@ function taxonomyPanel(divElement, conceptId, options) {
     }
 
     this.setToConcept = function(conceptId, term, definitionStatus, module, descendantCount) {
+        $("#" + panel.divElement.id + "-selectedConceptSection").hide();
         $("#" + panel.divElement.id + "-panelBody").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
@@ -689,6 +700,13 @@ function taxonomyPanel(divElement, conceptId, options) {
                     }
                     else{
                         res.defaultTerm = res.fsn.term;
+                    }
+                    
+                    if (conceptId === 138875005) {
+                        $("#" + panel.divElement.id + "-selectedConceptSection").hide();
+                    } else {
+                        $("#" + panel.divElement.id + "-selectedConceptTerm").text(res.defaultTerm);
+                        $("#" + panel.divElement.id + "-selectedConceptSection").show();
                     }
                     
                     panel.setupParents(result, { conceptId: conceptId, defaultTerm: res.defaultTerm, definitionStatus: res.definitionStatus, module: module, descendantCount: res.descendantCount });

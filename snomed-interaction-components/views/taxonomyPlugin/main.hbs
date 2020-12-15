@@ -37,6 +37,16 @@
             </li>
         </ul>
     </nav></div>
+    <div class="row" id="{{divElementId}}-selectedConceptSection" style="margin: 0px">
+        <div class="col-md-11">
+            <h4><span id="{{divElementId}}-selectedConceptTerm"></span></h4>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-link" style="padding-top: 2px; padding-bottom: 10px; padding-left: 0px; padding-right: 0px; outline: none">
+                <i class="glyphicon glyphicon-remove pull-right" id="{{divElementId}}-clearConceptButton"></i>
+            </button>
+        </div>
+    </div>
     <div ondrop="dropT(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class='panel-body' style='height:100%' id='{{divElementId}}-panelBody'>
     </div>
 </div>
