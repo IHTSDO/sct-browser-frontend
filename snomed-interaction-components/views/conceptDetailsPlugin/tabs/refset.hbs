@@ -1,5 +1,17 @@
-<div style="margin: 10px;">
-    <a class="btn btn-primary btn-sm pull-right i18n" href="https://mapping.ihtsdotools.org/#/record/conceptId/{{firstMatch.conceptId}}/autologin?refSetId=P447562003" target="_blank" role="button" data-i18n-id='i18n_open_maps_for_concept'>{{i18n "i18n_open_maps_for_concept" "Open maps for this concept"}}</a>
+<div style="margin: 10px;" class="row">
+    <div class="col-md-9" style="padding-left: 0px;">
+        <h4>
+            {{#if_undefined firstMatch.fsn.term}}
+                {{firstMatch.conceptId }} |{{firstMatch.fsn}}|
+            {{else}}
+                {{firstMatch.conceptId }} |{{firstMatch.defaultTerm }}|
+            {{/if_undefined}}
+            </span>
+        </h4>
+    </div>
+    <div class="col-md-3" style="padding-right: 0px;">
+        <a class="btn btn-primary btn-sm pull-right i18n" href="https://mapping.ihtsdotools.org/#/record/conceptId/{{firstMatch.conceptId}}/autologin?refSetId=P447562003" target="_blank" role="button" data-i18n-id='i18n_open_maps_for_concept'>{{i18n "i18n_open_maps_for_concept" "Open maps for this concept"}}</a>
+    </div>    
 </div>
 
 <table class='table table-hover'>
