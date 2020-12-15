@@ -773,18 +773,8 @@ function queryComputerPanel(divElement, options) {
             var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
             var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
             $('#' + panel.divElement.id + '-computeInferredButton2').addClass("disabled");
-            /*  $.post(options.serverUrl.replace("snomed", "expressions/") + "parse/brief", { expression: expression }).done(function(res) {
-                  //console.log(res);
-                  if (res.validation) { */
-            panel.execute("inferred", expression, true, null, optionalTermFilter);
-            /* } else {
-                      alertEvent("Invalid Expression", "error")
-                  }
-              }).fail(function(err) {
-                  //console.log(err);
-              }).always(function() { */
+            panel.execute("inferred", expression, true, null, optionalTermFilter);           
             $('#' + panel.divElement.id + '-computeInferredButton2').removeClass("disabled");
-            // });
         });
 
         $('#' + panel.divElement.id + '-computeInferredButton').unbind();
@@ -862,6 +852,20 @@ function queryComputerPanel(divElement, options) {
                 $("#" + panel.divElement.id + "-footer").html("");
             }
         });
+
+        $('#' + panel.divElement.id + '-ExpText').keyup(function() {
+            clearTimeout(thread);
+            thread = setTimeout(function() {
+                var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
+                if (typeof panel.options.setEcl !== 'undefined') {
+                    panel.options.setEcl(expression);
+                }
+            }, 500);
+        });
+
+        if (panel.options.ecl && panel.options.ecl.length !== 0) {
+            $('#' + panel.divElement.id + '-ExpText').val(panel.options.ecl);
+        }
     };
 
     panel.updateGrammarModal = function(fullSyntax) {
@@ -883,9 +887,9 @@ function queryComputerPanel(divElement, options) {
     panel.setUpPanel();
 
     this.doSearch = function() {
-        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
-        var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
-        if (expression) {
+        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());        
+        var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());        
+        if (expression) {            
             var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
             panel.execute("inferred", expression, true, null, optionalTermFilter);
         }
