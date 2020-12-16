@@ -62,7 +62,8 @@ function taxonomyPanel(divElement, conceptId, options) {
         });
 
         $("#" + panel.divElement.id + "-clearConceptButton").click(function(event) {
-            panel.setToConcept(138875005);
+            panel.default.conceptId = 138875005;
+            panel.setToConcept(panel.default.conceptId);
         });
 
         if (typeof panel.options.closeButton != "undefined" && panel.options.closeButton == false) {
