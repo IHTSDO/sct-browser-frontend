@@ -177,6 +177,15 @@ function queryComputerPanel(divElement, options) {
             clearTimeout(thread);
             var $this = $(this);
             thread = setTimeout(function() {
+                var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
+                if (optionalTermFilter.length !== 0) {
+                    $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').removeClass('disabled');
+                } else {
+                    panel.options.languageRefsetSearchFilter = [];
+                    $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect("clearSelection");
+                    $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
+                }
+                
                 panel.doSearch();
             }, 500);
         });
@@ -915,7 +924,7 @@ function queryComputerPanel(divElement, options) {
             selectedClass: '',
             enableHTML: true,
             templates: {
-                button: '<button type="button" style="white-space: normal;" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+                button: '<button type="button" id="' + panel.divElement.id + '-filterLanguageRefsetOptBtn"  style="white-space: normal;" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
             },
             buttonText: function(options, select) {
                 var i18n_language_refsets = jQuery.i18n.prop('i18n_language_refsets');                        
@@ -955,7 +964,8 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-filterLanguageRefsetOpt option').each(function() {
             $(this).attr('label', panel.options.languageNameOfLangRefset[$(this).val()]);
         });
-        $('#' + panel.divElement.id + '-filterLanguageRefsetOptHidden').hide()
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOptHidden').hide();
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
     };
 
     this.updateTypeFilterLabel = function() {        
