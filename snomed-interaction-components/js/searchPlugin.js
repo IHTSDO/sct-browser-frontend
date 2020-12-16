@@ -679,6 +679,7 @@ function searchPanel(divElement, options) {
                                 $('#' + panel.divElement.id + '-searchBar4').html("");
                                 $('#' + panel.divElement.id + '-searchBar5').html("");
                                 $('#' + panel.divElement.id + '-searchBar6').html("");
+                                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
                             }
                             else{
                                 Handlebars.registerHelper('if_eq', function(a, b, opts) {
@@ -773,6 +774,7 @@ function searchPanel(divElement, options) {
                             $('#' + panel.divElement.id + '-searchBar4').html("");
                             $('#' + panel.divElement.id + '-searchBar5').html("");
                             $('#' + panel.divElement.id + '-searchBar6').html("");
+                            $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
                             xhr = null;
                         });
                     } else if (t.substr(-2, 1) == "1") {
