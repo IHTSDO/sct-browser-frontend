@@ -41,14 +41,27 @@
     {{#each productData.ingredients}}
         <tr>
             <td>
-                {{#if_eq ingredient.definitionStatus "PRIMITIVE"}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{ingredient.module}}" data-concept-id="{{ingredient.conceptId}}" data-term="{{ingredient.defaultTerm}}" data-def-status="{{ingredient.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
-                {{else}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{ingredient.module}}" data-concept-id="{{ingredient.conceptId}}" data-term="{{ingredient.defaultTerm}}" data-def-status="{{ingredient.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
-                {{/if_eq}}
-                {{ingredient.defaultTerm}}
-                <br>
-                &nbsp;&nbsp;&nbsp;<span class="text-muted"><em>{{boss.defaultTerm}}</em></span>
+                {{#if ingredient}}
+                    {{#if_eq ingredient.definitionStatus "PRIMITIVE"}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{ingredient.module}}" data-concept-id="{{ingredient.conceptId}}" data-term="{{ingredient.defaultTerm}}" data-def-status="{{ingredient.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                    {{else}}
+                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{ingredient.module}}" data-concept-id="{{ingredient.conceptId}}" data-term="{{ingredient.defaultTerm}}" data-def-status="{{ingredient.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{ingredient.defaultTerm}}
+                {{/if}}
+                {{#if boss}}
+                    {{#if ingredient}}
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><em>{{boss.defaultTerm}}</em></span>
+                    {{else}}
+                        {{#if_eq boss.definitionStatus "PRIMITIVE"}}
+                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{boss.module}}" data-concept-id="{{boss.conceptId}}" data-term="{{boss.defaultTerm}}" data-def-status="{{boss.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
+                        {{else}}
+                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{boss.module}}" data-concept-id="{{boss.conceptId}}" data-term="{{boss.defaultTerm}}" data-def-status="{{boss.definitionStatus}}"><span class="badge alert-warning">&equiv;</span></a>&nbsp;&nbsp;
+                        {{/if_eq}}
+                        {{boss.defaultTerm}}
+                    {{/if}}                    
+                {{/if}}
             </td>
             <td>
                 {{#if numeratorValue}}
