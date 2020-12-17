@@ -10,9 +10,14 @@ var e_pipe = '<span class="exp-pipes">|</span>';
 
 var panel = {};
 
-var referenceToExpression = function(conceptReference) {
-    return conceptReference.conceptId + " " + e_pipe + "<span class='exp-term'>" +
-        conceptReference.defaultTerm + "</span>" + e_pipe;
+var referenceToExpression = function(conceptReference, concrete) {
+    if(!concrete){
+        return conceptReference.conceptId + " " + e_pipe + "<span class='exp-term'>" +
+            conceptReference.defaultTerm + "</span>" + e_pipe;
+    }
+    else{
+        return conceptReference;
+    }
 };
 
 var conceptToPostCoordinatedExpression = function(concept, relsProperty, div, options) {
@@ -31,9 +36,9 @@ var conceptToPostCoordinatedExpression = function(concept, relsProperty, div, op
             if (rel.active == true && rel.type.conceptId == "116680003") {
                 if (!firstParent) {
                     expression += " " + e_plus + " <br>";
-                    expression += tab + referenceToExpression(rel.target);
+                    expression += tab + referenceToExpression(rel.target, false);
                 } else {
-                    expression += referenceToExpression(rel.target);
+                    expression += referenceToExpression(rel.target, false);
                 }
                 firstParent = false;
 
@@ -68,7 +73,12 @@ var conceptToPostCoordinatedExpression = function(concept, relsProperty, div, op
                     expression += "&nbsp;&nbsp;";
                 }
                 firstInGroup = false;
-                expression += referenceToExpression(rel.type) + " " + e_equals + " " + referenceToExpression(rel.target);
+                if(rel.concreteValue){
+                    expression += referenceToExpression(rel.type) + " " + e_equals + " " + referenceToExpression(rel.concreteValue.value, true);
+                }
+                else{
+                    expression += referenceToExpression(rel.type) + " " + e_equals + " " + referenceToExpression(rel.target, false);
+                }
             });
             if (group != 0) {
                 expression += " " + e_closeCurlyBraces;
