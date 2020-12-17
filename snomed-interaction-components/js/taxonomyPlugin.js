@@ -587,7 +587,14 @@ function taxonomyPanel(divElement, conceptId, options) {
                     if (countryIcons[parent.module]) {
                         parentLiHtml = parentLiHtml + "<div class='phoca-flagbox' style='width:33px;height:33px'><span class='phoca-flag " + countryIcons[parent.module] + "'></span></div> ";
                     }
-                    parentLiHtml = parentLiHtml + '<a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"><span class="treeLabel selectable-row" data-concept-id="' + parent.conceptId + '" data-term="' + parent.fsn.term + '"> ' + parent.fsn.term + '</span></a>';
+                    var defaultTerm = "";
+                    if(panel.options.showPreferredTerm){
+                        defaultTerm = parent.pt.term;
+                    }
+                    else{
+                        defaultTerm = parent.fsn.term;
+                    }
+                    parentLiHtml = parentLiHtml + '<a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"><span class="treeLabel selectable-row" data-concept-id="' + parent.conceptId + '" data-term="' + parent.fsn.term + '"> ' + defaultTerm + '</span></a>';
                     parentLiHtml = parentLiHtml + "</li>";
                     parentsStrs.push(parentLiHtml);
                     if (firstParent == "empty") {
@@ -678,8 +685,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                     }
                     else{
                         item.defaultTerm = item.fsn.term;
-                    }
-                    
+                    }                    
                 }
             });
         }).done(function(result) {            
