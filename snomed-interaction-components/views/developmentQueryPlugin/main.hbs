@@ -101,10 +101,12 @@
           </div>
         </div>
         <div class="tab-pane active" id="{{divElementId}}-ExpTab" style="padding: 15px;margin: 0;">
-          <textarea rows="5" ondrop="dropE(event);" class="form-control i18n" placeholder="{{i18n "i18n_expression" "Expression"}}..." id="{{divElementId}}-ExpText"></textarea>
-          <input data-droppable="true" ondrop="dropS(event);" ondragover="removeHighlight();" style="width: 50%; margin-top: 5px" ondragstart="allowDrop(event);" class="form-control" id="{{divElementId}}-searchBoxOption" placeholder="{{i18n "i18n_ecl_search_option_placeholder" "Enter additional term filter (option)"}}" autocomplete="off">
+          <textarea rows="5" ondrop="dropE(event);" class="form-control i18n" placeholder="{{i18n "i18n_expression" "Expression"}}..." id="{{divElementId}}-ExpText"></textarea>          
+          <div class="btn btn-success i18n" style="margin-top: 5px; margin-bottom: 10px; margin-right: 10px; position: initial" id='{{divElementId}}-computeInferredButton2' data-i18n-id="i18n_execute">{{i18n "i18n_execute" "Execute"}}</div>
+          <br>
+          <input data-droppable="true" ondrop="dropS(event);" ondragover="removeHighlight();" style="width: 50%; margin-top: 3px" ondragstart="allowDrop(event);" class="form-control" id="{{divElementId}}-searchBoxOption" placeholder="{{i18n "i18n_ecl_search_option_placeholder" "Enter additional term filter (option)"}}" autocomplete="off">
           <div class="btn-group dropdown" id="{{divElementId}}-searchTypeSection">
-            <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" id="{{divElementId}}-searchTypeButton">
                 <span class='i18n' data-i18n-id='i18n_description_type'>{{i18n "i18n_description_type" "Description type" }}</span>: <span id="{{divElementId}}-searchTypeOpt"></span>&nbsp;<span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -132,10 +134,8 @@
                       <span class='i18n' data-i18n-id='i18n_language_refsets'>Language Refsets</span>&nbsp;<span class="caret"></span>
                   </button>                        
               </div>
-          </div>
-          <br>
-          <div class="btn btn-success i18n" style="margin-top: 10px; margin-bottom: 10px; margin-right: 10px; position: initial" id='{{divElementId}}-computeInferredButton2' data-i18n-id="i18n_execute">{{i18n "i18n_execute" "Execute"}}</div>
-          <div class="btn btn-success" style="display: none; margin: 10px;" id='{{divElementId}}-computeOntoserver2'>Run on Ontoserver</div>
+          </div>          
+          <div class="btn btn-success" style="display: none; margin-left: 10px;margin-right: 10px;margin-bottom: 10px;" id='{{divElementId}}-computeOntoserver2'>Run on Ontoserver</div>
           <br>
         </div>
         </form>
