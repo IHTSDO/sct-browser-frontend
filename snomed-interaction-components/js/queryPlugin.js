@@ -144,7 +144,7 @@ function queryComputerPanel(divElement, options) {
             ]
         };
         $(divElement).html(JST["snomed-interaction-components/views/developmentQueryPlugin/main.hbs"](context));
-
+        $('#' + panel.divElement.id + '-searchTypeButton').addClass('disabled');
         $(divElement).find('textarea').unbind();
         $(divElement).find('textarea').keypress(function(event) {
             if (event.which == 13) {
@@ -177,6 +177,22 @@ function queryComputerPanel(divElement, options) {
             clearTimeout(thread);
             var $this = $(this);
             thread = setTimeout(function() {
+<<<<<<< HEAD
+=======
+                var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
+                if (optionalTermFilter.length !== 0) {
+                    $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').removeClass('disabled');
+                    $('#' + panel.divElement.id + '-searchTypeButton').removeClass('disabled');
+                } else {
+                    panel.options.languageRefsetSearchFilter = [];
+                    panel.options.typeSearchFilter = '';
+                    $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect("clearSelection");
+                    $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
+                    $('#' + panel.divElement.id + '-searchTypeButton').addClass('disabled');                    
+                    $("#" + panel.divElement.id + '-searchTypeOpt').html("<span></span>");   
+                }
+                
+>>>>>>> 56b217f... BROWSE-361 UI tweaks
                 panel.doSearch();
             }, 500);
         });
