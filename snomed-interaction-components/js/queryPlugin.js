@@ -393,6 +393,7 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-clearButton').click(function() {
             if (xhrExecute != null)
                 xhrExecute.abort();
+            panel.clearOptionalFilters();
             panel.setUpPanel();
         });
 
@@ -400,13 +401,7 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-clearSearchButton').disableTextSelect();
         $('#' + panel.divElement.id + '-clearSearchButton').click(function() {
             $('#' + panel.divElement.id + '-searchBoxOption').val('');
-            panel.options.languageRefsetSearchFilter = [];
-            panel.options.typeSearchFilter = '';
-            panel.options.optionalTermFilter = '';
-            $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect("clearSelection");
-            $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
-            $('#' + panel.divElement.id + '-searchTypeButton').addClass('disabled');                    
-            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span></span>");
+            panel.clearOptionalFilters();            
             var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
             if (expression.length !== 0) {
                 panel.doSearch();
@@ -897,6 +892,9 @@ function queryComputerPanel(divElement, options) {
         if (panel.options.ecl && panel.options.ecl.length !== 0) {
             $('#' + panel.divElement.id + '-ExpText').val(panel.options.ecl);
         }
+        if (panel.options.languageRefsets && panel.options.languageRefsets.length !== 0) {
+            panel.setupLanguageRefsetDropdown();
+        }
     };
 
     panel.updateGrammarModal = function(fullSyntax) {
@@ -923,6 +921,16 @@ function queryComputerPanel(divElement, options) {
             var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
             panel.execute("inferred", expression, true, null);
         }
+    }
+
+    this.clearOptionalFilters = function() {
+        panel.options.languageRefsetSearchFilter = [];
+        panel.options.typeSearchFilter = '';
+        panel.options.optionalTermFilter = '';
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect("clearSelection");
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
+        $('#' + panel.divElement.id + '-searchTypeButton').addClass('disabled');                    
+        $("#" + panel.divElement.id + '-searchTypeOpt').html("<span></span>");
     }
 
     this.setLanguageRefsets = function(languageRefsets) {
@@ -976,8 +984,10 @@ function queryComputerPanel(divElement, options) {
                         return value !== option.val();
                     });
                 }
-
-                panel.doSearch();
+                var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
+                if (optionalTermFilter.length >= 3) {
+                    panel.doSearch();
+                }                
             }
         });
 
@@ -1007,7 +1017,10 @@ function queryComputerPanel(divElement, options) {
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_all'>"+i18n_all+"</span>");            
         }
 
-        panel.doSearch();
+        var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
+        if (optionalTermFilter.length >= 3) {
+            panel.doSearch();
+        } 
     };
 
     this.renumLines = function() {
