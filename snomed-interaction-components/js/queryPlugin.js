@@ -178,6 +178,9 @@ function queryComputerPanel(divElement, options) {
             var $this = $(this);
             thread = setTimeout(function() {
                 var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
+                if (optionalTermFilter.length < 3 && optionalTermFilter.length > 0) {
+                    return;
+                }
                 if (optionalTermFilter.length !== 0) {
                     $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').removeClass('disabled');
                     $('#' + panel.divElement.id + '-searchTypeButton').removeClass('disabled');
@@ -189,7 +192,7 @@ function queryComputerPanel(divElement, options) {
                     $('#' + panel.divElement.id + '-searchTypeButton').addClass('disabled');                    
                     $("#" + panel.divElement.id + '-searchTypeOpt').html("<span></span>");   
                 }
-                
+                panel.options.optionalTermFilter = optionalTermFilter;
                 panel.doSearch();
             }, 500);
         });
@@ -393,6 +396,23 @@ function queryComputerPanel(divElement, options) {
             panel.setUpPanel();
         });
 
+        $('#' + panel.divElement.id + '-clearSearchButton').unbind();
+        $('#' + panel.divElement.id + '-clearSearchButton').disableTextSelect();
+        $('#' + panel.divElement.id + '-clearSearchButton').click(function() {
+            $('#' + panel.divElement.id + '-searchBoxOption').val('');
+            panel.options.languageRefsetSearchFilter = [];
+            panel.options.typeSearchFilter = '';
+            panel.options.optionalTermFilter = '';
+            $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect("clearSelection");
+            $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
+            $('#' + panel.divElement.id + '-searchTypeButton').addClass('disabled');                    
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span></span>");
+            var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
+            if (expression.length !== 0) {
+                panel.doSearch();
+            }        
+        });
+
         $("#" + panel.divElement.id + "-configButton").click(function(event) {
             panel.setupOptionsPanel();
         });
@@ -400,10 +420,9 @@ function queryComputerPanel(divElement, options) {
         $("#" + panel.divElement.id + "-apply-button").click(function() {            
             panel.readOptionsPanel();
             
-            var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
-            var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());            
+            var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());            
             $('#' + panel.divElement.id + '-computeInferredButton2').addClass("disabled");           
-            panel.execute(panel.options.eclQueryFilter, expression, true, null, optionalTermFilter);            
+            panel.execute(panel.options.eclQueryFilter, expression, true, null);            
             $('#' + panel.divElement.id + '-computeInferredButton2').removeClass("disabled");
            
         });
@@ -784,9 +803,8 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-computeInferredButton2').disableTextSelect();
         $('#' + panel.divElement.id + '-computeInferredButton2').click(function(e) {
             var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
-            var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());
             $('#' + panel.divElement.id + '-computeInferredButton2').addClass("disabled");
-            panel.execute("inferred", expression, true, null, optionalTermFilter);           
+            panel.execute("inferred", expression, true, null);           
             $('#' + panel.divElement.id + '-computeInferredButton2').removeClass("disabled");
         });
 
@@ -901,10 +919,9 @@ function queryComputerPanel(divElement, options) {
 
     this.doSearch = function() {
         var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());        
-        var optionalTermFilter = $.trim($("#" + panel.divElement.id + "-searchBoxOption").val());        
         if (expression) {            
             var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
-            panel.execute("inferred", expression, true, null, optionalTermFilter);
+            panel.execute("inferred", expression, true, null);
         }
     }
 
@@ -1307,10 +1324,15 @@ function queryComputerPanel(divElement, options) {
         panel.options.eclQueryFilter = $("#" + panel.divElement.id + "-relsTypeFilterOption").val();
     }
 
-    this.execute = function(form, expression, clean, onlyTotal, optionalTermFilter) {
+    this.execute = function(form, expression, clean, onlyTotal) {
         panel.currentEx++;
         var currentEx = panel.currentEx;
-        //$('#' + panel.divElement.id + '-footer').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+        if (!expression || expression.trim().length === 0) {
+            var i18n_enter_ecl_query = jQuery.i18n.prop('i18n_enter_ecl_query');
+            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-danger'><span class='i18n' data-i18n-id='i18n_enter_ecl_query'>"+ i18n_enter_ecl_query + "</span></span>");
+            return
+        }
+
         if (onlyTotal) {
             limit = 1;
             skip = 0;
@@ -1370,20 +1392,6 @@ function queryComputerPanel(divElement, options) {
                     }, 600);
                 }
             }, 45000);
-            //setTimeout(function(){
-            //    $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeOutLeft");
-            //    setTimeout(function(){
-            //        $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeOutLeft");
-            //        if (xhrExecute != null && currentEx == panel.currentEx){
-            //            $("#" + panel.divElement.id + "-waitingSearch-text").html("");
-            //            $("#" + panel.divElement.id + "-waitingSearch-text").addClass("fadeInRight");
-            //            $("#" + panel.divElement.id + "-waitingSearch-text").html("Instruction set exceeds maximum allowed time for computation. Some times instructions can be simplified by specifying conditions using concepts closer in the hierarchy to the intended results, avoiding unnecessary selections of large portions of the terminology.");
-            //            setTimeout(function(){
-            //                $("#" + panel.divElement.id + "-waitingSearch-text").removeClass("fadeInRight");
-            //            }, 600);
-            //        }
-            //    }, 600);
-            //}, 61000);
 
             $('#' + panel.divElement.id + '-resultInfo').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
             if (clean) {
@@ -1415,7 +1423,7 @@ function queryComputerPanel(divElement, options) {
         const SYNONYM = '900000000000013009';
         const DEFINITION = '900000000000550004';
         var descriptionTypes = [];
-        if (panel.options.typeSearchFilter && panel.options.typeSearchFilter.length !== 0 && panel.options.typeSearchFilter !== 'all') {
+        if (panel.options.typeSearchFilter && panel.options.typeSearchFilter.length !== 0) {
             if(panel.options.typeSearchFilter ==='fsn'){
                 descriptionTypes.push(FSN);
             }
@@ -1426,26 +1434,23 @@ function queryComputerPanel(divElement, options) {
                 descriptionTypes.push(DEFINITION);
             }
             else {
-                // do nothing
+                descriptionTypes.push(FSN);
+                descriptionTypes.push(SYNONYM);
+                descriptionTypes.push(DEFINITION);
             }
-        } else {
-            descriptionTypes.push(FSN);
-            descriptionTypes.push(SYNONYM);
-            descriptionTypes.push(DEFINITION);
         }
 
         var params = "module=900000000000207008" + "&offset=" + skip + "&limit=" + limit;
         params += (panel.options.eclQueryFilter === "stated" ? "&statedEcl" : "&ecl")   + "=" + encodeURIComponent(strippedExpression);
-        if (typeof optionalTermFilter !== 'undefined' && optionalTermFilter.length != 0) {
-            params += "&term=" + optionalTermFilter;
+        if (panel.options.optionalTermFilter && panel.options.optionalTermFilter.length != 0) {
+            params += "&term=" + panel.options.optionalTermFilter;
         }
         if (descriptionTypes.length != 0) {
             $.each(descriptionTypes, function(i, type){
                 params += "&descriptionType=" + type;
             });                            
         }
-        if (panel.options.languageRefsetSearchFilter 
-            && panel.options.languageRefsetSearchFilter.length !== 0){                
+        if (panel.options.languageRefsetSearchFilter && panel.options.languageRefsetSearchFilter.length !== 0){                
             $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
                 params += "&preferredOrAcceptableIn=" + languageRefsetId;
             });
