@@ -289,6 +289,7 @@ function conceptDetails(divElement, conceptId, options) {
         conceptRequested = panel.conceptId;
         panel.panelRefsetsLoaded = false;
         panel.panelMembersLoaded = false;
+        panel.panelHistoryLoaded = false;
         panel.panelReferencesLoaded = false;
         panel.panelDiagramLoaded = false;
         panel.panelExpressionLoaded = false;
@@ -1110,6 +1111,10 @@ function conceptDetails(divElement, conceptId, options) {
                 drawConceptDiagram(firstMatch, $("#diagram-canvas-" + panel.divElement.id), panel.options, panel);
                 panel.panelDiagramLoaded = true;
             }
+            else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == (panel.divElement.id + "-history-tab")) {
+                $('#history-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+                panel.getHistory(firstMatch);
+            }
             else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == "expression-tab") {
                 $("#expression-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 setTimeout(function() {
@@ -1153,6 +1158,13 @@ function conceptDetails(divElement, conceptId, options) {
                 if (panel.panelRefsetsLoaded) return;
                 $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");             
                 panel.getRefsets(firstMatch);
+            });
+            
+            $("#history-tab-link-" + panel.divElement.id).unbind();
+            $("#history-tab-link-" + panel.divElement.id).click(function(e) {
+                if (panel.panelHistoryLoaded) return;  
+                $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+                panel.getHistory(firstMatch);
             });
 
             $("#members-tab-link-" + panel.divElement.id).unbind();
@@ -1272,6 +1284,7 @@ function conceptDetails(divElement, conceptId, options) {
             $("#diagram-tab-link-" + panel.divElement.id).unbind();
             $("#refsets-tab-link-" + panel.divElement.id).unbind();
             $("#members-tab-link-" + panel.divElement.id).unbind();
+            $("#history-tab-link-" + panel.divElement.id).unbind();
             $("#expression-tab-link-" + panel.divElement.id).unbind();
             if (xhr && xhr.status === 404) {
                 var release = null;
@@ -1537,6 +1550,42 @@ function conceptDetails(divElement, conceptId, options) {
         }).fail(function() {
             $('#' + panel.childrenPId).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
         });        
+    }
+    
+    this.getHistory = function(concept) {        
+        var branch = options.edition;
+        if(options.release.length > 0 && options.release !== 'None'){
+            branch = branch + "/" + options.release;
+        };
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': options.languages
+            }
+        });
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + concept.conceptId + "/history?showFutureVersions=false", function(result) {              
+           
+        }).done(function(result) {
+            var history = [];
+            console.log(result.history);
+            for (var key in result.history) {
+               var temp = key.slice(0,4) + '-' + key.slice(4);
+               var branch = temp.slice(0,7) + '-' + temp.slice(2)
+               history.push({ 
+                                'branch' : branch,
+                                'date' : key,
+                                'changes' : result.history[key] 
+                            });
+            }
+            console.log(history);
+            var context = {
+                                concept : concept,
+                                history : result.history
+                            };
+            $('#history-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/history.hbs"](context));
+            panel.panelHistoryLoaded = true;
+        }).fail(function() {
+            
+        });       
     }
 
     this.getRefsets = function(firstMatch) {

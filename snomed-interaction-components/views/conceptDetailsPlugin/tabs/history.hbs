@@ -1,0 +1,18 @@
+<div style="margin: 10px;" class="row">
+    <div class="col-md-9" style="padding-left: 0px;">
+        <h4>
+            {{#if_undefined concept.fsn.term}}
+                History - {{concept.conceptId }} |{{concept.fsn}}| 
+            {{else}}
+                History - {{concept.conceptId }} |{{concept.defaultTerm }}|
+            {{/if_undefined}}
+        </h4>
+    </div> 
+</div>
+{{#if history}}
+    {{#each history}}
+        <p class="" style="margin-top: 20px; margin-left:20px;"><span class='i18n' data-i18n-id='i18n_concept_changes'>{{i18n "i18n_concept_changes" ""}}{{this.branch}} - {{this.changes}}</span></p>
+    {{/each}}
+{{else}}
+    <p class="" style="margin-top: 20px; margin-left:20px;"><span class='i18n' data-i18n-id='i18n_no_history_found'>{{i18n "i18n_no_history_found" "No History Found"}}</span></p>
+{{/if}}
