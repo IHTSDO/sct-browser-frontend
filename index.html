@@ -201,7 +201,7 @@
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
             }
-            else if(window.location.hostname.includes('community-browser')) {
+            else if(window.location.hostname.includes('local')) {
                 options.communityBrowser = true;
             } 
             else if(window.location.hostname.includes('browser')) {
@@ -510,6 +510,16 @@
                             else if(options.communityBrowser) {
                                 options.edition = release.branchPath;
                                 $("#editionLabel").html(release.name + " Community Content");
+                                if(typeof release.latestVersion !== 'undefined'){
+                                   $("#fh-commnunity_content_canvas-li").css({
+                                        "display": "none"
+                                    });
+                                }
+                                else{
+                                    $("#fh-commnunity_content_canvas-li").css({
+                                        "display": "block"
+                                    });
+                                }
                             }
                             else {                            
                                 options.edition = release.latestVersion.branchPath;
@@ -794,6 +804,18 @@
                         $a.attr("href", "javascript:void(0);");
                         $a.on("click", function() {
                             var parsedLanguages = "";
+                            if(options.communityBrowser){
+                                if(typeof release.latestVersion !== 'undefined'){
+                                   $("#fh-commnunity_content_canvas-li").css({
+                                        "display": "none"
+                                    });
+                                }
+                                else{
+                                    $("#fh-commnunity_content_canvas-li").css({
+                                        "display": "block"
+                                    });
+                                }
+                            }
                             for (var language in release.languages) {
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
