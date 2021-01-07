@@ -1570,23 +1570,42 @@ function conceptDetails(divElement, conceptId, options) {
            
         }).done(function(result) {
             var history = [];
-            console.log(result.history);
             for (var key in result.history) {
                var temp = key.slice(0,4) + '-' + key.slice(4);
-               var branch = temp.slice(0,7) + '-' + temp.slice(2)
+               var date = temp.slice(0,7) + '-' + temp.slice(7)
                history.push({ 
-                                'branch' : branch,
-                                'date' : key,
-                                'changes' : result.history[key] 
+                                'branch' : key,
+                                'date' : date,
+                                'changes' : result.history[key],
+                                'conceptId' : concept.conceptId,
+                                'term' : concept.defaultTerm,
+                                'module' : concept.moduleId
                             });
             }
-            console.log(history);
             var context = {
                                 concept : concept,
-                                history : result.history
+                                history : history
                             };
             $('#history-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/history.hbs"](context));
             panel.panelHistoryLoaded = true;
+            setTimeout(function(){
+                console.log('timeout');
+                $('#history-list').find(".history-item").click(function(event) {
+                    console.log('click');
+                channel.publish(panel.divElement.id, {
+                    term: $(event.target).attr("data-term"),
+                    conceptId: $(event.target).attr('data-concept-id'),
+                    module: $(event.target).attr("data-module"),
+                    source: panel.divElement.id,
+                    branch: $(event.target).attr('data-branch')
+                });
+
+                if ($(event.target).attr('data-branch') && typeof options.updateReleaseSwitcher !== 'undefined') {
+                    options.release = 'MAIN/' + branch;
+                    options.updateReleaseSwitcher($(event.target).attr('data-branch'), $(event.target).attr('data-concept-id'));
+                }
+            });
+            }, 500);
         }).fail(function() {
             
         });       
