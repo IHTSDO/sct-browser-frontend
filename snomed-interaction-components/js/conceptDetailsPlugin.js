@@ -518,7 +518,6 @@ function conceptDetails(divElement, conceptId, options) {
                 firstMatch.inferredDescendantsString = firstMatch.inferredDescendants.toLocaleString();
             }
 
-            var swedishExtension = options.edition.startsWith('MAIN/SNOMEDCT-SE');
             var context = {
                 options: panel.options,
                 firstMatch: firstMatch,
@@ -529,7 +528,8 @@ function conceptDetails(divElement, conceptId, options) {
                 langRefset: panel.options.languages,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages,
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
-                swedishExtension: swedishExtension
+                showIssueCollector: panel.options.communityBrowser || options.edition.startsWith('MAIN/SNOMEDCT-SE') ,
+                issueCollectorButtonText: panel.options.communityBrowser ? 'Submit Synonym Suggestions' : 'Skicka synonymförslag'
             };
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
@@ -559,7 +559,7 @@ function conceptDetails(divElement, conceptId, options) {
                 $("#" + panel.divElement.id + "-descendantInfor").hide();
             }          
 
-            if (swedishExtension) {               
+            if (context.showIssueCollector) {               
                 
                 if( $('#' + panel.divElement.id + '-issues-collector').length != 0) {
                     $('#' + panel.divElement.id + '-issues-collector').remove();                   
@@ -575,9 +575,13 @@ function conceptDetails(divElement, conceptId, options) {
                 var context = {                    
                     firstMatch: firstMatch,
                     divElementId: panel.divElement.id,
-                    frameId: panel.divElement.id + '-issues-collector'
+                    frameId: panel.divElement.id + '-issues-collector',
+                    summary: (panel.options.communityBrowser ? '' : 'Förslag på synonymer för begreppet: ' + firstMatch.conceptId),
+                    issueCollectorUrl: (panel.options.communityBrowser ? 'https://dev-workflow.ihtsdotools.org/s/eae63851c7444cb91c1a2fe49b048a36-T/9qqnuc/713005/8b99849fa1d8eaa169fd4a5dd7253186/2.0.31/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=dd01c5f4' :
+                                                                        'https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164')
                 };
-                var issueCollectorFrameHtml = JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/jira-issues-collector.hbs"](context);
+                
+                var issueCollectorFrameHtml = JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/issues-collector.hbs"](context);
                 var blob = new Blob([issueCollectorFrameHtml], {type: 'text/html'});
                 issueCollectorFrame.src = URL.createObjectURL(blob);
 
