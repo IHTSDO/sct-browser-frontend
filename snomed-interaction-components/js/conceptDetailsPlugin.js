@@ -1210,9 +1210,9 @@ function conceptDetails(divElement, conceptId, options) {
                     loopGroup.forEach(function(loopRel) {
                         if (loopRel.type.conceptId == "127489000") {
                             loopIngredient.ingredient = loopRel.target;
-                        } else if (loopRel.type.conceptId == "732946004" || loopRel.type.conceptId == "3311482005") {
+                        } else if (loopRel.type.conceptId == "1142136003") {
                             loopIngredient.denominatorValue = loopRel;
-                        } else if (loopRel.type.conceptId == "732944001" || loopRel.type.conceptId == "3311481003") {
+                        } else if (loopRel.type.conceptId == "1142138002") {
                             loopIngredient.numeratorValue = loopRel;
                         } else if (loopRel.type.conceptId == "732943007") {
                             loopIngredient.boss = loopRel.target;
