@@ -1452,7 +1452,7 @@ function queryComputerPanel(divElement, options) {
             }
         }
 
-        var params = "module=900000000000207008" + "&offset=" + skip + "&limit=" + limit;
+        var params = "module=900000000000207008" + "&offset=" + skip + "&limit=" + limit + "&termActive=true";
         params += (panel.options.eclQueryFilter === "stated" ? "&statedEcl" : "&ecl")   + "=" + encodeURIComponent(strippedExpression);
         if (panel.options.optionalTermFilter && panel.options.optionalTermFilter.length != 0) {
             params += "&term=" + panel.options.optionalTermFilter;
