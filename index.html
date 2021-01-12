@@ -205,7 +205,7 @@
             else if(window.location.hostname.includes('community')) {
                 options.communityBrowser = true;
             }
-            else if(window.location.hostname.includes('concrete') || window.location.hostname.includes('preview')) {
+            else if(window.location.hostname.includes('concrete') || window.location.hostname.includes('local')) {
                 options.previewBrowser = true;
             }
             else if(window.location.hostname.includes('browser')) {
@@ -2164,8 +2164,11 @@
         <!-- Welcome Perspective Preview Browser -->
         <div id="welcome-perspective-preview" class="bperspective">
             <div class="jumbotron">
-                <h1>Technical Preview Browser</h1>
-                <p>This browser contains Technical Preview releases from SNOMED International.</p>
+                <h1>Concrete Domains Technical Preview</h1>
+                <p>This technical preview has been published in line with the January 2021 International Edition, with drug concept strengths and counts expressed as concrete values in the new Relationships file.</p>
+                <p>This preview is a full RF2 International Edition package (as opposed to a standalone Delta file containing Concrete Domains), containing all International content in addition to the new Concrete Domains Relationship file.</p>
+                <p>(ie) it comprises the January 2021 International Edition release <i>as if we had already transitioned to Concrete Domains</i>, as a preview of what the final Release package will look like when the transition is complete.</p>
+                <p>This Preview browser therefore represents the content published in the technical preview package.</p>
                 <p class="i18n" data-i18n-id="i18n_home9">This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong></p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="preview_editions" style="margin-bottom : 0px"></p>
