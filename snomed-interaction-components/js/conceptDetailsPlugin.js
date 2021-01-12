@@ -1196,11 +1196,12 @@ function conceptDetails(divElement, conceptId, options) {
                     var loopGroup = productData.groups[loopKey];
                     var loopIngredient = {};
                     loopGroup.forEach(function(loopRel) {
+                        //for or statements the first id is the updated CDI attribute
                         if (loopRel.type.conceptId == "127489000") {
                             loopIngredient.ingredient = loopRel.target;
                         } else if (loopRel.type.conceptId == "1142136003" || loopRel.type.conceptId == "732946004") {
                             loopIngredient.denominatorValue = loopRel;
-                        } else if (loopRel.type.conceptId == "1142138002" || loopRel.type.conceptId == "732944001") {
+                        } else if (loopRel.type.conceptId == "1142135004" || loopRel.type.conceptId == "732944001") {
                             loopIngredient.numeratorValue = loopRel;
                         } else if (loopRel.type.conceptId == "732943007") {
                             loopIngredient.boss = loopRel.target;
