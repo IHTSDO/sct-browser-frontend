@@ -1212,7 +1212,7 @@ function conceptDetails(divElement, conceptId, options) {
                             loopIngredient.ingredient = loopRel.target;
                         } else if (loopRel.type.conceptId == "1142136003" || loopRel.type.conceptId == "732946004") {
                             loopIngredient.denominatorValue = loopRel;
-                        } else if (loopRel.type.conceptId == "1142138002" || loopRel.type.conceptId == "733724008") {
+                        } else if (loopRel.type.conceptId == "1142138002" || loopRel.type.conceptId == "732944001") {
                             loopIngredient.numeratorValue = loopRel;
                         } else if (loopRel.type.conceptId == "732943007") {
                             loopIngredient.boss = loopRel.target;
