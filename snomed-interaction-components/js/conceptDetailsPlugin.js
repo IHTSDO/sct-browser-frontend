@@ -1217,9 +1217,9 @@ function conceptDetails(divElement, conceptId, options) {
                             loopIngredient.numeratorValue = loopRel;
                         } else if (loopRel.type.conceptId == "732943007") {
                             loopIngredient.boss = loopRel.target;
-                        } else if (loopRel.type.conceptId == "732947008") {
+                        } else if (loopRel.type.conceptId == "732947008" || loopRel.type.conceptId == "733722007") {
                             loopIngredient.denominatorUnit = loopRel.target;
-                        } else if (loopRel.type.conceptId == "732945000") {
+                        } else if (loopRel.type.conceptId == "732945000" || loopRel.type.conceptId == "733725009") {
                             loopIngredient.numeratorUnit = loopRel.target;
                         }
                     });
