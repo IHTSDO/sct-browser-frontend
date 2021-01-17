@@ -170,6 +170,21 @@
             "291000210106": "MI",
             "21000241105": "FR"
         };
+        
+        options.updateReleaseSwitcher = function(branch, conceptId) {
+            console.log(branch);
+            console.log(conceptId);
+            options.edition = branch;
+            defaultConceptId = conceptId;
+
+            for (let i = 0; i < options.releases.items.length; ++i) {
+                let release = options.releases.items[i];
+                if (typeof release.latestVersion !== "undefined" && (release.latestVersion.branchPath === options.edition || release.branchPath === options.edition)) {
+                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                    break;
+                }                                       
+            }            
+        };
 
         options.setEcl = function(eclQuery) {
             options.ecl = eclQuery;          

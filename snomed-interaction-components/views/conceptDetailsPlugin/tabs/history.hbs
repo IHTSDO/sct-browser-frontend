@@ -12,9 +12,9 @@
 <div id="history-list">
     {{#if history}}
         {{#each history}}
-            <a class="history-item" data-concept-id="{{this.conceptId}}" data-branch="{{this.branch}}" data-term="{{this.term}}" data-module="{{this.module}}">
+            <a>
                 <p class="" style="margin-top: 20px; margin-left:20px;">
-                    <span class='i18n' data-i18n-id='i18n_concept_changes'>{{i18n "i18n_concept_changes" ""}}{{this.date}} - {{this.changes}}</span>
+                    <span class="history-item" data-concept-id="{{this.conceptId}}" data-branch="{{this.branch}}" data-term="{{this.term}}" data-module="{{this.module}}" data-i18n-id='i18n_concept_changes'>{{i18n "i18n_concept_changes" ""}}{{effectiveTime}} - {{componentTypes}}</span>
                 </p>
             </a>
         {{/each}}
