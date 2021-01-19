@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ihtsdo.otf</groupId>
     <artifactId>sct-browser</artifactId>
-    <version>3.16.2</version>
+    <version>3.16.3-SNAPSHOT</version>
     <name>Snowstorm Browser</name>
     <description>Snomed Snowstorm Terminology Server Browser</description>
     <url>https://term.ihtsdotools.org/</url>

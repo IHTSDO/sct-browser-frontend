@@ -1,0 +1,24 @@
+<div style="margin: 10px;" class="row">
+    <div class="col-md-9" style="padding-left: 0px;">
+        <h4>
+            {{#if_undefined concept.fsn.term}}
+                History - {{concept.conceptId }} |{{concept.fsn}}| 
+            {{else}}
+                History - {{concept.conceptId }} |{{concept.defaultTerm }}|
+            {{/if_undefined}}
+        </h4>
+    </div> 
+</div>
+<div id="history-list">
+    {{#if history}}
+        {{#each history}}
+            <a>
+                <p class="" style="margin-top: 20px; margin-left:20px;">
+                    <span class="history-item" data-concept-id="{{this.conceptId}}" data-branch="{{this.branch}}" data-term="{{this.term}}" data-module="{{this.module}}" data-i18n-id='i18n_concept_changes'>{{i18n "i18n_concept_changes" ""}}{{effectiveTime}} - {{componentTypes}}</span>
+                </p>
+            </a>
+        {{/each}}
+    {{else}}
+        <p class="" style="margin-top: 20px; margin-left:20px;"><span class='i18n' data-i18n-id='i18n_no_history_found'>{{i18n "i18n_no_history_found" "No History Found"}}</span></p>
+    {{/if}}
+</div>

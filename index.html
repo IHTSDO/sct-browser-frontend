@@ -170,6 +170,21 @@
             "291000210106": "MI",
             "21000241105": "FR"
         };
+        
+        options.updateReleaseSwitcher = function(branch, conceptId) {
+            console.log(branch);
+            console.log(conceptId);
+            options.edition = branch;
+            defaultConceptId = conceptId;
+
+            for (let i = 0; i < options.releases.items.length; ++i) {
+                let release = options.releases.items[i];
+                if (typeof release.latestVersion !== "undefined" && (release.latestVersion.branchPath === options.edition || release.branchPath === options.edition)) {
+                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                    break;
+                }                                       
+            }            
+        };
 
         options.setEcl = function(eclQuery) {
             options.ecl = eclQuery;          
@@ -202,7 +217,7 @@
             if(window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
             }
-            else if(window.location.hostname.includes('community-browser')) {
+            else if(window.location.hostname.includes('community')) {
                 options.communityBrowser = true;
             }
             else if(window.location.hostname.includes('concrete') || window.location.hostname.includes('preview')) {
@@ -518,6 +533,16 @@
                             else if(options.communityBrowser) {
                                 options.edition = release.branchPath;
                                 $("#editionLabel").html(release.name + " Community Content");
+                                if(typeof release.latestVersion !== 'undefined'){
+                                   $("#fh-commnunity_content_canvas-li").css({
+                                        "display": "none"
+                                    });
+                                }
+                                else{
+                                    $("#fh-commnunity_content_canvas-li").css({
+                                        "display": "block"
+                                    });
+                                }
                             }
                             else {                            
                                 options.edition = release.latestVersion.branchPath;
@@ -802,6 +827,18 @@
                         $a.attr("href", "javascript:void(0);");
                         $a.on("click", function() {
                             var parsedLanguages = "";
+                            if(options.communityBrowser){
+                                if(typeof release.latestVersion !== 'undefined'){
+                                   $("#fh-commnunity_content_canvas-li").css({
+                                        "display": "none"
+                                    });
+                                }
+                                else{
+                                    $("#fh-commnunity_content_canvas-li").css({
+                                        "display": "block"
+                                    });
+                                }
+                            }
                             for (var language in release.languages) {
                                 parsedLanguages = parsedLanguages + language + ',';
                             }

@@ -280,7 +280,7 @@ function conceptDetails(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
     }
 
-    this.updateCanvas = function() {
+    this.updateCanvas = function(historyBranch) {
         $("#home-children-cant-" + panel.divElement.id).html("");
         $('.more-fields-button').popover('hide');
         if (conceptRequested == panel.conceptId) {
@@ -289,6 +289,7 @@ function conceptDetails(divElement, conceptId, options) {
         conceptRequested = panel.conceptId;
         panel.panelRefsetsLoaded = false;
         panel.panelMembersLoaded = false;
+        panel.panelHistoryLoaded = false;
         panel.panelReferencesLoaded = false;
         panel.panelDiagramLoaded = false;
         panel.panelExpressionLoaded = false;
@@ -310,11 +311,18 @@ function conceptDetails(divElement, conceptId, options) {
             xhr.abort();
             xhr = null;
         }
-               
+        
         var branch = options.edition;
-        if(options.release.length > 0 && options.release !== 'None'){
-            branch = branch + "/" + options.release;
+        
+        if (historyBranch){
+            branch = historyBranch;
         }
+        else{
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            }
+        }
+        
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
@@ -529,7 +537,7 @@ function conceptDetails(divElement, conceptId, options) {
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages,
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
                 showIssueCollector: panel.options.communityBrowser || options.edition.startsWith('MAIN/SNOMEDCT-SE') ,
-                issueCollectorButtonText: panel.options.communityBrowser ? 'Submit Synonym Suggestions' : 'Skicka synonymförslag'
+                issueCollectorButtonText: panel.options.communityBrowser ? 'Submit Feedback' : 'Skicka synonymförslag'
             };
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
@@ -576,8 +584,8 @@ function conceptDetails(divElement, conceptId, options) {
                     firstMatch: firstMatch,
                     divElementId: panel.divElement.id,
                     frameId: panel.divElement.id + '-issues-collector',
-                    summary: (panel.options.communityBrowser ? '' : 'Förslag på synonymer för begreppet: ' + firstMatch.conceptId),
-                    issueCollectorUrl: (panel.options.communityBrowser ? 'https://dev-workflow.ihtsdotools.org/s/eae63851c7444cb91c1a2fe49b048a36-T/9qqnuc/713005/8b99849fa1d8eaa169fd4a5dd7253186/2.0.31/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=dd01c5f4' :
+                    summary: (panel.options.communityBrowser ? 'Feedback For Concept: ' + firstMatch.defaultTerm + " | " + firstMatch.conceptId : 'Förslag på synonymer för begreppet: ' + firstMatch.conceptId),
+                    issueCollectorUrl: (panel.options.communityBrowser ? 'https://jira.ihtsdotools.org/s/de395333f61d94e8d9c1df353d370114-T/-xa03ko/802005/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=8a01cd8f' :
                                                                         'https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164')
                 };
                 
@@ -1114,6 +1122,10 @@ function conceptDetails(divElement, conceptId, options) {
                 drawConceptDiagram(firstMatch, $("#diagram-canvas-" + panel.divElement.id), panel.options, panel);
                 panel.panelDiagramLoaded = true;
             }
+            else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == (panel.divElement.id + "-history-tab")) {
+                $('#history-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+                panel.getHistory(firstMatch);
+            }
             else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == "expression-tab") {
                 $("#expression-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 setTimeout(function() {
@@ -1157,6 +1169,13 @@ function conceptDetails(divElement, conceptId, options) {
                 if (panel.panelRefsetsLoaded) return;
                 $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");             
                 panel.getRefsets(firstMatch);
+            });
+            
+            $("#history-tab-link-" + panel.divElement.id).unbind();
+            $("#history-tab-link-" + panel.divElement.id).click(function(e) {
+                if (panel.panelHistoryLoaded) return;  
+                $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+                panel.getHistory(firstMatch);
             });
 
             $("#members-tab-link-" + panel.divElement.id).unbind();
@@ -1277,6 +1296,7 @@ function conceptDetails(divElement, conceptId, options) {
             $("#diagram-tab-link-" + panel.divElement.id).unbind();
             $("#refsets-tab-link-" + panel.divElement.id).unbind();
             $("#members-tab-link-" + panel.divElement.id).unbind();
+            $("#history-tab-link-" + panel.divElement.id).unbind();
             $("#expression-tab-link-" + panel.divElement.id).unbind();
             if (xhr && xhr.status === 404) {
                 var release = null;
@@ -1542,6 +1562,45 @@ function conceptDetails(divElement, conceptId, options) {
         }).fail(function() {
             $('#' + panel.childrenPId).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
         });        
+    }
+    
+    this.getHistory = function(concept) {        
+        var branch = options.edition;
+        if(options.release.length > 0 && options.release !== 'None'){
+            branch = branch + "/" + options.release;
+        };
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': options.languages
+            }
+        });
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + concept.conceptId + "/history?showFutureVersions=false", function(result) {              
+           
+        }).done(function(result) {
+            result.history.forEach(function(item) {
+                if(item.branch === 'MAIN'){
+                    var temp = item.effectiveTime.slice(0,4) + '-' + item.effectiveTime.slice(4);
+                    var date = temp.slice(0,7) + '-' + temp.slice(7);
+                    item.branch = 'MAIN/' + date;
+                };
+                item.conceptId = concept.conceptId;
+                item.moduleId = concept.moduleId;
+                item.term = concept.term;
+            });
+            var context = {
+                                concept : concept,
+                                history : result.history
+                            };
+            $('#history-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/history.hbs"](context));
+            panel.panelHistoryLoaded = true;
+            setTimeout(function(){
+                $('#history-list').find(".history-item").click(function(event) {
+                    panel.updateCanvas($(event.target).attr('data-branch'));
+            });
+            }, 500);
+        }).fail(function() {
+            
+        });       
     }
 
     this.getRefsets = function(firstMatch) {
