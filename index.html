@@ -302,18 +302,20 @@
                                 if (release.maintainerType && release.maintainerType === 'Community Content') {
                                     options.communityContentReleases.push(release);
                                 }
-                                if(release.dailyBuildAvailable){
+                                else{
                                     options.dailyBuildReleases.push(release);
                                     dailyBuildInternational.push(release);
                                 }
                             } else {
-                                localReleases.push(release);
-                                if (release.maintainerType && release.maintainerType === 'Community Content') {
-                                        options.communityContentReleases.push(release);
+                                if(release.maintainerType && release.maintainerType === 'Community Content') {
+                                    options.communityContentReleases.push(release);
                                 }
-                                if(release.dailyBuildAvailable){
-                                    options.dailyBuildReleases.push(release);
-                                    dailyBuildLocal.push(release);
+                                else{
+                                    localReleases.push(release);
+                                    if(release.dailyBuildAvailable){
+                                        options.dailyBuildReleases.push(release);
+                                        dailyBuildLocal.push(release);
+                                    }
                                 }
                             }
                         }
