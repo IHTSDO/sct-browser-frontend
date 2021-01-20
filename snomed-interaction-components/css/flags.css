@@ -212,8 +212,8 @@
 
 .fr {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAhCAIAAADRbfVCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAJKSURBVEhL7dcxaBNxFMfxjFJwcrAiDsVBpwriIOogxaUuagfXCCqKOAgi1tJOEaqiQxdBIhgHwRacEpTWGIokaClS0Bbbpk1rz7bx0Hp3TcidJMbn/V8v/3u5y+X+Vzr1y2/o0HsfQmnLhapbW7NepVLRdb1YLGqapqqqYgZfFwqFUqlULpfx+7zy9ibm1870j2Uml5nhVu7oeSWewmfca+TBZ+p7MRXqSsA8venQAZgUvm0oKj7vlKu3kNc6+jIMa8ab2dHOyOz+U0oyg1fqcvbSU/K+y28tzJfH9vPZK7xlz8Eb/SLzEptf7z/55CVe5KLeV0nbFR4mGEzAg/0efI13N6JeZ+QDkdjEvGzr8b+6gafNbN5gWiKMNTEPtnrnEV43s3knetKEsSbszew8zH/EmjeRU4jBT9iD/YoOocF7kaFpYvAL4n07ew0N3jsd+UgMfkG82d3H0OC9tqtJYvAL4sHQ4D0CkG17fr29l2x/oMk23zvZW/vvU78gHvzKo8F7t2KTxOAXxFvsCKPBe6nPDv+GrAXx5PtRNHgPOng9RRhrQbw/0ioCxBuIzxHGmrD3/UI3XjezeVD7jVEisQl7enYRT5tR782nPJHYxDz5Qe0nx6IeFB3OEQwm4K3cvIcXuRw86OkIJf16K90P8ZY9Zw9KjC/vuTgi5v0YeI5X6nL1IEleP9c/5subP9Klvh/H551q5LFi7xbariS9vZZD+buP4RUAH3PJ22Mtyevs5QjPbwTvSvCKZBhGea3Ra4NVs97mVK3+A/4MtYV9LASgAAAAAElFTkSuQmCC);
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: left top;
