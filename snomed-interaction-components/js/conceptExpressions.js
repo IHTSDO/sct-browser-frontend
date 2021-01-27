@@ -10,13 +10,22 @@ var e_pipe = '<span class="exp-pipes">|</span>';
 
 var panel = {};
 
-var referenceToExpression = function(conceptReference, concrete) {
+var referenceToExpression = function(conceptReference, concrete, type) {
     if(!concrete){
         return conceptReference.conceptId + " " + e_pipe + "<span class='exp-term'>" +
             conceptReference.defaultTerm + "</span>" + e_pipe;
     }
     else{
-        return conceptReference;
+        if(type === 'INTEGER'){
+            return '#' + conceptReference;
+        }
+        else if(type === 'DECIMAL'){
+            return '#' + conceptReference;
+        }
+        else if(type === 'STRING'){
+            return '\"' + conceptReference + '\"';
+        }
+        
     }
 };
 
@@ -74,7 +83,7 @@ var conceptToPostCoordinatedExpression = function(concept, relsProperty, div, op
                 }
                 firstInGroup = false;
                 if(rel.concreteValue){
-                    expression += referenceToExpression(rel.type) + " " + e_equals + " " + referenceToExpression(rel.concreteValue.value, true);
+                    expression += referenceToExpression(rel.type) + " " + e_equals + " " + referenceToExpression(rel.concreteValue.value, true, rel.concreteValue.dataType);
                 }
                 else{
                     expression += referenceToExpression(rel.type) + " " + e_equals + " " + referenceToExpression(rel.target, false);
