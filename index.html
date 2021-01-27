@@ -71,7 +71,7 @@
           else {
             prefix = 'prd';
           }
-          return prefix;
+          return prefix;Fcomm
         }
         
         changeFavicon(getIconPrefixFromEnv());
@@ -673,6 +673,14 @@
                 initializePublicBrowser();
             }                       
         }
+        
+        function hideCommunityContentTab(release){
+            if(release.branchPath === QueryString.edition && options.communityBrowser && release.latestVersion) {
+                $("#fh-commnunity_content_canvas-li").css({
+                    "display": "none"
+                });
+            }
+        }
 
         function initializePublicBrowser() {
             setUILanguage();
@@ -685,6 +693,7 @@
             if (options.dailyBuildBrowser || options.communityBrowser) {
                 var releases = options.dailyBuildBrowser ? options.dailyBuildReleases : options.communityContentReleases;
                 if (releases.filter(function(release) {
+                        hideCommunityContentTab(release);
                         return release.branchPath === edition;
                     }).length !== 0) {
                     options.edition = edition;
