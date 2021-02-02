@@ -46,7 +46,6 @@ function conceptDetails(divElement, conceptId, options) {
     panel.subscriptions = [];
     panel.subscribers = [];
     panel.server = "";
-    this.historyBranch = null;
     this.panelRefsetsLoaded = false;
     this.panelMembersLoaded = false;
     this.panelReferencesLoaded = false;
@@ -232,7 +231,7 @@ function conceptDetails(divElement, conceptId, options) {
         });        
         $("#" + panel.divElement.id + "-apply-button").click(function() {
             panel.readOptionsPanel();
-            panel.updateCanvas();
+            panel.updateCanvas('');
         });     
         
         if (typeof(Storage) !== "undefined") {            
@@ -265,7 +264,7 @@ function conceptDetails(divElement, conceptId, options) {
             }
         }
 
-        panel.updateCanvas();
+        panel.updateCanvas('');
 
         channel.publish(panel.divElement.id, {
             term: panel.term,
@@ -316,11 +315,11 @@ function conceptDetails(divElement, conceptId, options) {
         
         var branch = options.edition;
         
-        if (historyBranch){
+        if (historyBranch !== ''){
             branch = historyBranch;
-            this.historyBranch = historyBranch;
         }
         else{
+            $('#branchDisplay').html('');
             if(options.release.length > 0 && options.release !== 'None'){
                 branch = branch + "/" + options.release;
             }
@@ -831,7 +830,7 @@ function conceptDetails(divElement, conceptId, options) {
                     if (typeof(Storage) !== "undefined") {          
                         localStorage.setItem("conceptDetailOptions_selectedView", panel.options.selectedView);
                     }                   
-                    panel.updateCanvas();
+                    panel.updateCanvas('');
                 });               
             } else {
                 $('#home-' + panel.divElement.id + '-stated-button').unbind();
@@ -851,7 +850,7 @@ function conceptDetails(divElement, conceptId, options) {
                     if (typeof(Storage) !== "undefined") {          
                         localStorage.setItem("conceptDetailOptions_selectedView", panel.options.selectedView);
                     }                    
-                    panel.updateCanvas();
+                    panel.updateCanvas('');
                 });                
             }
 
@@ -1437,7 +1436,7 @@ function conceptDetails(divElement, conceptId, options) {
             $("#home-parents-" + panel.divElement.id).dblclick(function(event) {
                 var conceptId = $(event.target).closest("li").attr('data-concept-id');
                 panel.conceptId = conceptId;
-                panel.updateCanvas();
+                panel.updateCanvas('');
                 channel.publish(panel.divElement.id, {
                     term: $(event.target).attr('data-term'),
                     module: $(event.target).attr("data-module"),
@@ -1552,7 +1551,7 @@ function conceptDetails(divElement, conceptId, options) {
             $("#home-children-" + panel.divElement.id + "-body").dblclick(function(event) {
                 var conceptId = $(event.target).closest("li").attr('data-concept-id');
                 panel.conceptId = conceptId;
-                panel.updateCanvas();
+                panel.updateCanvas('');
                 channel.publish(panel.divElement.id, {
                     term: $(event.target).attr('data-term'),
                     module: $(event.target).attr("data-module"),
@@ -1572,7 +1571,7 @@ function conceptDetails(divElement, conceptId, options) {
                 if (typeof(Storage) !== "undefined") {           
                     localStorage.setItem("conceptDetailOptions_displayChildren", panel.options.displayChildren);
                 }
-                panel.updateCanvas();
+                panel.updateCanvas('');
             });
         }).fail(function() {
             $('#' + panel.childrenPId).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
@@ -2594,7 +2593,7 @@ function conceptDetails(divElement, conceptId, options) {
                 var clickedConceptId = $(e.target).data("concept-id");
                 panel.conceptId = clickedConceptId;
                 $('#details-tabs-' + panel.divElement.id + ' a:first').tab('show');
-                panel.updateCanvas();
+                panel.updateCanvas('');
             });
             panel.panelMembersLoaded = true;
         }).fail(function() {
@@ -2686,7 +2685,7 @@ function conceptDetails(divElement, conceptId, options) {
                     $('a[href="#' + panel.divElement.id +'-pane"]').click();
                 }
                 if ($("#home-children-" + panel.divElement.id + "-body").length > 0) {
-                    panel.updateCanvas();                    
+                    panel.updateCanvas('');                    
                 } 
                 else {
                     panel.setupCanvas();
@@ -2816,7 +2815,7 @@ function updateCD(divElementId, conceptId) {
     $.each(componentsRegistry, function(i, field) {        
         if (field.divElement.id == divElementId) {
             field.conceptId = conceptId;
-            field.updateCanvas();
+            field.updateCanvas('');
             channel.publish(field.divElement.id, {
                 term: field.term,
                 conceptId: field.conceptId,
