@@ -543,9 +543,15 @@ function conceptDetails(divElement, conceptId, options) {
             
             if (typeof result.descendantCount !== 'undefined') {
                 var branch = options.edition;
-                if(options.release.length > 0 && options.release !== 'None'){
-                    branch = branch + "/" + options.release;
-                };
+        
+                if (historyBranch){
+                    branch = historyBranch;
+                }
+                else{
+                    if(options.release.length > 0 && options.release !== 'None'){
+                        branch = branch + "/" + options.release;
+                    }
+                }
                 
                 // get stated and inferred descendant count for concept detail tab
                 $("#" + panel.divElement.id + "-statedDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
@@ -1139,11 +1145,11 @@ function conceptDetails(divElement, conceptId, options) {
             }
             else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == "references-tab") {
                 $("#references-" + panel.divElement.id + "-resultsTable").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-                panel.getReferences(firstMatch.conceptId);
+                panel.getReferences(firstMatch.conceptId, historyBranch);
             }            
             else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == (panel.divElement.id + "-members-tab")) {
                 $("#members-" + panel.divElement.id + "-resultsTable").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");               
-                panel.loadMembers(100, 0);
+                panel.loadMembers(100, 0, 1, historyBranch);
             } 
             else {
                 // do nothing
@@ -1153,7 +1159,7 @@ function conceptDetails(divElement, conceptId, options) {
             $("#references-tab-link-" + panel.divElement.id).click(function(e) {
                 if (panel.panelReferencesLoaded) return;
                 $("#references-" + panel.divElement.id + "-resultsTable").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-                panel.getReferences(firstMatch.conceptId);
+                panel.getReferences(firstMatch.conceptId, historyBranch);
             });
             
             $("#diagram-tab-link-" + panel.divElement.id).unbind();
@@ -1182,7 +1188,7 @@ function conceptDetails(divElement, conceptId, options) {
             $("#members-tab-link-" + panel.divElement.id).click(function(e) {
                 if (panel.panelMembersLoaded) return;
                 $("#members-" + panel.divElement.id + "-resultsTable").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");               
-                panel.loadMembers(100, 0);
+                panel.loadMembers(100, 0, 1, historyBranch);
             });
 
             $("#expression-tab-link-" + panel.divElement.id).unbind();
@@ -1334,9 +1340,15 @@ function conceptDetails(divElement, conceptId, options) {
         });      
                 
         var branch = options.edition;
-        if(options.release.length > 0 && options.release !== 'None'){
-            branch = branch + "/" + options.release;
-        };
+        
+        if (historyBranch){
+            branch = historyBranch;
+        }
+        else{
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            }
+        }
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
@@ -1404,7 +1416,7 @@ function conceptDetails(divElement, conceptId, options) {
                         $(ev).removeClass("glyphicon-chevron-right");
                         $(ev).addClass("glyphicon-refresh");
                         $(ev).addClass("icon-spin");
-                        panel.getParent(conceptId, ev);
+                        panel.getParent(conceptId, ev, historyBranch);
                     } else if ($(ev).hasClass("glyphicon-minus")) {                      
                     }
                 } else if ($(event.target).hasClass("treeLabel")) {
@@ -1516,7 +1528,7 @@ function conceptDetails(divElement, conceptId, options) {
                         $("#" + iconId).removeClass("glyphicon-chevron-right");
                         $("#" + iconId).addClass("glyphicon-refresh");
                         $("#" + iconId).addClass("icon-spin");
-                        panel.getChildren($(event.target).closest("li").attr('data-concept-id'), true);
+                        panel.getChildren($(event.target).closest("li").attr('data-concept-id'), true, historyBranch);
                     } else if ($("#" + iconId).hasClass("glyphicon-minus")) {
                         //                    $("#" + iconId).removeClass("glyphicon-minus");
                         //                    $("#" + iconId).addClass("glyphicon-chevron-right");
@@ -1773,16 +1785,22 @@ function conceptDetails(divElement, conceptId, options) {
         );
     }
 
-    this.getReferences = function(conceptId) {
+    this.getReferences = function(conceptId, historyBranch) {
         $("#references-" + panel.divElement.id + "-accordion").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         if (xhrReferences != null) {
             xhrReferences.abort();
             xhrReferences = null;
         };
         var branch = options.edition;
-        if(options.release.length > 0 && options.release !== 'None'){
-            branch = branch + "/" + options.release;
-        };
+        
+        if (historyBranch){
+            branch = historyBranch;
+        }
+        else{
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            }
+        }
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
@@ -1851,7 +1869,7 @@ function conceptDetails(divElement, conceptId, options) {
 
     }
 
-    this.getChildren = function(conceptId, forceShow) {
+    this.getChildren = function(conceptId, forceShow, historyBranch) {
         if (typeof panel.options.selectedView == "undefined") {
             panel.options.selectedView = "inferred";
         }
@@ -1866,9 +1884,15 @@ function conceptDetails(divElement, conceptId, options) {
             xhrChildren.abort();
         };
         var branch = options.edition;
-        if(options.release.length > 0 && options.release !== 'None'){
-            branch = branch + "/" + options.release;
-        };
+        
+        if (historyBranch){
+            branch = historyBranch;
+        }
+        else{
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            }
+        }
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
@@ -1962,14 +1986,20 @@ function conceptDetails(divElement, conceptId, options) {
         });
     }
 
-    this.getParent = function(conceptId, target) {
+    this.getParent = function(conceptId, target, historyBranch) {
         if (xhrParents != null) {
             xhrParents.abort();
         };
         var branch = options.edition;
-        if(options.release.length > 0 && options.release !== 'None'){
-            branch = branch + "/" + options.release;
-        };
+        
+        if (historyBranch){
+            branch = historyBranch;
+        }
+        else{
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            }
+        }
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
@@ -2327,9 +2357,15 @@ function conceptDetails(divElement, conceptId, options) {
 
     this.loadLanguageRefsets = function() {        
         var branch = options.edition;
-        if(options.release.length > 0 && options.release !== 'None'){
-            branch = branch + "/" + options.release;
-        };
+        
+        if (historyBranch){
+            branch = historyBranch;
+        }
+        else{
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            }
+        }
         if(!options.serverUrl.includes('snowowl')){
         $.ajaxSetup({
             headers : {
@@ -2389,11 +2425,17 @@ function conceptDetails(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");        
     }
 
-    this.loadMembers = function(returnLimit, skipTo, paginate) {
+    this.loadMembers = function(returnLimit, skipTo, paginate, historyBranch) {
         var branch = options.edition;
-        if(options.release.length > 0 && options.release !== 'None'){
-            branch = branch + "/" + options.release;
-        };
+        
+        if (historyBranch){
+            branch = historyBranch;
+        }
+        else{
+            if(options.release.length > 0 && options.release !== 'None'){
+                branch = branch + "/" + options.release;
+            }
+        }
         var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + panel.conceptId + "&limit=100&active=true";
         if (skipTo > 0) {
             membersUrl = membersUrl + "&offset=" + skipTo;
@@ -2513,12 +2555,12 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 $("#" + panel.divElement.id + "-moreMembers").click(function() {
                     $("#" + panel.divElement.id + "-moreMembers").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-                    panel.loadMembers(returnLimit2, skipTo + returnLimit, paginate);
+                    panel.loadMembers(returnLimit2, skipTo + returnLimit, paginate, historyBranch);
                 });
                 $("#members-" + panel.divElement.id + "-sort").unbind();
                 $("#members-" + panel.divElement.id + "-sort").click(function() {
                     $("#members-" + panel.divElement.id + "-sort").blur();
-                    panel.loadMembers(returnLimit, 0, 1);
+                    panel.loadMembers(returnLimit, 0, 1, historyBranch);
                 });
             } else {
                 if (skipTo != 0) {
@@ -2531,12 +2573,12 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                     $("#" + panel.divElement.id + "-moreMembers").click(function() {
                         $("#" + panel.divElement.id + "-moreMembers").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-                        panel.loadMembers(returnLimit2, skipTo + returnLimit, paginate);
+                        panel.loadMembers(returnLimit2, skipTo + returnLimit, paginate, historyBranch);
                     });
                     $("#members-" + panel.divElement.id + "-sort").unbind();
                     $("#members-" + panel.divElement.id + "-sort").click(function() {
                         $("#members-" + panel.divElement.id + "-sort").blur();
-                        panel.loadMembers(returnLimit, 0, 1);
+                        panel.loadMembers(returnLimit, 0, 1, historyBranch);
                     });
                 } else {
                     $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>"+i18n_no_members+"</span></td></tr>");
