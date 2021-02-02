@@ -3,7 +3,9 @@
         <!--<button id='{{divElementId}}-ownMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-book'></i></button>-->
         <button id='{{divElementId}}-subscribersMarker' class='btn btn-link btn-lg' style='padding:2px;position: absolute;top: 1px;'><i class='glyphicon glyphicon-bookmark'></i></button>
         <div class='row'>
-            <div class='col-md-8' id='{{divElementId}}-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_concept_details'>Concept Details</span></strong></div>
+            <div class='col-md-8' id='{{divElementId}}-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_concept_details'>Concept Details</span>
+                <span style='display: none' id='branchDisplay'></span>
+            </strong></div>
             <div class='col-md-4 text-right'>
                 <!--<button id='{{divElementId}}-linkerButton' draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" class='btn btn-link linker-button' data-panel='{{divElementId}}' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>-->
                 <button id='{{divElementId}}-historyButton' class='btn btn-link history-button' style='padding:2px'><i class='glyphicon glyphicon-time'></i></button>
@@ -17,7 +19,7 @@
     <div class='panel-body' id='{{divElementId}}-panelBody' style="width: 98%">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" id="details-tabs-{{divElementId}}">
-            <li class="active"><a href="#home-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_summary">Summary</span></a></li>
+            <li class="active" id="home-link"><a href="#home-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_summary">Summary</span></a></li>
             <li><a href="#details-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;"><span class="i18n" data-i18n-id="i18n_details">Details</span></a></li>
             <li id="diagram-tab"><a href="#diagram-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;" id="diagram-tab-link-{{divElementId}}"><span class="i18n" data-i18n-id="i18n_diagram">Diagram</span></a></li>
             <li id="expression-tab"><a href="#expression-{{divElementId}}" data-toggle="tab" style="padding-top: 3px; padding-bottom:3px;" id="expression-tab-link-{{divElementId}}"><span class="i18n" data-i18n-id="i18n_expression">Expression</span></a></li>

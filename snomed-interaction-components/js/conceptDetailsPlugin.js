@@ -46,6 +46,7 @@ function conceptDetails(divElement, conceptId, options) {
     panel.subscriptions = [];
     panel.subscribers = [];
     panel.server = "";
+    this.historyBranch = null;
     this.panelRefsetsLoaded = false;
     this.panelMembersLoaded = false;
     this.panelReferencesLoaded = false;
@@ -302,6 +303,7 @@ function conceptDetails(divElement, conceptId, options) {
         $('#home-parents-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#home-roles-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#' + panel.childrenPId).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+        $("#history-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $("#diagram-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#product-details-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
@@ -316,6 +318,7 @@ function conceptDetails(divElement, conceptId, options) {
         
         if (historyBranch){
             branch = historyBranch;
+            this.historyBranch = historyBranch;
         }
         else{
             if(options.release.length > 0 && options.release !== 'None'){
@@ -1607,6 +1610,8 @@ function conceptDetails(divElement, conceptId, options) {
             panel.panelHistoryLoaded = true;
             setTimeout(function(){
                 $('#history-list').find(".history-item").click(function(event) {
+                    $('#branchDisplay').css("display", "contents");
+                    $('#branchDisplay').html(' - ' + $(event.target).attr('data-branch'));
                     panel.updateCanvas($(event.target).attr('data-branch'));
             });
             }, 500);
