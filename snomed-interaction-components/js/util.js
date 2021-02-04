@@ -166,7 +166,8 @@ function dropE(ev){
         if (typeof term == "undefined"){
             term = text.substr(i);
         }
-        $(ev.target).val(ev.target.value + conceptId + " |" + term + "|");        
+        $(ev.target).val(ev.target.value + conceptId + " |" + term + "|");
+        $(ev.target).trigger("change");        
     }
 }
 
