@@ -393,6 +393,8 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-clearButton').click(function() {
             if (xhrExecute != null)
                 xhrExecute.abort();
+            panel.options.ecl = '';
+            panel.options.setEcl(panel.options.ecl);
             panel.clearOptionalFilters();
             panel.setUpPanel();
         });
@@ -879,7 +881,7 @@ function queryComputerPanel(divElement, options) {
             }
         });
 
-        $('#' + panel.divElement.id + '-ExpText').keyup(function() {
+        $('#' + panel.divElement.id + '-ExpText').change(function() {
             clearTimeout(thread);
             thread = setTimeout(function() {
                 var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
