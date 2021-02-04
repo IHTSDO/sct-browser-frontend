@@ -1631,10 +1631,10 @@ function conceptDetails(divElement, conceptId, options) {
             panel.panelHistoryLoaded = true;
             setTimeout(function(){
                 $('#history-list').find(".history-item").click(function(event) {
-                    $('#branchDisplay').css("display", "contents");
-                    $('#branchDisplay').html(' - ' + $(event.target).attr('data-branch'));
                     var temp = $(event.target).attr('data-branch').substring($(event.target).attr('data-branch').lastIndexOf("/") + 1);
-                    var number = temp.replace(/-/g, "")
+                    var number = temp.replace(/-/g, "");
+                    $('#branchDisplay').css("display", "contents");
+                    $('#branchDisplay').html(' - ' + temp);
                     panel.options.historyEffective = number;
                     panel.options.history = true;
                     panel.updateCanvas($(event.target).attr('data-branch'));
