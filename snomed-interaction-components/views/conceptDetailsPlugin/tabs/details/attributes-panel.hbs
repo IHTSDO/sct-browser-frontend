@@ -2,6 +2,7 @@
     <tr
         {{#if options.dailyBuildBrowser}}{{#if_eq firstMatch.effectiveTime null}} class = 'highlightEffectiveTime' {{/if_eq}}{{/if}}
         {{#if options.tsBrowser}}{{#if_eq firstMatch.effectiveTime null}} class = 'highlightEffectiveTime' {{/if_eq}}{{/if}}
+        {{#if options.history}}{{#if historyEffective}} class='highlightEffectiveTime'{{/if}}{{/if}}
         >
         <td>
             <h4>

@@ -13,9 +13,10 @@
     </thead>
     <tbody>
         {{#each allDescriptions}}
-            <tr class='{{#if_eq typeId "900000000000003001"}} fsn-row{{else}} synonym-row{{/if_eq}}{{#if active}}{{else}} danger{{/if}}                     
-                    {{#if ../options.dailyBuildBrowser}}{{#if_eq effectiveTime null}} highlightEffectiveTime {{/if_eq}}{{/if}} 
-                    {{#if ../options.tsBrowser}}{{#if_eq effectiveTime null}} highlightEffectiveTime{{/if_eq}}{{/if}}'>
+            <tr class='{{#if_eq typeId "900000000000003001"}} fsn-row{{else}} synonym-row{{/if_eq}}{{#if active}}{{else}} danger{{/if}}
+                    {{#if ../options.dailyBuildBrowser}}{{#if_eq effectiveTime null}} highlightEffectiveTime {{/if_eq}}{{/if}}
+                    {{#if ../options.tsBrowser}}{{#if_eq effectiveTime null}} highlightEffectiveTime{{/if_eq}}{{/if}}
+                    {{#if ../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{/if}}'>
                     <td>
                         {{#if_eq typeId "900000000000003001"}}
                             <span rel="tooltip-right" title="{{i18n "i18n_fsn" "FSN"}}">F</span>

@@ -319,6 +319,8 @@ function conceptDetails(divElement, conceptId, options) {
             branch = historyBranch;
         }
         else{
+            panel.options.historyEffective = '';
+            panel.options.history = false;
             $('#branchDisplay').html('');
             if(options.release.length > 0 && options.release !== 'None'){
                 branch = branch + "/" + options.release;
@@ -342,6 +344,9 @@ function conceptDetails(divElement, conceptId, options) {
             setDefaultTerm(result);
             var pt = {};
             $.each(result.descriptions, function(i, description) {
+                if(description.effectiveTime === panel.options.historyEffective){
+                    description.historyEffective = true;
+                }
                 if (description.lang == options.defaultLanguage && description.active) {
                     $.each(description.acceptabilityMap, function(i, map){
                         if(map == "PREFERRED"){
@@ -385,6 +390,9 @@ function conceptDetails(divElement, conceptId, options) {
             panel.attributesFromAxioms = [];
 
             firstMatch.relationships.forEach(function(loopRel) {
+                if(loopRel.effectiveTime === panel.options.historyEffective){
+                    loopRel.historyEffective = true;
+                }
                 if(loopRel.type.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && loopRel.type.fsn.lang != options.defaultLanguage){
                     loopRel.type.defaultTerm = loopRel.type.pt.term;
                 }
@@ -406,6 +414,9 @@ function conceptDetails(divElement, conceptId, options) {
             });
 
             firstMatch.statedRelationships.forEach(function(loopRel) {
+                if(loopRel.effectiveTime === panel.options.historyEffective){
+                    loopRel.historyEffective = true;
+                }
                 if(loopRel.type.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && loopRel.type.fsn.lang != options.defaultLanguage){
                     loopRel.type.defaultTerm = loopRel.type.pt.term;
                 }
@@ -453,10 +464,16 @@ function conceptDetails(divElement, conceptId, options) {
 
             firstMatch.classAxioms = firstMatch.classAxioms.filter(function(axiom) { return axiom.active; });
             firstMatch.classAxioms.forEach(function(axiom) {
+                if(axiom.effectiveTime === panel.options.historyEffective){
+                    axiom.historyEffective = true;
+                }
                 axiom.clinicalFindingRelationships = true;
 
                 if(axiom.active){
                     axiom.relationships.forEach(function(rel) {
+                        if(rel.effectiveTime === panel.options.historyEffective){
+                            rel.historyEffective = true;
+                        }
                         if(rel.type.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && rel.type.fsn.lang != options.defaultLanguage){
                             rel.type.defaultTerm = rel.type.pt.term;
                         }
@@ -488,10 +505,17 @@ function conceptDetails(divElement, conceptId, options) {
 
             firstMatch.gciAxioms = firstMatch.gciAxioms.filter(function(axiom) { return axiom.active; });
             firstMatch.gciAxioms.forEach(function(axiom) {
+                if(axiom.effectiveTime === panel.options.historyEffective){
+                    axiom.historyEffective = true;
+                }
+                
                 axiom.clinicalFindingRelationships = true;
 
                 if(axiom.active){
                     axiom.relationships.forEach(function(rel) {
+                        if(rel.effectiveTime === panel.options.historyEffective){
+                            rel.historyEffective = true;
+                        }
                         if(rel.type.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && rel.type.fsn.lang != options.defaultLanguage){
                             rel.type.defaultTerm = rel.type.pt.term;
                         }
@@ -1592,11 +1616,9 @@ function conceptDetails(divElement, conceptId, options) {
            
         }).done(function(result) {
             result.history.forEach(function(item) {
-                if(item.branch === 'MAIN'){
-                    var temp = item.effectiveTime.slice(0,4) + '-' + item.effectiveTime.slice(4);
-                    var date = temp.slice(0,7) + '-' + temp.slice(7);
-                    item.branch = 'MAIN/' + date;
-                };
+                var temp = item.effectiveTime.slice(0,4) + '-' + item.effectiveTime.slice(4);
+                var date = temp.slice(0,7) + '-' + temp.slice(7);
+                item.branch = item.branch + '/' + date;
                 item.conceptId = concept.conceptId;
                 item.moduleId = concept.moduleId;
                 item.term = concept.term;
@@ -1611,6 +1633,10 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#history-list').find(".history-item").click(function(event) {
                     $('#branchDisplay').css("display", "contents");
                     $('#branchDisplay').html(' - ' + $(event.target).attr('data-branch'));
+                    var temp = $(event.target).attr('data-branch').substring($(event.target).attr('data-branch').lastIndexOf("/") + 1);
+                    var number = temp.replace(/-/g, "")
+                    panel.options.historyEffective = number;
+                    panel.options.history = true;
                     panel.updateCanvas($(event.target).attr('data-branch'));
             });
             }, 500);
