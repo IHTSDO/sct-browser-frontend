@@ -28,6 +28,11 @@
                                     highlightEffectiveTime
                                 {{/if_eq}}
                             {{/if}}
+                            {{#if ../../../options.history}}
+                                {{#if historyEffective}}
+                                   highlightEffectiveTime
+                                {{/if}}
+                            {{/if}}
                             '>
                             <td>
                                 {{#if_eq type.definitionStatus "PRIMITIVE"}}
@@ -162,7 +167,8 @@
                     {{#each relationships}}
                         {{#if active}}
                             <tr class='{{#if ../../../options.dailyBuildBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}
-                                       {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}'>
+                                       {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}
+                                       {{#if ../../../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{/if}}'>
                                 <td>
                                     {{#if_eq type.definitionStatus "PRIMITIVE"}}
                                         <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
@@ -231,7 +237,8 @@
                     {{#each relationships}}
                         {{#if active}}
                             <tr class='{{#if ../../../options.dailyBuildBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}
-                                       {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}'>
+                                       {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}
+                                       {{#if ../../../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{/if}}'>
                                 <td>
                                     {{#if_eq type.definitionStatus "PRIMITIVE"}}
                                         <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning">&nbsp;</span></a>&nbsp;&nbsp;
