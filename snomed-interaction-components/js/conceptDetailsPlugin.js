@@ -853,8 +853,8 @@ function conceptDetails(divElement, conceptId, options) {
                     panel.options.selectedView = "inferred";
                     if (typeof(Storage) !== "undefined") {          
                         localStorage.setItem("conceptDetailOptions_selectedView", panel.options.selectedView);
-                    }                   
-                    panel.updateCanvas('');
+                    }                  
+                    panel.updateCanvas(historyBranch);
                 });               
             } else {
                 $('#home-' + panel.divElement.id + '-stated-button').unbind();
@@ -874,7 +874,7 @@ function conceptDetails(divElement, conceptId, options) {
                     if (typeof(Storage) !== "undefined") {          
                         localStorage.setItem("conceptDetailOptions_selectedView", panel.options.selectedView);
                     }                    
-                    panel.updateCanvas('');
+                    panel.updateCanvas(historyBranch);
                 });                
             }
 
