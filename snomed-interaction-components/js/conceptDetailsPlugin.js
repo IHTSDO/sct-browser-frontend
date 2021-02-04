@@ -1638,6 +1638,7 @@ function conceptDetails(divElement, conceptId, options) {
                     panel.options.historyEffective = number;
                     panel.options.history = true;
                     panel.updateCanvas($(event.target).attr('data-branch'));
+                    $('#details-tabs-fh-cd1_canvas li:eq(1) a').tab('show');
             });
             }, 500);
         }).fail(function() {
