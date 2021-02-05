@@ -397,6 +397,7 @@ function searchPanel(divElement, options) {
         }        
         
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);       
+        $("#" + panel.divElement.id + "-groupConcept").prop('checked', true);
     };
 
     this.setLanguageRefsets = function(languageRefsets) {
