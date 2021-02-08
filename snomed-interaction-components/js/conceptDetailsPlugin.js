@@ -289,7 +289,6 @@ function conceptDetails(divElement, conceptId, options) {
         conceptRequested = panel.conceptId;
         panel.panelRefsetsLoaded = false;
         panel.panelMembersLoaded = false;
-        panel.panelHistoryLoaded = false;
         panel.panelReferencesLoaded = false;
         panel.panelDiagramLoaded = false;
         panel.panelExpressionLoaded = false;
@@ -302,10 +301,13 @@ function conceptDetails(divElement, conceptId, options) {
         $('#home-parents-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#home-roles-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#' + panel.childrenPId).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-        $("#history-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $("#diagram-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#product-details-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+        if(!historyBranch){
+            $("#history-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+            panel.panelHistoryLoaded = false;
+        }
 
         // load attributes
         if (xhr != null) {
