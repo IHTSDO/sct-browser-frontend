@@ -365,6 +365,9 @@ function conceptDetails(divElement, conceptId, options) {
             }
             var firstMatch = result;
             panel.firstMatch = result;
+            if(firstMatch.effectiveTime == panel.options.historyEffective){
+                firstMatch.historyEffective = true;
+            }
             xhr = null;
             panel.attributesPId = divElement.id + "-attributes-panel";
             panel.defaultTerm = firstMatch.defaultTerm;
