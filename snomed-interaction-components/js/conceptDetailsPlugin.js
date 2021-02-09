@@ -466,7 +466,7 @@ function conceptDetails(divElement, conceptId, options) {
 
             firstMatch.classAxioms = firstMatch.classAxioms.filter(function(axiom) { return axiom.active; });
             firstMatch.classAxioms.forEach(function(axiom) {
-                if(axiom.effectiveTime === panel.options.historyEffective){
+                if(axiom.effectiveTime == panel.options.historyEffective){
                     axiom.historyEffective = true;
                 }
                 axiom.clinicalFindingRelationships = true;
@@ -507,7 +507,7 @@ function conceptDetails(divElement, conceptId, options) {
 
             firstMatch.gciAxioms = firstMatch.gciAxioms.filter(function(axiom) { return axiom.active; });
             firstMatch.gciAxioms.forEach(function(axiom) {
-                if(axiom.effectiveTime === panel.options.historyEffective){
+                if(axiom.effectiveTime == panel.options.historyEffective){
                     axiom.historyEffective = true;
                 }
                 

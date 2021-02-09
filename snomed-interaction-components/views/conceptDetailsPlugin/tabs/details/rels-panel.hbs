@@ -137,7 +137,7 @@
     {{else}}
         {{#if_eq options.selectedView "stated"}}
             {{#each firstMatch.classAxioms}}
-                <table class='table table-bordered'>
+                <table class='table{{#if ../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{else}} table-bordered{{/if}}'>
                     <thead>
                     <tr>
                         <th colspan="4">
