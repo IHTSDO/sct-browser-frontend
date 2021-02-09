@@ -1624,6 +1624,11 @@ function conceptDetails(divElement, conceptId, options) {
                 item.conceptId = concept.conceptId;
                 item.moduleId = concept.moduleId;
                 item.term = concept.term;
+                for(i=0; i < item.componentTypes.length; i++){
+                    if(i > 0){
+                        item.componentTypes[i] = ' ' + item.componentTypes[i];
+                    }
+                }
             });
             var context = {
                                 concept : concept,
