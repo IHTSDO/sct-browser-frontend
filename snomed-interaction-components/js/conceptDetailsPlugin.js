@@ -323,7 +323,7 @@ function conceptDetails(divElement, conceptId, options) {
         else{
             panel.options.historyEffective = '';
             panel.options.history = false;
-            $('#branchDisplay').html('');
+            $('#branchDisplay-' + panel.divElement.id).html('');
             if(options.release.length > 0 && options.release !== 'None'){
                 branch = branch + "/" + options.release;
             }
@@ -1639,15 +1639,15 @@ function conceptDetails(divElement, conceptId, options) {
             $('#history-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/history.hbs"](context));
             panel.panelHistoryLoaded = true;
             setTimeout(function(){
-                $('#history-list').find(".history-item").click(function(event) {
+                $('#history-' + panel.divElement.id).find(".history-item").click(function(event) {
                     var temp = $(event.target).attr('data-branch').substring($(event.target).attr('data-branch').lastIndexOf("/") + 1);
                     var number = temp.replace(/-/g, "");
-                    $('#branchDisplay').css("display", "contents");
-                    $('#branchDisplay').html(' - ' + temp);
+                    $('#branchDisplay-' + panel.divElement.id).css("display", "contents");
+                    $('#branchDisplay-' + panel.divElement.id).html(' - ' + temp);
                     panel.options.historyEffective = number;
                     panel.options.history = true;
                     panel.updateCanvas($(event.target).attr('data-branch'));
-                    $('#details-tabs-fh-cd1_canvas li:eq(1) a').tab('show');
+                    $('#details-tabs-' + panel.divElement.id).find('li:eq(1) a').tab('show');
             });
             }, 500);
         }).fail(function() {

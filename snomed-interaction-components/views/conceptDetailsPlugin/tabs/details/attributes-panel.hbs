@@ -22,7 +22,7 @@
                     " data-def-status="{{firstMatch.definitionStatus}}" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning" >&equiv;</span></a>&nbsp;&nbsp;
                 {{/if_eq}}
 
-                <span ondrop="dropC(event, '{{divElementId}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">
+                <span ondrop="dropC(event, '{{divElementId}}', '{{firstMatch.historyEffective}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">
                 {{#if_undefined firstMatch.fsn.term}}
                     {{firstMatch.fsn}}
                 {{else}}
