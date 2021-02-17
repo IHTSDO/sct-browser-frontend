@@ -209,7 +209,7 @@
     {{else}}
         {{#if_eq options.selectedView "stated"}}
             {{#each firstMatch.gciAxioms}}
-                <table class='table table-bordered'>
+                <table class='table{{#if ../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{else}} table-bordered{{/if}}'>
                     <thead>
                     <th colspan="4">
                         <span>GCI</span>
