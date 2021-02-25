@@ -87,6 +87,7 @@ function allowDrop(ev) {
 
 function dropField(ev){
     var text = ev.dataTransfer.getData("Text");
+    text = removeSpaces(text);
     if (text != "javascript:void(0);"){
         var i = 0;
         while (text.charAt(i) != "|" && i < text.length){
@@ -143,7 +144,7 @@ function drag(ev, id) {
 //            icon = iconToDrag(term);
     }
     ev.dataTransfer.setDragImage(icon, 0, 0);
-    dataText = conceptId + "|" + term;
+    dataText = conceptId + " |" + term + "|";
     ev.dataTransfer.setData("Text", dataText);
     ev.dataTransfer.setData("divElementId", id);
     ev.dataTransfer.setData("branch", branch);
@@ -151,8 +152,9 @@ function drag(ev, id) {
 
 function dropE(ev){
     $(document).find('.drop-highlighted').removeClass('drop-highlighted');
-    ev.preventDefault();
+    //ev.preventDefault();
     var text = ev.dataTransfer.getData("Text");
+    text = removeSpaces(text);
     if (text != "javascript:void(0);"){
         var i = 0;
         while (text.charAt(i) != "|" && i < text.length){
@@ -166,8 +168,18 @@ function dropE(ev){
         if (typeof term == "undefined"){
             term = text.substr(i);
         }
-        $(ev.target).val(ev.target.value + conceptId + " |" + term + "|");
-        $(ev.target).trigger("change");        
+        $(ev.target).trigger("change");
+        setTimeout(function(){
+            if (window.getSelection) {
+                if (window.getSelection().empty) {
+                    window.getSelection().empty();
+                } else if (window.getSelection().removeAllRanges) {
+                    window.getSelection().removeAllRanges();
+                }
+            } else if (document.selection) {
+                document.selection.empty();
+            } 
+        }, 0);                
     }
 }
 
@@ -175,6 +187,7 @@ function dropS(ev){
     $(document).find('.drop-highlighted').removeClass('drop-highlighted');
     ev.preventDefault();
     var text = ev.dataTransfer.getData("Text");
+    text = removeSpaces(text);
     if (text != "javascript:void(0);"){
         var i = 0;
         while (text.charAt(i) != "|" && i < text.length){
@@ -199,11 +212,10 @@ function dropS(ev){
 }
 
 function dropC(ev, id, history) {
-    console.log('drop');
-    console.log(history);
     $(document).find('.drop-highlighted').removeClass('drop-highlighted');
     ev.preventDefault();
     var text = ev.dataTransfer.getData("Text");
+    text = removeSpaces(text);
     if (text != "javascript:void(0);"){
         var i = 0;
         while (text.charAt(i) != "|" && i < text.length){
@@ -239,6 +251,7 @@ function dropC(ev, id, history) {
 
 function dropF(ev, id) {
     var text = ev.dataTransfer.getData("Text");
+    text = removeSpaces(text);
     if (text != "javascript:void(0);"){
         var i = 0;
         while (text.charAt(i) != "|" && i < text.length){
@@ -278,6 +291,7 @@ function dropT(ev, id) {
     $(document).find('.drop-highlighted').removeClass('drop-highlighted');
     ev.preventDefault();
     var text = ev.dataTransfer.getData("Text");
+    text = removeSpaces(text);
     if (text != "javascript:void(0);") {
         var i = 0;
         while (text.charAt(i) != "|" && i < text.length){
@@ -320,6 +334,17 @@ function dropT(ev, id) {
             }
         }
     }
+}
+
+function removeSpaces(text) {
+    if (text.length !== 0) {
+        text = text.replace(/ /g,'');
+        if (text.endsWith('|')) {
+            text = text.substring(0, text.length -1);
+        }
+    }    
+
+    return text;
 }
 
 function stringToArray (string){
