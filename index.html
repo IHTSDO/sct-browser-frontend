@@ -1193,6 +1193,7 @@
                                 if (branchPath.includes(release.branchPath)) {
                                     options.languageObject = release.languages;                                
                                     options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                                    options.modules = release.modules;
 
                                     var parsedLanguages = "";
                                     for (var language in release.languages) {
@@ -1211,6 +1212,7 @@
                     if (!found && internationalEdition) {
                         options.languageObject = internationalEdition.languages;
                         options.defaultLanguageReferenceSets = [];
+                        options.modules = internationalEdition.modules;
                     }
                 } 
             }
@@ -1226,6 +1228,7 @@
                             options.projectMainlinePath = release.branchPath;
                             options.projectMainlineText = release.shortName;
                             options.editionShortname = release.shortName;
+                            options.modules = release.modules;
                         }                                                
                     }                   
                 }
