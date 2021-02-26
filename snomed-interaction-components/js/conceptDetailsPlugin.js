@@ -1622,6 +1622,7 @@ function conceptDetails(divElement, conceptId, options) {
             result.history.forEach(function(item) {
                 var temp = item.effectiveTime.slice(0,4) + '-' + item.effectiveTime.slice(4);
                 var date = temp.slice(0,7) + '-' + temp.slice(7);
+                item.date = date;
                 item.branch = item.branch + '/' + date;
                 item.conceptId = concept.conceptId;
                 item.moduleId = concept.moduleId;
