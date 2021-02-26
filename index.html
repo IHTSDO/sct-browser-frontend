@@ -142,6 +142,7 @@
             tsBrowser: false,
             communityBrowser: false,
             communityContentReleases: [],
+            modules: [],
             ecl: "",
             history: false
         };
@@ -174,8 +175,6 @@
         };
         
         options.updateReleaseSwitcher = function(branch, conceptId) {
-            console.log(branch);
-            console.log(conceptId);
             options.edition = branch;
             defaultConceptId = conceptId;
 
@@ -556,6 +555,7 @@
                             options.languages = parsedLanguages;
                             options.languageObject = release.languages;
                             options.editionShortname = release.shortName;
+                            options.modules = release.modules;
                             delete options.latestRedirect;
 
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
@@ -711,6 +711,7 @@
                             options.languageObject = release.languages;
                             options.editionShortname = release.shortName;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            options.modules = release.modules;
                             if (typeof release.latestVersion !== "undefined") {
                                 options.highlightByEffectiveTime = release.latestVersion.effectiveDate;
                             }                            
@@ -758,6 +759,7 @@
                             options.languageObject = release.languages;
                             options.editionShortname = release.shortName;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            options.modules = release.modules;
                             var parsedLanguages = "";
                             for (var language in release.languages) {
                                 parsedLanguages = parsedLanguages + language + ',';
@@ -863,6 +865,7 @@
                             options.editionShortname = release.shortName;
                             $("#editionLabel").html(release.name + (options.dailyBuildBrowser ? " DAILY BUILD" : ' Community Content'));
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            options.modules = release.modules;
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
 
                             reloadCurrentPerspective();
@@ -905,6 +908,7 @@
                                 options.languageObject = release.languages;
                                 options.editionShortname = release.shortName;                                
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                                options.modules = release.modules;
                                 options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                                 var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
                                 QueryString = queryString();

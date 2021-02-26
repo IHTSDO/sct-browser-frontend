@@ -897,6 +897,9 @@ function queryComputerPanel(divElement, options) {
         if (panel.options.languageRefsets && panel.options.languageRefsets.length !== 0) {
             panel.setupLanguageRefsetDropdown();
         }
+        if (panel.options.modules && panel.options.modules.length !== 0) {
+            panel.setupModuleDropdown();
+        }
     };
 
     panel.updateGrammarModal = function(fullSyntax) {
@@ -914,33 +917,6 @@ function queryComputerPanel(divElement, options) {
         panel.grammarToCopy = panel.exportToConstraintGrammar(false, fullSyntax);
         $("#" + panel.divElement.id + "-constraintGrammar").html(panel.exportToConstraintGrammar(true, fullSyntax));
     };
-
-    panel.setUpPanel();
-
-    this.doSearch = function() {
-        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());        
-        if (expression) {            
-            var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
-            panel.execute("inferred", expression, true, null);
-        }
-    }
-
-    this.clearOptionalFilters = function() {
-        panel.options.languageRefsetSearchFilter = [];
-        panel.options.typeSearchFilter = '';
-        panel.options.optionalTermFilter = '';
-        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect("clearSelection");
-        $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
-        $('#' + panel.divElement.id + '-searchTypeButton').addClass('disabled');                    
-        $("#" + panel.divElement.id + '-searchTypeOpt').html("<span></span>");
-    }
-
-    this.setLanguageRefsets = function(languageRefsets) {
-        panel.options.languageRefsets = languageRefsets;
-        if (panel.options.languageRefsets.length !== 0) {
-            panel.setupLanguageRefsetDropdown();
-        }        
-    }
 
     this.setupLanguageRefsetDropdown = function() {
         panel.options.languageRefsets.forEach(function(concept) {
@@ -1000,6 +976,83 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-filterLanguageRefsetOptHidden').hide();
         $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
     };
+
+    this.setupModuleDropdown = function() {
+        panel.options.modules.sort(function(a, b) {
+            return a.pt.term.localeCompare(b.pt.term);
+        });
+        panel.options.modules.forEach(function(concept) {
+            var o = new Option(concept.pt.term, concept.id);
+            $(o).html(concept.pt.term);
+            $('#' + panel.divElement.id + '-filterModulesOpt').append(o);
+        });
+
+        $('#' + panel.divElement.id + '-filterModulesOpt').multiselect({            
+            buttonClass: 'btn btn-success',       
+            selectedClass: '',
+            enableHTML: true,
+            templates: {
+                button: '<button type="button" style="white-space: normal;" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
+            },
+            buttonText: function(options, select) {
+                var i18n_moudles = jQuery.i18n.prop('i18n_moudles');                        
+                if (options.length === 0) {
+                   return "<span class='i18n' data-i18n-id='i18n_moudles'>"+i18n_moudles+"</span>";
+                }
+                else {
+                    var i18n_selected = jQuery.i18n.prop('i18n_selected');
+                    return "<span class='i18n' data-i18n-id='i18n_moudles'>"+i18n_moudles+"</span>: " + options.length  + " <span class='i18n' data-i18n-id='i18n_selected'>"+ i18n_selected + "</span>";
+                }
+            },          
+            onChange: function(option, checked, select) {
+                if (typeof panel.options.moduleSearchFilter === 'undefined') {
+                    panel.options.moduleSearchFilter = [];
+                }
+
+                if (checked) {
+                    if (!panel.options.moduleSearchFilter.includes(option.val())) {
+                        panel.options.moduleSearchFilter.push(option.val());
+                    }
+                }
+                else {
+                    panel.options.moduleSearchFilter = panel.options.moduleSearchFilter.filter(function (value) {
+                        return value !== option.val();
+                    });
+                }
+
+                panel.doSearch();
+            }
+        });
+       
+        $('#' + panel.divElement.id + '-filteModulesOptHidden').hide()
+    };
+
+    panel.setUpPanel();
+
+    this.doSearch = function() {
+        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());        
+        if (expression) {            
+            var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
+            panel.execute("inferred", expression, true, null);
+        }
+    }
+
+    this.clearOptionalFilters = function() {
+        panel.options.languageRefsetSearchFilter = [];
+        panel.options.typeSearchFilter = '';
+        panel.options.optionalTermFilter = '';
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect("clearSelection");
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOptBtn').addClass('disabled');
+        $('#' + panel.divElement.id + '-searchTypeButton').addClass('disabled');                    
+        $("#" + panel.divElement.id + '-searchTypeOpt').html("<span></span>");
+    }
+
+    this.setLanguageRefsets = function(languageRefsets) {
+        panel.options.languageRefsets = languageRefsets;
+        if (panel.options.languageRefsets.length !== 0) {
+            panel.setupLanguageRefsetDropdown();
+        }        
+    }    
 
     this.updateTypeFilterLabel = function() {        
         if (panel.options.typeSearchFilter == 'fsn') {
@@ -1455,7 +1508,7 @@ function queryComputerPanel(divElement, options) {
             }
         }
 
-        var params = "module=900000000000207008" + "&offset=" + skip + "&limit=" + limit + "&termActive=true";
+        var params = "offset=" + skip + "&limit=" + limit + "&termActive=true";
         params += (panel.options.eclQueryFilter === "stated" ? "&statedEcl" : "&ecl")   + "=" + encodeURIComponent(strippedExpression);
         if (panel.options.optionalTermFilter && panel.options.optionalTermFilter.length != 0) {
             params += "&term=" + panel.options.optionalTermFilter;
@@ -1468,6 +1521,11 @@ function queryComputerPanel(divElement, options) {
         if (panel.options.languageRefsetSearchFilter && panel.options.languageRefsetSearchFilter.length !== 0){                
             $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
                 params += "&preferredOrAcceptableIn=" + languageRefsetId;
+            });
+        }
+        if (panel.options.moduleSearchFilter && panel.options.moduleSearchFilter.length !== 0) {
+            $.each(panel.options.moduleSearchFilter, function(i, moduleId){
+                params += "&module=" + moduleId;
             });
         }
         expressionURL = options.serverUrl + "/" + branch + "/concepts?" + params;
