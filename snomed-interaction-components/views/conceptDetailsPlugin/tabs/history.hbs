@@ -17,15 +17,19 @@
     </tr>
     </thead>
     <tbody>
-    {{#each history}}
-        <tr>
-            <td style="width:12.5%;"> 
-                <span style="cursor:pointer" class="history-item" data-concept-id="{{this.conceptId}}" data-branch="{{this.branch}}" data-term="{{this.term}}" data-module="{{this.module}}">
-                    {{date}}
-                </span>
-            </td>
-            <td>{{componentTypes}}</td>
-        </tr>
-    {{/each}}
+    {{#if history}}
+        {{#each history}}
+            <tr>
+                <td style="width:12.5%;"> 
+                    <span style="cursor:pointer" class="history-item" data-concept-id="{{this.conceptId}}" data-branch="{{this.branch}}" data-term="{{this.term}}" data-module="{{this.module}}">
+                        {{date}}
+                    </span>
+                </td>
+                <td>{{componentTypes}}</td>
+            </tr>
+        {{/each}}
+    {{else}}
+        <p class="" style="margin-top: 20px; margin-left:20px;"><span class='i18n' data-i18n-id='i18n_no_history_found'>{{i18n "i18n_no_history_found" "No History Found"}}</span></p>
+    {{/if}}
     </tbody>
 </table>
