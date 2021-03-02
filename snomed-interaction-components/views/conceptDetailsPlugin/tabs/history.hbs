@@ -22,9 +22,9 @@
             {{#each history}}
                 <tr>
                     <td style="width:12.5%;"> 
-                        <span style="cursor:pointer" class="history-item" data-concept-id="{{this.conceptId}}" data-branch="{{this.branch}}" data-term="{{this.term}}" data-module="{{this.module}}">
+                        <a style="cursor:pointer" class="history-item" data-concept-id="{{this.conceptId}}" data-branch="{{this.branch}}" data-term="{{this.term}}" data-module="{{this.module}}">
                             {{date}}
-                        </span>
+                        </a>
                     </td>
                     <td>{{componentTypes}}</td>
                 </tr>
