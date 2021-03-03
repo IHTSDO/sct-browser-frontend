@@ -1644,7 +1644,7 @@ function conceptDetails(divElement, conceptId, options) {
                     var temp = $(event.target).attr('data-branch').substring($(event.target).attr('data-branch').lastIndexOf("/") + 1);
                     var number = temp.replace(/-/g, "");
                     $('#branchDisplay-' + panel.divElement.id).css("display", "contents");
-                    $('#branchDisplay-' + panel.divElement.id).html(' - ' + temp);
+                    $('#branchDisplay-' + panel.divElement.id).html(' - Historic Version: ' + temp);
                     panel.options.historyEffective = number;
                     panel.options.history = true;
                     panel.updateCanvas($(event.target).attr('data-branch'));
