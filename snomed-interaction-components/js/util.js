@@ -152,35 +152,46 @@ function drag(ev, id) {
 
 function dropE(ev){
     $(document).find('.drop-highlighted').removeClass('drop-highlighted');
-    //ev.preventDefault();
     var text = ev.dataTransfer.getData("Text");
-    text = removeSpaces(text);
-    if (text != "javascript:void(0);"){
-        var i = 0;
-        while (text.charAt(i) != "|" && i < text.length){
-            i++;
-        }
-        var conceptId = ev.dataTransfer.getData("concept-id");
-        if (typeof conceptId == "undefined" && i < text.length){
-            conceptId = text.substr(0, i);
-        }
-        var term = ev.dataTransfer.getData("term");
-        if (typeof term == "undefined"){
-            term = text.substr(i);
-        }
-        $(ev.target).trigger("change");
+    if (text != "javascript:void(0);") {
         setTimeout(function(){
-            if (window.getSelection) {
-                if (window.getSelection().empty) {
-                    window.getSelection().empty();
-                } else if (window.getSelection().removeAllRanges) {
-                    window.getSelection().removeAllRanges();
-                }
-            } else if (document.selection) {
-                document.selection.empty();
-            } 
+            insertCursorAtEndTarget(ev.target, text);          
         }, 0);                
     }
+}
+
+function insertCursorAtEndTarget(target) {
+	var txtarea = target;
+	var scrollPos = txtarea.scrollTop;
+    var strPos = 0;
+    var endPos = 0;
+	var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?  "ff" : (document.selection ? "ie" : false ) );
+	if (br == "ie") { 
+		txtarea.focus();
+		var range = document.selection.createRange();
+		range.moveStart ('character', -txtarea.value.length);
+        strPos = range.text.length;
+        endPos = strPos;
+	}
+	else if (br == "ff") {
+        strPos = txtarea.selectionStart;
+        endPos = txtarea.selectionEnd;
+    }
+	
+	if (br == "ie") { 
+		txtarea.focus();
+		var range = document.selection.createRange();
+		range.moveStart ('character', -txtarea.value.length);
+		range.moveStart ('character', strPos);
+		range.moveEnd ('character', 0);
+		range.select();
+	}
+	else if (br == "ff") {
+		txtarea.selectionStart = endPos;
+		txtarea.selectionEnd = endPos;
+		txtarea.focus();
+	}
+	txtarea.scrollTop = scrollPos;
 }
 
 function dropS(ev){
