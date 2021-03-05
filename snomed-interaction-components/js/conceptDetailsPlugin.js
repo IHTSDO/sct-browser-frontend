@@ -98,6 +98,38 @@ function conceptDetails(divElement, conceptId, options) {
         return returnColor;
     }
     panel.markerColor = panel.getNextMarkerColor(globalMarkerColor);
+    
+    this.updateCdiRels = function(concept){
+        console.log(concept);
+        concept.relationships.forEach(function(relationship) {
+            if(!relationship.target){
+                relationship.target = { fsn: {},
+                                        id: null,
+                                        pt: {}};
+            }
+        });
+        concept.classAxioms.forEach(function(axiom) {
+            axiom.relationships.forEach(function(relationship) {
+                if(!relationship.target){
+                    relationship.target = { fsn: {},
+                                        id: null,
+                                        pt: {}};
+                }
+            });
+        });
+        concept.gciAxioms.forEach(function(axiom) {
+            axiom.relationships.forEach(function(relationship) {
+                if(!relationship.target){
+                    relationship.target = { fsn: {},
+                                        term:'',
+                                        id: null,
+                                        pt: {}};
+                }
+            });
+        });
+        return concept;
+
+    }
 
     this.setupCanvas = function() {
         panel.attributesPId = panel.divElement.id + "-attributes-panel";
@@ -342,6 +374,7 @@ function conceptDetails(divElement, conceptId, options) {
         xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "?descendantCountForm=" + panel.options.selectedView, function(result) {
 
         }).done(function(result) {
+            result = panel.updateCdiRels(result);
             setDefaultTerm(result);
             var pt = {};
             $.each(result.descriptions, function(i, description) {
@@ -472,7 +505,6 @@ function conceptDetails(divElement, conceptId, options) {
                     axiom.historyEffective = true;
                 }
                 axiom.clinicalFindingRelationships = true;
-
                 if(axiom.active){
                     axiom.relationships.forEach(function(rel) {
                         if(rel.effectiveTime === panel.options.historyEffective){
@@ -1480,7 +1512,7 @@ function conceptDetails(divElement, conceptId, options) {
         }        
         
         xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "/children?form=" + panel.options.selectedView, function(result) {
-        }).done(function(result) {          
+        }).done(function(result) {
 
             result.forEach(function(item) {
                 if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
