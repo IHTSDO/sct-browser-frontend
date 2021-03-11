@@ -43,6 +43,12 @@
     <link rel="stylesheet" type="text/css" href="/browser/css/bootstrap-multiselect.css">
     <link rel="stylesheet" type="text/css" href="/browser/css/snomed-interaction-components.min.css?version=build_version">
 
+    <style>
+        .modal.fade .modal-dialog {
+            margin-top: 60px;
+        }
+    </style>
+
     <script>
         function changeFavicon(iconPrefix) {
           var link;
@@ -825,6 +831,19 @@
             if (!options.acceptLicense) {
                 $('#license-modal').modal('show');
             }
+
+            $("#cookiescript_accept").unbind();
+            $("#cookiescript_accept").click(function() {
+                createCookie("complianceCookie", "true", 2);
+                $('#cookiescript').hide();
+            });
+            options.complianceCookie = getCookie("complianceCookie") == "true";
+            if (!options.complianceCookie) {
+                $('#cookiescript').show();
+            } else {
+                $('#cookiescript').hide();
+            }
+            
 
             // set language one more time after finishing components initialization
             setUILanguage();
@@ -2043,6 +2062,13 @@
 </head>
 
 <body onLoad="getCopyrightYear(); determineServer();" style="height: 100%; display: block;">
+    <div id="cookiescript" style="top: 0px; background-color: rgb(17, 17, 17); z-index: 999999; opacity: 1; position: fixed; padding: 15px 0px; width: 100%; left: 0px; font-size: 13px; font-weight: normal; text-align: left; letter-spacing: normal; color: rgb(0, 0, 0); font-family: Arial, sans-serif; box-shadow: rgb(0, 0, 0) 0px 0px 8px; display: none;">
+        <div style="margin: 0px 10px; font-size: 13px; font-weight: bold; text-align: center; color: rgb(255, 255, 255); font-family: Arial, sans-serif; line-height: 23px; letter-spacing: normal;">This website uses cookies to improve user experience. By using our website you consent to all cookies in accordance with our Cookie Policy. &nbsp;&nbsp;
+            <a href="https://www.iubenda.com/privacy-policy/46600952/cookie-policy" target="_blank" style="text-decoration: underline; color: rgb(255, 255, 255); cursor: pointer; padding: 0px; margin: 0px; white-space: nowrap; display: inline-block;">Read more</span></a>
+            <div id="cookiescript_accept" style="border-radius: 5px; border: 0px; padding: 6px 10px; font-weight: bold; cursor: pointer; margin: 0px 10px 0px 15px; transition: all 0.25s ease 0s; display: inline; text-shadow: rgb(0, 0, 0) 0px 0px 2px; white-space: nowrap; background-color: rgb(91, 183, 91); color: rgb(255, 255, 255);">I agree</span></div>		
+            <divstyle="width: 1px; height: 1px; float: left;"></div>
+        </div>
+    </div>
     <nav class="navbar navbar-default  navbar-static-top" role="navigation">
         <div>
             <!-- Brand and toggle get grouped for better mobile display -->
