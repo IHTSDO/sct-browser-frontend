@@ -2163,68 +2163,55 @@ function conceptDetails(divElement, conceptId, options) {
         });
         if (panel.options.defaultLanguageReferenceSets && panel.options.defaultLanguageReferenceSets.length > 0) {
             $.each(panel.options.defaultLanguageReferenceSets, function(i, loopSelectedLangRefset) {
-                var allDescriptions = firstMatch.descriptions.slice(0);
-                var homeDescriptionsHtml = "";
-                $.each(allDescriptions, function(i, field) {
-                    field.included = false;
-                    field.preferred = false;
-                    field.acceptable = false;
-                    if (panel.options.displayInactiveDescriptions || field.active == true) {
-                        if (field.active == true) {
-                            if (homeDescriptionsHtml != "") {
-                                homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
+                if (panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;}).length !== 0) {
+                    var allDescriptions = firstMatch.descriptions.slice(0);
+                    var homeDescriptionsHtml = "";
+                    $.each(allDescriptions, function(i, field) {
+                        field.included = false;
+                        field.preferred = false;
+                        field.acceptable = false;
+                        if (panel.options.displayInactiveDescriptions || field.active == true) {
+                            if (field.active == true) {
+                                if (homeDescriptionsHtml != "") {
+                                    homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
+                                }
+                                homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
                             }
-                            homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
                         }
-                    }
-                });
-                Handlebars.registerHelper('removeSemtag', function(term) {
-                    return panel.removeSemtag(term);
-                });
-                Handlebars.registerHelper('if_eq', function(a, b, opts) {
-                    if (opts != "undefined") {
-                        if (a == b)
-                            return opts.fn(this);
-                        else
-                            return opts.inverse(this);
-                    }
-                });
+                    });
+                    Handlebars.registerHelper('removeSemtag', function(term) {
+                        return panel.removeSemtag(term);
+                    });
+                    Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                        if (opts != "undefined") {
+                            if (a == b)
+                                return opts.fn(this);
+                            else
+                                return opts.inverse(this);
+                        }
+                    });
 
-                var auxDescriptions = [];
-                $.each(allDescriptions, function(i, description) {
-                    var included = false;                   
-                    if (description.acceptabilityMap) {
-                        $.each(description.acceptabilityMap, function(langref, acceptability) {
-                            if (langref === loopSelectedLangRefset) {
-                                included = true;
-                                acceptabilityPair = description.acceptabilityMap[i];
-                                if (acceptability == "PREFERRED") {
-                                    description.preferred = true;
-                                } else {
-                                    if (acceptability == "ACCEPTABLE") {
-                                        description.acceptable = true;
+                    var auxDescriptions = [];
+                    $.each(allDescriptions, function(i, description) {
+                        var included = false;                   
+                        if (description.acceptabilityMap) {
+                            $.each(description.acceptabilityMap, function(langref, acceptability) {
+                                if (langref === loopSelectedLangRefset) {
+                                    included = true;
+                                    acceptabilityPair = description.acceptabilityMap[i];
+                                    if (acceptability == "PREFERRED") {
+                                        description.preferred = true;
+                                    } else {
+                                        if (acceptability == "ACCEPTABLE") {
+                                            description.acceptable = true;
+                                        }
                                     }
                                 }
-                            }
-                            
-                        });
-                    }
-
-                    if (included) {
-                        if (panel.options.displayInactiveDescriptions) {
-                            auxDescriptions.push(description);
-                        } else {
-                            if (description.active) {
-                                auxDescriptions.push(description);
-                            }
+                                
+                            });
                         }
-                    } else {
-                        description.acceptable = false;
-                        if (panel.options.hideNotAcceptable) {
-                            if (panel.options.displayInactiveDescriptions) {
-                                auxDescriptions.push(description);
-                            }
-                        } else {
+
+                        if (included) {
                             if (panel.options.displayInactiveDescriptions) {
                                 auxDescriptions.push(description);
                             } else {
@@ -2232,55 +2219,71 @@ function conceptDetails(divElement, conceptId, options) {
                                     auxDescriptions.push(description);
                                 }
                             }
-                        }
-                    }
-                });
-                allDescriptions = auxDescriptions.slice(0);
-                allDescriptions.sort(function(a, b) {
-                    if (a.active && !b.active)
-                        return -1;
-                    if (!a.active && b.active)
-                        return 1;
-                    if (a.active == b.active) {
-                        if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
-                            return -1;
-                        if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
-                            return 1;
-                        if (a.typeId < b.typeId)
-                            return -1;
-                        if (a.typeId > b.typeId)
-                            return 1;
-                        if (a.typeId == b.typeId) {
-                            if (a.preferred && !b.preferred)
-                                return -1;
-                            if (!a.preferred && b.preferred)
-                                return 1;
-                            if (a.preferred == b.preferred) {
-                                if (a.term < b.term)
-                                    return -1;
-                                if (a.term > b.term)
-                                    return 1;
+                        } else {
+                            description.acceptable = false;
+                            if (panel.options.hideNotAcceptable) {
+                                if (panel.options.displayInactiveDescriptions) {
+                                    auxDescriptions.push(description);
+                                }
+                            } else {
+                                if (panel.options.displayInactiveDescriptions) {
+                                    auxDescriptions.push(description);
+                                } else {
+                                    if (description.active) {
+                                        auxDescriptions.push(description);
+                                    }
+                                }
                             }
                         }
-                    }
+                    });
+                    allDescriptions = auxDescriptions.slice(0);
+                    allDescriptions.sort(function(a, b) {
+                        if (a.active && !b.active)
+                            return -1;
+                        if (!a.active && b.active)
+                            return 1;
+                        if (a.active == b.active) {
+                            if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
+                                return -1;
+                            if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
+                                return 1;
+                            if (a.typeId < b.typeId)
+                                return -1;
+                            if (a.typeId > b.typeId)
+                                return 1;
+                            if (a.typeId == b.typeId) {
+                                if (a.preferred && !b.preferred)
+                                    return -1;
+                                if (!a.preferred && b.preferred)
+                                    return 1;
+                                if (a.preferred == b.preferred) {
+                                    if (a.term < b.term)
+                                        return -1;
+                                    if (a.term > b.term)
+                                        return 1;
+                                }
+                            }
+                        }
 
-                    return 0;
-                });
+                        return 0;
+                    });
 
-                var context = {
-                    options: panel.options,
-                    languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
-                    longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
-                    divElementId: panel.divElement.id,
-                    server: panel.server,
-                    allDescriptions: allDescriptions
-                };
-                
-                if (allDescriptions.length != 0) {
-                    allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
-                }                
-                
-                $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);                   
+                    var context = {
+                        options: panel.options,
+                        languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
+                        longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
+                        divElementId: panel.divElement.id,
+                        server: panel.server,
+                        allDescriptions: allDescriptions
+                    };
+                    
+                    if (allDescriptions.length != 0) {
+                        allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                    }                
+                    
+                    $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);
+                }
+                                   
             });
         }
         else {                    
