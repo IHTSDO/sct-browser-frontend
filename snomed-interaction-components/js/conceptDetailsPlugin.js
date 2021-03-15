@@ -337,6 +337,7 @@ function conceptDetails(divElement, conceptId, options) {
         $('#refsets-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $('#product-details-' + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         if(!historyBranch){
+            $('#branchReset-' + panel.divElement.id).css("display", "none");
             $("#history-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
             panel.panelHistoryLoaded = false;
         }
@@ -1675,8 +1676,18 @@ function conceptDetails(divElement, conceptId, options) {
                 $('#history-' + panel.divElement.id).find(".history-item").click(function(event) {
                     var temp = $(event.target).attr('data-branch').substring($(event.target).attr('data-branch').lastIndexOf("/") + 1);
                     var number = temp.replace(/-/g, "");
-                    $('#branchDisplay-' + panel.divElement.id).css("display", "contents");
+                    $('#branchDisplay-' + panel.divElement.id).css("display", "inline-block");
                     $('#branchDisplay-' + panel.divElement.id).html(' - Historic Version: ' + temp);
+                    $('#branchReset-' + panel.divElement.id).css("display", "inline-block");
+                    $('#branchReset-' + panel.divElement.id).tooltip({
+                        placement: 'right',
+                        trigger: 'hover',
+                        title: 'Reset concept to latest version',
+                        animation: true
+                    });    
+                    $('#branchReset-' + panel.divElement.id).click(function(event) {
+                        panel.updateCanvas('');
+                    });
                     panel.options.historyEffective = number;
                     panel.options.history = true;
                     panel.updateCanvas($(event.target).attr('data-branch'));
