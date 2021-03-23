@@ -119,29 +119,8 @@ diagrammingMarkupEnabled|true|SNOMED CT diagramming Markup is enabled.
 
 ## Docker
 
-To run the SNOMED CT browser in a docker instance, first check the `docker/nginx.conf` file for the location of the snowstorm instance in the following code section (this example uses another docker container running snowstorm, otherwise add the instance relevant URL):
-
-```conf
-    location /snowstorm/snomed-ct/ {
-        #
-        # Snowstorm running on the local host machine on port 8080.
-        # Change this if using a remote server.
-        # Change the branch name if you want to target a specific version or extension.
-        #
-
-        proxy_pass http://host.docker.internal:8080/;
-
-     }
-```
-
-Then run the following command to build the docker image:
+Simply run the following commend, replacing the `<host>` variable with the URL to your snowstorm instance:
 
 ```bash
-docker build -t snomedstorm-browser-nginx .
-```
-
-and then simply run the container with:
-
-```bash
-docker run --name snowstorm-nginx -d -p 80:80 snomedstorm-browser-nginx
+docker run --name snowstorm-nginx -d -p 80:80 --env API_HOST=<host> snomedinternational/snomedct-browser
 ```
