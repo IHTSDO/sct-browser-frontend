@@ -410,28 +410,29 @@ function taxonomyPanel(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-panelBody").click(function(event) {
             if ($(event.target).hasClass("treeButton")) {
                 var conceptId = $(event.target).closest("li").attr('data-concept-id');
-                var iconId = panel.divElement.id + "-treeicon-" + conceptId;
+                var matchingI =  $(event.target).closest("i");
                 event.preventDefault();
-                if ($("#" + iconId).hasClass("glyphicon-chevron-down")) {
-                    //console.log("close");
-                    $(event.target).closest("li").find("ul").remove();
-                    $("#" + iconId).removeClass("glyphicon-chevron-down");
-                    $("#" + iconId).addClass("glyphicon-chevron-right");
-                } else if ($("#" + iconId).hasClass("glyphicon-chevron-right")) {
-                    //console.log("open");
-                    $("#" + iconId).removeClass("glyphicon-chevron-right");
-                    $("#" + iconId).addClass("glyphicon-refresh");
-                    $("#" + iconId).addClass("icon-spin");
-                    panel.getChildren($(event.target).closest("li").attr('data-concept-id'));
-                } else if ($("#" + iconId).hasClass("glyphicon-chevron-up")) {
-                    $("#" + iconId).removeClass("glyphicon-chevron-up");
-                    $("#" + iconId).addClass("glyphicon-refresh");
-                    $("#" + iconId).addClass("icon-spin");
-                    panel.wrapInParents($(event.target).closest("li").attr('data-concept-id'), $(event.target).closest("li"));
-                } else if ($("#" + iconId).hasClass("glyphicon-minus")) {
-                    //                    $("#" + iconId).removeClass("glyphicon-minus");
-                    //                    $("#" + iconId).addClass("glyphicon-chevron-right");
-                }
+                if (matchingI.length !== 0) {
+                    var closestI = matchingI[0];
+                    if ($(closestI).hasClass("glyphicon-chevron-down")) {
+                        $(event.target).closest("li").find("ul").remove();
+                        $(closestI).removeClass("glyphicon-chevron-down");
+                        $(closestI).addClass("glyphicon-chevron-right");
+                    } else if ($(closestI).hasClass("glyphicon-chevron-right")) {
+                        $(closestI).removeClass("glyphicon-chevron-right");
+                        $(closestI).addClass("glyphicon-refresh");
+                        $(closestI).addClass("icon-spin");
+                        panel.getChildren(conceptId, event.target);
+                    } else if ($(closestI).hasClass("glyphicon-chevron-up")) {
+                        $(closestI).removeClass("glyphicon-chevron-up");
+                        $(closestI).addClass("glyphicon-refresh");
+                        $(closestI).addClass("icon-spin");
+                        panel.wrapInParents(conceptId, $(event.target).closest("li"));
+                    } else if ($(closestI).hasClass("glyphicon-minus")) {
+                        //                    $("#" + iconId).removeClass("glyphicon-minus");
+                        //                    $("#" + iconId).addClass("glyphicon-chevron-right");
+                    }
+                }                
             } else if ($(event.target).hasClass("treeLabel")) {
                 var selectedId = $(event.target).attr('data-concept-id');
                 if (typeof selectedId != "undefined") {
@@ -451,11 +452,10 @@ function taxonomyPanel(divElement, conceptId, options) {
         $("#" + iconId).removeClass("glyphicon-chevron-right");
         $("#" + iconId).addClass("glyphicon-refresh");
         $("#" + iconId).addClass("icon-spin");
-        //console.log("getChildren..." + focusConcept.conceptId);
         panel.getChildren(focusConcept.conceptId);
     };
 
-    this.getChildren = function(conceptId) {
+    this.getChildren = function(conceptId, target) {
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
@@ -509,24 +509,49 @@ function taxonomyPanel(divElement, conceptId, options) {
             Handlebars.registerHelper('push', function(element) {
                 listIconIds.push(element);
             });
-            $("#" + panel.divElement.id + "-treeicon-" + conceptId).removeClass("glyphicon-refresh");
-            $("#" + panel.divElement.id + "-treeicon-" + conceptId).removeClass("icon-spin");
-            if (result.length > 0) {
-                $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-chevron-down");
+            if (target) {
+                var closestLi = ($(target).parent().parent())[0];
+                var closestI =  $(target).closest("#" + panel.divElement.id + "-treeicon-" + conceptId)[0];
+                
+                $(closestI).removeClass("glyphicon-refresh");
+                $(closestI).removeClass("icon-spin");
+                if (result.length > 0) {
+                    $(closestI).addClass("glyphicon-chevron-down");
+                } else {
+                    $(closestI).addClass("glyphicon-minus");
+                }
+                $(closestLi).find("ul").remove();
+                $(closestLi).append(JST["snomed-interaction-components/views/taxonomyPlugin/body/children.hbs"](context));
+                if (panel.options.descendantsCount == true) {
+                    result.forEach(function(concept) {
+                        if (concept.active) {
+                            var descedants = concept.descendantCount;
+                            $(closestLi).find('.selectable-row[data-concept-id="' + concept.conceptId + '"]').append("&nbsp;&nbsp;&nbsp;&nbsp;<span class='text-muted'>" + descedants + "</span>");
+                            
+                        }
+                    });                
+                }
             } else {
-                $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-minus");
+                $("#" + panel.divElement.id + "-treeicon-" + conceptId).removeClass("glyphicon-refresh");
+                $("#" + panel.divElement.id + "-treeicon-" + conceptId).removeClass("icon-spin");
+                if (result.length > 0) {
+                    $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-chevron-down");
+                } else {
+                    $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-minus");
+                }
+                $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").find("ul").remove();
+                $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").append(JST["snomed-interaction-components/views/taxonomyPlugin/body/children.hbs"](context));
+                if (panel.options.descendantsCount == true) {
+                    result.forEach(function(concept) {
+                        if (concept.active) {
+                            var descedants = concept.descendantCount;
+                            $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").find('.selectable-row[data-concept-id="' + concept.conceptId + '"]').append("&nbsp;&nbsp;&nbsp;&nbsp;<span class='text-muted'>" + descedants + "</span>");
+                            
+                        }
+                    });                
+                }
             }
-            $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").find("ul").remove();
-            $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").append(JST["snomed-interaction-components/views/taxonomyPlugin/body/children.hbs"](context));
-            if (panel.options.descendantsCount == true) {
-                result.forEach(function(concept) {
-                    if (concept.active) {
-                        var descedants = concept.descendantCount;
-                        $("#" + panel.divElement.id + "-treenode-" + conceptId).closest("li").find('.selectable-row[data-concept-id="' + concept.conceptId + '"]').append("&nbsp;&nbsp;&nbsp;&nbsp;<span class='text-muted'>" + descedants + "</span>");
-                        
-                    }
-                });                
-            }
+            
             $(".treeButton").disableTextSelect();
             $("[draggable='true']").tooltip({
                 placement: 'left auto',
