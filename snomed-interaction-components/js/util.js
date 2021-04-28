@@ -222,7 +222,7 @@ function dropS(ev){
     }
 }
 
-function dropC(ev, id, history) {
+function dropC(ev, id, historyBranch) {
     $(document).find('.drop-highlighted').removeClass('drop-highlighted');
     ev.preventDefault();
     var text = ev.dataTransfer.getData("Text");
@@ -249,7 +249,7 @@ function dropC(ev, id, history) {
         });
         if (conceptId && panelAct.conceptId != conceptId) {
             panelAct.conceptId = conceptId;
-            panelAct.updateCanvas(history);
+            panelAct.updateCanvas(historyBranch);
             channel.publish(panelAct.divElement.id, {
                 term: term,
                 conceptId: panelAct.conceptId,

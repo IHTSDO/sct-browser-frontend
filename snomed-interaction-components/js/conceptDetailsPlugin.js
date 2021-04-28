@@ -350,7 +350,7 @@ function conceptDetails(divElement, conceptId, options) {
         
         var branch = options.edition;
         
-        if (historyBranch !== ''){
+        if (historyBranch){
             branch = historyBranch;
         }
         else{
