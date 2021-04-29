@@ -22,6 +22,13 @@
 <p class="" style="margin-top: 20px;"><span class='i18n' data-i18n-id='i18n_expression_inferred_concept_definition'>{{i18n "i18n_expression_inferred_concept_definition" "Expression from Inferred Concept Definition"}}</span> (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-inferred-expression" data-clipboard-text="{{plainInferredExpression}}"></i></small></p>
 <div class="expression-code" style="margin-top: 10px; padding: 10px;">{{{inferredExpressionHtml}}}</div>
 <br><br>
+
+{{#if_gr otherOwlExpressions.length 0}}
+<p class=""><span class='i18n' data-i18n-id='i18n_other_expressions'>{{i18n "i18n_other_expressions" "Other Expressions"}}</span> (*)</p>
+{{#each otherOwlExpressions}}        
+        <div class="expression-code" style="margin-top: 10px; padding: 10px;"><pre>{{this}}</pre></div>
+    {{/each}}
+{{/if_gr}}
 <div class="well small">
     <p>(*) <span class='i18n' data-i18n-id='i18n_expression_text1'>{{i18n "i18n_expression_text1" "The expressions are generated according to the ABNF syntax found in the \"SNOMED CT Compositional Grammar Specification and Guide\""}}</span> (<a href="http://snomed.org/compgrammar" target="_blank">http://snomed.org/compgrammar</a>)</p>
     <p><span class='i18n' data-i18n-id='i18n_expression_text2'>{{i18n "i18n_expression_text2" "SNOMED CT Compositional Grammar is a lightweight syntax for the representation of SNOMED CT expressions. SNOMED CT expressions are used in Electronic Health Records (EHRs) to represent clinical meanings in a way that enables automatic interpretation. They are also carried in messages, used to define precoordinated concepts and used to represent links between SNOMED CT and other terminologies"}}</span>.</p>

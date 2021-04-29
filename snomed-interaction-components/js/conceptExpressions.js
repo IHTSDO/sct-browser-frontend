@@ -98,40 +98,45 @@ var conceptToPostCoordinatedExpression = function(concept, relsProperty, div, op
 };
 
 function formatOwlAxiomExpression (owlExpression, conceptsMap) {
-    var text = owlExpression;
+    var lines = getLines(owlExpression);
     
-    // Add new line char
+    // Add tab char
+    var tabCount = 0;
+    for (var i = 0 ; i < lines.length; i++) {        
+        lines[i] = lines[i].trim();
+        if (lines[i].indexOf(')') !== -1) {
+            tabCount--;
+        }
+        if (i !== 0 && tabCount > 0) {
+            for (var j = 0 ; j < tabCount; j++) {
+                lines[i] = '\t' + lines[i];
+            }
+        }
+        if (lines[i].indexOf('(') !== -1) {
+            tabCount++;
+        }
+
+        // Fill FSN
+        lines[i] = fillConceptFSN(lines[i], conceptsMap);       
+    }
+    return lines.join('\n');
+}
+
+function addTabToLine(line, tabCount) {}
+
+function getLines(text) {
     text = text.replace(/\(/g, "(\n");
     text = text.replace(/\)/g, "\n)\n"); 
     text = text.replace(/(:\d*)\s/g, "$&\n");
     text = text.replace(/(:roleGroup)\s/g, "$&\n");
 
-    var textArr = text.split("\n");
-    textArr = textArr.filter(function (el) {
+    var lines = text.split("\n");
+    lines = lines.filter(function (el) {
       el = el.trim();
       return el != '';
     });
 
-    // Add tab char
-    var tabCount = 0;
-    for (var i = 0 ; i < textArr.length; i++) {        
-      textArr[i] = textArr[i].trim();
-      if (textArr[i].indexOf(')') !== -1) {
-        tabCount--;
-      }
-      if (i !== 0 && tabCount > 0) {
-        for (var j = 0 ; j < tabCount; j++) {
-          textArr[i] = '\t' + textArr[i];
-        }
-      }
-      if (textArr[i].indexOf('(') !== -1) {
-        tabCount++;
-      }
-
-      // Fill FSN
-      textArr[i] = fillConceptFSN(textArr[i], conceptsMap);       
-    }
-    return textArr.join('\n');
+    return lines;
 }
 
 function fillConceptFSN (text, conceptsMap) {
@@ -153,8 +158,28 @@ function fillConceptFSN (text, conceptsMap) {
     }
 }
 
-function renderExpressionForAxioms (concept, members, classAxiomOwlExpressions, gciAxiomOwlExpressions) {
-    var owlAxiomExpressions = {};
+function getConceptIdsFromOwlExpresstion(owlExpression) {
+    var lines = getLines(owlExpression);
+    var conceptIds = [];
+    for (var i = 0 ; i < lines.length; i++) {
+        var line = lines[i].trim();
+        const match = /(^:\d*)/g;
+        if (match.test(line)) {
+            conceptIds.push(line.substring(1,line.length));            
+        }
+    }
+    return conceptIds;
+}
+
+function renderExpressionForAxioms (concept, members, classAxiomOwlExpressions, gciAxiomOwlExpressions, otherOwlExpressions) {
+    Handlebars.registerHelper('if_gr', function(a, b, opts) {
+        if (a > b)
+            return opts.fn(this);
+        else
+            return opts.inverse(this);
+    });
+    
+    var owlAxiomExpressions = {};    
 
     members.forEach(function(item) {
         if (item.additionalFields.hasOwnProperty('owlExpression')) {                               
@@ -195,20 +220,29 @@ function renderExpressionForAxioms (concept, members, classAxiomOwlExpressions, 
         owlAxiomExpression[key] = formatOwlAxiomExpression(owlAxiomExpressions[key], conceptsMap);
     }
 
+    var inUseOwlExpressionIds = [];
     if(concept.classAxioms && concept.classAxioms.length !== 0) {
         concept.classAxioms.forEach(function(classAxiom){
             if (owlAxiomExpression.hasOwnProperty(classAxiom.axiomId)) {
                 classAxiomOwlExpressions.push(owlAxiomExpression[classAxiom.axiomId]);
+                inUseOwlExpressionIds.push(classAxiom.axiomId);
             }
         });
     } 
     
     if(concept.gciAxioms && concept.gciAxioms.length !== 0) {
-        concept.gciAxioms.forEach(function(classAxiom){
-            if (owlAxiomExpression.hasOwnProperty(classAxiom.axiomId)) {
-                gciAxiomOwlExpressions.push(owlAxiomExpression[classAxiom.axiomId]);
+        concept.gciAxioms.forEach(function(gciAxiom){
+            if (owlAxiomExpression.hasOwnProperty(gciAxiom.axiomId)) {
+                gciAxiomOwlExpressions.push(owlAxiomExpression[gciAxiom.axiomId]);
+                inUseOwlExpressionIds.push(gciAxiom.axiomId);
             }        
         });
+    }
+
+    for (var key in owlAxiomExpressions) {
+        if (!inUseOwlExpressionIds.includes(key)) {
+            otherOwlExpressions.push(owlAxiomExpressions[key]);
+        }
     }
 }
   
@@ -219,14 +253,15 @@ var renderExpression = function(concept, inferredConcept, div, options) {
     var plainPreCoordinatedExpression =  tmp.textContent || tmp.innerText || "";
     plainPreCoordinatedExpression = plainPreCoordinatedExpression.replace(/\s\s+/g, ' ');
 
-    if((concept.classAxioms && concept.classAxioms.length !== 0) || concept.gciAxioms && concept.gciAxioms.length !== 0) {
+    if((concept.classAxioms && concept.classAxioms.length !== 0) || (concept.gciAxioms && concept.gciAxioms.length !== 0)) {
         
         $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + concept.conceptId + '&active=true', function(result) {
         }).done(function(result) {
             var classAxiomOwlExpressions = [];
-            var gciAxiomOwlExpressions = [];           
+            var gciAxiomOwlExpressions = [];
+            var otherOwlExpressions = [];           
             if (result.total > 0) {
-                renderExpressionForAxioms (concept, result.items, classAxiomOwlExpressions, gciAxiomOwlExpressions)
+                renderExpressionForAxioms (concept, result.items, classAxiomOwlExpressions, gciAxiomOwlExpressions, otherOwlExpressions)
             }
 
             var inferredHtml = conceptToPostCoordinatedExpression(concept, "relationships", div, options);
@@ -243,17 +278,36 @@ var renderExpression = function(concept, inferredConcept, div, options) {
                 plainPreCoordinatedExpression: plainPreCoordinatedExpression,
                 plainStatedExpression: plainStatedExpression,
                 classAxiomOwlExpressions: classAxiomOwlExpressions,
+                otherOwlExpressions: otherOwlExpressions,
                 gciAxiomOwlExpressions: gciAxiomOwlExpressions,
                 plainInferredExpression: plainInferredExpression
             };
-            div.html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/expression.hbs"](context).trim());
+            if (otherOwlExpressions.length !== 0) {
+                var conceptIds = [];
+                otherOwlExpressions.forEach(function(expression) {
+                    conceptIds = conceptIds.concat(getConceptIdsFromOwlExpresstion(expression));
+                });
+
+                $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "concepts?conceptIds=" + conceptIds.join(','), function(result) {
+                }).done(function(result) {
+                    var conceptsMap = {};
+                    if (result && result.items) {
+                        result.items.forEach(function(item) {
+                            conceptsMap[item.conceptId] = item.fsn.term;
+                        });
+                    }
+                    for (var i = 0; i < otherOwlExpressions.length; i++) {                   
+                        otherOwlExpressions[i] = formatOwlAxiomExpression(otherOwlExpressions[i], conceptsMap);
+                    }
+                    div.html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/expression.hbs"](context).trim());
+                });
+            } else {
+                div.html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/expression.hbs"](context).trim());
+            }            
 
             if (panel.clipboard) panel.clipboard.destroy();
             panel.clipboard = new Clipboard('.clip-btn-exp');
-            panel.clipboard.on('success', function(e) {
-                // console.info('Action:', e.action);
-                // console.info('Text:', e.text);
-                // console.info('Trigger:', e.trigger);
+            panel.clipboard.on('success', function(e) {                
                 alertEvent("Copied!", "info");
                 e.clearSelection();
             });
