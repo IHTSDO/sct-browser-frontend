@@ -24,10 +24,13 @@
 <br><br>
 
 {{#if_gr otherOwlExpressions.length 0}}
-<p class=""><span class='i18n' data-i18n-id='i18n_other_expressions'>{{i18n "i18n_other_expressions" "Other Expressions"}}</span> (*)</p>
-{{#each otherOwlExpressions}}        
-        <div class="expression-code" style="margin-top: 10px; padding: 10px;"><pre>{{this}}</pre></div>
-    {{/each}}
+<p class=""><span class='i18n' data-i18n-id='i18n_other_expressions' style="margin-bottom: 10px">{{i18n "i18n_other_expressions" "Other Expressions"}}</span> (*)</p>
+{{#each otherOwlExpressions}}
+    <div>
+        <small><i class="glyphicon glyphicon-export clip-btn-exp" style="float: right;top: 20px;margin-right: 20px;" data-clipboard-text="{{this}}"></i></small>        
+        <div class="expression-code" style="padding: 10px;"><pre>{{this}}</pre></div>
+    </div>
+{{/each}}
 {{/if_gr}}
 <div class="well small">
     <p>(*) <span class='i18n' data-i18n-id='i18n_expression_text1'>{{i18n "i18n_expression_text1" "The expressions are generated according to the ABNF syntax found in the \"SNOMED CT Compositional Grammar Specification and Guide\""}}</span> (<a href="http://snomed.org/compgrammar" target="_blank">http://snomed.org/compgrammar</a>)</p>
