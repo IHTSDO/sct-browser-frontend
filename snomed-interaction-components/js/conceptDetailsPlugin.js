@@ -2163,33 +2163,93 @@ function conceptDetails(divElement, conceptId, options) {
         }).fail(function() {});
     }
 
-    this.renderDesriptionsPanel =  function (firstMatch) {
-        var allLangsHtml = "";
-        firstMatch.descriptions.sort(function(a, b) {
-            if (a.lang == options.defaultLanguage && b.lang != options.defaultLanguage)
+    this.sortDescriptions = function(descriptions) {
+        descriptions.sort(function(a, b) {
+            if (a.active && !b.active)
                 return -1;
-            if (a.lang != options.defaultLanguage && b.lang == options.defaultLanguage)
+            if (!a.active && b.active)
                 return 1;
+            if (a.active == b.active) {
+                if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
+                    return -1;
+                if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
+                    return 1;
+                if (a.typeId < b.typeId)
+                    return -1;
+                if (a.typeId > b.typeId)
+                    return 1;
+                if (a.typeId == b.typeId) {
+                    if (a.preferred && !b.preferred)
+                        return -1;
+                    if (!a.preferred && b.preferred)
+                        return 1;
+                    if (a.preferred == b.preferred) {
+                        if (a.term < b.term)
+                            return -1;
+                        if (a.term > b.term)
+                            return 1;
+                    }
+                }
+            }
+
             return 0;
         });
-        if (panel.options.defaultLanguageReferenceSets && panel.options.defaultLanguageReferenceSets.length > 0) {
-            $.each(panel.options.defaultLanguageReferenceSets, function(i, loopSelectedLangRefset) {
-                if (panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;}).length !== 0) {
-                    var allDescriptions = firstMatch.descriptions.slice(0);
-                    var homeDescriptionsHtml = "";
-                    $.each(allDescriptions, function(i, field) {
-                        field.included = false;
-                        field.preferred = false;
-                        field.acceptable = false;
-                        if (panel.options.displayInactiveDescriptions || field.active == true) {
-                            if (field.active == true) {
-                                if (homeDescriptionsHtml != "") {
-                                    homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
-                                }
-                                homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
+    }
+
+    this.renderDesriptionsPanel =  function (firstMatch) {
+        var allDescriptions = firstMatch.descriptions.slice(0);
+        
+        var nonEnglishDescriptions = allDescriptions.filter(function(desc) {
+            return desc.lang !== 'en';
+        });
+        var englishDescriptions = allDescriptions.filter(function(desc) {
+            return desc.lang === 'en';
+        });       
+        
+        $.each(englishDescriptions, function(i, description) {
+            description.preferred = false;
+            description.acceptable = false;                           
+            if (description.acceptabilityMap) {
+                $.each(description.acceptabilityMap, function(langref, acceptability) {
+                    if ('900000000000509007' === langref) {
+                        acceptabilityPair = description.acceptabilityMap[i];
+                        if (acceptability == "PREFERRED") {
+                            description.preferred = true;
+                        } else {
+                            if (acceptability == "ACCEPTABLE") {
+                                description.acceptable = true;
                             }
                         }
-                    });
+                    }                                
+                });
+            }
+        });
+
+        panel.sortDescriptions(englishDescriptions);
+        var newDescriptions = [];
+        if (panel.options.defaultLanguage && panel.options.defaultLanguage !== 'en') {
+            newDescriptions = nonEnglishDescriptions.concat(englishDescriptions);
+        } else {                    
+            newDescriptions = englishDescriptions.concat(nonEnglishDescriptions);
+        }
+
+        var homeDescriptionsHtml = "";
+        $.each(newDescriptions, function(i, field) {           
+            if (field.active == true) {
+                if (field.active == true) {
+                    if (homeDescriptionsHtml != "") {
+                        homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
+                    }
+                    homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
+                }
+            }
+        });
+        $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);
+        
+        var allLangsHtml = "";
+        if (panel.options.defaultLanguageReferenceSets && panel.options.defaultLanguageReferenceSets.length > 0) {            
+            $.each(panel.options.defaultLanguageReferenceSets, function(i, loopSelectedLangRefset) {
+                if (panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;}).length !== 0) {                    
                     Handlebars.registerHelper('removeSemtag', function(term) {
                         return panel.removeSemtag(term);
                     });
@@ -2204,6 +2264,8 @@ function conceptDetails(divElement, conceptId, options) {
 
                     var auxDescriptions = [];
                     $.each(allDescriptions, function(i, description) {
+                        description.preferred = false;
+                        description.acceptable = false;
                         var included = false;                   
                         if (description.acceptabilityMap) {
                             $.each(description.acceptabilityMap, function(langref, acceptability) {
@@ -2217,8 +2279,7 @@ function conceptDetails(divElement, conceptId, options) {
                                             description.acceptable = true;
                                         }
                                     }
-                                }
-                                
+                                }                                
                             });
                         }
 
@@ -2248,36 +2309,7 @@ function conceptDetails(divElement, conceptId, options) {
                         }
                     });
                     allDescriptions = auxDescriptions.slice(0);
-                    allDescriptions.sort(function(a, b) {
-                        if (a.active && !b.active)
-                            return -1;
-                        if (!a.active && b.active)
-                            return 1;
-                        if (a.active == b.active) {
-                            if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
-                                return -1;
-                            if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
-                                return 1;
-                            if (a.typeId < b.typeId)
-                                return -1;
-                            if (a.typeId > b.typeId)
-                                return 1;
-                            if (a.typeId == b.typeId) {
-                                if (a.preferred && !b.preferred)
-                                    return -1;
-                                if (!a.preferred && b.preferred)
-                                    return 1;
-                                if (a.preferred == b.preferred) {
-                                    if (a.term < b.term)
-                                        return -1;
-                                    if (a.term > b.term)
-                                        return 1;
-                                }
-                            }
-                        }
-
-                        return 0;
-                    });
+                    panel.sortDescriptions(allDescriptions);
 
                     var context = {
                         options: panel.options,
@@ -2290,31 +2322,14 @@ function conceptDetails(divElement, conceptId, options) {
                     
                     if (allDescriptions.length != 0) {
                         allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
-                    }                
-                    
-                    $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);
+                    }
                 }
                                    
             });
         }
         else {                    
             // START FOR                    
-            for (var language in options.languageObject) {
-                var allDescriptions = firstMatch.descriptions.slice(0);
-                var homeDescriptionsHtml = "";
-                $.each(allDescriptions, function(i, field) {
-                    field.included = false;
-                    field.preferred = false;
-                    field.acceptable = false;
-                    if (panel.options.displayInactiveDescriptions || field.active == true) {
-                        if (field.active == true) {
-                            if (homeDescriptionsHtml != "") {
-                                homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
-                            }
-                            homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
-                        }
-                    }
-                });
+            for (var language in options.languageObject) {                
                 Handlebars.registerHelper('removeSemtag', function(term) {
                     return panel.removeSemtag(term);
                 });
@@ -2330,6 +2345,8 @@ function conceptDetails(divElement, conceptId, options) {
                 var auxDescriptions = [];
                 $.each(allDescriptions, function(i, description) {
                     var included = false;
+                    description.preferred = false;
+                    description.acceptable = false;
                     if(description.lang === language){
                         included = true;
                     }
@@ -2372,36 +2389,7 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 });
                 allDescriptions = auxDescriptions.slice(0);
-                allDescriptions.sort(function(a, b) {
-                    if (a.active && !b.active)
-                        return -1;
-                    if (!a.active && b.active)
-                        return 1;
-                    if (a.active == b.active) {
-                        if ((a.acceptable || a.preferred) && (!b.preferred && !b.acceptable))
-                            return -1;
-                        if ((!a.preferred && !a.acceptable) && (b.acceptable || b.preferred))
-                            return 1;
-                        if (a.typeId < b.typeId)
-                            return -1;
-                        if (a.typeId > b.typeId)
-                            return 1;
-                        if (a.typeId == b.typeId) {
-                            if (a.preferred && !b.preferred)
-                                return -1;
-                            if (!a.preferred && b.preferred)
-                                return 1;
-                            if (a.preferred == b.preferred) {
-                                if (a.term < b.term)
-                                    return -1;
-                                if (a.term > b.term)
-                                    return 1;
-                            }
-                        }
-                    }
-
-                    return 0;
-                });
+                panel.sortDescriptions(allDescriptions);
 
                 var context = {
                     options: panel.options,
@@ -2412,9 +2400,7 @@ function conceptDetails(divElement, conceptId, options) {
                     allDescriptions: allDescriptions
                 };                       
 
-                allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
-                
-                $('#home-descriptions-' + panel.divElement.id).html(homeDescriptionsHtml);                        
+                allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);                     
             }
             // END FOR                   
         }
