@@ -384,7 +384,9 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 if (description.lang == options.defaultLanguage && description.active) {
                     $.each(description.acceptabilityMap, function(i, map){
-                        if(map == "PREFERRED"){
+                        if(map == "PREFERRED" && 
+                          description.type !== "TEXT_DEFINITION" && 
+                          panel.options.defaultLanguageReferenceSets.includes(i)) {
                             pt = description;
                         }
                     })
@@ -396,6 +398,7 @@ function conceptDetails(divElement, conceptId, options) {
             else{
                 result.defaultTerm = result.fsn.term;
             }
+            console.log("I'm here");
             var firstMatch = result;
             panel.firstMatch = result;
             if(firstMatch.effectiveTime == panel.options.historyEffective){
