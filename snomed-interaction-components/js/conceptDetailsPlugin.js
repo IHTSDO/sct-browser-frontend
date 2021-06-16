@@ -406,7 +406,7 @@ function conceptDetails(divElement, conceptId, options) {
                 if(description.effectiveTime === panel.options.historyEffective){
                     description.historyEffective = true;
                 }
-                if (description.lang == options.defaultLanguage && description.active) {
+                if (description.type === 'SYNONYM' && description.lang == options.defaultLanguage && description.active) {
                     $.each(description.acceptabilityMap, function(i, map){
                         if(map == "PREFERRED"){
                             pt = description;
