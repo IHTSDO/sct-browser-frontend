@@ -32,7 +32,9 @@
     <script src="external-libs/jquery.history.js"></script>
     <script src="external-libs/ZeroClipboard.js"></script>
     <script src="internal-libs/snomed-interaction-components.min.js?version=build_version"></script>
-    
+    <script type="text/javascript" src="ecl-builder/ecl-builder.js" defer></script>
+
+    <link rel="stylesheet" type="text/css" href="ecl-builder/styles.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.splitter.css">
     <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.custom.min.css">
@@ -2023,6 +2025,18 @@
                 delay: 1000
             });
             
+        }
+    </script>
+    <script>
+        function openEclBuilder() {
+            var eclString = $('#fh-query_canvas-ExpText').val();
+
+            $("body").append("<ecl-builder id='ecl-builder' branch=" + options.edition + " api-url='/snowstorm/snomed-ct' ecl-string='" + eclString + "'></ecl-builder>");
+
+            const el = document.querySelector('ecl-builder');
+            el.addEventListener('output', e => {
+                $('#fh-query_canvas-ExpText').val(e.detail);
+            });
         }
     </script>
     <style>

@@ -101,8 +101,9 @@
           </div>
         </div>
         <div class="tab-pane active" id="{{divElementId}}-ExpTab" style="padding: 15px;margin: 0;">
-          <textarea rows="5" ondrop="dropE(event);" class="form-control i18n" placeholder="{{i18n "i18n_expression" "Expression"}}..." id="{{divElementId}}-ExpText"></textarea>          
-          <div class="btn btn-success i18n" style="margin-top: 5px; margin-bottom: 10px; margin-right: 10px; position: initial" id='{{divElementId}}-computeInferredButton2' data-i18n-id="i18n_execute">{{i18n "i18n_execute" "Execute"}}</div>
+          <textarea rows="5" ondrop="dropE(event);" class="form-control i18n" placeholder="{{i18n "i18n_expression" "Expression"}}..." id="{{divElementId}}-ExpText"></textarea>
+            <button type="button" id="{{divElemeentId}}-eclBuilderButton" class="btn btn-primary i18n" style="margin-top: 5px; margin-bottom: 10px; margin-right: 10px; position: initial" data-i18n-id="i18n_eclBuilder" onclick="openEclBuilder()">{{i18n "i18n_eclBuilder" "ECL Builder"}}</button>
+            <div class="btn btn-success i18n" style="margin-top: 5px; margin-bottom: 10px; margin-right: 10px; position: initial" id='{{divElementId}}-computeInferredButton2' data-i18n-id="i18n_execute">{{i18n "i18n_execute" "Execute"}}</div>
           <br>
           <div class="btn-group" style="width: 50%;">
             <input data-droppable="true" ondrop="dropS(event);" ondragover="removeHighlight();" style="width: 100%; margin-top: 3px" ondragstart="allowDrop(event);" class="form-control" id="{{divElementId}}-searchBoxOption" placeholder="{{i18n "i18n_ecl_search_option_placeholder" "Enter additional search filter (optional)"}}" autocomplete="off">
