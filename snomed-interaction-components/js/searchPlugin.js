@@ -35,6 +35,66 @@ function searchPanel(divElement, options) {
     panel.subscriptionsColor = [];
     this.history = [];
 
+    var en_es_semantictags_mapping = {
+        "OWL metadata concept": "concepto de metadatos de OWL",  
+        "administration method": "método de administración",  
+        "assessment scale": "escala de evaluación", 
+        "attribute": "atributo",
+        "basic dose form": "forma farmacéutica básica",
+        "body structure": "estructura corporal",
+        "cell": "célula",
+        "cell structure": "estructura celular",
+        "clinical drug": "fármaco de uso clínico",  
+        "core metadata concept": "metadato del núcleo",  
+        "disorder": "trastorno",  
+        "disposition": "disposición",
+        "dose form": "forma farmacéutica",  
+        "environment": "medio ambiente",
+        "environment / location": "medio ambiente / localización", 
+        "ethnic group": "grupo étnico",
+        "event": "evento",  
+        "finding": "hallazgo",
+        "foundation metadata concept": "metadato fundacional",  
+        "geographic location": "localización geográfica",  
+        "intended site": "sitio de administración previsto",
+        "life style": "estilo de vida",
+        "link assertion": "relación asertiva",
+        "linkage concept": "concepto de enlace",  
+        "medicinal product": "producto medicinal",
+        "medicinal product form": "forma farmacéutica de producto medicinal",  
+        "metadata": "metadato",
+        "morphologic abnormality": "anomalía morfológica", 
+        "namespace concept": "espacio de nombres",
+        "navigational concept": "concepto para navegación", 
+        "observable entity": "entidad observable",
+        "occupation": "ocupación",
+        "organism": "organismo",  
+        "person": "persona",
+        "physical force": "fuerza física",
+        "physical object": "objeto físico",  
+        "procedure": "procedimiento",
+        "product": "producto",
+        "product name": "nombre de producto",
+        "qualifier value": "calificador",
+        "racial group": "grupo racial",
+        "record artifact": "elemento de registro",
+        "regime/therapy": "régimen/tratamiento",  
+        "release characteristic": "forma de liberación",
+        "religion/philosophy": "religión/filosofía",
+        "role": "rol",  
+        "situation": "situación",
+        "social concept": "contexto social",
+        "special concept": "concepto especial",
+        "specimen": "espécimen",
+        "staging scale": "escala de estadificación",
+        "state of matter": "estado de la materia",
+        "substance": "sustancia",
+        "supplier": "proveedor",
+        "transformation": "transformación", 
+        "tumor staging": "estadificación tumoral",  
+        "unit of presentation": "unidad de presentación"
+      };
+
     this.setupCanvas = function() {
         var server = 'snowstorm';
         if(options.serverUrl.includes('snowowl')){
@@ -1003,12 +1063,24 @@ function searchPanel(divElement, options) {
             // search again if list of semantic tags provided
             if (semTags && semTags.length !== 0) {
                 var filtered = [];
+                var semanticTags = [];            
                 if (result.buckets && result.buckets.semanticTags) {
                     $.each(semTags, function(i, semTag){
                         if (typeof result.buckets.semanticTags[semTag] !== 'undefined') {
                             filtered.push(semTag);
                         }
-                    });                                
+                    });
+                    for (var key in result.buckets.semanticTags) {
+                        semanticTags.push({
+                            key: key,
+                            value: result.buckets.semanticTags[key]
+                        });
+                    }
+                    if (panel.options.editionShortname === 'SNOMEDCT-ES') {
+                        semanticTags = sortSemanticTags(semanticTags);                    
+                    } else {
+                        semanticTags.sort(function(a,b) {return a.key.localeCompare(b.key)});
+                    }                            
                 }
                 if (filtered.length !== 0) {
                     $('#' + panel.divElement.id + '-searchBar4').hide();
@@ -1019,7 +1091,8 @@ function searchPanel(divElement, options) {
                     };
                     var context = {
                         server: server,
-                        result: result,                                  
+                        result: result,
+                        semanticTags: semanticTags,                                  
                         divElementId: panel.divElement.id,
                         options: panel.options
                     };
@@ -1174,14 +1247,31 @@ function searchPanel(divElement, options) {
             if(options.serverUrl.includes('snowowl')){
                server = 'snowowl';
             };
+
+            var semanticTags = [];
+            if (result.buckets && result.buckets.semanticTags) {
+                for (var key in result.buckets.semanticTags) {
+                    semanticTags.push({
+                        key: key,
+                        value: result.buckets.semanticTags[key]
+                    });
+                }
+               
+                if (panel.options.editionShortname === 'SNOMEDCT-ES') {
+                    semanticTags = sortSemanticTags(semanticTags);                    
+                } else {
+                    semanticTags.sort(function(a,b) {return a.key.localeCompare(b.key)});
+                }                
+            }
             
             var context = {
                 server: server,
                 result: result,
+                semanticTags: semanticTags,
                 elapsed: elapsed,
                 divElementId: panel.divElement.id,
                 options: panel.options
-            };
+            };            
             $('#' + panel.divElement.id + '-searchBar').html(JST["snomed-interaction-components/views/searchPlugin/body/bar.hbs"](context));                                                  
             $('#' + panel.divElement.id + '-searchBar2').html(JST["snomed-interaction-components/views/searchPlugin/body/bar2.hbs"](context));
             $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
@@ -1399,6 +1489,88 @@ function searchPanel(divElement, options) {
         }});
     }
 
+    function sortSemanticTags(semanticTags) {
+        var allEnSemantictags = Object.keys(en_es_semantictags_mapping);
+        var allEsSemantictags = Object.values(en_es_semantictags_mapping);
+        var newSemantictags = [];
+        var semanticTagsInUsed = [];
+        
+        // check for English semantic tags
+        for (var i = 0; i < semanticTags.length; i++) {
+            if (allEnSemantictags.indexOf(semanticTags[i].key) !== -1) {
+                semanticTagsInUsed.push(semanticTags[i]);
+                newSemantictags.push({
+                    en_key: semanticTags[i].key,
+                    en_value: semanticTags[i].value,
+                    es_key: '',
+                    es_value: ''
+                });
+            }
+        }
+        // remove EN semantic tags from list
+        semanticTags = semanticTags.filter( function( el ) {
+            return semanticTagsInUsed.indexOf( el ) < 0;
+        });
+        semanticTagsInUsed = [];
+
+        // check for Spainish semantic tags
+        for (var i = 0; i < semanticTags.length; i++) {
+            if (allEsSemantictags.indexOf(semanticTags[i].key) !== -1) {
+                semanticTagsInUsed.push(semanticTags[i]);
+                var found = newSemantictags.filter(function(el) {
+                    return en_es_semantictags_mapping[el.en_key] === semanticTags[i].key;
+                })[0];               
+                if (found) {
+                    found.es_key = semanticTags[i].key;
+                    found.es_value = semanticTags[i].value;
+                } else {
+                    newSemantictags.push({
+                        en_key: '',
+                        en_value: '',
+                        es_key: semanticTags[i].key,
+                        es_value: semanticTags[i].value
+                    }); 
+                }
+            }
+        }
+
+        // remove ES semantic tags from list
+        semanticTags = semanticTags.filter( function( el ) {
+            return semanticTagsInUsed.indexOf( el ) < 0;
+        });
+        semanticTagsInUsed = [];
+
+        // treat all remaning ones as English Semantic tags
+        for (var i = 0; i < semanticTags.length; i++) {
+            newSemantictags.push({
+                en_key: semanticTags[i].key,
+                en_value: semanticTags[i].value,
+                es_key: '',
+                es_value: ''
+            });
+        }
+
+        // sort English semantic tags alphabetically
+        newSemantictags.sort(function(a,b) {return a.en_key.localeCompare(b.en_key); });
+        
+        var results = [];
+        for (var i = 0; i < newSemantictags.length; i++) {
+            if (newSemantictags[i].en_key) {
+                results.push({
+                    key: newSemantictags[i].en_key,
+                    value: newSemantictags[i].en_value,
+                });
+            }
+            if (newSemantictags[i].es_key) {
+                results.push({
+                    key: newSemantictags[i].es_key,
+                    value: newSemantictags[i].es_value,
+                });
+            }
+        }
+
+        return results;
+    }
 
     this.getNextMarkerColor = function(color) {
         //console.log(color);

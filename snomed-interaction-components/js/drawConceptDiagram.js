@@ -158,7 +158,7 @@ function drawConceptDiagram (concept, div, options, panel) {
         //console.log("In draw: " + concept.defaultTerm + " " + concept.conceptId + " " + sctClass);
         var pt = {};
         $.each(concept.descriptions, function(i, description) {
-            if (description.lang == options.defaultLanguage && description.active) {
+            if (description.type === 'SYNONYM' && description.lang == options.defaultLanguage && description.active) {
                 $.each(description.acceptabilityMap, function(i, map){
                     if(map == "PREFERRED"){
                         pt = description;
