@@ -119,7 +119,13 @@ diagrammingMarkupEnabled|true|SNOMED CT diagramming Markup is enabled.
 
 ## Docker
 
-Simply run the following commend, replacing the `<host>` variable with the URL to your snowstorm instance:
+If you want to build an image based on any local changes you have made run the following on the command line:
+
+```bash
+docker build -t snomedinternational/snomedct-browser .
+```
+
+Or you can just jump to running the following command, replacing the `<host>` variable with the full URL to your snowstorm instance:
 
 ```bash
 docker run --name snowstorm-nginx -d -p 80:80 --env API_HOST=<host> snomedinternational/snomedct-browser
