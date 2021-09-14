@@ -2231,8 +2231,8 @@ function conceptDetails(divElement, conceptId, options) {
                             }
                         }
                     });
-                    allDescriptions = auxDescriptions.slice(0);
-                    panel.sortDescriptions(allDescriptions);
+                    //allDescriptions = auxDescriptions.slice(0);
+                    panel.sortDescriptions(auxDescriptions);
 
                     var context = {
                         options: panel.options,
@@ -2240,10 +2240,10 @@ function conceptDetails(divElement, conceptId, options) {
                         longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
                         divElementId: panel.divElement.id,
                         server: panel.server,
-                        allDescriptions: allDescriptions
+                        allDescriptions: auxDescriptions
                     };
                     
-                    if (allDescriptions.length != 0) {
+                    if (auxDescriptions.length != 0) {
                         allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
                     }
                 }
