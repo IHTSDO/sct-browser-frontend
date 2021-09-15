@@ -1728,12 +1728,12 @@
 
             $("#fh-query_canvas-li").show();
 
-            var fhTaxonomyCanvasLoaded = false;
+            options.fhTaxonomyCanvasLoaded = false;
             $("#fh-taxonomies_canvas-li").unbind();
             $("#fh-taxonomies_canvas-li").click(function() {
-                if (!fhTaxonomyCanvasLoaded) {
+                if (!options.fhTaxonomyCanvasLoaded) {
                     tpt.updateCanvas();
-                    fhTaxonomyCanvasLoaded = true;
+                    options.fhTaxonomyCanvasLoaded = true;
                 }                
             });            
 
@@ -1779,7 +1779,7 @@
                 $('#fh-tabs li:eq(1) a').tab('show');
                 $('#fh-search_canvas-searchBox').focus();
             }
-        }
+        }        
 
         function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
             currentPerspective = "responsive";
@@ -1934,6 +1934,10 @@
                 currentPerspective = "home";
                 initialize();
             }
+        }
+
+        function markTaxonomyTabAsLoaded() {
+            options.fhTaxonomyCanvasLoaded = true;
         }
 
         //PWI 20161108 This function went missing at some point.  Returning as urgent P1
@@ -2358,7 +2362,7 @@
                         <li id="fh-taxonomies_canvas-li">
                             <a href="#fh-taxonomy_canvas" data-toggle="tab">
                                 <div>
-                                    <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
+                                    <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');markTaxonomyTabAsLoaded();" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
                                 </div>
                             </a>
                         </li>
