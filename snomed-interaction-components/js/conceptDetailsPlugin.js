@@ -629,32 +629,7 @@ function conceptDetails(divElement, conceptId, options) {
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
             if (typeof result.descendantCount !== 'undefined') {
-                var branch = options.edition;
-        
-                if (historyBranch){
-                    branch = historyBranch;
-                }
-                else{
-                    if(options.release.length > 0 && options.release !== 'None'){
-                        branch = branch + "/" + options.release;
-                    }
-                }
-                
-                // get stated and inferred descendant count for concept detail tab
-                $("#" + panel.divElement.id + "-statedDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-                $("#" + panel.divElement.id+ "-inferredDescendantCount").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-                
-                $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "?descendantCountForm=" + (panel.options.selectedView === "inferred" ? "stated" : "inferred"), function(respone) {            
-                }).done(function(respone) {
-                    if (panel.options.selectedView === "inferred") {
-                        $("#" + panel.divElement.id + "-inferredDescendantCount").html(result.descendantCount);       
-                        $("#" + panel.divElement.id + "-statedDescendantCount").html(respone.descendantCount);
-                    }
-                    else {
-                        $("#" + panel.divElement.id + "-inferredDescendantCount").html(respone.descendantCount);       
-                        $("#" + panel.divElement.id + "-statedDescendantCount").html(result.descendantCount);
-                    }                            
-                });                
+                $("#" + panel.divElement.id + "-descendantCount").html(result.descendantCount);                 
             } 
             else {
                 $("#" + panel.divElement.id + "-descendantInfor").hide();
