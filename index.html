@@ -137,7 +137,6 @@
             searchMode: "partialMatching",
             searchLang: "english",
             diagrammingMarkupEnabled: false,
-            disableTaxonomyInitialLoad: true,
             statusSearchFilter: "activeOnly",
             highlightByEffectiveTime: "false",
             dailyBuildBrowser: false,
@@ -1636,6 +1635,9 @@
                 spa.setLanguageRefsets(result.languageRefsets);
                 tx1.setLanguageRefsets(result.languageRefsets);
                 tx2.setLanguageRefsets(result.languageRefsets);
+
+                tx1.updateCanvas();
+                tx2.updateCanvas();
             });
 
             $('#comparing-taxonomies-wrapper').split({
@@ -1725,6 +1727,16 @@
             }
 
             $("#fh-query_canvas-li").show();
+
+            var fhTaxonomyCanvasLoaded = false;
+            $("#fh-taxonomies_canvas-li").unbind();
+            $("#fh-taxonomies_canvas-li").click(function() {
+                if (!fhTaxonomyCanvasLoaded) {
+                    tpt.updateCanvas();
+                    fhTaxonomyCanvasLoaded = true;
+                }                
+            });            
+
             cdPanel1.subscribe(qpa);
             cdPanel1.subscribe(tpt);
             cdPanel1.subscribe(spa);
@@ -1821,6 +1833,8 @@
                 cdPanel2.setLangugeRefsets(result.languageRefsets);
                 spa.setLanguageRefsets(result.languageRefsets);
                 tpt.setLanguageRefsets(result.languageRefsets);
+
+                tpt.updateCanvas();
             });
 
             $('#spliter2').split({
