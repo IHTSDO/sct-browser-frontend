@@ -100,6 +100,7 @@
                 'en': 'English'
             },
             defaultLanguage: 'en',
+            defaultAcceptLanguage: "",
             closeButton: false,
             collapseButton: false,
             linkerButton: true,
@@ -260,6 +261,11 @@
                     if (options.releases) {
                         for (let i = 0; i < options.releases.items.length; ++i) {
                             var release = options.releases.items[i];
+                            
+                            /* TODO: The default Accept language should be handled by code-system */
+                            if (release.shortName === 'SNOMEDCT-NZ') {
+                                release.defaultAcceptLanguage = 'en-X-271000210107';
+                            }
                             if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
                                 if (release.shortName === 'SNOMEDCT') {
                                     release.stats = true;
@@ -522,6 +528,7 @@
 
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
 
                             switchToFullHeight(404684003, 138875005);
 
@@ -685,6 +692,7 @@
                             }
                             parsedLanguages = parsedLanguages.slice(0, -1);
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                             break;
                         }
                     }
@@ -719,6 +727,7 @@
                             options.languageObject = release.languages;
                             options.editionShortname = release.shortName;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                             options.modules = release.modules;
                             var parsedLanguages = "";
                             for (var language in release.languages) {
@@ -839,6 +848,7 @@
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             options.modules = release.modules;
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
 
                             reloadCurrentPerspective();
 
@@ -882,6 +892,7 @@
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                                 options.modules = release.modules;
                                 options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
+                                options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                                 var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
                                 QueryString = queryString();
 
@@ -1193,11 +1204,11 @@
                             options.projectMainlineText = release.shortName;
                             options.editionShortname = release.shortName;
                             options.modules = release.modules;
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                         }
                     }
                 }
             }
-
         }
 
         function initTour() {

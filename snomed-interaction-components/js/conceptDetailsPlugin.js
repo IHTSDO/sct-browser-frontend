@@ -1651,7 +1651,7 @@ function conceptDetails(divElement, conceptId, options) {
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
-                'Accept-Language': options.languages
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
               }
             });
         };
@@ -2337,13 +2337,13 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')){
-        $.ajaxSetup({
-            headers : {
-                'Accept-Language': options.languages
-            }
+        if(!options.serverUrl.includes('snowowl')) {
+            $.ajaxSetup({
+                headers : {
+                    'Accept-Language': options.languages
+                }
             });
-        };
+        }
         $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {              
             // do nothing                
         }).done(function(result) {
@@ -2424,8 +2424,15 @@ function conceptDetails(divElement, conceptId, options) {
             xhrMembers = null;
         }
 
-        xhrMembers = $.getJSON(membersUrl, function(result) {
+        if(!options.serverUrl.includes('snowowl')) {
+            $.ajaxSetup({
+                headers : {
+                    'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                }
+            });
+        }
 
+        xhrMembers = $.getJSON(membersUrl, function(result) {
         }).done(function(result) {
             var remaining = "asd";
             if (typeof total == "undefined") total = result.total;
