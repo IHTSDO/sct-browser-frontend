@@ -64,15 +64,24 @@ module.exports = function(grunt) {
                 ],
                 dest: 'snomed-interaction-components/dist/js/<%= pkg.name %>.js'
             },
-            externalCss:{
-                src:[
-                    'css/*.css'
-                ],
-                dest: 'css/external.css'
-            },
             css: {
                 src: 'snomed-interaction-components/css/*.css',
                 dest: 'snomed-interaction-components/dist/css/<%= pkg.name %>.css'
+            },
+            externalCss:{
+                src:[
+                    "ecl-builder/styles.css",
+                    "css/bootstrap-theme.min.css",
+                    "css/jquery.splitter.css",
+                    "css/jquery-ui-1.10.4.custom.min.css",
+                    "css/bootstrap.min.base.12.css",
+                    "css/bootstrap-tour.css",
+                    "css/popover-extra-placements.css",
+                    "css/animate.css",
+                    "css/bootstrap-multiselect.css",
+                    'snomed-interaction-components/dist/css/<%= pkg.name %>.css'
+                ],
+                dest: 'css/external.css'
             }
         },
         uglify: {
