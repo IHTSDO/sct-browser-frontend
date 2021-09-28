@@ -547,7 +547,7 @@
             var language = '';
             var flag = '';
             if (ui_language == "en") {
-                language = 'en_US';
+                language = 'en';
                 flag = 'img/flags/us.png';
             } else if (ui_language == "es") {
                 language = 'es';
@@ -565,7 +565,7 @@
                 language = 'pt';
                 flag = 'img/flags/pt.png';
             } else {
-                language = 'en_US';
+                language = 'en';
                 flag = 'img/flags/us.png';
             }
 
@@ -657,7 +657,7 @@
         }
 
         function initializePublicBrowser() {
-            setUILanguage();
+            
             var edition = QueryString.edition;
             var isLatestRedirect = true;
             if (QueryString.latestRedirect) {
@@ -2115,7 +2115,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'img/flags/us.png', true);"><img src="img/flags/us.png" /> English</a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png" /> Dansk</a>
@@ -2427,7 +2427,7 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'img/flags/us.png', true);"><img src="img/flags/us.png" /> English</a>
                             </li>
                             <li class="pull-left">
                                 <a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png" /> Español</a>
