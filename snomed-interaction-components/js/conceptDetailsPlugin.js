@@ -2110,7 +2110,6 @@ function conceptDetails(divElement, conceptId, options) {
             if (description.acceptabilityMap) {
                 $.each(description.acceptabilityMap, function(langref, acceptability) {
                     if ('900000000000509007' === langref) {
-                        acceptabilityPair = description.acceptabilityMap[i];
                         if (acceptability == "PREFERRED") {
                             description.preferred = true;
                         } else {
@@ -2169,7 +2168,6 @@ function conceptDetails(divElement, conceptId, options) {
                             $.each(description.acceptabilityMap, function(langref, acceptability) {
                                 if (langref === loopSelectedLangRefset) {
                                     included = true;
-                                    acceptabilityPair = description.acceptabilityMap[i];
                                     if (acceptability == "PREFERRED") {
                                         description.preferred = true;
                                     } else {
@@ -2182,15 +2180,8 @@ function conceptDetails(divElement, conceptId, options) {
                         }
 
                         if (included) {
-                            if (panel.options.displayInactiveDescriptions) {
-                                auxDescriptions.push(description);
-                            } else {
-                                if (description.active) {
-                                    auxDescriptions.push(description);
-                                }
-                            }
-                        } else {
-                            description.acceptable = false;
+                            auxDescriptions.push(description);
+                        } else {                            
                             if (panel.options.hideNotAcceptable) {
                                 if (panel.options.displayInactiveDescriptions) {
                                     auxDescriptions.push(description);
@@ -2198,10 +2189,6 @@ function conceptDetails(divElement, conceptId, options) {
                             } else {
                                 if (panel.options.displayInactiveDescriptions) {
                                     auxDescriptions.push(description);
-                                } else {
-                                    if (description.active) {
-                                        auxDescriptions.push(description);
-                                    }
                                 }
                             }
                         }
@@ -2218,9 +2205,7 @@ function conceptDetails(divElement, conceptId, options) {
                         allDescriptions: auxDescriptions
                     };
                     
-                    if (auxDescriptions.length != 0) {
-                        allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
-                    }
+                    allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
                 }
                                    
             });
@@ -2250,7 +2235,6 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                     if (description.acceptabilityMap) {
                         $.each(description.acceptabilityMap, function(langref, acceptability) {
-                            acceptabilityPair = description.acceptabilityMap[i];
                                 if (acceptability == "PREFERRED") {
                                     description.preferred = true;
                                 } else {
