@@ -51,6 +51,7 @@ module.exports = function(grunt) {
                     'external-libs/clipboard.min.js',
                     'external-libs/popover-extra-placements.js',
                     'external-libs/canvas2image.js',
+                    'external-libs/canvg.min.js',
                     'external-libs/bootstrap-multiselect.js',
                     'external-libs/jquery.history.js',
                     'external-libs/ZeroClipboard.js'
