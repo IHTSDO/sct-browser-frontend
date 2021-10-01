@@ -1492,18 +1492,26 @@ function conceptDetails(divElement, conceptId, options) {
                             refset.refsetId = item.refsetId;
 
                             simpleRefsetMembers.push(refset)
-                            ids.push(item.refsetId);
+                            if (ids.indexOf(item.refsetId) === -1) {
+                                ids.push(item.refsetId);
+                            }                            
                         }
                         else if (item.additionalFields.hasOwnProperty('mapTarget')) {
                             var refset = initializeRefsetMemberByType(item,'mapTarget');
                             simpleMapRefsetMembers.push(refset)
-                            ids.push(item.refsetId);
+                            if (ids.indexOf(item.refsetId) === -1) {
+                                ids.push(item.refsetId);
+                            }
                         }
                         else if (item.additionalFields.hasOwnProperty('valueId')) {
                             var refset = initializeRefsetMemberByType(item,'valueId');
-                            attributeValueRefsetMembers.push(refset)
-                            ids.push(item.refsetId);
-                            ids.push(refset.otherValue);
+                            attributeValueRefsetMembers.push(refset);
+                            if (ids.indexOf(item.refsetId) === -1) {
+                                ids.push(item.refsetId);
+                            }
+                            if (ids.indexOf(refset.otherValue) === -1) {
+                                ids.push(refset.otherValue);
+                            }
                         }
                         else if (item.additionalFields.hasOwnProperty('targetComponent') || item.additionalFields.hasOwnProperty('targetComponentId')) {
                             var refset = {};
@@ -1517,8 +1525,12 @@ function conceptDetails(divElement, conceptId, options) {
                             }
 
                             associationRefsetMembers.push(refset)
-                            ids.push(item.refsetId);
-                            ids.push(refset.otherValue);
+                            if (ids.indexOf(item.refsetId) === -1) {
+                                ids.push(item.refsetId);
+                            }
+                            if (ids.indexOf(refset.otherValue) === -1) {
+                                ids.push(refset.otherValue);
+                            }
                         }
                         else {
                             // do nothing
@@ -1534,11 +1546,18 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 });
                 if (ids.length > 0) {
+                    if(!options.serverUrl.includes('snowowl')) {
+                        $.ajaxSetup({
+                            headers : {
+                                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                            }
+                        });
+                    }
                     var getConcepts =  function(list) {
                         var dfd = $.Deferred();
                         var result = {concepts: []};
                         for (var i = 0 ; i < list.length; i++) {
-                            $.getJSON(options.serverUrl + "/browser/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/' : '') + "concepts/" + list[i], function (concept) {
+                            $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/' : '') + "concepts/" + list[i], function (concept) {
                             }).done(function (concept) {
                                 result.concepts.push(concept)
                                 if (result.concepts.length  === list.length) {
@@ -1550,7 +1569,6 @@ function conceptDetails(divElement, conceptId, options) {
                         }
                         return dfd.promise();
                     };
-
                     $.when(getConcepts(ids)).then(
                         function( respone ) {
                             var populateRefsetMember = function (list, type, conceptsMap) {
@@ -2163,11 +2181,9 @@ function conceptDetails(divElement, conceptId, options) {
                     $.each(allDescriptions, function(i, description) {
                         description.preferred = false;
                         description.acceptable = false;
-                        var included = false;                   
                         if (description.acceptabilityMap) {
                             $.each(description.acceptabilityMap, function(langref, acceptability) {
                                 if (langref === loopSelectedLangRefset) {
-                                    included = true;
                                     if (acceptability == "PREFERRED") {
                                         description.preferred = true;
                                     } else {
@@ -2179,33 +2195,25 @@ function conceptDetails(divElement, conceptId, options) {
                             });
                         }
 
-                        if (included) {
-                            auxDescriptions.push(description);
-                        } else {                            
-                            if (panel.options.hideNotAcceptable) {
-                                if (panel.options.displayInactiveDescriptions) {
-                                    auxDescriptions.push(description);
-                                }
-                            } else {
-                                if (panel.options.displayInactiveDescriptions) {
-                                    auxDescriptions.push(description);
-                                }
-                            }
+                        if (description.preferred || description.acceptable
+                            || (panel.options.displayInactiveDescriptions && !description.active)
+                            || (!panel.options.hideNotAcceptable && description.active)) {
+                            auxDescriptions.push(description); 
                         }
                     });
-                    //allDescriptions = auxDescriptions.slice(0);
-                    panel.sortDescriptions(auxDescriptions);
-
-                    var context = {
-                        options: panel.options,
-                        languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
-                        longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
-                        divElementId: panel.divElement.id,
-                        server: panel.server,
-                        allDescriptions: auxDescriptions
-                    };
-                    
-                    allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                    if (auxDescriptions.length !== 0) {
+                        panel.sortDescriptions(auxDescriptions);
+                        var context = {
+                            options: panel.options,
+                            languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
+                            longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
+                            divElementId: panel.divElement.id,
+                            server: panel.server,
+                            allDescriptions: auxDescriptions
+                        };
+                        
+                        allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                    }                    
                 }
                                    
             });
