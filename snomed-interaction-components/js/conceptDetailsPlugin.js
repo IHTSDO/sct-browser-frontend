@@ -2201,18 +2201,19 @@ function conceptDetails(divElement, conceptId, options) {
                             auxDescriptions.push(description); 
                         }
                     });
-                    panel.sortDescriptions(auxDescriptions);
-
-                    var context = {
-                        options: panel.options,
-                        languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
-                        longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
-                        divElementId: panel.divElement.id,
-                        server: panel.server,
-                        allDescriptions: auxDescriptions
-                    };
-                    
-                    allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                    if (auxDescriptions.length !== 0) {
+                        panel.sortDescriptions(auxDescriptions);
+                        var context = {
+                            options: panel.options,
+                            languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
+                            longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
+                            divElementId: panel.divElement.id,
+                            server: panel.server,
+                            allDescriptions: auxDescriptions
+                        };
+                        
+                        allLangsHtml += JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/descriptions-panel.hbs"](context);
+                    }                    
                 }
                                    
             });
