@@ -517,10 +517,14 @@
                                     });
                                 }
                             } else {
-                                options.edition = release.latestVersion.branchPath;                               
-                                $("#editionLabel").html(release.name);
-                                $("#versionLabel").html(release.latestVersion.version);
-                                initVersionsDropdown(release);
+                                options.edition = release.latestVersion.branchPath;
+                                if (options.publicBrowser) {
+                                    $("#editionLabel").html(release.name);
+                                    $("#versionLabel").html(release.latestVersion.version);
+                                    initVersionsDropdown(release);
+                                } else {
+                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                }                                
                             }
 
                             options.release = '';
@@ -920,25 +924,38 @@
                                             reloadCurrentPerspective(404684003);
                                         }
                                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                                        $("#editionLabel").html(release.name);
-                                        $("#versionLabel").html(release.latestVersion.version);
+                                        if (options.publicBrowser) {
+                                            $("#editionLabel").html(release.name);
+                                            $("#versionLabel").html(release.latestVersion.version);
+                                            initVersionsDropdown(release);
+                                        } else {
+                                            $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                        }                                        
                                     });
                                 } else {
                                     reloadCurrentPerspective();
                                     switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                                    $("#editionLabel").html(release.name);
-                                    $("#versionLabel").html(release.latestVersion.version);
-                                }
-                                initVersionsDropdown(release);
+                                    if (options.publicBrowser) {
+                                        $("#editionLabel").html(release.name);
+                                        $("#versionLabel").html(release.latestVersion.version);
+                                        initVersionsDropdown(release);
+                                    } else {
+                                        $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                    }
+                                }                                
                             });
                             $li.append($a);
                             $releaseSwitcher.append($li);
 
                             // set default selection for release
                             if (options.edition && release.latestVersion.branchPath === options.edition) {
-                                $("#editionLabel").html(release.name);
-                                $("#versionLabel").html(release.latestVersion.version);
-                                initVersionsDropdown(release);                                
+                                if (options.publicBrowser) {
+                                    $("#editionLabel").html(release.name);
+                                    $("#versionLabel").html(release.latestVersion.version);
+                                    initVersionsDropdown(release);
+                                } else {
+                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                }                                                             
                             }
                         }
                     }
@@ -2121,7 +2138,7 @@
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                 <span class="i18n" data-i18n-id="i18n_version">Version</span>:&nbsp;<span id="versionLabel"></span> <span class="caret"></span>
                             </button>
-                        <ul class="dropdown-menu" id="versionSwitcher" role="menu">
+                        <ul class="dropdown-menu" id="versionSwitcher" role="menu" style="max-height: 600px;overflow: auto;">
                         </ul>
                     </li>
 
