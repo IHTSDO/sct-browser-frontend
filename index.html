@@ -409,6 +409,7 @@
                             }
                         }
                         $('#multi-extension-search').css('display', 'block');
+                        $('#version-selector').css('display', 'block');
                     }
                 } else {
                     if (options.serverUrl === '/snowowl/snomed-ct/v2') {
@@ -463,7 +464,7 @@
 
         function addEditionLinks($releaseSwitcher, releases) {
             for (let i = 0; i < releases.length; ++i) {
-                let release = releases[i];
+                let release = releases[i];                
                 if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser || options.communityBrowser) {
                     var $img = $('<img>').attr("src", release.countryCode !== '' ? "img/flags/" + release.countryCode + ".png" : "img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
 
@@ -516,9 +517,12 @@
                                     });
                                 }
                             } else {
-                                options.edition = release.latestVersion.branchPath;
-                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                options.edition = release.latestVersion.branchPath;                               
+                                $("#editionLabel").html(release.name);
+                                $("#versionLabel").html(release.latestVersion.version);
+                                initVersionsDropdown(release);
                             }
+
                             options.release = '';
                             options.languages = parsedLanguages;
                             options.languageObject = release.languages;
@@ -874,7 +878,7 @@
                         let release = options.releases.items[i];
                         if (typeof release.latestVersion !== "undefined") {
                             var $li = $('<li>')
-                            var $a = $('<a>').attr("shortName", release.shortName).append(release.name + " " + release.latestVersion.version);
+                            var $a = $('<a>').attr("shortName", release.shortName).append(release.name);
                             $a.attr("href", "javascript:void(0);");
                             $a.on("click", function(event) {
                                 event.stopPropagation();
@@ -916,25 +920,55 @@
                                             reloadCurrentPerspective(404684003);
                                         }
                                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                                        $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                        $("#editionLabel").html(release.name);
+                                        $("#versionLabel").html(release.latestVersion.version);
                                     });
                                 } else {
                                     reloadCurrentPerspective();
                                     switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                    $("#editionLabel").html(release.name);
+                                    $("#versionLabel").html(release.latestVersion.version);
                                 }
+                                initVersionsDropdown(release);
                             });
                             $li.append($a);
                             $releaseSwitcher.append($li);
 
                             // set default selection for release
                             if (options.edition && release.latestVersion.branchPath === options.edition) {
-                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                $("#editionLabel").html(release.name);
+                                $("#versionLabel").html(release.latestVersion.version);
+                                initVersionsDropdown(release);                                
                             }
                         }
                     }
                 }
             }
+        }
+
+        function initVersionsDropdown(release) {
+            $.getJSON("/snowstorm/snomed-ct/codesystems/" + release.shortName  + "/versions?showFutureVersions=false&showInternalReleases=false", function(result) {}).done(function(result) {
+                var $versionSwitcher = $('#versionSwitcher');
+                $versionSwitcher.html("");
+                if (result.items.length > 0) {
+                    result.items.sort(function(a, b) {
+                        return b.effectiveDate - a.effectiveDate;
+                    });
+                }
+                for (let j = 0; j < result.items.length; j++) {
+                    let version = result.items[j];
+                    var $li = $('<li>');
+                    var $a = $('<a>').append(version.version);
+                    $a.attr("href", "javascript:void(0);");
+                    $a.on("click", function() {                                                
+                        options.edition = version.branchPath;                                               
+                        $("#versionLabel").html(version.version);
+                        reloadCurrentPerspective();
+                    });
+                    $li.append($a);
+                    $versionSwitcher.append($li);
+                }
+            });
         }
 
         function getDefaultLanguage(defaultLanguageCode, parsedLanguages) {
@@ -2081,6 +2115,13 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel"></span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" id="releaseSwitcher" role="menu">
+                        </ul>
+                    </li>
+                    <li class="navbar-btn" id="version-selector" style="display: none">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class="i18n" data-i18n-id="i18n_version">Version</span>:&nbsp;<span id="versionLabel"></span> <span class="caret"></span>
+                            </button>
+                        <ul class="dropdown-menu" id="versionSwitcher" role="menu">
                         </ul>
                     </li>
 
