@@ -99,8 +99,7 @@ function conceptDetails(divElement, conceptId, options) {
     }
     panel.markerColor = panel.getNextMarkerColor(globalMarkerColor);
     
-    this.updateCdiRels = function(concept){
-        console.log(concept);
+    this.updateCdiRels = function(concept){        
         concept.relationships.forEach(function(relationship) {
             if(!relationship.target){
                 relationship.target = { fsn: {},
@@ -401,21 +400,13 @@ function conceptDetails(divElement, conceptId, options) {
             }
             result = panel.updateCdiRels(result);
             setDefaultTerm(result);
-            var pt = {};
             $.each(result.descriptions, function(i, description) {
                 if(description.effectiveTime === panel.options.historyEffective){
                     description.historyEffective = true;
-                }
-                if (description.type === 'SYNONYM' && description.lang == options.defaultLanguage && description.active) {
-                    $.each(description.acceptabilityMap, function(i, map){
-                        if(map == "PREFERRED"){
-                            pt = description;
-                        }
-                    })
-                }
+                }                
             });
-            if(pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && result.fsn.lang != options.defaultLanguage){
-                result.defaultTerm = pt.term;
+            if(options.defaultLanguage != 'en' && result.fsn.lang != options.defaultLanguage){
+                result.defaultTerm = result.pt.term;
             }
             else{
                 result.defaultTerm = result.fsn.term;
