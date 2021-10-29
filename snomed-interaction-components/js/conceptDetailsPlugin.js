@@ -2139,9 +2139,9 @@ function conceptDetails(divElement, conceptId, options) {
             newDescriptions = englishDescriptions.concat(nonEnglishDescriptions);
         }
 
-        var homeDescriptionsHtml = "";
+        var homeDescriptionsHtml = "";        
         $.each(newDescriptions, function(i, field) {           
-            if (field.active == true) {
+            if (field.active == true && Object.keys(field.acceptabilityMap).filter(function(key) {return panel.options.defaultLanguageReferenceSets.indexOf(key) !== -1}).length > 0) {
                 if (field.active == true) {
                     if (homeDescriptionsHtml != "") {
                         homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
