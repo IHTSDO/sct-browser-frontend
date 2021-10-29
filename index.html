@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" type="text/css" href="ecl-builder/styles.css">
     <link rel="stylesheet" type="text/css" href="css/external.css">
-    
+
     <style>
         .modal.fade .modal-dialog {
             margin-top: 60px;
@@ -261,7 +261,7 @@
                     if (options.releases) {
                         for (let i = 0; i < options.releases.items.length; ++i) {
                             var release = options.releases.items[i];
-                            
+
                             /* TODO: The default Accept language should be handled by code-system */
                             if (release.shortName === 'SNOMEDCT-NZ') {
                                 release.defaultAcceptLanguage = 'en-X-271000210107';
@@ -464,7 +464,7 @@
 
         function addEditionLinks($releaseSwitcher, releases) {
             for (let i = 0; i < releases.length; ++i) {
-                let release = releases[i];                
+                let release = releases[i];
                 if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser || options.communityBrowser) {
                     var $img = $('<img>').attr("src", release.countryCode !== '' ? "img/flags/" + release.countryCode + ".png" : "img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
 
@@ -524,7 +524,7 @@
                                     initVersionsDropdown(release);
                                 } else {
                                     $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                                }                                
+                                }
                             }
 
                             options.release = '';
@@ -665,7 +665,7 @@
         }
 
         function initializePublicBrowser() {
-            
+
             setUILanguage();
             var edition = QueryString.edition;
             var isLatestRedirect = true;
@@ -930,7 +930,7 @@
                                             initVersionsDropdown(release);
                                         } else {
                                             $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                                        }                                        
+                                        }
                                     });
                                 } else {
                                     reloadCurrentPerspective();
@@ -942,7 +942,7 @@
                                     } else {
                                         $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                                     }
-                                }                                
+                                }
                             });
                             $li.append($a);
                             $releaseSwitcher.append($li);
@@ -955,7 +955,7 @@
                                     initVersionsDropdown(release);
                                 } else {
                                     $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                                }                                                             
+                                }
                             }
                         }
                     }
@@ -964,7 +964,7 @@
         }
 
         function initVersionsDropdown(release) {
-            $.getJSON("/snowstorm/snomed-ct/codesystems/" + release.shortName  + "/versions?showFutureVersions=false&showInternalReleases=false", function(result) {}).done(function(result) {
+            $.getJSON("/snowstorm/snomed-ct/codesystems/" + release.shortName + "/versions?showFutureVersions=false&showInternalReleases=false", function(result) {}).done(function(result) {
                 var $versionSwitcher = $('#versionSwitcher');
                 $versionSwitcher.html("");
                 if (result.items.length > 0) {
@@ -977,8 +977,8 @@
                     var $li = $('<li>');
                     var $a = $('<a>').append(version.version);
                     $a.attr("href", "javascript:void(0);");
-                    $a.on("click", function() {                                                
-                        options.edition = version.branchPath;                                               
+                    $a.on("click", function() {
+                        options.edition = version.branchPath;
                         $("#versionLabel").html(version.version);
                         reloadCurrentPerspective();
                     });
@@ -1767,8 +1767,8 @@
                 if (!options.fhTaxonomyCanvasLoaded) {
                     tpt.updateCanvas();
                     options.fhTaxonomyCanvasLoaded = true;
-                }                
-            });            
+                }
+            });
 
             cdPanel1.subscribe(qpa);
             cdPanel1.subscribe(tpt);
@@ -1812,7 +1812,7 @@
                 $('#fh-tabs li:eq(1) a').tab('show');
                 $('#fh-search_canvas-searchBox').focus();
             }
-        }        
+        }
 
         function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
             currentPerspective = "responsive";
@@ -1994,7 +1994,7 @@
         }
 
         function switchLanguage(language, flagPng, fade) {
-            if(selectedLanguage !== language) {
+            if (selectedLanguage !== language) {
                 selectedLanguage = language;
                 if (typeof(Storage) !== "undefined") {
                     localStorage.setItem("ui_language", language);
@@ -2490,7 +2490,7 @@
                         <p><span class="i18n" data-i18n-id="i18n_licence_agreement_4">Use of SNOMED CT in <strong>SNOMED International SNOMED CT Browser</strong> is governed by the conditions of the following SNOMED CT license issued by the SNOMED International</span>:</p>
                         <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”, “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and “SNOMED CT Content” are as defined in the SNOMED International Affiliate License Agreement (see www.snomed.org/license.pdf)</span>.</p>
                         <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate)</a></span>.</p>
-                        <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://www.snomed.org/members">www.snomed.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
+                        <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://snomed.org/members">snomed.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
                         <p style="margin-left: 20px;">4. <span class="i18n" data-i18n-id="i18n_licence_agreement_8">End Users, that do not hold an SNOMED International Affiliate License, may access SNOMED CT® using <strong>SNOMED International SNOMED CT Browser</strong> subject to acceptance of and adherence to the following sub-license limitations</span>:</p>
                         <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_9">The sub-licensee is only permitted to access SNOMED CT® using this software (or service) for the purpose of exploring and evaluating the terminology</span>.</p>
                         <p style="margin-left: 40px;">b) <span class="i18n" data-i18n-id="i18n_licence_agreement_10">The sub-licensee is not permitted the use of this software as part of a system that constitutes a SNOMED CT “Data Creation System” or “Data Analysis System”, as defined in the SNOMED International Affiliate License. This means that the sub-licensee must not use <strong>SNOMED International SNOMED CT Browser</strong> to add or copy SNOMED CT identifiers into any type of record system, database or document</span>.</p>
