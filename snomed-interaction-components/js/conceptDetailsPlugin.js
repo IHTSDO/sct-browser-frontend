@@ -779,7 +779,7 @@ function conceptDetails(divElement, conceptId, options) {
             function copyHandler(e) {
                 if (window.getSelection().isCollapsed) {
                     if (e.srcElement && e.srcElement.value) {} else {
-                        e.clipboardData.setData('text/plain', firstMatch.conceptId + " | " + firstMatch.defaultTerm + " |");
+                        e.clipboardData.setData('text/plain', firstMatch.conceptId + " |" + firstMatch.defaultTerm + "|");
                         e.preventDefault();
                         alertEvent("Copied!", "info");
                     }
