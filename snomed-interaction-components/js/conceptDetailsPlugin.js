@@ -2196,7 +2196,7 @@ function conceptDetails(divElement, conceptId, options) {
                         panel.sortDescriptions(auxDescriptions);
                         var context = {
                             options: panel.options,
-                            languageName: "(" + options.languageNameOfLangRefset[loopSelectedLangRefset] + ")",
+                            languageName: "(" + (options.languageNameOfLangRefset.hasOwnProperty(loopSelectedLangRefset) ? options.languageNameOfLangRefset[loopSelectedLangRefset] : loopSelectedLangRefset) + ")",
                             longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
                             divElementId: panel.divElement.id,
                             server: panel.server,
