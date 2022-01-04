@@ -228,3 +228,28 @@
     height: 66.666666666667%;
     background-size: 100% 100%;
 }
+
+/* Switzerland */
+.ch {
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0ibTAgMGgzMnYzMmgtMzJ6IiBmaWxsPSIjZjAwIi8+CjxwYXRoIGQ9Im0xMyA2aDZ2N2g3djZoLTd2N2gtNnYtN2gtN3YtNmg3eiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K');
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}
+
+/* Austria */
+.at {
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCI+DQo8cmVjdCBmaWxsPSIjZWQyOTM5IiB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIvPg0KPHJlY3QgZmlsbD0iI2ZmZiIgeT0iMjAwIiB3aWR0aD0iOTAwIiBoZWlnaHQ9IjIwMCIvPg0KPC9zdmc+');
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}
+
+/* South Korea */
+.kr {
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjkwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9Ii0zNiAtMjQgNzIgNDgiPg0KPHRpdGxlPkZsYWcgb2YgU291dGggS29yZWE8L3RpdGxlPg0KPHBhdGggZD0iTS0zNi0yNGg3MnY0OGgtNzJ6IiBmaWxsPSIjZmZmIi8+DQo8ZyB0cmFuc2Zvcm09InJvdGF0ZSgtNTYuMzA5OTMyNSkiPjwhLS1hcmN0YW4oLTMvMiktLT4NCjxnIGlkPSJiMiI+PHBhdGggaWQ9ImIiIGQ9Ik0tNi0yNkg2djJILTZ6bTAgM0g2djJILTZ6bTAgM0g2djJILTZ6Ii8+DQo8dXNlIHhsaW5rOmhyZWY9IiNiIiB5PSI0NCIvPjwvZz4NCjxwYXRoIHN0cm9rZT0iI2ZmZiIgZD0iTTAsMTd2MTAiLz4NCjxwYXRoIGZpbGw9IiNjZDJlM2EiIGQ9Ik0wLTEyQTEyIDEyIDAgMCAxIDAgMTJ6Ii8+DQo8cGF0aCBmaWxsPSIjMDA0N2EwIiBkPSJNMC0xMkExMiAxMiAwIDAgMCAwIDEyIDYgNiAwIDAgMCAwIDB6Ii8+DQo8Y2lyY2xlIGN5PSItNiIgZmlsbD0iI2NkMmUzYSIgcj0iNiIvPjwvZz4NCjxnIHRyYW5zZm9ybT0icm90YXRlKC0xMjMuNjkwMDY3NSkiPjx1c2UgeGxpbms6aHJlZj0iI2IyIi8+DQo8cGF0aCBzdHJva2U9IiNmZmYiIGQ9Ik0wLTIzLjV2M00wLDE3djMuNU0wLDIzLjV2MyIvPjwvZz48L3N2Zz4NCg==');
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}
+ 
