@@ -11,7 +11,10 @@
   <div class='panel-body' style='height:100%' id='{{divElementId}}-panelBody'>
     <!--<p style="margin: 10px;">Create a query, conditions are evaluated in order:</p>-->
     <div class="row container-fluid" style="margin-left: 10px; margin-right: 10px; margin-top: 0px; padding-left: 0px;">
-      <p class="lead col-md-6 i18n" style="padding-left: 5px;  padding-top: 15px; margin-bottom: 0px;" data-i18n-id="i18n__enter_an_expression">{{i18n "i18n__enter_an_expression" "Enter an ECL query"}}</p>
+      <p class="lead col-md-6 i18n" style="padding-left: 5px; padding-top: 15px; margin-bottom: 0px;" data-i18n-id="i18n__enter_an_expression">{{i18n "i18n__enter_an_expression" "Enter an ECL query"}}        
+        <i class="i18n" style="padding-top: 15px; margin-bottom: 0px; font-size: 12px" data-i18n-id="i18n_ecl_version">({{i18n "i18n_ecl_version" "ECL version"}}:</i>
+        <i class="i18n" style="padding-top: 15px; margin-bottom: 0px; font-size: 12px" data-i18n-id="i18n_ecl_version_number">{{i18n "i18n_ecl_version_number" "1.3"}})</i>
+      </p>      
       <button type="button" id="{{divElementId}}-helpButton" class="btn btn-default pull-right i18n" style="margin: 10px;" data-toggle="modal" data-target="#{{divElementId}}-queryHelpModal" data-i18n-id="i18n_Help">{{i18n "i18n_Help" "Help"}}</button>
       <button type="button" id="{{divElementId}}-clearButton" class="btn btn-default pull-right i18n" style="margin: 10px;" data-i18n-id="i18n_clear">{{i18n "i18n_clear" "Clear"}}</button>
       <!--<p><strong>This will execute against the current MAIN branch of the authoring platform. Please make sure you have logged into the authoring platform to be able to run any queries.</strong></p> -->
