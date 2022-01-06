@@ -1974,7 +1974,7 @@ function conceptDetails(divElement, conceptId, options) {
                             auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>&equiv;</span>&nbsp;&nbsp";
                         }
                         if (countryIcons[field.moduleId]) {
-                            auxHtml = auxHtml + "<div class='phoca-flagbox' style='width:26px;height:26px'><span class='phoca-flag " + countryIcons[field.moduleId] + "'></span></div>&nbsp";
+                            auxHtml = auxHtml + "<div class='phoca-flagbox' style='width:20px;height:20px'><span class='phoca-flag " + countryIcons[field.moduleId] + "'></span></div>&nbsp";
                         }
                         auxHtml = auxHtml + "<a id='" + ind + panel.divElement.id + "-treeicon-" + field.conceptId + "' href='javascript:void(0);' style='color: inherit;text-decoration: inherit;'>";
                         auxHtml = auxHtml + "<span class='treeLabel selectable-row' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>" + field.defaultTerm + "</span></a></li>";
