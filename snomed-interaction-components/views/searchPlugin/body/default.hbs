@@ -23,7 +23,7 @@
                         {{#hasCountryIcon module}}
                             <div class="phoca-flagbox" style="width:20px;height:20px">
                                 <span class="phoca-flag {{countryIcon module}}"></span>
-                            </div>
+                            </div>&nbsp;
                         {{/hasCountryIcon}}
                         <a href='javascript:void(0);' style='color: inherit;text-decoration: inherit; 'draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{term}}' data-branch='{{branch}}'>{{term}}</a>
                     </div>
@@ -32,7 +32,7 @@
                     {{#hasCountryIcon concept.moduleId}}
                         <div class="phoca-flagbox" style="width:20px;height:20px">
                             <span class="phoca-flag {{countryIcon concept.moduleId}}"></span>
-                        </div>
+                        </div>&nbsp;
                     {{/hasCountryIcon}}                    
                     {{#if concept.fsn.term}}
                         {{concept.fsn.term}}
