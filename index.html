@@ -404,7 +404,7 @@
                                 let release = options.releases.items[i];
                                 if (typeof release.latestVersion !== 'undefined' && release.countryCode) {
                                     count++;
-                                    $('#extension-flags').append($('<img>').attr("src", "img/flags/" + release.countryCode + ".png")).append(' ');
+                                    $('#extension-flags').append('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + release.countryCode + '" style="width:100%;height:100%"></span></div>').append(' ');
                                     if (count !== 0 && (count % 7 === 0)) {
                                         $('#extension-flags').append('<br>');
                                     }
@@ -469,7 +469,7 @@
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
                 if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser || options.communityBrowser) {
-                    var $img = $('<img>').attr("src", release.countryCode !== '' ? "img/flags/" + release.countryCode + ".png" : "img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
+                    var $img = '<div class="phoca-flagbox" style="' + (release.countryCode !== '' ? 'width:16px;height:11px' : 'width:20px;height:20px') +'"><span class="phoca-flag ' + (release.countryCode !== '' ? release.countryCode : 'logo') + '" style="width:100%;height:100%"></span></div>'+ ' ';
 
                     var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
                     $span1.text("Go browsing...");
@@ -559,25 +559,25 @@
             var flag = '';
             if (ui_language == "en") {
                 language = 'en';
-                flag = 'img/flags/us.png';
+                flag = 'us';
             } else if (ui_language == "es") {
                 language = 'es';
-                flag = 'img/flags/es.png';
+                flag = 'es';
             } else if (ui_language == "sv") {
                 language = 'sv';
-                flag = 'img/flags/se.png';
+                flag = 'se';
             } else if (ui_language == "da") {
                 language = 'da';
-                flag = 'img/flags/dk.png';
+                flag = 'dk';
             } else if (ui_language == "fr") {
                 language = 'fr';
-                flag = 'img/flags/fr.png';
+                flag = 'fr';
             } else if (ui_language == "pt") {
                 language = 'pt';
-                flag = 'img/flags/pt.png';
+                flag = 'pt';
             } else {
                 language = 'en';
-                flag = 'img/flags/us.png';
+                flag = 'us';
             }
 
             return {
@@ -2002,8 +2002,8 @@
                 if (typeof(Storage) !== "undefined") {
                     localStorage.setItem("ui_language", language);
                 }
-                $("#nav-selected-flag").html('<img src="' + flagPng + '">');
-                $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
+                $("#nav-selected-flag").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
+                $("#nav-selected-flag-modal").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
                 jQuery.i18n.properties({
                     name: 'Languages',
                     path: 'i18n/',
@@ -2202,22 +2202,22 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'img/flags/us.png', true);"><img src="img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png" /> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png" /> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('fr', 'img/flags/fr.png', true);"><img src="img/flags/fr.png" /> Français</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('fr', 'fr', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag fr" style="width:100%;height:100%"></span></div> Français</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png" /> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('sv', 'img/flags/se.png', true);"><img src="img/flags/se.png" /> Swedish</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('sv', 'se', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Swedish</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -2225,7 +2225,7 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology" />
+                            <a href="http://www.snomed.org" target="_blank"><div class="phoca-flagbox pull-right visible-lg" style="width:110px;height: 48px;" alt="SNOMED International delivering SNOMED, the global clinical terminology"><span class="phoca-flag snomed-logo"></span></div>
                             </a>
                     </li>
                 </ul>
@@ -2260,20 +2260,20 @@
                 <h2 style="margin-top : 2px">
                     <span class="i18n" data-i18n-id="i18n_home10">Externally Hosted Extensions</span>
                 </h2>
-                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank"><img src="img/flags/gb.png" style="">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
+                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
                 <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
                 <p class="lead">
-                    <img src="img/flags/ar.png">&nbsp;&nbsp;&nbsp;<a href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
-                    <br><img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
-                    <br><img src="img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
-                    <br><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
-                    <br><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="https://sundhedsdatastyrelsen.dk/" target="_blank">The Danish Health Data Authority, Denmark</a>
-                    <br><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="https://www.nictiz.nl/" target="_blank">Nictiz, Netherlands</a>
-                    <br><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="https://www.socialstyrelsen.se" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                    <br><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
-                    <br><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br><img src="img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
-                    <br><img src="img/flags/nz.png">&nbsp;&nbsp;&nbsp;<a href="https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre" target="_blank">New Zealand SNOMED CT National Release Centre</a>
+                    <span class="phoca-flagbox" style="width:16px;height:16px"><span class="phoca-flag ar"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag au" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag be" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ca" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://sundhedsdatastyrelsen.dk/" target="_blank">The Danish Health Data Authority, Denmark</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nl" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.nictiz.nl/" target="_blank">Nictiz, Netherlands</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.socialstyrelsen.se" target="_blank">The National Board of Health and Welfare, Sweden</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag uy" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nz" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre" target="_blank">New Zealand SNOMED CT National Release Centre</a>
                 </p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
@@ -2514,19 +2514,19 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'img/flags/us.png', true);"><img src="img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png" /> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png" /> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png" /> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', 'img/flags/se.png', true);"><img src="img/flags/se.png" /> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', 'se', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Svenska</a>
                             </li>
                         </ul>
                     </div>
