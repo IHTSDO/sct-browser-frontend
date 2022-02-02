@@ -41,7 +41,8 @@ countryIcons = {
     '11000241103': 'common-fr',
     '2011000195101': 'ch',
     '11000234105': 'at',
-    '11000267109': 'kr'
+    '11000267109': 'kr',
+    '11000229106': 'fi'
 };
 
 Handlebars.registerHelper('countryIcon', function(moduleId) {
