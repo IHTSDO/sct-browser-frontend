@@ -268,6 +268,14 @@
     height: 100%;
     background-size: 100% 100%;
 }
+
+/* Finland */
+.fi {
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAwIDExMDAiPg0KPHBhdGggZmlsbD0iI2ZmZiIgZD0ibTAsMGgxODAwdjExMDBoLTE4MDB6Ii8+DQo8ZyBmaWxsPSIjMDAzNTgwIj4NCjxwYXRoIGQ9Im0wLDQwMGgxODAwdjMwMGgtMTgwMHoiLz4NCjxwYXRoIGQ9Im0wLTgwMGgxMTAwdjMwMGgtMTEwMHoiIHRyYW5zZm9ybT0icm90YXRlKDkwKSIvPg0KPC9nPg0KPC9zdmc+DQo=');
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}
  
 
 /* Portugal */
