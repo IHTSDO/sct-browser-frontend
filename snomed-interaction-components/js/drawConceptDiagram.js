@@ -34,6 +34,7 @@ function drawConceptDiagram (concept, div, options, panel) {
     
         //Clear the canvas
         canvas.width = canvas.width;
+        document.body.removeChild(canvas);
     };
 
     var renderDiagram = function(concept, div, options, ungroupedAttributes) {
