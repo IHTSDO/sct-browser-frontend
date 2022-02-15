@@ -54,7 +54,8 @@ module.exports = function(grunt) {
                     'external-libs/canvg.min.js',
                     'external-libs/bootstrap-multiselect.js',
                     'external-libs/jquery.history.js',
-                    'external-libs/ZeroClipboard.js'
+                    'external-libs/ZeroClipboard.js',
+                    'external-libs/datatables.min.js'
                 ],
                 dest: 'snomed-interaction-components/dist/js/external.js'
             },
@@ -80,6 +81,7 @@ module.exports = function(grunt) {
                     "css/popover-extra-placements.css",
                     "css/animate.css",
                     "css/bootstrap-multiselect.css",
+                    "css/datatables.min.css",
                     'snomed-interaction-components/dist/css/<%= pkg.name %>.css'
                 ],
                 dest: 'css/external.css'

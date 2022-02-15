@@ -116,6 +116,7 @@ function refsetPanel(divElement, options) {
                 showConcept: true
             });
         });
+        $('#' + panel.divElement.id + '-datatable').DataTable({searching: false, paging: false, info: false});
     }
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate) {
