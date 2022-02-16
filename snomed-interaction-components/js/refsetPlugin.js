@@ -116,7 +116,25 @@ function refsetPanel(divElement, options) {
                 showConcept: true
             });
         });
-        $('#' + panel.divElement.id + '-datatable').DataTable({searching: false, paging: false, info: false});
+
+        setTimeout(function() {
+            $('#' + panel.divElement.id + '-datatable').DataTable({
+                searching: false, 
+                paging: false, 
+                info: false,
+                "autoWidth": false,
+                "columnDefs": [
+                    { "width": "25%", "targets": 0 },
+                    { "width": "60%", "targets": 1 },
+                    { "width": "15%", "targets": 2 }
+                  ], 
+                "columns": [
+                    { "width": "25%" },
+                    { "width": "60%" },
+                    { "width": "15%" }
+                ]
+            });
+        }, 0);
     }
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate) {
