@@ -124,8 +124,8 @@ function refsetPanel(divElement, options) {
             "autoWidth": false,
             "columnDefs": [
                 { "width": "25%", "targets": 0 },
-                { "width": "60%", "targets": 1 },
-                { "width": "15%", "targets": 2 }
+                { "width": "70%", "targets": 1 },
+                { "width": "5%", "targets": 2 }
               ]
         });
 
