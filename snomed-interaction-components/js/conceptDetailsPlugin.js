@@ -614,8 +614,8 @@ function conceptDetails(divElement, conceptId, options) {
                 langRefset: panel.options.languages,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages,
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
-                showIssueCollector: panel.options.communityBrowser || options.edition.startsWith('MAIN/SNOMEDCT-SE') ,
-                issueCollectorButtonText: panel.options.communityBrowser ? 'Submit Feedback' : 'Skicka synonymförslag'
+                showIssueCollector: panel.options.communityBrowser || options.edition.startsWith('MAIN/SNOMEDCT-SE') || options.edition.startsWith('MAIN/SNOMEDCT-NZ'),
+                issueCollectorButtonText: options.edition.startsWith('MAIN/SNOMEDCT-SE') ? 'Skicka synonymförslag' : 'Submit Feedback'
             };
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
@@ -643,9 +643,9 @@ function conceptDetails(divElement, conceptId, options) {
                     firstMatch: firstMatch,
                     divElementId: panel.divElement.id,
                     frameId: panel.divElement.id + '-issues-collector',
-                    summary: (panel.options.communityBrowser ? 'Feedback For Concept: ' + firstMatch.defaultTerm + " | " + firstMatch.conceptId : 'Förslag på synonymer för begreppet: ' + firstMatch.conceptId),
-                    issueCollectorUrl: (panel.options.communityBrowser ? 'https://jira.ihtsdotools.org/s/de395333f61d94e8d9c1df353d370114-T/-xa03ko/802005/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=8a01cd8f' :
-                                                                        'https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164')
+                    summary: (options.edition.startsWith('MAIN/SNOMEDCT-SE') ? 'Förslag på synonymer för begreppet: ' + firstMatch.conceptId : 'Feedback For Concept: ' + firstMatch.defaultTerm + " | " + firstMatch.conceptId),
+                    issueCollectorUrl: (options.edition.startsWith('MAIN/SNOMEDCT-SE') ? 'https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164' : 
+                                                                                        'https://jira.ihtsdotools.org/s/de395333f61d94e8d9c1df353d370114-T/-xa03ko/802005/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=8a01cd8f')
                 };
                 
                 var issueCollectorFrameHtml = JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/issues-collector.hbs"](context);
