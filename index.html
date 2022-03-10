@@ -2088,6 +2088,9 @@
             const el = document.querySelector('ecl-builder');
             el.addEventListener('output', e => {
                 $('#fh-query_canvas-ExpText').val(e.detail);
+                if (typeof options.setEcl !== 'undefined') {
+                    options.setEcl(e.detail);
+                }
             });
         }
     </script>
