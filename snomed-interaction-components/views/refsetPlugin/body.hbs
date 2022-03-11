@@ -1,55 +1,57 @@
 <div style="margin-top: 10px" class="panel panel-default">
-    <div class="panel-body">
-        <div class="row container-fluid" style="max-height: 260px; overflow-y: scroll; margin: 10px;">
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th class="i18n" data-i18n-id='i18n_type'>{{i18n "i18n_type" "Type"}}</th>
-                        <th class="i18n" data-i18n-id='i18n_refset'>{{i18n "i18n_refset" "Refset"}}</th>
-                        <th class="i18n" data-i18n-id='i18n_active_members_count'>{{i18n "i18n_active_members_count" "Active Members Count"}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {{#if_eq refsets.length 0}}
-                    <tr>
-                        <td colspan="3">
-                            <span class="text-muted i18n" data-i18n-id='i18n_no_refsets'>{{i18n "i18n_no_refsets" "No refsets"}}</span>
-                        </td>
-                    </tr>
-                {{else}}
-                    {{#each refsets}}
+    <div style="position: relative">
+        <div class="panel-body" id="{{divElementId}}-details" style="height: 82vh;">
+            <div class="row container-fluid">
+                <table class="table table-hover table-bordered" id="{{divElementId}}-datatable">
+                    <thead>
                         <tr>
-                            <td>{{type}}</td>
-                            <td>
-                                <a class="refset-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
-                                    {{#if_eq definitionStatus "PRIMITIVE"}}
-                                        <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&nbsp;&nbsp;</span>
-                                    {{else}}
-                                        <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&equiv;</span>
-                                    {{/if_eq}}
-                                    {{#hasCountryIcon module}}
-                                        <div class="phoca-flagbox" style="width:22px;height:22px">
-                                            <span class="phoca-flag {{countryIcon module}}"></span>
-                                        </div>
-                                    {{/hasCountryIcon}}
-                                    <span draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>
-                                        {{defaultTerm}}
-                                    </span>                                    
-                                </a>
-                            </td>
-                            <td>
-                                {{count}}
+                            <th class="i18n" data-i18n-id='i18n_type'>{{i18n "i18n_type" "Type"}}</th>
+                            <th class="i18n" data-i18n-id='i18n_refset'>{{i18n "i18n_refset" "Refset"}}</th>
+                            <th class="i18n" data-i18n-id='i18n_active_members_count'>{{i18n "i18n_active_members_count" "Active Members"}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#if_eq refsets.length 0}}
+                        <tr>
+                            <td colspan="3">
+                                <span class="text-muted i18n" data-i18n-id='i18n_no_refsets'>{{i18n "i18n_no_refsets" "No refsets"}}</span>
                             </td>
                         </tr>
-                    {{/each}}
-                {{/if_eq}}
-                </tbody>
-            </table>
-        </div>
-        <div class="row container-fluid">
-            <table id="{{divElementId}}-resultsTable" class="table table-hover table-bordered">
+                    {{else}}
+                        {{#each refsets}}
+                            <tr>
+                                <td>{{type}}</td>
+                                <td>
+                                    <a class="refset-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                        {{#if_eq definitionStatus "PRIMITIVE"}}
+                                            <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&nbsp;&nbsp;</span>
+                                        {{else}}
+                                            <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&equiv;</span>
+                                        {{/if_eq}}
+                                        {{#hasCountryIcon module}}
+                                            <div class="phoca-flagbox" style="width:22px;height:22px">
+                                                <span class="phoca-flag {{countryIcon module}}"></span>
+                                            </div>
+                                        {{/hasCountryIcon}}
+                                        <span draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>
+                                            {{defaultTerm}}
+                                        </span>                                    
+                                    </a>
+                                </td>
+                                <td>
+                                    {{count}}
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{/if_eq}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row container-fluid">
+                <table id="{{divElementId}}-resultsTable" class="table table-hover table-bordered">
 
-            </table>
+                </table>
+            </div>
         </div>
-    </div>
+    </div>    
 </div>

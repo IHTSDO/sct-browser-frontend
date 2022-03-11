@@ -752,10 +752,10 @@ function taxonomyPanel(divElement, conceptId, options) {
     }
 
     this.setLanguageRefsets = function(languageRefsets) {
-        panel.initialiseLanguageDropdown(languageRefsets);
+        panel.initializeLanguageDropdown(languageRefsets);
     }
 
-    panel.initialiseLanguageDropdown = function(languageRefsets) {
+    panel.initializeLanguageDropdown = function(languageRefsets) {
         const usFSN = {id: '900000000000509007-fsn', label: 'FSN in US', dialectId: "900000000000509007"};
         const usPT = {id: '900000000000509007-pt', label: 'PT in US', dialectId: "900000000000509007"};
         var i18n_language = jQuery.i18n.prop('i18n_language');
@@ -794,8 +794,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         }
         
         $("#" + panel.divElement.id + "-txLanguageSwitcherLabel").html("<span><span class='i18n' data-i18n-id='i18n_language'>" + i18n_language + "</span>: " + defaultLanguage['label'] + "</span>");
-        panel.options.acceptLanguageValue = panel.getAcceptLanguage(defaultLanguage['dialectId']);        
-        panel.updateCanvas();
+        panel.options.acceptLanguageValue = panel.getAcceptLanguage(defaultLanguage['dialectId']);
     }
 
     panel.getAcceptLanguage = function(dialectId) {
@@ -966,10 +965,6 @@ function taxonomyPanel(divElement, conceptId, options) {
     }
 
     this.setupCanvas();
-     
-    if (!panel.options.disableTaxonomyInitialLoad) {
-        panel.updateCanvas();
-    }
 }
 
 function clearTaxonomyPanelSubscriptions(divElementId1) {

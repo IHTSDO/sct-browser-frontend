@@ -1534,7 +1534,7 @@ function queryComputerPanel(divElement, options) {
         var xhrExecute2 = $.ajax({
             type: "GET",
             headers: {
-                'Accept-Language': panel.options.languages
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
             },
             url: expressionURL,
             //timeout: 300000,lasturl

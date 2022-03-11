@@ -43,7 +43,8 @@
             {{else}}
                 <span class='i18n' data-i18n-id='i18n_inactive'>Inactive</span><span>.</span>
             {{/if_eq}}
-            <span id="{{divElementId}}-descendantInfor"><span class='i18n' data-i18n-id='i18n_descendants_count'>{{i18n 'i18n_descendants_count' 'Descendants Count'}}</span>, <span class='i18n' data-i18n-id='i18n_stated'>{{i18n 'i18n_stated' 'Stated'}}</span>: <span id="{{divElementId}}-statedDescendantCount"></span> <span class='i18n' data-i18n-id='i18n_concepts'>{{i18n 'i18n_concepts' 'concepts'}}</span>, <span class='i18n' data-i18n-id='i18n_inferred'>{{i18n 'i18n_inferred' 'Inferred'}}</span>: <span id="{{divElementId}}-inferredDescendantCount"></span> <span class='i18n' data-i18n-id='i18n_concepts'>{{i18n 'i18n_concepts' 'concepts'}}</span>.</span>          
+
+            <span id="{{divElementId}}-descendantInfor"><span class='i18n' data-i18n-id='i18n_descendants_count'>{{i18n 'i18n_descendants_count' 'Descendants Count'}}</span>: <span id="{{divElementId}}-descendantCount"></span> <span class='i18n' data-i18n-id='i18n_concepts'>{{i18n 'i18n_concepts' 'concepts'}}</span>.</span>            
         </td>
         <td>
             <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="
@@ -79,7 +80,7 @@
                     <!--<form><input class='form-control' id='share-field-{{divElementId}}' value='{{dataContentValue}}?perspective=full&conceptId1={{firstMatch.conceptId}}&edition={{edition}}&release={{release}}&server={{server}}&langRefset={{langRefset}}'></form><br>Copy the concept link (e.g. CTRL-C) to save and share a reference to this concept.-->
                     <!--" data-html="true"><i class="glyphicon glyphicon-share-alt"></i></button>-->
             <span class="pull-right">
-               <div class="phoca-flagbox" style="width:40px;height:40px">
+               <div class="phoca-flagbox" style="width:30px;height:30px">
                    <span class="phoca-flag {{countryIcon firstMatch.moduleId}}"></span>
                </div>
             </span>

@@ -8,42 +8,12 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="SNOMED International SNOMED CT Browser">
     <meta name="author" content="SNOMED International">
-    
-    <script src="external-libs/jquery-3.3.1.min.js" type="text/javascript"></script>
-    <script src="external-libs/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
-    <script src="external-libs/base64.js" type="text/javascript"></script>
-    <script src="external-libs/jquery.svg.js" type="text/javascript"></script>
-    <script src="external-libs/jquery.splitter-0.14.0.js" type="text/javascript"></script>
-    <script src="external-libs/conduit.min.js" type="text/javascript"></script>
-    <script src="external-libs/lodash.js" type="text/javascript"></script>
-    <script src="external-libs/postal.min.js" type="text/javascript"></script>
-    <script src="external-libs/bootstrap-tour.min.js"></script>
-    <script src="external-libs/jquery.i18n.properties-min-1.0.9.js"></script>
-    <script src="external-libs/handlebars-v1.3.0.min.js"></script>
-    <script src="external-libs/bootstrap.min.js" type="text/javascript"></script>
-    <script src="external-libs/jquery.ui.touch-punch.min.js"></script>
-    <script src="external-libs/excellentexport.min.js"></script>
-    <script src="external-libs/notify.js"></script>
-    <script src="external-libs/clipboard.min.js"></script>
-    <script src="external-libs/popover-extra-placements.js" type="text/javascript"></script>
-    <script src="external-libs/canvg.min.js" type="text/javascript"></script>
-    <script src="external-libs/canvas2image.js" type="text/javascript"></script>
-    <script src="external-libs/bootstrap-multiselect.js" type="text/javascript"></script>
-    <script src="external-libs/jquery.history.js"></script>
-    <script src="external-libs/ZeroClipboard.js"></script>
+
     <script src="internal-libs/snomed-interaction-components.min.js?version=build_version"></script>
-    <script type="text/javascript" src="ecl-builder/ecl-builder.js" defer></script>
+    <script type="text/javascript" src="ecl-builder/ecl-builder.js"></script>
 
     <link rel="stylesheet" type="text/css" href="ecl-builder/styles.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery.splitter.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.custom.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.base.12.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-tour.css">
-    <link rel="stylesheet" type="text/css" href="css/popover-extra-placements.css">
-    <link rel="stylesheet" type="text/css" href="css/animate.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-multiselect.css">
-    <link rel="stylesheet" type="text/css" href="css/snomed-interaction-components.min.css?version=build_version">
+    <link rel="stylesheet" type="text/css" href="css/external.css">
 
     <style>
         .modal.fade .modal-dialog {
@@ -53,35 +23,31 @@
 
     <script>
         function changeFavicon(iconPrefix) {
-          var link;
-          link = document.createElement('link');
-          link.type = 'image/x-icon';
-          link.rel = 'shortcut icon';
-          link.href = iconPrefix + '-favicon.png';
-          document.getElementsByTagName('head')[0].appendChild(link);
+            var link;
+            link = document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = iconPrefix + '-favicon.png';
+            document.getElementsByTagName('head')[0].appendChild(link);
         }
-        
+
         function getIconPrefixFromEnv() {
-          const env = window.location.hostname.split(/[.]/)[0];
-          let prefix;
-          if (env === 'local') {
-            prefix = 'loc';
-          }
-          else if (env.startsWith('dev-')) {
-            prefix = 'dev';
-          }
-          else if (env.startsWith('uat-')) {
-            prefix = 'uat';
-          }
-          else if (env.startsWith('training-')) {
-            prefix = 'trn';
-          }
-          else {
-            prefix = 'prd';
-          }
-          return prefix;
+            const env = window.location.hostname.split(/[.]/)[0];
+            let prefix;
+            if (env === 'local') {
+                prefix = 'loc';
+            } else if (env.startsWith('dev-')) {
+                prefix = 'dev';
+            } else if (env.startsWith('uat-')) {
+                prefix = 'uat';
+            } else if (env.startsWith('training-')) {
+                prefix = 'trn';
+            } else {
+                prefix = 'prd';
+            }
+            return prefix;
         }
-        
+
         changeFavicon(getIconPrefixFromEnv());
     </script>
 
@@ -116,7 +82,7 @@
         var QueryString = queryString();
         var enableQueriesInFullPerspective = true;
         var currentPerspective = "home";
-        var selectedLanguage = '';        
+        var selectedLanguage = '';
         var options = {
             serverUrl: "",
             queryServerUrl: "",
@@ -134,6 +100,7 @@
                 'en': 'English'
             },
             defaultLanguage: 'en',
+            defaultAcceptLanguage: "",
             closeButton: false,
             collapseButton: false,
             linkerButton: true,
@@ -141,9 +108,8 @@
             searchMode: "partialMatching",
             searchLang: "english",
             diagrammingMarkupEnabled: false,
-            disableTaxonomyInitialLoad: true,
             statusSearchFilter: "activeOnly",
-            highlightByEffectiveTime: "false",         
+            highlightByEffectiveTime: "false",
             dailyBuildBrowser: false,
             publicBrowser: false,
             previewBrowser: false,
@@ -164,7 +130,7 @@
             "5641000179103": "ES-UY",
             "554461000005103": "DA",
             "46011000052107": "SV",
-            "32570271000036106": "AU",            
+            "32570271000036106": "AU",
             "11000146104": "NL",
             "31000146106": "NL",
             "31000172101": "NL",
@@ -179,9 +145,12 @@
             "722128001": "ZH",
             "291000210106": "MI",
             "21000241105": "FR",
-            "722130004": "DE"
+            "722130004": "DE",
+            "2041000195100": "DE",
+            "2021000195106": "FR",
+            "2031000195108": "IT"
         };
-        
+
         options.updateReleaseSwitcher = function(branch, conceptId) {
             options.edition = branch;
             defaultConceptId = conceptId;
@@ -191,27 +160,27 @@
                 if (typeof release.latestVersion !== "undefined" && (release.latestVersion.branchPath === options.edition || release.branchPath === options.edition)) {
                     $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                     break;
-                }                                       
-            }            
+                }
+            }
         };
 
         options.setEcl = function(eclQuery) {
-            options.ecl = eclQuery;          
+            options.ecl = eclQuery;
         };
 
         function getCopyrightYear() {
-            $.ajax({ 
-                type: 'GET', 
-                url:'/', 
-                success: function(data, textStatus, response){
+            $.ajax({
+                type: 'GET',
+                url: '/',
+                success: function(data, textStatus, response) {
                     let copyrightYear = new Date(response.getResponseHeader('Date')).getFullYear();
                     $('.copyright_year').text(copyrightYear);
                 }
             });
-        }        
+        }
 
         function setUILanguage() {
-            var ui_language = '';            
+            var ui_language = '';
             if (typeof(Storage) !== "undefined") {
                 if (localStorage.getItem("ui_language")) {
                     ui_language = localStorage.getItem("ui_language");
@@ -221,41 +190,35 @@
             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(ui_language !== '' ? ui_language : options.defaultLanguage);
             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
         }
-        
+
         function determineServer() {
-            if(window.location.hostname.includes('dailybuild')) {
+            if (window.location.hostname.includes('dailybuild')) {
                 options.dailyBuildBrowser = true;
-            }
-            else if(window.location.hostname.includes('community')) {
+            } else if (window.location.hostname.includes('community')) {
                 options.communityBrowser = true;
-            }
-            else if(window.location.hostname.includes('concrete') || window.location.hostname.includes('preview')) {
+            } else if (window.location.hostname.includes('concrete') || window.location.hostname.includes('preview')) {
                 options.previewBrowser = true;
-            }
-            else if(window.location.hostname.includes('browser')) {
+            } else if (window.location.hostname.includes('browser')) {
                 options.publicBrowser = true;
-            }
-            else {
+            } else {
                 // do nothing
             }
 
-            if(options.dailyBuildBrowser) {
+            if (options.dailyBuildBrowser) {
                 $("#fh-daily_canvas-li").css({
                     "display": "block"
                 });
-            }
-            else {
+            } else {
                 $("#fh-daily_canvas-li").css({
                     "display": "none"
                 });
             }
 
-            if(options.communityBrowser) {
+            if (options.communityBrowser) {
                 $("#fh-commnunity_content_canvas-li").css({
                     "display": "block"
                 });
-            }
-            else {
+            } else {
                 $("#fh-commnunity_content_canvas-li").css({
                     "display": "none"
                 });
@@ -264,8 +227,7 @@
             var getCodeSystems = function() {
                 var dfd = $.Deferred();
 
-                $.getJSON("/snowstorm/snomed-ct/codesystems", function(result) {
-                }).done(function(result) {
+                $.getJSON("/snowstorm/snomed-ct/codesystems", function(result) {}).done(function(result) {
                     options.serverUrl = "/snowstorm/snomed-ct";
                     options.queryServerUrl = "/snowstorm/snomed-ct";
                     options.releases = result;
@@ -297,31 +259,34 @@
                     options.dailyBuildReleases = [];
                     var dailyBuildInternational = [];
                     var dailyBuildLocal = [];
-                    options.communityContentReleases = [];                    
+                    options.communityContentReleases = [];
 
                     if (options.releases) {
                         for (let i = 0; i < options.releases.items.length; ++i) {
                             var release = options.releases.items[i];
+
+                            /* TODO: The default Accept language should be handled by code-system */
+                            if (release.shortName === 'SNOMEDCT-NZ') {
+                                release.defaultAcceptLanguage = 'en-X-271000210107';
+                            }
                             if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
-                                if(release.shortName === 'SNOMEDCT'){
+                                if (release.shortName === 'SNOMEDCT') {
                                     release.stats = true;
                                     release.mrcm = true;
                                 }
                                 internationalReleases.push(release);
                                 if (release.maintainerType && release.maintainerType === 'Community Content') {
                                     options.communityContentReleases.push(release);
-                                }
-                                else{
+                                } else {
                                     options.dailyBuildReleases.push(release);
                                     dailyBuildInternational.push(release);
                                 }
                             } else {
-                                if(release.maintainerType && release.maintainerType === 'Community Content') {
+                                if (release.maintainerType && release.maintainerType === 'Community Content') {
                                     options.communityContentReleases.push(release);
-                                }
-                                else{
+                                } else {
                                     localReleases.push(release);
-                                    if(release.dailyBuildAvailable){
+                                    if (release.dailyBuildAvailable) {
                                         options.dailyBuildReleases.push(release);
                                         dailyBuildLocal.push(release);
                                     }
@@ -333,14 +298,14 @@
                     // sort local extensions again
                     localReleases.sort(function(a, b) {
                         return a.name.localeCompare(b.name);
-                    });                    
-                    
-                    if(options.publicBrowser){
+                    });
+
+                    if (options.publicBrowser) {
                         addEditionLinks($('#international_editions'), internationalReleases);
                         addEditionLinks($('#local_editions'), localReleases);
                         addStatsLinks($('#international_stats'), internationalReleases);
                         addMrcmLink($('#international_mrcm'), internationalReleases);
-                    } else if (options.previewBrowser){
+                    } else if (options.previewBrowser) {
                         addEditionLinks($('#preview_editions'), internationalReleases);
                         addMrcmLink($('#preview_mrcm'), internationalReleases);
                     } else if (options.communityBrowser) {
@@ -352,12 +317,15 @@
                         // do nothing
                     }
 
-                    dfd.resolve({internationalReleases: internationalReleases, localReleases: localReleases});
+                    dfd.resolve({
+                        internationalReleases: internationalReleases,
+                        localReleases: localReleases
+                    });
                 }).fail(function() {
                     console.log('fail');
                     options.serverUrl = "/snowowl/snomed-ct/v2";
                     options.queryServerUrl = "/snowowl/snomed-ct/v2";
-                    
+
                     dfd.resolve();
                 });
 
@@ -371,7 +339,7 @@
                     options.imsUrl = null;
                     return dfd.resolve();
                 }
-                
+
                 $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
                     options.tsBrowser = true;
@@ -380,7 +348,7 @@
                     options.languageObject = {
                         en: "English"
                     };
-                    
+
                     var $header = $('#header-nav');
                     var $projectSpan = $('<span>');
                     $projectSpan.css('margin-left', '10px');
@@ -414,9 +382,9 @@
 
                 return dfd.promise();
             };
-            
+
             $.when(getCodeSystems(), getUIConfiguration()).then(function(response) {
-                if(options.imsUrl == null) {
+                if (options.imsUrl == null) {
 
                     // Marked as public browser if both daily build and community browser could not be specifed from URL
                     if (!options.communityBrowser && !options.dailyBuildBrowser && !options.publicBrowser && !options.previewBrowser) {
@@ -431,23 +399,23 @@
                     $('#edition-selector').css('display', 'block');
                     if (options.publicBrowser) {
                         if (options.releases) {
-                            let count = 0;                           
+                            let count = 0;
                             for (let i = 0; i < options.releases.items.length; i++) {
                                 let release = options.releases.items[i];
                                 if (typeof release.latestVersion !== 'undefined' && release.countryCode) {
-                                    count++;                                    
-                                    $('#extension-flags').append($('<img>').attr("src", "img/flags/" + release.countryCode + ".png")).append(' ');
-                                    if (count !== 0 && (count%7 === 0)) {
+                                    count++;
+                                    $('#extension-flags').append('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + release.countryCode + '" style="width:100%;height:100%"></span></div>').append(' ');
+                                    if (count !== 0 && (count % 7 === 0)) {
                                         $('#extension-flags').append('<br>');
                                     }
-                                }                                
+                                }
                             }
                         }
-                        $('#multi-extension-search').css('display', 'block');                        
+                        $('#multi-extension-search').css('display', 'block');
+                        $('#version-selector').css('display', 'block');
                     }
-                }
-                else {
-                    if(options.serverUrl === '/snowowl/snomed-ct/v2') {
+                } else {
+                    if (options.serverUrl === '/snowowl/snomed-ct/v2') {
                         $('#fh-refset_canvas').css('display', 'none');
                         $('#fh-refset_canvas-li').css('display', 'none');
                     }
@@ -458,7 +426,7 @@
 
         function addStatsLinks($statsLinks, releases) {
             for (let i = 0; i < releases.length; ++i) {
-                if(releases[i].stats){
+                if (releases[i].stats) {
                     let release = releases[i];
                     var $span1 = $('<span>');
                     var $span2 = $('<span>');
@@ -470,22 +438,21 @@
                     $a.attr("href", '/qa');
                     $a.attr("target", "_blank");
                     $statsLinks.append($a);
-                    $statsLinks.append(" "); 
-                }     
+                    $statsLinks.append(" ");
+                }
             }
         }
-        
+
         function addMrcmLink($statsLinks, releases) {
             for (let i = 0; i < releases.length; ++i) {
-                if(releases[i].mrcm){
+                if (releases[i].mrcm) {
                     let release = releases[i];
                     var $span1 = $('<span>');
                     var $span2 = $('<span>');
                     $span1.text("MRCM Browser");
-                    if(options.previewBrowser){
+                    if (options.previewBrowser) {
                         var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -6px; width:253px; margin-bottom:10px;");
-                    }
-                    else {
+                    } else {
                         var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -6px; width:165px; margin-bottom:10px;");
                     }
                     $a.append($span1);
@@ -493,8 +460,8 @@
                     $a.attr("href", '/mrcm');
                     $a.attr("target", "_blank");
                     $statsLinks.append($a);
-                    $statsLinks.append(" "); 
-                }     
+                    $statsLinks.append(" ");
+                }
             }
         }
 
@@ -502,23 +469,23 @@
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
                 if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser || options.communityBrowser) {
-                    var $img = $('<img>').attr("src", release.countryCode !== '' ? "img/flags/" + release.countryCode + ".png" : "img/logo.png").attr("style", release.countryCode !== '' ? "" : "height:20px");
+                    var $img = '<div class="phoca-flagbox" style="' + (release.countryCode !== '' ? 'width:16px;height:11px' : 'width:20px;height:20px') +'"><span class="phoca-flag ' + (release.countryCode !== '' ? release.countryCode : 'logo') + '" style="width:100%;height:100%"></span></div>'+ ' ';
 
                     var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
                     $span1.text("Go browsing...");
                     var $span2 = $('<span>').attr("class", "small");
-                    if(options.dailyBuildBrowser) {
+                    if (options.dailyBuildBrowser) {
                         $span2.append(release.name + "<br>DAILY BUILD");
                         $("#editionLabel").html(release.name + " DAILY BUILD");
-                    } else if(options.communityBrowser) {
+                    } else if (options.communityBrowser) {
                         $span2.append(release.name + "<br>Community Content");
                         $("#editionLabel").html(release.name + " Community Content");
-                    } else {                    
-                        $span2.append(release.name + "<br>" + release.latestVersion.version);                                       
+                    } else {
+                        $span2.append(release.name + "<br>" + release.latestVersion.version);
                     }
 
                     var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
-                    if(!options.communityBrowser){
+                    if (!options.communityBrowser) {
                         $a.append($img);
                     }
                     $a.append("&nbsp;&nbsp;&nbsp;");
@@ -537,28 +504,32 @@
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
                             parsedLanguages = parsedLanguages.slice(0, -1);
-                            if(options.dailyBuildBrowser) {
+                            if (options.dailyBuildBrowser) {
                                 options.edition = release.branchPath;
                                 $("#editionLabel").html(release.name + " DAILY BUILD");
-                            } 
-                            else if(options.communityBrowser) {
+                            } else if (options.communityBrowser) {
                                 options.edition = release.branchPath;
                                 $("#editionLabel").html(release.name + " Community Content");
-                                if(typeof release.latestVersion !== 'undefined'){
-                                   $("#fh-commnunity_content_canvas-li").css({
+                                if (typeof release.latestVersion !== 'undefined') {
+                                    $("#fh-commnunity_content_canvas-li").css({
                                         "display": "none"
                                     });
-                                }
-                                else{
+                                } else {
                                     $("#fh-commnunity_content_canvas-li").css({
                                         "display": "block"
                                     });
                                 }
-                            }
-                            else {                            
+                            } else {
                                 options.edition = release.latestVersion.branchPath;
-                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);                                                    
+                                if (options.publicBrowser) {
+                                    $("#editionLabel").html(release.name);
+                                    $("#versionLabel").html(release.latestVersion.version);
+                                    initVersionsDropdown(release);
+                                } else {
+                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                }
                             }
+
                             options.release = '';
                             options.languages = parsedLanguages;
                             options.languageObject = release.languages;
@@ -568,9 +539,10 @@
 
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
-                                                        
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
+
                             switchToFullHeight(404684003, 138875005);
-                            
+
                             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
                             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                         });
@@ -578,7 +550,7 @@
 
                     $releaseSwitcher.append($a);
                     $releaseSwitcher.append(" ");
-                }                
+                }
             }
         }
 
@@ -586,23 +558,26 @@
             var language = '';
             var flag = '';
             if (ui_language == "en") {
-                language = 'en_US';
-                flag = 'img/flags/us.png';
+                language = 'en';
+                flag = 'us';
             } else if (ui_language == "es") {
                 language = 'es';
-                flag = 'img/flags/es.png';
+                flag = 'es';
             } else if (ui_language == "sv") {
                 language = 'sv';
-                flag = 'img/flags/se.png';
+                flag = 'se';
             } else if (ui_language == "da") {
                 language = 'da';
-                flag = 'img/flags/dk.png';
+                flag = 'dk';
+            } else if (ui_language == "fr") {
+                language = 'fr';
+                flag = 'fr';
             } else if (ui_language == "pt") {
                 language = 'pt';
-                flag = 'img/flags/pt.png';
+                flag = 'pt';
             } else {
-                language = 'en_US';
-                flag = 'img/flags/us.png';
+                language = 'en';
+                flag = 'us';
             }
 
             return {
@@ -630,7 +605,7 @@
                 }
             }
             return query_string;
-        }        
+        }
 
         function start() {
             if (options.imsUrl === null) {
@@ -656,7 +631,7 @@
                 });
                 $('.noSelect').disableTextSelect(); //No text selection on elements with a class of 'noSelect'
             });
-            
+
             var diagrammingMarkupEnabled = QueryString.diagrammingMarkupEnabled;
             if (typeof diagrammingMarkupEnabled == "undefined" || diagrammingMarkupEnabled == null || diagrammingMarkupEnabled == "") {
                 diagrammingMarkupEnabled = false;
@@ -672,20 +647,20 @@
                     languages = options.languages;
                 }
                 options.languages = languages;
-            }                       
-            
+            }
+
             // For TS Browser
-            if (options.imsUrl) {                
+            if (options.imsUrl) {
                 initializeTSBrowser();
             }
-             // For Public Browser
-            else {                
+            // For Public Browser
+            else {
                 initializePublicBrowser();
-            }                       
+            }
         }
-        
-        function hideCommunityContentTab(release){
-            if(release.branchPath === QueryString.edition && options.communityBrowser && release.latestVersion) {
+
+        function hideCommunityContentTab(release) {
+            if (release.branchPath === QueryString.edition && options.communityBrowser && release.latestVersion) {
                 $("#fh-commnunity_content_canvas-li").css({
                     "display": "none"
                 });
@@ -693,11 +668,12 @@
         }
 
         function initializePublicBrowser() {
+
             setUILanguage();
             var edition = QueryString.edition;
-            var isLatestRedirect  = true; 
+            var isLatestRedirect = true;
             if (QueryString.latestRedirect) {
-                isLatestRedirect = (QueryString.latestRedirect == 'true') ;
+                isLatestRedirect = (QueryString.latestRedirect == 'true');
                 options.latestRedirect = isLatestRedirect;
             }
             if (options.dailyBuildBrowser || options.communityBrowser) {
@@ -707,12 +683,11 @@
                         return release.branchPath === edition;
                     }).length !== 0) {
                     options.edition = edition;
-                }
-                else {
+                } else {
                     options.edition = 'MAIN';
                 }
 
-                if (releases &&  releases.length > 0) {
+                if (releases && releases.length > 0) {
                     for (let i = 0; i < releases.length; i++) {
                         let release = releases[i];
                         if (release.branchPath === options.edition) {
@@ -722,51 +697,49 @@
                             options.modules = release.modules;
                             if (typeof release.latestVersion !== "undefined") {
                                 options.highlightByEffectiveTime = release.latestVersion.effectiveDate;
-                            }                            
+                            }
                             var parsedLanguages = "";
                             for (var language in release.languages) {
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
                             parsedLanguages = parsedLanguages.slice(0, -1);
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                             break;
                         }
-                    }                    
-                }                       
-            }
-            else {
+                    }
+                }
+            } else {
                 if (!isLatestRedirect) {
                     if (typeof edition !== 'undefined') {
                         options.edition = edition;
-                    } 
-                    else {
+                    } else {
                         console.error('Edition not found');
-                    }                    
-                } 
-                else {
-                    if (options.releases.items.filter(function(release) {
-                        return (typeof release.latestVersion !== "undefined") && release.latestVersion.branchPath === edition;
-                    }).length !== 0) {
-                        options.edition = edition;
                     }
-                    else {
+                } else {
+                    if (options.releases.items.filter(function(release) {
+                            return (typeof release.latestVersion !== "undefined") && release.latestVersion.branchPath === edition;
+                        }).length !== 0) {
+                        options.edition = edition;
+                    } else {
                         for (let i = 0; i < options.releases.items.length; i++) {
                             let release = options.releases.items[i];
                             if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath) {
                                 options.edition = release.latestVersion.branchPath;
                                 break;
                             }
-                        }                    
-                    }                    
+                        }
+                    }
                 }
                 if (options.releases && options.releases.items && options.releases.items.length > 0) {
                     for (let i = options.releases.items.length - 1; i >= 0; i--) {
                         let release = options.releases.items[i];
-                        if ((isLatestRedirect && typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === options.edition)
-                            || (!isLatestRedirect && options.edition.includes(release.branchPath))) {
+                        if ((isLatestRedirect && typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath === options.edition) ||
+                            (!isLatestRedirect && options.edition.includes(release.branchPath))) {
                             options.languageObject = release.languages;
                             options.editionShortname = release.shortName;
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                             options.modules = release.modules;
                             var parsedLanguages = "";
                             for (var language in release.languages) {
@@ -777,7 +750,7 @@
                             break;
                         }
                     }
-                }                                  
+                }
             }
 
             var cdValue1 = QueryString.conceptId1;
@@ -823,7 +796,7 @@
             var acceptLicense = QueryString.acceptLicense;
             if (typeof acceptLicense == "undefined" || acceptLicense == null || acceptLicense == "") {
                 acceptLicense = false;
-            }                    
+            }
 
             $("#accept-license-button-modal").unbind();
             $("#accept-license-button-modal").click(function() {
@@ -845,15 +818,15 @@
             } else {
                 $('#cookiescript').hide();
             }
-            
+
 
             // set language one more time after finishing components initialization
             setUILanguage();
 
             // RELEASES DROPDOWN HANDLER for daily build/community content
-            if(options.dailyBuildBrowser || options.communityBrowser) {
-                if ((options.dailyBuildBrowser && options.dailyBuildReleases)
-                    || (options.communityBrowser && options.communityContentReleases)) {
+            if (options.dailyBuildBrowser || options.communityBrowser) {
+                if ((options.dailyBuildBrowser && options.dailyBuildReleases) ||
+                    (options.communityBrowser && options.communityContentReleases)) {
                     var $releaseSwitcher = $('#releaseSwitcher');
                     var releases = options.dailyBuildBrowser ? options.dailyBuildReleases : options.communityContentReleases;
                     for (let i = 0; i < releases.length; ++i) {
@@ -863,13 +836,12 @@
                         $a.attr("href", "javascript:void(0);");
                         $a.on("click", function() {
                             var parsedLanguages = "";
-                            if(options.communityBrowser){
-                                if(typeof release.latestVersion !== 'undefined'){
-                                   $("#fh-commnunity_content_canvas-li").css({
+                            if (options.communityBrowser) {
+                                if (typeof release.latestVersion !== 'undefined') {
+                                    $("#fh-commnunity_content_canvas-li").css({
                                         "display": "none"
                                     });
-                                }
-                                else{
+                                } else {
                                     $("#fh-commnunity_content_canvas-li").css({
                                         "display": "block"
                                     });
@@ -888,6 +860,7 @@
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             options.modules = release.modules;
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
 
                             reloadCurrentPerspective();
 
@@ -903,7 +876,7 @@
                         }
                     }
                 }
-            } 
+            }
             // RELEASES DROPDOWN HANDLER for public browser
             else {
                 if (options.releases && options.releases.items) {
@@ -912,7 +885,7 @@
                         let release = options.releases.items[i];
                         if (typeof release.latestVersion !== "undefined") {
                             var $li = $('<li>')
-                            var $a = $('<a>').attr("shortName", release.shortName).append(release.name + " " + release.latestVersion.version);
+                            var $a = $('<a>').attr("shortName", release.shortName).append(release.name);
                             $a.attr("href", "javascript:void(0);");
                             $a.on("click", function(event) {
                                 event.stopPropagation();
@@ -927,21 +900,21 @@
                                 delete options.latestRedirect;
                                 options.languages = parsedLanguages;
                                 options.languageObject = release.languages;
-                                options.editionShortname = release.shortName;                                
+                                options.editionShortname = release.shortName;
                                 options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                                 options.modules = release.modules;
                                 options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
+                                options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                                 var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
                                 QueryString = queryString();
-                                
+
                                 if (QueryString.conceptId1) {
-                                    var checkConceptExist = function (conceptId) {
+                                    var checkConceptExist = function(conceptId) {
                                         var dfd = $.Deferred();
                                         xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
                                             dfd.resolve(true);
-                                        }).done(function(result) {                                             
-                                        }).fail(function() {
-                                            dfd.resolve(false);                                   
+                                        }).done(function(result) {}).fail(function() {
+                                            dfd.resolve(false);
                                         });
 
                                         return dfd.promise();
@@ -950,31 +923,72 @@
                                     checkConceptExist(QueryString.conceptId1).then(function(result) {
                                         if (result) {
                                             reloadCurrentPerspective();
-                                        }
-                                        else {
+                                        } else {
                                             reloadCurrentPerspective(404684003);
                                         }
                                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                                        $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                        if (options.publicBrowser) {
+                                            $("#editionLabel").html(release.name);
+                                            $("#versionLabel").html(release.latestVersion.version);
+                                            initVersionsDropdown(release);
+                                        } else {
+                                            $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                        }
                                     });
-                                }
-                                else {
+                                } else {
                                     reloadCurrentPerspective();
                                     switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
-                                }                                
+                                    if (options.publicBrowser) {
+                                        $("#editionLabel").html(release.name);
+                                        $("#versionLabel").html(release.latestVersion.version);
+                                        initVersionsDropdown(release);
+                                    } else {
+                                        $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                    }
+                                }
                             });
                             $li.append($a);
                             $releaseSwitcher.append($li);
 
                             // set default selection for release
                             if (options.edition && release.latestVersion.branchPath === options.edition) {
-                                $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                if (options.publicBrowser) {
+                                    $("#editionLabel").html(release.name);
+                                    $("#versionLabel").html(release.latestVersion.version);
+                                    initVersionsDropdown(release);
+                                } else {
+                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                }
                             }
-                        }                        
+                        }
                     }
                 }
-            }            
+            }
+        }
+
+        function initVersionsDropdown(release) {
+            $.getJSON("/snowstorm/snomed-ct/codesystems/" + release.shortName + "/versions?showFutureVersions=false&showInternalReleases=false", function(result) {}).done(function(result) {
+                var $versionSwitcher = $('#versionSwitcher');
+                $versionSwitcher.html("");
+                if (result.items.length > 0) {
+                    result.items.sort(function(a, b) {
+                        return b.effectiveDate - a.effectiveDate;
+                    });
+                }
+                for (let j = 0; j < result.items.length; j++) {
+                    let version = result.items[j];
+                    var $li = $('<li>');
+                    var $a = $('<a>').append(version.version);
+                    $a.attr("href", "javascript:void(0);");
+                    $a.on("click", function() {
+                        options.edition = version.branchPath;
+                        $("#versionLabel").html(version.version);
+                        reloadCurrentPerspective();
+                    });
+                    $li.append($a);
+                    $versionSwitcher.append($li);
+                }
+            });
         }
 
         function getDefaultLanguage(defaultLanguageCode, parsedLanguages) {
@@ -999,31 +1013,29 @@
             }
 
             $.when(getAuth(), getProjects()).then(function(roles, projects) {
-                
+
                 if (options.managedServiceUser) {
                     findProjectMainline(projects);
                 } else {
                     if (options.releases && options.releases.items && options.releases.items.length > 0) {
                         options.editionShortname = options.releases.items[0].shortName;
-                    }                    
+                    }
                 }
 
                 var found = projects.filter(function(item) {
                     return item.branchPath === options.edition;
                 }).length !== 0;
-                
+
                 if (!found || !options.edition) {
                     if (options.managedServiceUser) {
                         if (options.projectMainlinePath) {
                             options.edition = options.projectMainlinePath;
-                        }
-                        else {
+                        } else {
                             options.edition = projects[0].branchPath;
                         }
-                    }
-                    else {
+                    } else {
                         options.edition = 'MAIN';
-                    }                   
+                    }
                 }
 
                 findDefaultLanguageRefsetsByBranchPath(options.edition);
@@ -1031,8 +1043,7 @@
                 var $projectDdl = $('#projectDdl');
                 if (!options.managedServiceUser) {
                     $('<option>').val('MAIN').text('MAIN').appendTo($projectDdl);
-                }
-                else {
+                } else {
                     if (options.projectMainlinePath) {
                         $('<option>').val(options.projectMainlinePath).text(options.projectMainlineText).appendTo($projectDdl);
                     }
@@ -1049,18 +1060,17 @@
                             return item.key === options.release;
                         }).length !== 0;
 
-                        if(!found) {
+                        if (!found) {
                             options.release = "None";
-                        }                     
-                    }
-                    else {
+                        }
+                    } else {
                         options.release = "None";
                     }
-                    
+
                     $("#taskDdl").val(options.release);
                     var focusConcept = QueryString.conceptId1 ? QueryString.conceptId1 : 138875005;
-                    switchToFullHeight(focusConcept,focusConcept);
-                }); 
+                    switchToFullHeight(focusConcept, focusConcept);
+                });
             });
 
             function getAuth() {
@@ -1095,23 +1105,23 @@
                     projectsInDateFormat.sort(function(a, b) {
                         return b.key.localeCompare(a.key);
                     });
-                    result.items = projectsInStringFormat.concat(projectsInDateFormat);                                 
+                    result.items = projectsInStringFormat.concat(projectsInDateFormat);
 
                     var projectChanged = function() {
-                        options.edition = $('#projectDdl').val();                                                
+                        options.edition = $('#projectDdl').val();
                         options.release = "None";
                         findDefaultLanguageRefsetsByBranchPath(options.edition);
-                        reloadCurrentPerspective(null,false);
+                        reloadCurrentPerspective(null, false);
                         getTasks();
                         var selectedLanguageAndFlag = getSelectedLanguageAndFlag(selectedLanguage);
-                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);                      
+                        switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                     }
 
                     $("#projectDdl").on("change", function(event) {
                         projectChanged(this, event);
                     });
 
-                    dfd.resolve(result.items.length !== 0 ? result.items : []);                    
+                    dfd.resolve(result.items.length !== 0 ? result.items : []);
                 });
 
                 return dfd.promise();
@@ -1120,7 +1130,7 @@
             // TASK DROPDOWN HANDLER
             function getTasks() {
                 var dfd = $.Deferred();
-                
+
                 var groupTaskList = function(taskList) {
                     //return b.baseTimestamp - a.baseTimestamp;
                     var map = {};
@@ -1172,29 +1182,29 @@
                     $taskDdl.html("");
                     $('<option>').val("None").text("None").appendTo($taskDdl);
 
-                    return dfd.resolve([]);                    
+                    return dfd.resolve([]);
                 }
                 $.getJSON("/authoring-services/projects/" + project + "/tasks?lightweight=true").done(function(result) {
                     var $taskDdl = $('#taskDdl');
                     $taskDdl.html("");
                     $('<option>').val("None").text("None").appendTo($taskDdl);
-                    result = groupTaskList(result);                    
+                    result = groupTaskList(result);
                     $.each(result, function() {
                         $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
                     });
-                    
+
                     var taskChanged = function() {
                         options.release = $('#taskDdl').val();
-                        reloadCurrentPerspective(null,false);
+                        reloadCurrentPerspective(null, false);
                         var selectedLanguageAndFlag = getSelectedLanguageAndFlag(selectedLanguage);
                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                     }
-                    
+
                     $("#taskDdl").on("change", function(event) {
                         taskChanged(this, event);
                     });
 
-                    dfd.resolve(result);                   
+                    dfd.resolve(result);
                 });
 
                 return dfd.promise()
@@ -1205,14 +1215,13 @@
                     let internationalEdition = null;
                     let found = false;
                     for (let i = 0; i < options.releases.items.length; i++) {
-                        let release = options.releases.items[i];                           
+                        let release = options.releases.items[i];
                         if (typeof release.branchPath !== "undefined") {
                             if (release.branchPath === 'MAIN') {
                                 internationalEdition = release;
-                            }
-                            else {
+                            } else {
                                 if (branchPath.includes(release.branchPath)) {
-                                    options.languageObject = release.languages;                                
+                                    options.languageObject = release.languages;
                                     options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                                     options.modules = release.modules;
 
@@ -1222,12 +1231,12 @@
                                     }
                                     parsedLanguages = parsedLanguages.slice(0, -1);
                                     options.languages = parsedLanguages;
-                                    options.defaultLanguage = parsedLanguages.substr(0, 2);                                    
+                                    options.defaultLanguage = parsedLanguages.substr(0, 2);
                                     found = true;
                                     break;
                                 }
-                            }                            
-                        }                            
+                            }
+                        }
                     }
 
                     if (!found && internationalEdition) {
@@ -1235,26 +1244,26 @@
                         options.defaultLanguageReferenceSets = [];
                         options.modules = internationalEdition.modules;
                     }
-                } 
+                }
             }
 
             function findProjectMainline(projects) {
-                if (options.releases && options.releases.items && options.releases.items.length > 0 && projects.length > 0) {                   
+                if (options.releases && options.releases.items && options.releases.items.length > 0 && projects.length > 0) {
                     for (let i = 0; i < options.releases.items.length; i++) {
-                        let release = options.releases.items[i];                
-                        if (typeof release.branchPath !== "undefined"
-                            && release.branchPath !== 'MAIN'
-                            && projects[0].branchPath.split('/').length > 1
-                            && projects[0].branchPath.includes(release.branchPath)) {                                
+                        let release = options.releases.items[i];
+                        if (typeof release.branchPath !== "undefined" &&
+                            release.branchPath !== 'MAIN' &&
+                            projects[0].branchPath.split('/').length > 1 &&
+                            projects[0].branchPath.includes(release.branchPath)) {
                             options.projectMainlinePath = release.branchPath;
                             options.projectMainlineText = release.shortName;
                             options.editionShortname = release.shortName;
                             options.modules = release.modules;
-                        }                                                
-                    }                   
+                            options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
+                        }
+                    }
                 }
             }
-
         }
 
         function initTour() {
@@ -1428,7 +1437,7 @@
             componentsRegistry = [];
             postal.unsubscribeFor();
             currentPerspective = "home";
-            if(options.dailyBuildBrowser) {
+            if (options.dailyBuildBrowser) {
                 $("#welcome-perspective-dailybuild").css({
                     "display": "block"
                 });
@@ -1440,8 +1449,7 @@
                 $("#welcome-perspective-preview").css({
                     "display": "block"
                 });
-            }
-            else {
+            } else {
                 $("#welcome-perspective").css({
                     "display": "block"
                 });
@@ -1533,7 +1541,7 @@
             });
             $.each(componentsRegistry, function(i, field) {
                 field.loadMarkers();
-            });            
+            });
         }
 
         function switchToComparingConcepts(conceptId) {
@@ -1547,8 +1555,7 @@
             if (typeof cdValue2 == "undefined" || cdValue2 == null || cdValue2 == "") {
                 if (typeof cdValue1 == "undefined" || cdValue1 == null || cdValue1 == "") {
                     cdValue2 = 404684003;
-                }
-                else{
+                } else {
                     cdValue2 = cdValue1;
                 }
             }
@@ -1587,7 +1594,7 @@
             $("#responsive-perspective").css({
                 "display": "none"
             });
-            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_concepts_perspective'>"+jQuery.i18n.prop('i18n_comp_concepts_perspective')+"</span>");
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_concepts_perspective'>" + jQuery.i18n.prop('i18n_comp_concepts_perspective') + "</span>");
             var spa = new searchPanel(document.getElementById("cc-search_canvas"), options);
             var cdPanel1 = new conceptDetails(document.getElementById("cc-cd1_canvas"), cdValue1, options);
             var cdPanel2 = new conceptDetails(document.getElementById("cc-cd2_canvas"), cdValue2, options);
@@ -1598,8 +1605,8 @@
             loadLanguageRefsets().then(function(result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);
                 cdPanel2.setLangugeRefsets(result.languageRefsets);
-                spa.setLanguageRefsets(result.languageRefsets);                
-            }); 
+                spa.setLanguageRefsets(result.languageRefsets);
+            });
 
             $('#comparing-concepts-wrapper').split({
                 orientation: 'horizontal'
@@ -1609,7 +1616,7 @@
             });
             $.each(componentsRegistry, function(i, field) {
                 field.loadMarkers();
-            });            
+            });
         }
 
         function switchToComparingTaxonomies(cd1Value, txValue1, txValue2) {
@@ -1647,9 +1654,9 @@
             });
             $("#responsive-perspective").css({
                 "display": "none"
-            });            
-            
-            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_hier_perspective'>"+jQuery.i18n.prop('i18n_comp_hier_perspective')+"</span>");
+            });
+
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_comp_hier_perspective'>" + jQuery.i18n.prop('i18n_comp_hier_perspective') + "</span>");
             var tx1 = new taxonomyPanel(document.getElementById("ct-tx1_canvas"), txValue1, options);
             var tx2 = new taxonomyPanel(document.getElementById("ct-tx2_canvas"), txValue2, options);
             var spa = new searchPanel(document.getElementById("ct-search_canvas"), options);
@@ -1660,10 +1667,13 @@
             cdPanel1.setupCanvas();
 
             loadLanguageRefsets().then(function(result) {
-                cdPanel1.setLangugeRefsets(result.languageRefsets);                
+                cdPanel1.setLangugeRefsets(result.languageRefsets);
                 spa.setLanguageRefsets(result.languageRefsets);
                 tx1.setLanguageRefsets(result.languageRefsets);
-                tx2.setLanguageRefsets(result.languageRefsets);                
+                tx2.setLanguageRefsets(result.languageRefsets);
+
+                tx1.updateCanvas();
+                tx2.updateCanvas();
             });
 
             $('#comparing-taxonomies-wrapper').split({
@@ -1677,7 +1687,7 @@
             });
             $.each(componentsRegistry, function(i, field) {
                 field.loadMarkers();
-            });            
+            });
         }
 
         function switchToFullHeight(focusSearchTab) {
@@ -1693,8 +1703,7 @@
             if (typeof cdValue2 == "undefined" || cdValue2 == null || cdValue2 == "") {
                 if (typeof cdValue1 == "undefined" || cdValue1 == null || cdValue1 == "") {
                     cdValue2 = 404684003;
-                }
-                else{
+                } else {
                     cdValue2 = cdValue1;
                 }
             }
@@ -1732,16 +1741,16 @@
             });
             $("#responsive-perspective").css({
                 "display": "none"
-            });            
-            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_full_perspective'>"+jQuery.i18n.prop('i18n_full_perspective')+"</span>");
-            
+            });
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_full_perspective'>" + jQuery.i18n.prop('i18n_full_perspective') + "</span>");
+
             options.subscribersMarker = false;
             options.linkerButton = false;
             options.disableRefsetsInitialLoad = true;
             var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, options);
             var fav = new favoritePanel(document.getElementById("fh-favorites_canvas"), options);
             var ref = new refsetPanel(document.getElementById("fh-refset_canvas"), options);
-            var spa = new searchPanel(document.getElementById("fh-search_canvas"), options);            
+            var spa = new searchPanel(document.getElementById("fh-search_canvas"), options);
             var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cdValue1, options);
             var qpa = new queryComputerPanel(document.getElementById("fh-query_canvas"), options);
             if (options.dailyBuildBrowser) {
@@ -1750,13 +1759,23 @@
             }
             if (options.communityBrowser) {
                 var com = new communityContentPanel(document.getElementById("fh-commnunity_content_canvas"), options);
-                cdPanel1.subscribe(com); 
+                cdPanel1.subscribe(com);
             }
-            
+
             $("#fh-query_canvas-li").show();
+
+            options.fhTaxonomyCanvasLoaded = false;
+            $("#fh-taxonomies_canvas-li").unbind();
+            $("#fh-taxonomies_canvas-li").click(function() {
+                if (!options.fhTaxonomyCanvasLoaded) {
+                    tpt.updateCanvas();
+                    options.fhTaxonomyCanvasLoaded = true;
+                }
+            });
+
             cdPanel1.subscribe(qpa);
             cdPanel1.subscribe(tpt);
-            cdPanel1.subscribe(spa);            
+            cdPanel1.subscribe(spa);
             cdPanel1.subscribe(fav);
             cdPanel1.subscribe(ref);
             cdPanel1.setupCanvas();
@@ -1767,8 +1786,8 @@
                 ref.renderRefsets(result.referenceSets);
                 qpa.setLanguageRefsets(result.languageRefsets);
                 tpt.setLanguageRefsets(result.languageRefsets);
-            });            
-            
+            });
+
             if (window.screen.width > 1500) {
                 $('#spliter-fh').split({
                     orientation: 'vertical',
@@ -1795,7 +1814,7 @@
             if (typeof focusSearchTab === "undefined" || focusSearchTab) {
                 $('#fh-tabs li:eq(1) a').tab('show');
                 $('#fh-search_canvas-searchBox').focus();
-            }                       
+            }
         }
 
         function switchToResponsiveLayout(cd1Value, cd2Value, txValue1) {
@@ -1833,9 +1852,9 @@
             });
             $("#responsive-perspective").css({
                 "display": "block"
-            });    
-                   
-            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_responsive'>"+jQuery.i18n.prop('i18n_responsive')+"</span>");
+            });
+
+            $("#perspectiveLabel").html("<span class='i18n' data-i18n-id='i18n_responsive'>" + jQuery.i18n.prop('i18n_responsive') + "</span>");
             var tpt = new taxonomyPanel(document.getElementById("rp-taxonomy_canvas"), txValue1, options);
             var spa = new searchPanel(document.getElementById("rp-search_canvas"), options);
             var cdPanel1 = new conceptDetails(document.getElementById("rp-cd1_canvas"), cd1Value, options);
@@ -1847,9 +1866,11 @@
 
             loadLanguageRefsets().then(function(result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);
-                cdPanel2.setLangugeRefsets(result.languageRefsets);                
+                cdPanel2.setLangugeRefsets(result.languageRefsets);
                 spa.setLanguageRefsets(result.languageRefsets);
-                tpt.setLanguageRefsets(result.languageRefsets);                
+                tpt.setLanguageRefsets(result.languageRefsets);
+
+                tpt.updateCanvas();
             });
 
             $('#spliter2').split({
@@ -1867,42 +1888,44 @@
             });
             $.each(componentsRegistry, function(i, field) {
                 field.loadMarkers();
-            });            
+            });
         }
 
-        function loadLanguageRefsets () {
+        function loadLanguageRefsets() {
             var dfd = $.Deferred();
             var branch = options.edition;
-            if(options.release.length > 0 && options.release !== 'None'){
+            if (options.release.length > 0 && options.release !== 'None') {
                 branch = branch + "/" + options.release;
             };
-            if(!options.serverUrl.includes('snowowl')){
-            $.ajaxSetup({
-                headers : {
-                    'Accept-Language': options.languages
-                }
+            if (!options.serverUrl.includes('snowowl')) {
+                $.ajaxSetup({
+                    headers: {
+                        'Accept-Language': options.languages
+                    }
                 });
             };
-            $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {                 
-            }).done(function(result) {
-                var languageRefsets = [];            
+            $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {}).done(function(result) {
+                var languageRefsets = [];
                 Object.keys(result.referenceSets).forEach(function(key) {
                     if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
-                        languageRefsets.push(result.referenceSets[key]);                                      
+                        languageRefsets.push(result.referenceSets[key]);
                     }
                 });
 
                 languageRefsets.sort(function(a, b) {
-                    if (a.conceptId === '900000000000509007'){
+                    if (a.conceptId === '900000000000509007') {
                         return -1;
-                    }    
-                    if (b.conceptId === '900000000000509007'){
+                    }
+                    if (b.conceptId === '900000000000509007') {
                         return 1;
-                    }    
+                    }
                     return a.fsn.term.localeCompare(b.fsn.term);
                 });
 
-                dfd.resolve({'referenceSets' : result, 'languageRefsets' : languageRefsets});                
+                dfd.resolve({
+                    'referenceSets': result,
+                    'languageRefsets': languageRefsets
+                });
             }).fail(function() {
                 dfd.reject();
             });
@@ -1949,6 +1972,10 @@
             }
         }
 
+        function markTaxonomyTabAsLoaded() {
+            options.fhTaxonomyCanvasLoaded = true;
+        }
+
         //PWI 20161108 This function went missing at some point.  Returning as urgent P1
         function verifyDate(release) {
             var now = new Date();
@@ -1970,61 +1997,86 @@
         }
 
         function switchLanguage(language, flagPng, fade) {
-            selectedLanguage = language;
-            if (typeof(Storage) !== "undefined") {
-                localStorage.setItem("ui_language", language);
-            }
-            $("#nav-selected-flag").html('<img src="' + flagPng + '">');
-            $("#nav-selected-flag-modal").html('<img src="' + flagPng + '">');
-            jQuery.i18n.properties({
-                name: 'Languages',
-                path: 'i18n/',
-                mode: 'both',
-                language: language,
-                cache: true
-            });            
-            $(".i18n").each(function(index) {
-                var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
-                if (translation != "[" + $(this).attr('data-i18n-id') + "]") {
-                    if (fade) {
-                        $(this).fadeOut("slow", function() {
-                            $(this).html(translation);
-                            $(this).fadeIn("slow");
-                        });
-                    } else {
-                        $(this).html(translation);
-                    }
-                } else {
-                    console.log($(this).attr('data-i18n-id') + " = " + $(this).html());
+            if (selectedLanguage !== language) {
+                selectedLanguage = language;
+                if (typeof(Storage) !== "undefined") {
+                    localStorage.setItem("ui_language", language);
                 }
-            });
-
-            var i18n_search_placeholder = jQuery.i18n.prop('i18n_search_placeholder');
-            var i18n_ecl_search_option_placeholder = jQuery.i18n.prop('i18n_ecl_search_option_placeholder');
-            if (fade) {
-                $('#fh-search_canvas-searchBox').fadeOut("slow", function() {
-                    $('#fh-search_canvas-searchBox').attr('placeholder',i18n_search_placeholder);
-                    $('#fh-search_canvas-searchBox').fadeIn("slow");
+                $("#nav-selected-flag").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
+                $("#nav-selected-flag-modal").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
+                jQuery.i18n.properties({
+                    name: 'Languages',
+                    path: 'i18n/',
+                    mode: 'both',
+                    language: language,
+                    cache: true
                 });
-                $('#fh-query_canvas-searchBoxOption').fadeOut("slow", function() {
-                    $('#fh-query_canvas-searchBoxOption').attr('placeholder',i18n_ecl_search_option_placeholder);
-                    $('#fh-query_canvas-searchBoxOption').fadeIn("slow");
+                $(".i18n").each(function(index) {
+                    var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
+                    if (translation != "[" + $(this).attr('data-i18n-id') + "]") {
+                        if (fade) {
+                            $(this).fadeOut("slow", function() {
+                                $(this).html(translation);
+                                $(this).fadeIn("slow");
+                            });
+                        } else {
+                            $(this).html(translation);
+                        }
+                    } else {
+                        console.log($(this).attr('data-i18n-id') + " = " + $(this).html());
+                    }
                 });
-            } else {
-                $('#fh-search_canvas-searchBox').attr('placeholder',i18n_search_placeholder);
-                $('#fh-query_canvas-searchBoxOption').attr('placeholder',i18n_ecl_search_option_placeholder);
-            }            
 
-            initTour();
-            $("#navBarBrand").tooltip().tooltip('destroy');
-            $("#navBarBrand").tooltip({
-                placement: 'bottom',
-                trigger: 'hover',
-                title: i18n_go_back_home,
-                animation: true,
-                delay: 1000
-            });
-            
+                var i18n_search_placeholder = jQuery.i18n.prop('i18n_search_placeholder');
+                var i18n_ecl_search_option_placeholder = jQuery.i18n.prop('i18n_ecl_search_option_placeholder');
+                if (fade) {
+                    $('#fh-search_canvas-searchBox').fadeOut("slow", function() {
+                        $('#fh-search_canvas-searchBox').attr('placeholder', i18n_search_placeholder);
+                        $('#fh-search_canvas-searchBox').fadeIn("slow");
+                    });
+                    $('#fh-query_canvas-searchBoxOption').fadeOut("slow", function() {
+                        $('#fh-query_canvas-searchBoxOption').attr('placeholder', i18n_ecl_search_option_placeholder);
+                        $('#fh-query_canvas-searchBoxOption').fadeIn("slow");
+                    });
+                } else {
+                    $('#fh-search_canvas-searchBox').attr('placeholder', i18n_search_placeholder);
+                    $('#fh-query_canvas-searchBoxOption').attr('placeholder', i18n_ecl_search_option_placeholder);
+                }
+
+                initTour();
+                $("#navBarBrand").tooltip().tooltip('destroy');
+                $("#navBarBrand").tooltip({
+                    placement: 'bottom',
+                    trigger: 'hover',
+                    title: i18n_go_back_home,
+                    animation: true,
+                    delay: 1000
+                });
+                $("#fh-search_canvas-historyButton").tooltip().tooltip('destroy');
+                $("#fh-search_canvas-historyButton").tooltip({
+                    placement: 'left',
+                    trigger: 'hover',
+                    title: i18n_history,
+                    animation: true,
+                    delay: 1000
+                });
+                $("#fh-taxonomy_canvas-historyButton").tooltip().tooltip('destroy');
+                $("#fh-taxonomy_canvas-historyButton").tooltip({
+                    placement: 'left',
+                    trigger: 'hover',
+                    title: i18n_history,
+                    animation: true,
+                    delay: 1000
+                });
+                $("#fh-cd1_canvas-historyButton").tooltip().tooltip('destroy');
+                $("#fh-cd1_canvas-historyButton").tooltip({
+                    placement: 'left',
+                    trigger: 'hover',
+                    title: i18n_history,
+                    animation: true,
+                    delay: 1000
+                });
+            }
         }
     </script>
     <script>
@@ -2036,6 +2088,9 @@
             const el = document.querySelector('ecl-builder');
             el.addEventListener('output', e => {
                 $('#fh-query_canvas-ExpText').val(e.detail);
+                if (typeof options.setEcl !== 'undefined') {
+                    options.setEcl(e.detail);
+                }
             });
         }
     </script>
@@ -2053,7 +2108,7 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
-
+        
         .ribbon span {
             border: 1px solid #faa;
             color: #fff;
@@ -2064,11 +2119,11 @@
             text-align: center;
             text-decoration: none;
         }
-
+        
         .navbar-brand {
             margin-top: 4px;
         }
-
+        
         .navbar .navbar-btn {
             margin-left: 10px;
         }
@@ -2079,9 +2134,11 @@
     <div id="cookiescript" style="top: 0px; background-color: rgb(17, 17, 17); z-index: 999999; opacity: 1; position: fixed; padding: 15px 0px; width: 100%; left: 0px; font-size: 13px; font-weight: normal; text-align: left; letter-spacing: normal; color: rgb(0, 0, 0); font-family: Arial, sans-serif; box-shadow: rgb(0, 0, 0) 0px 0px 8px; display: none;">
         <div style="margin: 0px 10px; font-size: 13px; font-weight: bold; text-align: center; color: rgb(255, 255, 255); font-family: Arial, sans-serif; line-height: 23px; letter-spacing: normal;">This website uses cookies to improve user experience. By using our website you consent to all cookies in accordance with our Cookie Policy. &nbsp;&nbsp;
             <a href="https://www.iubenda.com/privacy-policy/46600952/cookie-policy" target="_blank" style="text-decoration: underline; color: rgb(255, 255, 255); cursor: pointer; padding: 0px; margin: 0px; white-space: nowrap; display: inline-block;">Read more</span></a>
-            <div id="cookiescript_accept" style="border-radius: 5px; border: 0px; padding: 6px 10px; font-weight: bold; cursor: pointer; margin: 0px 10px 0px 15px; transition: all 0.25s ease 0s; display: inline; text-shadow: rgb(0, 0, 0) 0px 0px 2px; white-space: nowrap; background-color: rgb(91, 183, 91); color: rgb(255, 255, 255);">I agree</span></div>		
-            <divstyle="width: 1px; height: 1px; float: left;"></div>
+            <div id="cookiescript_accept" style="border-radius: 5px; border: 0px; padding: 6px 10px; font-weight: bold; cursor: pointer; margin: 0px 10px 0px 15px; transition: all 0.25s ease 0s; display: inline; text-shadow: rgb(0, 0, 0) 0px 0px 2px; white-space: nowrap; background-color: rgb(91, 183, 91); color: rgb(255, 255, 255);">I agree</span>
+            </div>
+            <divstyle="width: 1px; height: 1px; float: left;">
         </div>
+    </div>
     </div>
     <nav class="navbar navbar-default  navbar-static-top" role="navigation">
         <div>
@@ -2105,6 +2162,13 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel"></span> <span class="caret"></span>
                             </button>
                         <ul class="dropdown-menu" id="releaseSwitcher" role="menu">
+                        </ul>
+                    </li>
+                    <li class="navbar-btn" id="version-selector" style="display: none">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class="i18n" data-i18n-id="i18n_version">Version</span>:&nbsp;<span id="versionLabel"></span> <span class="caret"></span>
+                            </button>
+                        <ul class="dropdown-menu" id="versionSwitcher" role="menu" style="max-height: 600px;overflow: auto;">
                         </ul>
                     </li>
 
@@ -2141,19 +2205,22 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png" /> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('sv', 'img/flags/se.png', true);"><img src="img/flags/se.png" /> Swedish</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png" /> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('fr', 'fr', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag fr" style="width:100%;height:100%"></span></div> Français</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png" /> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" onclick="switchLanguage('sv', 'se', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Swedish</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -2161,7 +2228,7 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"><img class="pull-right visible-lg" src="img/snomed-logo.png" style="width:110px;" alt="SNOMED International delivering SNOMED, the global clinical terminology" />
+                            <a href="http://www.snomed.org" target="_blank"><div class="phoca-flagbox pull-right visible-lg" style="width:110px;height: 48px;" alt="SNOMED International delivering SNOMED, the global clinical terminology"><span class="phoca-flag snomed-logo"></span></div>
                             </a>
                     </li>
                 </ul>
@@ -2196,20 +2263,20 @@
                 <h2 style="margin-top : 2px">
                     <span class="i18n" data-i18n-id="i18n_home10">Externally Hosted Extensions</span>
                 </h2>
-                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank"><img src="img/flags/gb.png" style="">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
+                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
                 <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
                 <p class="lead">
-                    <img src="img/flags/ar.png">&nbsp;&nbsp;&nbsp;<a href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
-                    <br><img src="img/flags/au.png">&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
-                    <br><img src="img/flags/be.png">&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
-                    <br><img src="img/flags/ca.png">&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
-                    <br><img src="img/flags/dk.png">&nbsp;&nbsp;&nbsp;<a href="https://sundhedsdatastyrelsen.dk/" target="_blank">The Danish Health Data Authority, Denmark</a>
-                    <br><img src="img/flags/nl.png">&nbsp;&nbsp;&nbsp;<a href="https://www.nictiz.nl/" target="_blank">Nictiz, Netherlands</a>
-                    <br><img src="img/flags/se.png">&nbsp;&nbsp;&nbsp;<a href="https://www.socialstyrelsen.se" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                    <br><img src="img/flags/gb.png">&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
-                    <br><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br><img src="img/flags/uy.png">&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
-                    <br><img src="img/flags/nz.png">&nbsp;&nbsp;&nbsp;<a href="https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre" target="_blank">New Zealand SNOMED CT National Release Centre</a>
+                    <span class="phoca-flagbox" style="width:16px;height:16px"><span class="phoca-flag ar"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag au" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag be" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ca" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://sundhedsdatastyrelsen.dk/" target="_blank">The Danish Health Data Authority, Denmark</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nl" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.nictiz.nl/" target="_blank">Nictiz, Netherlands</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.socialstyrelsen.se" target="_blank">The National Board of Health and Welfare, Sweden</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag uy" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nz" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre" target="_blank">New Zealand SNOMED CT National Release Centre</a>
                 </p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
@@ -2255,7 +2322,8 @@
             <div class="jumbotron" style="background-color:darkgray">
                 <h1>Community Content Browser</h1>
                 <p style="padding-top:20px; font-weight: bold">For more information on the Community Content platform and the content provided within this browser visit - <a href="http://snomed.org/community-content">snomed.org/community-content</a></p>
-                <p>This browser contains the first, draft view into different content projects being created collaboratively by the SNOMED community in the <strong>Community Content area</strong>. This content has not been verified by SNOMED International but has been quality assured by those working on each project.</p>
+                <p>This browser contains the first, draft view into different content projects being created collaboratively by the SNOMED community in the <strong>Community Content area</strong>. This content has not been verified by SNOMED International
+                    but has been quality assured by those working on each project.</p>
                 <p>At this stage, it is strongly recommended to not use any new concepts or identifiers in production clinical data.</p>
                 <p>Future iterations of this browser will provide ways for you to provide feedback on any new content that you see in a project.</p>
                 <p id="commnunity_content_editions" style="margin-bottom : 0px"></p>
@@ -2275,9 +2343,12 @@
             <div class="jumbotron">
                 <h1>SNOMED CT Concrete Domains Technical Preview Browser</h1>
                 <p style="padding-top:20px;">This Concrete Domains (CD) Technical Preview (TP) has been published in line with the SNOMED CT January 2021 International Edition, with drug concept strengths and counts expressed as concrete values in the new Relationships file.</p>
-                <p>It is a full RF2 International Edition package (as opposed to a standalone Delta file containing only Concrete Domains), containing all the January 2021 International content together with the new CD Relationships file. The release files offer a preview of the final release package contents and format once the CD transition is complete.</p>
-                <p>The CD TP Browser presents the TP content through the familiar SNOMED CT Browser user interface for ease of viewing and consideration of the impact and scope of the changes. Whilst browsing the content you can use the Feedback button in the header bar to send your thoughts and questions to SNOMED International via a pop-up form.</p>
-                <p style="padding-bottom:20px;">The CD TP Browser is optimized for the Google Chrome web browser, but may be usable in other modern web browsers, such as Safari, Firefox and Microsoft Edge. Internet Explorer is not supported since it is now deprecated by Microsoft in favour of Microsoft Edge.</p>
+                <p>It is a full RF2 International Edition package (as opposed to a standalone Delta file containing only Concrete Domains), containing all the January 2021 International content together with the new CD Relationships file. The release files
+                    offer a preview of the final release package contents and format once the CD transition is complete.</p>
+                <p>The CD TP Browser presents the TP content through the familiar SNOMED CT Browser user interface for ease of viewing and consideration of the impact and scope of the changes. Whilst browsing the content you can use the Feedback button in
+                    the header bar to send your thoughts and questions to SNOMED International via a pop-up form.</p>
+                <p style="padding-bottom:20px;">The CD TP Browser is optimized for the Google Chrome web browser, but may be usable in other modern web browsers, such as Safari, Firefox and Microsoft Edge. Internet Explorer is not supported since it is now deprecated by Microsoft in
+                    favour of Microsoft Edge.</p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="preview_editions" style="margin-bottom : 0px"></p>
                 <p id="preview_mrcm" style="margin-bottom : 0px"></p>
@@ -2362,7 +2433,7 @@
                         <li id="fh-taxonomies_canvas-li">
                             <a href="#fh-taxonomy_canvas" data-toggle="tab">
                                 <div>
-                                    <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
+                                    <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');markTaxonomyTabAsLoaded();" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
                                 </div>
                             </a>
                         </li>
@@ -2425,7 +2496,7 @@
                         <p><span class="i18n" data-i18n-id="i18n_licence_agreement_4">Use of SNOMED CT in <strong>SNOMED International SNOMED CT Browser</strong> is governed by the conditions of the following SNOMED CT license issued by the SNOMED International</span>:</p>
                         <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”, “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and “SNOMED CT Content” are as defined in the SNOMED International Affiliate License Agreement (see www.snomed.org/license.pdf)</span>.</p>
                         <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate)</a></span>.</p>
-                        <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://www.snomed.org/members">www.snomed.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
+                        <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://snomed.org/members">snomed.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
                         <p style="margin-left: 20px;">4. <span class="i18n" data-i18n-id="i18n_licence_agreement_8">End Users, that do not hold an SNOMED International Affiliate License, may access SNOMED CT® using <strong>SNOMED International SNOMED CT Browser</strong> subject to acceptance of and adherence to the following sub-license limitations</span>:</p>
                         <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_9">The sub-licensee is only permitted to access SNOMED CT® using this software (or service) for the purpose of exploring and evaluating the terminology</span>.</p>
                         <p style="margin-left: 40px;">b) <span class="i18n" data-i18n-id="i18n_licence_agreement_10">The sub-licensee is not permitted the use of this software as part of a system that constitutes a SNOMED CT “Data Creation System” or “Data Analysis System”, as defined in the SNOMED International Affiliate License. This means that the sub-licensee must not use <strong>SNOMED International SNOMED CT Browser</strong> to add or copy SNOMED CT identifiers into any type of record system, database or document</span>.</p>
@@ -2446,19 +2517,19 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en_US', 'img/flags/us.png', true);"><img src="img/flags/us.png" /> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'img/flags/es.png', true);"><img src="img/flags/es.png" /> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'img/flags/dk.png', true);"><img src="img/flags/dk.png" /> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'img/flags/pt.png', true);"><img src="img/flags/pt.png" /> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', 'img/flags/se.png', true);"><img src="img/flags/se.png" /> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', 'se', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Svenska</a>
                             </li>
                         </ul>
                     </div>
