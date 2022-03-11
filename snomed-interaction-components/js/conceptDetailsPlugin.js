@@ -357,7 +357,7 @@ function conceptDetails(divElement, conceptId, options) {
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
-                'Accept-Language': options.languages
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
               }
             });
         }
@@ -411,7 +411,6 @@ function conceptDetails(divElement, conceptId, options) {
             else{
                 result.defaultTerm = result.fsn.term;
             }
-            console.log("I'm here");
             var firstMatch = result;
             panel.firstMatch = result;
             if(firstMatch.effectiveTime == panel.options.historyEffective){

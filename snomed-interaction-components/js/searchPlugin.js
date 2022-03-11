@@ -714,7 +714,7 @@ function searchPanel(divElement, options) {
                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted i18n' data-i18n-id='i18n_searching'>"+i18n_searching+"...</span>");                
                 t = t.trim();
                 if (isNumber(t) && !panel.options.multiExtensionSearch) {
-                    if (t.substr(-2, 1) == "0") {
+                    if (t.substr(-2, 1) == "0") {                        
                         panel.getConcept(t, skipTo, returnLimit, skipSemtagFilter, semTags)
                     } else if (t.substr(-2, 1) == "1") {
                         panel.getDescription(t, skipTo, returnLimit, skipSemtagFilter, semTags);
@@ -736,7 +736,7 @@ function searchPanel(divElement, options) {
         if(!options.serverUrl.includes('snowowl')){
             $.ajaxSetup({
                 headers : {
-                'Accept-Language': options.languages
+                  'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
                 }
             });
         };
