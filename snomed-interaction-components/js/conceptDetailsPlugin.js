@@ -492,28 +492,7 @@ function conceptDetails(divElement, conceptId, options) {
                     panel.statedParents.push(loopRel);
                 }
             });
-
-            function sortAxiomRelationships (relationships){
-                relationships.sort(function(a, b) {
-                    if (a.groupId < b.groupId) {
-                        return -1;
-                    } else if (a.groupId > b.groupId) {
-                        return 1;
-                    } else {
-                        if (a.type.conceptId == 116680003) {
-                            return -1;
-                        }
-                        if (b.type.conceptId == 116680003) {
-                            return 1;
-                        }
-                        if (a.target.defaultTerm < b.target.defaultTerm)
-                            return -1;
-                        if (a.target.defaultTerm > b.target.defaultTerm)
-                            return 1;
-                        return 0;
-                    }
-                });
-            };
+          
 
             firstMatch.classAxioms = firstMatch.classAxioms.filter(function(axiom) { return axiom.active; });
             firstMatch.classAxioms.forEach(function(axiom) {
@@ -552,7 +531,6 @@ function conceptDetails(divElement, conceptId, options) {
                         }
                     });
                 }
-                sortAxiomRelationships(axiom.relationships);
             });
 
             firstMatch.gciAxioms = firstMatch.gciAxioms.filter(function(axiom) { return axiom.active; });
@@ -594,7 +572,6 @@ function conceptDetails(divElement, conceptId, options) {
                         }
                     });
                 }
-                sortAxiomRelationships(axiom.relationships);
             });
 
             if (firstMatch.statedDescendants) {
@@ -914,25 +891,34 @@ function conceptDetails(divElement, conceptId, options) {
             panel.relsPId = divElement.id + "-rels-panel";
 
             if (firstMatch.relationships) {
-                firstMatch.relationships.sort(function(a, b) {
-                    if (a.groupId < b.groupId) {
+                var isaRels = firstMatch.relationships.filter(function (rel) {
+                    return rel.type.conceptId === '116680003';
+                });
+        
+                var attrRels = firstMatch.relationships.filter(function (rel) {
+                    return rel.type.conceptId !== '116680003';
+                });        
+                  
+        
+                // NOTE: All isaRels should be group 0, but sort by group anyway
+                isaRels.sort(function (a, b) {
+                    if (!a.groupId && b.groupId) {
                         return -1;
-                    } else if (a.groupId > b.groupId) {
+                    }
+                    if (!b.groupId && a.groupId) {
                         return 1;
+                    }
+                    if (a.groupId === b.groupId) {
+                        return a.target.fsn > b.target.fsn;
                     } else {
-                        if (a.type.conceptId == 116680003) {
-                            return -1;
-                        }
-                        if (b.type.conceptId == 116680003) {
-                            return 1;
-                        }
-                        if (a.target.defaultTerm < b.target.defaultTerm)
-                            return -1;
-                        if (a.target.defaultTerm > b.target.defaultTerm)
-                            return 1;
-                        return 0;
+                        return a.groupId - b.groupId;
                     }
                 });
+        
+                attrRels.sort(function (a, b) {
+                    return a.groupId - b.groupId;
+                });
+                firstMatch.relationships = isaRels.concat(attrRels);                
             }
 
             if (firstMatch.statedRelationships) {
@@ -1038,17 +1024,7 @@ function conceptDetails(divElement, conceptId, options) {
             });
 
             panel.inferredRoles.sort(function(a, b) {
-                if (a.groupId < b.groupId) {
-                    return -1;
-                } else if (a.groupId > b.groupId) {
-                    return 1;
-                } else {
-                    if (a.target.defaultTerm < b.target.defaultTerm)
-                        return -1;
-                    if (a.target.defaultTerm > b.target.defaultTerm)
-                        return 1;
-                    return 0;
-                }
+                return a.groupId - b.groupId;
             });
 
             panel.statedRoles.sort(function(a, b) {
