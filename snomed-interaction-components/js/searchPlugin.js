@@ -769,6 +769,18 @@ function searchPanel(divElement, options) {
                         return opts.inverse(this);
                 });
                 var resDescriptions = [];
+                
+                // Filter by description type
+                result.descriptions = result.descriptions.filter(function(item) {return !panel.options.typeSearchFilter 
+                                                                                    || (panel.options.typeSearchFilter === 'noDef' && item.type !== 'DEF')
+                                                                                    || (panel.options.typeSearchFilter === 'fsn' && item.type === 'FSN')
+                                                                                    || (panel.options.typeSearchFilter === 'pt' && item.type === 'SYNONYM' && Object.values(item.acceptabilityMap).includes('PREFERRED'));});                
+               
+                // Filter by language refset
+                result.descriptions = result.descriptions.filter(function(item) {return !panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.length === 0
+                    || Object.keys(item.acceptabilityMap).filter(function(i) {return panel.options.languageRefsetSearchFilter.includes(i)}).length !==0; });
+                    
+                // Filter by descritpion status
                 $.each(result.descriptions, function(i, field) {
                     var aux = field;
                     aux.definitionStatus = result.definitionStatus;
@@ -781,29 +793,20 @@ function searchPanel(divElement, options) {
                     if (field.active) {
                         if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
                             if (aux.term === result.pt.term && aux.lang == result.pt.lang) {
-                                if (panel.options.statusSearchFilter == "activeOnly") {
+                                if (panel.options.statusSearchFilter == "activeOnly" || panel.options.statusSearchFilter == "activeAndInactive") {
                                     resDescriptions.push(aux);
-                                }
-                                if (panel.options.statusSearchFilter == "activeAndInactive") {
-                                    resDescriptions.push(aux);
-                                }
-                                if (panel.options.statusSearchFilter == "inactiveOnly") {
-                                    resDescriptions.push(aux);
-                                }
-                            }
-                            
+                                }                                
+                            }                            
                         } 
                         else {
-                            if (panel.options.statusSearchFilter == "activeOnly") {
-                                resDescriptions.push(aux);
-                            }
-                            if (panel.options.statusSearchFilter == "activeAndInactive") {
-                                resDescriptions.push(aux);
-                            }
-                            if (panel.options.statusSearchFilter == "inactiveOnly") {
+                            if (panel.options.statusSearchFilter == "activeOnly" || panel.options.statusSearchFilter == "activeAndInactive") {
                                 resDescriptions.push(aux);
                             }
                         }                                        
+                    } else {
+                        if (panel.options.statusSearchFilter == "inactiveOnly" || panel.options.statusSearchFilter == "activeAndInactive") {
+                            resDescriptions.push(aux);
+                        }
                     }
                 });
                 result.descriptions = resDescriptions;
