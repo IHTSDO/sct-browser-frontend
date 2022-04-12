@@ -7,8 +7,8 @@
             <ul class="dropdown-menu small" role="menu" aria-labelledby="dropdownMenu1">
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-sctid" class="clip-btn" data-clipboard-text="{{firstMatch.conceptId}}">Copy Concept ID</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-fsn" class="clip-btn" data-clipboard-text="{{firstMatch.fsn.term}}">Copy FSN</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-sctid-fsn" class="clip-btn" data-clipboard-text="{{firstMatch.conceptId}} |{{firstMatch.fsn.term}}|">Copy Concept ID and FSN</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-sctid-term" class="clip-btn" data-clipboard-text="{{firstMatch.conceptId}} |{{firstMatch.pt.term}}|">Copy Concept ID and PT</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-sctid-fsn" class="clip-btn" data-clipboard-text="{{firstMatch.conceptId}} |{{firstMatch.fsn.term}}|">Copy FSN and Concept ID</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-sctid-term" class="clip-btn" data-clipboard-text="{{firstMatch.conceptId}} |{{firstMatch.pt.term}}|">Copy PT and Concept ID</a></li>
                 {{#if panel.options.hideConceptShareLink}}
                 {{else}}
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-copy-link" class="clip-btn" data-clipboard-text="{{link}}">Copy link to share</a></li>
