@@ -1475,10 +1475,7 @@ function queryComputerPanel(divElement, options) {
             skip: skip,
             form: form
         };
-        console.log("normal " + expression);
-        var strippedExpression1 = expression.replace(/\|.*?\|/guim, '');
-        var strippedExpression = strippedExpression1.replace(/\n/guim, '');
-        console.log("stripped " + strippedExpression);
+        console.log("ecl " + expression);
         panel.lastRequest = data;
         page = skip / limit;
         var expressionURL;
@@ -1509,7 +1506,7 @@ function queryComputerPanel(divElement, options) {
         }
 
         var params = "offset=" + skip + "&limit=" + limit + "&termActive=true";
-        params += (panel.options.eclQueryFilter === "stated" ? "&statedEcl" : "&ecl")   + "=" + encodeURIComponent(strippedExpression);
+        params += (panel.options.eclQueryFilter === "stated" ? "&statedEcl" : "&ecl")   + "=" + encodeURIComponent(expression);
         if (panel.options.optionalTermFilter && panel.options.optionalTermFilter.length != 0) {
             params += "&term=" + panel.options.optionalTermFilter;
         }
