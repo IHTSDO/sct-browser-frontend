@@ -1561,11 +1561,11 @@ function queryComputerPanel(divElement, options) {
                         if (countryIcons[row.moduleId]) {
                             countryIcon = '<div class="phoca-flagbox" style="width:20px;height:20px"> <span class="phoca-flag ' + countryIcons[row.moduleId] + '"></span> </div> &nbsp';
                         }
-                        var inactiveStyle = '';
+                        var inactiveClass = '';
                         if (row.active == false) {
-                            inactiveStyle = 'background-color: lightpink;';
+                            inactiveClass = 'danger';
                         }
-                        $('#' + panel.divElement.id + '-outputBody').append("<tr style='cursor: pointer;" + inactiveStyle + "' class='conceptResult' data-module='" + row.moduleId + "' data-concept-id='" + row.id + "' data-term='" + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "'><td>" + countryIcon + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "</td><td>" + row.pt.term + "</td><td>" + row.id + "</td></tr>");
+                        $('#' + panel.divElement.id + '-outputBody').append("<tr style='cursor: pointer;' class='conceptResult " + inactiveClass + "' data-module='" + row.moduleId + "' data-concept-id='" + row.id + "' data-term='" + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "'><td>" + countryIcon + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "</td><td>" + row.pt.term + "</td><td>" + row.id + "</td></tr>");
                     });
 
                     $('#' + panel.divElement.id + '-outputBody').find(".conceptResult").unbind();
