@@ -1556,6 +1556,18 @@ function queryComputerPanel(divElement, options) {
                             $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.totalElements + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span></span>");
                         }
                     }
+                    var tableTr = $('#' + panel.divElement.id + '-output > table:first > thead > tr');
+                    tableTr.html("");
+                    if (data.items && data.items.length > 0 && data.items[0].fields) {
+                        $.each(data.items[0].fields, function(i, field) {
+                            tableTr.append($("<th>").append(field));
+                        });
+                    } else {
+                        tableTr.append($("<th>").append("Concept"));
+                        tableTr.append($("<th>").append("Preferred Term"));
+                        tableTr.append($("<th>").append("Id"));
+                    }
+                    var queryOutputBody = $('#' + panel.divElement.id + '-outputBody');
                     $.each(data.items, function(i, row) {
                         var countryIcon = '';
                         if (countryIcons[row.moduleId]) {
@@ -1565,7 +1577,20 @@ function queryComputerPanel(divElement, options) {
                         if (row.active == false) {
                             inactiveClass = 'danger';
                         }
-                        $('#' + panel.divElement.id + '-outputBody').append("<tr style='cursor: pointer;' class='conceptResult " + inactiveClass + "' data-module='" + row.moduleId + "' data-concept-id='" + row.id + "' data-term='" + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "'><td>" + countryIcon + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "</td><td>" + row.pt.term + "</td><td>" + row.id + "</td></tr>");
+                        if (row.fields) {
+                            var queryResultRow = $("<tr style='cursor: pointer;' class='conceptResult " + inactiveClass + "' data-module='" + row.moduleId + "' data-concept-id='" + row.referencedComponentId + "'>");
+                            $.each(row.fields, function(i, field) {
+                                queryResultRow.append($("<td>").append(row[field]));
+                            });
+                            queryOutputBody.append(queryResultRow);
+                        } else {
+                            queryOutputBody
+                                .append("<tr style='cursor: pointer;' class='conceptResult " + inactiveClass + "' data-module='" + row.moduleId + "' data-concept-id='" + row.id + "' data-term='" + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "'>" + 
+                                "<td>" + countryIcon + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "</td>" + 
+                                "<td>" + row.pt.term + "</td>" + 
+                                "<td>" + row.id + "</td>" + 
+                                "</tr>");
+                        }
                     });
 
                     $('#' + panel.divElement.id + '-outputBody').find(".conceptResult").unbind();
