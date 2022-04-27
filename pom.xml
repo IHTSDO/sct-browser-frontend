@@ -104,7 +104,7 @@
                                 <data>
                                     <src>${basedir}/</src>
                                     <type>directory</type>
-                                    <excludes>deb/**,target/**, pom.xml </excludes>
+                                    <excludes>deb/**,target/**, pom.xml, .git/**, .gitignore, *.log</excludes>
                                     <mapper>
                                         <type>perm</type>
                                         <prefix>/opt/${packageName}/lib/</prefix>
