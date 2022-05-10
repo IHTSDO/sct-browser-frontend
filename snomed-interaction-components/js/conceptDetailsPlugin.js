@@ -1601,6 +1601,9 @@ function conceptDetails(divElement, conceptId, options) {
 
                             $('#refsets-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/refset.hbs"](context));
                             panel.panelRefsetsLoaded = true;
+                            setTimeout(function() {
+                                $("[data-toggle=popover]").popover();
+                            }, 0);
                         },
                         function( status ) {
                             // do nothing
@@ -1616,6 +1619,9 @@ function conceptDetails(divElement, conceptId, options) {
                     };
 
                     $('#refsets-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/refset.hbs"](context));
+                    setTimeout(function() {
+                        $("[data-toggle=popover]").popover();
+                    }, 0);
                 }
             }).fail(function() {
                 $("#refsets-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
