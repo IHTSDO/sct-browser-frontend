@@ -801,6 +801,13 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-computeInferredButton2').click(function(e) {
             var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
             $('#' + panel.divElement.id + '-computeInferredButton2').addClass("disabled");
+
+            // Replace left and right double quote characters with straight quote characters
+            if (expression.includes('“') || expression.includes('”')) {
+                expression = expression.replaceAll('“', '"').replaceAll('”', '"');
+                $("#" + panel.divElement.id + "-ExpText").val(expression);
+            }
+            
             panel.execute("inferred", expression, true, null);           
             $('#' + panel.divElement.id + '-computeInferredButton2').removeClass("disabled");
         });
@@ -1030,7 +1037,7 @@ function queryComputerPanel(divElement, options) {
     panel.setUpPanel();
 
     this.doSearch = function() {
-        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());        
+        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
         if (expression) {            
             var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
             panel.execute("inferred", expression, true, null);
