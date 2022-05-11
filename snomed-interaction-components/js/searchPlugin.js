@@ -1201,11 +1201,14 @@ function searchPanel(divElement, options) {
                     $.each(result.buckets.membership, function(i, refset) {
                         var auxObject = {};
                         var bucketTerm = null;
+                        var moduleId = null;
                         if (result.bucketConcepts[i]) {
-                            bucketTerm = result.bucketConcepts[i].fsn.term;
+                            bucketTerm = result.bucketConcepts[i].pt && result.bucketConcepts[i].pt.term ? result.bucketConcepts[i].pt.term : result.bucketConcepts[i].fsn.term;
+                            moduleId = result.bucketConcepts[i].moduleId;
                         }
                         auxObject.id = i;
                         auxObject.term = bucketTerm;
+                        auxObject.moduleId = moduleId;
                         auxObject.value = refset;
                         auxObject.cant = refset;
                         auxArray.push(auxObject);
@@ -1227,7 +1230,7 @@ function searchPanel(divElement, options) {
                     var auxObject = {};
                     var bucketTerm = null;
                     if (result.bucketConcepts[i]) {
-                        bucketTerm = result.bucketConcepts[i].fsn.term;
+                        bucketTerm = result.bucketConcepts[i].pt && result.bucketConcepts[i].pt.term ? result.bucketConcepts[i].pt.term : result.bucketConcepts[i].fsn.term;
                     }
                     auxObject.id = i;
                     auxObject.term = bucketTerm;

@@ -13,7 +13,13 @@
                             {{#each result.buckets.membership}}
                                 <li class="list-group-item">
                                     <span class="badge">{{value}}</span>
-                                    <a class='refset-link' href='javascript:void(0);' data-term="{{term}}" data-refset='{{id}}'>{{#if term}}{{term}}{{else}}{{value}}{{/if}}</a>
+                                    <a class='refset-link' href='javascript:void(0);' data-term="{{term}}" data-refset='{{id}}'>{{#if term}}{{term}}{{else}}{{value}}{{/if}}
+                                        {{#hasCountryIcon moduleId}}
+                                            <div class="phoca-flagbox" style="width:20px;height:20px">
+                                                <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                                            </div>
+                                        {{/hasCountryIcon}}
+                                    </a>
                                 </li>
                             {{/each}}
                         </ul>
