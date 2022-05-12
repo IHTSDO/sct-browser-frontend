@@ -149,31 +149,6 @@
             disableHistoryStateChange: true
         };
 
-        options.languageNameOfLangRefset = {
-            "20581000087109": "fr-CA",
-            "19491000087109": "en-CA",
-            "900000000000508004": "GB",
-            "900000000000509007": "US",
-            "450828004": "ES",
-            "5641000179103": "ES",
-            "554461000005103": "DA",
-            "46011000052107": "SV",
-            "32570271000036106": "AU",
-            "11000146104": "NL",
-            "31000146106": "NL",
-            "31000172101": "NL",
-            "15551000146102": "NL-PF",
-            "61000202103": "NO",
-            "21000172104": "FR",
-            "21000220103": "IE",
-            "71000181105": "ET",
-            "281000210109": "NZ-PF",
-            "271000210107": "NZ",
-            "722128001": "ZH",
-            "291000210106": "MI",
-            "21000241105": "FR"
-        };                
-
         options.updateReleaseSwitcher = function(branch, conceptId) {
             options.edition = branch;
             defaultConceptId = conceptId;
@@ -209,9 +184,28 @@
                 });
 
                 return dfd.promise();
-            };            
+            };
             
-            $.when(getCodeSystems()).then(function() {
+            var getConfig = function() {
+                var dfd = $.Deferred();
+
+                $.ajax({
+                    url:        'config.json',
+                    async:      false,
+                    cache:		false,
+                    contentType:'application/json; charset=utf-8',
+                    dataType:   'json',
+                    success:    function(data, status) {
+                        countryIcons = data.countryIcons;
+                        options.languageNameOfLangRefset = data.languageRefsetShortname;
+                        dfd.resolve();
+                    }
+                });
+
+                return dfd.promise();
+            }
+            
+            $.when(getCodeSystems(), getConfig()).then(function() {
                 $('#edition-selector').css('display', 'block');
                 start();
             });

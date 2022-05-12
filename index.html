@@ -121,36 +121,6 @@
             history: false
         };
 
-        options.languageNameOfLangRefset = {
-            "20581000087109": "fr-CA",
-            "19491000087109": "en-CA",
-            "900000000000508004": "GB",
-            "900000000000509007": "US",
-            "450828004": "ES",
-            "5641000179103": "ES-UY",
-            "554461000005103": "DA",
-            "46011000052107": "SV",
-            "32570271000036106": "AU",
-            "11000146104": "NL",
-            "31000146106": "NL",
-            "31000172101": "NL",
-            "15551000146102": "NL-PF",
-            "61000202103": "NO-NB",
-            "91000202106": "NO-NN",
-            "21000172104": "FR",
-            "21000220103": "IE",
-            "71000181105": "ET",
-            "281000210109": "NZ-PF",
-            "271000210107": "NZ",
-            "722128001": "ZH",
-            "291000210106": "MI",
-            "21000241105": "FR",
-            "722130004": "DE",
-            "2041000195100": "DE",
-            "2021000195106": "FR",
-            "2031000195108": "IT"
-        };
-
         options.updateReleaseSwitcher = function(branch, conceptId) {
             options.edition = branch;
             defaultConceptId = conceptId;
@@ -334,6 +304,25 @@
                 return dfd.promise();
             };
 
+            var getConfig = function() {
+                var dfd = $.Deferred();
+
+                $.ajax({
+                    url:        'config.json',
+                    async:      false,
+                    cache:		false,
+                    contentType:'application/json; charset=utf-8',
+                    dataType:   'json',
+                    success:    function(data, status) {
+                        countryIcons = data.countryIcons;
+                        options.languageNameOfLangRefset = data.languageRefsetShortname;
+                        dfd.resolve();
+                    }
+                });
+
+                return dfd.promise();
+            }
+
             var getUIConfiguration = function() {
                 var dfd = $.Deferred();
 
@@ -385,7 +374,7 @@
                 return dfd.promise();
             };
 
-            $.when(getCodeSystems(), getUIConfiguration()).then(function(response) {
+            $.when(getCodeSystems(), getUIConfiguration(), getConfig()).then(function(response) {
                 if (options.imsUrl == null) {
 
                     // Marked as public browser if both daily build and community browser could not be specifed from URL
