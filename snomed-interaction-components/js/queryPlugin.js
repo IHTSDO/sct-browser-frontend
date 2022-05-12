@@ -801,6 +801,13 @@ function queryComputerPanel(divElement, options) {
         $('#' + panel.divElement.id + '-computeInferredButton2').click(function(e) {
             var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
             $('#' + panel.divElement.id + '-computeInferredButton2').addClass("disabled");
+
+            // Replace left and right double quote characters with straight quote characters
+            if (expression.includes('“') || expression.includes('”')) {
+                expression = expression.replaceAll('“', '"').replaceAll('”', '"');
+                $("#" + panel.divElement.id + "-ExpText").val(expression);
+            }
+            
             panel.execute("inferred", expression, true, null);           
             $('#' + panel.divElement.id + '-computeInferredButton2').removeClass("disabled");
         });
@@ -1030,7 +1037,7 @@ function queryComputerPanel(divElement, options) {
     panel.setUpPanel();
 
     this.doSearch = function() {
-        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());        
+        var expression = $.trim($("#" + panel.divElement.id + "-ExpText").val());
         if (expression) {            
             var view = panel.options.eclQueryFilter ? panel.options.eclQueryFilter : "inferred";
             panel.execute("inferred", expression, true, null);
@@ -1475,10 +1482,7 @@ function queryComputerPanel(divElement, options) {
             skip: skip,
             form: form
         };
-        console.log("normal " + expression);
-        var strippedExpression1 = expression.replace(/\|.*?\|/guim, '');
-        var strippedExpression = strippedExpression1.replace(/\n/guim, '');
-        console.log("stripped " + strippedExpression);
+        console.log("ecl " + expression);
         panel.lastRequest = data;
         page = skip / limit;
         var expressionURL;
@@ -1509,7 +1513,7 @@ function queryComputerPanel(divElement, options) {
         }
 
         var params = "offset=" + skip + "&limit=" + limit + "&termActive=true";
-        params += (panel.options.eclQueryFilter === "stated" ? "&statedEcl" : "&ecl")   + "=" + encodeURIComponent(strippedExpression);
+        params += (panel.options.eclQueryFilter === "stated" ? "&statedEcl" : "&ecl")   + "=" + encodeURIComponent(expression);
         if (panel.options.optionalTermFilter && panel.options.optionalTermFilter.length != 0) {
             params += "&term=" + panel.options.optionalTermFilter;
         }
@@ -1544,8 +1548,10 @@ function queryComputerPanel(divElement, options) {
                 //result.computeResponse.matches
                 if (!onlyTotal) {
                     $("#" + panel.divElement.id + "-exportResults").removeClass("disabled");
-                    var i18n_found_text = jQuery.i18n.prop('i18n_found');                   
-                    var i18n_concepts_text = jQuery.i18n.prop('i18n_concepts');                    
+                    var i18n_found_text = jQuery.i18n.prop('i18n_found');
+                    var i18n_concepts_text = jQuery.i18n.prop('i18n_concepts');
+                    var i18n_members_text = jQuery.i18n.prop('i18n_members');
+                    var memberTypeResults = data.items && data.items.length > 0 && data.items[0].fields;
                     if (data.performanceCutOff) {
                         if (!data.totalElements) {
                             $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.total + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span>. <span class='text-danger'>This query cannot be completed in real-time, please schedule a Cloud executions. Results below are incomplete and some conditions were not tested. </span></span>");
@@ -1553,19 +1559,51 @@ function queryComputerPanel(divElement, options) {
                             $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.totalElements + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span>. <span class='text-danger'>This query cannot be completed in real-time, please schedule a Cloud executions. Results below are incomplete and some conditions were not tested. </span></span>");
                         }                        
                     } else {
+                        var resultsTypeMessage = "<span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span>";
+                        if (memberTypeResults) {
+                            resultsTypeMessage = "<span class='i18n' data-i18n-id='i18n_members'>"+ i18n_members_text +"</span>";
+                        }
                         if (!data.totalElements) {
-                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.total + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span></span>");
+                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.total + " " + resultsTypeMessage + "</span>");
                         } else {
-                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.totalElements + " <span class='i18n' data-i18n-id='i18n_concepts'>"+ i18n_concepts_text +"</span></span>");
+                            $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-muted small'><span class='i18n' data-i18n-id='i18n_found'>"+ i18n_found_text +"</span> " + data.totalElements + " " + resultsTypeMessage + "</span>");
                         }
                     }
+                    var tableTr = $('#' + panel.divElement.id + '-output > table:first > thead > tr');
+                    tableTr.html("");
+                    if (memberTypeResults) {
+                        $.each(data.items[0].fields, function(i, field) {
+                            tableTr.append($("<th>").append(field));
+                        });
+                    } else {
+                        tableTr.append($("<th>").append("Concept"));
+                        tableTr.append($("<th>").append("Preferred Term"));
+                        tableTr.append($("<th>").append("Id"));
+                    }
+                    var queryOutputBody = $('#' + panel.divElement.id + '-outputBody');
                     $.each(data.items, function(i, row) {
                         var countryIcon = '';
                         if (countryIcons[row.moduleId]) {
                             countryIcon = '<div class="phoca-flagbox" style="width:20px;height:20px"> <span class="phoca-flag ' + countryIcons[row.moduleId] + '"></span> </div> &nbsp';
                         }
-                        $('#' + panel.divElement.id + '-outputBody').append("<tr style='cursor: pointer;' class='conceptResult' data-module='" + row.moduleId + "' data-concept-id='" + row.id + "' data-term='" + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "'><td>" + countryIcon + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "</td><td>" + row.pt.term + "</td><td>" + row.id + "</td></tr>");
-                        //$('#' + panel.divElement.id + '-outputBody2').append("<tr><td>" + row.fsn.term + "</td><td>" + row.pt.term + "</td><td>" + row.id + "</td></tr>");
+                        var inactiveClass = '';
+                        if (row.active == false) {
+                            inactiveClass = 'danger';
+                        }
+                        if (row.fields) {
+                            var queryResultRow = $("<tr style='cursor: pointer;' class='conceptResult " + inactiveClass + "' data-module='" + row.moduleId + "' data-concept-id='" + row.referencedComponentId + "'>");
+                            $.each(row.fields, function(i, field) {
+                                queryResultRow.append($("<td>").append(row[field]));
+                            });
+                            queryOutputBody.append(queryResultRow);
+                        } else {
+                            queryOutputBody
+                                .append("<tr style='cursor: pointer;' class='conceptResult " + inactiveClass + "' data-module='" + row.moduleId + "' data-concept-id='" + row.id + "' data-term='" + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "'>" + 
+                                "<td>" + countryIcon + (panel.options.displayPreferredTerm ? row.pt.term : row.fsn.term) + "</td>" + 
+                                "<td>" + row.pt.term + "</td>" + 
+                                "<td>" + row.id + "</td>" + 
+                                "</tr>");
+                        }
                     });
 
                     $('#' + panel.divElement.id + '-outputBody').find(".conceptResult").unbind();
@@ -1590,25 +1628,29 @@ function queryComputerPanel(divElement, options) {
                    
                     var show_html = "<span class='i18n' data-i18n-id='i18n_show'>"+i18n_show_text+"</span>";
                     var more_html = "<span class='i18n' data-i18n-id='i18n_more'>"+i18n_more_text+"</span>";
-                    var viewing_html = "<span class='i18n' data-i18n-id='i18n_viewing'>"+i18n_viewing_text+"</span>";
+                    var viewing_html = "<span class='i18n' data-i18n-id='i18n_viewing'>"+i18n_viewing_text+"</span> ";
                     var items_of_html = "<span class='i18n' data-i18n-id='i18n_items_of'>"+i18n_items_of_text+"</span>";
                     var total_html = "<span class='i18n' data-i18n-id='i18n_total'>"+i18n_total_text+"</span>";
                     var showing_all_html = "<span class='i18n' data-i18n-id='i18n_showing_all'>"+i18n_showing_all_text+"</span>";
                     var matches_html = "<span class='i18n' data-i18n-id='i18n_matches'>"+i18n_matches_text+"</span>";
+                    var inferredOrStated = panel.options.eclQueryFilter;
+                    if (memberTypeResults) {
+                        inferredOrStated = "";
+                    }
 
                     if (!data.totalElements) {
                         panel.lastTotalValues = data.total;
                         if (limit + skip < data.total) {
-                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>"+show_html+" "+more_html+" ("+viewing_html+ (limit + skip) + " " + panel.options.eclQueryFilter + " "+items_of_html+" " + data.total + " "+total_html+")</span>");
+                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>"+show_html+" "+more_html+" ("+viewing_html+ (limit + skip) + " " + inferredOrStated + " "+items_of_html+" " + data.total + " "+total_html+")</span>");
                         } else {
-                            $('#' + panel.divElement.id + '-footer').html(showing_all_html+" " + data.total + " " + panel.options.eclQueryFilter + " "+matches_html);
+                            $('#' + panel.divElement.id + '-footer').html(showing_all_html+" " + data.total + " " + inferredOrStated + " "+matches_html);
                         }
                     } else {
                         panel.lastTotalValues = data.totalElements;
                         if (limit + skip < data.totalElements) {
-                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>"+show_html+" "+more_html+" ("+viewing_html+ (limit + (page * limit)) + " " + panel.options.eclQueryFilter + " "+items_of_html+" " + data.totalElements + " "+total_html+")</span>");
+                            $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>"+show_html+" "+more_html+" ("+viewing_html+ (limit + (page * limit)) + " " + inferredOrStated + " "+items_of_html+" " + data.totalElements + " "+total_html+")</span>");
                         } else {
-                            $('#' + panel.divElement.id + '-footer').html(showing_all_html+" " + data.totalElements + " " + panel.options.eclQueryFilter + " "+matches_html);
+                            $('#' + panel.divElement.id + '-footer').html(showing_all_html+" " + data.totalElements + " " + inferredOrStated + " "+matches_html);
                         }
                     }
 
