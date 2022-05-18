@@ -235,7 +235,7 @@
         </div>
         <div class="modal-body" style="max-height: 450px; overflow: auto;">
           <h2 class="i18n" data-i18n-id="i18n_snomed_ecl_title">{{i18n "i18n_snomed_ecl_title" "SNOMED CT Expression Constraint Language"}}</h2>
-          <p> <span class="i18n" data-i18n-id="i18n_snomed_ecl_description">{{i18n "i18n_snomed_ecl_description" 'This tool implements the full set of ECL v1.3 functions from the "SNOMED CT Expression Constraint Language Specification and Guide"'}}</span> (<a href="http://snomed.org/expressionconstraint" target="_blank">http://snomed.org/expressionconstraint)</a>. </p>
+          <p> <span class="i18n" data-i18n-id="i18n_snomed_ecl_description">{{i18n "i18n_snomed_ecl_description" 'This tool implements the full set of ECL v2.0 functions from the "SNOMED CT Expression Constraint Language Specification and Guide"'}}</span> (<a href="http://snomed.org/ecl" target="_blank">http://snomed.org/ecl</a>). <span class="i18n" data-i18n-id="i18n_snomed_ecl_description1">{{i18n "i18n_snomed_ecl_description1" 'For a quick reference to the key syntax features, please refer to the'}}</span> <a href="https://confluence.ihtsdotools.org/display/DOCECL/Appendix+D+-+ECL+Quick+Reference" target="_blank"><span class="i18n" data-i18n-id="i18n_snomed_ecl_description2">{{i18n "i18n_snomed_ecl_description2" 'ECL Quick Reference'}}</span></a></p>
           <p class="lead"><span class="i18n" data-i18n-id="i18n_for_example">{{i18n "i18n_for_example" "For example"}}</span>:</p>
           <table class="c0">
             <tbody>
@@ -340,6 +340,20 @@
                 </td>
                 <td class="c6" colspan="1" rowspan="1">
                   <p class="c3"><span class="c9">^ 733990004 |Nursing activities reference set|</span></p>
+                </td>
+              </tr>
+              <tr class="c1">
+                <td class="c8" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c2">^ [x,y]</span></p>
+                </td>
+                <td class="c11" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name19">Member of with field selection</span></p>
+                </td>
+                <td class="c13" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary19">Selects fields x and y from matching rows of the given reference set</span></p>
+                </td>
+                <td class="c6" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c9">^ [referencedComponentId, mapTarget] 447562003 |ICD-10 complex map reference set|</span></p>
                 </td>
               </tr>
               <tr class="c16">
@@ -455,8 +469,62 @@
                   <p class="c3"><span class="c9">&lt; 125605004 |Fracture of bone|. 363698007 |Finding site|</span></p>
                 </td>
               </tr>
-
-
+              <tr class="c19">
+                <td class="c8" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c2">&#123;&#123; D &#125;&#125;</span></p>
+                </td>
+                <td class="c11" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name15">Description filter</span></p>
+                </td>
+                <td class="c13" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary15">Only those concepts with a description that matches the filter criteria</span></p>
+                </td>
+                <td class="c6" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c9">&lt; 64572001 |Disease| { Unknown macro: \{ D term = "cardi"}}</span></p>
+                </td>
+              </tr>
+              <tr class="c19">
+                <td class="c8" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c2">&#123;&#123; C &#125;&#125;</span></p>
+                </td>
+                <td class="c11" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name16">Concept filter</span></p>
+                </td>
+                <td class="c13" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary16">Only those concepts with properties that match the filter criteria</span></p>
+                </td>
+                <td class="c6" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c9">&lt; 56265001 |Heart disease| { Unknown macro: \{ C definitionStatus = primitive }}</span></p>
+                </td>
+              </tr>
+              <tr class="c19">
+                <td class="c8" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c2">&#123;&#123; M &#125;&#125;</span></p>
+                </td>
+                <td class="c11" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name17">Member filter</span></p>
+                </td>
+                <td class="c13" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary17">Only those reference set members that match the filter criteria</span></p>
+                </td>
+                <td class="c6" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c9">^ 447562003 |ICD-10 complex map reference set| { Unknown macro: \{ M mapTarget = "J45" }}</span></p>
+                </td>
+              </tr>
+              <tr class="c19">
+                <td class="c8" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c2">&#123;&#123; +HISTORY &#125;&#125;</span></p>
+                </td>
+                <td class="c11" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_name18">History supplement</span></p>
+                </td>
+                <td class="c13" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c5 i18n" data-i18n-id="i18n_ecl_summary18">Add all inactive concepts associated with a concept in the result set via a historical reference set indicated by the filter</span></p>
+                </td>
+                <td class="c6" colspan="1" rowspan="1">
+                  <p class="c3"><span class="c9">&lt;&lt; 195967001 |Asthma| { Unknown macro: \{ + HISTORY_MIN }}</span></p>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
