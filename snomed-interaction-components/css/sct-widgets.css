@@ -229,3 +229,9 @@ i:active { background-color: #428bca; }
 .exp-term {
     color: #086d11;
 }
+.w-10 {
+    width: 10% !important;
+}
+.w-20 {
+    width: 20% !important;
+}
