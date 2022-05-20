@@ -127,7 +127,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-historyButton").click(function(event) {
             $("#" + panel.divElement.id + "-historyButton").popover({
                 trigger: 'manual',
-                placement: 'bottomRight',
+                placement: function(context, src) {  $(context).addClass(panel.divElement.id + '-historyButton-popover'); return 'bottomRight'; },
                 html: true,
                 content: function() {
                     historyHtml = '<div style="height:100px;overflow:auto;">';
