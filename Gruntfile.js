@@ -128,6 +128,10 @@ module.exports = function(grunt) {
                 {                
                     src: 'snomed-interaction-components/dist/css/<%= pkg.name %>.min.css',
                     dest: 'css//<%= pkg.name %>.min.css',
+                },
+                {
+                    src: 'node_modules/snomed-ecl-builder/output/*',
+                    dest: 'internal-libs/'
                 }]
             }
             
