@@ -886,6 +886,7 @@
             else {
                 if (options.releases && options.releases.items) {
                     var $releaseSwitcher = $('#releaseSwitcher');
+                    var foundRelease = null;
                     for (let i = 0; i < options.releases.items.length; ++i) {
                         let release = options.releases.items[i];
                         if (typeof release.latestVersion !== "undefined") {
@@ -955,14 +956,30 @@
                             $li.append($a);
                             $releaseSwitcher.append($li);
 
-                            // set default selection for release
                             if (options.edition && release.latestVersion.branchPath === options.edition) {
-                                if (options.publicBrowser) {
+                                foundRelease = release;
+                            }
+                        }
+                    }
+                    // set default selection for release
+                    if (foundRelease) {
+                        if (options.publicBrowser) {
+                            $("#editionLabel").html(foundRelease.name);
+                            $("#versionLabel").html(foundRelease.latestVersion.version);
+                            initVersionsDropdown(foundRelease.shortName);
+                        } else {
+                            $("#editionLabel").html(foundRelease.name + " " + foundRelease.latestVersion.version);
+                        }
+                    } else {
+                        if (options.publicBrowser && /^MAIN.*\d{4}-\d{2}-\d{2}$/.test(options.edition)) {
+                            var isInternationalBranch = /^MAIN\/+\d{4}-\d{2}-\d{2}$/.test(options.edition);
+                            for (let i = 0; i < options.releases.items.length; ++i) {
+                                let release = options.releases.items[i];
+                                if ((isInternationalBranch && release.branchPath === 'MAIN') || (!isInternationalBranch && release.branchPath !== 'MAIN' && options.edition.startsWith(release.branchPath))) {
                                     $("#editionLabel").html(release.name);
-                                    $("#versionLabel").html(release.latestVersion.version);
-                                    initVersionsDropdown(release);
-                                } else {
-                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                    $("#versionLabel").html(options.edition.substring(options.edition.lastIndexOf('/') + 1));
+                                    initVersionsDropdown(release.shortName);
+                                    break;
                                 }
                             }
                         }
@@ -971,8 +988,8 @@
             }
         }
 
-        function initVersionsDropdown(release) {
-            $.getJSON("/snowstorm/snomed-ct/codesystems/" + release.shortName + "/versions?showFutureVersions=false&showInternalReleases=false", function(result) {}).done(function(result) {
+        function initVersionsDropdown(shortName) {
+            $.getJSON("/snowstorm/snomed-ct/codesystems/" + shortName + "/versions?showFutureVersions=false&showInternalReleases=false", function(result) {}).done(function(result) {
                 var $versionSwitcher = $('#versionSwitcher');
                 $versionSwitcher.html("");
                 if (result.items.length > 0) {
@@ -2113,7 +2130,7 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
-        
+
         .ribbon span {
             border: 1px solid #faa;
             color: #fff;
@@ -2124,11 +2141,11 @@
             text-align: center;
             text-decoration: none;
         }
-        
+
         .navbar-brand {
             margin-top: 4px;
         }
-        
+
         .navbar .navbar-btn {
             margin-left: 10px;
         }
