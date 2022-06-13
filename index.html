@@ -317,6 +317,7 @@
                     success:    function(data, status) {
                         countryIcons = data.countryIcons;
                         options.languageNameOfLangRefset = data.languageRefsetShortname;
+                        options.singleCharacterSearchLanguageRefsets = data.singleCharacterSearchLanguageRefsets;
                         dfd.resolve();
                     }
                 });

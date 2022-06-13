@@ -677,7 +677,7 @@ function searchPanel(divElement, options) {
         }
 
         if (t != "" && (originalSearchStr != lastT || forceSearch)) {
-            if (t.length < 3) {
+            if (t.length < 3 && (!panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.filter(function(item) {return panel.options.singleCharacterSearchLanguageRefsets.indexOf(item) !== -1;}).length == 0)) {
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('glyphicon-ok');
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('text-success');
                 $('#' + panel.divElement.id + '-typeIcon').addClass('glyphicon-remove');
