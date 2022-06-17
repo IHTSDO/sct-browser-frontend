@@ -1617,14 +1617,56 @@ function queryComputerPanel(divElement, options) {
                     $('#' + panel.divElement.id + '-outputBody').find(".conceptResult").unbind();
                     $('#' + panel.divElement.id + '-outputBody').find(".conceptResult").click(function(event) {
                         var id = $(event.target).closest("tr").attr('data-concept-id');
-                        if (panel.isSctid(id) && id.slice(id.length - 2, id.length - 1) === '0') {
-                            channel.publish(panel.divElement.id, {
-                                term: $(event.target).closest("tr").attr('data-term'),
-                                module: $(event.target).closest("tr").attr("data-module"),
-                                conceptId: $(event.target).closest("tr").attr('data-concept-id'),
-                                source: panel.divElement.id,
-                                showConcept: true
-                            });
+                        if (panel.isSctid(id)) {
+                            var partitionId = id.slice(id.length - 2, id.length - 1);
+                            // concept
+                            if (partitionId === '0') {
+                                channel.publish(panel.divElement.id, {
+                                    term: $(event.target).closest("tr").attr('data-term'),
+                                    module: $(event.target).closest("tr").attr("data-module"),
+                                    conceptId: $(event.target).closest("tr").attr('data-concept-id'),
+                                    source: panel.divElement.id,
+                                    showConcept: true
+                                });
+                            } else if (partitionId === '1') { // Description
+                                $.ajax({
+                                    type: "GET",
+                                    headers: {
+                                        'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                                    },
+                                    url: options.serverUrl + "/" + branch + "/descriptions/" + id,                                    
+                                    success: function(result) {                                        
+                                        if (result) {
+                                            channel.publish(panel.divElement.id, {
+                                                term: $(event.target).closest("tr").attr('data-term'),
+                                                module: $(event.target).closest("tr").attr("data-module"),
+                                                conceptId: result.conceptId,
+                                                source: panel.divElement.id,
+                                                showConcept: true
+                                            });
+                                        }
+                                    }
+                                });
+                            } else if (partitionId === '2') { // Relationship
+                                $.ajax({
+                                    type: "GET",
+                                    headers: {
+                                        'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                                    },
+                                    url: options.serverUrl + "/" + branch + "/relationships/" + id,                                    
+                                    success: function(result) {                                        
+                                        if (result) {
+                                            channel.publish(panel.divElement.id, {
+                                                term: $(event.target).closest("tr").attr('data-term'),
+                                                module: $(event.target).closest("tr").attr("data-module"),
+                                                conceptId: result.sourceId,
+                                                source: panel.divElement.id,
+                                                showConcept: true
+                                            });
+                                        }
+                                    }
+                                });
+                            }                            
                         }                        
                     });
 
