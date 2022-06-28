@@ -2300,7 +2300,7 @@ function conceptDetails(divElement, conceptId, options) {
     this.loadLanguageRefsets = function() {        
         var branch = options.edition;
         
-        if (historyBranch){
+        if (typeof historyBranch !== "undefined"){
             branch = historyBranch;
         }
         else{
