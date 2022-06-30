@@ -723,10 +723,11 @@
                         console.error('Edition not found');
                     }
                 } else {
-                    if (options.releases.items.filter(function(release) {
-                            return (typeof release.latestVersion !== "undefined") && release.latestVersion.branchPath === edition;
-                        }).length !== 0) {
-                        options.edition = edition;
+                    var filteredReleases = options.releases.items.filter(function(release) {
+                        return (typeof release.latestVersion !== "undefined") && (release.branchPath === edition || release.latestVersion.branchPath === edition);
+                    });
+                    if (filteredReleases.length !== 0) {
+                        options.edition = filteredReleases[0].latestVersion.branchPath;
                     } else {
                         for (let i = 0; i < options.releases.items.length; i++) {
                             let release = options.releases.items[i];
