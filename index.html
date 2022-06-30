@@ -286,6 +286,7 @@
                     } else if (options.dailyBuildBrowser) {
                         addEditionLinks($('#dailybuild_editions'), dailyBuildInternational);
                         addEditionLinks($('#dailybuild_local_editions'), dailyBuildLocal);
+                        addMrcmLink($('#dailybuild_mrcm'), internationalReleases);
                     } else {
                         // do nothing
                     }
@@ -2324,7 +2325,7 @@
                 <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
                 <p>No new concepts or identifiers may be used in clinical systems.</p>
                 <p id="dailybuild_editions" style="margin-bottom : 0px"></p>
-
+                <p id="dailybuild_mrcm" style="margin-bottom : 0px"></p>
                 <!--<a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('Daily Build Edition 20200131', 'en-edition', 'v20200131', '', '900000000000509007', 'https://prod-dailybuild.ihtsdotools.org/api/snomed');switchToFullHeight(404684003, 138875005);"><img src="img/box-logo.png" style="height:20px">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_start_browsing">Start browsing...</span><br><span class="small">Daily Build edition</span></a>-->
                 </p>
                 <p id="lastUpdatedText"></p>
