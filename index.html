@@ -310,12 +310,12 @@
                 var dfd = $.Deferred();
 
                 $.ajax({
-                    url:        'config.json',
-                    async:      false,
-                    cache:		false,
-                    contentType:'application/json; charset=utf-8',
-                    dataType:   'json',
-                    success:    function(data, status) {
+                    url: 'config.json',
+                    async: false,
+                    cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function(data, status) {
                         countryIcons = data.countryIcons;
                         options.languageNameOfLangRefset = data.languageRefsetShortname;
                         options.singleCharacterSearchLanguageRefsets = data.singleCharacterSearchLanguageRefsets;
@@ -463,7 +463,7 @@
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
                 if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser || options.communityBrowser) {
-                    var $img = '<div class="phoca-flagbox" style="' + (release.countryCode !== '' ? 'width:16px;height:11px' : 'width:20px;height:20px') +'"><span class="phoca-flag ' + (release.countryCode !== '' ? release.countryCode : 'logo') + '" style="width:100%;height:100%"></span></div>'+ ' ';
+                    var $img = '<div class="phoca-flagbox" style="' + (release.countryCode !== '' ? 'width:16px;height:11px' : 'width:20px;height:20px') + '"><span class="phoca-flag ' + (release.countryCode !== '' ? release.countryCode : 'logo') + '" style="width:100%;height:100%"></span></div>' + ' ';
 
                     var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
                     $span1.text("Go browsing...");
@@ -627,9 +627,9 @@
             });
 
             // hide any open popovers when the anywhere else in the body is clicked
-            $('body').on('mouseup', function (e) {
-                $("div[class$='-popover'],div[class*='-popover ']").each(function () {
-                    if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0  && $(this).hasClass("in")) {
+            $('body').on('mouseup', function(e) {
+                $("div[class$='-popover'],div[class*='-popover ']").each(function() {
+                    if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0 && $(this).hasClass("in")) {
                         $.each($(this).attr('class').split(/\s+/), function(i, name) {
                             if (name.indexOf('-popover') > -1) {
                                 $('#' + name.substr(0, name.indexOf('-popover'))).popover('hide');
@@ -2133,7 +2133,7 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
-
+        
         .ribbon span {
             border: 1px solid #faa;
             color: #fff;
@@ -2144,11 +2144,11 @@
             text-align: center;
             text-decoration: none;
         }
-
+        
         .navbar-brand {
             margin-top: 4px;
         }
-
+        
         .navbar .navbar-btn {
             margin-left: 10px;
         }
@@ -2230,22 +2230,28 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('fr', 'fr', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag fr" style="width:100%;height:100%"></span></div> Français</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('fr', 'fr', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag fr" style="width:100%;height:100%"></span></div> Français</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" onclick="switchLanguage('sv', 'se', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Swedish</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('sv', 'se', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Swedish</a>
                             </li>
                             <li class="divider"></li>
                             <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
@@ -2253,7 +2259,8 @@
                     </li>
                     <li>
                         <p class="pull-right">
-                            <a href="http://www.snomed.org" target="_blank"><div class="phoca-flagbox pull-right visible-lg" style="width:110px;height: 48px;" alt="SNOMED International delivering SNOMED, the global clinical terminology"><span class="phoca-flag snomed-logo"></span></div>
+                            <a href="http://www.snomed.org" target="_blank">
+                                <div class="phoca-flagbox pull-right visible-lg" style="width:110px;height: 48px;" alt="SNOMED International delivering SNOMED, the global clinical terminology"><span class="phoca-flag snomed-logo"></span></div>
                             </a>
                     </li>
                 </ul>
@@ -2288,8 +2295,10 @@
                 <h2 style="margin-top : 2px">
                     <span class="i18n" data-i18n-id="i18n_home10">Externally Hosted Extensions</span>
                 </h2>
-                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
-                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px; margin-left: 2px" href="https://snomedsns.es/" target="_blank"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">Spanish edition<br>(hosted by the Spain)</span></a>
+                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank">
+                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
+                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px; margin-left: 2px" href="https://snomedsns.es/" target="_blank">
+                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">Spanish edition<br>(hosted by Spain)</span></a>
                 <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
                 <p class="lead">
                     <span class="phoca-flagbox" style="width:16px;height:16px"><span class="phoca-flag ar"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
@@ -2299,10 +2308,13 @@
                     <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://sundhedsdatastyrelsen.dk/" target="_blank">The Danish Health Data Authority, Denmark</a>
                     <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nl" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.nictiz.nl/" target="_blank">Nictiz, Netherlands</a>
                     <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.socialstyrelsen.se" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications"
+                        target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
                     <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag uy" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html" target="_blank">Salud.uy, Uruguay</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nz" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre" target="_blank">New Zealand SNOMED CT National Release Centre</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag uy" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.agesic.gub.uy/innovaportal/v/4425/1/agesic/programa-saluduy.html"
+                        target="_blank">Salud.uy, Uruguay</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nz" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre"
+                        target="_blank">New Zealand SNOMED CT National Release Centre</a>
                 </p>
 
                 <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
@@ -2543,19 +2555,24 @@
                             </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
                             </li>
                             <li class="pull-left">
-                                <a href="javascript:void(0);" onclick="switchLanguage('se', 'se', true);"><div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Svenska</a>
+                                <a href="javascript:void(0);" onclick="switchLanguage('se', 'se', true);">
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Svenska</a>
                             </li>
                         </ul>
                     </div>
