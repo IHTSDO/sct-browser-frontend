@@ -1,17 +1,27 @@
 {{#if_eq skipTo 0}}
     <thead>
         <tr>
+            <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_conceptId" "Concept Id"}}</span></th>
             <th><span data-i18n-id="i18n_term" class="i18n">{{i18n "i18n_term" "Term"}}</span></th>
             {{#if_eq containingTermOnly false}}
-                <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_preferred_term" "Preferred Term"}}</span></th>
+                <th><span data-i18n-id="i18n_preferred_term" class="i18n">{{i18n "i18n_preferred_term" "Preferred Term"}}</span></th>
+            {{else}}
+                <th><span data-i18n-id="i18n_acceptability" class="i18n">{{i18n "i18n_acceptability" "Acceptability"}}</span></th>
             {{/if_eq}}
-            <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_conceptId" "Concept Id"}}</span></th>
+            <th><span data-i18n-id="i18n_module_id" class="i18n">{{i18n "i18n_module_id" "Module Id"}}</span></th>
+            <th><span data-i18n-id="i18n_active" class="i18n">{{i18n "i18n_active" "Active"}}</span></th>
+            {{#with result.items.[0]}}
+                {{#each additionalFields}}
+                    <th>{{@key}}</th>
+                {{/each}}
+            {{/with}}
         </tr>
     </thead>
 {{/if_eq}}
-<tbody>
+<tbody>      
     {{#each result.items}}
         <tr class="member-row">
+            <td data-concept-id='{{referencedComponent.conceptId}}'>{{referencedComponent.conceptId}}</td>
             {{#if_eq ../containingTermOnly false}}
                 <td data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>
                     <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>&nbsp;&nbsp;</span>
@@ -21,10 +31,10 @@
                         </div>
                     {{/hasCountryIcon}}
                     {{referencedComponent.fsn.term}}
-                </td>            
+                </td>     
                 <td data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.pt.term}}'>                
                     {{referencedComponent.pt.term}}
-                </td>
+                </td>     
             {{else}}
                 <td data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.term}}'>
                     <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.term}}'>&nbsp;&nbsp;</span>
@@ -35,14 +45,30 @@
                     {{/hasCountryIcon}}
                     {{referencedComponent.term}}
                 </td>
+                <td>{{ getAcceptability referencedComponent.acceptabilityMap refsetId }}</td>
             {{/if_eq}}
-            <td data-concept-id='{{referencedComponent.conceptId}}'>{{referencedComponent.conceptId}}</td>
+                <td>
+                    {{#hasCountryIcon moduleId}}
+                        <div class="phoca-flagbox" style="width:22px;height:22px">
+                            <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                        </div>
+                    {{/hasCountryIcon}}
+                    {{moduleId}}
+                </td>
+            {{#if active}}
+                <td>{{active}}</td>
+            {{else}}
+                <td>false</td>
+            {{/if}}
+            {{#each additionalFields}}
+                <td>{{this}}</td>
+            {{/each}} 
 
     {{/each}}
 
     <tr class="more-row">
         {{#if_eq referenceComponentsOfRefsetAreNotConcepts true}}
-            <td class="text-muted" class="text-center" colspan="2">The reference components of these reference set members are not concepts.</span></td>
+            <td class="text-muted" class="text-center" colspan="100%">The reference components of these reference set members are not concepts.</span></td>
         {{else}}
             {{#if_eq remaining "asd"}}
                 <td class="text-center" id="{{divElementId}}-moreMembers" colspan="2">
@@ -50,15 +76,26 @@
                 </td>
             {{else}}
                 {{#if_eq remaining 0}}
-                    <td class="text-muted" class="text-center" colspan="2">{{total}} <span data-i18n-id="i18n_members" class="i18n">members</span></td>
+                    <td class="text-muted" class="text-center" colspan="100%">{{total}} <span data-i18n-id="i18n_members" class="i18n">{{i18n "i18n_members" "members"}}</span></td>
                 {{else}}
-                    {{#if_gr remaining returnLimit}}
-                        <td class="text-center" id="{{divElementId}}-moreMembers" colspan="2">
-                            <button class='btn btn-link' id='{{divElementId}}-moreMembers'><span data-i18n-id="i18n_load" class="i18n">{{i18n "i18n_load" "Load"}}</span> {{returnLimit}} <span data-i18n-id="i18n_more" class="i18n">{{i18n "i18n_more" "more"}}</span> ({{remaining}} <span data-i18n-id="i18n_remaining" class="i18n">{{i18n "i18n_remaining" "remaining"}}</span>)</button>
-                        </td>
+                    {{#if_gr remaining returnLimit}} 
+                        {{#if_eq returnLimit maxReturnLimit}}
+                            <td class="text-muted" class="text-center" colspan="100%">{{maxReturnLimit}} <span data-i18n-id="i18n_members" class="i18n">{{i18n "i18n_members" "members"}}</span></td>
+                        {{else}}
+                            <td class="text-center" id="{{divElementId}}-moreMembers" colspan="2">
+                                <button class='btn btn-link' id='{{divElementId}}-moreMembers'><span data-i18n-id="i18n_load" class="i18n">{{i18n "i18n_load" "Load"}}</span> {{returnLimit}} <span data-i18n-id="i18n_more" class="i18n">{{i18n "i18n_more" "more"}}</span> ({{remaining}} <span data-i18n-id="i18n_remaining" class="i18n">{{i18n "i18n_remaining" "remaining"}}</span>)</button>
+                            </td>
+                            <td class="text-left" id="{{divElementId}}-moreMembers" colspan="100%" >
+                                {{#if_gr remaining maxReturnLimit}}
+                                    <button class='btn btn-link' id='{{divElementId}}-moreMembers-all'><span data-i18n-id="i18n_load" class="i18n">{{i18n "i18n_load" "Load"}}</span> {{maxReturnLimit}} <span data-i18n-id="i18n_members" class="i18n">{{i18n "i18n_members" "members"}}</span></button>
+                                {{else}}
+                                    <button class='btn btn-link' id='{{divElementId}}-moreMembers-all'><span data-i18n-id="i18n_load" class="i18n">{{i18n "i18n_load" "Load"}}</span> {{remaining}} <span data-i18n-id="i18n_members" class="i18n">{{i18n "i18n_members" "members"}}</span></button>
+                                {{/if_gr}}
+                            </td>
+                        {{/if_eq}}
                     {{else}}
                         <td class="text-center" colspan="2">
-                            <button class='btn btn-link' id='{{divElementId}}-moreMembers'><span data-i18n-id="i18n_load" class="i18n">{{i18n "i18n_load" "Load"}}</span> {{remaining}} <span data-i18n-id="i18n_more" class="i18n">{{i18n "i18n_more" "more"}}</span> ({{remaining}} <span data-i18n-id="i18n_remaining" class="i18n">{{i18n "i18n_remaining" "remaining"}}</span>)</button>
+                            <button class='btn btn-link' id='{{divElementId}}-moreMembers'><span data-i18n-id="i18n_load" class="i18n">{{i18n "i18n_load" "Load"}}</span> {{remaining}} <span data-i18n-id="i18n_more" class="i18n">{{i18n "i18n_more" "more"}}</span> ({{remaining}} <span data-i18n-id="i18n_remaining" class="i18n">{{i18n "i18n_remaining" "remaining"}}</span></button>
                         </td>
                     {{/if_gr}}
                 {{/if_eq}}
