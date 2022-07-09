@@ -6,6 +6,7 @@
                 <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_preferred_term" "Preferred Term"}}</span></th>
             {{/if_eq}}
             <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_conceptId" "Concept Id"}}</span></th>
+            <th><span data-i18n-id="i18n_active" class="i18n">{{i18n "i18n_active" "Active"}}</span></th>
         </tr>
     </thead>
 {{/if_eq}}
@@ -37,7 +38,11 @@
                 </td>
             {{/if_eq}}
             <td data-concept-id='{{referencedComponent.conceptId}}'>{{referencedComponent.conceptId}}</td>
-
+            {{#if active}}
+                <td>{{active}}</td>
+            {{else}}
+                <td>false</td>
+            {{/if}}
     {{/each}}
 
     <tr class="more-row">
