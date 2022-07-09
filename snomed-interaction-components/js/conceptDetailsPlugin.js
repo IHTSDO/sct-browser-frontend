@@ -1441,7 +1441,7 @@ function conceptDetails(divElement, conceptId, options) {
             xhrRefsets = null;
         }
 
-        xhrRefsets = $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId + '&active=true', function(result) {
+        xhrRefsets = $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId, function(result) {
             }).done(function(result) {
                 var simpleRefsetMembers = [];
                 var simpleMapRefsetMembers = [];
@@ -2367,6 +2367,10 @@ function conceptDetails(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");        
     }
 
+    Handlebars.registerHelper('getObjProp', function (obj, prop) {
+        return obj[prop];
+    });
+
     this.loadMembers = function(returnLimit, skipTo, paginate, historyBranch) {
         var branch = options.edition;
         
@@ -2378,7 +2382,7 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + panel.conceptId + "&limit=100&active=true";
+        var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + panel.conceptId + "&limit=" + returnLimit;
         if (skipTo > 0) {
             membersUrl = membersUrl + "&offset=" + skipTo;
         } else {
@@ -2425,7 +2429,6 @@ function conceptDetails(divElement, conceptId, options) {
                     var returnLimit2 = 0;
                 }
             }
-
             var isReferenceComponentsOfRefsetNotConcepts = false;
             var containingTermOnly = true;
             if (result.items && result.items.length > 0) {
@@ -2446,6 +2449,7 @@ function conceptDetails(divElement, conceptId, options) {
                 });
             }
             console.log("containingTermOnly : " + containingTermOnly);
+            var maxReturnLimit = 10000;
             var context = {};
             if (isReferenceComponentsOfRefsetNotConcepts) {
                 context = {
@@ -2462,6 +2466,7 @@ function conceptDetails(divElement, conceptId, options) {
                 context = {
                     result: result,
                     returnLimit: returnLimit2,
+                    maxReturnLimit: maxReturnLimit,
                     remaining: remaining,
                     divElementId: panel.divElement.id,
                     server: panel.server,
@@ -2499,12 +2504,17 @@ function conceptDetails(divElement, conceptId, options) {
                 $("#members-" + panel.divElement.id + "-resultsTable").find(".more-row").remove();
                 if (skipTo == 0) {
                     $('#members-' + panel.divElement.id + "-resultsTable").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/members.hbs"](context));
+                    $('#members-' + panel.divElement.id + "-resultsTable").wrap( "<div style='overflow:auto;'></div>" );
                 } else {
                     $('#members-' + panel.divElement.id + "-resultsTable").append(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/members.hbs"](context));
                 }
                 $("#" + panel.divElement.id + "-moreMembers").click(function() {
                     $("#" + panel.divElement.id + "-moreMembers").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                     panel.loadMembers(returnLimit2, skipTo + returnLimit, paginate, historyBranch);
+                });
+                $("#" + panel.divElement.id + "-moreMembers-all").click(function() {
+                    $("#" + panel.divElement.id + "-moreMembers").html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+                    panel.loadMembers(maxReturnLimit, 0, paginate, historyBranch);
                 });
                 $("#members-" + panel.divElement.id + "-sort").unbind();
                 $("#members-" + panel.divElement.id + "-sort").click(function() {
