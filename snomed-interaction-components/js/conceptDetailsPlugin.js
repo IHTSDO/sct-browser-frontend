@@ -1441,8 +1441,8 @@ function conceptDetails(divElement, conceptId, options) {
             xhrRefsets = null;
         }
 
-        xhrRefsets = $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId, function(result) {
-            }).done(function(result) {
+        xhrRefsets = $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId + '&active=true', function(result) {
+        }).done(function(result) {
                 var simpleRefsetMembers = [];
                 var simpleMapRefsetMembers = [];
                 var attributeValueRefsetMembers = [];
@@ -2378,7 +2378,7 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + panel.conceptId + "&limit=" + returnLimit;
+        var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + panel.conceptId + "&limit=" + returnLimit + "&active=true";
         if (skipTo > 0) {
             membersUrl = membersUrl + "&offset=" + skipTo;
         } else {
