@@ -2367,10 +2367,6 @@ function conceptDetails(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");        
     }
 
-    Handlebars.registerHelper('getObjProp', function (obj, prop) {
-        return obj[prop];
-    });
-
     this.loadMembers = function(returnLimit, skipTo, paginate, historyBranch) {
         var branch = options.edition;
         
@@ -2504,7 +2500,6 @@ function conceptDetails(divElement, conceptId, options) {
                 $("#members-" + panel.divElement.id + "-resultsTable").find(".more-row").remove();
                 if (skipTo == 0) {
                     $('#members-' + panel.divElement.id + "-resultsTable").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/members.hbs"](context));
-                    $('#members-' + panel.divElement.id + "-resultsTable").wrap( "<div style='overflow:auto;'></div>" );
                 } else {
                     $('#members-' + panel.divElement.id + "-resultsTable").append(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/members.hbs"](context));
                 }
