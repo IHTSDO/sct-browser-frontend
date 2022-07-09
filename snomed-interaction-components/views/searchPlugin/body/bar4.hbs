@@ -12,7 +12,7 @@
                             <li class="list-group-item">
                                 <input type="checkbox" class="semtag-checkbox" style="margin: 0" data-semtag='{{key}}' {{#ifIn key ../../options.semTagsFilter }}checked{{/ifIn}}>
                                 <span class="badge">{{value}}</span>
-                                <span class='semtag-link' style="margin-left: 5px" data-semtag='{{key}}'>{{key}}</span>                                
+                                <span class='semtag-link' style="margin-left: 5px; cursor: pointer" data-semtag='{{key}}'>{{key}}</span>                                
                             </li>
                         {{/each}}
                     </ul>

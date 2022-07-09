@@ -677,7 +677,7 @@ function searchPanel(divElement, options) {
         }
 
         if (t != "" && (originalSearchStr != lastT || forceSearch)) {
-            if (t.length < 3) {
+            if (t.length < 3 && (!panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.filter(function(item) {return panel.options.singleCharacterSearchLanguageRefsets.indexOf(item) !== -1;}).length == 0)) {
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('glyphicon-ok');
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('text-success');
                 $('#' + panel.divElement.id + '-typeIcon').addClass('glyphicon-remove');
@@ -792,11 +792,11 @@ function searchPanel(divElement, options) {
                     }
                     if (field.active) {
                         if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
-                            if (aux.term === result.pt.term && aux.lang == result.pt.lang) {
+                            if ((aux.term === result.pt.term || (panel.options.typeSearchFilter === 'fsn' && aux.term === result.fsn.term)) && aux.lang == result.pt.lang) {
                                 if (panel.options.statusSearchFilter == "activeOnly" || panel.options.statusSearchFilter == "activeAndInactive") {
                                     resDescriptions.push(aux);
                                 }                                
-                            }                            
+                            }                             
                         } 
                         else {
                             if (panel.options.statusSearchFilter == "activeOnly" || panel.options.statusSearchFilter == "activeAndInactive") {
@@ -1100,7 +1100,7 @@ function searchPanel(divElement, options) {
                         options: panel.options
                     };
                     $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
-                    $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox').click(function(event) {                            
+                    $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox').click(function(event) {
                         var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');
                         var semTagsFilter = [];
                         for (var i = 0; i < checkboxes.length; i++) {
@@ -1111,6 +1111,21 @@ function searchPanel(divElement, options) {
                         panel.options.semTagsFilter = semTagsFilter;
                         panel.search(t, 0, returnLimit, true, true);
                     });
+                    $("#" + panel.divElement.id + '-searchBar4').find('.semtag-link').click(function(event) {
+                        var semTagsFilter = [];
+                        semTagsFilter.push($(this).attr('data-semtag'));
+                        var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');                    
+                        for (var i = 0; i < checkboxes.length; i++) {
+                            if ($(checkboxes[i]).attr('data-semtag') === $(this).attr('data-semtag')) {
+                                $(checkboxes[i]).prop('checked',true);
+                            } else {
+                                $(checkboxes[i]).prop('checked',false);
+                            }                        
+                        }
+                        panel.options.semTagsFilter = semTagsFilter;
+                        panel.search(t, 0, returnLimit, true, true);
+                    });
+                    
                     panel.search(t, 0, returnLimit, true, true);
                     return;
                 }
@@ -1290,6 +1305,20 @@ function searchPanel(divElement, options) {
                         if (checkboxes[i].checked) {
                             semTagsFilter.push($(checkboxes[i]).attr('data-semtag'));
                         }
+                    }
+                    panel.options.semTagsFilter = semTagsFilter;
+                    panel.search(t, 0, returnLimit, true, true);
+                });
+                $("#" + panel.divElement.id + '-searchBar4').find('.semtag-link').click(function(event) {
+                    var semTagsFilter = [];
+                    semTagsFilter.push($(this).attr('data-semtag'));
+                    var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');                    
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        if ($(checkboxes[i]).attr('data-semtag') === $(this).attr('data-semtag')) {
+                            $(checkboxes[i]).prop('checked',true);
+                        } else {
+                            $(checkboxes[i]).prop('checked',false);
+                        }                        
                     }
                     panel.options.semTagsFilter = semTagsFilter;
                     panel.search(t, 0, returnLimit, true, true);

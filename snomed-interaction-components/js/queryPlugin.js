@@ -1399,6 +1399,14 @@ function queryComputerPanel(divElement, options) {
         panel.options.eclQueryFilter = $("#" + panel.divElement.id + "-relsTypeFilterOption").val();
     }
 
+    this.isSctid=  function(id) {
+        if (!id) {
+          return false;
+        }
+        var match = id.match(/^[0-9]+$/);
+        return match ? true : false;
+      }
+
     this.execute = function(form, expression, clean, onlyTotal) {
         panel.currentEx++;
         var currentEx = panel.currentEx;
@@ -1608,14 +1616,58 @@ function queryComputerPanel(divElement, options) {
 
                     $('#' + panel.divElement.id + '-outputBody').find(".conceptResult").unbind();
                     $('#' + panel.divElement.id + '-outputBody').find(".conceptResult").click(function(event) {
-                        //console.log("clicked",$(event.target).closest("tr").attr('data-term'));
-                        channel.publish(panel.divElement.id, {
-                            term: $(event.target).closest("tr").attr('data-term'),
-                            module: $(event.target).closest("tr").attr("data-module"),
-                            conceptId: $(event.target).closest("tr").attr('data-concept-id'),
-                            source: panel.divElement.id,
-                            showConcept: true
-                        });
+                        var id = $(event.target).closest("tr").attr('data-concept-id');
+                        if (panel.isSctid(id)) {
+                            var partitionId = id.slice(id.length - 2, id.length - 1);
+                            // concept
+                            if (partitionId === '0') {
+                                channel.publish(panel.divElement.id, {
+                                    term: $(event.target).closest("tr").attr('data-term'),
+                                    module: $(event.target).closest("tr").attr("data-module"),
+                                    conceptId: $(event.target).closest("tr").attr('data-concept-id'),
+                                    source: panel.divElement.id,
+                                    showConcept: true
+                                });
+                            } else if (partitionId === '1') { // Description
+                                $.ajax({
+                                    type: "GET",
+                                    headers: {
+                                        'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                                    },
+                                    url: options.serverUrl + "/" + branch + "/descriptions/" + id,                                    
+                                    success: function(result) {                                        
+                                        if (result) {
+                                            channel.publish(panel.divElement.id, {
+                                                term: $(event.target).closest("tr").attr('data-term'),
+                                                module: $(event.target).closest("tr").attr("data-module"),
+                                                conceptId: result.conceptId,
+                                                source: panel.divElement.id,
+                                                showConcept: true
+                                            });
+                                        }
+                                    }
+                                });
+                            } else if (partitionId === '2') { // Relationship
+                                $.ajax({
+                                    type: "GET",
+                                    headers: {
+                                        'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                                    },
+                                    url: options.serverUrl + "/" + branch + "/relationships/" + id,                                    
+                                    success: function(result) {                                        
+                                        if (result) {
+                                            channel.publish(panel.divElement.id, {
+                                                term: $(event.target).closest("tr").attr('data-term'),
+                                                module: $(event.target).closest("tr").attr("data-module"),
+                                                conceptId: result.sourceId,
+                                                source: panel.divElement.id,
+                                                showConcept: true
+                                            });
+                                        }
+                                    }
+                                });
+                            }                            
+                        }                        
                     });
 
                     var i18n_show_text = jQuery.i18n.prop('i18n_show');                    

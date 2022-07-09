@@ -589,7 +589,7 @@ function conceptDetails(divElement, conceptId, options) {
                 release: options.release,
                 server: options.serverUrl.substr(0, options.serverUrl.length - 10),
                 langRefset: panel.options.languages,
-                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages,
+                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages,
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
                 showIssueCollector: panel.options.communityBrowser || options.edition.startsWith('MAIN/SNOMEDCT-SE') || options.edition.startsWith('MAIN/SNOMEDCT-NZ'),
                 issueCollectorButtonText: options.edition.startsWith('MAIN/SNOMEDCT-SE') ? 'Skicka synonymförslag' : 'Submit Feedback'
@@ -686,7 +686,7 @@ function conceptDetails(divElement, conceptId, options) {
                 panel: panel,
                 firstMatch: firstMatch,
                 divElementId: panel.divElement.id,
-                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + panel.options.edition + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' ? '&latestRedirect=' + panel.options.latestRedirect : ''),
+                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' ? '&latestRedirect=' + panel.options.latestRedirect : ''),
                 server: panel.server
             };
             $('#home-attributes-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/attributes.hbs"](context));
@@ -2300,7 +2300,7 @@ function conceptDetails(divElement, conceptId, options) {
     this.loadLanguageRefsets = function() {        
         var branch = options.edition;
         
-        if (historyBranch){
+        if (typeof historyBranch !== "undefined"){
             branch = historyBranch;
         }
         else{
