@@ -4,8 +4,16 @@
             <th><span data-i18n-id="i18n_term" class="i18n">{{i18n "i18n_term" "Term"}}</span></th>
             {{#if_eq containingTermOnly false}}
                 <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_preferred_term" "Preferred Term"}}</span></th>
+            {{else}}
+                <th><span data-i18n-id="i18n_acceptability" class="i18n">{{i18n "i18n_acceptability" "Acceptability"}}</span></th>
             {{/if_eq}}
             <th><span data-i18n-id="i18n_conceptId" class="i18n">{{i18n "i18n_conceptId" "Concept Id"}}</span></th>
+            <th><span data-i18n-id="i18n_module_id" class="i18n">{{i18n "i18n_module_id" "Module Id"}}</span></th>
+            {{#with result.items.[0]}}
+                {{#each additionalFields}}
+                    <th>{{@key}}</th>
+                {{/each}}
+            {{/with}}
         </tr>
     </thead>
 {{/if_eq}}
@@ -35,9 +43,20 @@
                     {{/hasCountryIcon}}
                     {{referencedComponent.term}}
                 </td>
+                <td>{{ getObjProp referencedComponent.acceptabilityMap refsetId }}</td>
             {{/if_eq}}
             <td data-concept-id='{{referencedComponent.conceptId}}'>{{referencedComponent.conceptId}}</td>
-
+            <td>
+                {{#hasCountryIcon moduleId}}
+                    <div class="phoca-flagbox" style="width:22px;height:22px">
+                        <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                    </div>
+                {{/hasCountryIcon}}
+                {{moduleId}}
+            </td>
+            {{#each additionalFields}}
+                <td>{{this}}</td>
+            {{/each}} 
     {{/each}}
 
     <tr class="more-row">
