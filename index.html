@@ -518,7 +518,7 @@
                                 if (options.publicBrowser) {
                                     $("#editionLabel").html(release.name);
                                     $("#versionLabel").html(release.latestVersion.version);
-                                    initVersionsDropdown(release);
+                                    initVersionsDropdown(release.shortName);
                                 } else {
                                     $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                                 }
@@ -939,7 +939,7 @@
                                         if (options.publicBrowser) {
                                             $("#editionLabel").html(release.name);
                                             $("#versionLabel").html(release.latestVersion.version);
-                                            initVersionsDropdown(release);
+                                            initVersionsDropdown(release.shortName);
                                         } else {
                                             $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                                         }
@@ -950,7 +950,7 @@
                                     if (options.publicBrowser) {
                                         $("#editionLabel").html(release.name);
                                         $("#versionLabel").html(release.latestVersion.version);
-                                        initVersionsDropdown(release);
+                                        initVersionsDropdown(release.shortName);
                                     } else {
                                         $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                                     }
