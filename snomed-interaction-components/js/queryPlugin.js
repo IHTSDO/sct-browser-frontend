@@ -1732,6 +1732,12 @@ function queryComputerPanel(divElement, options) {
                 $("#" + panel.divElement.id + "-footer").html("");
                 $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-danger'>" + jqXHR.responseJSON.message + "</span>");
             }
+            else if (jqXHR && jqXHR.status === 414) {
+                $('#' + panel.divElement.id + '-outputBody').html("");
+                $('#' + panel.divElement.id + '-outputBody2').html("");
+                $("#" + panel.divElement.id + "-footer").html("");
+                $('#' + panel.divElement.id + '-resultInfo').html("<span class='text-danger'>" + "Request is too large" + "</span>");
+            }
             else {
                 var textStatus = xhrExecute2.statusText;
                 if (textStatus != "abort") {
