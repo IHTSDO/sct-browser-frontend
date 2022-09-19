@@ -675,7 +675,6 @@
         }
 
         function initializePublicBrowser() {
-
             setUILanguage();
             var edition = QueryString.edition;
             var isLatestRedirect = true;
@@ -830,6 +829,7 @@
 
             // set language one more time after finishing components initialization
             setUILanguage();
+           
 
             // RELEASES DROPDOWN HANDLER for daily build/community content
             if (options.dailyBuildBrowser || options.communityBrowser) {
@@ -2022,86 +2022,84 @@
         }
 
         function switchLanguage(language, flagPng, fade) {
-            if (selectedLanguage !== language) {
-                selectedLanguage = language;
-                if (typeof(Storage) !== "undefined") {
-                    localStorage.setItem("ui_language", language);
-                }
-                $("#nav-selected-flag").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
-                $("#nav-selected-flag-modal").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
-                jQuery.i18n.properties({
-                    name: 'Languages',
-                    path: 'i18n/',
-                    mode: 'both',
-                    language: language,
-                    cache: true
-                });
-                $(".i18n").each(function(index) {
-                    var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
-                    if (translation != "[" + $(this).attr('data-i18n-id') + "]") {
-                        if (fade) {
-                            $(this).fadeOut("slow", function() {
-                                $(this).html(translation);
-                                $(this).fadeIn("slow");
-                            });
-                        } else {
-                            $(this).html(translation);
-                        }
-                    } else {
-                        console.log($(this).attr('data-i18n-id') + " = " + $(this).html());
-                    }
-                });
-
-                var i18n_search_placeholder = jQuery.i18n.prop('i18n_search_placeholder');
-                var i18n_ecl_search_option_placeholder = jQuery.i18n.prop('i18n_ecl_search_option_placeholder');
-                if (fade) {
-                    $('#fh-search_canvas-searchBox').fadeOut("slow", function() {
-                        $('#fh-search_canvas-searchBox').attr('placeholder', i18n_search_placeholder);
-                        $('#fh-search_canvas-searchBox').fadeIn("slow");
-                    });
-                    $('#fh-query_canvas-searchBoxOption').fadeOut("slow", function() {
-                        $('#fh-query_canvas-searchBoxOption').attr('placeholder', i18n_ecl_search_option_placeholder);
-                        $('#fh-query_canvas-searchBoxOption').fadeIn("slow");
-                    });
-                } else {
-                    $('#fh-search_canvas-searchBox').attr('placeholder', i18n_search_placeholder);
-                    $('#fh-query_canvas-searchBoxOption').attr('placeholder', i18n_ecl_search_option_placeholder);
-                }
-
-                initTour();
-                $("#navBarBrand").tooltip().tooltip('destroy');
-                $("#navBarBrand").tooltip({
-                    placement: 'bottom',
-                    trigger: 'hover',
-                    title: i18n_go_back_home,
-                    animation: true,
-                    delay: 1000
-                });
-                $("#fh-search_canvas-historyButton").tooltip().tooltip('destroy');
-                $("#fh-search_canvas-historyButton").tooltip({
-                    placement: 'left',
-                    trigger: 'hover',
-                    title: i18n_history,
-                    animation: true,
-                    delay: 1000
-                });
-                $("#fh-taxonomy_canvas-historyButton").tooltip().tooltip('destroy');
-                $("#fh-taxonomy_canvas-historyButton").tooltip({
-                    placement: 'left',
-                    trigger: 'hover',
-                    title: i18n_history,
-                    animation: true,
-                    delay: 1000
-                });
-                $("#fh-cd1_canvas-historyButton").tooltip().tooltip('destroy');
-                $("#fh-cd1_canvas-historyButton").tooltip({
-                    placement: 'left',
-                    trigger: 'hover',
-                    title: i18n_history,
-                    animation: true,
-                    delay: 1000
-                });
+            selectedLanguage = language;
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("ui_language", language);
             }
+            $("#nav-selected-flag").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
+            $("#nav-selected-flag-modal").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
+            jQuery.i18n.properties({
+                name: 'Languages',
+                path: 'i18n/',
+                mode: 'both',
+                language: language,
+                cache: true
+            });
+            $(".i18n").each(function(index) {
+                var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
+                if (translation != "[" + $(this).attr('data-i18n-id') + "]") {
+                    if (fade) {
+                        $(this).fadeOut("slow", function() {
+                            $(this).html(translation);
+                            $(this).fadeIn("slow");
+                        });
+                    } else {
+                        $(this).html(translation);
+                    }
+                } else {
+                    console.log($(this).attr('data-i18n-id') + " = " + $(this).html());
+                }
+            });
+
+            var i18n_search_placeholder = jQuery.i18n.prop('i18n_search_placeholder');
+            var i18n_ecl_search_option_placeholder = jQuery.i18n.prop('i18n_ecl_search_option_placeholder');
+            if (fade) {
+                $('#fh-search_canvas-searchBox').fadeOut("slow", function() {
+                    $('#fh-search_canvas-searchBox').attr('placeholder', i18n_search_placeholder);
+                    $('#fh-search_canvas-searchBox').fadeIn("slow");
+                });
+                $('#fh-query_canvas-searchBoxOption').fadeOut("slow", function() {
+                    $('#fh-query_canvas-searchBoxOption').attr('placeholder', i18n_ecl_search_option_placeholder);
+                    $('#fh-query_canvas-searchBoxOption').fadeIn("slow");
+                });
+            } else {
+                $('#fh-search_canvas-searchBox').attr('placeholder', i18n_search_placeholder);
+                $('#fh-query_canvas-searchBoxOption').attr('placeholder', i18n_ecl_search_option_placeholder);
+            }
+
+            initTour();
+            $("#navBarBrand").tooltip().tooltip('destroy');
+            $("#navBarBrand").tooltip({
+                placement: 'bottom',
+                trigger: 'hover',
+                title: i18n_go_back_home,
+                animation: true,
+                delay: 1000
+            });
+            $("#fh-search_canvas-historyButton").tooltip().tooltip('destroy');
+            $("#fh-search_canvas-historyButton").tooltip({
+                placement: 'left',
+                trigger: 'hover',
+                title: i18n_history,
+                animation: true,
+                delay: 1000
+            });
+            $("#fh-taxonomy_canvas-historyButton").tooltip().tooltip('destroy');
+            $("#fh-taxonomy_canvas-historyButton").tooltip({
+                placement: 'left',
+                trigger: 'hover',
+                title: i18n_history,
+                animation: true,
+                delay: 1000
+            });
+            $("#fh-cd1_canvas-historyButton").tooltip().tooltip('destroy');
+            $("#fh-cd1_canvas-historyButton").tooltip({
+                placement: 'left',
+                trigger: 'hover',
+                title: i18n_history,
+                animation: true,
+                delay: 1000
+            });            
         }
     </script>
     <script>
