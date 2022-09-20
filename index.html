@@ -716,7 +716,7 @@
                     }
                 }
             } else {
-                if (!isLatestRedirect) {
+                if (!isLatestRedirect) {                    
                     if (typeof edition !== 'undefined') {
                         options.edition = edition;
                     } else {
@@ -732,12 +732,13 @@
                         for (let i = 0; i < options.releases.items.length; i++) {
                             let release = options.releases.items[i];
                             if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath) {
-                                options.edition = release.latestVersion.branchPath;
+                                options.edition = release.latestVersion.branchPath;                     
                                 break;
                             }
                         }
                     }
                 }
+                QueryString = queryString();
                 if (options.releases && options.releases.items && options.releases.items.length > 0) {
                     for (let i = options.releases.items.length - 1; i >= 0; i--) {
                         let release = options.releases.items[i];
@@ -752,8 +753,11 @@
                             for (var language in release.languages) {
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
-                            parsedLanguages = parsedLanguages.slice(0, -1);
+                            parsedLanguages = parsedLanguages.slice(0, -1);                                                      
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
+                            if (!QueryString || !QueryString.languages) {
+                                options.languages = parsedLanguages;
+                            }                             
                             break;
                         }
                     }
@@ -779,7 +783,7 @@
             if (typeof txValue2 == "undefined" || txValue2 == null || txValue2 == "") {
                 txValue2 = 138875005;
             }
-
+            console.log(options);
             if (QueryString.perspective == "home") {
                 initialize();
             } else if (QueryString.perspective == "browsing") {
