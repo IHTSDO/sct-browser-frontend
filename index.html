@@ -896,7 +896,7 @@
                     var foundRelease = null;
                     for (let i = 0; i < options.releases.items.length; ++i) {
                         let release = options.releases.items[i];
-                        if (typeof release.latestVersion !== "undefined") {
+                        if (typeof release.latestVersion !== "undefined" && (!release.maintainerType || release.maintainerType !== 'Community Content')) {
                             var $li = $('<li>')
                             var $a = $('<a>').attr("shortName", release.shortName).append(release.name);
                             $a.attr("href", "javascript:void(0);");
