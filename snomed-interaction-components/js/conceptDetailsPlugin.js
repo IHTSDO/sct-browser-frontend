@@ -397,6 +397,8 @@ function conceptDetails(divElement, conceptId, options) {
                 });
                 $("#home-children-" + panel.divElement.id + "-body").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/children.hbs"](context));
                 $('#home-parents-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/parents.hbs"](context));
+
+                registerContextMenu(panel.options);
             }
             result = panel.updateCdiRels(result);
             setDefaultTerm(result);
@@ -690,6 +692,10 @@ function conceptDetails(divElement, conceptId, options) {
                 server: panel.server
             };
             $('#home-attributes-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/attributes.hbs"](context));
+
+            // rigister right click event
+            registerContextMenu(panel.options);
+
 
             // Update browser history
             if (!panel.options.disableHistoryStateChange) {
@@ -1957,9 +1963,9 @@ function conceptDetails(divElement, conceptId, options) {
                             auxHtml = auxHtml + "<i class='glyphicon glyphicon-chevron-right treeButton' data-ind='" + ind + "'></i></button>";
                         }
                         if (field.definitionStatus == "PRIMITIVE") {
-                            auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>&nbsp;&nbsp;</span>&nbsp;&nbsp";
+                            auxHtml = auxHtml + "<span class='badge alert-warning context-menu' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "' data-fsn='" + field.fsn.term + "' data-preffered-term='" + field.pt.term + "'>&nbsp;&nbsp;</span>&nbsp;&nbsp";
                         } else {
-                            auxHtml = auxHtml + "<span class='badge alert-warning' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "'>&equiv;</span>&nbsp;&nbsp";
+                            auxHtml = auxHtml + "<span class='badge alert-warning context-menu' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "' data-fsn='" + field.fsn.term + "' data-preffered-term='" + field.pt.term + "'>&equiv;</span>&nbsp;&nbsp";
                         }
                         if (countryIcons[field.moduleId]) {
                             auxHtml = auxHtml + "<div class='phoca-flagbox' style='width:20px;height:20px'><span class='phoca-flag " + countryIcons[field.moduleId] + "'></span></div>&nbsp";
@@ -1976,6 +1982,7 @@ function conceptDetails(divElement, conceptId, options) {
                 } else {
                     $(target).addClass("glyphicon-minus");
                 }
+                registerContextMenu(panel.options);
             } else {
                 var context = {
                     divElementId: panel.divElement.id,                    
@@ -1985,6 +1992,7 @@ function conceptDetails(divElement, conceptId, options) {
                 };
     
                 $('#home-parents-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/parents.hbs"](context));
+                registerContextMenu(panel.options);
                 if (!panel.options.diagrammingMarkupEnabled) {                   
                     $('#home-parents-' + panel.divElement.id).html(panel.stripDiagrammingMarkup($('#home-parents-' + panel.divElement.id).html()));
                 }

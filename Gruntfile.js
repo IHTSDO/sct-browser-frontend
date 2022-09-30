@@ -55,7 +55,9 @@ module.exports = function(grunt) {
                     'external-libs/bootstrap-multiselect.js',
                     'external-libs/jquery.history.js',
                     'external-libs/ZeroClipboard.js',
-                    'external-libs/datatables.min.js'
+                    'external-libs/datatables.min.js',
+                    'external-libs/jquery.contextMenu.js',
+                    'external-libs/jquery.ui.position.js'
                 ],
                 dest: 'snomed-interaction-components/dist/js/external.js'
             },
@@ -82,6 +84,7 @@ module.exports = function(grunt) {
                     "css/animate.css",
                     "css/bootstrap-multiselect.css",
                     "css/datatables.min.css",
+                    "css/jquery.contextMenu.css",
                     'snomed-interaction-components/dist/css/<%= pkg.name %>.css'
                 ],
                 dest: 'css/external.css'

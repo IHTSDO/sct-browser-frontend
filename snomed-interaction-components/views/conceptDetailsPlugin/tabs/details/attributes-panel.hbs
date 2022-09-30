@@ -12,14 +12,14 @@
                     {{else}}
                         {{firstMatch.defaultTerm}}
                     {{/if_undefined}}
-                    " data-def-status="{{firstMatch.definitionStatus}}" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning">&nbsp;&nbsp;</span></a>&nbsp;&nbsp;
+                    " data-def-status="{{firstMatch.definitionStatus}}" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning context-menu" data-concept-id="{{firstMatch.conceptId}}" data-fsn="{{firstMatch.fsn.term}}" data-preffered-term="{{firstMatch.pt.term}}">&nbsp;&nbsp;</span></a>&nbsp;&nbsp;
                 {{else}}
                     <a href="javascript:void(0);" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{firstMatch.moduleId}}" data-concept-id="{{firstMatch.conceptId}}" data-term="{{#if_undefined firstMatch.fsn.term}}
                         {{firstMatch.fsn}}
                     {{else}}
                         {{firstMatch.defaultTerm}}
                     {{/if_undefined}}
-                    " data-def-status="{{firstMatch.definitionStatus}}" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning" >&equiv;</span></a>&nbsp;&nbsp;
+                    " data-def-status="{{firstMatch.definitionStatus}}" style="color: inherit;text-decoration: inherit;"><span class="badge alert-warning context-menu" data-concept-id="{{firstMatch.conceptId}}" data-fsn="{{firstMatch.fsn.term}}" data-preffered-term="{{firstMatch.pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
                 {{/if_eq}}
 
                 <span ondrop="dropC(event, '{{divElementId}}', '{{firstMatch.historyEffective}}')" ondragleave="removeHighlight();" ondragover="allowDrop(event)">

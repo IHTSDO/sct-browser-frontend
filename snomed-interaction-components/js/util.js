@@ -386,6 +386,64 @@ function alertEvent(message, type) {
     lastEventTime = t;
 }
 
+function registerContextMenu(options) {
+    var items = options.hideConceptShareLink ? {
+        "copyConceptId": {name: "Copy Concept ID"},
+        "copyFsn": {name: "Copy FSN"},
+        "copyFsnAndConceptId": {name: "Copy FSN and Concept ID"},
+        "copyPreferredTermAndConceptId": {name: "Copy PT and Concept ID"}        
+    } : {
+        "copyConceptId": {name: "Copy Concept ID"},
+        "copyFsn": {name: "Copy FSN"},
+        "copyFsnAndConceptId": {name: "Copy FSN and Concept ID"},
+        "copyPreferredTermAndConceptId": {name: "Copy PT and Concept ID"},
+        "copyLinkToShare": {name: "Copy link to share"}
+    };
+
+    $.contextMenu({
+        selector: '.context-menu', 
+        callback: function(key, opt) {            
+            var conceptId = $($(opt.$trigger)[0]).attr('data-concept-id');
+            var fsn = $($(opt.$trigger)[0]).attr('data-fsn');
+            var prefferedTerm = $($(opt.$trigger)[0]).attr('data-preffered-term');
+
+            var text = '';
+            if (key === 'copyConceptId') {
+                text = conceptId;
+            } else if (key === 'copyFsn') {
+                text = fsn;
+            } else if (key === 'copyFsnAndConceptId') {
+                text = conceptId + ' |' + fsn + '|';
+            } else if (key === 'copyPreferredTermAndConceptId') {
+                text = conceptId + ' |' + prefferedTerm + '|';
+            } else if (key === 'copyLinkToShare') {
+                text = document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + conceptId + "&edition=" + (options.publicBrowser ? options.edition.substring(0, options.edition.lastIndexOf('/')) : options.edition) + "&release=" + options.release + "&languages=" + options.languages; 
+            }
+             
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            
+            // Avoid scrolling to bottom
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+        
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alertEvent("Copied!", "info");
+            } catch (err) {
+                alertEvent("Error", "error");
+            }
+                        
+            document.body.removeChild(textArea);
+        },
+        items: items
+    });
+}
+
 if (!String.prototype.endsWith) {
     String.prototype.endsWith = function(searchString, position) {
         var subjectString = this.toString();

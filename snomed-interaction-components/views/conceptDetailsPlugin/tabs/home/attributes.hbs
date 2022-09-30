@@ -27,7 +27,7 @@
             {{firstMatch.defaultTerm}}
         {{/if_undefined}}" 
        data-def-status="{{firstMatch.definitionStatus}}">
-        <span class="badge alert-warning">
+        <span class="badge alert-warning context-menu" data-concept-id="{{firstMatch.conceptId}}" data-fsn="{{firstMatch.fsn.term}}" data-preffered-term="{{firstMatch.pt.term}}">
         {{#if_eq firstMatch.definitionStatus "PRIMITIVE"}}
             &nbsp;&nbsp;
         {{else}}
