@@ -14,7 +14,7 @@
         <tr class="member-row">
             {{#if_eq ../containingTermOnly false}}
                 <td data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>
-                    <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>&nbsp;&nbsp;</span>
+                    <span class="badge alert-warning context-menu" data-fsn="{{referencedComponent.fsn.term}}" data-preffered-term="{{referencedComponent.pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>&nbsp;&nbsp;</span>
                     {{#hasCountryIcon referencedComponent.moduleId}}
                         <div class="phoca-flagbox" style="width:22px;height:22px">
                             <span class="phoca-flag {{countryIcon referencedComponent.moduleId}}"></span>
@@ -27,7 +27,7 @@
                 </td>
             {{else}}
                 <td data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.term}}'>
-                    <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.term}}'>&nbsp;&nbsp;</span>
+                    <span class="badge alert-warning context-menu" data-fsn="{{referencedComponent.fsn.term}}" data-preffered-term="{{referencedComponent.pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{referencedComponent.moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.term}}'>&nbsp;&nbsp;</span>
                     {{#hasCountryIcon referencedComponent.moduleId}}
                         <div class="phoca-flagbox" style="width:22px;height:22px">
                             <span class="phoca-flag {{countryIcon referencedComponent.moduleId}}"></span>

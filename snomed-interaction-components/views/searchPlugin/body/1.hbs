@@ -3,12 +3,12 @@
         <td class='col-md-7'>
             <div class='result-item' data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
                 {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
                 {{else}}
                   {{#if_eq definitionStatus "900000000000074008"}}
-                      <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                      <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
                     {{else}}
-                      <span class="badge alert-warning" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&equiv;</span>&nbsp;&nbsp;
+                      <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&equiv;</span>&nbsp;&nbsp;
                     {{/if_eq}}
                 {{/if_eq}}
                 {{#hasCountryIcon moduleId}}

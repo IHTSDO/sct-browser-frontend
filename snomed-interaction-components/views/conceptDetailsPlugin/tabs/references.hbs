@@ -22,9 +22,9 @@
                         <tr>
                             <td>
                                 {{#if_eq definitionStatus "PRIMITIVE"}}
-                                    <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{fsn.term}}'>&nbsp;&nbsp;</span>
+                                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{fsn.term}}'>&nbsp;&nbsp;</span>
                                 {{else}}
-                                    <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{fsn.term}}'>&equiv;</span>                                    
+                                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{fsn.term}}'>&equiv;</span>                                    
                                 {{/if_eq}}
                                 {{#hasCountryIcon moduleId}}
                                     <div class="phoca-flagbox" style="width:22px;height:22px">

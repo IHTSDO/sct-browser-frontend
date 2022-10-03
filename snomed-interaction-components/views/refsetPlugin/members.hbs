@@ -51,9 +51,9 @@
             <tr class="member-concept-row">
                 <td>
                     {{#if_eq referencedComponent.definitionStatus "PRIMITIVE"}}
-                        <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>&nbsp;&nbsp;</span>
+                        <span class="badge alert-warning context-menu" data-fsn="{{referencedComponent.fsn.term}}" data-preffered-term="{{referencedComponent.pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>&nbsp;&nbsp;</span>
                     {{else}}
-                        <span class="badge alert-warning" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>&equiv;</span>                    
+                        <span class="badge alert-warning context-menu" data-fsn="{{referencedComponent.fsn.term}}" data-preffered-term="{{referencedComponent.pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{referencedComponent.conceptId}}' data-term='{{referencedComponent.fsn.term}}'>&equiv;</span>                    
                     {{/if_eq}}                
                     {{#hasCountryIcon moduleid}}
                         <div class="phoca-flagbox" style="width:22px;height:22px">

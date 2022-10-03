@@ -308,7 +308,6 @@ function taxonomyPanel(divElement, conceptId, options) {
     }
 
     this.setupParents = function(parents, focusConcept) {
-        console.log(focusConcept);
         var lastParent;
         $.each(parents, function(i, parent) {
             lastParent = parent;
@@ -370,6 +369,9 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var descendantCount = $(event.target).attr('data-descendants')
                 var selectedLabel = $(event.target).attr('data-term');
                 var definitionStatus = $(event.target).attr('data-definition-status');
+                var fsn = {'term' : $(event.target).attr('data-fsn')};
+                var pt = {'term': $(event.target).attr('data-preffered-term')};                
+
                 panel.history.push({ term: selectedLabel, conceptId: selectedId, time: time });
                 panel.default.conceptId = selectedId;
                 var branch = options.edition;
@@ -401,7 +403,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                             $("#" + panel.divElement.id + "-selectedConceptSection").show();
                         }
 
-                        panel.setupParents(result, { conceptId: selectedId, defaultTerm: selectedLabel, definitionStatus: definitionStatus, module: selectedModule, descendantCount: descendantCount});
+                        panel.setupParents(result, { conceptId: selectedId, defaultTerm: selectedLabel, definitionStatus: definitionStatus, module: selectedModule, descendantCount: descendantCount, fsn: fsn, pt: pt});
                     }).fail(function() {});
                 }
             }
@@ -605,9 +607,9 @@ function taxonomyPanel(divElement, conceptId, options) {
                     }
                     parentLiHtml = parentLiHtml + " treeButton'  id='" + panel.divElement.id + "-treeicon-" + parent.conceptId + "'></i></button>";
                     if (parent.definitionStatus == "PRIMITIVE") {
-                        parentLiHtml = parentLiHtml + '<span class="badge alert-warning" data-concept-id="' + parent.conceptId + '" data-term="' + parent.fsn.term + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&nbsp;&nbsp;</span>&nbsp;&nbsp;';
+                        parentLiHtml = parentLiHtml + '<span class="badge alert-warning context-menu" data-concept-id="' + parent.conceptId + '" data-fsn="' + parent.fsn.term + '" data-preferred-term="' + parent.pt.term + '" data-term="' + parent.fsn.term + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&nbsp;&nbsp;</span>&nbsp;&nbsp;';
                     } else {
-                        parentLiHtml = parentLiHtml + '<span class="badge alert-warning" data-concept-id="' + parent.conceptId + '" data-term="' + parent.fsn.term + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&equiv;</span>&nbsp;&nbsp;';
+                        parentLiHtml = parentLiHtml + '<span class="badge alert-warning context-menu" data-concept-id="' + parent.conceptId + '" data-fsn="' + parent.fsn.term + '" data-preferred-term="' + parent.pt.term + '" data-term="' + parent.fsn.term + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&equiv;</span>&nbsp;&nbsp;';
                     }
                     if (countryIcons[parent.module]) {
                         parentLiHtml = parentLiHtml + "<div class='phoca-flagbox' style='width:33px;height:33px'><span class='phoca-flag " + countryIcons[parent.module] + "'></span></div> ";
@@ -741,10 +743,10 @@ function taxonomyPanel(divElement, conceptId, options) {
                         $("#" + panel.divElement.id + "-selectedConceptSection").show();
                     }
                     
-                    panel.setupParents(result, { conceptId: conceptId, defaultTerm: res.defaultTerm, definitionStatus: res.definitionStatus, module: module, descendantCount: res.descendantCount });
+                    panel.setupParents(result, { conceptId: conceptId, defaultTerm: res.defaultTerm, definitionStatus: res.definitionStatus, module: module, descendantCount: res.descendantCount, fsn: res.fsn, pt: res.pt });
                 });
             } else {
-                panel.setupParents(result, { conceptId: conceptId, defaultTerm: term, definitionStatus: definitionStatus, module: module, descendantCount: descendantCount });
+                panel.setupParents(result, { conceptId: conceptId, defaultTerm: term, definitionStatus: definitionStatus, module: module, descendantCount: descendantCount, fsn: res.fsn, pt: res.pt });
             }
         }).fail(function() {
             $("#" + panel.divElement.id + "-panelBody").html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");

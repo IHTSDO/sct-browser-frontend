@@ -714,7 +714,9 @@ function conceptDetails(divElement, conceptId, options) {
                     module: firstMatch.module,
                     conceptId: firstMatch.conceptId,
                     defaultTerm: firstMatch.defaultTerm,
-                    definitionStatus: firstMatch.definitionStatus
+                    definitionStatus: firstMatch.definitionStatus,
+                    fsn: firstMatch.fsn,
+                    pt: firstMatch.pt
                 };
                 if ($(e.target).hasClass("glyphicon-star")) {
                     var favs = stringToArray(localStorage.getItem("favs")),
@@ -1557,6 +1559,8 @@ function conceptDetails(divElement, conceptId, options) {
 
                                         item.definitionStatus = concept.definitionStatus;
                                         item.defaultTerm = concept.pt ? concept.pt.term : concept.fsn.term;
+                                        item.pt = concept.pt;
+                                        item.fsn = concept.fsn;
                                         item.module = concept.moduleId;
                                         item.effectiveTime = concept.effectiveTime;
                                         item.conceptId = concept.conceptId;

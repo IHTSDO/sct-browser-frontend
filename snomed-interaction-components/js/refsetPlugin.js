@@ -82,6 +82,8 @@ function refsetPanel(divElement, options) {
             refsetItem.module = data.referenceSets[key].moduleId;
             refsetItem.conceptId = key;
             refsetItem.defaultTerm = data.referenceSets[key].fsn.term;
+            refsetItem.fsn = data.referenceSets[key].fsn;
+            refsetItem.pt = data.referenceSets[key].pt;
             refsetItem.count = data.memberCountsByReferenceSet[key];
             refsetItem.type = data.referenceSets[key].referenceSetType.pt.term;
             refsetItem.definitionStatus = data.referenceSets[key].definitionStatus;
