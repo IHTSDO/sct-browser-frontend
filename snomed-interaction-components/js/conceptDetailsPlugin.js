@@ -1967,9 +1967,9 @@ function conceptDetails(divElement, conceptId, options) {
                             auxHtml = auxHtml + "<i class='glyphicon glyphicon-chevron-right treeButton' data-ind='" + ind + "'></i></button>";
                         }
                         if (field.definitionStatus == "PRIMITIVE") {
-                            auxHtml = auxHtml + "<span class='badge alert-warning context-menu' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "' data-fsn='" + field.fsn.term + "' data-preffered-term='" + field.pt.term + "'>&nbsp;&nbsp;</span>&nbsp;&nbsp";
+                            auxHtml = auxHtml + "<span class='badge alert-warning context-menu' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "' data-fsn='" + field.fsn.term + "' data-preferred-term='" + field.pt.term + "'>&nbsp;&nbsp;</span>&nbsp;&nbsp";
                         } else {
-                            auxHtml = auxHtml + "<span class='badge alert-warning context-menu' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "' data-fsn='" + field.fsn.term + "' data-preffered-term='" + field.pt.term + "'>&equiv;</span>&nbsp;&nbsp";
+                            auxHtml = auxHtml + "<span class='badge alert-warning context-menu' draggable='true' ondragstart='drag(event)' data-module='" + field.moduleId + "' data-concept-id='" + field.conceptId + "' data-term='" + field.defaultTerm + "' data-fsn='" + field.fsn.term + "' data-preferred-term='" + field.pt.term + "'>&equiv;</span>&nbsp;&nbsp";
                         }
                         if (countryIcons[field.moduleId]) {
                             auxHtml = auxHtml + "<div class='phoca-flagbox' style='width:20px;height:20px'><span class='phoca-flag " + countryIcons[field.moduleId] + "'></span></div>&nbsp";

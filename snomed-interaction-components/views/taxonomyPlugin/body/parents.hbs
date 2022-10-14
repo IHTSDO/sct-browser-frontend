@@ -6,9 +6,9 @@
                     <i class='glyphicon glyphicon-chevron-{{#if_def conceptId}}down{{else}}up{{/if_def}} treeButton' id='{{../divElementId}}-treeicon-{{conceptId}}'></i>
                 </button>
                 {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" draggable="true" ondragstart="drag(event, '{{divElementId}}')">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" draggable="true" ondragstart="drag(event, '{{divElementId}}')">&nbsp;&nbsp;</span>&nbsp;&nbsp;
                 {{else}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" draggable="true" ondragstart="drag(event, '{{divElementId}}')">&equiv;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" draggable="true" ondragstart="drag(event, '{{divElementId}}')">&equiv;</span>&nbsp;&nbsp;
                 {{/if_eq}}
                 {{#hasCountryIcon module}}
                     <div class="phoca-flagbox" style="width:33px;height:33px">
@@ -16,7 +16,7 @@
                     </div>
                 {{/hasCountryIcon}}
                 <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
-                    <span data-module="{{module}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" data-definition-status="{{definitionStatus}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-descendants="{{descendantCount}}" class="treeLabel selectable-row" id="{{../divElementId}}-treenode-{{conceptId}}">{{defaultTerm}}</span>
+                    <span data-module="{{module}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" data-definition-status="{{definitionStatus}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-descendants="{{descendantCount}}" class="treeLabel selectable-row" id="{{../divElementId}}-treenode-{{conceptId}}">{{defaultTerm}}</span>
                 </a>
         {{/each}}
         {{#if_gr parents.length 0}}
@@ -26,9 +26,9 @@
             <li data-definition-status="{{focusConcept.definitionStatus}}" data-module="{{focusConcept.module}}" data-concept-id='{{focusConcept.conceptId}}' data-term='{{focusConcept.defaultTerm}}' data-statedDescendants='{{focusConcept.statedDescendants}}' class='treeLabel'>
                 <button class='btn btn-link btn-xs treeButton' style='padding:2px'><i class='glyphicon glyphicon-chevron-right treeButton'  id='{{divElementId}}-treeicon-{{focusConcept.conceptId}}'></i></button>
                 {{#if_eq focusConcept.definitionStatus "PRIMITIVE"}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{focusConcept.fsn.term}}" data-preffered-term="{{focusConcept.pt.term}}" draggable="true" ondragstart="drag(event, '{{divElementId}}')" data-definition-status="{{focusConcept.definitionStatus}}" data-module="{{focusConcept.module}}" data-concept-id="{{focusConcept.conceptId}}" data-term="{{focusConcept.defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{focusConcept.fsn.term}}" data-preferred-term="{{focusConcept.pt.term}}" draggable="true" ondragstart="drag(event, '{{divElementId}}')" data-definition-status="{{focusConcept.definitionStatus}}" data-module="{{focusConcept.module}}" data-concept-id="{{focusConcept.conceptId}}" data-term="{{focusConcept.defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
                 {{else}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{focusConcept.fsn.term}}" data-preffered-term="{{focusConcept.pt.term}}" draggable="true" ondragstart="drag(event, '{{divElementId}}')" data-definition-status="{{focusConcept.definitionStatus}}" data-module="{{focusConcept.module}}" data-concept-id="{{focusConcept.conceptId}}" data-term="{{focusConcept.defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{focusConcept.fsn.term}}" data-preferred-term="{{focusConcept.pt.term}}" draggable="true" ondragstart="drag(event, '{{divElementId}}')" data-definition-status="{{focusConcept.definitionStatus}}" data-module="{{focusConcept.module}}" data-concept-id="{{focusConcept.conceptId}}" data-term="{{focusConcept.defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
                 {{/if_eq}}
                 {{#hasCountryIcon focusConcept.module}}
                     <div class="phoca-flagbox" style="width:33px;height:33px">
@@ -36,7 +36,7 @@
                     </div>
                 {{/hasCountryIcon}}
                 <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
-                    <span draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-fsn="{{focusConcept.fsn.term}}" data-preffered-term="{{focusConcept.pt.term}}" data-definition-status="{{focusConcept.definitionStatus}}" data-module="{{focusConcept.module}}" data-concept-id="{{focusConcept.conceptId}}" data-term="{{focusConcept.defaultTerm}}" data-descendants="{{focusConcept.descendantCount}}" class="treeLabel selectable-row" id="{{divElementId}}-treenode-{{focusConcept.conceptId}}">{{focusConcept.defaultTerm}}</span>
+                    <span draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-fsn="{{focusConcept.fsn.term}}" data-preferred-term="{{focusConcept.pt.term}}" data-definition-status="{{focusConcept.definitionStatus}}" data-module="{{focusConcept.module}}" data-concept-id="{{focusConcept.conceptId}}" data-term="{{focusConcept.defaultTerm}}" data-descendants="{{focusConcept.descendantCount}}" class="treeLabel selectable-row" id="{{divElementId}}-treenode-{{focusConcept.conceptId}}">{{focusConcept.defaultTerm}}</span>
                 </a>
             </li>
         </ul>

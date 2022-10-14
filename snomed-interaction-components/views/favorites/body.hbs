@@ -30,7 +30,7 @@
                         <td>
                             {{#if_eq definitionStatus "FULLY_DEFINED"}}
                                 <a class="fav-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
-                                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&equiv;</span>
+                                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&equiv;</span>
                                     {{#hasCountryIcon module}}
                                         <div class="phoca-flagbox" style="width:22px;height:22px">
                                             <span class="phoca-flag {{countryIcon module}}"></span>
@@ -43,7 +43,7 @@
                                 </a>
                             {{else}}
                                 <a class="fav-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
-                                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&nbsp;&nbsp;</span>
+                                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}'>&nbsp;&nbsp;</span>
                                     {{#hasCountryIcon module}}
                                         <div class="phoca-flagbox" style="width:22px;height:22px">
                                             <span class="phoca-flag {{countryIcon module}}"></span>

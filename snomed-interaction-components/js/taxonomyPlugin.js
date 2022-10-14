@@ -370,7 +370,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var selectedLabel = $(event.target).attr('data-term');
                 var definitionStatus = $(event.target).attr('data-definition-status');
                 var fsn = {'term' : $(event.target).attr('data-fsn')};
-                var pt = {'term': $(event.target).attr('data-preffered-term')};                
+                var pt = {'term': $(event.target).attr('data-preferred-term')};                
 
                 panel.history.push({ term: selectedLabel, conceptId: selectedId, time: time });
                 panel.default.conceptId = selectedId;

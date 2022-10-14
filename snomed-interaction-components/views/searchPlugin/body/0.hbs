@@ -3,9 +3,9 @@
         <td class='col-md-7'>
             <div class='result-item' data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
                 {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
                 {{else}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&equiv;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&equiv;</span>&nbsp;&nbsp;
                 {{/if_eq}}
                 {{#hasCountryIcon moduleId}}
                     <div class="phoca-flagbox" style="width:20px;height:20px">

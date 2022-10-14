@@ -405,7 +405,7 @@ function registerContextMenu(options) {
         callback: function(key, opt) {            
             var conceptId = $($(opt.$trigger)[0]).attr('data-concept-id');
             var fsn = $($(opt.$trigger)[0]).attr('data-fsn');
-            var prefferedTerm = $($(opt.$trigger)[0]).attr('data-preffered-term');
+            var prefferedTerm = $($(opt.$trigger)[0]).attr('data-preferred-term');
 
             var text = '';
             if (key === 'copyConceptId') {

@@ -6,9 +6,9 @@
                     <i class='glyphicon glyphicon-{{#if_eq ../../selectedView "inferred"}}{{#if_eq isLeafInferred true}}minus{{else}}chevron-right{{/if_eq}}{{else}}{{#if_eq isLeafStated true}}minus{{else}}chevron-right{{/if_eq}}{{/if_eq}} treeButton' id='{{../../divElementId}}-treeicon-{{conceptId}}'></i>
                 </button>
                 {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
                 {{else}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
+                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}">&equiv;</span>&nbsp;&nbsp;
                 {{/if_eq}}
                 {{#hasCountryIcon module}}
                     <div class="phoca-flagbox" style="width:20px;height:20px">
@@ -16,7 +16,7 @@
                     </div>&nbsp;
                 {{/hasCountryIcon}}
                 <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;">
-                    <span class="treeLabel selectable-row" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-fsn="{{fsn.term}}" data-preffered-term="{{pt.term}}" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-descendants="{{descendantCount}}" id="{{../../divElementId}}-treenode-{{conceptId}}">{{defaultTerm}}</span>
+                    <span class="treeLabel selectable-row" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" data-definition-status="{{definitionStatus}}" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-descendants="{{descendantCount}}" id="{{../../divElementId}}-treenode-{{conceptId}}">{{defaultTerm}}</span>
                 </a>
                 {{push conceptId}}
             </li>
