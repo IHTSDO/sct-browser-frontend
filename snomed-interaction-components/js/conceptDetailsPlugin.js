@@ -1575,6 +1575,8 @@ function conceptDetails(divElement, conceptId, options) {
                                         item.module = concept.moduleId;
                                         item.effectiveTime = concept.effectiveTime;
                                         item.conceptId = concept.conceptId;
+                                        item.pt = concept.pt;
+                                        item.fsn = concept.fsn;
 
                                         var cidConcept = conceptsMap[item.otherValue];
                                         var cidValue = {};
@@ -1582,6 +1584,8 @@ function conceptDetails(divElement, conceptId, options) {
                                         cidValue.defaultTerm =  cidConcept.pt ? cidConcept.pt.term : cidConcept.fsn.term;
                                         cidValue.conceptId = cidConcept.conceptId;
                                         cidValue.definitionStatus = cidConcept.definitionStatus;
+                                        cidValue.fsn = cidConcept.fsn;
+                                        cidValue.pt = cidConcept.pt;
 
                                         item.cidValue = cidValue;
                                     });
