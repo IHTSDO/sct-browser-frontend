@@ -894,23 +894,40 @@ function searchPanel(divElement, options) {
                     panel.search(t, parseInt(skipTo), returnLimit, true, true);
                 });
 
-                var tempResults = {};
-                tempResults.matches = [];
-                tempResults.matches.push(result);
-                var context = {
-                    result: tempResults
-                };
-                $('#' + panel.divElement.id + '-resultsTable').html(JST["snomed-interaction-components/views/searchPlugin/body/1.hbs"](context));
-                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
-                $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
-                    channel.publish(panel.divElement.id, {
-                        term: $(event.target).attr('data-term'),
-                        module: $(event.target).attr("data-module"),
-                        conceptId: $(event.target).attr('data-concept-id'),
-                        source: panel.divElement.id,
-                        showConcept: true
-                    });
+                $.ajax({
+                    url: options.serverUrl + "/" + branch + "/concepts/" + result.conceptId,
+                    type: "GET",
+                    beforeSend: function(xhr){
+                        if(!options.serverUrl.includes('snowowl')){
+                        xhr.setRequestHeader('Accept-Language', options.languages);
+                        };
+                    },
+                    success: function(concept) {
+                        result.fsn = concept.fsn;
+                        result.pt = concept.pt;
+                        result.definitionStatus = concept.definitionStatus;
+                        
+                        var tempResults = {};
+                        tempResults.matches = [];
+                        tempResults.matches.push(result);
+                        var context = {
+                            result: tempResults
+                        };
+                        $('#' + panel.divElement.id + '-resultsTable').html(JST["snomed-interaction-components/views/searchPlugin/body/1.hbs"](context));
+                        $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
+                        $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
+                            channel.publish(panel.divElement.id, {
+                                term: $(event.target).attr('data-term'),
+                                module: $(event.target).attr("data-module"),
+                                conceptId: $(event.target).attr('data-concept-id'),
+                                source: panel.divElement.id,
+                                showConcept: true
+                            });
+                        });
+                    }
                 });
+
+                
                 xhr = null;
             },
             error: function(error) {
