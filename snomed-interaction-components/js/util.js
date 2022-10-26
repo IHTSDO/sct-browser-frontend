@@ -417,7 +417,7 @@ function registerContextMenu(options) {
             } else if (key === 'copyPreferredTermAndConceptId') {
                 text = conceptId + ' |' + prefferedTerm + '|';
             } else if (key === 'copyLinkToShare') {
-                text = document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + conceptId + "&edition=" + (options.publicBrowser ? options.edition.substring(0, options.edition.lastIndexOf('/')) : options.edition) + "&release=" + options.release + "&languages=" + options.languages; 
+                text = document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + conceptId + "&edition=" + (options.publicBrowser ? options.edition.substring(0, options.edition.lastIndexOf('/')) : options.edition) + "&release=" + options.release + "&languages=" + options.languages + (typeof options.latestRedirect !== 'undefined' && !options.publicBrowser ? '&latestRedirect=' + options.latestRedirect : ''); 
             }
              
             var textArea = document.createElement("textarea");
