@@ -1192,6 +1192,7 @@ function searchPanel(divElement, options) {
             result.matches = resDescriptions;
             result.matches.forEach(function(match) {
                 match.fsn = match.concept.fsn;
+                match.pt = match.concept.pt;
                 match.conceptActive = match.concept.active;
                 match.conceptId = match.concept.conceptId;
                 match.definitionStatus = match.concept.definitionStatus;

@@ -12,12 +12,12 @@
                 <td class='col-md-6'>
                     <div class='result-item' data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{term}}' data-branch='{{branch}}'>
                         {{#if_eq definitionStatus "PRIMITIVE"}}
-                            <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}" data-branch='{{branch}}'>&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                            <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}" data-branch='{{branch}}'>&nbsp;&nbsp;</span>&nbsp;&nbsp;
                             {{else}}
                               {{#if_eq definitionStatus "900000000000074008"}}
-                                  <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}" data-branch='{{branch}}'>&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                                  <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}" data-branch='{{branch}}'>&nbsp;&nbsp;</span>&nbsp;&nbsp;
                                 {{else}}
-                                  <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}" data-branch='{{branch}}'>&equiv;</span>&nbsp;&nbsp;
+                                  <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{term}}" data-branch='{{branch}}'>&equiv;</span>&nbsp;&nbsp;
                                 {{/if_eq}}
                             {{/if_eq}}
                         {{#hasCountryIcon module}}
