@@ -593,8 +593,7 @@ function conceptDetails(divElement, conceptId, options) {
                 langRefset: panel.options.languages,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : ''),
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
-                showIssueCollector: panel.options.communityBrowser || options.edition.startsWith('MAIN/SNOMEDCT-SE') || options.edition.startsWith('MAIN/SNOMEDCT-NZ'),
-                issueCollectorButtonText: options.edition.startsWith('MAIN/SNOMEDCT-SE') ? 'Skicka synonymförslag' : 'Submit Feedback'
+                showIssueCollector: panel.options.communityBrowser || options.edition.startsWith('MAIN/SNOMEDCT-SE') || options.edition.startsWith('MAIN/SNOMEDCT-NZ')
             };
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             

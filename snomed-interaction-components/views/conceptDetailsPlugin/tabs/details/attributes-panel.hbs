@@ -70,13 +70,10 @@
             </span>
             {{#if showIssueCollector}}
                 <span class="pull-right">
-                    <div class="dropdown">
-                        <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenu1-details" data-toggle="dropdown" aria-expanded="true">
-                            <i class="glyphicon glyphicon-plus-sign pull-right" id="{{divElementId}}-addsyn-icon-details"></i>
+                    <div>
+                        <button class="btn btn-primary" type="button" id="{{divElementId}}-addsyn-sctid-details"aria-expanded="true">
+                            <span data-i18n-id="i18n_concept_feedback" class="i18n">{{i18n "i18n_concept_feedback" "Concept Feedback"}}</span>
                         </button>
-                        <ul class="dropdown-menu small pull-right" role="menu" aria-labelledby="dropdownMenu2-details">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" id="{{divElementId}}-addsyn-sctid-details">{{issueCollectorButtonText}}</a></li>
-                        </ul>
                     </div>
                 </span>
             {{/if}}
