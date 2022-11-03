@@ -604,7 +604,16 @@ function conceptDetails(divElement, conceptId, options) {
                 $("#" + panel.divElement.id + "-descendantInfor").hide();
             }          
 
-            if (context.showIssueCollector) {               
+            if (context.showIssueCollector) {
+                if (options.edition.startsWith('MAIN/SNOMEDCT-SE')) {
+                    $("#" + panel.divElement.id + "-addsyn-sctid-details").tooltip({
+                        placement: 'bottom',
+                        trigger: 'hover',
+                        title: 'Skicka synonymförslag',
+                        animation: true,
+                        delay: 1000
+                    });
+                }                               
                 
                 if( $('#' + panel.divElement.id + '-issues-collector').length != 0) {
                     $('#' + panel.divElement.id + '-issues-collector').remove();                   
