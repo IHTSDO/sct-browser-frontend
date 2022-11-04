@@ -593,7 +593,9 @@ function conceptDetails(divElement, conceptId, options) {
                 langRefset: panel.options.languages,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : ''),
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
-                showIssueCollector: panel.options.communityBrowser || options.edition.startsWith('MAIN/SNOMEDCT-SE') || options.edition.startsWith('MAIN/SNOMEDCT-NZ')
+                showIssueCollector: panel.options.communityBrowser || (panel.options.publicBrowser && (options.edition.startsWith('MAIN/SNOMEDCT-SE') 
+                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-NZ') 
+                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-BE')))
             };
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
@@ -626,18 +628,23 @@ function conceptDetails(divElement, conceptId, options) {
                 var firstChildAfterBody = document.body.firstChild;
                 firstChildAfterBody.parentNode.insertBefore(issueCollectorFrame, firstChildAfterBody);
                 var issueCollectorUrl;
-                if (options.edition.startsWith('MAIN/SNOMEDCT-SE')) {
-                    issueCollectorUrl = 'https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164';
-                } else if (options.edition.startsWith('MAIN/SNOMEDCT-NZ')) {
-                    issueCollectorUrl = 'https://jira.ihtsdotools.org/s/373e93f7c4bfcd2355dbf6c3bc2becfc-T/xqix14/813006/fe47b4489ac981edbb824b5107716c37/4.0.4/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-UK&collectorId=1afa7237';
+                if (panel.options.publicBrowser) {
+                    if (options.edition.startsWith('MAIN/SNOMEDCT-SE')) {
+                        issueCollectorUrl = 'https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164';
+                    } else if (options.edition.startsWith('MAIN/SNOMEDCT-NZ')) {
+                        issueCollectorUrl = 'https://jira.ihtsdotools.org/s/373e93f7c4bfcd2355dbf6c3bc2becfc-T/xqix14/813006/fe47b4489ac981edbb824b5107716c37/4.0.4/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-UK&collectorId=1afa7237';
+                    } else if (options.edition.startsWith('MAIN/SNOMEDCT-BE')) {
+                        issueCollectorUrl = 'https://jira.ihtsdotools.org/s/373e93f7c4bfcd2355dbf6c3bc2becfc-T/xqix14/813106/fe47b4489ac981edbb824b5107716c37/4.0.4/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-UK&collectorId=a9d37267';
+                    }
                 } else {
                     issueCollectorUrl = 'https://jira.ihtsdotools.org/s/de395333f61d94e8d9c1df353d370114-T/-xa03ko/802005/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=8a01cd8f';
                 }
+                
                 var context = {                    
                     firstMatch: firstMatch,
                     divElementId: panel.divElement.id,
                     frameId: panel.divElement.id + '-issues-collector',
-                    summary: (options.edition.startsWith('MAIN/SNOMEDCT-SE') ? 'Förslag på synonymer för begreppet: ' + firstMatch.conceptId : 'Feedback For Concept: ' + firstMatch.defaultTerm + " | " + firstMatch.conceptId),
+                    summary: (panel.options.publicBrowser && options.edition.startsWith('MAIN/SNOMEDCT-SE') ? 'Förslag på synonymer för begreppet: ' + firstMatch.conceptId : 'Feedback For Concept: ' + firstMatch.defaultTerm + " | " + firstMatch.conceptId),
                     issueCollectorUrl: issueCollectorUrl
                 };
                 
