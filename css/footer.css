@@ -1,0 +1,25 @@
+#footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    /*background-color: rgb(33,37,41);*/
+    /*color: white;*/
+}
+
+a.footer-link {
+    line-height: 40px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 400;
+    /*color: rgb(200,207,214);*/
+    color: grey;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+}
+
+a.footer-link:hover {
+    color: #49a8db;
+}
