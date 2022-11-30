@@ -1,5 +1,11 @@
-IHTSDO Browser Frontend
-=======================
+# Browser Frontend by SNOMED International
+
+![Last Commit](https://img.shields.io/github/last-commit/ihtsdo/sct-browser-frontend/develop)
+![Issues](https://img.shields.io/github/issues/ihtsdo/sct-browser-frontend)
+![Contributors](https://img.shields.io/github/contributors/ihtsdo/sct-browser-frontend)
+
+![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+![GitHub commit activity the past year](https://img.shields.io/github/commit-activity/m/ihtsdo/sct-browser-frontend/develop)
 
 This is a generic browser front end project, specific instances used in the IHTSDO browsers are customized in branches of this project.
 
@@ -74,7 +80,7 @@ The Grunt default task will create all these components, running `grunt` in the 
 Run locally
 -----------
 
-In order to obtain api-endpoint information within the local environment, a configuration similar to the following should be used: 
+In order to obtain api-endpoint information within the local environment, a configuration similar to the following should be used:
 
 ```
 user 'details here';
