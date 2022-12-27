@@ -873,6 +873,10 @@
                             options.modules = release.modules;
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                             options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
+                            
+                            if (currentPerspective == "home") {
+                                currentPerspective = "full";
+                            }
 
                             reloadCurrentPerspective();
 
@@ -920,6 +924,10 @@
                                 options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                                 var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
                                 QueryString = queryString();
+
+                                if (currentPerspective == "home") {
+                                    currentPerspective = "full";
+                                }
 
                                 if (QueryString.conceptId1) {
                                     var checkConceptExist = function(conceptId) {
@@ -1010,6 +1018,9 @@
                     var $a = $('<a>').append(version.version);
                     $a.attr("href", "javascript:void(0);");
                     $a.on("click", function() {
+                        if (currentPerspective == "home") {
+                            currentPerspective = "full";
+                        }
                         options.edition = version.branchPath;
                         $("#versionLabel").html(version.version);
                         reloadCurrentPerspective();
