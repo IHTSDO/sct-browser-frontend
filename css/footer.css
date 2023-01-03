@@ -4,8 +4,8 @@
     bottom: 0;
     left: 0;
     height: 40px;
-    /*background-color: rgb(33,37,41);*/
-    /*color: white;*/
+    background-color: rgb(248,248,248);
+    border-top: solid 1px rgb(220,220,220);
 }
 
 a.footer-link {
@@ -13,7 +13,6 @@ a.footer-link {
     padding: 10px;
     font-size: 12px;
     font-weight: 400;
-    /*color: rgb(200,207,214);*/
     color: grey;
     text-decoration: none;
     letter-spacing: 0.5px;
@@ -22,4 +21,16 @@ a.footer-link {
 
 a.footer-link:hover {
     color: #49a8db;
+}
+
+a.footer-link.inactive {
+    cursor: default;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0 10px 0 0;
+}
+
+a.footer-link.inactive:hover {
+    color: grey;
 }
