@@ -113,7 +113,7 @@ function searchPanel(divElement, options) {
                     return opts.inverse(this);
             }
         });
-        $(divElement).html(JST["snomed-interaction-components/views/searchPlugin/aux.hbs"](context));
+        $(divElement).html(JST["snomed-interaction-components/views/searchPlugin/auxiliar.hbs"](context));
 
         $('#' + panel.divElement.id + '-searchBox').keyup(function() {
             clearTimeout(thread);
