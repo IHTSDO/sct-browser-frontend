@@ -595,7 +595,8 @@ function conceptDetails(divElement, conceptId, options) {
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
                 showIssueCollector: panel.options.communityBrowser || (panel.options.publicBrowser && (options.edition.startsWith('MAIN/SNOMEDCT-SE') 
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-NZ') 
-                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-BE')))
+                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-BE')
+                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-DK')))
             };
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
             
@@ -635,6 +636,8 @@ function conceptDetails(divElement, conceptId, options) {
                         issueCollectorUrl = 'https://jira.ihtsdotools.org/s/373e93f7c4bfcd2355dbf6c3bc2becfc-T/xqix14/813006/fe47b4489ac981edbb824b5107716c37/4.0.4/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-UK&collectorId=1afa7237';
                     } else if (options.edition.startsWith('MAIN/SNOMEDCT-BE')) {
                         issueCollectorUrl = 'https://jira.ihtsdotools.org/plugins/servlet/issueCollectorBootstrap.js?collectorId=a9d37267&locale=en';
+                    } else if (options.edition.startsWith('MAIN/SNOMEDCT-DK')) {
+                        issueCollectorUrl = 'https://jira.ihtsdotools.org/plugins/servlet/issueCollectorBootstrap.js?collectorId=c4c3a865&locale=en ';
                     }
                 } else {
                     issueCollectorUrl = 'https://jira.ihtsdotools.org/s/de395333f61d94e8d9c1df353d370114-T/-xa03ko/802005/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=8a01cd8f';
