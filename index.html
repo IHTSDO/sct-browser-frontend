@@ -277,8 +277,8 @@
                     if (options.publicBrowser) {
                         addEditionLinks($('#international_editions'), internationalReleases);
                         addEditionLinks($('#local_editions'), localReleases);
-                        addStatsLinks($('#international_stats'), internationalReleases);
-                        addMrcmLink($('#international_mrcm'), internationalReleases);
+                        addStatsLinks($('#international_tools'), internationalReleases);
+                        addMrcmLink($('#international_tools'), internationalReleases);
                     } else if (options.previewBrowser) {
                         addEditionLinks($('#preview_editions'), internationalReleases);
                         addMrcmLink($('#preview_mrcm'), internationalReleases);
@@ -387,8 +387,8 @@
                         if (response && response.internationalReleases && response.localReleases) {
                             addEditionLinks($('#international_editions'), response.internationalReleases);
                             addEditionLinks($('#local_editions'), response.localReleases);
-                            addStatsLinks($('#international_stats'), response.internationalReleases);
-                            addMrcmLink($('#international_mrcm'), response.internationalReleases);
+                            addStatsLinks($('#international_tools'), response.internationalReleases);
+                            addMrcmLink($('#international_tools'), response.internationalReleases);
                         }
                     }
                     $('#edition-selector').css('display', 'block');
@@ -426,8 +426,9 @@
                     var $span1 = $('<span>');
                     var $span2 = $('<span>');
                     $span1.text("Release Stats");
-                    $span2.attr("class", "glyphicon glyphicon-signal").attr("style", "margin-left : 5px;");;
-                    var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -8px; width:165px; margin-bottom:10px;");
+                    $span1.attr("style", "margin-left:15px;");
+                    $span2.attr("class", "glyphicon glyphicon-signal").attr("style", "top: 30px; left: -50px; font-size: 18px;");
+                    var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "height:81px; width:165px; margin-bottom:10px;");
                     $a.append($span1);
                     $a.append($span2);
                     $a.attr("href", '/qa');
@@ -445,11 +446,13 @@
                     var $span1 = $('<span>');
                     var $span2 = $('<span>');
                     $span1.text("MRCM Browser");
+                    $span1.attr("style", "margin-left:15px;");
                     if (options.previewBrowser) {
-                        var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -6px; width:253px; margin-bottom:10px;");
+                        var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "height:81px; width:253px; margin-bottom:10px;");
                     } else {
-                        var $a = $('<a>').attr("class", "btn btn-primary").attr("role", "button").attr("style", "margin-top : -6px; width:165px; margin-bottom:10px;");
+                        var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "height:81px; width:165px; margin-bottom:10px;");
                     }
+                    $span2.attr("class", "glyphicon glyphicon-tasks").attr("style", "top: 30px; left: -70px; font-size: 18px;");
                     $a.append($span1);
                     $a.append($span2);
                     $a.attr("href", '/mrcm');
@@ -2287,10 +2290,17 @@
                 <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
                 <p class="i18n" data-i18n-id="i18n_home9">This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong></p>
-                <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
-                <p id="international_editions" style="margin-bottom : 0px"></p>
-                <p id="international_stats" style="margin-bottom : 0px"></p>
-                <p id="international_mrcm" style="margin-bottom : 0px"></p>
+                
+                <div class="row">
+                  <div class="col-s-6" style="margin-left:15px;">
+                    <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
+                    <div id="international_editions" style="margin-bottom : 0px;"></div>
+                  </div>
+                  <div class="col-s-6" style="margin-left: 523px; margin-top: -150px;">
+                      <h2><span class="i18n" data-i18n-id="i18n_international_tools">Other Tools</span></h2>
+                      <div id="international_tools" style="margin-bottom : 0px"></div>
+                  </div>
+                </div>
                 <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
                 <p id="local_editions" style="margin-bottom : 0px"></p>
                 <p id="multi-extension-search" style="display: none;">
