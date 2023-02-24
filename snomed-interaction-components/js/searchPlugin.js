@@ -793,18 +793,24 @@ function searchPanel(divElement, options) {
                     if (field.active) {
                         if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
                             if ((aux.term === result.pt.term || (panel.options.typeSearchFilter === 'fsn' && aux.term === result.fsn.term)) && aux.lang == result.pt.lang) {
-                                if (panel.options.statusSearchFilter == "activeOnly" || panel.options.statusSearchFilter == "activeAndInactive") {
+                                if (panel.options.statusSearchFilter == "activeOnly" 
+                                    || panel.options.statusSearchFilter == "activeAndInactive"
+                                    || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
                                     resDescriptions.push(aux);
                                 }                                
                             }                             
                         } 
                         else {
-                            if (panel.options.statusSearchFilter == "activeOnly" || panel.options.statusSearchFilter == "activeAndInactive") {
+                            if (panel.options.statusSearchFilter == "activeOnly" 
+                                || panel.options.statusSearchFilter == "activeAndInactive"
+                                || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
                                 resDescriptions.push(aux);
                             }
                         }                                        
                     } else {
-                        if (panel.options.statusSearchFilter == "inactiveOnly" || panel.options.statusSearchFilter == "activeAndInactive") {
+                        if (panel.options.statusSearchFilter == "inactiveOnly" 
+                            || panel.options.statusSearchFilter == "activeAndInactive"
+                            || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
                             resDescriptions.push(aux);
                         }
                     }
