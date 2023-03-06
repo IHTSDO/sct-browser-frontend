@@ -410,7 +410,7 @@ function drawConceptDiagram (concept, div, options, panel) {
     if(!options.serverUrl.includes('snowowl')){
         $.ajaxSetup({
         headers : {
-            'Accept-Language': options.languages
+            'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
         }
         });
     };

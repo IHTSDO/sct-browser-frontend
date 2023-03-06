@@ -1408,7 +1408,7 @@ function conceptDetails(divElement, conceptId, options) {
         };
         $.ajaxSetup({
             headers : {
-                'Accept-Language': options.languages
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
             }
         });
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + concept.conceptId + "/history?showFutureVersions=false", function(result) {              
@@ -1745,8 +1745,7 @@ function conceptDetails(divElement, conceptId, options) {
 
     }
 
-    this.getChildren = function(conceptId, forceShow, historyBranch, childrenExpand) {
-        console.log('forceShow :' + forceShow);
+    this.getChildren = function(conceptId, forceShow, historyBranch, childrenExpand) {        
         if (typeof panel.options.selectedView == "undefined") {
             panel.options.selectedView = "inferred";
         }
@@ -1774,7 +1773,7 @@ function conceptDetails(divElement, conceptId, options) {
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
-                'Accept-Language': options.languages
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
               }
             });
         };
@@ -1945,7 +1944,7 @@ function conceptDetails(divElement, conceptId, options) {
         if(!options.serverUrl.includes('snowowl')){
            $.ajaxSetup({
               headers : {
-                'Accept-Language': options.languages
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
               }
             });
         };
@@ -2345,7 +2344,7 @@ function conceptDetails(divElement, conceptId, options) {
         if(!options.serverUrl.includes('snowowl')) {
             $.ajaxSetup({
                 headers : {
-                    'Accept-Language': options.languages
+                    'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
                 }
             });
         }
