@@ -134,6 +134,9 @@
                 let release = options.releases.items[i];
                 if (typeof release.latestVersion !== "undefined" && (release.latestVersion.branchPath === options.edition || release.branchPath === options.edition)) {
                     $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                    if (options.multiExtensionSearch) {
+                        options.edition = release.latestVersion.branchPath;
+                    }
                     break;
                 }                                       
             }            

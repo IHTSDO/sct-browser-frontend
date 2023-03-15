@@ -2671,8 +2671,24 @@ function conceptDetails(divElement, conceptId, options) {
                 
                 // apply for muilti search
                 if (data.branch && data.branch !== options.edition) {
-                    options.edition = data.branch;
-                    panel.options.edition = data.branch;
+                    var found = false;
+                    if (options.multiExtensionSearch) {
+                        for (var i = 0; i < options.releases.items.length; i++) {
+                            var release = options.releases.items[i];
+                            if (typeof release.latestVersion !== "undefined" && release.branchPath === data.branch) {
+                                options.edition = release.latestVersion.branchPath;
+                                panel.options.edition = release.latestVersion.branchPath;
+                                found = true;
+                                break;
+                            }                                       
+                        }
+                    }
+
+                    if (!found) {
+                        options.edition = data.branch;
+                        panel.options.edition = data.branch;
+                    }
+                    
                     panel.options.languageRefsets = [];
                     panel.options.defaultLanguageReferenceSets = []; 
                     panel.loadLanguageRefsets();
