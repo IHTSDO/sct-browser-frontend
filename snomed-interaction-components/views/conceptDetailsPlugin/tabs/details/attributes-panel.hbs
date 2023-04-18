@@ -35,6 +35,7 @@
             {{#each firstMatch.alternateIdentifiers}}{{#if active}}<div style="background-color: rgb(66, 139, 202);color: #fff;
             padding-left: 4px; padding-right: 4px; padding-top: 2px; padding-bottom: 2px;border: 1px solid darkgrey; border-radius: 4px; width: fit-content; display: inline; margin-left: 10px;">{{identifierScheme.pt.term}}: {{alternateIdentifier}}</div>{{/if}}{{/each}}
              <br>
+             <div style="padding-top: 10px">
             {{#if_eq firstMatch.definitionStatus "PRIMITIVE"}}
                 <span class='i18n' data-i18n-id='i18n_primitive'>PRIMITIVE</span><span>,</span>
             {{else}}
@@ -48,6 +49,7 @@
             {{/if_eq}}
 
             <span id="{{divElementId}}-descendantInfor"><span class='i18n' data-i18n-id='i18n_descendants_count'>{{i18n 'i18n_descendants_count' 'Descendants Count'}}</span>: <span id="{{divElementId}}-descendantCount"></span> <span class='i18n' data-i18n-id='i18n_concepts'>{{i18n 'i18n_concepts' 'concepts'}}</span>.</span>            
+            </div>
         </td>
         <td>
             <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="

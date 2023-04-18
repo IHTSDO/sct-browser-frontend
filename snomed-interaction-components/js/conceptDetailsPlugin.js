@@ -702,6 +702,14 @@ function conceptDetails(divElement, conceptId, options) {
                     return opts.inverse(this);
                 }
             });
+            Handlebars.registerHelper('if_gr', function(a, b, opts) {
+                if (a) {
+                    if (a > parseInt(b))
+                        return opts.fn(this);
+                    else
+                        return opts.inverse(this);
+                }
+            });
             var context = {
                 panel: panel,
                 firstMatch: firstMatch,
