@@ -48,7 +48,12 @@
     </span>
 </h4>
 
-<h5>SCTID: {{firstMatch.conceptId}}<br><br><div id="copy-content-custom">{{firstMatch.conceptId}} | 
+<h5><div class="row"><div class="col-md-5">SCTID: {{firstMatch.conceptId}}</div>
+    <div class="col-md-7" style="margin-top: -10px; padding-left: 0; padding-right: 10px;">
+        {{#each firstMatch.alternateIdentifiers}}{{#if active}}<div style="background-color: #fff;color: rgb(66, 139, 202);padding-top: 2px;
+            padding-left: 2px; padding-right: 2px;border: 1px solid darkgrey; border-radius: 4px; width: fit-content">{{identifierScheme.pt.term}}: {{alternateIdentifier}}</div>{{/if}}{{/each}}
+    </div></div>     
+    <br><div id="copy-content-custom">{{firstMatch.conceptId}} | 
     {{#if_undefined firstMatch.fsn.term}}
         {{firstMatch.fsn}}
     {{else}}

@@ -30,8 +30,11 @@
                 {{/if_undefined}}
                 </span>
             </h4>
-            <br>SCTID: {{firstMatch.conceptId}}<span>,</span>
-
+            <br>
+            SCTID: {{firstMatch.conceptId}}
+            {{#each firstMatch.alternateIdentifiers}}{{#if active}}<div style="background-color: rgb(66, 139, 202);color: #fff;
+            padding-left: 4px; padding-right: 4px; padding-top: 2px; padding-bottom: 2px;border: 1px solid darkgrey; border-radius: 4px; width: fit-content; display: inline; margin-left: 10px;">{{identifierScheme.pt.term}}: {{alternateIdentifier}}</div>{{/if}}{{/each}}
+             <br>
             {{#if_eq firstMatch.definitionStatus "PRIMITIVE"}}
                 <span class='i18n' data-i18n-id='i18n_primitive'>PRIMITIVE</span><span>,</span>
             {{else}}
