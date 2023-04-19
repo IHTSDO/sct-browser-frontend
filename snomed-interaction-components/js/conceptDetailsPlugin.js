@@ -710,6 +710,14 @@ function conceptDetails(divElement, conceptId, options) {
                         return opts.inverse(this);
                 }
             });
+            Handlebars.registerHelper("if_is_long_conceptId", function(conceptId, opts) {
+                var isLongConceptId = conceptId.slice(-3, -2) === '1';
+                if (isLongConceptId) {
+                    return opts.fn(this);
+                } else {
+                    return opts.inverse(this);
+                }
+            });
             var context = {
                 panel: panel,
                 firstMatch: firstMatch,
