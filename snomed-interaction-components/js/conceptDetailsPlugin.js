@@ -1648,6 +1648,14 @@ function conceptDetails(divElement, conceptId, options) {
                             };
 
                             $('#refsets-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/refset.hbs"](context));
+                            $('#refsets-' + panel.divElement.id).find(".association-refset-item").unbind();
+                            $('#refsets-' + panel.divElement.id).find(".association-refset-item").click(function(event) {
+                                var clickedConceptId = $(event.target).attr('data-concept-id');
+                                panel.conceptId = clickedConceptId;
+                                $('#details-tabs-' + panel.divElement.id + ' a:first').tab('show');
+                                panel.updateCanvas('');
+                            });
+
                             panel.panelRefsetsLoaded = true;
                             setTimeout(function() {
                                 $("[data-toggle=popover]").popover();
