@@ -1031,6 +1031,13 @@ function conceptDetails(divElement, conceptId, options) {
                 totalStatedAxioms : (firstMatch.classAxioms ? firstMatch.classAxioms.length : 0) + (firstMatch.gciAxioms ? firstMatch.gciAxioms.length : 0)
             };
             $("#" + panel.relsPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/rels-panel.hbs"](context));
+            $("#" + panel.relsPId).find(".destination-item").unbind();
+            $("#" + panel.relsPId).find(".destination-item").click(function(event) {
+                var clickedConceptId = $(event.target).attr('data-concept-id');
+                panel.conceptId = clickedConceptId;
+                $('#details-tabs-' + panel.divElement.id + ' a:first').tab('show');
+                panel.updateCanvas('');
+            });
 
 
             panel.inferredParents.sort(function(a, b) {
