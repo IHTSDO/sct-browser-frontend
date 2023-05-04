@@ -51,6 +51,18 @@
             return prefix;
         }
 
+        function getEnvPrefix() {
+            const env = window.location.hostname.split(/[.]/)[0];
+            let prefix = '';
+            if (env.startsWith('dev-')) {
+                prefix = 'dev-';
+            } else if (env.startsWith('uat-')) {
+                prefix = 'uat-';
+            }
+
+            return prefix;
+        }
+
         changeFavicon(getIconPrefixFromEnv());
     </script>
 
@@ -816,6 +828,11 @@
                 acceptLicense = false;
             }
 
+            $("#navBarBrand").unbind();
+            $("#navBarBrand").on("click", function() {                
+                initialize();
+            });
+
             $("#accept-license-button-modal").unbind();
             $("#accept-license-button-modal").click(function() {
                 createCookie("licenseCookie", "true", 2);
@@ -1058,6 +1075,11 @@
             if (typeof release != "undefined" && isTask(release)) {
                 options.release = release;
             }
+
+            $("#navBarBrand").unbind();
+            $("#navBarBrand").on("click", function() {                           
+                window.open("https://" + getEnvPrefix() + "browser.ihtsdotools.org/", "_blank");
+            });
 
             $.when(getAuth(), getProjects()).then(function(roles, projects) {
 
@@ -2186,7 +2208,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                <a class="navbar-brand" href="javascript:void(0);" onclick="initialize();" id="navBarBrand">
+                <a class="navbar-brand" href="javascript:void(0);" id="navBarBrand">
                     <strong>
                             &nbsp;&nbsp;SNOMED CT Browser</strong></a>
             </div>
