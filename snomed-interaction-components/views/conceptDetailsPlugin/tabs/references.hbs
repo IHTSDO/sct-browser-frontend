@@ -19,8 +19,8 @@
                     </thead>
                     <tbody>
                     {{#each referencingConcepts}}
-                        <tr>
-                            <td>
+                        <tr class="reference-row">
+                            <td data-concept-id='{{conceptId}}'>
                                 {{#if_eq definitionStatus "PRIMITIVE"}}
                                     <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}" draggable='true' ondragstart="drag(event, '{{../divElementId}}')" data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{fsn.term}}'>&nbsp;&nbsp;</span>
                                 {{else}}
@@ -33,10 +33,10 @@
                                 {{/hasCountryIcon}}
                                 {{fsn.term}}
                             </td>
-                            <td>
+                            <td data-concept-id='{{conceptId}}'>
                                 {{pt.term}}
                             </td>
-                            <td>{{conceptId}}</td>
+                            <td data-concept-id='{{conceptId}}'>{{conceptId}}</td>
                         </tr>
                     {{/each}}
                     </tbody>

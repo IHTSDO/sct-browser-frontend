@@ -22,12 +22,14 @@
     {{#each simpleRefsetMembers}}
         <tr class='{{#if active}}{{else}}danger{{/if}}'>
             <td>
-                {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                {{else}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                {{/if_eq}}
-                {{defaultTerm}}
+                <a class="refset-tab-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                    {{#if_eq definitionStatus "PRIMITIVE"}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}"  data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                    {{else}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}"  data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{defaultTerm}}
+                </a>
             </td>            
             <td>                
                 <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="
@@ -55,12 +57,14 @@
     {{#each simpleMapRefsetMembers}}        
         <tr class='{{#if active}}{{else}}danger{{/if}}'>
             <td>
-                {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}"  data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                {{else}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}"  data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                {{/if_eq}}
-                {{defaultTerm}}
+                <a class="refset-tab-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                    {{#if_eq definitionStatus "PRIMITIVE"}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}"  data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                    {{else}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}"  data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{defaultTerm}}
+                </a>
             </td>
             <td class="refset-simplemap" data-refsetId="{{conceptId}}" data-conceptId="{{otherValue}}">{{otherValue}}</td>
             <td>                
@@ -90,20 +94,25 @@
     {{#each attributeValueRefsetMembers}}       
         <tr class='{{#if active}}{{else}}danger{{/if}}'>
             <td>
-                {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                {{else}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                {{/if_eq}}
-                {{defaultTerm}}
+                <a class="refset-tab-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                    {{#if_eq definitionStatus "PRIMITIVE"}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                    {{else}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{defaultTerm}}
+                </a>
             </td>
             <td>
-                {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')"  data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.defaultTerm}}" data-def-status="{{cidValue.definitionStatus}}"><span  class="badge alert-warning context-menu" data-concept-id="{{cidValue.conceptId}}" data-fsn="{{cidValue.fsn.term}}" data-preferred-term="{{cidValue.pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                {{else}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')"  data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.defaultTerm}}" data-def-status="{{cidValue.definitionStatus}}"><span  class="badge alert-warning context-menu" data-concept-id="{{cidValue.conceptId}}" data-fsn="{{cidValue.fsn.term}}" data-preferred-term="{{cidValue.pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                {{/if_eq}}
-                {{cidValue.defaultTerm}}</td>
+                <a class="refset-tab-item" href="javascript:void(0);" data-module="{{cidValue.module}}" data-concept-id='{{cidValue.conceptId}}' data-term='{{cidValue.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                    {{#if_eq cidValue.definitionStatus "PRIMITIVE"}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.defaultTerm}}" data-def-status="{{cidValue.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{cidValue.conceptId}}" data-fsn="{{cidValue.fsn.term}}" data-preferred-term="{{cidValue.pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                    {{else}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.defaultTerm}}" data-def-status="{{cidValue.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{cidValue.conceptId}}" data-fsn="{{cidValue.fsn.term}}" data-preferred-term="{{cidValue.pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{cidValue.defaultTerm}}
+                </a>
+            </td>
             <td>                
                 <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="
                     <table border='1'><tr><th style='padding: 3px;'>RefsetId</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>
@@ -130,22 +139,25 @@
     {{#each associationRefsetMembers}}        
         <tr class='{{#if active}}{{else}}danger{{/if}}'>
             <td>
-                {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                {{else}}
-                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                {{/if_eq}}
-                {{defaultTerm}}
+                <a class="refset-tab-item" href="javascript:void(0);" data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                    {{#if_eq definitionStatus "PRIMITIVE"}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                    {{else}}
+                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{module}}" data-concept-id="{{conceptId}}" data-term="{{defaultTerm}}" data-def-status="{{definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{conceptId}}" data-fsn="{{fsn.term}}" data-preferred-term="{{pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{defaultTerm}}
+                </a>
             </td>
             <td>
-                <a class="association-refset-item" href="javascript:void(0);" data-module="{{cidValue.module}}" data-concept-id='{{cidValue.conceptId}}' data-term='{{cidValue.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
-                    {{#if_eq definitionStatus "PRIMITIVE"}}
+                <a class="refset-tab-item" href="javascript:void(0);" data-module="{{cidValue.module}}" data-concept-id='{{cidValue.conceptId}}' data-term='{{cidValue.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                    {{#if_eq cidValue.definitionStatus "PRIMITIVE"}}
                         <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.defaultTerm}}" data-def-status="{{cidValue.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{cidValue.conceptId}}" data-fsn="{{cidValue.fsn.term}}" data-preferred-term="{{cidValue.pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
                     {{else}}
                         <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart = "drag(event, '{{divElementId}}')" data-module="{{cidValue.module}}" data-concept-id="{{cidValue.conceptId}}" data-term="{{cidValue.defaultTerm}}" data-def-status="{{cidValue.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{cidValue.conceptId}}" data-fsn="{{cidValue.fsn.term}}" data-preferred-term="{{cidValue.pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
                     {{/if_eq}}
                     {{cidValue.defaultTerm}}
-                </a></td>                
+                </a>
+            </td>                
             <td>                
                 <button type="button" class="btn btn-link unobtrusive-icon more-fields-button pull-right" data-container="body" data-toggle="popover" data-placement="left" data-content="
                     <table border='1'><tr><th style='padding: 3px;'>RefsetId</th><th style='padding: 3px;'>Effective Time</th><th style='padding: 3px;'>ModuleId</th></tr>

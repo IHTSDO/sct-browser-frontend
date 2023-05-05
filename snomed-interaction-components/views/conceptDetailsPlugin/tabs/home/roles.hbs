@@ -15,17 +15,22 @@
             &nbsp;<span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
                 {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
 
-            {{#if_eq target.definitionStatus "PRIMITIVE"}}
-                <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-primitive-concept-compact' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
-            {{else}}
-                <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-defined-concept-compact' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
-            {{/if_eq}}
             {{#if concreteValue.value}}
-                {{concreteValue.value}}
+                <span>{{concreteValue.value}}</span>
             {{else}}
-                {{removeSemtag target.defaultTerm}}
+                <a class="home-roles-destination-item" href="javascript:void(0);" data-module="{{target.moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                    <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='
+                        {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                            sct-primitive-concept-compact
+                        {{else}}
+                            sct-defined-concept-compact
+                        {{/if_eq}}
+                        ' data-module="{{target.moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                        {{removeSemtag target.defaultTerm}}
+                    </span>
+                </a>
             {{/if}}
-            </span><br>
+            <br>
         {{/each}}
         </div>
         {{#if_eq statedRoles.length 0}}
@@ -55,18 +60,23 @@
                             {{/eqLastGroup}}
                             &nbsp;<span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
                             {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
-                        <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='
-                            {{#if_eq target.definitionStatus "PRIMITIVE"}}
-                                sct-primitive-concept-compact
-                            {{else}}
-                                sct-defined-concept-compact
-                            {{/if_eq}}
-                            ' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                            
                             {{#if concreteValue.value}}
-                                {{concreteValue.value}}
+                                <span>{{concreteValue.value}}</span>
                             {{else}}
-                                {{removeSemtag target.defaultTerm}}
-                            {{/if}}</span><br>
+                                <a class="home-roles-destination-item" href="javascript:void(0);" data-module="{{target.moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                    <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='
+                                        {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                                            sct-primitive-concept-compact
+                                        {{else}}
+                                            sct-defined-concept-compact
+                                        {{/if_eq}}
+                                        ' data-module="{{target.moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                                        {{removeSemtag target.defaultTerm}}
+                                    </span>                       
+                                </a>
+                            {{/if}}                            
+                            <br>
                         {{/if_eq}}
                     {{/each}}
                 </span>
@@ -93,18 +103,23 @@
                         {{/eqLastGroup}}
                         &nbsp;<span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
                         {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
-                    <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='
-                        {{#if_eq target.definitionStatus "PRIMITIVE"}}
-                            sct-primitive-concept-compact
-                        {{else}}
-                            sct-defined-concept-compact
-                        {{/if_eq}}
-                        ' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                        
                         {{#if concreteValue.value}}
-                            {{concreteValue.value}}
+                            <span>{{concreteValue.value}}</span>
                         {{else}}
-                            {{removeSemtag target.defaultTerm}}
-                        {{/if}}</span><br>                        
+                            <a class="home-roles-destination-item" href="javascript:void(0);" data-module="{{target.moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='
+                                    {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                                        sct-primitive-concept-compact
+                                    {{else}}
+                                        sct-defined-concept-compact
+                                    {{/if_eq}}
+                                    ' data-module="{{target.moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                                    {{removeSemtag target.defaultTerm}}
+                                </span>                       
+                            </a>
+                        {{/if}}
+                        <br>                        
                     {{/each}}
                 </span>
                 </div>
@@ -115,29 +130,34 @@
         
             {{#each inferredRoles}}
                 
-                        {{#eqLastGroup groupId}}
-                            </div>
-                            {{setLastGroup groupId}}
-                            {{lastColor "random"}}
-                            <div {{#if_eq groupId 0}}{{else}}style="border: 1px solid darkgrey; border-radius: 4px; padding: 3px; background-color: white; margin: 5px;"{{/if_eq}}>
-                            <span style='background-color: {{lastColor "get"}}'></span>
-                        {{else}}
-                            <span style='background-color: {{lastColor "get"}}'></span>
-                        {{/eqLastGroup}}
-                        &nbsp;<span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
-                        {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
-                <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='
-                    {{#if_eq target.definitionStatus "PRIMITIVE"}}
-                         sct-primitive-concept-compact
-                    {{else}}
-                         sct-defined-concept-compact
-                    {{/if_eq}}
-                    ' data-module="{{target.module}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
-                    {{#if concreteValue.value}}
-                        {{concreteValue.value}}
-                    {{else}}
-                        {{removeSemtag target.defaultTerm}}
-                    {{/if}}</span><br>
+                {{#eqLastGroup groupId}}
+                    </div>
+                    {{setLastGroup groupId}}
+                    {{lastColor "random"}}
+                    <div {{#if_eq groupId 0}}{{else}}style="border: 1px solid darkgrey; border-radius: 4px; padding: 3px; background-color: white; margin: 5px;"{{/if_eq}}>
+                    <span style='background-color: {{lastColor "get"}}'></span>
+                {{else}}
+                    <span style='background-color: {{lastColor "get"}}'></span>
+                {{/eqLastGroup}}
+                &nbsp;<span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
+                {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
+
+                {{#if concreteValue.value}}
+                    <span>{{concreteValue.value}}</span>
+                {{else}}
+                    <a class="home-roles-destination-item" href="javascript:void(0);" data-module="{{target.moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                        <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='
+                            {{#if_eq target.definitionStatus "PRIMITIVE"}}
+                                sct-primitive-concept-compact
+                            {{else}}
+                                sct-defined-concept-compact
+                            {{/if_eq}}
+                            ' data-module="{{target.moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}'>
+                            {{removeSemtag target.defaultTerm}}
+                        </span>                       
+                    </a>
+                {{/if}}                    
+                <br>
             {{/each}}
         </div>
         {{#if_eq inferredRoles.length 0}}
