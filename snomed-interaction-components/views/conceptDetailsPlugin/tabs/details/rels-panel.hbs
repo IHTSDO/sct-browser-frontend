@@ -35,12 +35,14 @@
                             {{/if}}
                             '>
                             <td>
-                                {{#if_eq type.definitionStatus "PRIMITIVE"}}
-                                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                                {{else}}
-                                    <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                                {{/if_eq}}
-                                {{type.defaultTerm}}
+                                <a class="destination-item" href="javascript:void(0);" data-module="{{moduleId}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                    {{#if_eq type.definitionStatus "PRIMITIVE"}}
+                                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                                    {{else}}
+                                        <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                                    {{/if_eq}}
+                                    {{type.defaultTerm}}
+                                </a>
                             </td>
                             <td>
                                 {{#if concreteValue.value}}
@@ -100,12 +102,14 @@
                             {{#if_eq active true}}
                                 <tr style="display: table-row">
                                     <td>
-                                        {{#if_eq type.definitionStatus "PRIMITIVE"}}
-                                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                                        {{else}}
-                                            <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                                        {{/if_eq}}
-                                        {{type.defaultTerm}}
+                                        <a class="destination-item" href="javascript:void(0);" data-module="{{moduleId}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                            {{#if_eq type.definitionStatus "PRIMITIVE"}}
+                                                <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                                            {{else}}
+                                                <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')"  data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                                            {{/if_eq}}
+                                            {{type.defaultTerm}}
+                                        </a>
                                     </td>
                                     <td>
                                         {{#if concreteValue.value}}
@@ -174,12 +178,15 @@
                                        {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}
                                        {{#if ../../../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{/if}}'>
                                 <td>
-                                    {{#if_eq type.definitionStatus "PRIMITIVE"}}
-                                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                                    {{else}}
-                                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                                    {{/if_eq}}
-                                    {{type.defaultTerm}}</td>
+                                    <a class="destination-item" href="javascript:void(0);" data-module="{{moduleId}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                        {{#if_eq type.definitionStatus "PRIMITIVE"}}
+                                            <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                                        {{else}}
+                                            <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                                        {{/if_eq}}
+                                        {{type.defaultTerm}}
+                                    </a>
+                                </td>
                                 <td>
                                     {{#if concreteValue.value}}
                                         <span style="margin-left:28px;">{{concreteValue.value}}</span>
@@ -246,12 +253,15 @@
                                        {{#if ../../../options.tsBrowser}}{{#if_eq ../effectiveTime null}}highlightEffectiveTime{{/if_eq}}{{/if}}
                                        {{#if ../../../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{/if}}'>
                                 <td>
-                                    {{#if_eq type.definitionStatus "PRIMITIVE"}}
-                                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}"&nbsp;</span></a>&nbsp;&nbsp;
-                                    {{else}}
-                                        <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                                    {{/if_eq}}
-                                    {{type.defaultTerm}}</td>
+                                    <a class="destination-item" href="javascript:void(0);" data-module="{{moduleId}}" data-concept-id='{{target.conceptId}}' data-term='{{target.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                        {{#if_eq type.definitionStatus "PRIMITIVE"}}
+                                            <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}"&nbsp;</span></span>&nbsp;&nbsp;
+                                        {{else}}
+                                            <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                                        {{/if_eq}}
+                                        {{type.defaultTerm}}
+                                    </a>
+                                </td>
                                 <td>
                                     {{#if concreteValue.value}}
                                         <span style="margin-left:28px;">{{concreteValue.value}}</span>
@@ -298,12 +308,15 @@
                 {{#if active}}
                     <tr>
                         <td>
-                            {{#if_eq type.definitionStatus "PRIMITIVE"}}
-                                <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&nbsp;</span></a>&nbsp;&nbsp;
-                            {{else}}
-                                <a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></a>&nbsp;&nbsp;
-                            {{/if_eq}}
-                            {{type.defaultTerm}}</td>
+                            <a class="destination-item" href="javascript:void(0);" data-module="{{moduleId}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                {{#if_eq type.definitionStatus "PRIMITIVE"}}
+                                    <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&nbsp;</span></span>&nbsp;&nbsp;
+                                {{else}}
+                                    <span style="color: inherit;text-decoration: inherit;" draggable = "true" ondragstart="drag(event, '{{divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{type.conceptId}}" data-term="{{type.defaultTerm}}" data-def-status="{{type.definitionStatus}}"><span class="badge alert-warning context-menu" data-concept-id="{{type.conceptId}}" data-fsn="{{type.fsn.term}}" data-preferred-term="{{type.pt.term}}">&equiv;</span></span>&nbsp;&nbsp;
+                                {{/if_eq}}
+                                {{type.defaultTerm}}
+                            </a>
+                        </td>
                         <td>
                             {{#if concreteValue.value}}
                                 <span style="margin-left:28px;">{{concreteValue.value}}</span>

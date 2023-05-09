@@ -12,8 +12,12 @@
             {{else}}
                 <span style='background-color: {{lastColor "get"}}'></span>
             {{/eqLastGroup}}
-            &nbsp;<span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
-                {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
+            &nbsp;
+            <a class="home-roles-destination-item" href="javascript:void(0);" data-module="{{type.moduleId}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                <span draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
+                    {{removeSemtag type.defaultTerm}}</span>
+            </a>
+            &nbsp;&rarr;&nbsp;
 
             {{#if concreteValue.value}}
                 <span>{{concreteValue.value}}</span>
@@ -58,8 +62,12 @@
                                 {{else}}
                                 <span style='background-color: {{lastColor "get"}}'></span>
                             {{/eqLastGroup}}
-                            &nbsp;<span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
-                            {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
+                            &nbsp;
+                            <a class="home-roles-destination-item" href="javascript:void(0);" data-module="{{type.moduleId}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                                <span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
+                                {{removeSemtag type.defaultTerm}}</span>
+                            </a>
+                            &nbsp;&rarr;&nbsp;
                             
                             {{#if concreteValue.value}}
                                 <span>{{concreteValue.value}}</span>
@@ -101,8 +109,12 @@
                             {{else}}
                             <span style='background-color: {{lastColor "get"}}'></span>
                         {{/eqLastGroup}}
-                        &nbsp;<span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
-                        {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
+                        &nbsp;
+                        <a class="home-roles-destination-item" href="javascript:void(0);" data-module="{{type.moduleId}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                            <span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
+                            {{removeSemtag type.defaultTerm}}</span>
+                        </a>
+                        &nbsp;&rarr;&nbsp;
                         
                         {{#if concreteValue.value}}
                             <span>{{concreteValue.value}}</span>
@@ -139,8 +151,12 @@
                 {{else}}
                     <span style='background-color: {{lastColor "get"}}'></span>
                 {{/eqLastGroup}}
-                &nbsp;<span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
-                {{removeSemtag type.defaultTerm}}</span>&nbsp;&rarr;&nbsp;
+                &nbsp;
+                <a class="home-roles-destination-item" href="javascript:void(0);" data-module="{{type.moduleId}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}' style="color: inherit; text-decoration: inherit;">
+                    <span style='background-color: {{lastColor "get"}}' draggable = "true" ondragstart="drag(event, '{{divElementId}}')" class='sct-attribute-compact' data-module="{{type.module}}" data-concept-id='{{type.conceptId}}' data-term='{{type.defaultTerm}}'>
+                    {{removeSemtag type.defaultTerm}}</span>
+                </a>
+                &nbsp;&rarr;&nbsp;
 
                 {{#if concreteValue.value}}
                     <span>{{concreteValue.value}}</span>
