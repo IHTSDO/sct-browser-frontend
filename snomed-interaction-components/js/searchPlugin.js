@@ -132,6 +132,7 @@ function searchPanel(divElement, options) {
         $("#" + panel.divElement.id + "-clearButton").disableTextSelect();
         $("#" + panel.divElement.id + "-expandButton").hide();
         $("#" + panel.divElement.id + "-subscribersMarker").hide();
+        $("#" + panel.divElement.id + "-standardSearchButton").prop('checked', true);
 
         $("#" + panel.divElement.id).find('.semtag-button').click(function(event) {
             //console.log("Semtag click: " + $(this).html());
@@ -207,25 +208,7 @@ function searchPanel(divElement, options) {
 
         });
         $("#" + panel.divElement.id + "-clearButton").click(function() {
-            panel.options.semTagFilter = "none";
-            panel.options.langFilter = "none";
-            panel.options.moduleFilter = "none";
-            panel.options.refsetFilter = "none";
-            panel.options.semTagsFilter = [];
-            $('#' + panel.divElement.id + '-searchBox').val('');
-            $('#' + panel.divElement.id + '-searchFilters').html("");
-            $('#' + panel.divElement.id + '-resultsTable').html("");
-            $('#' + panel.divElement.id + '-searchBar').html("");
-            $('#' + panel.divElement.id + '-searchBar2').html("");
-            $('#' + panel.divElement.id + '-searchBar3').html("");
-            $('#' + panel.divElement.id + '-searchBar4').html("");
-            $('#' + panel.divElement.id + '-searchBar5').html("");
-            $('#' + panel.divElement.id + '-searchBar6').html("");
-            $('#' + panel.divElement.id + '-typeIcon').removeClass('glyphicon-ok');
-            $('#' + panel.divElement.id + '-typeIcon').removeClass('text-success');
-            $('#' + panel.divElement.id + '-typeIcon').addClass('glyphicon-remove');
-            $('#' + panel.divElement.id + '-typeIcon').addClass('text-danger');
-            lastT = "";
+            panel.clearSearch();
         });
         $("#" + panel.divElement.id + "-historyButton").click(function(event) {
             $("#" + panel.divElement.id + "-historyButton").popover({
@@ -293,6 +276,19 @@ function searchPanel(divElement, options) {
                 panel.search(searchTerm, 0, 100, true);
             }
         });
+
+        $("#" + panel.divElement.id + "-standardSearchButton").click(function(event) {
+            $("#" + panel.divElement.id + "-searchConfigBar").find("button").attr("disabled", false);
+            $("#" + panel.divElement.id + "-searchConfigBar").find('input:checkbox').attr("disabled", false);
+            panel.clearSearch();
+        });
+
+        $("#" + panel.divElement.id + "-identifierSearchButton").click(function(event) {
+            $("#" + panel.divElement.id + "-searchConfigBar").find("button").attr("disabled", true);
+            $("#" + panel.divElement.id + "-searchConfigBar").find('input:checkbox').attr("disabled", true);
+            panel.clearSearch();
+        });
+
         $("#" + panel.divElement.id + "-partialMatchingButton").click(function(event) {
             panel.options.searchMode = 'partialMatching';
             if (typeof(Storage) !== "undefined") {
@@ -472,6 +468,28 @@ function searchPanel(divElement, options) {
         
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
     };
+
+    this.clearSearch = function() {
+        panel.options.semTagFilter = "none";
+        panel.options.langFilter = "none";
+        panel.options.moduleFilter = "none";
+        panel.options.refsetFilter = "none";
+        panel.options.semTagsFilter = [];
+        $('#' + panel.divElement.id + '-searchBox').val('');
+        $('#' + panel.divElement.id + '-searchFilters').html("");
+        $('#' + panel.divElement.id + '-resultsTable').html("");
+        $('#' + panel.divElement.id + '-searchBar').html("");
+        $('#' + panel.divElement.id + '-searchBar2').html("");
+        $('#' + panel.divElement.id + '-searchBar3').html("");
+        $('#' + panel.divElement.id + '-searchBar4').html("");
+        $('#' + panel.divElement.id + '-searchBar5').html("");
+        $('#' + panel.divElement.id + '-searchBar6').html("");
+        $('#' + panel.divElement.id + '-typeIcon').removeClass('glyphicon-ok');
+        $('#' + panel.divElement.id + '-typeIcon').removeClass('text-success');
+        $('#' + panel.divElement.id + '-typeIcon').addClass('glyphicon-remove');
+        $('#' + panel.divElement.id + '-typeIcon').addClass('text-danger');
+        lastT = "";
+    }
 
     this.setLanguageRefsets = function(languageRefsets) {
         panel.options.languageRefsets = languageRefsets;
@@ -713,7 +731,10 @@ function searchPanel(divElement, options) {
                 var i18n_searching = jQuery.i18n.prop('i18n_searching');                        
                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted i18n' data-i18n-id='i18n_searching'>"+i18n_searching+"...</span>");                
                 t = t.trim();
-                if (isNumber(t) && !panel.options.multiExtensionSearch) {
+                
+                if($("#" + panel.divElement.id + "-identifierSearchButton").is(':checked')) {
+                   panel.getIdentifier(t);
+                } else if (isNumber(t) && !panel.options.multiExtensionSearch) {
                     if (t.substr(-2, 1) == "0") {                        
                         panel.getConcept(t, skipTo, returnLimit, skipSemtagFilter, semTags)
                     } else if (t.substr(-2, 1) == "1") {
@@ -726,6 +747,92 @@ function searchPanel(divElement, options) {
                 }
             }
         }
+    }
+
+    this.getIdentifier = function(t) {
+        var branch = options.edition;
+        if(options.release.length > 0 && options.release !== 'None'){
+            branch = branch + "/" + options.release;
+        };
+        if(!options.serverUrl.includes('snowowl')){
+            $.ajaxSetup({
+                headers : {
+                  'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                }
+            });
+        };
+        var searchUrl = options.serverUrl + "/" + branch + "/identifiers?alternateIdentifier=" + t;
+        xhr = $.getJSON(searchUrl , function(result) {
+        }).done(function(result) {
+            if(result.total === 0){
+                var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                                
+                var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
+                $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
+                $('#' + panel.divElement.id + '-searchBar2').html("");
+                $('#' + panel.divElement.id + '-searchBar3').html("");
+                $('#' + panel.divElement.id + '-searchBar4').html("");
+                $('#' + panel.divElement.id + '-searchBar5').html("");
+                $('#' + panel.divElement.id + '-searchBar6').html("");
+                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
+            }
+            else {
+                Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                    if (opts != "undefined") {
+                        if (a == b)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                });
+                Handlebars.registerHelper('if_gre', function(a, b, opts) {
+                    if (a) {
+                        if (parseInt(a) >= b)
+                            return opts.fn(this);
+                        else
+                            return opts.inverse(this);
+                    }
+                });
+                Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
+                    if (countryIcons[moduleId])
+                        return opts.fn(this);
+                    else
+                        return opts.inverse(this);
+                });
+                result.matches = [];
+                result.items.forEach(function(item) {
+                    item.referencedComponent.term = item.referencedComponent.pt.term;
+                    item.referencedComponent.fsn = item.referencedComponent.fsn.term;
+                    result.matches.push(item.referencedComponent)
+                });
+                var context = {
+                    result: result
+                };
+               console.log(context);
+                $('#' + panel.divElement.id + '-resultsTable').html(JST["snomed-interaction-components/views/searchPlugin/body/default.hbs"](context));
+                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
+                $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
+                    channel.publish(panel.divElement.id, {
+                        term: $(event.target).attr('data-term'),
+                        module: $(event.target).attr("data-module"),
+                        conceptId: $(event.target).attr('data-concept-id'),
+                        source: panel.divElement.id,
+                        showConcept: true
+                    });
+                });
+            }
+            xhr = null;
+        }).fail(function(error) {
+            xhr = null;
+            var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                            
+            var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
+            $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
+            $('#' + panel.divElement.id + '-searchBar2').html("");
+            $('#' + panel.divElement.id + '-searchBar3').html("");
+            $('#' + panel.divElement.id + '-searchBar4').html("");
+            $('#' + panel.divElement.id + '-searchBar5').html("");
+            $('#' + panel.divElement.id + '-searchBar6').html("");
+            $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
+        });
     }
 
     this.getConcept = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {        
