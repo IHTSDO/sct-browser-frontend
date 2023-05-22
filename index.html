@@ -354,6 +354,7 @@
                 $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
                     options.tsBrowser = true;
+                    options.enableIdentifierSearch = true;
 
                     options.language = 'en';
                     options.languageObject = {
