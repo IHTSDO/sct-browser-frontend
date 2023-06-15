@@ -1,31 +1,33 @@
-{{#each result.descriptions}}
-    <tr class='resultRow selectable-row {{#if danger}}danger{{/if}}'>
-        <td class='col-md-7'>
-            <div class='result-item' data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
-                {{#if_eq definitionStatus "PRIMITIVE"}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
-                {{else}}
-                    <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&equiv;</span>&nbsp;&nbsp;
-                {{/if_eq}}
-                {{#hasCountryIcon moduleId}}
+{{#each results}}
+    {{#each descriptions}}
+        <tr class='resultRow selectable-row {{#if danger}}danger{{/if}}'>
+            <td class='col-md-7'>
+                <div class='result-item' data-module="{{module}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
+                    {{#if_eq definitionStatus "PRIMITIVE"}}
+                        <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&nbsp;&nbsp;</span>&nbsp;&nbsp;
+                    {{else}}
+                        <span class="badge alert-warning context-menu" data-fsn="{{fsn.term}}" data-preferred-term="{{term}}" draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-module="{{moduleId}}" data-concept-id="{{conceptId}}" data-term="{{term}}">&equiv;</span>&nbsp;&nbsp;
+                    {{/if_eq}}
+                    {{#hasCountryIcon moduleId}}
+                        <div class="phoca-flagbox" style="width:20px;height:20px">
+                            <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                        </div>&nbsp;
+                    {{/hasCountryIcon}}
+                    <a href='javascript:void(0);' style='color: inherit;text-decoration: inherit;' draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-term='{{term}}' data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>{{term}}</a>
+                </div>
+            </td>
+            <td class='text-muted small-text col-md-5 result-item' data-term='{{term}}' data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
+                {{#hasCountryIcon ../moduleId}}
                     <div class="phoca-flagbox" style="width:20px;height:20px">
-                        <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                        <span class="phoca-flag {{countryIcon ../moduleId}}"></span>
                     </div>&nbsp;
                 {{/hasCountryIcon}}
-                <a href='javascript:void(0);' style='color: inherit;text-decoration: inherit;' draggable="true" ondragstart="drag(event, '{{../../divElementId}}')" data-term='{{term}}' data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>{{term}}</a>
-            </div>
-        </td>
-        <td class='text-muted small-text col-md-5 result-item' data-term='{{term}}' data-module="{{moduleId}}" data-concept-id='{{conceptId}}' data-term='{{term}}'>
-            {{#hasCountryIcon ../result.moduleId}}
-                <div class="phoca-flagbox" style="width:20px;height:20px">
-                    <span class="phoca-flag {{countryIcon ../moduleId}}"></span>
-                </div>&nbsp;
-            {{/hasCountryIcon}}
-            {{../result.fsn.term}}
-        </td>
-    </tr>
+                {{../fsn.term}}
+            </td>
+        </tr>
+    {{/each}}
 {{/each}}
 
-{{#if_eq result.descriptions.length 0}}
+{{#if_eq results.length 0}}
     <tr><td class='text-muted'><span data-i18n-id="i18n_no_results" class="i18n">{{i18n "i18n_no_results" "No results"}}</span></td></tr>
 {{/if_eq}}

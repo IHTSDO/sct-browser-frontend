@@ -20,18 +20,6 @@
         <div style="display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; ">            
             <h4><span class='i18n' data-i18n-id='i18n_options'>Options</span></h4>
             <div id='{{divElementId}}-searchConfigBar' style='margin-bottom: 10px;'>
-                {{#if options.enableIdentifierSearch}}
-                    <div style="margin-top: 15px; margin-bottom: -15px; margin-left: 0px; margin-right: 0px" class="row">
-                        <div class='col-md-5' style="padding-right: 0px; padding-left: 0px">
-                            <input type="radio" id="{{divElementId}}-standardSearchButton" name="{{divElementId}}-search-option" value="standard">
-                            <label for="{{divElementId}}-standardSearchButton"><span class='i18n' data-i18n-id='i18n_standard'>{{i18n "i18n_standard" "Standard" }}</span></label>      
-                        </div>
-                        <div class='col-md-5' style="padding-right: 0px; padding-left: 0px">
-                            <input type="radio" id="{{divElementId}}-identifierSearchButton" name="{{divElementId}}-search-option" value="indentifier">
-                        <label for="{{divElementId}}-identifierSearchButton"><span class='i18n' data-i18n-id='i18n_identifier'>{{i18n "i18n_identifier" "Identifier" }}</span></label>
-                        </div>
-                    </div>
-                {{/if}}
                 <div style="margin-top: 15px">
                     {{#if_eq server 'snowstorm'}}
                         <div style="margin-top: 5px" class="btn-group">

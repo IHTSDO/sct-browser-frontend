@@ -181,7 +181,6 @@
                 options.dailyBuildBrowser = true;
             } else if (window.location.hostname.includes('community')) {
                 options.communityBrowser = true;
-                options.enableIdentifierSearch = true;
             } else if (window.location.hostname.includes('concrete') || window.location.hostname.includes('preview')) {
                 options.previewBrowser = true;
             } else if (window.location.hostname.includes('browser')) {
@@ -354,7 +353,6 @@
                 $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
                     options.tsBrowser = true;
-                    options.enableIdentifierSearch = true;
 
                     options.language = 'en';
                     options.languageObject = {
