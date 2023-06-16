@@ -753,8 +753,9 @@ function searchPanel(divElement, options) {
             });
         };
         var searchUrl = options.serverUrl + "/browser/" + branch + "/concepts/" + encodeURIComponent(t) + "/concept-or-identifier-ref-concept";
-        xhr = $.getJSON(searchUrl , function(results) {
-        }).done(function(results) {            
+        xhr = $.getJSON(searchUrl , function(response) {
+        }).done(function(response) {
+            var results = response.items;
             Handlebars.registerHelper('if_eq', function(a, b, opts) {
                 if (opts != "undefined") {
                     if (a == b)
