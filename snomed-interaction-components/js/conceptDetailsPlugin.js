@@ -1737,12 +1737,16 @@ function conceptDetails(divElement, conceptId, options) {
                 });
             });
 
-            var context = {
-                divElementId: panel.divElement.id,
-                server: panel.server,
-                result: result
-            };
-            $("#references-" + panel.divElement.id + "-accordion").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/references.hbs"](context));
+            if (result && result.total !== 0) {
+                var context = {
+                    divElementId: panel.divElement.id,
+                    server: panel.server,
+                    result: result
+                };
+                $("#references-" + panel.divElement.id + "-accordion").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/references.hbs"](context));
+            } else {
+                $('#references-' + panel.divElement.id + "-accordion").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_references' class='i18n'>"+i18n_no_references+"</span></td></tr>");
+            }            
             $("#references-" + panel.divElement.id + "-accordion").click(function(e) {
                 if ($($(e.target).closest("a").attr("href")).hasClass("collapse")) {
                     var target = $($(e.target).closest("a").attr("href") + "-span");
