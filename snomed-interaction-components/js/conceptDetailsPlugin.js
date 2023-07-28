@@ -2066,11 +2066,7 @@ function conceptDetails(divElement, conceptId, options) {
                 $("#home-parents-" + panel.divElement.id).unbind();
                 $("#home-parents-" + panel.divElement.id).click(function(event) {
                     if ($(event.target).hasClass("treeButton")) {
-                        var ev = event.target;
-                        //firefox issue!
-                        if (navigator.userAgent.indexOf("Firefox") > -1) {
-                            ev = $(ev).context.children;
-                        }
+                        var ev = event.target;                      
                         var conceptId = $(ev).closest("li").attr('data-concept-id');
                         event.preventDefault();
                         if ($(ev).hasClass("glyphicon-chevron-up")) {
