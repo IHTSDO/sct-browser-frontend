@@ -723,8 +723,9 @@ function searchPanel(divElement, options) {
                     panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags);
                 } else {
                     if (isNumber(t) && (t.substr(-2, 1) == "0" || t.substr(-2, 1) == "1")) {
-                        if (t.substr(-2, 1) == "0") {                        
-                            panel.getConcept(t, skipTo, returnLimit, skipSemtagFilter, semTags);
+                        if (t.substr(-2, 1) == "0") {
+                            var cocenptArray = [t];
+                            panel.getConcepts(cocenptArray, t, skipTo, returnLimit, skipSemtagFilter, semTags, true);
                         } else if (t.substr(-2, 1) == "1") {
                             panel.getDescription(t, skipTo, returnLimit, skipSemtagFilter, semTags);
                         }
@@ -756,115 +757,32 @@ function searchPanel(divElement, options) {
         xhr = $.getJSON(searchUrl , function(response) {
         }).done(function(response) {
             var results = response.items;
-            Handlebars.registerHelper('if_eq', function(a, b, opts) {
-                if (opts != "undefined") {
-                    if (a == b)
-                        return opts.fn(this);
-                    else
-                        return opts.inverse(this);
-                }
-            });
-            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
-                if (countryIcons[moduleId])
-                    return opts.fn(this);
-                else
-                    return opts.inverse(this);
-            });
-            
-            $.each(results, function(i, result) {
-                // Filter by description type                
-                result.descriptions = result.descriptions.filter(function(item) {return !panel.options.typeSearchFilter 
-                    || (panel.options.typeSearchFilter === 'noDef' && item.type !== 'DEF')
-                    || (panel.options.typeSearchFilter === 'fsn' && item.type === 'FSN')
-                    || (panel.options.typeSearchFilter === 'pt' && item.type === 'SYNONYM' && Object.values(item.acceptabilityMap).includes('PREFERRED'));});
-
-                // Filter by language refset
-                result.descriptions = result.descriptions.filter(function(item) {return !panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.length === 0
-                    || Object.keys(item.acceptabilityMap).filter(function(i) {return panel.options.languageRefsetSearchFilter.includes(i)}).length !==0; });
-
-                // Filter by descritpion status
-                var resDescriptions = [];
-                $.each(result.descriptions, function(i, field) {
-                    var aux = field;
-                    aux.definitionStatus = result.definitionStatus;
-                    if (!aux.active) {
-                        aux.danger = true;
-                    }
-                    if(!result.active){
-                        aux.danger = true;
-                    }
-                    if (field.active) {
-                        if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
-                            if ((aux.term === result.pt.term || (panel.options.typeSearchFilter === 'fsn' && aux.term === result.fsn.term)) && aux.lang == result.pt.lang) {
-                                if (panel.options.statusSearchFilter == "activeOnly" 
-                                    || panel.options.statusSearchFilter == "activeAndInactive"
-                                    || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
-                                    resDescriptions.push(aux);
-                                }                                
-                            }                             
-                        } 
-                        else {
-                            if (panel.options.statusSearchFilter == "activeOnly" 
-                                || panel.options.statusSearchFilter == "activeAndInactive"
-                                || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
-                                resDescriptions.push(aux);
-                            }
-                        }                                        
-                    } else {
-                        if (panel.options.statusSearchFilter == "inactiveOnly" 
-                            || panel.options.statusSearchFilter == "activeAndInactive"
-                            || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
-                            resDescriptions.push(aux);
-                        }
-                    }
+            if (results.length == 0) {
+                panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags);
+                return;
+            } else {
+                var conceptIds = [];
+                $.each(results, function(i, field) {
+                    conceptIds.push(field.conceptId);
                 });
-                result.descriptions = resDescriptions;
-            });            
-
-            var context = {
-                results: results.filter(function(item) {return item.descriptions.length !== 0;}).length !== 0 ? results : []
-            };           
-            $('#' + panel.divElement.id + '-resultsTable').html(JST["snomed-interaction-components/views/searchPlugin/body/0.hbs"](context));
-            $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
-            $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
-                channel.publish(panel.divElement.id, {
-                    term: $(event.target).attr('data-term'),
-                    module: $(event.target).attr("data-module"),
-                    conceptId: $(event.target).attr('data-concept-id'),
-                    source: panel.divElement.id,
-                    showConcept: true
-                });
-            });
-
-            $("#" + panel.divElement.id + "-groupConcept").unbind();
-            $("#" + panel.divElement.id + "-groupConcept").click(function() {
-                if (typeof(Storage) !== "undefined") {
-                    var groupConcept = $("#" + panel.divElement.id + "-groupConcept").is(":checked");
-                    localStorage.setItem("groupConcept", groupConcept);
-                }
-                
-                panel.search(t, parseInt(skipTo), returnLimit, true, true);
-            });
+                panel.getConcepts(conceptIds, t, skipTo, returnLimit, skipSemtagFilter, semTags, false);
+            }            
             xhr = null;
         }).fail(function(error) {
-            if (error.status === 404) {
-                panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags);
-            } else {
-                xhr = null;
-                var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                            
-                var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
-                $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
-                $('#' + panel.divElement.id + '-searchBar2').html("");
-                $('#' + panel.divElement.id + '-searchBar3').html("");
-                $('#' + panel.divElement.id + '-searchBar4').html("");
-                $('#' + panel.divElement.id + '-searchBar5').html("");
-                $('#' + panel.divElement.id + '-searchBar6').html("");
-                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
-            }            
+            xhr = null;
+            var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
+            var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
+            $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
+            $('#' + panel.divElement.id + '-searchBar2').html("");
+            $('#' + panel.divElement.id + '-searchBar3').html("");
+            $('#' + panel.divElement.id + '-searchBar4').html("");
+            $('#' + panel.divElement.id + '-searchBar5').html("");
+            $('#' + panel.divElement.id + '-searchBar6').html("");
+            $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");                      
         });
     }
 
-    this.getConcept = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {        
+    this.getConcepts = function(conceptArray, originalSearchTerm, skipTo, returnLimit, skipSemtagFilter, semTags, directCall) {        
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
@@ -876,9 +794,22 @@ function searchPanel(divElement, options) {
                 }
             });
         };
-        xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + t, function(result) {
+        var queryParameters = "?size=" + conceptArray.length;
+        for (var i = 0; i < conceptArray.length; i++) {
+            queryParameters = queryParameters + "&conceptIds=" + conceptArray[i];
+        }
+        xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts" + queryParameters, function(result) {
         }).done(function(result) {
-            if(result.active === false && panel.options.statusSearchFilter == "activeOnly"){
+            if (result.total === 0) {
+                if (directCall) {
+                    panel.getConceptOrIdentifierReferencedConcept(originalSearchTerm, skipTo, returnLimit, skipSemtagFilter, semTags);
+                } else {
+                    panel.findConceptDescriptions(originalSearchTerm, skipTo, returnLimit, skipSemtagFilter, semTags);
+                }
+                return;
+            }
+            var activeConcepts = result.items.filter(function(item) {return item.active === true;});
+            if(activeConcepts.length === 0 && panel.options.statusSearchFilter == "activeOnly"){
                 var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                                
                 var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                 $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
@@ -904,54 +835,58 @@ function searchPanel(divElement, options) {
                     else
                         return opts.inverse(this);
                 });
-                var resDescriptions = [];
+                var concepts = result.items;
+                for (var i = 0; i < concepts.length; i++) {
+                    var concept = concepts[i];
+                    var resDescriptions = [];
                 
-                // Filter by description type
-                result.descriptions = result.descriptions.filter(function(item) {return !panel.options.typeSearchFilter 
-                                                                                    || (panel.options.typeSearchFilter === 'noDef' && item.type !== 'DEF')
-                                                                                    || (panel.options.typeSearchFilter === 'fsn' && item.type === 'FSN')
-                                                                                    || (panel.options.typeSearchFilter === 'pt' && item.type === 'SYNONYM' && Object.values(item.acceptabilityMap).includes('PREFERRED'));});                
-               
-                // Filter by language refset
-                result.descriptions = result.descriptions.filter(function(item) {return !panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.length === 0
-                    || Object.keys(item.acceptabilityMap).filter(function(i) {return panel.options.languageRefsetSearchFilter.includes(i)}).length !==0; });
-                    
-                // Filter by descritpion status
-                $.each(result.descriptions, function(i, field) {
-                    var aux = field;
-                    aux.definitionStatus = result.definitionStatus;
-                    if (!aux.active) {
-                        aux.danger = true;
-                    }
-                    if(!result.active){
-                        aux.danger = true;
-                    }
-                    if (field.active) {
-                        if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
-                            if ((aux.term === result.pt.term || (panel.options.typeSearchFilter === 'fsn' && aux.term === result.fsn.term)) && aux.lang == result.pt.lang) {
+                    // Filter by description type
+                    concept.descriptions = concept.descriptions.filter(function(item) {return !panel.options.typeSearchFilter 
+                                                                                        || (panel.options.typeSearchFilter === 'noDef' && item.type !== 'DEF')
+                                                                                        || (panel.options.typeSearchFilter === 'fsn' && item.type === 'FSN')
+                                                                                        || (panel.options.typeSearchFilter === 'pt' && item.type === 'SYNONYM' && Object.values(item.acceptabilityMap).includes('PREFERRED'));});                
+                
+                    // Filter by language refset
+                    concept.descriptions = concept.descriptions.filter(function(item) {return !panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.length === 0
+                        || Object.keys(item.acceptabilityMap).filter(function(i) {return panel.options.languageRefsetSearchFilter.includes(i)}).length !==0; });
+                        
+                    // Filter by descritpion status
+                    $.each(concept.descriptions, function(i, field) {
+                        var aux = field;
+                        aux.definitionStatus = concept.definitionStatus;
+                        if (!aux.active) {
+                            aux.danger = true;
+                        }
+                        if(!concept.active){
+                            aux.danger = true;
+                        }
+                        if (field.active) {
+                            if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
+                                if ((aux.term === concept.pt.term || (panel.options.typeSearchFilter === 'fsn' && aux.term === concept.fsn.term)) && aux.lang == concept.pt.lang) {
+                                    if (panel.options.statusSearchFilter == "activeOnly" 
+                                        || panel.options.statusSearchFilter == "activeAndInactive"
+                                        || (panel.options.statusSearchFilter == "inactiveOnly" && !concept.active)) {
+                                        resDescriptions.push(aux);
+                                    }                                
+                                }                             
+                            } 
+                            else {
                                 if (panel.options.statusSearchFilter == "activeOnly" 
                                     || panel.options.statusSearchFilter == "activeAndInactive"
-                                    || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
+                                    || (panel.options.statusSearchFilter == "inactiveOnly" && !concept.active)) {
                                     resDescriptions.push(aux);
-                                }                                
-                            }                             
-                        } 
-                        else {
-                            if (panel.options.statusSearchFilter == "activeOnly" 
+                                }
+                            }
+                        } else {
+                            if (panel.options.statusSearchFilter == "inactiveOnly" 
                                 || panel.options.statusSearchFilter == "activeAndInactive"
-                                || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
+                                || (panel.options.statusSearchFilter == "inactiveOnly" && !concept.active)) {
                                 resDescriptions.push(aux);
                             }
-                        }                                        
-                    } else {
-                        if (panel.options.statusSearchFilter == "inactiveOnly" 
-                            || panel.options.statusSearchFilter == "activeAndInactive"
-                            || (panel.options.statusSearchFilter == "inactiveOnly" && !result.active)) {
-                            resDescriptions.push(aux);
                         }
-                    }
-                });
-                result.descriptions = resDescriptions;
+                    });
+                    concept.descriptions = resDescriptions;
+                }                
                 
                 $("#" + panel.divElement.id + "-groupConcept").unbind();
                 $("#" + panel.divElement.id + "-groupConcept").click(function() {
@@ -960,13 +895,12 @@ function searchPanel(divElement, options) {
                         localStorage.setItem("groupConcept", groupConcept);
                     }
                     
-                    panel.search(t, parseInt(skipTo), returnLimit, true, true);
+                    panel.search(originalSearchTerm, parseInt(skipTo), returnLimit, true, true);
                 });
 
                 var context = {
-                    results: result.descriptions.length !== 0 ? [result] : []
+                    results: concepts.filter(function(concept) {return concept.descriptions.length !== 0;})
                 };
-               
                 $('#' + panel.divElement.id + '-resultsTable').html(JST["snomed-interaction-components/views/searchPlugin/body/0.hbs"](context));
                 $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
                 $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
@@ -982,19 +916,15 @@ function searchPanel(divElement, options) {
             xhr = null;
         }).fail(function(error) {
             xhr = null;
-            if (error.status === 404) {
-                panel.getConceptOrIdentifierReferencedConcept(t, skipTo, returnLimit, skipSemtagFilter, semTags);
-            } else {
-                var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                            
-                var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
-                $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
-                $('#' + panel.divElement.id + '-searchBar2').html("");
-                $('#' + panel.divElement.id + '-searchBar3').html("");
-                $('#' + panel.divElement.id + '-searchBar4').html("");
-                $('#' + panel.divElement.id + '-searchBar5').html("");
-                $('#' + panel.divElement.id + '-searchBar6').html("");
-                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
-            }
+            var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
+            var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
+            $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
+            $('#' + panel.divElement.id + '-searchBar2').html("");
+            $('#' + panel.divElement.id + '-searchBar3').html("");
+            $('#' + panel.divElement.id + '-searchBar4').html("");
+            $('#' + panel.divElement.id + '-searchBar5').html("");
+            $('#' + panel.divElement.id + '-searchBar6').html("");
+            $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
         });
     }
 
