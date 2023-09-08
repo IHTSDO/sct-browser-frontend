@@ -80,6 +80,15 @@
     background-size: 100% 100%;
 }
 
+/* gemany */
+
+.de {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' id='flag-icons-de' viewBox='0 0 640 480'%3E%3Cpath fill='%23ffce00' d='M0 320h640v160H0z'/%3E%3Cpath d='M0 0h640v160H0z'/%3E%3Cpath fill='%23d00' d='M0 160h640v160H0z'/%3E%3C/svg%3E%0A");
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}
+
 
 /* belgium */
 
