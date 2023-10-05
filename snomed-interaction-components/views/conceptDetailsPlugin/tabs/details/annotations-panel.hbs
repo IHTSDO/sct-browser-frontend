@@ -1,0 +1,25 @@
+<table class='table table-bordered' id = '{{divElementId}}-annotation-panel-table'>
+    <thead>
+        <tr>
+            <th colspan="3" class="text-left"><span class='i18n' data-i18n-id='i18n_annotations'>{{i18n "i18n_annotations" "Annotations"}}</span></th>            
+        </tr>
+        <tr>
+            <th><span class='i18n' data-i18n-id='i18n_type'>{{i18n "i18n_type" "Type"}}</span></th>
+            <th><span class='i18n' data-i18n-id='i18n_value'>{{i18n "i18n_value" "Value"}}</span></th>
+            <th><span class='i18n' data-i18n-id='i18n_language'>{{i18n "i18n_language" "Language"}}</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each annotations}}
+            <tr class='{{#if active}}{{else}} danger{{/if}}
+                    {{#if ../options.dailyBuildBrowser}}{{#if_eq effectiveTime null}} highlightEffectiveTime {{/if_eq}}{{/if}}
+                    {{#if ../options.tsBrowser}}{{#if_eq effectiveTime null}} highlightEffectiveTime{{/if_eq}}{{/if}}
+                    {{#if ../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{/if}}'>
+                    <td><a class="destination-item" href="javascript:void(0);" data-module="{{moduleId}}" data-concept-id='{{annotationTypeId}}' data-term='{{annotationTypePt.term}}' style="color: inherit; text-decoration: inherit;">{{annotationTypePt.term}}</a></td>
+                    <td>{{annotationValue}}</td>
+                    <td style="text-transform: uppercase;">{{annotationLanguage}}</td>
+                </tr>
+        {{/each}}
+    </tbody>
+</table>
+<br/>
