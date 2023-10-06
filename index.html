@@ -177,7 +177,7 @@
         }
 
         function determineServer() {
-            if (window.location.hostname.includes('dailybuild')) {
+            if (window.location.hostname.includes('dailybuild') || window.location.hostname.includes('simplex')) {
                 options.dailyBuildBrowser = true;
             } else if (window.location.hostname.includes('community')) {
                 options.communityBrowser = true;
