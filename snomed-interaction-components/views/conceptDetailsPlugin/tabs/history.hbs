@@ -2,9 +2,9 @@
     <div class="col-md-9" style="padding-left: 0px;">
         <h4>
             {{#if_undefined concept.fsn.term}}
-                History - {{concept.conceptId }} |{{concept.fsn}}| 
+                <span class='i18n' data-i18n-id='i18n_history'>{{i18n "i18n_history" "History"}}</span> - {{concept.conceptId }} |{{concept.fsn}}| 
             {{else}}
-                History - {{concept.conceptId }} |{{concept.defaultTerm }}|
+                <span class='i18n' data-i18n-id='i18n_history'>{{i18n "i18n_history" "History"}}</span> - {{concept.conceptId }} |{{concept.defaultTerm }}|
             {{/if_undefined}}
         </h4>
     </div> 
@@ -13,8 +13,8 @@
     <table class="table table-hover table-bordered" id="history-list-{{divElementId}}" style="margin-top:20px">
         <thead>
         <tr>
-            <th><span >Version</span></th>
-            <th><span >Type of Change</span></th>
+            <th><span class='i18n' data-i18n-id='i18n_version'>{{i18n "i18n_version" "Version"}}</span></th>
+            <th><span class='i18n' data-i18n-id='i18n_type_of_change'>{{i18n "i18n_type_of_change" "Type of Change"}}</span></th>
         </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
                             {{date}}
                         </a>
                     </td>
-                    <td>{{componentTypes}}</td>
+                    <td>{{{componentTypesHtml}}}</td>
                 </tr>
             {{/each}}
         </tbody>

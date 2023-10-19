@@ -1674,9 +1674,11 @@ function queryComputerPanel(divElement, options) {
                     var i18n_more_text = jQuery.i18n.prop('i18n_more');                    
                     var i18n_viewing_text = jQuery.i18n.prop('i18n_viewing');                    
                     var i18n_items_of_text = jQuery.i18n.prop('i18n_items_of');                    
-                    var i18n_total_text = jQuery.i18n.prop('i18n_total');                    
-                    var i18n_showing_all_text = jQuery.i18n.prop('i18n_showing_all');                    
+                    var i18n_total_text = jQuery.i18n.prop('i18n_total');
+                    var i18n_showing_all_text = jQuery.i18n.prop('i18n_showing_all');
                     var i18n_matches_text = jQuery.i18n.prop('i18n_matches');
+                    var i18n_stated_text = jQuery.i18n.prop('i18n_stated');
+                    var i18n_inferred_text = jQuery.i18n.prop('i18n_inferred');
                    
                     var show_html = "<span class='i18n' data-i18n-id='i18n_show'>"+i18n_show_text+"</span>";
                     var more_html = "<span class='i18n' data-i18n-id='i18n_more'>"+i18n_more_text+"</span>";
@@ -1685,9 +1687,15 @@ function queryComputerPanel(divElement, options) {
                     var total_html = "<span class='i18n' data-i18n-id='i18n_total'>"+i18n_total_text+"</span>";
                     var showing_all_html = "<span class='i18n' data-i18n-id='i18n_showing_all'>"+i18n_showing_all_text+"</span>";
                     var matches_html = "<span class='i18n' data-i18n-id='i18n_matches'>"+i18n_matches_text+"</span>";
-                    var inferredOrStated = panel.options.eclQueryFilter;
+                    var inferredOrStated = null;
                     if (memberTypeResults) {
                         inferredOrStated = "";
+                    } else {
+                        if (panel.options.eclQueryFilter === 'stated') {
+                            inferredOrStated = "<span class='i18n' data-i18n-id='i18n_stated' style='text-transform: lowercase'>"+i18n_stated_text+"</span>";
+                        } else {
+                            inferredOrStated = "<span class='i18n' data-i18n-id='i18n_inferred' style='text-transform: lowercase'>"+i18n_inferred_text+"</span>";
+                        }
                     }
 
                     if (!data.totalElements) {
@@ -1695,7 +1703,7 @@ function queryComputerPanel(divElement, options) {
                         if (limit + skip < data.total) {
                             $('#' + panel.divElement.id + '-footer').html("<span id='" + panel.divElement.id + "-more'>"+show_html+" "+more_html+" ("+viewing_html+ (limit + skip) + " " + inferredOrStated + " "+items_of_html+" " + data.total + " "+total_html+")</span>");
                         } else {
-                            $('#' + panel.divElement.id + '-footer').html(showing_all_html+" " + data.total + " " + inferredOrStated + " "+matches_html);
+                            $('#' + panel.divElement.id + '-footer').html(showing_all_html+" " + data.total + " " + inferredOrStated + " " + matches_html);
                         }
                     } else {
                         panel.lastTotalValues = data.totalElements;

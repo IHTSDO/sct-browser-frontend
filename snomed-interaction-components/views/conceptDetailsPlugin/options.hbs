@@ -55,14 +55,14 @@
         <label for="selectedRelsView"><span class="i18n" data-i18n-id="i18n_rels_view">{{i18n "i18n_rels_view" "Relationships View"}}</span></label>
         <select class="form-control" id="{{divElementId}}-relsViewOption">
             {{#if_eq options.selectedView "stated"}}
-                <option value="stated" selected>Stated</option>
+                <option value="stated" selected><span class="i18n" data-i18n-id="i18n_stated">{{i18n "i18n_stated" "Stated"}}</span></option>
             {{else}}
-                <option value="stated">Stated</option>
+                <option value="stated"><span class="i18n" data-i18n-id="i18n_stated">{{i18n "i18n_stated" "Stated"}}</span></option>
             {{/if_eq}}
             {{#if_eq options.selectedView "inferred"}}
-                <option value="inferred" selected>Inferred</option>
+                <option value="inferred" selected><span class="i18n" data-i18n-id="i18n_inferred">{{i18n "i18n_inferred" "Inferred"}}</span></option>
             {{else}}
-                <option value="inferred">Inferred</option>
+                <option value="inferred"><span class="i18n" data-i18n-id="i18n_inferred">{{i18n "i18n_inferred" "Inferred"}}</span></option>
             {{/if_eq}}           
         </select>
     </div>

@@ -223,6 +223,20 @@ function searchPanel(divElement, options) {
                     var reversedHistory = panel.history.slice(0);
                     reversedHistory.reverse();
                     //console.log(JSON.stringify(reversedHistory));
+                    var second_text = jQuery.i18n.prop('i18n_second');
+                    var seconds_text = jQuery.i18n.prop('i18n_seconds');
+                    var minute_text = jQuery.i18n.prop('i18n_minute');
+                    var minutes_text = jQuery.i18n.prop('i18n_minutes');
+                    var hour_text = jQuery.i18n.prop('i18n_hour');
+                    var hours_text = jQuery.i18n.prop('i18n_hours');
+                    var ago_text = jQuery.i18n.prop('i18n_ago');
+                    var second_html = "<span class='i18n' data-i18n-id='i18n_second'>"+second_text+"</span>";
+                    var seconds_html = "<span class='i18n' data-i18n-id='i18n_seconds'>"+seconds_text+"</span>";
+                    var minute_html = "<span class='i18n' data-i18n-id='i18n_minute'>"+minute_text+"</span>";
+                    var minutes_html = "<span class='i18n' data-i18n-id='i18n_minutes'>"+minutes_text+"</span>";
+                    var hour_html = "<span class='i18n' data-i18n-id='i18n_hour'>"+hour_text+"</span>";
+                    var hours_html = "<span class='i18n' data-i18n-id='i18n_hours'>"+hours_text+"</span>";
+                    var ago_html = "<span class='i18n' data-i18n-id='i18n_ago'>"+ago_text+"</span>";
                     $.each(reversedHistory, function(i, field) {
                         var d = new Date();
                         var curTime = d.getTime();
@@ -230,21 +244,21 @@ function searchPanel(divElement, options) {
                         var agoString = "";
                         if (ago < (1000 * 60)) {
                             if (Math.round((ago / 1000)) == 1) {
-                                agoString = Math.round((ago / 1000)) + ' second ago';
+                                agoString = Math.round((ago / 1000)) + ' '+ second_html + ' ' + ago_html;
                             } else {
-                                agoString = Math.round((ago / 1000)) + ' seconds ago';
+                                agoString = Math.round((ago / 1000)) + ' '+ seconds_html + ' ' + ago_html;
                             }
                         } else if (ago < (1000 * 60 * 60)) {
                             if (Math.round((ago / 1000) / 60) == 1) {
-                                agoString = Math.round((ago / 1000) / 60) + ' minute ago';
+                                agoString = Math.round((ago / 1000) / 60) + ' '+ minute_html + ' ' + ago_html;
                             } else {
-                                agoString = Math.round((ago / 1000) / 60) + ' minutes ago';
+                                agoString = Math.round((ago / 1000) / 60) + ' '+ minutes_html + ' ' + ago_html;
                             }
                         } else if (ago < (1000 * 60 * 60 * 60)) {
                             if (Math.round(((ago / 1000) / 60) / 60) == 1) {
-                                agoString = Math.round(((ago / 1000) / 60) / 60) + ' hour ago';
+                                agoString = Math.round(((ago / 1000) / 60) / 60) + ' '+ hour_html + ' ' + ago_html;
                             } else {
-                                agoString = Math.round(((ago / 1000) / 60) / 60) + ' hours ago';
+                                agoString = Math.round(((ago / 1000) / 60) / 60) + ' '+ hours_html + ' ' + ago_html;
                             }
                         }
                         historyHtml = historyHtml + '<tr><td><a href="javascript:void(0);" onclick="searchInPanel(\'' + panel.divElement.id + '\',\'' + field.searchTerm + '\');">' + field.searchTerm + '</a>';
