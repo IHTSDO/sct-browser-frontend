@@ -75,7 +75,7 @@
                             <goal>grunt</goal>
                         </goals>
                         <configuration>
-                            <arguments>--verbose</arguments>
+                            <arguments>--force</arguments>
                         </configuration>
                     </execution>
                 </executions>
@@ -128,7 +128,20 @@
             </plugin>
         </plugins>
     </build>
-
+    <profiles>
+        <!-- Default build number for local builds, outside of Jenkins -->
+        <profile>
+            <id>BUILD_NUMBER default value</id>
+            <activation>
+                <property>
+                    <name>!BUILD_NUMBER</name>
+                </property>
+            </activation>
+            <properties>
+                <BUILD_NUMBER>default value</BUILD_NUMBER>
+            </properties>
+        </profile>
+    </profiles>
     <distributionManagement>
         <repository>
             <id>ihtsdo-public-nexus</id>
