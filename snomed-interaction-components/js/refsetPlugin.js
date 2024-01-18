@@ -107,34 +107,60 @@ function refsetPanel(divElement, options) {
             divElementId: panel.divElement.id,
             refsets: refsets
         }
-        $("#" + panel.divElement.id + "-panelBody").html(JST["snomed-interaction-components/views/refsetPlugin/body.hbs"](context));
-        $('#' + panel.divElement.id + '-panelBody').find(".refset-item").click(function(event) {
-            panel.loadMembers($(event.target).attr('data-concept-id'), $(event.target).attr('data-term'), 100, 0);
-            channel.publish(panel.divElement.id, {
-                term: $(event.target).attr('data-term'),
-                module: $(event.target).attr("data-module"),
-                conceptId: $(event.target).attr('data-concept-id'),
-                source: panel.divElement.id,
-                showConcept: true
+       
+        setTimeout(function() {
+            Handlebars.registerHelper('if_eq', function(a, b, opts) {
+                if (opts != "undefined") {
+                    if (a == b)
+                        return opts.fn(this);
+                    else
+                        return opts.inverse(this);
+                }
             });
-        });       
-
-        $('#' + panel.divElement.id + '-datatable').DataTable({
-            searching: false, 
-            paging: false, 
-            info: false,
-            "autoWidth": false,
-            "columnDefs": [
-                { "width": "25%", "targets": 0 },
-                { "width": "70%", "targets": 1 },
-                { "width": "5%", "targets": 2 }
-              ]
-        });
-
-        $('#' + panel.divElement.id + '-details').split({
-            orientation: 'horizontal',
-            position: '90%'
-        });
+            Handlebars.registerHelper('if_gr', function(a, b, opts) {
+                if (a) {
+                    if (a > b)
+                        return opts.fn(this);
+                    else
+                        return opts.inverse(this);
+                }
+            });
+            Handlebars.registerHelper('hasCountryIcon', function(moduleId, opts) {
+                if (countryIcons[moduleId])
+                    return opts.fn(this);
+                else
+                    return opts.inverse(this);
+            });
+            $("#" + panel.divElement.id + "-panelBody").html(JST["snomed-interaction-components/views/refsetPlugin/body.hbs"](context));
+            $('#' + panel.divElement.id + '-panelBody').find(".refset-item").click(function(event) {
+                panel.loadMembers($(event.target).attr('data-concept-id'), $(event.target).attr('data-term'), 100, 0);
+                channel.publish(panel.divElement.id, {
+                    term: $(event.target).attr('data-term'),
+                    module: $(event.target).attr("data-module"),
+                    conceptId: $(event.target).attr('data-concept-id'),
+                    source: panel.divElement.id,
+                    showConcept: true
+                });
+            });       
+    
+            $('#' + panel.divElement.id + '-datatable').DataTable({
+                searching: false, 
+                paging: false, 
+                info: false,
+                "autoWidth": false,
+                "columnDefs": [
+                    { "width": "25%", "targets": 0 },
+                    { "width": "70%", "targets": 1 },
+                    { "width": "5%", "targets": 2 }
+                  ]
+            });
+    
+            $('#' + panel.divElement.id + '-details').split({
+                orientation: 'horizontal',
+                position: '90%'
+            });
+        } , 0);
+        
     }
 
     this.loadMembers = function(conceptId, term, returnLimit, skipTo, paginate) {

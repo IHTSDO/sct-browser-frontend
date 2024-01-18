@@ -9,6 +9,8 @@ function searchPanel(divElement, options) {
     var panel = this;
     var lastT = "";
     var xhr = null;
+    var identifierReferencedConceptFound = false;
+    var getConceptOrIdentifierReferencedConceptDone = false;
     if (typeof componentsRegistry == "undefined") {
         componentsRegistry = [];
     }
@@ -756,6 +758,11 @@ function searchPanel(divElement, options) {
     }
 
     this.getConceptOrIdentifierReferencedConcept = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {
+        panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags, skipSemtagFilter ? false : true);
+        if (skipSemtagFilter) {
+            return;
+        }
+
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
@@ -767,20 +774,22 @@ function searchPanel(divElement, options) {
                 }
             });
         };
+
+        identifierReferencedConceptFound = false;
+        getConceptOrIdentifierReferencedConceptDone = false;
         var searchUrl = options.serverUrl + "/browser/" + branch + "/concepts/" + encodeURIComponent(t) + "/concept-or-identifier-ref-concept";
         xhr = $.getJSON(searchUrl , function(response) {
         }).done(function(response) {
             var results = response.items;
-            if (results.length == 0) {
-                panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags);
-                return;
-            } else {
+            getConceptOrIdentifierReferencedConceptDone = true
+            if (results.length != 0) {
+                identifierReferencedConceptFound = true;
                 var conceptIds = [];
                 $.each(results, function(i, field) {
                     conceptIds.push(field.conceptId);
                 });
                 panel.getConcepts(conceptIds, t, skipTo, returnLimit, skipSemtagFilter, semTags, false);
-            }            
+            }
             xhr = null;
         }).fail(function(error) {
             xhr = null;
@@ -1035,7 +1044,7 @@ function searchPanel(divElement, options) {
         });
     }
 
-    this.findConceptDescriptions = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {                            
+    this.findConceptDescriptions = function(t, skipTo, returnLimit, skipSemtagFilter, semTags, parallelRequest) {                            
         var searchUrl = '';
         if (panel.options.multiExtensionSearch) {
             searchUrl = options.serverUrl + "/multisearch/descriptions?&limit=100&active=true&conceptActive=true&term=" + encodeURIComponent(t);                        
@@ -1158,8 +1167,15 @@ function searchPanel(divElement, options) {
                 xhr.setRequestHeader('Accept-Language', options.languages);
             };
         },
-        success: function(result) { 
-            
+        success: function(result) {
+            if (parallelRequest) {
+                while (!getConceptOrIdentifierReferencedConceptDone) {
+                    // wait
+                }
+                if (identifierReferencedConceptFound) {
+                    return;
+                }
+            }
             Handlebars.registerHelper('ifIn', function(elem, list, options) {
                 if (list.indexOf(elem) > -1) {
                     return options.fn(this);
