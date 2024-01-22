@@ -18,11 +18,10 @@
     "dependencies": {
         "canvg": "^1.5.3",
         "chalk": "^0.5.1",
-        "grunt": "^1.0.3",
+        "grunt": "0.4",
         "grunt-cli": "^0.1.13",
         "grunt-contrib-handlebars": "^0.8.0",
         "grunt-conventional-changelog": "^6.1.0",
-        "grunt-release": "^0.14.0",
         "handlebars": "^4.0.0",
         "snomed-ecl-builder": "^1.0.4"
     },
