@@ -18,8 +18,8 @@
     "dependencies": {
         "canvg": "^1.5.3",
         "chalk": "^0.5.1",
+        "cypress": "^13.6.4",
         "cypress-mochawesome-reporter": "^3.8.1",
-        "cyprus": "^2.0.2",
         "grunt": "0.4",
         "grunt-cli": "^0.1.13",
         "grunt-contrib-handlebars": "^0.8.0",
