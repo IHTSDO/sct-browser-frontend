@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('C605827-Search_and_Load', () => {
     it('passes', () => {
       
     //Launch browser tool
@@ -151,6 +151,7 @@ describe('template spec', () => {
     } 
        
     //Load the last changed version by clicking the first date in the version column in the history tab.
+    cy.get(':nth-child(1) > [style="width:12.5%;"] > .history-item').contains('2019-07-31').click()
     const datelink = cy.get(':nth-child(1) > [style="width:12.5%;"] > .history-item')
     datelink.click()
     if(cy.get(':nth-child(1) > tbody > .fsn-row > :nth-child(1)').should('contain', 'Heart structure (body structure)'))
