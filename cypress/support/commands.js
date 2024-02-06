@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// -- Accept cookies disclaimers
+Cypress.Commands.add('AcceptCookies', (text) => {
+    cy.get('.iubenda-cs-accept-btn').should('have.text', 'Accept').click()
+    cy.get('#accept-license-button-modal > .i18n').should('have.text', 'Accept').click()
+  })
+
+// -- Select International Edition
+Cypress.Commands.add('InternationalEdition', (text) => {
+    cy.get('#international_editions > :nth-child(1)').should('contain', 'International Edition').click()
+  })

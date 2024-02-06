@@ -5,16 +5,13 @@ describe('C605827-Search_and_Load', () => {
     cy.visit('https://dev-browser.ihtsdotools.org/')
       
     // Click on Accept cookies disclaimers
-    cy.get('.iubenda-cs-accept-btn').click()
-    cy.get('#accept-license-button-modal > .i18n').click()
-
+    cy.AcceptCookies('Accept cookies disclaimers')
+    
     //Ensure SNOMED CT browser page is displayed
     cy.get('h1 > .i18n').should('have.text', 'SNOMED International SNOMED CT Browser')
       
-      
     //Click on International Edition
-    cy.get('#international_editions > :nth-child(1)').click()
-      
+    cy.InternationalEdition('Select International Edition')
 
     //Select the version - 2023-12-01
     cy.get('#version-selector > .btn').click()
@@ -152,8 +149,6 @@ describe('C605827-Search_and_Load', () => {
        
     //Load the last changed version by clicking the first date in the version column in the history tab.
     cy.get(':nth-child(1) > [style="width:12.5%;"] > .history-item').contains('2019-07-31').click()
-    const datelink = cy.get(':nth-child(1) > [style="width:12.5%;"] > .history-item')
-    datelink.click()
     if(cy.get(':nth-child(1) > tbody > .fsn-row > :nth-child(1)').should('contain', 'Heart structure (body structure)'))
     {
       cy.log('Successfully redirected to Details page from History page')     
