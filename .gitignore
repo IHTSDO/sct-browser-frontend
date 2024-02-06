@@ -50,3 +50,6 @@ bin
 .settings/org.eclipse.jdt.apt.core.prefs
 .classpath
 .project
+
+#gitignorefiles
+/cypress/reports
