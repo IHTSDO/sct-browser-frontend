@@ -1,9 +1,9 @@
 class DetailsPage {
 
 //Swap the view to Inferred
-getDetailsTab(){
+getDetailsTab(value){
     cy.get('#details-tabs-fh-cd1_canvas > :nth-child(2) > a > .i18n').click()
-    if(cy.get(':nth-child(1) > thead > :nth-child(1) > .text-center').should('have.text', 'United States of America English language reference set'))
+    if(cy.get(':nth-child(1) > thead > :nth-child(1) > .text-center').should('have.text', value))
     {
       return cy.log('Details page is displayed')
     }

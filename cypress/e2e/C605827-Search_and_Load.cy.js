@@ -95,7 +95,9 @@ import HistoryPage from "../pages/HistoryPage"
 
 //Navigate to Details page
 it("Redirect to Details page", () => {
-  detailspage.getDetailsTab()
+  cy.fixture('DetailsTab').then((data) => {
+  detailspage.getDetailsTab(data.InternationalEditionConceptDetailsTab)
+})
 })
 
 //Click on the first description information icon
