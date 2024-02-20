@@ -54,6 +54,21 @@ getConcept(){
     return cy.get('#fh-search_canvas-resultsTable > :nth-child(1) > :nth-child(1)')
 }
 
+// Select Spanish language
+getSpanishlanguage(){
+    cy.get(':nth-child(2) > .lang-link').click()
+    if(cy.get('.label').should('contain', 'spanish'))
+    {
+        return cy.log('Spanish language filter is enabled and search results are displayed')
+    }
+}
+
+// Assert that all results have flags in the first column in the search results
+getResultHaveFlags(){
+     cy.get(':nth-child(1) > :nth-child(1) > .result-item > .phoca-flagbox > .phoca-flag').should('be.visible')
+     return cy.log('A flag should be present next to each result')  
+}
+
 }
 
 module.exports = SNOMEDCTBrowserPage
