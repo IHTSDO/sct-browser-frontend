@@ -30,6 +30,11 @@ getArgentinianEdition(){
   return cy.get('#local_editions > :nth-child(1)').should('contain', 'Argentinian Edition')
 }
 
+// -- Select Austrian Edition
+getAustrianEdition(){
+  return cy.get('#local_editions > :nth-child(3)').should('contain', 'Austrian Edition')
+}
+
 }
 
 module.exports = AcceptCookiesDisclaimerPage

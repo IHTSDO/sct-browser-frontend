@@ -26,8 +26,8 @@ getSearch(){
     return cy.get('#fh-search_canvas-searchBox')
 }
 
-getValidateSearchResult(){
-    if(cy.get('#fh-search_canvas-searchBar > .text-muted').contains( 'matches found in ' ))
+getValidateSearchResult(searchvalidationText){
+    if(cy.get('#fh-search_canvas-searchBar > .text-muted').contains( searchvalidationText ))
     {
       return cy.log('Search returns matching records')
          
@@ -63,10 +63,19 @@ getSpanishlanguage(){
     }
 }
 
-// Assert that all results have flags in the first column in the search results
+// Assert that the first result has a flag in the first column in the search results
 getResultHaveFlags(){
-     cy.get(':nth-child(1) > :nth-child(1) > .result-item > .phoca-flagbox > .phoca-flag').should('be.visible')
-     return cy.log('A flag should be present next to each result')  
+    cy.get(':nth-child(1) > :nth-child(1) > .result-item > .phoca-flagbox > .phoca-flag').should('be.visible')
+    return cy.log('A flag should be present next to each result')  
+}
+
+// Click on Österreichisches Module filter
+getÖsterreichischesModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'Österreichisches M...'))
+    {
+        return cy.log('Österreichisches module filter is enabled and search results are displayed')
+    }
 }
 
 }
