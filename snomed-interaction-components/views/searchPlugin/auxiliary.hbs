@@ -20,27 +20,25 @@
         <div style="display: inline;width: 34%;height: 100%; float: left; border: 1px solid lightgray; border-radius: 4px; padding: 5px; ">            
             <h4><span class='i18n' data-i18n-id='i18n_options'>Options</span></h4>
             <div id='{{divElementId}}-searchConfigBar' style='margin-bottom: 10px;'>
-                <div style="margin-top: 15px">
-                    {{#if_eq server 'snowstorm'}}
-                        <div style="margin-top: 5px" class="btn-group">
-                            <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class='i18n' data-i18n-id='i18n_search_mode'>{{i18n "i18n_search_mode" "Search Mode" }}</span>: <span id="{{divElementId}}-searchMode"></span>&nbsp;<span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#" id='{{divElementId}}-fullTextButton'><span class='i18n' data-i18n-id='i18n_full_text_search_mode'>{{i18n "i18n_full_text_search_mode" "Full text search mode" }}</span></a>
-                                </li>
-                                <li>
-                                    <a href="#" id='{{divElementId}}-partialMatchingButton'><span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>{{i18n "i18n_partial_match_search_mode" "Partial matching search mode"}}</span></a>
-                                </li>
-                                <!--
-                                <li>
-                                    <a href="#" id='{{divElementId}}-regexButton'><span class='i18n' data-i18n-id='i18n_regex_search_mode'>{{i18n "i18n_regex_search_mode" "Regular Expressions search mode"}}</span></a>
-                                </li>
-                                -->                                
-                            </ul>
-                        </div>
-                    {{/if_eq}}
+                <div style="margin-top: 15px">                    
+                    <div style="margin-top: 5px" class="btn-group">
+                        <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <span class='i18n' data-i18n-id='i18n_search_mode'>{{i18n "i18n_search_mode" "Search Mode" }}</span>: <span id="{{divElementId}}-searchMode"></span>&nbsp;<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#" id='{{divElementId}}-fullTextButton'><span class='i18n' data-i18n-id='i18n_full_text_search_mode'>{{i18n "i18n_full_text_search_mode" "Full text search mode" }}</span></a>
+                            </li>
+                            <li>
+                                <a href="#" id='{{divElementId}}-partialMatchingButton'><span class='i18n' data-i18n-id='i18n_partial_match_search_mode'>{{i18n "i18n_partial_match_search_mode" "Partial matching search mode"}}</span></a>
+                            </li>
+                            <!--
+                            <li>
+                                <a href="#" id='{{divElementId}}-regexButton'><span class='i18n' data-i18n-id='i18n_regex_search_mode'>{{i18n "i18n_regex_search_mode" "Regular Expressions search mode"}}</span></a>
+                            </li>
+                            -->
+                        </ul>
+                    </div>
                     <div style="margin-top: 5px" class="btn-group"  id="{{divElementId}}-searchStatusSection">
                         <button style="white-space: normal;" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                             <span class='i18n' data-i18n-id='i18n_status'>{{i18n "i18n_status" "Status" }}</span>: <span id="{{divElementId}}-searchStatus"></span>&nbsp;<span class="caret"></span>
@@ -88,14 +86,11 @@
                             </button>                        
                         </div>
                     </div>
-                     
-                    {{#if_eq server 'snowstorm'}}
-                        <div style="margin-top: 5px; " class="checkbox" id="{{divElementId}}-searchGroupByConceptSection">
-                            <label>
-                                <input id="{{divElementId}}-groupConcept" type="checkbox"><span class='i18n' data-i18n-id='i18n_group_by_concept'>{{i18n "i18n_group_by_concept" "Group by concept"}}</span>
-                            </label>
-                        </div>
-                    {{/if_eq}}
+                    <div style="margin-top: 5px; " class="checkbox" id="{{divElementId}}-searchGroupByConceptSection">
+                        <label>
+                            <input id="{{divElementId}}-groupConcept" type="checkbox"><span class='i18n' data-i18n-id='i18n_group_by_concept'>{{i18n "i18n_group_by_concept" "Group by concept"}}</span>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div id="{{divElementId}}-searchBar2"></div>
