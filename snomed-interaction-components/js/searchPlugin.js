@@ -9,8 +9,6 @@ function searchPanel(divElement, options) {
     var panel = this;
     var lastT = "";
     var xhr = null;
-    var identifierReferencedConceptFound = false;
-    var getConceptOrIdentifierReferencedConceptDone = false;
     if (typeof componentsRegistry == "undefined") {
         componentsRegistry = [];
     }
@@ -38,52 +36,52 @@ function searchPanel(divElement, options) {
     this.history = [];
 
     var en_es_semantictags_mapping = {
-        "OWL metadata concept": "concepto de metadatos de OWL",  
-        "administration method": "método de administración",  
-        "assessment scale": "escala de evaluación", 
+        "OWL metadata concept": "concepto de metadatos de OWL",
+        "administration method": "método de administración",
+        "assessment scale": "escala de evaluación",
         "attribute": "atributo",
         "basic dose form": "forma farmacéutica básica",
         "body structure": "estructura corporal",
         "cell": "célula",
         "cell structure": "estructura celular",
-        "clinical drug": "fármaco de uso clínico",  
-        "core metadata concept": "metadato del núcleo",  
-        "disorder": "trastorno",  
+        "clinical drug": "fármaco de uso clínico",
+        "core metadata concept": "metadato del núcleo",
+        "disorder": "trastorno",
         "disposition": "disposición",
-        "dose form": "forma farmacéutica",  
+        "dose form": "forma farmacéutica",
         "environment": "medio ambiente",
-        "environment / location": "medio ambiente / localización", 
+        "environment / location": "medio ambiente / localización",
         "ethnic group": "grupo étnico",
-        "event": "evento",  
+        "event": "evento",
         "finding": "hallazgo",
-        "foundation metadata concept": "metadato fundacional",  
-        "geographic location": "localización geográfica",  
+        "foundation metadata concept": "metadato fundacional",
+        "geographic location": "localización geográfica",
         "intended site": "sitio de administración previsto",
         "life style": "estilo de vida",
         "link assertion": "relación asertiva",
-        "linkage concept": "concepto de enlace",  
+        "linkage concept": "concepto de enlace",
         "medicinal product": "producto medicinal",
-        "medicinal product form": "forma farmacéutica de producto medicinal",  
+        "medicinal product form": "forma farmacéutica de producto medicinal",
         "metadata": "metadato",
-        "morphologic abnormality": "anomalía morfológica", 
+        "morphologic abnormality": "anomalía morfológica",
         "namespace concept": "espacio de nombres",
-        "navigational concept": "concepto para navegación", 
+        "navigational concept": "concepto para navegación",
         "observable entity": "entidad observable",
         "occupation": "ocupación",
-        "organism": "organismo",  
+        "organism": "organismo",
         "person": "persona",
         "physical force": "fuerza física",
-        "physical object": "objeto físico",  
+        "physical object": "objeto físico",
         "procedure": "procedimiento",
         "product": "producto",
         "product name": "nombre de producto",
         "qualifier value": "calificador",
         "racial group": "grupo racial",
         "record artifact": "elemento de registro",
-        "regime/therapy": "régimen/tratamiento",  
+        "regime/therapy": "régimen/tratamiento",
         "release characteristic": "forma de liberación",
         "religion/philosophy": "religión/filosofía",
-        "role": "rol",  
+        "role": "rol",
         "situation": "situación",
         "social concept": "contexto social",
         "special concept": "concepto especial",
@@ -92,8 +90,8 @@ function searchPanel(divElement, options) {
         "state of matter": "estado de la materia",
         "substance": "sustancia",
         "supplier": "proveedor",
-        "transformation": "transformación", 
-        "tumor staging": "estadificación tumoral",  
+        "transformation": "transformación",
+        "tumor staging": "estadificación tumoral",
         "unit of presentation": "unidad de presentación"
       };
 
@@ -133,7 +131,7 @@ function searchPanel(divElement, options) {
         $("#" + panel.divElement.id + "-closeButton").disableTextSelect();
         $("#" + panel.divElement.id + "-clearButton").disableTextSelect();
         $("#" + panel.divElement.id + "-expandButton").hide();
-        $("#" + panel.divElement.id + "-subscribersMarker").hide();        
+        $("#" + panel.divElement.id + "-subscribersMarker").hide();
 
         $("#" + panel.divElement.id).find('.semtag-button').click(function(event) {
             //console.log("Semtag click: " + $(this).html());
@@ -286,7 +284,7 @@ function searchPanel(divElement, options) {
             if (searchTerm.charAt(0) == "^") {
                 searchTerm = searchTerm.slice(1);
                 $("#" + panel.divElement.id + '-searchBox').val(searchTerm);
-            }            
+            }
             if (searchTerm.length > 0) {
                 panel.search(searchTerm, 0, 100, true);
             }
@@ -324,7 +322,7 @@ function searchPanel(divElement, options) {
                 panel.search(searchTerm, 0, 100, true);
             }
         });
-        
+
         $("#" + panel.divElement.id + "-danishLangButton").click(function(event) {
             panel.options.searchLang = 'danish';
             $("#" + panel.divElement.id + '-navLanguageLabel').html(i18n_danish_stemmer);
@@ -356,7 +354,7 @@ function searchPanel(divElement, options) {
             if (searchTerm.length > 0) {
                 panel.search(searchTerm, 0, 100, true);
             }
-        });        
+        });
 
         $("#" + panel.divElement.id + "-activeOnlyButton").click(function(event) {
             panel.options.statusSearchFilter = 'activeOnly';
@@ -381,7 +379,7 @@ function searchPanel(divElement, options) {
             }
             panel.updateStatusFilterLabel();
         });
-        
+
         $("#" + panel.divElement.id + "-allTypeButton").click(function(event) {
             panel.options.typeSearchFilter = '';
             if (typeof(Storage) !== "undefined") {
@@ -420,7 +418,7 @@ function searchPanel(divElement, options) {
                 localStorage.setItem("groupConcept", groupConcept);
             }
         });
-       
+
         if (typeof(Storage) !== "undefined") {
             if (localStorage.getItem("searchType")) {
                 panel.options.typeSearchFilter = localStorage.getItem("searchType");
@@ -446,17 +444,17 @@ function searchPanel(divElement, options) {
                         break;
                     // case 'regex':
                     //    $("#" + panel.divElement.id + "-regexButton").click();
-                    //    break;                    
+                    //    break;
                     default:
                         $("#" + panel.divElement.id + "-partialMatchingButton").click();
                   }
             }
             else {
-                $("#" + panel.divElement.id + "-partialMatchingButton").click(); 
+                $("#" + panel.divElement.id + "-partialMatchingButton").click();
             }
             if (localStorage.getItem("groupConcept")) {
                 var  groupConcept = localStorage.getItem("groupConcept") === 'true';
-                $("#" + panel.divElement.id + "-groupConcept").prop('checked', groupConcept);               
+                $("#" + panel.divElement.id + "-groupConcept").prop('checked', groupConcept);
             }
             else {
                 $("#" + panel.divElement.id + "-groupConcept").prop('checked', true);
@@ -467,8 +465,8 @@ function searchPanel(divElement, options) {
             panel.updateTypeFilterLabel();
             $("#" + panel.divElement.id + "-partialMatchingButton").click();
             $("#" + panel.divElement.id + "-groupConcept").prop('checked', true);
-        }        
-        
+        }
+
         $("#" + panel.divElement.id + "-ownMarker").css('color', panel.markerColor);
     };
 
@@ -498,7 +496,7 @@ function searchPanel(divElement, options) {
         panel.options.languageRefsets = languageRefsets;
         if (panel.options.languageRefsets.length !== 0) {
             panel.setupLanguageRefsetDropdown();
-        }        
+        }
     }
 
     this.setupLanguageRefsetDropdown = function() {
@@ -509,15 +507,15 @@ function searchPanel(divElement, options) {
             $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').append(o);
         });
 
-        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect({            
-            buttonClass: 'btn btn-success',       
+        $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').multiselect({
+            buttonClass: 'btn btn-success',
             selectedClass: '',
             enableHTML: true,
             templates: {
                 button: '<button type="button" style="white-space: normal;" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
             },
             buttonText: function(options, select) {
-                var i18n_language_refsets = jQuery.i18n.prop('i18n_language_refsets');                        
+                var i18n_language_refsets = jQuery.i18n.prop('i18n_language_refsets');
                 if (options.length === 0) {
                    return "<span class='i18n' data-i18n-id='i18n_language_refsets'>"+i18n_language_refsets+"</span>";
                 }
@@ -529,7 +527,7 @@ function searchPanel(divElement, options) {
                     });
                     return "<span class='i18n' data-i18n-id='i18n_language_refsets'>"+i18n_language_refsets+"</span>: " + selected.substr(0, selected.length - 2);
                  }
-            },          
+            },
             onChange: function(option, checked, select) {
                 if (typeof panel.options.languageRefsetSearchFilter === 'undefined') {
                     panel.options.languageRefsetSearchFilter = [];
@@ -640,23 +638,23 @@ function searchPanel(divElement, options) {
         }
     }
 
-    this.updateTypeFilterLabel = function() {        
+    this.updateTypeFilterLabel = function() {
         if (panel.options.typeSearchFilter == 'noDef') {
-            var i18n_exclude_definitions = jQuery.i18n.prop('i18n_exclude_definitions');           
+            var i18n_exclude_definitions = jQuery.i18n.prop('i18n_exclude_definitions');
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_exclude_definitions'>"+i18n_exclude_definitions+"</span>");
-           
+
         } else if (panel.options.typeSearchFilter == 'fsn') {
-            var i18n_fsn = jQuery.i18n.prop('i18n_fsn');            
+            var i18n_fsn = jQuery.i18n.prop('i18n_fsn');
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_fsn'>"+i18n_fsn+"</span>");
-           
+
         } else if (panel.options.typeSearchFilter == 'pt') {
-            var i18n_preferred_term = jQuery.i18n.prop('i18n_preferred_term');            
+            var i18n_preferred_term = jQuery.i18n.prop('i18n_preferred_term');
             $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_preferred_term'>"+i18n_preferred_term+"</span>");
-           
+
         } else {
-            var i18n_all = jQuery.i18n.prop('i18n_all');            
+            var i18n_all = jQuery.i18n.prop('i18n_all');
             panel.options.typeSearchFilter = '';
-            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_all'>"+i18n_all+"</span>");            
+            $("#" + panel.divElement.id + '-searchTypeOpt').html("<span class='i18n' data-i18n-id='i18n_all'>"+i18n_all+"</span>");
         }
 
         var searchTerm = $('#' + panel.divElement.id + '-searchBox').val();
@@ -692,7 +690,7 @@ function searchPanel(divElement, options) {
         var originalSearchStr = t;
 
         // omitted the text between the pipe-bars if any
-        var patt = new RegExp('^\\d+\\s\\|.*\\|$');         
+        var patt = new RegExp('^\\d+\\s\\|.*\\|$');
         if (patt.test(t)) {
             t = t.substring(0, t.indexOf(' '));
         }
@@ -707,7 +705,7 @@ function searchPanel(divElement, options) {
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('glyphicon-remove');
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('text-danger');
                 $('#' + panel.divElement.id + '-typeIcon').addClass('glyphicon-ok');
-                $('#' + panel.divElement.id + '-typeIcon').addClass('text-success');       
+                $('#' + panel.divElement.id + '-typeIcon').addClass('text-success');
                 lastT = originalSearchStr;
                 var d = new Date();
                 var time = d.getTime();
@@ -717,24 +715,24 @@ function searchPanel(divElement, options) {
                     $('#' + panel.divElement.id + '-resultsTable').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 } else {
                     $('#' + panel.divElement.id + '-resultsTable').find('.more-row').html("<td colspan='2' class='text-center'><i class='glyphicon glyphicon-refresh icon-spin'></i>&nbsp;&nbsp;</td>");
-                }                
+                }
                 if (xhr != null) {
                     xhr.abort();
                 }
-                
+
                 $('#' + panel.divElement.id + '-searchBar2').html("");
                 $('#' + panel.divElement.id + '-searchBar3').html("");
                 if (!skipSemtagFilter) {
                     panel.options.semTagsFilter = [];
-                    $('#' + panel.divElement.id + '-searchBar4').html("");                    
+                    $('#' + panel.divElement.id + '-searchBar4').html("");
                 }
                 $('#' + panel.divElement.id + '-searchBar5').html("");
                 $('#' + panel.divElement.id + '-searchBar6').html("");
-                
-                var i18n_searching = jQuery.i18n.prop('i18n_searching');                        
-                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted i18n' data-i18n-id='i18n_searching'>"+i18n_searching+"...</span>");                
+
+                var i18n_searching = jQuery.i18n.prop('i18n_searching');
+                $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted i18n' data-i18n-id='i18n_searching'>"+i18n_searching+"...</span>");
                 t = t.trim();
-                
+
                 if (panel.options.multiExtensionSearch) {
                     panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags);
                 } else {
@@ -750,7 +748,7 @@ function searchPanel(divElement, options) {
                             panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags);
                         } else {
                             panel.getConceptOrIdentifierReferencedConcept(t, skipTo, returnLimit, skipSemtagFilter, semTags);
-                        }                        
+                        }
                     }
                 }
             }
@@ -758,11 +756,6 @@ function searchPanel(divElement, options) {
     }
 
     this.getConceptOrIdentifierReferencedConcept = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {
-        panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags, skipSemtagFilter ? false : true);
-        if (skipSemtagFilter) {
-            return;
-        }
-
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
@@ -774,16 +767,14 @@ function searchPanel(divElement, options) {
                 }
             });
         };
-
-        identifierReferencedConceptFound = false;
-        getConceptOrIdentifierReferencedConceptDone = false;
         var searchUrl = options.serverUrl + "/browser/" + branch + "/concepts/" + encodeURIComponent(t) + "/concept-or-identifier-ref-concept";
         xhr = $.getJSON(searchUrl , function(response) {
         }).done(function(response) {
             var results = response.items;
-            getConceptOrIdentifierReferencedConceptDone = true
-            if (results.length != 0) {
-                identifierReferencedConceptFound = true;
+            if (results.length == 0) {
+                panel.findConceptDescriptions(t, skipTo, returnLimit, skipSemtagFilter, semTags);
+                return;
+            } else {
                 var conceptIds = [];
                 $.each(results, function(i, field) {
                     conceptIds.push(field.conceptId);
@@ -801,11 +792,11 @@ function searchPanel(divElement, options) {
             $('#' + panel.divElement.id + '-searchBar4').html("");
             $('#' + panel.divElement.id + '-searchBar5').html("");
             $('#' + panel.divElement.id + '-searchBar6').html("");
-            $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");                      
+            $('#' + panel.divElement.id + '-searchBar').html("<span class='text-muted'></span>");
         });
     }
 
-    this.getConcepts = function(conceptArray, originalSearchTerm, skipTo, returnLimit, skipSemtagFilter, semTags, directCall) {        
+    this.getConcepts = function(conceptArray, originalSearchTerm, skipTo, returnLimit, skipSemtagFilter, semTags, directCall) {
         var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
@@ -833,7 +824,7 @@ function searchPanel(divElement, options) {
             }
             var activeConcepts = result.items.filter(function(item) {return item.active === true;});
             if(activeConcepts.length === 0 && panel.options.statusSearchFilter == "activeOnly"){
-                var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                                
+                var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
                 var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                 $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                 $('#' + panel.divElement.id + '-searchBar2').html("");
@@ -862,17 +853,17 @@ function searchPanel(divElement, options) {
                 for (var i = 0; i < concepts.length; i++) {
                     var concept = concepts[i];
                     var resDescriptions = [];
-                
+
                     // Filter by description type
-                    concept.descriptions = concept.descriptions.filter(function(item) {return !panel.options.typeSearchFilter 
+                    concept.descriptions = concept.descriptions.filter(function(item) {return !panel.options.typeSearchFilter
                                                                                         || (panel.options.typeSearchFilter === 'noDef' && item.type !== 'DEF')
                                                                                         || (panel.options.typeSearchFilter === 'fsn' && item.type === 'FSN')
-                                                                                        || (panel.options.typeSearchFilter === 'pt' && item.type === 'SYNONYM' && Object.values(item.acceptabilityMap).includes('PREFERRED'));});                
-                
+                                                                                        || (panel.options.typeSearchFilter === 'pt' && item.type === 'SYNONYM' && Object.values(item.acceptabilityMap).includes('PREFERRED'));});
+
                     // Filter by language refset
                     concept.descriptions = concept.descriptions.filter(function(item) {return !panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.length === 0
                         || Object.keys(item.acceptabilityMap).filter(function(i) {return panel.options.languageRefsetSearchFilter.includes(i)}).length !==0; });
-                        
+
                     // Filter by descritpion status
                     $.each(concept.descriptions, function(i, field) {
                         var aux = field;
@@ -886,22 +877,22 @@ function searchPanel(divElement, options) {
                         if (field.active) {
                             if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
                                 if ((aux.term === concept.pt.term || (panel.options.typeSearchFilter === 'fsn' && aux.term === concept.fsn.term)) && aux.lang == concept.pt.lang) {
-                                    if (panel.options.statusSearchFilter == "activeOnly" 
+                                    if (panel.options.statusSearchFilter == "activeOnly"
                                         || panel.options.statusSearchFilter == "activeAndInactive"
                                         || (panel.options.statusSearchFilter == "inactiveOnly" && !concept.active)) {
                                         resDescriptions.push(aux);
-                                    }                                
-                                }                             
-                            } 
+                                    }
+                                }
+                            }
                             else {
-                                if (panel.options.statusSearchFilter == "activeOnly" 
+                                if (panel.options.statusSearchFilter == "activeOnly"
                                     || panel.options.statusSearchFilter == "activeAndInactive"
                                     || (panel.options.statusSearchFilter == "inactiveOnly" && !concept.active)) {
                                     resDescriptions.push(aux);
                                 }
                             }
                         } else {
-                            if (panel.options.statusSearchFilter == "inactiveOnly" 
+                            if (panel.options.statusSearchFilter == "inactiveOnly"
                                 || panel.options.statusSearchFilter == "activeAndInactive"
                                 || (panel.options.statusSearchFilter == "inactiveOnly" && !concept.active)) {
                                 resDescriptions.push(aux);
@@ -909,15 +900,15 @@ function searchPanel(divElement, options) {
                         }
                     });
                     concept.descriptions = resDescriptions;
-                }                
-                
+                }
+
                 $("#" + panel.divElement.id + "-groupConcept").unbind();
                 $("#" + panel.divElement.id + "-groupConcept").click(function() {
                     if (typeof(Storage) !== "undefined") {
                         var groupConcept = $("#" + panel.divElement.id + "-groupConcept").is(":checked");
                         localStorage.setItem("groupConcept", groupConcept);
                     }
-                    
+
                     panel.search(originalSearchTerm, parseInt(skipTo), returnLimit, true, true);
                 });
 
@@ -952,7 +943,7 @@ function searchPanel(divElement, options) {
     }
 
     this.getDescription = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {
-        var branch = options.edition;                        
+        var branch = options.edition;
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
@@ -979,7 +970,7 @@ function searchPanel(divElement, options) {
                     else
                         return opts.inverse(this);
                 });
-                
+
                 $("#" + panel.divElement.id + "-groupConcept").unbind();
                 $("#" + panel.divElement.id + "-groupConcept").click(function() {
                     if (typeof(Storage) !== "undefined") {
@@ -1001,7 +992,7 @@ function searchPanel(divElement, options) {
                         result.fsn = concept.fsn;
                         result.pt = concept.pt;
                         result.definitionStatus = concept.definitionStatus;
-                        
+
                         var tempResults = {};
                         tempResults.matches = [];
                         tempResults.matches.push(result);
@@ -1022,7 +1013,7 @@ function searchPanel(divElement, options) {
                     }
                 });
 
-                
+
                 xhr = null;
             },
             error: function(error) {
@@ -1030,7 +1021,7 @@ function searchPanel(divElement, options) {
                 if (error.status === 404) {
                     panel.getConceptOrIdentifierReferencedConcept(t, skipTo, returnLimit, skipSemtagFilter, semTags);
                 } else {
-                    var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');                            
+                    var i18n_no_results_text = jQuery.i18n.prop('i18n_no_results');
                     var resultsHtml = resultsHtml + "<tr><td class='text-muted i18n' data-i18n-id='i18n_no_results'>" + i18n_no_results_text + "</td></tr>";
                     $('#' + panel.divElement.id + '-resultsTable').html(resultsHtml);
                     $('#' + panel.divElement.id + '-searchBar2').html("");
@@ -1044,10 +1035,10 @@ function searchPanel(divElement, options) {
         });
     }
 
-    this.findConceptDescriptions = function(t, skipTo, returnLimit, skipSemtagFilter, semTags, parallelRequest) {                            
+    this.findConceptDescriptions = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {
         var searchUrl = '';
         if (panel.options.multiExtensionSearch) {
-            searchUrl = options.serverUrl + "/multisearch/descriptions?&limit=100&active=true&conceptActive=true&term=" + encodeURIComponent(t);                        
+            searchUrl = options.serverUrl + "/multisearch/descriptions?&limit=100&active=true&conceptActive=true&term=" + encodeURIComponent(t);
         }
         else {
             if (panel.options.searchMode == "partialMatching") {
@@ -1055,10 +1046,10 @@ function searchPanel(divElement, options) {
                 t = t.replace("(", "");
                 t = t.replace(")", "");
             }
-            
+
             var startTime = Date.now();
             var branch = options.edition;
-            
+
             if(options.release.length > 0 && options.release !== 'None'){
                 branch = branch + "/" + options.release;
             };
@@ -1093,11 +1084,11 @@ function searchPanel(divElement, options) {
             if (panel.options.semTagFilter != "none") {
                 searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
             }
-            if (panel.options.semTagsFilter && panel.options.semTagsFilter.length !== 0){                        
+            if (panel.options.semTagsFilter && panel.options.semTagsFilter.length !== 0){
                 $.each(panel.options.semTagsFilter, function(i, semTag){
                     searchUrl = searchUrl + "&semanticTags=" + semTag;
                 });
-            }                        
+            }
             if (panel.options.langFilter != "none") {
                 searchUrl = searchUrl + "&language=" + panel.options.langFilter;
             }
@@ -1123,7 +1114,7 @@ function searchPanel(divElement, options) {
                 var descriptionTypes = [];
                 const FSN = '900000000000003001';
                 const SYNONYM = '900000000000013009' ;
-                
+
                 if(panel.options.typeSearchFilter ==='fsn'){
                     descriptionTypes.push(FSN);
                 }
@@ -1133,11 +1124,11 @@ function searchPanel(divElement, options) {
                 }
                 else if (panel.options.typeSearchFilter ==='pt') {
                     descriptionTypes.push(SYNONYM);
-                    
+
                     if (panel.options.languageRefsets && panel.options.languageRefsets.length != 0) {
                         $.each(panel.options.languageRefsets, function(i, concept){
                             searchUrl = searchUrl + "&preferredIn=" + concept.conceptId;
-                        });                            
+                        });
                     }
                 }
                 else {
@@ -1147,10 +1138,10 @@ function searchPanel(divElement, options) {
                 if (descriptionTypes.length != 0) {
                     $.each(descriptionTypes, function(i, type){
                         searchUrl = searchUrl + "&type=" + type;
-                    });                            
-                }                                                
+                    });
+                }
             }
-            if (panel.options.languageRefsetSearchFilter 
+            if (panel.options.languageRefsetSearchFilter
                 && panel.options.languageRefsetSearchFilter.length !== 0){
                 searchUrl = searchUrl + (searchUrl.includes('&type') ? '' : '&type=900000000000013009');
                 $.each(panel.options.languageRefsetSearchFilter, function(i, languageRefsetId){
@@ -1158,7 +1149,7 @@ function searchPanel(divElement, options) {
                 });
             }
         }
-        
+
         xhr = $.ajax({
         url: searchUrl,
         type: "GET",
@@ -1168,14 +1159,7 @@ function searchPanel(divElement, options) {
             };
         },
         success: function(result) {
-            if (parallelRequest) {
-                while (!getConceptOrIdentifierReferencedConceptDone) {
-                    // wait
-                }
-                if (identifierReferencedConceptFound) {
-                    return;
-                }
-            }
+
             Handlebars.registerHelper('ifIn', function(elem, list, options) {
                 if (list.indexOf(elem) > -1) {
                     return options.fn(this);
@@ -1185,7 +1169,7 @@ function searchPanel(divElement, options) {
             // search again if list of semantic tags provided
             if (semTags && semTags.length !== 0) {
                 var filtered = [];
-                var semanticTags = [];            
+                var semanticTags = [];
                 if (result.buckets && result.buckets.semanticTags) {
                     $.each(semTags, function(i, semTag){
                         if (typeof result.buckets.semanticTags[semTag] !== 'undefined') {
@@ -1199,10 +1183,10 @@ function searchPanel(divElement, options) {
                         });
                     }
                     if (panel.options.editionShortname === 'SNOMEDCT-ES') {
-                        semanticTags = sortSemanticTags(semanticTags);                    
+                        semanticTags = sortSemanticTags(semanticTags);
                     } else {
                         semanticTags.sort(function(a,b) {return a.key.localeCompare(b.key)});
-                    }                            
+                    }
                 }
                 if (filtered.length !== 0) {
                     $('#' + panel.divElement.id + '-searchBar4').hide();
@@ -1214,7 +1198,7 @@ function searchPanel(divElement, options) {
                     var context = {
                         server: server,
                         result: result,
-                        semanticTags: semanticTags,                                  
+                        semanticTags: semanticTags,
                         divElementId: panel.divElement.id,
                         options: panel.options
                     };
@@ -1233,18 +1217,18 @@ function searchPanel(divElement, options) {
                     $("#" + panel.divElement.id + '-searchBar4').find('.semtag-link').click(function(event) {
                         var semTagsFilter = [];
                         semTagsFilter.push($(this).attr('data-semtag'));
-                        var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');                    
+                        var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');
                         for (var i = 0; i < checkboxes.length; i++) {
                             if ($(checkboxes[i]).attr('data-semtag') === $(this).attr('data-semtag')) {
                                 $(checkboxes[i]).prop('checked',true);
                             } else {
                                 $(checkboxes[i]).prop('checked',false);
-                            }                        
+                            }
                         }
                         panel.options.semTagsFilter = semTagsFilter;
                         panel.search(t, 0, returnLimit, true, true);
                     });
-                    
+
                     panel.search(t, 0, returnLimit, true, true);
                     return;
                 }
@@ -1397,14 +1381,14 @@ function searchPanel(divElement, options) {
                         value: result.buckets.semanticTags[key]
                     });
                 }
-               
+
                 if (panel.options.editionShortname === 'SNOMEDCT-ES') {
-                    semanticTags = sortSemanticTags(semanticTags);                    
+                    semanticTags = sortSemanticTags(semanticTags);
                 } else {
                     semanticTags.sort(function(a,b) {return a.key.localeCompare(b.key)});
-                }                
+                }
             }
-            
+
             var context = {
                 server: server,
                 result: result,
@@ -1412,13 +1396,13 @@ function searchPanel(divElement, options) {
                 elapsed: elapsed,
                 divElementId: panel.divElement.id,
                 options: panel.options
-            };            
-            $('#' + panel.divElement.id + '-searchBar').html(JST["snomed-interaction-components/views/searchPlugin/body/bar.hbs"](context));                                                  
+            };
+            $('#' + panel.divElement.id + '-searchBar').html(JST["snomed-interaction-components/views/searchPlugin/body/bar.hbs"](context));
             $('#' + panel.divElement.id + '-searchBar2').html(JST["snomed-interaction-components/views/searchPlugin/body/bar2.hbs"](context));
             $('#' + panel.divElement.id + '-searchBar3').html(JST["snomed-interaction-components/views/searchPlugin/body/bar3.hbs"](context));
             if (!skipSemtagFilter) {
                 $('#' + panel.divElement.id + '-searchBar4').html(JST["snomed-interaction-components/views/searchPlugin/body/bar4.hbs"](context));
-                $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox').click(function(event) {                            
+                $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox').click(function(event) {
                     var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');
                     var semTagsFilter = [];
                     for (var i = 0; i < checkboxes.length; i++) {
@@ -1432,20 +1416,20 @@ function searchPanel(divElement, options) {
                 $("#" + panel.divElement.id + '-searchBar4').find('.semtag-link').click(function(event) {
                     var semTagsFilter = [];
                     semTagsFilter.push($(this).attr('data-semtag'));
-                    var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');                    
+                    var checkboxes = $("#" + panel.divElement.id + '-searchBar4').find('.semtag-checkbox');
                     for (var i = 0; i < checkboxes.length; i++) {
                         if ($(checkboxes[i]).attr('data-semtag') === $(this).attr('data-semtag')) {
                             $(checkboxes[i]).prop('checked',true);
                         } else {
                             $(checkboxes[i]).prop('checked',false);
-                        }                        
+                        }
                     }
                     panel.options.semTagsFilter = semTagsFilter;
                     panel.search(t, 0, returnLimit, true, true);
                 });
-            }                        
+            }
             $('#' + panel.divElement.id + '-searchBar5').html(JST["snomed-interaction-components/views/searchPlugin/body/bar5.hbs"](context));
-            $('#' + panel.divElement.id + '-searchBar6').html(JST["snomed-interaction-components/views/searchPlugin/body/bar6.hbs"](context));                                              
+            $('#' + panel.divElement.id + '-searchBar6').html(JST["snomed-interaction-components/views/searchPlugin/body/bar6.hbs"](context));
 
             $('#' + panel.divElement.id + '-moduleResumed').tooltip({
                 placement: 'left auto',
@@ -1519,7 +1503,7 @@ function searchPanel(divElement, options) {
                 panel.options.moduleFilterName = null;
                 panel.search(t, 0, returnLimit, true);
             });
-            
+
             var remaining = 0;
             if(result.totalElements) {
                 remaining = result.totalElements - (skipTo + returnLimit);
@@ -1649,7 +1633,7 @@ function searchPanel(divElement, options) {
         var allEsSemantictags = Object.values(en_es_semantictags_mapping);
         var newSemantictags = [];
         var semanticTagsInUsed = [];
-        
+
         // check for English semantic tags
         for (var i = 0; i < semanticTags.length; i++) {
             if (allEnSemantictags.indexOf(semanticTags[i].key) !== -1) {
@@ -1674,7 +1658,7 @@ function searchPanel(divElement, options) {
                 semanticTagsInUsed.push(semanticTags[i]);
                 var found = newSemantictags.filter(function(el) {
                     return en_es_semantictags_mapping[el.en_key] === semanticTags[i].key;
-                })[0];               
+                })[0];
                 if (found) {
                     found.es_key = semanticTags[i].key;
                     found.es_value = semanticTags[i].value;
@@ -1684,7 +1668,7 @@ function searchPanel(divElement, options) {
                         en_value: '',
                         es_key: semanticTags[i].key,
                         es_value: semanticTags[i].value
-                    }); 
+                    });
                 }
             }
         }
@@ -1707,7 +1691,7 @@ function searchPanel(divElement, options) {
 
         // sort English semantic tags alphabetically
         newSemantictags.sort(function(a,b) {return a.en_key.localeCompare(b.en_key); });
-        
+
         var results = [];
         for (var i = 0; i < newSemantictags.length; i++) {
             if (newSemantictags[i].en_key) {
@@ -1863,12 +1847,12 @@ function searchPanel(divElement, options) {
         if (typeof panel.options.searchMode == "undefined") {
             panel.options.searchMode = "partialMatching";
         }
-        /*       
+        /*
         if (panel.options.searchMode == "regex") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
             $("#" + panel.divElement.id + '-searchExample').html("<span class='i18n text-muted' data-i18n-id='i18n_search_examp_1'>" + i18n_search_examp_1 + "</span> ");
             $("#" + panel.divElement.id + '-navSearchModeLabel').html("<span class='i18n' data-i18n-id='i18n_regex_search_mode'>" + i18n_regex_search_mode + "</span>");
-        } else 
+        } else
         */
         if (panel.options.searchMode == "fullText") {
             $("#" + panel.divElement.id + "-searchMode").html("<span class='i18n' data-i18n-id='i18n_full_text_search_mode'>" + i18n_full_text_search_mode + "</span>");
@@ -1881,7 +1865,7 @@ function searchPanel(divElement, options) {
         } else {
             // do nothing
         }
-       
+
         if (panel.options.searchLang == "danish") {
             $("#" + panel.divElement.id + '-navLanguageLabel').html("<span class='i18n' data-i18n-id='i18n_danish_stemmer'>" + i18n_danish_stemmer + "</span>");
         } else if (panel.options.searchLang == "english") {
