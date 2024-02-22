@@ -393,13 +393,11 @@ function taxonomyPanel(divElement, conceptId, options) {
                     branch = branch + "/" + options.release;
                 };
                 if (typeof selectedId != "undefined") {
-                    if(!options.serverUrl.includes('snowowl')){
-                       $.ajaxSetup({
-                          headers : {
-                            'Accept-Language': panel.options.acceptLanguageValue
-                          }
-                        });
-                    };
+                    $.ajaxSetup({
+                        headers : {
+                          'Accept-Language': panel.options.acceptLanguageValue
+                        }
+                    });
                     $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {
                         result.forEach(function(item) {
                             if(panel.options.showPreferredTerm){
@@ -476,13 +474,11 @@ function taxonomyPanel(divElement, conceptId, options) {
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
-                'Accept-Language': panel.options.acceptLanguageValue
-              }
-            });
-        };
+        $.ajaxSetup({
+            headers : {
+              'Accept-Language': panel.options.acceptLanguageValue
+            }
+        });
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {}).done(function(result) {
             result.forEach(function(item) {
                 if(panel.options.showPreferredTerm){
@@ -599,13 +595,11 @@ function taxonomyPanel(divElement, conceptId, options) {
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
-                'Accept-Language': panel.options.acceptLanguageValue
-              }
-            });
-        };
+        $.ajaxSetup({
+            headers : {
+              'Accept-Language': panel.options.acceptLanguageValue
+            }
+        });
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(parents) {
         }).done(function(parents) {
             if (parents.length > 0) {
@@ -711,13 +705,11 @@ function taxonomyPanel(divElement, conceptId, options) {
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
-                'Accept-Language': panel.options.acceptLanguageValue
-              }
-            });
-        };
+        $.ajaxSetup({
+            headers : {
+              'Accept-Language': panel.options.acceptLanguageValue
+            }
+        });
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {
             $.each(result, function(i, item) {
                 if (typeof item.defaultTerm == "undefined") {
@@ -731,17 +723,12 @@ function taxonomyPanel(divElement, conceptId, options) {
             });
         }).done(function(result) {            
             if (typeof term == "undefined" || typeof definitionStatus == "undefined" || term == null || definitionStatus == null) {
-                if(!options.serverUrl.includes('snowowl')){
-                   $.ajaxSetup({
-                      headers : {
-                        'Accept-Language': panel.options.acceptLanguageValue
-                      }
-                    });
-                };
-                var urlArgs = '?descendantCountForm=' + panel.options.selectedView;
-                if(options.serverUrl.includes('snowowl')){
-                    urlArgs = urlArgs + '&expand=fsn()';
-                }
+                $.ajaxSetup({
+                    headers : {
+                      'Accept-Language': panel.options.acceptLanguageValue
+                    }
+                });
+                var urlArgs = '?descendantCountForm=' + panel.options.selectedView;                
                 $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + urlArgs, function(res) {
                     if(panel.options.showPreferredTerm){
                         res.defaultTerm = res.pt.term;
