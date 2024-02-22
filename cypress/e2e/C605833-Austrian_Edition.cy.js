@@ -7,13 +7,13 @@ const accept = new AcceptCookiesDisclaimerPage()
 const searchpage = new SNOMEDCTBrowserPage()
 const detailspage = new DetailsPage()
 
-describe("C605832-Argentinian Edition", () => {
+describe("C605833-Austrian Edition", () => {
 it("Launch browser url", () => {
     accept.visit()
 })
           
 // Click on Accept cookies  
-it("click on Accept cookies", () => {
+it("Click on Accept cookies", () => {
     accept.getCookiesAccept().click()
 })
         
@@ -22,31 +22,27 @@ it("Click on Accept disclaimers", () => {
    accept.getDisclaimersAccept().click()
 })
 
-// Select Argentinian Edition
-it("Select Argentinian Edition", () => {
-   accept.getArgentinianEdition().click()
+// Select Austrian Edition
+it("Select Austrian Edition", () => {
+   accept.getAustrianEdition().click()
 })
 
-// Uncheck the Group by concept checkbox if it is selected already
-it("Uncheck GroupbyConcept checkbox", () => {
-   searchpage.getUnchekGroupbyConcept()
-   cy.log('Group by concept check box is uncheked')
-})
-
-// Search heart and ensure that search records and record count is displayed
-it("Search heart and verify the search result", () => {
-   searchpage.getSearch().type('heart')
+// Search module and ensure that search records and record count is displayed
+it("Search module and verify the search result", () => {
+   searchpage.getSearch().type('module')
    cy.fixture('SNOMEDCTSearch').then((data) => {
-    searchpage.getValidateSearchResult(data.InternationalEditionSearchResult)
-    })
+   searchpage.getValidateSearchResult(data.AustrianEditionSearchResult)
+   })
 })
 
-// Filter by 'Spanish'
-it("Filter by Spanish", () => {
-    searchpage.getSpanishlanguage()
-    cy.fixture('SNOMEDCTSearch').then((data) => {
-    searchpage.getValidateSearchResult(data.InternationalEditionSearchResult)
-    })
+//Scroll the page
+it("Scroll page", () => {
+   cy.get('#fh-tabs-pane').scrollTo(0,500)
+})
+
+//Select Österreichisches Module filter
+it("Select Österreichisches Module filter", () => {
+    searchpage.getÖsterreichischesModuleFilter()
 })
 
 // Assert that the first result has a flag in the first column in the search results
@@ -57,7 +53,7 @@ it("Assert that the first result has a flag in the first column in the search re
 // Load the first result
 it("Load the first result", () => {
     searchpage.getConcept().click()
-    if(cy.get('#home-attributes-fh-cd1_canvas > h4').should('contain', 'virus Heartland (organismo)'))
+    if(cy.get('#home-attributes-fh-cd1_canvas > h4').should('contain', 'Österreichisches Modul'))
     {
         cy.log('Selected concept loads into summary panel')
     }
@@ -66,7 +62,7 @@ it("Load the first result", () => {
 // Click the details tab
 it("Click the details tab", () => {
     cy.fixture('DetailsTab').then((data) => {
-    detailspage.getDetailsTab(data.ArgentinianEditionConceptDetailsTab)
+    detailspage.getDetailsTab(data.AustrianEditionConceptDetailsTab)
     })
 })
 

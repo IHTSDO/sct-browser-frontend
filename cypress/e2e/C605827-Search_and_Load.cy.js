@@ -58,7 +58,10 @@ import HistoryPage from "../pages/HistoryPage"
   //Search heart and ensure that search records and record count is displayed
   it("Search heart and verify the search result", () => {
     searchpage.getSearch().type('heart')
-    searchpage.getValidateSearchResult()
+    cy.fixture('SNOMEDCTSearch').then((data) => {
+    searchpage.getValidateSearchResult(data.InternationalEditionSearchResult)
+    })
+    
   })
 
   //Scroll the page
@@ -70,7 +73,9 @@ import HistoryPage from "../pages/HistoryPage"
   //Ensure that search records and record count is displayed
   it("Filter records by Body Structure semantic tag", () => {
     searchpage.getBodyStructureSemanticTag().click()
-    searchpage.getValidateSearchResult()
+    cy.fixture('SNOMEDCTSearch').then((data) => {
+    searchpage.getValidateSearchResult(data.InternationalEditionSearchResult)
+    })
   })
   
   //Select Group by concept check box
@@ -78,7 +83,9 @@ import HistoryPage from "../pages/HistoryPage"
   it("Check GroupbyConcept checkbox", () => {
     searchpage.getChekGroupbyConcept().click()
     cy.log('Group by concept check box is cheked')
-    searchpage.getValidateSearchResult()
+    cy.fixture('SNOMEDCTSearch').then((data) => {
+    searchpage.getValidateSearchResult(data.InternationalEditionSearchResult)
+    })
   })
 
   // Scroll to top and select the first concept from the search result
