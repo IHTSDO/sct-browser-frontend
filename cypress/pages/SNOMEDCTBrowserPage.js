@@ -78,6 +78,14 @@ getÖsterreichischesModuleFilter(){
     }
 }
 
+// Click on Belgian module filter
+getBelgianModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'Belgian module...'))
+    {
+        return cy.log('Belgin module filer is enabled and search results are displayed')
+    }
+}
 }
 
 module.exports = SNOMEDCTBrowserPage
