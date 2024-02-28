@@ -86,6 +86,16 @@ getBelgianModuleFilter(){
         return cy.log('Belgin module filer is enabled and search results are displayed')
     }
 }
+
+// Click on Canada Health Infoway French module filter
+getCanadaHealthInfowayFrechModuleFilter(){
+    cy.get(':nth-child(4) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'Canada Health Info...'))
+    {
+        return cy.log('Canada Health Infoway French module filter is enabled and search results are displayed')
+    }
+}
+
 }
 
 module.exports = SNOMEDCTBrowserPage
