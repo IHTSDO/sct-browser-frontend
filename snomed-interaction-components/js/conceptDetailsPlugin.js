@@ -2404,7 +2404,7 @@ function conceptDetails(divElement, conceptId, options) {
         }).done(function(result) {
             panel.options.languageRefsets = [];
             Object.keys(result.referenceSets).forEach(function(key) {
-                if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                if (result.referenceSets[key].referenceSetType && result.referenceSets[key].referenceSetType.id === '900000000000506000') {
                     panel.options.languageRefsets.push(result.referenceSets[key]);
                 }
             });
