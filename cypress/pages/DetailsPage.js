@@ -3,9 +3,9 @@ class DetailsPage {
 //Swap the view to Inferred
 getDetailsTab(value){
     cy.get('#details-tabs-fh-cd1_canvas > :nth-child(2) > a > .i18n').click()
-    if(cy.get(':nth-child(1) > thead > :nth-child(1) > .text-center').should('have.text', value))
+    if(cy.get('#fh-cd1_canvas-attributes-panel > .table > tbody > tr > :nth-child(1)').should('contain', value))
     {
-      return cy.log('Details page is displayed')
+      return cy.log('Details page is loaded for the selected concept')
     }
 }
 

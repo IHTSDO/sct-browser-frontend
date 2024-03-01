@@ -96,6 +96,16 @@ getCanadaHealthInfowayFrechModuleFilter(){
     }
 }
 
+// Click on dansk modul
+getDanskModulFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'dansk modul...'))
+    {
+        return cy.log('Dansk Modul filter is enabled and search results are displayed')
+    }
+
+}
+
 }
 
 module.exports = SNOMEDCTBrowserPage
