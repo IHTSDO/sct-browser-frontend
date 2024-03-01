@@ -7,7 +7,7 @@ const accept = new AcceptCookiesDisclaimerPage()
 const searchpage = new SNOMEDCTBrowserPage()
 const detailspage = new DetailsPage()
 
-describe("C605835-Belgian Edition", () => {
+describe("C605837-Danish Edition", () => {
 it("Launch browser url", () => {
     accept.visit()
 })
@@ -22,27 +22,27 @@ it("Click on Accept disclaimers", () => {
    accept.getDisclaimersAccept().click()
 })
 
-// Select Belgian Edition
-it("Select Belgian Edition", () => {
-   accept.getBelgianEdition().click()
+// Select Danish Edition
+it("Select Danish Edition", () => {
+   accept.getDanishEdition().click()
 })
 
 // Search module and ensure that search records and record count is displayed
 it("Search module and verify the search result", () => {
    searchpage.getSearch().type('module')
    cy.fixture('SNOMEDCTSearch').then((data) => {
-   searchpage.getValidateSearchResult(data.InternationalEditionSearchResult)
+   searchpage.getValidateSearchResult(data.DanishEditionSearchResult)
    })
 })
 
-//Scroll the page
+// Scroll the page
 it("Scroll page", () => {
    cy.get('#fh-tabs-pane').scrollTo(0,500)
 })
 
-//Select Belgian module filter
+// Select Belgian module filter
 it("Select Belgian module filter", () => {
-    searchpage.getBelgianModuleFilter()
+    searchpage.getDanskModulFilter()
 })
 
 // Assert that the first result has a flag in the first column in the search results
@@ -53,7 +53,7 @@ it("Assert that the first result has a flag in the first column in the search re
 // Load the first result
 it("Load the first result", () => {
     searchpage.getConcept().click()
-    if(cy.get('#home-attributes-fh-cd1_canvas > h4').should('contain', 'Module (core metadata concept)'))
+    if(cy.get('#home-attributes-fh-cd1_canvas > h4').should('contain', '  moduleret'))
     {
         cy.log('Selected concept loads into summary panel')
     }
@@ -62,7 +62,7 @@ it("Load the first result", () => {
 // Click the details tab
 it("Click the details tab", () => {
     cy.fixture('DetailsTab').then((data) => {
-    detailspage.getDetailsTab(data.BelgianEditionConceptDetailsTab)
+    detailspage.getDetailsTab(data.DanishEditionConceptDetailsTab)
     })
 })
 

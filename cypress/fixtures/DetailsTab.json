@@ -1,5 +1,11 @@
 {
-    "InternationalEditionConceptDetailsTab" : "United States of America English language reference set",
-    "ArgentinianEditionConceptDetailsTab" : "conjunto de referencias de lenguaje castellano para América Latina",
-    "AustrianEditionConceptDetailsTab" : "Austrian German language reference set"
+    "_InternationalEditionConceptDetailsTab" : "United States of America English language reference set",
+    "_ArgentinianEditionConceptDetailsTab" : "conjunto de referencias de lenguaje castellano para América Latina",
+    "_AustrianEditionConceptDetailsTab" : "Austrian German language reference set",
+    "InternationalEditionConceptDetailsTab" : "SCTID: 80891009",
+    "ArgentinianEditionConceptDetailsTab" : "SCTID: 764947004",
+    "AustrianEditionConceptDetailsTab" : "SCTID: 11000234105",
+    "BelgianEditionConceptDetailsTab" : "SCTID: 900000000000443000",
+    "CanadianEditionConceptDetailsTab" : "SCTID: 261019009",
+    "DanishEditionConceptDetailsTab" : "SCTID: 261019009"
 }

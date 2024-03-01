@@ -62,7 +62,7 @@ it("Load the first result", () => {
 // Click the details tab
 it("Click the details tab", () => {
     cy.fixture('DetailsTab').then((data) => {
-    detailspage.getDetailsTab(data.InternationalEditionConceptDetailsTab)
+    detailspage.getDetailsTab(data.CanadianEditionConceptDetailsTab)
     })
 })
 

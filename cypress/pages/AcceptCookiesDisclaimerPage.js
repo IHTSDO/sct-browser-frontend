@@ -45,6 +45,11 @@ getCanadianEdition(){
   return cy.get('#local_editions > :nth-child(5)').should('contain', 'Canadian Edition')
 }
 
+// -- Select Danish Edition
+getDanishEdition(){
+  return cy.get('#local_editions > :nth-child(6)').should('contain', 'Danish Edition')
+}
+
 }
 
 module.exports = AcceptCookiesDisclaimerPage
