@@ -409,7 +409,7 @@
             }).done(function(result) {
                 var languageRefsets = [];            
                 Object.keys(result.referenceSets).forEach(function(key) {
-                    if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                    if (result.referenceSets[key].referenceSetType && result.referenceSets[key].referenceSetType.id === '900000000000506000') {
                         languageRefsets.push(result.referenceSets[key]);                                      
                     }
                 });
