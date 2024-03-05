@@ -103,7 +103,15 @@ getDanskModulFilter(){
     {
         return cy.log('Dansk Modul filter is enabled and search results are displayed')
     }
+}
 
+// Click on Estonian module
+getEstonianModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'Estonian module...'))
+    {
+        return cy.log('Estonian module filter is enabled and search results are displayed')
+    }
 }
 
 }
