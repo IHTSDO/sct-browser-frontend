@@ -46,20 +46,12 @@ function conceptDetails(divElement, conceptId, options) {
     panel.subscriptionsColor = [];
     panel.subscriptions = [];
     panel.subscribers = [];
-    panel.server = "";
     this.panelRefsetsLoaded = false;
     this.panelMembersLoaded = false;
     this.panelReferencesLoaded = false;
     this.panelDiagramLoaded = false;
     this.panelExpressionLoaded = false;
     this.firstMatch = null;
-
-    if (options.serverUrl.includes('snowowl')){
-        panel.server = 'snowowl';
-    }
-    else{
-        panel.server = 'snowstorm';
-    }
 
     componentLoaded = false;
     $.each(componentsRegistry, function(i, field) {
@@ -141,8 +133,7 @@ function conceptDetails(divElement, conceptId, options) {
         $(divElement).html();
 
         var context = {
-            divElementId: panel.divElement.id,
-            server: panel.server
+            divElementId: panel.divElement.id
         };
 
         $(divElement).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/main.hbs"](context));
@@ -370,14 +361,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
-                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-              }
-            });
-        }
+        $.ajaxSetup({
+            headers : {
+              'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+            }
+          });
         if (typeof panel.options.selectedView == "undefined") {
             panel.options.selectedView = "inferred";
         }
@@ -398,7 +386,6 @@ function conceptDetails(divElement, conceptId, options) {
                     displayChildren: true,
                     childrenResult: [],
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     selectedView: panel.options.selectedView,
                     statedParents: [],
                     inferredParents: [],
@@ -739,8 +726,7 @@ function conceptDetails(divElement, conceptId, options) {
                 panel: panel,
                 firstMatch: firstMatch,
                 divElementId: panel.divElement.id,
-                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : ''),
-                server: panel.server
+                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : '')
             };
             $('#home-attributes-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/attributes.hbs"](context));
 
@@ -1587,13 +1573,11 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 });
                 if (ids.length > 0) {
-                    if(!options.serverUrl.includes('snowowl')) {
-                        $.ajaxSetup({
-                            headers : {
-                                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-                            }
-                        });
-                    }
+                    $.ajaxSetup({
+                        headers : {
+                            'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                        }
+                    });
                     var getConcepts =  function(list) {
                         var dfd = $.Deferred();
                         var result = {concepts: []};
@@ -1721,13 +1705,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
+        $.ajaxSetup({
+            headers : {
                 'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-              }
-            });
-        };
+            }
+        });
         xhrReferences = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId + "/references?stated=" + (panel.options.selectedView === 'stated') + '&offset=0&limit=10000', function(result) {
 
         }).done(function(result) {
@@ -1767,7 +1749,6 @@ function conceptDetails(divElement, conceptId, options) {
             if (result && result.total !== 0) {
                 var context = {
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     result: result
                 };
                 $("#references-" + panel.divElement.id + "-accordion").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/references.hbs"](context));
@@ -1819,13 +1800,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
+        $.ajaxSetup({
+            headers : {
                 'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-              }
-            });
-        };
+            }
+        });
         xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
             result.forEach(function(item) {
                 if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
@@ -1847,7 +1826,6 @@ function conceptDetails(divElement, conceptId, options) {
                 displayChildren: forceShow,
                 childrenResult: result,
                 divElementId: panel.divElement.id,
-                server: panel.server,
                 selectedView: panel.options.selectedView
             };
 
@@ -2009,13 +1987,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
-                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-              }
-            });
-        };
+        $.ajaxSetup({
+            headers : {
+              'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+            }
+        });
         xhrParents = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
         }).done(function(result) {
             result.forEach(function(c) {
@@ -2284,7 +2260,6 @@ function conceptDetails(divElement, conceptId, options) {
                             languageName: "(" + (options.languageNameOfLangRefset.hasOwnProperty(loopSelectedLangRefset) ? options.languageNameOfLangRefset[loopSelectedLangRefset] : loopSelectedLangRefset) + ")",
                             longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
                             divElementId: panel.divElement.id,
-                            server: panel.server,
                             allDescriptions: auxDescriptions
                         };
 
@@ -2362,7 +2337,6 @@ function conceptDetails(divElement, conceptId, options) {
                     languageName: "(" + language + ")",
                     longLangName: panel.options.languagesArray[language],
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     allDescriptions: allDescriptions
                 };
 
@@ -2400,7 +2374,6 @@ function conceptDetails(divElement, conceptId, options) {
             var context = {
                 options: panel.options,
                 divElementId: panel.divElement.id,
-                server: panel.server,
                 annotations: firstMatch.annotations
             };
             allLangsHtml = JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/annotations-panel.hbs"](context);
@@ -2421,19 +2394,17 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')) {
-            $.ajaxSetup({
-                headers : {
-                    'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-                }
-            });
-        }
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+            }
+        });
         $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {
             // do nothing
         }).done(function(result) {
             panel.options.languageRefsets = [];
             Object.keys(result.referenceSets).forEach(function(key) {
-                if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                if (result.referenceSets[key].referenceSetType && result.referenceSets[key].referenceSetType.id === '900000000000506000') {
                     panel.options.languageRefsets.push(result.referenceSets[key]);
                 }
             });
@@ -2508,13 +2479,11 @@ function conceptDetails(divElement, conceptId, options) {
             xhrMembers = null;
         }
 
-        if(!options.serverUrl.includes('snowowl')) {
-            $.ajaxSetup({
-                headers : {
-                    'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-                }
-            });
-        }
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+            }
+        });
 
         xhrMembers = $.getJSON(membersUrl, function(result) {
         }).done(function(result) {
@@ -2564,7 +2533,6 @@ function conceptDetails(divElement, conceptId, options) {
                 context = {
                     result: {'items':[]},
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     total: total,
                     skipTo: 0,
                     referenceComponentsOfRefsetAreNotConcepts: true,
@@ -2577,7 +2545,6 @@ function conceptDetails(divElement, conceptId, options) {
                     returnLimit: returnLimit2,
                     remaining: remaining,
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     skipTo: skipTo,
                     panel: panel,
                     total: total,
