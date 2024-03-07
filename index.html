@@ -313,9 +313,6 @@
                     });
                 }).fail(function() {
                     console.log('fail');
-                    options.serverUrl = "/snowowl/snomed-ct/v2";
-                    options.queryServerUrl = "/snowowl/snomed-ct/v2";
-
                     dfd.resolve();
                 });
 
@@ -425,10 +422,7 @@
                         $('#version-selector').css('display', 'block');
                     }
                 } else {
-                    if (options.serverUrl === '/snowowl/snomed-ct/v2') {
-                        $('#fh-refset_canvas').css('display', 'none');
-                        $('#fh-refset_canvas-li').css('display', 'none');
-                    }
+                    // do nothing
                 }
                 start();
             });
@@ -1973,17 +1967,15 @@
             if (options.release.length > 0 && options.release !== 'None') {
                 branch = branch + "/" + options.release;
             };
-            if (!options.serverUrl.includes('snowowl')) {
-                $.ajaxSetup({
-                    headers: {
-                        'Accept-Language': options.languages
-                    }
-                });
-            };
+            $.ajaxSetup({
+                headers: {
+                    'Accept-Language': options.languages
+                }
+            });
             $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {}).done(function(result) {
                 var languageRefsets = [];
                 Object.keys(result.referenceSets).forEach(function(key) {
-                    if (result.referenceSets[key].referenceSetType.id === '900000000000506000') {
+                    if (result.referenceSets[key].referenceSetType && result.referenceSets[key].referenceSetType.id === '900000000000506000') {
                         languageRefsets.push(result.referenceSets[key]);
                     }
                 });
