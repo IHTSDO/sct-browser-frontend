@@ -114,6 +114,15 @@ getEstonianModuleFilter(){
     }
 }
 
+// Click on Finnish module
+getFinnishModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'Finnish module...'))
+    {
+        return cy.log('Finnish module filter is enabled and search results are displayed')
+    }
+}
+
 }
 
 module.exports = SNOMEDCTBrowserPage
