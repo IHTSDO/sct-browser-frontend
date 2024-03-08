@@ -1272,8 +1272,6 @@ function searchPanel(divElement, options) {
                     }
                     resDescriptions.push(aux);
                 }
-
-                resDescriptions.push(aux);
             });
 
             // Convert response format
