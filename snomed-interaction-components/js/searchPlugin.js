@@ -95,9 +95,14 @@ function searchPanel(divElement, options) {
         "unit of presentation": "unidad de presentación"
       };
 
-    this.setupCanvas = function() {      
+    this.setupCanvas = function() {
+        var server = 'snowstorm';
+        if(options.serverUrl.includes('snowowl')){
+           server = 'snowowl';
+        };
         var context = {
             divElementId: panel.divElement.id,
+            server: server,
             options: panel.options
         };
         Handlebars.registerHelper('if_eq', function(a, b, opts) {
@@ -755,11 +760,13 @@ function searchPanel(divElement, options) {
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
-        $.ajaxSetup({
-            headers : {
-              'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-            }
-        });
+        if(!options.serverUrl.includes('snowowl')){
+            $.ajaxSetup({
+                headers : {
+                  'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                }
+            });
+        };
         var searchUrl = options.serverUrl + "/browser/" + branch + "/concepts/" + encodeURIComponent(t) + "/concept-or-identifier-ref-concept";
         xhr = $.getJSON(searchUrl , function(response) {
         }).done(function(response) {
@@ -794,11 +801,13 @@ function searchPanel(divElement, options) {
         if(options.release.length > 0 && options.release !== 'None'){
             branch = branch + "/" + options.release;
         };
-        $.ajaxSetup({
-            headers : {
-              'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-            }
-        });
+        if(!options.serverUrl.includes('snowowl')){
+            $.ajaxSetup({
+                headers : {
+                  'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                }
+            });
+        };
         var queryParameters = "?size=" + conceptArray.length;
         for (var i = 0; i < conceptArray.length; i++) {
             queryParameters = queryParameters + "&conceptIds=" + conceptArray[i];
@@ -942,7 +951,9 @@ function searchPanel(divElement, options) {
             url: options.serverUrl + "/" + branch + "/descriptions/" + t,
             type: "GET",
             beforeSend: function(xhr){
+                if(!options.serverUrl.includes('snowowl')){
                 xhr.setRequestHeader('Accept-Language', options.languages);
+                };
             },
             success: function(result) {
                 Handlebars.registerHelper('if_eq', function(a, b, opts) {
@@ -973,7 +984,9 @@ function searchPanel(divElement, options) {
                     url: options.serverUrl + "/" + branch + "/concepts/" + result.conceptId,
                     type: "GET",
                     beforeSend: function(xhr){
+                        if(!options.serverUrl.includes('snowowl')){
                         xhr.setRequestHeader('Accept-Language', options.languages);
+                        };
                     },
                     success: function(concept) {
                         result.fsn = concept.fsn;
@@ -1043,21 +1056,30 @@ function searchPanel(divElement, options) {
 
             searchUrl = options.serverUrl + "/browser/" + branch + "/descriptions?" + "&limit=100";
 
-            if (panel.options.statusSearchFilter == "activeOnly") {
+            if (panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowstorm')) {
                 searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
                 searchUrl = searchUrl + "&active=true";
                 searchUrl = searchUrl + "&conceptActive=true";
                 searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
             }
-            if (panel.options.statusSearchFilter == "inactiveOnly") {
+            else if(panel.options.statusSearchFilter == "activeOnly" && options.serverUrl.includes('snowowl')) {
+                searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
+            }
+            if (panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowstorm')) {
                 searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
                 searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
                 searchUrl = searchUrl + "&conceptActive=false";
             }
-            if (panel.options.statusSearchFilter == "activeAndInactive") {
+            else if(panel.options.statusSearchFilter == "inactiveOnly" && options.serverUrl.includes('snowowl')) {
+                searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
+            }
+            if (panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowstorm')) {
                 searchUrl = searchUrl + "&active=true";
                 searchUrl = searchUrl + "&term=" + encodeURIComponent(t);
                 searchUrl = searchUrl + "&lang=" + panel.options.searchLang;
+            }
+            else if(panel.options.statusSearchFilter == "activeAndInactive" && options.serverUrl.includes('snowowl')) {
+                searchUrl = searchUrl + "&query=" + encodeURIComponent(t);
             }
             if (panel.options.semTagFilter != "none") {
                 searchUrl = searchUrl + "&semanticTag=" + panel.options.semTagFilter;
@@ -1132,7 +1154,9 @@ function searchPanel(divElement, options) {
         url: searchUrl,
         type: "GET",
         beforeSend: function(xhr){
-            xhr.setRequestHeader('Accept-Language', options.languages);
+            if(!options.serverUrl.includes('snowowl')){
+                xhr.setRequestHeader('Accept-Language', options.languages);
+            };
         },
         success: function(result) {
 
@@ -1167,7 +1191,12 @@ function searchPanel(divElement, options) {
                 if (filtered.length !== 0) {
                     $('#' + panel.divElement.id + '-searchBar4').hide();
                     panel.options.semTagsFilter = filtered;
+                    var server = 'snowstorm';
+                    if(options.serverUrl.includes('snowowl')){
+                        server = 'snowowl';
+                    };
                     var context = {
+                        server: server,
                         result: result,
                         semanticTags: semanticTags,
                         divElementId: panel.divElement.id,
@@ -1213,12 +1242,35 @@ function searchPanel(divElement, options) {
                 var aux = field;
                 aux.definitionStatus = result.definitionStatus;
                 aux.conceptActive = field.concept.active;
-                if (!aux.active || !aux.conceptActive) {
-                    aux.danger = true;
+                
+                //Filter results by active status for snowowl
+                if(options.serverUrl.includes('snowowl')){
+                    if (field.active && field.concept.active) {
+                        if (panel.options.statusSearchFilter == "activeOnly") {
+                            resDescriptions.push(aux);
+                        }
+                        if (panel.options.statusSearchFilter == "activeAndInactive") {
+                            resDescriptions.push(aux);
+                        }
+                    } else {
+                        aux.danger = true;
+                        if (panel.options.statusSearchFilter == "inactiveOnly") {
+                            resDescriptions.push(aux);
+                        }
+                        if (panel.options.statusSearchFilter == "activeAndInactive") {
+                            resDescriptions.push(aux);
+                        }
+                    }
                 }
-                if (field.active && field.concept.active) {
-                } else {
-                    aux.danger = true;
+                else{
+                    if (!aux.active || !aux.conceptActive) {
+                        aux.danger = true;
+                    }
+                    if (field.active && field.concept.active) {
+                    } else {
+                        aux.danger = true;
+                    }
+                    resDescriptions.push(aux);
                 }
 
                 resDescriptions.push(aux);
@@ -1318,6 +1370,11 @@ function searchPanel(divElement, options) {
                 });
             }
                  
+            var server = 'snowstorm';
+            if(options.serverUrl.includes('snowowl')){
+               server = 'snowowl';
+            };
+
             var semanticTags = [];
             if (result.buckets && result.buckets.semanticTags) {
                 for (var key in result.buckets.semanticTags) {
@@ -1335,6 +1392,7 @@ function searchPanel(divElement, options) {
             }
 
             var context = {
+                server: server,
                 result: result,
                 semanticTags: semanticTags,
                 elapsed: elapsed,

@@ -407,11 +407,13 @@ function drawConceptDiagram (concept, div, options, panel) {
     if(options.release.length > 0 && options.release !== 'None'){
         branch = branch + "/" + options.release;
     };
-    $.ajaxSetup({
+    if(!options.serverUrl.includes('snowowl')){
+        $.ajaxSetup({
         headers : {
             'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
         }
-    });
+        });
+    };
     $.getJSON(options.serverUrl + "/" + branch + "/members?referenceSet=723561005&offset=0&limit=500&active=true&expand=referencedComponent(expand(fsn()))", function(result) {
     }).done(function(result) {
         var ungroupedAttributes = [];
