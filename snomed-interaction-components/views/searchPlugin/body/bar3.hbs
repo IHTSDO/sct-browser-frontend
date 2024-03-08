@@ -1,20 +1,23 @@
-{{#if_eq result.totalElements 0}}
-{{else}}
-    {{#if_eq options.langFilter "none"}}
-        <div style="margin-top: 10px" class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{i18n "i18n_filters_language" "Filter results by Language"}}</h3>
+{{#if_eq server 'snowstorm'}}    
+    {{#if_eq result.totalElements 0}}
+    {{else}}
+        {{#if_eq options.langFilter "none"}}
+            <div style="margin-top: 10px" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{i18n "i18n_filters_language" "Filter results by Language"}}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {{#each result.buckets.language}}
+                            <li class="list-group-item">
+                                <span class="badge">{{this}}</span>
+                                <a class='lang-link' href='javascript:void(0);' data-lang='{{@key}}'>{{parseLanguageName @key}}</a>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
             </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    {{#each result.buckets.language}}
-                        <li class="list-group-item">
-                            <span class="badge">{{this}}</span>
-                            <a class='lang-link' href='javascript:void(0);' data-lang='{{@key}}'>{{parseLanguageName @key}}</a>
-                        </li>
-                    {{/each}}
-                </ul>
-            </div>
-        </div>
+        {{/if_eq}}
     {{/if_eq}}
+{{else}}
 {{/if_eq}}

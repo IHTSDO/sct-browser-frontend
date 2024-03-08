@@ -1,25 +1,27 @@
-{{#if_eq options.moduleFilter "none"}}
+{{#if_eq server 'snowstorm'}}
+    {{#if_eq options.moduleFilter "none"}}
+    {{else}}
+        <h3 style="margin-top: 5px;">
+            <span id="{{divElementId}}-moduleResumed" style="font-size: 12px;white-space: normal" class='label label-danger' data-name="{{#if options.moduleFilterName}}{{options.moduleFilterName}}{{else}}{{options.moduleFilter}}{{/if}}">{{#if options.moduleFilterName}}{{first20chars options.moduleFilterName}}{{else}}{{first20chars options.moduleFilter}}{{/if}} &nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-module'>&times;</a></span>
+        </h3>
+    {{/if_eq}}
+    {{#if_eq options.langFilter "none"}}
+    {{else}}
+        <h3 style="margin-top: 5px;">
+            <span style="font-size: 12px; margin-top: 5px;" class='label label-danger'>{{parseLanguageName options.langFilter}}&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-lang'>&times;</a></span>
+        </h3>
+    {{/if_eq}}
+    {{#if_eq options.semTagFilter "none"}}
+    {{else}}
+        <h3 style="margin-top: 5px;">
+            <span style="font-size: 12px; margin-top: 5px;" class='label label-danger'>{{options.semTagFilter}}&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-semtag'>&times;</a></span>
+        </h3>
+    {{/if_eq}}
+    {{#if_eq options.refsetFilter "none"}}
+    {{else}}
+        <h3 style="margin-top: 5px;">
+            <span id="{{divElementId}}-refsetResumed" style="font-size: 12px; margin-top: 5px;" class='label label-danger' data-name="{{#if options.refsetFilterName}}{{options.refsetFilterName}}{{else}}{{options.refsetFilter}}{{/if}}">{{#if options.refsetFilterName}}{{first20chars options.refsetFilterName}}{{else}}{{first20chars options.refsetFilter}}{{/if}} &nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-refset'>&times;</a></span>
+        </h3>
+    {{/if_eq}}    
 {{else}}
-    <h3 style="margin-top: 5px;">
-        <span id="{{divElementId}}-moduleResumed" style="font-size: 12px;white-space: normal" class='label label-danger' data-name="{{#if options.moduleFilterName}}{{options.moduleFilterName}}{{else}}{{options.moduleFilter}}{{/if}}">{{#if options.moduleFilterName}}{{first20chars options.moduleFilterName}}{{else}}{{first20chars options.moduleFilter}}{{/if}} &nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-module'>&times;</a></span>
-    </h3>
 {{/if_eq}}
-{{#if_eq options.langFilter "none"}}
-{{else}}
-    <h3 style="margin-top: 5px;">
-        <span style="font-size: 12px; margin-top: 5px;" class='label label-danger'>{{parseLanguageName options.langFilter}}&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-lang'>&times;</a></span>
-    </h3>
-{{/if_eq}}
-{{#if_eq options.semTagFilter "none"}}
-{{else}}
-    <h3 style="margin-top: 5px;">
-        <span style="font-size: 12px; margin-top: 5px;" class='label label-danger'>{{options.semTagFilter}}&nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-semtag'>&times;</a></span>
-    </h3>
-{{/if_eq}}
-{{#if_eq options.refsetFilter "none"}}
-{{else}}
-    <h3 style="margin-top: 5px;">
-        <span id="{{divElementId}}-refsetResumed" style="font-size: 12px; margin-top: 5px;" class='label label-danger' data-name="{{#if options.refsetFilterName}}{{options.refsetFilterName}}{{else}}{{options.refsetFilter}}{{/if}}">{{#if options.refsetFilterName}}{{first20chars options.refsetFilterName}}{{else}}{{first20chars options.refsetFilter}}{{/if}} &nbsp;<a href='javascript:void(0);' style='color: white;text-decoration: none;' class='remove-refset'>&times;</a></span>
-    </h3>
-{{/if_eq}}
-

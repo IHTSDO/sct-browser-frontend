@@ -398,11 +398,13 @@
             if(options.release.length > 0 && options.release !== 'None'){
                 branch = branch + "/" + options.release;
             };
+            if(!options.serverUrl.includes('snowowl')){
             $.ajaxSetup({
-            headers : {
-                'Accept-Language': options.languages
+                headers : {
+                    'Accept-Language': options.languages
                 }
-            });
+                });
+            };
             $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {                 
             }).done(function(result) {
                 var languageRefsets = [];            
