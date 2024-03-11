@@ -123,6 +123,15 @@ getFinnishModuleFilter(){
     }
 }
 
+// Click on German module
+getGermanModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'German module...'))
+    {
+        return cy.log('German module filter is enabled and search results are displayed')
+    }
+}
+
 }
 
 module.exports = SNOMEDCTBrowserPage

@@ -60,6 +60,11 @@ getFinnishEdition(){
   return cy.get('#local_editions > :nth-child(8)').should('contain', 'Finnish Edition')
 }
 
+// -- Select German Edition
+getGermanEdition(){
+  return cy.get('#local_editions > :nth-child(9)').should('contain', 'Germany Edition')
+}
+
 }
 
 module.exports = AcceptCookiesDisclaimerPage
