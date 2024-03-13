@@ -48,7 +48,7 @@ getChekGroupbyConcept(){
     return cy.get('#fh-search_canvas-groupConcept')
 }
 
-// Select the concept
+// Select the first concept
 getConcept(){
     //Select the first concept
     return cy.get('#fh-search_canvas-resultsTable > :nth-child(1) > :nth-child(1)')
@@ -130,6 +130,21 @@ getGermanModuleFilter(){
     {
         return cy.log('German module filter is enabled and search results are displayed')
     }
+}
+
+// Select French language filter
+getFrenchLanguageFilter(){
+    cy.get(':nth-child(2) > .lang-link').click()
+    if(cy.get('.label').should('contain', 'french'))
+    {
+        return cy.log('French language filter is enabled and search results are displayed')
+    }
+}
+
+// Select the second concept
+getSecondConcept(){
+    //Select the second concept
+    return cy.get(':nth-child(2) > :nth-child(1) > .result-item > a')
 }
 
 }
