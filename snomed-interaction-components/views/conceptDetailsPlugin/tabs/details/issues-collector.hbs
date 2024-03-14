@@ -2,7 +2,7 @@
     <script type="text/javascript" src="https://jira.ihtsdotools.org/s/d41d8cd98f00b204e9800998ecf8427e-CDN/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/2.2.4.7/_/download/batch/com.atlassian.plugins.jquery:jquery/com.atlassian.plugins.jquery:jquery.js?collectorId=bedcc164"></script>
     <script type="text/javascript" src="{{issueCollectorUrl}}"></script>
 
-    <script type="text/javascript">        
+    <script type="text/javascript">
         window.ATL_JQ_PAGE_PROPS =  {
             "triggerFunction": function(showCollectorDialog) {
                 jQuery("#{{divElementId}}-addsyn-issue-collector").click(function(e) {
@@ -18,21 +18,26 @@
         };
 
         function openJiraIssueCollectorDialog() {
-            var link = document.getElementById('{{divElementId}}-addsyn-issue-collector');
+            var link = document.getElementById('atlwdg-trigger');
+            if (link == null) {
+                link = document.getElementById('{{divElementId}}-addsyn-issue-collector');
+            } else {
+                link.style.display = 'none';
+            }
             link.click();
-            watchIssueCollectorDialogEvents();            
+            watchIssueCollectorDialogEvents();
         }
 
         function watchIssueCollectorDialogEvents() {
             //watch if dialog has been loaded completely
-            var issueCollectorDialoglocadingCompleteInterval = setInterval(function() {              
-                var elm = $('#atlwdg-container');                
+            var issueCollectorDialoglocadingCompleteInterval = setInterval(function() {
+                var elm = $('#atlwdg-container');
                 if (elm && elm.length > 0 && !elm[0].classList.contains('atlwdg-hidden')) {
                     clearInterval(issueCollectorDialoglocadingCompleteInterval);
-                    
+
                     //watch if dialog is being got closed
-                    var issueCollectorDialogClosingInterval = setInterval(function() {              
-                        var elm = $('#atlwdg-container');                
+                    var issueCollectorDialogClosingInterval = setInterval(function() {
+                        var elm = $('#atlwdg-container');
                         if (elm && elm.length > 0 && elm[0].classList.contains('atlwdg-hidden')) {
                             clearInterval(issueCollectorDialogClosingInterval);
                             var frame = parent.document.getElementById('{{frameId}}');
@@ -46,7 +51,5 @@
 
     </script>
 
-    <button style="display: none !important">
-        <i id="{{divElementId}}-addsyn-issue-collector"></i>
-    </button>
+    <a href="#" style="display: none !important" id="{{divElementId}}-addsyn-issue-collector"></a>
 </div>
