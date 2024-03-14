@@ -1775,7 +1775,7 @@ function conceptDetails(divElement, conceptId, options) {
                 };
                 $("#references-" + panel.divElement.id + "-accordion").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/references.hbs"](context));
             } else {
-                $('#references-' + panel.divElement.id + "-accordion").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_references' class='i18n'>"+i18n_no_references+"</span></td></tr>");
+                $('#references-' + panel.divElement.id + "-accordion").html("<tr><td class='text-muted' colspan='2'><br/><span style='padding-left: 10px;' data-i18n-id='i18n_concept_no_references' class='i18n'>" + i18n_concept_no_references + ".</span></td></tr>");
             }
             $("#references-" + panel.divElement.id + "-accordion").click(function(e) {
                 if ($($(e.target).closest("a").attr("href")).hasClass("collapse")) {
