@@ -766,7 +766,9 @@ function taxonomyPanel(divElement, conceptId, options) {
         languageFilter.push(usFSN);
         languageFilter.push(usPT);
         languageRefsets.forEach(function(languageRefset) {
-            if (languageRefset.conceptId !== '900000000000509007' && languageRefset.conceptId !== '900000000000508004') {
+            if (languageRefset.conceptId !== '900000000000509007' 
+                && languageRefset.conceptId !== '900000000000508004'
+                && panel.options.languageNameOfLangRefset.hasOwnProperty(languageRefset.conceptId)) {
                 var dialect = {id: languageRefset.conceptId, label: 'PT in ' + panel.options.languageNameOfLangRefset[languageRefset.conceptId], dialectId: languageRefset.conceptId};
                 languageFilter.push(dialect);
             }            
@@ -801,7 +803,7 @@ function taxonomyPanel(divElement, conceptId, options) {
     }
 
     panel.getAcceptLanguage = function(dialectId) {
-        if (dialectId !== "900000000000509007") {
+        if (dialectId !== "900000000000509007" && panel.options.languageNameOfLangRefset.hasOwnProperty(dialectId)) {
             if (panel.options.languageNameOfLangRefset[dialectId].includes('-')) {
                 var strArray = panel.options.languageNameOfLangRefset[dialectId].split('-');
                 return strArray[0].toLowerCase() + '-' + strArray[1].toUpperCase() + '-x-' + dialectId + ';q=0.8,en-US;q=0.5';

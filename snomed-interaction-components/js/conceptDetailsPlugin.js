@@ -600,7 +600,8 @@ function conceptDetails(divElement, conceptId, options) {
                 showIssueCollector: panel.options.communityBrowser || (panel.options.publicBrowser && (options.edition.startsWith('MAIN/SNOMEDCT-SE')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-NZ')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-BE')
-                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-DK')))
+                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-DK')
+                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-AT')))
             };
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
 
@@ -641,7 +642,9 @@ function conceptDetails(divElement, conceptId, options) {
                     } else if (options.edition.startsWith('MAIN/SNOMEDCT-BE')) {
                         issueCollectorUrl = 'https://jira.ihtsdotools.org/plugins/servlet/issueCollectorBootstrap.js?collectorId=a9d37267&locale=en';
                     } else if (options.edition.startsWith('MAIN/SNOMEDCT-DK')) {
-                        issueCollectorUrl = 'https://jira.ihtsdotools.org/plugins/servlet/issueCollectorBootstrap.js?collectorId=c4c3a865&locale=en ';
+                        issueCollectorUrl = 'https://jira.ihtsdotools.org/plugins/servlet/issueCollectorBootstrap.js?collectorId=c4c3a865&locale=en';
+                    } else if (options.edition.startsWith('MAIN/SNOMEDCT-AT')) {
+                        issueCollectorUrl = 'https://jira.ihtsdotools.org/plugins/servlet/issueCollectorBootstrap.js?collectorId=16d0dbcd&locale=en';
                     }
                 } else {
                     issueCollectorUrl = 'https://jira.ihtsdotools.org/s/de395333f61d94e8d9c1df353d370114-T/-xa03ko/802005/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=8a01cd8f';
@@ -1753,7 +1756,7 @@ function conceptDetails(divElement, conceptId, options) {
                 };
                 $("#references-" + panel.divElement.id + "-accordion").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/references.hbs"](context));
             } else {
-                $('#references-' + panel.divElement.id + "-accordion").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_references' class='i18n'>"+i18n_no_references+"</span></td></tr>");
+                $('#references-' + panel.divElement.id + "-accordion").html("<tr><td class='text-muted' colspan='2'><br/><span style='padding-left: 10px;' data-i18n-id='i18n_concept_no_references' class='i18n'>" + i18n_concept_no_references + ".</span></td></tr>");
             }
             $("#references-" + panel.divElement.id + "-accordion").click(function(e) {
                 if ($($(e.target).closest("a").attr("href")).hasClass("collapse")) {

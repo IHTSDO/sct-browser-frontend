@@ -84,9 +84,11 @@ function refsetPanel(divElement, options) {
             refsetItem.defaultTerm = data.referenceSets[key].fsn.term;
             refsetItem.fsn = data.referenceSets[key].fsn;
             refsetItem.pt = data.referenceSets[key].pt;
-            refsetItem.count = data.memberCountsByReferenceSet[key];
-            refsetItem.type = data.referenceSets[key].referenceSetType.pt.term;
+            refsetItem.count = data.memberCountsByReferenceSet[key];            
             refsetItem.definitionStatus = data.referenceSets[key].definitionStatus;
+            if (data.referenceSets[key].referenceSetType && data.referenceSets[key].referenceSetType.pt) {
+                refsetItem.type = data.referenceSets[key].referenceSetType.pt.term;
+            }
 
             refsets.push(refsetItem);
         });

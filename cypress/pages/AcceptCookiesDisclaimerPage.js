@@ -55,6 +55,7 @@ getEstonianEdition(){
   return cy.get('#local_editions > :nth-child(7)').should('contain', 'Estonian Edition')
 }
 
+<<<<<<< HEAD
 // -- Select Finnish Edition
 getFinnishEdition(){
   return cy.get('#local_editions > :nth-child(8)').should('contain', 'Finnish Edition')
@@ -70,6 +71,8 @@ getSwissEdition(){
   return cy.get('#local_editions > :nth-child(15)').should('contain', 'Swiss Edition')
 }
 
+=======
+>>>>>>> develop
 }
 
 module.exports = AcceptCookiesDisclaimerPage
