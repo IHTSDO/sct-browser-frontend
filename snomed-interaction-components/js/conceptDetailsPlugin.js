@@ -599,6 +599,7 @@ function conceptDetails(divElement, conceptId, options) {
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
                 showIssueCollector: panel.options.communityBrowser || (panel.options.publicBrowser && (options.edition.startsWith('MAIN/SNOMEDCT-SE')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-NZ')
+                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-DE')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-BE')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-DK')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-AT')))
@@ -639,6 +640,8 @@ function conceptDetails(divElement, conceptId, options) {
                         issueCollectorUrl = 'https://jira.ihtsdotools.org/s/1e429f95cf34cfd3040da73ee0505926-T/-6fupcg/802003/fe47b4489ac981edbb824b5107716c37/3.0.7/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en&collectorId=bedcc164';
                     } else if (options.edition.startsWith('MAIN/SNOMEDCT-NZ')) {
                         issueCollectorUrl = 'https://jira.ihtsdotools.org/s/373e93f7c4bfcd2355dbf6c3bc2becfc-T/xqix14/813006/fe47b4489ac981edbb824b5107716c37/4.0.4/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-UK&collectorId=1afa7237';
+                    } else if (options.edition.startsWith('MAIN/SNOMEDCT-DE')) {
+                        issueCollectorUrl = 'https://jira.ihtsdotools.org/plugins/servlet/issueCollectorBootstrap.js?collectorId=a4c9ec62&locale=de';
                     } else if (options.edition.startsWith('MAIN/SNOMEDCT-BE')) {
                         issueCollectorUrl = 'https://jira.ihtsdotools.org/plugins/servlet/issueCollectorBootstrap.js?collectorId=a9d37267&locale=en';
                     } else if (options.edition.startsWith('MAIN/SNOMEDCT-DK')) {
