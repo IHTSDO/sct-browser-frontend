@@ -36,11 +36,11 @@
 						 <replacements>
 							 <replacement>
 								 <token>(build_version)</token>
-								 <value>${project.version}-${BUILD_NUMBER}</value>
+								 <value>\${project.version}-\${BUILD_NUMBER}</value>
 							 </replacement>
                              <replacement>
 								 <token>(project_version)</token>
-								 <value>${project.version}</value>
+								 <value>\${project.version}</value>
 							 </replacement>
 						 </replacements>
 				 </configuration>
