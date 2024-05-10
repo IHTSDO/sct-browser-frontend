@@ -59,7 +59,7 @@
                         <phase>generate-resources</phase>
                     </execution>
                     <execution>
-                        <id>npm install</id>
+                        <id>npm install --legacy-peer-deps</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
