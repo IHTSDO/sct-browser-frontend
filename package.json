@@ -16,30 +16,30 @@
     },
     "homepage": "https://github.com/termMed/snomed-interaction-components",
     "dependencies": {
-        "canvg": "^1.5.3",
+        "canvg": "^4.0.2",
         "chalk": "^0.5.1",
         "cypress": "^13.6.4",
         "cypress-mochawesome-reporter": "^3.8.1",
-        "grunt": "0.4",
-        "grunt-cli": "^0.1.13",
-        "grunt-contrib-handlebars": "^0.8.0",
+        "grunt": "^1.6.1",
+        "grunt-cli": "^1.4.3",
+        "grunt-contrib-handlebars": "^3.0.0",
         "grunt-conventional-changelog": "^6.1.0",
         "handlebars": "^4.0.0",
-        "lru-cache": "5.1.1",
+        "lru-cache": "9.1.1",
         "node": "^20.13.1",
         "snomed-ecl-builder": "^1.0.4"
     },
     "devDependencies": {
         "grunt-bump": "0.0.14",
-        "grunt-contrib-clean": "^0.5.0",
-        "grunt-contrib-concat": "^0.4.0",
-        "grunt-contrib-copy": "^0.5.0",
-        "grunt-contrib-cssmin": "^0.10.0",
-        "grunt-contrib-jshint": "^0.10.0",
-        "grunt-contrib-uglify": "^0.5.0",
+        "grunt-contrib-clean": "^2.0.1",
+        "grunt-contrib-concat": "^2.1.0",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-cssmin": "^5.0.0",
+        "grunt-contrib-jshint": "^3.2.0",
+        "grunt-contrib-uglify": "^5.2.2",
         "jshint-stylish": "^0.4.0"
     },
     "overrides": {
-     "semver": "7.3.2"
-   }
+        "semver": "7.3.2"
+    }
 }
