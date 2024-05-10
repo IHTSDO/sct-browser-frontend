@@ -63,7 +63,7 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
-                        <phase>Clear cache</phase>
+                        <phase>generate-resources</phase>
                         <configuration>
                             <arguments>cache clean --force</arguments>
                         </configuration>
