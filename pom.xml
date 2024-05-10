@@ -59,6 +59,16 @@
                         <phase>generate-resources</phase>
                     </execution>
                     <execution>
+                        <id>clear cache</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>Clear cache</phase>
+                        <configuration>
+                            <arguments>cache clean --force</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>npm install</id>
                         <goals>
                             <goal>npm</goal>
