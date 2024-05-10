@@ -25,7 +25,7 @@
         "grunt-contrib-handlebars": "^0.8.0",
         "grunt-conventional-changelog": "^6.1.0",
         "handlebars": "^4.0.0",
-        "lru-cache": "^5.1.1",
+        "lru-cache": "5.1.1",
         "node": "^20.13.1",
         "snomed-ecl-builder": "^1.0.4"
     },
