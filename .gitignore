@@ -52,4 +52,4 @@ bin
 .project
 
 #gitignorefiles
-/cypress/reports
+/cypress/reports/html/assets
