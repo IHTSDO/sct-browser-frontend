@@ -48,11 +48,7 @@ getChekGroupbyConcept(){
     return cy.get('#fh-search_canvas-groupConcept')
 }
 
-<<<<<<< HEAD
 // Select the first concept
-=======
-// Select the concept
->>>>>>> develop
 getConcept(){
     //Select the first concept
     return cy.get('#fh-search_canvas-resultsTable > :nth-child(1) > :nth-child(1)')
@@ -118,7 +114,6 @@ getEstonianModuleFilter(){
     }
 }
 
-<<<<<<< HEAD
 // Click on Finnish module
 getFinnishModuleFilter(){
     cy.get(':nth-child(3) > .module-link').click()
@@ -152,8 +147,6 @@ getSecondConcept(){
     return cy.get(':nth-child(2) > :nth-child(1) > .result-item > a')
 }
 
-=======
->>>>>>> develop
 }
 
 module.exports = SNOMEDCTBrowserPage

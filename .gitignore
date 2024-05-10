@@ -53,3 +53,5 @@ bin
 
 #gitignorefiles
 /cypress/reports/html/assets
+/cypress/screenshots
+/cypress/reports/html/screenshots

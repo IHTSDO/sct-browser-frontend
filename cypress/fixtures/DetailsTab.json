@@ -8,12 +8,8 @@
     "BelgianEditionConceptDetailsTab" : "SCTID: 900000000000443000",
     "CanadianEditionConceptDetailsTab" : "SCTID: 261019009",
     "DanishEditionConceptDetailsTab" : "SCTID: 261019009",
-<<<<<<< HEAD
     "EstonianEditionConceptDetailsTab" : "SCTID: 11000181102", 
     "FinnishEditionConceptDetailsTab" : "SCTID: 11000229106",
     "GermanyEditionConceptDetailsTab" : "SCTID: 11000274103",
     "SwissEditionConceptDetailsTab" : "SCTID: 722265006"
-=======
-    "EstonianEditionConceptDetailsTab" : "SCTID: 11000181102"
->>>>>>> develop
 }
