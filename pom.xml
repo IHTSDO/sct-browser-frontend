@@ -91,6 +91,7 @@
                 </executions>
                 <configuration>
                     <nodeVersion>v20.9.0</nodeVersion>
+                    <npmVersion>10.7.0</npmVersion>
                 </configuration>
             </plugin>
             <plugin>
