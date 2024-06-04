@@ -7,6 +7,8 @@ module.exports = defineConfig({
       require('cypress-mochawesome-reporter/plugin')(on);
     },
     baseUrl: "https://dev-browser.ihtsdotools.org/?",
+    viewportWidth: 1920,
+    viewportHeight: 1080,
     testIsolation: false,
   },
 });

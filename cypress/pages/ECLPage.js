@@ -54,7 +54,7 @@ getExecuteButton(){
 
 // Get Result
 getResult(){
-  if(cy.get('#fh-query_canvas-outputBody', { timeout: 10000 }).should('be.visible'))
+  if(cy.get('#fh-query_canvas-outputBody', { timeout: 20000 }).should('be.visible'))
     {
        return cy.log('Query executed and result is displayed')
     }

@@ -5,7 +5,7 @@ import RefsetTabPage from "../pages/RefsetTabPage"
 const accept = new AcceptCookiesDisclaimerPage()
 const refset = new RefsetTabPage()
 
-describe("C605829-Taxonomy", () => {
+describe("C605829-Refset", () => {
 it("Launch browser url", () => {
     accept.visit()
 })

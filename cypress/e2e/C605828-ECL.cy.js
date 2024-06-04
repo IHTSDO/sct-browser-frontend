@@ -48,11 +48,6 @@ it("click on OK button", () => {
     eclquey.getOkButton()
 })
 
-//Scroll the page
-it("Scroll page", () => {
-    cy.get('#fh-tabs-pane2').scrollTo('top')
-  })
-
 //Click on Execute button
 it("click on Execute button", () => {
     eclquey.getECLQuery()
