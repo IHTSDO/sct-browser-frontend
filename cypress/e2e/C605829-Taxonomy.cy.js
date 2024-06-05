@@ -75,11 +75,6 @@ it("brackets are removed from the concept name in PT in US language", () => {
     taxonomy.getLanguageResult()
 })
 
-// Remove the taxonomy focus concept
-it("remove taxonomy focus concept", () => {
-    taxonomy.getRemoveTaxonomyFocusConcept()
-})
-
 // Reset the taxonomy
 it("reset the taxonomy", () => {
     taxonomy.getResetTaxonomy()

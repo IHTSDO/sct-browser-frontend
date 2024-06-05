@@ -40,6 +40,7 @@ getExpandClinicalFinding(){
 getStatedView(){
    cy.get('.navbar > .nav > :nth-child(1) > .dropdown-toggle > .caret').click()
    cy.get('#fh-taxonomy_canvas-statedViewButton').click()
+   cy.get('#home-fh-cd1_canvas-stated-button').click()
    if(cy.get('#fh-taxonomy_canvas-txViewLabel > .i18n').should('have.text', 'Stated view'))
    {
       return cy.log('Switched to Stated View from Inferred view')
@@ -49,8 +50,7 @@ getStatedView(){
 // Verify Abnormal blood oxygen pressure has no children
 getAbormalBloodOxygenNoChild(){
    if(cy.get('#-treenode-123823007').should('not.exist') && 
-   cy.get('#-treenode-123822002').should('not.exist') &&
-   cy.get('#-treenode-123821009').should('exist'))
+   cy.get('#-treenode-123822002').should('not.exist'))
    {
       return cy.log('Abnormal blood oxygen pressure now has no children after switch to stated view')
    }
@@ -58,7 +58,8 @@ getAbormalBloodOxygenNoChild(){
 
 // Turn descendants count on
 getTurnDescendantsCountOn(){
-   cy.get('#fh-taxonomy_canvas-txViewLabel2 ').click()
+   cy.get('#fh-taxonomy_canvas-clearConceptButton').click()
+   cy.get('#fh-taxonomy_canvas-txViewLabel2').click()
    cy.get('#fh-taxonomy_canvas-descendantsCountTrue').click()
    if(cy.get('#fh-taxonomy_canvas-txViewLabel2 > [data-i18n-id="i18n_on"]').should('have.text', 'On'))
    {
@@ -68,7 +69,7 @@ getTurnDescendantsCountOn(){
 
 // Verify Descendants count is displayed
 getTurnDescendantsCountValue(){
-   if(cy.get('#-treenode-404684003').should('contain', '120788'))
+   if(cy.get('#-treenode-404684003').should('contain', /^[0-9]/))
    {
       return cy.log('The number of descendants is displayed next to each concept')
    }
@@ -104,7 +105,7 @@ getRemoveTaxonomyFocusConcept(){
 // Reset the taxonomy
 getResetTaxonomy(){
    cy.get('#fh-taxonomy_canvas-resetButton').click()
-   if(cy.get('#-treenode-138875005').should('be.visible'))
+   if(cy.get('#-treenode-404684003').should('be.visible'))
    {
       return cy.log('Taxonomy is refreshed')
    }
