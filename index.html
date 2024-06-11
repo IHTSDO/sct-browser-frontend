@@ -2169,9 +2169,15 @@
     <script>
         function openEclBuilder() {
             var eclString = $('#fh-query_canvas-ExpText').val();
-
-            $("body").append("<ecl-builder id='ecl-builder' branch=" + options.edition + " api-url='/snowstorm/snomed-ct' ecl-string='" + eclString + "'></ecl-builder>");
-
+            var valueContainsApostropheChar = false;
+            if (eclString && eclString.indexOf("'") >= 0) {
+                valueContainsApostropheChar = true;
+            }
+            if (valueContainsApostropheChar) {
+                $('body').append('<ecl-builder id="ecl-builder" branch=' + options.edition + ' api-url="/snowstorm/snomed-ct" ecl-string="' + eclString + '"></ecl-builder>');
+            } else {
+                $("body").append("<ecl-builder id='ecl-builder' branch=" + options.edition + " api-url='/snowstorm/snomed-ct' ecl-string='" + eclString + "'></ecl-builder>");
+            }
             const el = document.querySelector('ecl-builder');
             el.addEventListener('output', e => {
                 $('#fh-query_canvas-ExpText').val(e.detail);
