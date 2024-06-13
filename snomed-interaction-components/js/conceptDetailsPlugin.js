@@ -1229,7 +1229,7 @@ function conceptDetails(divElement, conceptId, options) {
             else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == "expression-tab") {
                 $("#expression-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 setTimeout(function() {
-                    renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), options);
+                    renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), panel.options);
                     panel.panelExpressionLoaded = true;
                 }, 300);
             }
@@ -1289,7 +1289,7 @@ function conceptDetails(divElement, conceptId, options) {
             $("#expression-tab-link-" + panel.divElement.id).click(function(e) {
                 if (panel.panelExpressionLoaded) return;
                 $("#expression-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-                renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), options);
+                renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), panel.options);
                 panel.panelExpressionLoaded = true;
             });
 
