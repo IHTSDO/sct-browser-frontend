@@ -132,6 +132,15 @@ getGermanModuleFilter(){
     }
 }
 
+// Click on Netherlands module
+getNetherlandsModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'module van Nederla...'))
+    {
+        return cy.log('Netherlands module filter is enabled and search results are displayed')
+    }
+}
+
 // Select French language filter
 getFrenchLanguageFilter(){
     cy.get(':nth-child(2) > .lang-link').click()

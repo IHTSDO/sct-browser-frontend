@@ -65,6 +65,11 @@ getGermanEdition(){
   return cy.get('#local_editions > :nth-child(9)').should('contain', 'Germany Edition')
 }
 
+// -- Select Netherlands Edition
+getNetherlandsEdition() {
+  return cy.get('#local_editions > :nth-child(11)').should('contain', 'Netherlands Edition')
+}
+
 // -- Select Swiss Edition
 getSwissEdition(){
   return cy.get('#local_editions > :nth-child(15)').should('contain', 'Swiss Edition')
