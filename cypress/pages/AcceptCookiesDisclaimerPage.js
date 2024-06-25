@@ -90,6 +90,11 @@ getUSEdition() {
   return cy.get('#local_editions > :nth-child(16)').should('contain', 'United States Edition')
 }
 
+// -- Select SE Edition
+getSwedishEdition() {
+  return cy.get('#local_editions > :nth-child(14)').should('contain', 'Swedish Edition')
+}
+
 }
 
 module.exports = AcceptCookiesDisclaimerPage
