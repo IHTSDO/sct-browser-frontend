@@ -85,6 +85,11 @@ getNorwegianEdition() {
   return cy.get('#local_editions > :nth-child(13)').should('contain', 'Norwegian Edition')
 }
 
+// -- Select US Edition
+getUSEdition() {
+  return cy.get('#local_editions > :nth-child(16)').should('contain', 'United States Edition')
+}
+
 }
 
 module.exports = AcceptCookiesDisclaimerPage

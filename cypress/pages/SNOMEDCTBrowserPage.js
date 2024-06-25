@@ -159,6 +159,15 @@ getNorwegianModuleFilter(){
     }
 }
 
+// Click on US Extension module
+getUSModuleFilter(){
+    cy.get(':nth-child(1) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'US National Librar...'))
+    {
+        return cy.log('US Extension module filter is enabled and search results are displayed')
+    }
+}
+
 // Select French language filter
 getFrenchLanguageFilter(){
     cy.get(':nth-child(2) > .lang-link').click()
