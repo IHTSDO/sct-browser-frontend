@@ -177,6 +177,15 @@ getSwedishModuleFilter(){
     }
 }
 
+// Click on New Zealand Extension module
+getNewZealandModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'New Zealand integr...'))
+    {
+        return cy.log('New Zealand Extension module filter is enabled and search results are displayed')
+    }
+}
+
 // Select French language filter
 getFrenchLanguageFilter(){
     cy.get(':nth-child(2) > .lang-link').click()

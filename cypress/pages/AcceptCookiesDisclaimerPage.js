@@ -95,6 +95,11 @@ getSwedishEdition() {
   return cy.get('#local_editions > :nth-child(14)').should('contain', 'Swedish Edition')
 }
 
+// -- Select NZ Edition
+getNewZealandEdition() {
+  return cy.get('#local_editions > :nth-child(12)').should('contain', 'New Zealand Edition')
+}
+
 }
 
 module.exports = AcceptCookiesDisclaimerPage
