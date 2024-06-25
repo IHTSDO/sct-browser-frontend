@@ -80,6 +80,11 @@ getUruguayEdition() {
   return cy.get('#local_editions > :nth-child(17)').should('contain', 'Uruguay Edition')
 }
 
+// -- Select Norwegian Edition
+getNorwegianEdition() {
+  return cy.get('#local_editions > :nth-child(13)').should('contain', 'Norwegian Edition')
+}
+
 }
 
 module.exports = AcceptCookiesDisclaimerPage
