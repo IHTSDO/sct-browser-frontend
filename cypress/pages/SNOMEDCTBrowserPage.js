@@ -186,6 +186,15 @@ getNewZealandModuleFilter(){
     }
 }
 
+// Click on Spanish module
+getSpanishModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'módulo de la exten...'))
+    {
+        return cy.log('Spanish module filter is enabled and search results are displayed')
+    }
+}
+
 // Select French language filter
 getFrenchLanguageFilter(){
     cy.get(':nth-child(2) > .lang-link').click()

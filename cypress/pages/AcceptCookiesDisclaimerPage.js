@@ -25,6 +25,10 @@ getInternationEdition(){
   return cy.get('#international_editions > :nth-child(1)').should('contain', 'International Edition')
 }
 
+getSpanishEdition() {
+  return cy.get('#international_editions > :nth-child(2)').should('contain', 'Spanish Edition')
+}
+
 // -- Select Argentinian Edition
 getArgentinianEdition(){
   return cy.get('#local_editions > :nth-child(1)').should('contain', 'Argentinian Edition')
