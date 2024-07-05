@@ -141,6 +141,15 @@ getNetherlandsModuleFilter(){
     }
 }
 
+// Click on Irish module
+getIrishModuleFilter(){
+    cy.get(':nth-child(3) > .module-link').click()
+    if(cy.get('#fh-search_canvas-moduleResumed').should('contain', 'Irish module'))
+    {
+        return cy.log('Irish module filter is enabled and search results are displayed')
+    }
+}
+
 // Click on Latin American Spanish Extension module
 getLatinAmericanSpanishModuleFilter(){
     cy.get(':nth-child(3) > .module-link').click()
