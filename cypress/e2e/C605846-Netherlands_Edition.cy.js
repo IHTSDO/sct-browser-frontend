@@ -7,7 +7,7 @@ const accept = new AcceptCookiesDisclaimerPage()
 const searchpage = new SNOMEDCTBrowserPage()
 const detailspage = new DetailsPage()
 
-describe("C605839-Netherlands Edition", () => {
+describe("C605846-Netherlands Edition", () => {
     it("Launch browser url", () => {
         accept.visit()
     })
