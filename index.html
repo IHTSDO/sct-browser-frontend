@@ -46,6 +46,20 @@
         .ecl-builder div.expression-group.grey div.expression-row:not(:first-child) ngb-typeahead-window.dropdown-menu {
             left: 0px !important;
         }
+
+        #full-height-perspective .home-children-panel {
+            max-height: 500px;
+        }
+        @media screen and (min-height: 1110px) {
+            #full-height-perspective .home-children-panel {
+                max-height: 595px;
+            }
+        }
+        @media screen and (min-height: 1450px) {
+            #full-height-perspective .home-children-panel {
+                max-height: 800px;
+            }
+        }
     </style>
 
     <script>
