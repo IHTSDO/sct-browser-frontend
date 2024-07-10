@@ -13,7 +13,9 @@
 
             fieldValues: {
                 'summary': '{{summary}}',
-                'customfield_10602': {{firstMatch.conceptId}}
+                'customfield_10602': {{firstMatch.conceptId}},
+                'recordWebInfo': '1', // field Name
+                'recordWebInfoConsent': ['1'] // field Id
             }
         };
 
@@ -24,7 +26,7 @@
             } else {
                 link.style.display = 'none';
             }
-            link.click();
+            link.click();            
             watchIssueCollectorDialogEvents();
         }
 
