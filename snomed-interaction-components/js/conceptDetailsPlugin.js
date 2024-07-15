@@ -1970,6 +1970,17 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 icon = iconToDrag(term);
             });
+
+            // Update home children panel max-height
+            if ($("#full-height-perspective").is(':visible')) {
+                var windowHeight = window.innerHeight;
+                var parentsPanelHeight = document.getElementsByClassName("home-parents-panel")[0];
+                var childrenPanelHeight = document.getElementsByClassName("home-concept-details-panel")[0];
+                var maxHeight = windowHeight - parentsPanelHeight.offsetHeight - childrenPanelHeight.offsetHeight - 250;
+                maxHeight = maxHeight < 500 ? 500 : maxHeight;
+                document.getElementsByClassName("home-children-panel")[0].style.maxHeight = maxHeight + 'px';
+            }
+
             xhrChildren = null;
         }).fail(function() {
             if (childrenExpand) {
