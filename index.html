@@ -241,26 +241,7 @@
                     options.queryServerUrl = "/snowstorm/snomed-ct";
                     options.releases = result;
 
-                    const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES'];
-                    // sort extensions. International and Spanish Editions are always on Top
-                    if (options.releases) {
-                        options.releases.items.sort(function(a, b) {
-                            if (a.shortName === 'SNOMEDCT' && b.shortName === 'SNOMEDCT-ES') {
-                                return -1;
-                            }
-                            if (b.shortName === 'SNOMEDCT' && a.shortName === 'SNOMEDCT-ES') {
-                                return 1;
-                            }
-                            if (internationalEditionShortNames.indexOf(a.shortName) > -1) {
-                                return -1;
-                            }
-                            if (internationalEditionShortNames.indexOf(b.shortName) > -1) {
-                                return 1;
-                            }
-
-                            return a.name.localeCompare(b.name);
-                        });
-                    }
+                    const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES', 'SNOMEDCT-DERIVATIVES'];
 
                     // dynamic extension links
                     var internationalReleases = [];
@@ -307,6 +288,11 @@
                             }
                         }
                     }
+
+                    // sort international extensions
+                    internationalReleases.sort(function(a, b) {
+                        return internationalEditionShortNames.indexOf(a.shortName) - internationalEditionShortNames.indexOf(b.shortName);
+                    });
 
                     // sort local extensions again
                     localReleases.sort(function(a, b) {
@@ -2355,11 +2341,11 @@
                 <p class="i18n" data-i18n-id="i18n_home9">This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong></p>
                 
                 <div class="row">
-                  <div class="col-s-6" style="margin-left:15px;">
+                  <div class="col-md-6" style="padding-left:15px;">
                     <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                     <div id="international_editions" style="margin-bottom : 0px;"></div>
                   </div>
-                  <div class="col-s-6" style="margin-left: 523px; margin-top: -150px;">
+                  <div class="col-md-6">
                       <h2><span class="i18n" data-i18n-id="i18n_international_tools">Additional Information</span></h2>
                       <div id="international_tools" style="margin-bottom : 0px"></div>
                   </div>
