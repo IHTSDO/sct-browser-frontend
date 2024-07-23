@@ -63,7 +63,7 @@ editions.forEach((edition) => {
         })
 
         it(`Select Details tab`, () => {
-            cy.get('a[href="#details-fh-cd1_canvas"]').click();
+            cy.get('#details-tabs-fh-cd1_canvas a[data-test="details"]').click();
         })
 
         it(`Assert that '${edition.editionCode}' flag is displayed in the Details tab`, () => {
