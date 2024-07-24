@@ -11,26 +11,26 @@ export class RefsetPage {
         })
     }
 
-// Load the first concept from the members list
-    getFirstConceptMembersList() {
-        cy.get('.bottom_panel').scrollTo(0, 50)
-        cy.get('tbody > :nth-child(1) > :nth-child(1) > .badge').click()
-        cy.get('#home-attributes-fh-cd1_canvas > h4').invoke('text').then((text) => {
-            if (text.includes('(disorder)')) {
-                return cy.log('Selected first concept from members list is loaded into the details panelsection')
-            } else if (text.includes('(procedure)')) {
-                return cy.log('Selected first concept from members list is loaded into the details panelsection')
-            } else {
-            }
+    loadFirstMemberConcept() {
+        cy.get('#fh-refset_canvas-resultsTable .member-concept-row').first().as('member').click();
+
+        cy.get('@member').find('.badge').invoke('attr', 'data-concept-id').then(conceptId => {
+            cy.get('#home-attributes-fh-cd1_canvas')
+                .within(() => {
+                    cy.get('a[data-concept-id="' + conceptId + '"]').should('exist').and('be.visible');
+                })
         })
     }
 
-// Sort the refset table by the active members
-    getSortRefset() {
-        cy.get('[data-i18n-id="i18n_active_members_count"]').click()
-        if (cy.get(':nth-child(1) > .sorting_1').contains(/10|[1-9]/)) {
-            return cy.log('Members with the lowest counts are displayed first')
-        }
+    sortRefsetByActiveMembersCount() {
+        cy.get('#fh-refset_canvas-datatable .sorting[data-i18n-id="i18n_active_members_count"]').as('activeMembersCount').click();
+
+        cy.get('@activeMembersCount').should('have.class', 'sorting_asc');
+        cy.get('#fh-refset_canvas-datatable .sorting_1').each(($el, index, $list) => {
+            if (index > 0) {
+                assert(Number(Number($el.text()) >= Number($list[index - 1].textContent)));
+            }
+        })
     }
 
 }

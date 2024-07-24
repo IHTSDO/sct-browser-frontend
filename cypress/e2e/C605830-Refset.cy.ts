@@ -34,11 +34,11 @@ describe("C605829-Refset", () => {
     })
 
     it("Load the first concept from the members list", () => {
-        refsetPage.getFirstConceptMembersList()
+        refsetPage.loadFirstMemberConcept()
     })
 
     it("Sort the refset table by the active members", () => {
-        refsetPage.getSortRefset()
+        refsetPage.sortRefsetByActiveMembersCount()
     })
 
 })
