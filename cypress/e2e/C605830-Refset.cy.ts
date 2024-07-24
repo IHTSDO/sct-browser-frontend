@@ -25,7 +25,7 @@ describe("C605829-Refset", () => {
     })
 
     it("Select Refset tab", () => {
-        cy.get('#fh-refset_canvas-link').click();
+        cy.get('a[href="#fh-refset_canvas"]').click();
         cy.get('#fh-refset_canvas').should('have.class', 'active');
     })
 
