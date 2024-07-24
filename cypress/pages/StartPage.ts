@@ -15,9 +15,7 @@ export class StartPage {
     }
 
     selectInternationalEdition() {
-        // International Edition button does not have 'editioncode' value or any other distinct characteristic
-        // among 3 existing at the moment international editions, so we have to rely on the order number for now
-        cy.get('#international_editions').find('a').first().should('contain.text', 'International Edition').click()
+        cy.get('#international_editions').find('a[codesystem-shortname="SNOMEDCT"]').click()
     }
 
 }

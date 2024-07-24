@@ -61,7 +61,7 @@ describe("C605827-Search_and_Load", () => {
         cy.get('#fh-tabs-pane').scrollTo('top')
     })
 
-    it("load concept '80891009 | Heart structure (body structure)'", () => {
+    it("Load concept '80891009 | Heart structure (body structure)'", () => {
         searchPage.loadConcept('80891009');
     })
 
