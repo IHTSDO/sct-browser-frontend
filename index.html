@@ -515,7 +515,8 @@
                         $a.attr("target", "_blank");
                     } else {
                         $a.attr("href", "javascript:void(0);");
-                        $a.attr("editionCode", release.countryCode)
+                        $a.attr("editionCode", release.countryCode);
+                        $a.attr("codesystem-shortname", release.shortName);
                         $a.on("click", function() {
                             var parsedLanguages = "";
                             for (var language in release.languages) {
