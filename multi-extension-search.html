@@ -9,7 +9,7 @@
     <meta name="description" content="SNOMED International SNOMED CT Browser">
     <meta name="author" content="SNOMED International">
     
-    <script src="internal-libs/snomed-interaction-components.min.js?version=build_version"></script>
+    <script src="internal-libs/snomed-interaction-components.min.js?version=3.41.0-SNAPSHOT-${BUILD_NUMBER}"></script>
     <script type="text/javascript" src="internal-libs/node_modules/snomed-ecl-builder/output/ecl-builder.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/external.css">
@@ -398,13 +398,11 @@
             if(options.release.length > 0 && options.release !== 'None'){
                 branch = branch + "/" + options.release;
             };
-            if(!options.serverUrl.includes('snowowl')){
             $.ajaxSetup({
-                headers : {
-                    'Accept-Language': options.languages
+            headers : {
+                'Accept-Language': options.languages
                 }
-                });
-            };
+            });
             $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {                 
             }).done(function(result) {
                 var languageRefsets = [];            

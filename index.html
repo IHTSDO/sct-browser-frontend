@@ -22,6 +22,9 @@
         .row.splitter_panel {
             height: calc(100vh - 95px) !important;
         }
+        .ecl-builder ngb-typeahead-window.dropdown-menu {
+            max-width: 60vw !important;
+        }
         .ecl-builder div.modal-body button.circle {
             top: 20px !important;
         }
@@ -38,10 +41,10 @@
             width: 19.85vw !important;
         }      
         .ecl-builder div.expression-group.grey div.expression-row:first-child ngb-typeahead-window.dropdown-menu {
-            left: -230px !important;
+            left: 0px !important;
         }
         .ecl-builder div.expression-group.grey div.expression-row:not(:first-child) ngb-typeahead-window.dropdown-menu {
-            left: -200px !important;
+            left: 0px !important;
         }
     </style>
 
@@ -238,26 +241,7 @@
                     options.queryServerUrl = "/snowstorm/snomed-ct";
                     options.releases = result;
 
-                    const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES'];
-                    // sort extensions. International and Spanish Editions are always on Top
-                    if (options.releases) {
-                        options.releases.items.sort(function(a, b) {
-                            if (a.shortName === 'SNOMEDCT' && b.shortName === 'SNOMEDCT-ES') {
-                                return -1;
-                            }
-                            if (b.shortName === 'SNOMEDCT' && a.shortName === 'SNOMEDCT-ES') {
-                                return 1;
-                            }
-                            if (internationalEditionShortNames.indexOf(a.shortName) > -1) {
-                                return -1;
-                            }
-                            if (internationalEditionShortNames.indexOf(b.shortName) > -1) {
-                                return 1;
-                            }
-
-                            return a.name.localeCompare(b.name);
-                        });
-                    }
+                    const internationalEditionShortNames = ['SNOMEDCT', 'SNOMEDCT-ES', 'SNOMEDCT-DERIVATIVES'];
 
                     // dynamic extension links
                     var internationalReleases = [];
@@ -305,6 +289,11 @@
                         }
                     }
 
+                    // sort international extensions
+                    internationalReleases.sort(function(a, b) {
+                        return internationalEditionShortNames.indexOf(a.shortName) - internationalEditionShortNames.indexOf(b.shortName);
+                    });
+
                     // sort local extensions again
                     localReleases.sort(function(a, b) {
                         return a.name.localeCompare(b.name);
@@ -334,9 +323,6 @@
                     });
                 }).fail(function() {
                     console.log('fail');
-                    options.serverUrl = "/snowowl/snomed-ct/v2";
-                    options.queryServerUrl = "/snowowl/snomed-ct/v2";
-
                     dfd.resolve();
                 });
 
@@ -446,10 +432,7 @@
                         $('#version-selector').css('display', 'block');
                     }
                 } else {
-                    if (options.serverUrl === '/snowowl/snomed-ct/v2') {
-                        $('#fh-refset_canvas').css('display', 'none');
-                        $('#fh-refset_canvas-li').css('display', 'none');
-                    }
+                    // do nothing
                 }
                 start();
             });
@@ -532,6 +515,8 @@
                         $a.attr("target", "_blank");
                     } else {
                         $a.attr("href", "javascript:void(0);");
+                        $a.attr("editionCode", release.countryCode);
+                        $a.attr("codesystem-shortname", release.shortName);
                         $a.on("click", function() {
                             var parsedLanguages = "";
                             for (var language in release.languages) {
@@ -1994,13 +1979,11 @@
             if (options.release.length > 0 && options.release !== 'None') {
                 branch = branch + "/" + options.release;
             };
-            if (!options.serverUrl.includes('snowowl')) {
-                $.ajaxSetup({
-                    headers: {
-                        'Accept-Language': options.languages
-                    }
-                });
-            };
+            $.ajaxSetup({
+                headers: {
+                    'Accept-Language': options.languages
+                }
+            });
             $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {}).done(function(result) {
                 var languageRefsets = [];
                 Object.keys(result.referenceSets).forEach(function(key) {
@@ -2177,9 +2160,15 @@
     <script>
         function openEclBuilder() {
             var eclString = $('#fh-query_canvas-ExpText').val();
-
-            $("body").append("<ecl-builder id='ecl-builder' branch=" + options.edition + " api-url='/snowstorm/snomed-ct' ecl-string='" + eclString + "'></ecl-builder>");
-
+            var valueContainsApostropheChar = false;
+            if (eclString && eclString.indexOf("'") >= 0) {
+                valueContainsApostropheChar = true;
+            }
+            if (valueContainsApostropheChar) {
+                $('body').append('<ecl-builder id="ecl-builder" branch=' + options.edition + ' api-url="/snowstorm/snomed-ct" ecl-string="' + eclString + '"></ecl-builder>');
+            } else {
+                $("body").append("<ecl-builder id='ecl-builder' branch=" + options.edition + " api-url='/snowstorm/snomed-ct' ecl-string='" + eclString + "'></ecl-builder>");
+            }
             const el = document.querySelector('ecl-builder');
             el.addEventListener('output', e => {
                 $('#fh-query_canvas-ExpText').val(e.detail);
@@ -2353,11 +2342,11 @@
                 <p class="i18n" data-i18n-id="i18n_home9">This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong></p>
                 
                 <div class="row">
-                  <div class="col-s-6" style="margin-left:15px;">
+                  <div class="col-md-6" style="padding-left:15px;">
                     <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                     <div id="international_editions" style="margin-bottom : 0px;"></div>
                   </div>
-                  <div class="col-s-6" style="margin-left: 523px; margin-top: -150px;">
+                  <div class="col-md-6">
                       <h2><span class="i18n" data-i18n-id="i18n_international_tools">Additional Information</span></h2>
                       <div id="international_tools" style="margin-bottom : 0px"></div>
                   </div>

@@ -43,7 +43,7 @@ module.exports = function(grunt) {
                     'external-libs/postal.min.js',
                     'external-libs/bootstrap-tour.min.js',
                     'external-libs/jquery.i18n.properties-min-1.0.9.js',
-                    'external-libs/handlebars-v1.3.0.min.js',
+                    'external-libs/handlebars.runtime.min-v4.7.8.js',
                     'external-libs/bootstrap.min.js',
                     'external-libs/jquery.ui.touch-punch.min.js',
                     'external-libs/excellentexport.min.js',

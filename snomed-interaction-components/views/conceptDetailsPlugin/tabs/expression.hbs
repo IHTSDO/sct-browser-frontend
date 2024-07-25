@@ -15,12 +15,14 @@
     {{/each}}
 {{/if}}
 
-{{#if statedExpressionHtml}}
+{{#if_eq options.selectedView "stated"}}
     <p class="" style="margin-top: 20px;"><span class='i18n' data-i18n-id='i18n_expression_stated_concept_definition'>{{i18n "i18n_expression_stated_concept_definition" "Expression from Stated Concept Definition"}}</span> (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-stated-expression" data-clipboard-text="{{plainStatedExpression}}"></i></small></p>
     <div class="expression-code" style="margin-top: 10px; padding: 10px;">{{{statedExpressionHtml}}}</div>    
-{{/if}}
-<p class="" style="margin-top: 20px;"><span class='i18n' data-i18n-id='i18n_expression_inferred_concept_definition'>{{i18n "i18n_expression_inferred_concept_definition" "Expression from Inferred Concept Definition"}}</span> (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-inferred-expression" data-clipboard-text="{{plainInferredExpression}}"></i></small></p>
-<div class="expression-code" style="margin-top: 10px; padding: 10px;">{{{inferredExpressionHtml}}}</div>
+{{/if_eq}}
+{{#if_eq options.selectedView "inferred"}}
+    <p class="" style="margin-top: 20px;"><span class='i18n' data-i18n-id='i18n_expression_inferred_concept_definition'>{{i18n "i18n_expression_inferred_concept_definition" "Expression from Inferred Concept Definition"}}</span> (*)&nbsp;&nbsp;&nbsp;&nbsp;<small><i class="glyphicon glyphicon-export clip-btn-exp" id="{{divElementId}}-copy-inferred-expression" data-clipboard-text="{{plainInferredExpression}}"></i></small></p>
+    <div class="expression-code" style="margin-top: 10px; padding: 10px;">{{{inferredExpressionHtml}}}</div>
+{{/if_eq}}
 <br><br>
 
 {{#if_gr otherOwlExpressions.length 0}}

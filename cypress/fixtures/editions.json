@@ -1,0 +1,155 @@
+[
+  {
+    "editionName": "Argentinian Edition",
+    "editionCode": "ar",
+    "internationalEdition": false,
+    "languageFlag": "es",
+    "searchTerm": "modulo",
+    "moduleId": "11000221109",
+    "moduleName": "módulo identificador de la extensión Argentina"
+  },
+  {
+    "editionName": "Austrian Edition",
+    "editionCode": "at",
+    "internationalEdition": false,
+    "languageFlag": "de",
+    "searchTerm": "module",
+    "moduleId": "11000234105",
+    "moduleName": "Österreichisches Modul"
+  },
+  {
+    "editionName": "Belgian Edition",
+    "editionCode": "be",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "11000172109",
+    "moduleName": "Belgian module"
+  },
+  {
+    "editionName": "Canadian Edition",
+    "editionCode": "ca",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "20621000087109",
+    "moduleName": "Canada Health Infoway English module"
+  },
+  {
+    "editionName": "Danish Edition",
+    "editionCode": "dk",
+    "internationalEdition": false,
+    "languageFlag": "dk",
+    "searchTerm": "module",
+    "moduleId": "554471000005108",
+    "moduleName": "dansk modul"
+  },
+  {
+    "editionName": "Estonian Edition",
+    "editionCode": "ee",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "11000181102",
+    "moduleName": "Estonian module"
+  },
+  {
+    "editionName": "Finnish Edition",
+    "editionCode": "fi",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "11000229106",
+    "moduleName": "Finnish module"
+  },
+  {
+    "editionName": "Germany Edition",
+    "editionCode": "de",
+    "internationalEdition": false,
+    "languageFlag": "de",
+    "searchTerm": "module",
+    "moduleId": "11000274103",
+    "moduleName": "German module"
+  },
+  {
+    "editionName": "Irish Edition",
+    "editionCode": "ie",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "11000220105",
+    "moduleName": "Irish module"
+  },
+  {
+    "editionName": "Netherlands Edition",
+    "editionCode": "nl",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "11000146104",
+    "moduleName": "module van Nederlandse editie"
+  },
+  {
+    "editionName": "New Zealand Edition",
+    "editionCode": "nz",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "21000210109",
+    "moduleName": "New Zealand integrated care module"
+  },
+  {
+    "editionName": "Norwegian Edition",
+    "editionCode": "no",
+    "internationalEdition": false,
+    "languageFlag": "no",
+    "searchTerm": "module",
+    "moduleId": "51000202101",
+    "moduleName": "norsk modul"
+  },
+  {
+    "editionName": "Spanish Edition",
+    "editionCode": "es",
+    "internationalEdition": true,
+    "languageFlag": "es",
+    "searchTerm": "modulo",
+    "moduleId": "450829007",
+    "moduleName": "módulo de la extensión de la lengua castellana para Latinoamérica"
+  },
+  {
+    "editionName": "Swedish Edition",
+    "editionCode": "se",
+    "internationalEdition": false,
+    "languageFlag": "se",
+    "searchTerm": "module",
+    "moduleId": "45991000052106",
+    "moduleName": "SNOMED CT Sweden NRC maintained module"
+  },
+  {
+    "editionName": "Swiss Edition",
+    "editionCode": "ch",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "2011000195101",
+    "moduleName": "SNOMED CT Switzerland NRC maintained Module"
+  },
+  {
+    "editionName": "United States Edition",
+    "editionCode": "us",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "731000124108",
+    "moduleName": "US National Library of Medicine maintained module"
+  },
+  {
+    "editionName": "Uruguay Edition",
+    "editionCode": "uy",
+    "internationalEdition": false,
+    "languageFlag": "es",
+    "searchTerm": "modulo",
+    "moduleId": "5631000179106",
+    "moduleName": "módulo de la extensión de Uruguay"
+  }
+]

@@ -1,5 +1,16 @@
 <form role="form" id="{{divElementId}}-options-form">
     <div class="form-group">
+         {{#if showDisplayUsFsnCheckbox}}
+            <div class="checkbox">
+                <label>
+                    {{#if options.displayUsFsn}}
+                        <input type="checkbox" id="{{divElementId}}-displayUsFsnOption" checked> <span class="i18n" data-i18n-id="i18n_display_us_fsn">{{i18n "i18n_display_us_fsn" "Display English FSN"}}</span>
+                    {{else}}
+                        <input type="checkbox" id="{{divElementId}}-displayUsFsnOption"> <span class="i18n" data-i18n-id="i18n_display_us_fsn">{{i18n "i18n_display_us_fsn" "Display English FSN"}}</span>
+                    {{/if}}
+                </label>
+            </div>
+        {{/if}}
         <div class="checkbox">
             <label>
                 {{#if options.displaySynonyms}}
@@ -63,10 +74,10 @@
                 <option value="inferred" selected><span class="i18n" data-i18n-id="i18n_inferred">{{i18n "i18n_inferred" "Inferred"}}</span></option>
             {{else}}
                 <option value="inferred"><span class="i18n" data-i18n-id="i18n_inferred">{{i18n "i18n_inferred" "Inferred"}}</span></option>
-            {{/if_eq}}           
+            {{/if_eq}}
         </select>
     </div>
-    
+
     {{#if options.languageRefsets}}
         <label><span class="i18n" data-i18n-id="i18n_language_refset">{{i18n "i18n_language_refset" "Language Refset"}}</span></label>
         {{#each options.languageRefsets}}

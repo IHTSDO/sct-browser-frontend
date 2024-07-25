@@ -46,20 +46,12 @@ function conceptDetails(divElement, conceptId, options) {
     panel.subscriptionsColor = [];
     panel.subscriptions = [];
     panel.subscribers = [];
-    panel.server = "";
     this.panelRefsetsLoaded = false;
     this.panelMembersLoaded = false;
     this.panelReferencesLoaded = false;
     this.panelDiagramLoaded = false;
     this.panelExpressionLoaded = false;
     this.firstMatch = null;
-
-    if (options.serverUrl.includes('snowowl')){
-        panel.server = 'snowowl';
-    }
-    else{
-        panel.server = 'snowstorm';
-    }
 
     componentLoaded = false;
     $.each(componentsRegistry, function(i, field) {
@@ -141,8 +133,7 @@ function conceptDetails(divElement, conceptId, options) {
         $(divElement).html();
 
         var context = {
-            divElementId: panel.divElement.id,
-            server: panel.server
+            divElementId: panel.divElement.id
         };
 
         $(divElement).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/main.hbs"](context));
@@ -282,6 +273,9 @@ function conceptDetails(divElement, conceptId, options) {
         });
 
         if (typeof(Storage) !== "undefined") {
+            if (localStorage.getItem("conceptDetailOptions_displayUsFsn")) {
+                panel.options.displayUsFsn = localStorage.getItem("conceptDetailOptions_displayUsFsn") === 'true';
+            }
             if (localStorage.getItem("conceptDetailOptions_displaySynonyms")) {
                 panel.options.displaySynonyms = localStorage.getItem("conceptDetailOptions_displaySynonyms") === 'true';
             }
@@ -370,14 +364,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
-                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-              }
-            });
-        }
+        $.ajaxSetup({
+            headers : {
+              'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+            }
+          });
         if (typeof panel.options.selectedView == "undefined") {
             panel.options.selectedView = "inferred";
         }
@@ -398,7 +389,6 @@ function conceptDetails(divElement, conceptId, options) {
                     displayChildren: true,
                     childrenResult: [],
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     selectedView: panel.options.selectedView,
                     statedParents: [],
                     inferredParents: [],
@@ -744,9 +734,10 @@ function conceptDetails(divElement, conceptId, options) {
             var context = {
                 panel: panel,
                 firstMatch: firstMatch,
+                usFsn: getUsFsn(firstMatch),
                 divElementId: panel.divElement.id,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : ''),
-                server: panel.server
+                forceShowUsFsn: panel.options.displayUsFsn && panel.options.languages && panel.options.languages.length !== 0 && panel.options.languages[0] !== 'en' && panel.options.languages !== 'en'
             };
             $('#home-attributes-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/attributes.hbs"](context));
 
@@ -1238,7 +1229,7 @@ function conceptDetails(divElement, conceptId, options) {
             else if ($('ul#details-tabs-' + panel.divElement.id + ' li.active').attr('id') == "expression-tab") {
                 $("#expression-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
                 setTimeout(function() {
-                    renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), options);
+                    renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), panel.options);
                     panel.panelExpressionLoaded = true;
                 }, 300);
             }
@@ -1298,7 +1289,7 @@ function conceptDetails(divElement, conceptId, options) {
             $("#expression-tab-link-" + panel.divElement.id).click(function(e) {
                 if (panel.panelExpressionLoaded) return;
                 $("#expression-canvas-" + panel.divElement.id).html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
-                renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), options);
+                renderExpression(firstMatch, firstMatch, $("#expression-canvas-" + panel.divElement.id), panel.options);
                 panel.panelExpressionLoaded = true;
             });
 
@@ -1593,13 +1584,11 @@ function conceptDetails(divElement, conceptId, options) {
                     }
                 });
                 if (ids.length > 0) {
-                    if(!options.serverUrl.includes('snowowl')) {
-                        $.ajaxSetup({
-                            headers : {
-                                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-                            }
-                        });
-                    }
+                    $.ajaxSetup({
+                        headers : {
+                            'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                        }
+                    });
                     var getConcepts =  function(list) {
                         var dfd = $.Deferred();
                         var result = {concepts: []};
@@ -1727,13 +1716,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
+        $.ajaxSetup({
+            headers : {
                 'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-              }
-            });
-        };
+            }
+        });
         xhrReferences = $.getJSON(options.serverUrl + "/" + branch + "/concepts/" + conceptId + "/references?stated=" + (panel.options.selectedView === 'stated') + '&offset=0&limit=10000', function(result) {
 
         }).done(function(result) {
@@ -1773,7 +1760,6 @@ function conceptDetails(divElement, conceptId, options) {
             if (result && result.total !== 0) {
                 var context = {
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     result: result
                 };
                 $("#references-" + panel.divElement.id + "-accordion").html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/references.hbs"](context));
@@ -1825,13 +1811,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
+        $.ajaxSetup({
+            headers : {
                 'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-              }
-            });
-        };
+            }
+        });
         xhrChildren = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView, function(result) {}).done(function(result) {
             result.forEach(function(item) {
                 if(item.pt && item.pt.lang === options.defaultLanguage && options.defaultLanguage != 'en' && item.fsn.lang != options.defaultLanguage){
@@ -1853,7 +1837,6 @@ function conceptDetails(divElement, conceptId, options) {
                 displayChildren: forceShow,
                 childrenResult: result,
                 divElementId: panel.divElement.id,
-                server: panel.server,
                 selectedView: panel.options.selectedView
             };
 
@@ -1987,6 +1970,17 @@ function conceptDetails(divElement, conceptId, options) {
                 }
                 icon = iconToDrag(term);
             });
+
+            // Update home children panel max-height
+            if ($("#full-height-perspective").is(':visible')) {
+                var windowHeight = window.innerHeight;
+                var parentsPanelHeight = document.getElementsByClassName("home-parents-panel")[0];
+                var childrenPanelHeight = document.getElementsByClassName("home-concept-details-panel")[0];
+                var maxHeight = windowHeight - parentsPanelHeight.offsetHeight - childrenPanelHeight.offsetHeight - 250;
+                maxHeight = maxHeight < 500 ? 500 : maxHeight;
+                document.getElementsByClassName("home-children-panel")[0].style.maxHeight = maxHeight + 'px';
+            }
+
             xhrChildren = null;
         }).fail(function() {
             if (childrenExpand) {
@@ -2015,13 +2009,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')){
-           $.ajaxSetup({
-              headers : {
-                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-              }
-            });
-        };
+        $.ajaxSetup({
+            headers : {
+              'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+            }
+        });
         xhrParents = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView, function(result) {
         }).done(function(result) {
             result.forEach(function(c) {
@@ -2290,7 +2282,6 @@ function conceptDetails(divElement, conceptId, options) {
                             languageName: "(" + (options.languageNameOfLangRefset.hasOwnProperty(loopSelectedLangRefset) ? options.languageNameOfLangRefset[loopSelectedLangRefset] : loopSelectedLangRefset) + ")",
                             longLangName: panel.removeSemtag(panel.options.languageRefsets.filter(function (el) { return el.id == loopSelectedLangRefset;})[0].fsn.term),
                             divElementId: panel.divElement.id,
-                            server: panel.server,
                             allDescriptions: auxDescriptions
                         };
 
@@ -2368,7 +2359,6 @@ function conceptDetails(divElement, conceptId, options) {
                     languageName: "(" + language + ")",
                     longLangName: panel.options.languagesArray[language],
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     allDescriptions: allDescriptions
                 };
 
@@ -2406,7 +2396,6 @@ function conceptDetails(divElement, conceptId, options) {
             var context = {
                 options: panel.options,
                 divElementId: panel.divElement.id,
-                server: panel.server,
                 annotations: firstMatch.annotations
             };
             allLangsHtml = JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/annotations-panel.hbs"](context);
@@ -2427,13 +2416,11 @@ function conceptDetails(divElement, conceptId, options) {
                 branch = branch + "/" + options.release;
             }
         }
-        if(!options.serverUrl.includes('snowowl')) {
-            $.ajaxSetup({
-                headers : {
-                    'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-                }
-            });
-        }
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+            }
+        });
         $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {
             // do nothing
         }).done(function(result) {
@@ -2514,13 +2501,11 @@ function conceptDetails(divElement, conceptId, options) {
             xhrMembers = null;
         }
 
-        if(!options.serverUrl.includes('snowowl')) {
-            $.ajaxSetup({
-                headers : {
-                    'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
-                }
-            });
-        }
+        $.ajaxSetup({
+            headers : {
+                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+            }
+        });
 
         xhrMembers = $.getJSON(membersUrl, function(result) {
         }).done(function(result) {
@@ -2570,7 +2555,6 @@ function conceptDetails(divElement, conceptId, options) {
                 context = {
                     result: {'items':[]},
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     total: total,
                     skipTo: 0,
                     referenceComponentsOfRefsetAreNotConcepts: true,
@@ -2583,7 +2567,6 @@ function conceptDetails(divElement, conceptId, options) {
                     returnLimit: returnLimit2,
                     remaining: remaining,
                     divElementId: panel.divElement.id,
-                    server: panel.server,
                     skipTo: skipTo,
                     panel: panel,
                     total: total,
@@ -2826,7 +2809,8 @@ function conceptDetails(divElement, conceptId, options) {
     this.setupOptionsPanel = function() {
         var context = {
             options: panel.options,
-            divElementId: panel.divElement.id
+            divElementId: panel.divElement.id,
+            showDisplayUsFsnCheckbox: panel.options.languages && panel.options.languages.length !== 0 && panel.options.languages[0] !== 'en' && panel.options.languages !== 'en'
         };
         Handlebars.registerHelper('if_eq', function(a, b, opts) {
             if (opts != "undefined") {
@@ -2837,7 +2821,8 @@ function conceptDetails(divElement, conceptId, options) {
             }
         });
         Handlebars.registerHelper('ifIn', function(elem, list, options) {
-            if (list.indexOf(elem) > -1) {
+            console.log(elem, list, options);
+            if (options.data.root.options.defaultLanguageReferenceSets.indexOf(elem) > -1) {
                 return options.fn(this);
             }
             return options.inverse(this);
@@ -2846,6 +2831,7 @@ function conceptDetails(divElement, conceptId, options) {
     }
 
     this.readOptionsPanel = function() {
+        panel.options.displayUsFsn = $("#" + panel.divElement.id + "-displayUsFsnOption").is(':checked');
         panel.options.displaySynonyms = $("#" + panel.divElement.id + "-displaySynonymsOption").is(':checked');
         panel.options.showIds = $("#" + panel.divElement.id + "-displayIdsOption").is(':checked');
         panel.options.displayChildren = $("#" + panel.divElement.id + "-childrenOption").is(':checked');
@@ -2861,6 +2847,7 @@ function conceptDetails(divElement, conceptId, options) {
         });
 
         if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("conceptDetailOptions_displayUsFsn", panel.options.displayUsFsn);
             localStorage.setItem("conceptDetailOptions_displaySynonyms", panel.options.displaySynonyms);
             localStorage.setItem("conceptDetailOptions_showIds", panel.options.showIds);
             localStorage.setItem("conceptDetailOptions_displayInactiveDescriptions", panel.options.displayInactiveDescriptions);

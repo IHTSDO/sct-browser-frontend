@@ -29,19 +29,19 @@ var referenceToExpression = function(conceptReference, concrete, type) {
     }
 };
 
-var conceptToPostCoordinatedExpression = function(concept, relsProperty, div, options) {
+var conceptToPostCoordinatedExpression = function(conceptDefinitionStatus, relationships) {
     var expression = "";
     var tab = "&nbsp;&nbsp;&nbsp;&nbsp;";
-    if (concept.definitionStatus == "PRIMITIVE") {
+    if (conceptDefinitionStatus == "PRIMITIVE") {
         expression += "<span class='exp-operators'>&lt;&lt;&lt;</span> ";        
     } else {
         expression += "<span class='exp-operators'>===</span> "; 
     }
-    if (concept[relsProperty] && concept[relsProperty].length > 0) {
+    if (relationships && relationships.length > 0) {
         //expression += ' <span class="exp-brackets">{</span>';
         var firstParent = true;
         var attributes = {};
-        $.each(concept[relsProperty], function(i, rel){
+        $.each(relationships, function(i, rel){
             if (rel.active == true && rel.type.conceptId == "116680003") {
                 if (!firstParent) {
                     expression += " " + e_plus + " <br>";
@@ -264,16 +264,34 @@ var renderExpression = function(concept, inferredConcept, div, options) {
                 renderExpressionForAxioms (concept, result.items, classAxiomOwlExpressions, gciAxiomOwlExpressions, otherOwlExpressions)
             }
 
-            var inferredHtml = conceptToPostCoordinatedExpression(concept, "relationships", div, options);
+            var inferredHtml = conceptToPostCoordinatedExpression(concept.definitionStatus, concept.relationships);
             var tmp = document.createElement("DIV");
             tmp.innerHTML = inferredHtml;
             var plainInferredExpression =  tmp.textContent || tmp.innerText || "";
             plainInferredExpression = plainInferredExpression.replace(/\s\s+/g, ' ');
 
+            var statedHtml = '';
+            var plainStatedExpression = '';
+            $.each(concept.classAxioms, function(i, axiom){
+                if (axiom.active) {
+                    if (statedHtml.length !== 0) {
+                        statedHtml += ' <br><br>';
+                    }
+                    statedHtml += conceptToPostCoordinatedExpression(concept.definitionStatus, axiom.relationships)
+                }
+            });
+            if (statedHtml.length !== 0) {
+                tmp = document.createElement("DIV");
+                tmp.innerHTML = statedHtml;
+                plainStatedExpression =  tmp.textContent || tmp.innerText || "";
+                plainStatedExpression = plainStatedExpression.replace(/\s\s+/g, ' ');
+            }
+
             var context = {
+                options: options,
                 divElementId: div.attr('id'),
                 preCoordinatedExpressionHtml: preCoordinatedHtml,
-                statedExpressionHtml: '',
+                statedExpressionHtml: statedHtml,
                 inferredExpressionHtml: inferredHtml,
                 plainPreCoordinatedExpression: plainPreCoordinatedExpression,
                 plainStatedExpression: plainStatedExpression,
@@ -317,13 +335,13 @@ var renderExpression = function(concept, inferredConcept, div, options) {
             });
         });
     } else {        
-        var statedHtml = conceptToPostCoordinatedExpression(concept, "statedRelationships");
+        var statedHtml = conceptToPostCoordinatedExpression(concept.definitionStatus, concept.statedRelationships);
         var tmp = document.createElement("DIV");
         tmp.innerHTML = statedHtml;
         var plainStatedExpression =  tmp.textContent || tmp.innerText || "";
         plainStatedExpression = plainStatedExpression.replace(/\s\s+/g, ' ');
 
-        var inferredHtml = conceptToPostCoordinatedExpression(concept, "relationships", div, options);
+        var inferredHtml = conceptToPostCoordinatedExpression(concept.definitionStatus, concept.relationships);
         var tmp = document.createElement("DIV");
         tmp.innerHTML = inferredHtml;
         var plainInferredExpression =  tmp.textContent || tmp.innerText || "";
