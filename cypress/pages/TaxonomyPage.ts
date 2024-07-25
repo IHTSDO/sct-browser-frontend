@@ -2,7 +2,7 @@ export class TaxonomyPage {
 
    // Select Able to thrive (finding)
    getAbletoThrive() {
-      cy.get('#-treenode-1148601009').click()
+      cy.get('#fh-taxonomy_canvas-treenode-1148601009').click()
       if (cy.get('#home-attributes-fh-cd1_canvas').should('contain', 'Able to thrive (finding)')) {
          return cy.log('Able to thrive (finding) concept details is displayed')
       }
@@ -10,7 +10,7 @@ export class TaxonomyPage {
 
    // Select Abnormal blood oxygen pressure (finding)
    getAbnormalBloodFinding() {
-      cy.get('#-treenode-123821009').dblclick()
+      cy.get('#fh-taxonomy_canvas-treenode-123821009').dblclick()
       if (cy.get('#fh-taxonomy_canvas-selectedConceptTerm').should('have.text', 'Abnormal blood oxygen pressure (finding)')) {
          return cy.log('Abnormal blood oxygen pressure is loaded in the taxonomy')
       }
@@ -36,8 +36,8 @@ export class TaxonomyPage {
 
    // Verify Abnormal blood oxygen pressure has no children
    getAbormalBloodOxygenNoChild() {
-      if (cy.get('#-treenode-123823007').should('not.exist') &&
-          cy.get('#-treenode-123822002').should('not.exist')) {
+      if (cy.get('#fh-taxonomy_canvas-treenode-123823007').should('not.exist') &&
+          cy.get('#fh-taxonomy_canvas-treenode-123822002').should('not.exist')) {
          return cy.log('Abnormal blood oxygen pressure now has no children after switch to stated view')
       }
    }
@@ -54,7 +54,7 @@ export class TaxonomyPage {
 
    // Verify Descendants count is displayed
    getTurnDescendantsCountValue() {
-      if (cy.get('#-treenode-404684003').should('contain', /^[0-9]/)) {
+      if (cy.get('#fh-taxonomy_canvas-treenode-404684003').should('contain', /^[0-9]/)) {
          return cy.log('The number of descendants is displayed next to each concept')
       }
    }
@@ -70,7 +70,7 @@ export class TaxonomyPage {
 
    // Verify brackets are removed from the concept name in PT in US language
    getLanguageResult() {
-      if (cy.get('#-treenode-404684003').should('not.have.text', '(finding)')) {
+      if (cy.get('#fh-taxonomy_canvas-treenode-404684003').should('not.have.text', '(finding)')) {
          return cy.log('Brackets are removed from the concept name in PT in US language')
       }
    }
@@ -78,7 +78,7 @@ export class TaxonomyPage {
    // Remove the taxonomy focus concept
    getRemoveTaxonomyFocusConcept() {
       cy.get('#fh-taxonomy_canvas-clearConceptButton').click()
-      if (cy.get('#-treenode-138875005').should('be.visible')) {
+      if (cy.get('#fh-taxonomy_canvas-treenode-138875005').should('be.visible')) {
          return cy.log('Taxonomy focus concept is remved and Top level hierarchy is loaded')
       }
    }
@@ -86,7 +86,7 @@ export class TaxonomyPage {
    // Reset the taxonomy
    getResetTaxonomy() {
       cy.get('#fh-taxonomy_canvas-resetButton').click()
-      if (cy.get('#-treenode-404684003').should('be.visible')) {
+      if (cy.get('#fh-taxonomy_canvas-treenode-404684003').should('be.visible')) {
          return cy.log('Taxonomy is refreshed')
       }
    }
