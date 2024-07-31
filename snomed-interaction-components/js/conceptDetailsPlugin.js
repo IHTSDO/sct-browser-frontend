@@ -273,8 +273,8 @@ function conceptDetails(divElement, conceptId, options) {
         });
 
         if (typeof(Storage) !== "undefined") {
-            if (localStorage.getItem("conceptDetailOptions_displayUsFsn")) {
-                panel.options.displayUsFsn = localStorage.getItem("conceptDetailOptions_displayUsFsn") === 'true';
+            if (localStorage.getItem("conceptDetailOptions_displayUsFsn-" + panel.options.editionShortname)) {
+                panel.options.displayUsFsn = localStorage.getItem("conceptDetailOptions_displayUsFsn-" + panel.options.editionShortname) === 'true';
             }
             if (localStorage.getItem("conceptDetailOptions_displaySynonyms")) {
                 panel.options.displaySynonyms = localStorage.getItem("conceptDetailOptions_displaySynonyms") === 'true';
@@ -734,10 +734,9 @@ function conceptDetails(divElement, conceptId, options) {
             var context = {
                 panel: panel,
                 firstMatch: firstMatch,
-                usFsn: getUsFsn(firstMatch),
+                fsnTerm: getUsFsn(firstMatch),
                 divElementId: panel.divElement.id,
-                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : ''),
-                forceShowUsFsn: panel.options.displayUsFsn && panel.options.languages && panel.options.languages.length !== 0 && panel.options.languages[0] !== 'en' && panel.options.languages !== 'en'
+                link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : '')                
             };
             $('#home-attributes-' + panel.divElement.id).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/home/attributes.hbs"](context));
 
@@ -2807,10 +2806,11 @@ function conceptDetails(divElement, conceptId, options) {
     }
 
     this.setupOptionsPanel = function() {
+        var shouldDisplayFsnOption = panel.options.languages && panel.options.languages.length !== 0 && (Array.isArray(panel.options.languages) ? panel.options.languages[0] !== 'en' : !panel.options.languages.startsWith('en'));
         var context = {
             options: panel.options,
             divElementId: panel.divElement.id,
-            showDisplayUsFsnCheckbox: panel.options.languages && panel.options.languages.length !== 0 && panel.options.languages[0] !== 'en' && panel.options.languages !== 'en'
+            displayFsnOptionVisible: shouldDisplayFsnOption
         };
         Handlebars.registerHelper('if_eq', function(a, b, opts) {
             if (opts != "undefined") {
@@ -2821,7 +2821,6 @@ function conceptDetails(divElement, conceptId, options) {
             }
         });
         Handlebars.registerHelper('ifIn', function(elem, list, options) {
-            console.log(elem, list, options);
             if (options.data.root.options.defaultLanguageReferenceSets.indexOf(elem) > -1) {
                 return options.fn(this);
             }
@@ -2847,7 +2846,7 @@ function conceptDetails(divElement, conceptId, options) {
         });
 
         if (typeof(Storage) !== "undefined") {
-            localStorage.setItem("conceptDetailOptions_displayUsFsn", panel.options.displayUsFsn);
+            localStorage.setItem("conceptDetailOptions_displayUsFsn-" + panel.options.editionShortname, panel.options.displayUsFsn);
             localStorage.setItem("conceptDetailOptions_displaySynonyms", panel.options.displaySynonyms);
             localStorage.setItem("conceptDetailOptions_showIds", panel.options.showIds);
             localStorage.setItem("conceptDetailOptions_displayInactiveDescriptions", panel.options.displayInactiveDescriptions);

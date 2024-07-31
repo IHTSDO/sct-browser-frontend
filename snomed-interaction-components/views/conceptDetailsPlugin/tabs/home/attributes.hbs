@@ -36,8 +36,8 @@
         </span>
     </a>
     &nbsp;&nbsp;
-    {{#if forceShowUsFsn}}
-        {{usFsn}}
+    {{#if panel.options.displayUsFsn}}
+        {{fsnTerm}}
     {{else}}
         {{#if_undefined firstMatch.fsn.term}}
             {{firstMatch.fsn}}
