@@ -81,6 +81,15 @@
     "moduleName": "Irish module"
   },
   {
+    "editionName": "Jamaican Edition",
+    "editionCode": "jm",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "11000318109",
+    "moduleName": "Jamaican module"
+  },
+  {
     "editionName": "Netherlands Edition",
     "editionCode": "nl",
     "internationalEdition": false,
