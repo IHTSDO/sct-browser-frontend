@@ -1,9 +1,9 @@
-const urlBrowser = Cypress.env('URL_BROWSER');
-
 export class StartPage {
 
+    urlBrowser = Cypress.env('URL_BROWSER');
+
     visit() {
-        cy.visit(urlBrowser);
+        cy.visit(this.urlBrowser);
     }
 
     acceptCookies() {
@@ -16,6 +16,11 @@ export class StartPage {
 
     selectInternationalEdition() {
         cy.get('#international_editions').find('a[codesystem-shortname="SNOMEDCT"]').click()
+    }
+
+    selectEditionByEditionCode(editionCode: string, internationalEdition: boolean) {
+        const editionsSelector = internationalEdition ? '#international_editions' : '#local_editions';
+        cy.get(editionsSelector).find('a[editioncode="' + editionCode + '"]').click();
     }
 
 }

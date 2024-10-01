@@ -1,84 +1,54 @@
 export class ECLPage {
-
-    // Select Expression Constraint Queries tab on the right
-    getExpressionConstraintTab() {
-        cy.get('a[href="#fh-query_canvas"]').click()
-        if (cy.get('.col-md-6 > .lead').should('have.text', 'Enter an ECL query')) {
-            return cy.log('Expression Constraint Queries page is displayed');
-        }
+    populateTypeaheadBox(expressionSectionIndex: number, typeaheadIndex: number, searchTerm: string, conceptId: string) {
+        cy.get('ecl-builder').find('.expression-section').eq(expressionSectionIndex).within(() => {
+            cy.get('.ecl-builder-typeahead > input').eq(typeaheadIndex).type(searchTerm);
+            cy.get('ngb-highlight').filter(':contains("' + conceptId + '")').click();
+        });
     }
 
-    // Click on ECL Builder button
-    getEclBuilderButton() {
+    verifyOutput(conceptId: string) {
+        cy.get('.output').should('contain', conceptId);
+    }
+
+    selectExpressionConstraintQueriesTab() {
+        cy.get('a[href="#fh-query_canvas"]').click();
+        cy.get('#fh-query_canvas').should('have.class', 'active');
+    }
+
+    clickEclBuilderButton() {
         cy.get('button[id="-eclBuilderButton"]').click();
-
-        if (cy.get('.modal-header > h3').should('have.text', 'ECL Builder')) {
-            return cy.log('ECL builder page is displayed')
-        }
+        cy.get('ecl-builder[id="ecl-builder"]').should('exist');
     }
 
-    // Search for '80891009' and select the match
-    getSearchConcept(conceptnumber) {
-        //Enter the concept number in searchbox
-        cy.get('.ecl-builder-typeahead > .ng-untouched').type(conceptnumber)
-        //Select the concept
-        cy.get('ngb-highlight').click()
-        if (cy.get('.output > :nth-child(1)').should('contain', '<< 80891009 |Heart structure (body structure)|')) {
-            return cy.log('Heart Structure concept is selected')
-        }
+    populateFocusConcept(searchTerm: string, conceptId: string) {
+        this.populateTypeaheadBox(0, 0, searchTerm, conceptId);
+        this.verifyOutput(conceptId);
     }
 
-    // Click on Ok button
-    getOkButton() {
-        cy.get('.ecl-builder .accept').click();
-
-        if (cy.get('.col-md-6 > .lead').should('have.text', 'Enter an ECL query')) {
-            return cy.log('ECL tab page is displayed');
-        }
+    populateRefinement(index: number, searchTerm: string, conceptId: string) {
+        this.populateTypeaheadBox(1, index, searchTerm, conceptId);
+        this.verifyOutput(conceptId);
     }
 
-    // Verify ECL query is added
-    getECLQuery() {
-        cy.get('#fh-query_canvas-ExpText').then(($ele) => {
-            expect($ele.text()).to.not.be.null
-            return cy.log('ECL query is added')
-        })
+    clickOkButton() {
+        cy.get('ecl-builder button[class="accept"]').click();
     }
 
-    // Click on Execute button
-    getExecuteButton() {
-        return cy.get('#fh-query_canvas-computeInferredButton2').click()
+    checkExpressionContainsText(text: string) {
+        cy.get('#fh-query_canvas-ExpText').should('contain.value', text);
     }
 
-    // Get Result
-    getResult() {
-        if (cy.get('#fh-query_canvas-outputBody', {timeout: 20000}).should('be.visible')) {
-            return cy.log('Query executed and result is displayed')
-        }
+    clickExecuteButton() {
+        cy.get('#fh-query_canvas-computeInferredButton2').click();
     }
 
-    // Click on Add Refinment button
-    getAddRefinementButton() {
-        cy.contains('ADD REFINEMENT').click()
-        if (cy.get('.green > span').should('be.visible')) {
-            return cy.log('Add refinement is displayed')
-        }
+    verifyResults() {
+        cy.get('#fh-query_canvas-outputBody').children().should('have.length.at.least', 1);
     }
 
-    // Populate refinement with Laterality (attribute) and Side (qualifier value)
-    getPopulateRefinementValues(attribute, qualifier) {
-        //Enter Laterality in search textbox
-        cy.get(':nth-child(3) > .expression-group > .expression-row > :nth-child(2) > .ecl-builder-typeahead > .ng-untouched').type(attribute)
-        //Select the Laterality value
-        cy.get('ngb-highlight').click()
-
-        //Enter Side in search textbox
-        cy.get(':nth-child(5) > .ecl-builder-typeahead > .ng-untouched').type(qualifier)
-        //Select Side value
-        cy.get('#ngb-typeahead-4-0 > ngb-highlight').click()
-
-        if (cy.get('.output').should('contain', '<< 272741003 |Laterality (attribute)| = << 182353008 |Side (qualifier value)|')) {
-            return cy.log('Refinement with Laterality (attribute) and Side (qualifier value) populated')
-        }
+    clickAddRefinementButton() {
+        cy.get('ecl-builder').find('.expression-group').should('have.length', 1);
+        cy.get('ecl-builder').contains('button','ADD REFINEMENT').click();
+        cy.get('ecl-builder').find('.expression-group').should('have.length', 2);
     }
 }

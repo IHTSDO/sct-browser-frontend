@@ -10,7 +10,7 @@ const detailsTab = new DetailsTab()
 
 describe("C605827-Search_and_Load", () => {
 
-    it(`Launch browser`, () => {
+    it(`Launch browser at ${startPage.urlBrowser}`, () => {
         startPage.visit();
     })
 

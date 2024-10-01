@@ -1,14 +1,18 @@
 import {it} from "mocha"
+import ecl = require('../fixtures/ECLQuery.json');
 
 import {StartPage} from "../pages/StartPage"
 import {ECLPage} from "../pages/ECLPage"
 
 const startPage = new StartPage()
-const ecl = new ECLPage()
+const eclPage = new ECLPage()
 
 describe("C605828-ECL", () => {
 
-    it(`Launch browser`, () => {
+    let searchCount1 = 0;
+    let searchCount2 = 0;
+
+    it(`Launch browser at ${startPage.urlBrowser}`, () => {
         startPage.visit();
     })
 
@@ -24,78 +28,65 @@ describe("C605828-ECL", () => {
         startPage.selectInternationalEdition();
     })
 
-    //Select Expression Constraint Queries tab on the right
-    it("navigate to ECL query page", () => {
-        ecl.getExpressionConstraintTab()
+    it("Select Expression Constraint Queries tab", () => {
+        eclPage.selectExpressionConstraintQueriesTab();
     })
 
-    //Click on ECL Builder button
-    it("click on ECL builder button", () => {
-        ecl.getEclBuilderButton()
+    it("Click ECL Builder button", () => {
+        eclPage.clickEclBuilderButton();
     })
 
-    //Search for '80891009' and select the match
-    it("search concept 80891009", () => {
-        cy.fixture('ECLQuery').then((data) => {
-            ecl.getSearchConcept(data.conceptnumber)
+    it(`Search for concept ${ecl.conceptId}`, () => {
+        eclPage.populateFocusConcept(ecl.searchTerm, ecl.conceptId);
+    })
+
+    it("Click OK button", () => {
+        eclPage.clickOkButton();
+        cy.wait(2000);
+        eclPage.checkExpressionContainsText(ecl.conceptId);
+    })
+
+    it("Click Execute button", () => {
+        eclPage.clickExecuteButton();
+        cy.wait(2000);
+        eclPage.verifyResults();
+
+        cy.get('#fh-query_canvas-resultInfo > span').then(($el) => {
+            searchCount1 = parseInt($el.contents().eq(1).text().trim());
+        });
+    })
+
+    it("Click ECL Builder button", () => {
+        eclPage.clickEclBuilderButton();
+        eclPage.verifyOutput(ecl.conceptId);
+    })
+
+    it("Click Add Refinement button", () => {
+        eclPage.clickAddRefinementButton();
+    })
+
+    it("Populate refinement with Laterality (attribute) and Side (qualifier value)", () => {
+        ecl.refinements.forEach((refinement, index) => {
+            eclPage.populateRefinement(index, refinement.searchTerm, refinement.conceptId);
         })
     })
 
-    //Click on Ok button
-    it("click on OK button", () => {
-        ecl.getOkButton()
+    it("Click OK button", () => {
+        eclPage.clickOkButton();
+        cy.wait(2000);
+        ecl.refinements.forEach((refinement) => {
+            eclPage.checkExpressionContainsText(refinement.conceptId);
+        });
     })
 
-    it("Get the right pane", () => {
-        cy.get('#fh-tabs-pane2');//.scrollTo('top')
-    })
+    it("Click Execute button", () => {
+        eclPage.clickExecuteButton();
+        cy.wait(2000);
+        eclPage.verifyResults();
 
-    //Click on Execute button
-    it("click on Execute button", () => {
-        ecl.getECLQuery()
-        ecl.getExecuteButton()
+        cy.get('#fh-query_canvas-resultInfo > span').should(($el) => {
+            searchCount2 = parseInt($el.contents().eq(1).text().trim());
+            expect(searchCount2).to.lt(searchCount1);
+        });
     })
-
-    //Verify the query execution result
-    it("check query execution and result", () => {
-        ecl.getResult()
-    })
-
-    //Click on ECL Builder button
-    it("click on ECL builder button", () => {
-        ecl.getEclBuilderButton()
-    })
-
-    //Click on Add Refinement button
-    it("click on Add Refinement button", () => {
-        ecl.getAddRefinementButton()
-    })
-
-    //Populate refinement with Laterality (attribute) and Side (qualifier value)
-    it("populate attribute and qualifier values", () => {
-        cy.fixture('ECLQuery').then((data) => {
-            ecl.getPopulateRefinementValues(data.attribute, data.qualifier)
-        })
-    })
-
-    //Click on Ok button
-    it("click on OK button", () => {
-        ecl.getOkButton()
-    })
-
-    it("Get the right pane", () => {
-        cy.get('#fh-tabs-pane2');//.scrollTo('top')
-    })
-
-    //Click on Execute button
-    it("click on Execute button", () => {
-        ecl.getECLQuery()
-        ecl.getExecuteButton()
-    })
-
-    //Verify the query execution result
-    it("check query execution and result", () => {
-        ecl.getResult()
-    })
-
 })
