@@ -1,6 +1,6 @@
 import {it} from "mocha"
-import ecl = require('../fixtures/ECLQuery.json');
 
+import ecl = require('../fixtures/ecl.json');
 import {StartPage} from "../pages/StartPage"
 import {ECLPage} from "../pages/ECLPage"
 

@@ -1,5 +1,6 @@
 import {it} from "mocha"
 
+import taxonomy = require('../fixtures/taxonomy.json');
 import {StartPage} from "../pages/StartPage"
 import {TaxonomyPage} from "../pages/TaxonomyPage"
 
@@ -8,7 +9,7 @@ const taxonomyPage = new TaxonomyPage()
 
 describe("C605829-Taxonomy", () => {
 
-    it(`Launch browser`, () => {
+    it(`Launch browser at ${startPage.urlBrowser}`, () => {
         startPage.visit();
     })
 
@@ -25,58 +26,53 @@ describe("C605829-Taxonomy", () => {
     })
 
     it("Select Taxonomy tab", () => {
-        cy.get('a[href="#fh-taxonomy_canvas"]').click();
-        cy.get('#fh-taxonomy_canvas').should('have.class', 'active');
+        taxonomyPage.selectTaxonomyTab();
+        taxonomyPage.verifyConceptExpanded(taxonomy.clinicalFinding, null);
     })
 
-    // Click on  Able to thrive (finding)
-    it("select Able to thrive (finding)", () => {
-        taxonomyPage.getAbletoThrive()
+    it("Select 1148601009 |Able to thrive (finding)| concept", () => {
+        taxonomyPage.selectConcept(taxonomy.ableToThrive);
     })
 
-    // Click on Abnormal blood oxygen pressure (finding)
-    it("select Abnormal blood oxygen pressure (finding)", () => {
-        taxonomyPage.getAbnormalBloodFinding()
+    it("Focus 123821009 |Abnormal blood oxygen pressure (finding)| concept", () => {
+        taxonomyPage.setFocusConcept(taxonomy.abnormalBloodOxygenPressure);
     })
 
-    // Expand Abnoraml blood clinical finding
-    it("expand Abnormal blood clinical finding", () => {
-        taxonomyPage.getExpandClinicalFinding()
+    it("Navigate up", () => {
+        taxonomyPage.navigateUp(taxonomy.clinicalFinding, taxonomy.snomedCTConcept);
     })
 
-    // Switch to stated view
-    it("switch to stated view", () => {
-        taxonomyPage.getStatedView()
+    it("Switch to Stated view", () => {
+        taxonomyPage.switchToStatedView();
     })
 
-    // Verify Abnormal blood oxygen pressure now has no children after switch to stated view
-    it("verify Abnormal blood oxygen pressure now has no children after switch to stated view", () => {
-        taxonomyPage.getAbormalBloodOxygenNoChild()
+    it("Verify that 123821009 |Abnormal blood oxygen pressure (finding)| has no children", () => {
+        taxonomyPage.verifyConceptHasNoChildren(taxonomy.abnormalBloodOxygenPressure);
     })
 
-    // Turn descendants count on
-    it("Turn descendants count on", () => {
-        taxonomyPage.getTurnDescendantsCountOn()
+    it("Turn Descendants Count on", () => {
+        taxonomyPage.turnDescendantsCountOn();
     })
 
-    // Verify descendants count is displayed
-    it("descendants count value", () => {
-        taxonomyPage.getTurnDescendantsCountValue()
+    it("Verify that the number of descendants is displayed", () => {
+        taxonomyPage.verifyDescendantsCountIsDisplayed(taxonomy.clinicalFinding);
     })
 
-    // Change the language to 'PT in US'
-    it("change the language to PT in US", () => {
-        taxonomyPage.getChangeLanguage()
+    it("Change the language to 'PT in US'", () => {
+        taxonomyPage.changeLanguageToPtInUs();
     })
 
-    // Verify brackets are removed from the concept name in PT in US language
-    it("brackets are removed from the concept name in PT in US language", () => {
-        taxonomyPage.getLanguageResult()
+    it("Verify the PT is displayed", () => {
+        taxonomyPage.verifyPtIsDisplayed(taxonomy.clinicalFinding);
     })
 
-    // Reset the taxonomy
-    it("reset the taxonomy", () => {
-        taxonomyPage.getResetTaxonomy()
+    it("Remove focus concept", () => {
+        taxonomyPage.removeFocusConcept();
+        taxonomyPage.verifyConceptExpanded(taxonomy.snomedCTConcept, taxonomy.clinicalFinding);
     })
 
+    it("Reset the taxonomy", () => {
+        taxonomyPage.resetTaxonomy();
+        taxonomyPage.verifyConceptExpanded(taxonomy.snomedCTConcept, taxonomy.clinicalFinding);
+    })
 })

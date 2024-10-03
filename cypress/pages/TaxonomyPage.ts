@@ -1,94 +1,92 @@
 export class TaxonomyPage {
+   verifyConceptExpanded(conceptId: string, childConceptId: string) {
+      cy.get('#fh-taxonomy_canvas')
+          .find('li[data-concept-id="' + conceptId + '"]').should('exist')
+          .find('ul').should('exist')
+          .children('li').should('have.length.at.least', 1);
 
-   // Select Able to thrive (finding)
-   getAbletoThrive() {
-      cy.get('#fh-taxonomy_canvas-treenode-1148601009').click()
-      if (cy.get('#home-attributes-fh-cd1_canvas').should('contain', 'Able to thrive (finding)')) {
-         return cy.log('Able to thrive (finding) concept details is displayed')
+      cy.get('#fh-taxonomy_canvas-treeicon-' + conceptId).should('be.visible').and('have.class', 'glyphicon-chevron-down');
+      if (childConceptId) {
+         cy.get('#fh-taxonomy_canvas-treenode-' + childConceptId).should('be.visible');
       }
    }
 
-   // Select Abnormal blood oxygen pressure (finding)
-   getAbnormalBloodFinding() {
-      cy.get('#fh-taxonomy_canvas-treenode-123821009').dblclick()
-      if (cy.get('#fh-taxonomy_canvas-selectedConceptTerm').should('have.text', 'Abnormal blood oxygen pressure (finding)')) {
-         return cy.log('Abnormal blood oxygen pressure is loaded in the taxonomy')
-      }
+   selectTaxonomyTab() {
+      cy.get('a[href="#fh-taxonomy_canvas"]').click();
+      cy.get('#fh-taxonomy_canvas').should('have.class', 'active');
    }
 
-   // Navigate up the taxonomy - Expand the tree
-   getExpandClinicalFinding() {
-      cy.get('#fh-taxonomy_canvas-treeicon-404684003').click()
-      if (cy.get('li[data-concept-id="138875005"]').should('contain', 'SNOMED CT Concept (SNOMED RT+CTV3)')) {
-         return cy.log('Taxonomy expands upwards')
-      }
+   selectConcept(conceptId: string) {
+      cy.get('#fh-taxonomy_canvas-treenode-' + conceptId).click();
+      cy.get('#home-attributes-fh-cd1_canvas').find('a[data-concept-id="' + conceptId + '"]').should('exist').and('be.visible');
    }
 
-   // Switch to stated view
-   getStatedView() {
-      cy.get('.navbar > .nav > :nth-child(1) > .dropdown-toggle > .caret').click()
-      cy.get('#fh-taxonomy_canvas-statedViewButton').click()
-      cy.get('#home-fh-cd1_canvas-stated-button').click()
-      if (cy.get('#fh-taxonomy_canvas-txViewLabel > .i18n').should('have.text', 'Stated view')) {
-         return cy.log('Switched to Stated View from Inferred view')
-      }
+   setFocusConcept(conceptId: string) {
+      cy.get('#fh-taxonomy_canvas-treenode-' + conceptId).as('focusConcept').invoke('attr', 'data-term').then((value) => {
+         cy.get('@focusConcept').dblclick();
+         cy.get('#fh-taxonomy_canvas-selectedConceptTerm').should('have.text', value);
+      });
    }
 
-   // Verify Abnormal blood oxygen pressure has no children
-   getAbormalBloodOxygenNoChild() {
-      if (cy.get('#fh-taxonomy_canvas-treenode-123823007').should('not.exist') &&
-          cy.get('#fh-taxonomy_canvas-treenode-123822002').should('not.exist')) {
-         return cy.log('Abnormal blood oxygen pressure now has no children after switch to stated view')
-      }
+   navigateUp(conceptId: string, parentConceptId: string) {
+      cy.get('#fh-taxonomy_canvas-treenode-' + parentConceptId).should('not.exist');
+      cy.get('#fh-taxonomy_canvas-treeicon-' + conceptId).click();
+      cy.get('#fh-taxonomy_canvas-treenode-' + parentConceptId).should('exist').and('be.visible');
    }
 
-   // Turn descendants count on
-   getTurnDescendantsCountOn() {
-      cy.get('#fh-taxonomy_canvas-clearConceptButton').click()
-      cy.get('#fh-taxonomy_canvas-txViewLabel2').click()
-      cy.get('#fh-taxonomy_canvas-descendantsCountTrue').click()
-      if (cy.get('#fh-taxonomy_canvas-txViewLabel2 > [data-i18n-id="i18n_on"]').should('have.text', 'On')) {
-         return cy.log('Descendants count turn to ON ')
-      }
+   switchToStatedView() {
+      cy.get('#fh-taxonomy_canvas-txViewLabel').as('viewToggle').should('contain', 'Inferred view').click();
+      cy.get('#fh-taxonomy_canvas-statedViewButton').click();
+      cy.get('@viewToggle').should('contain', 'Stated view');
    }
 
-   // Verify Descendants count is displayed
-   getTurnDescendantsCountValue() {
-      if (cy.get('#fh-taxonomy_canvas-treenode-404684003').should('contain', /^[0-9]/)) {
-         return cy.log('The number of descendants is displayed next to each concept')
-      }
+   verifyConceptHasNoChildren(conceptId: string) {
+      cy.get('#fh-taxonomy_canvas').find('li[data-concept-id="' + conceptId + '"]').find('ul').should('not.exist');
    }
 
-   // Change the language to 'PT in US'
-   getChangeLanguage() {
-      cy.get('#fh-taxonomy_canvas-txLanguageSwitcherLabel').click()
-      cy.get('#fh-taxonomy_canvas-txLangage-900000000000509007-pt').click()
-      if (cy.get('#fh-taxonomy_canvas-txLanguageSwitcherLabel > :nth-child(1)').should('have.text', 'Language: PT in US')) {
-         return cy.log('Langugae changed to PT in US')
-      }
+   turnDescendantsCountOn() {
+      cy.get('#fh-taxonomy_canvas-txViewLabel2').as('countToggle').should('contain', 'Off').click();
+      cy.get('#fh-taxonomy_canvas-descendantsCountTrue').click();
+      cy.get('@countToggle').should('contain', 'On');
    }
 
-   // Verify brackets are removed from the concept name in PT in US language
-   getLanguageResult() {
-      if (cy.get('#fh-taxonomy_canvas-treenode-404684003').should('not.have.text', '(finding)')) {
-         return cy.log('Brackets are removed from the concept name in PT in US language')
-      }
+   verifyDescendantsCountIsDisplayed(conceptId: string) {
+      ///^[0-9]+$/
+      let descendants = '';
+
+      cy.get('#fh-taxonomy_canvas-treenode-' + conceptId).as('concept').then(($el) => {
+         descendants = $el.contents().eq(2).text();
+      });
+      cy.get('@concept').invoke('attr', 'data-descendants').then((value) => {
+         expect(value).to.eq(descendants);
+      });
    }
 
-   // Remove the taxonomy focus concept
-   getRemoveTaxonomyFocusConcept() {
-      cy.get('#fh-taxonomy_canvas-clearConceptButton').click()
-      if (cy.get('#fh-taxonomy_canvas-treenode-138875005').should('be.visible')) {
-         return cy.log('Taxonomy focus concept is remved and Top level hierarchy is loaded')
-      }
+   changeLanguageToPtInUs() {
+      cy.get('#fh-taxonomy_canvas-txLanguageSwitcherLabel').as('languageToggle').should('contain', 'FSN in US').click();
+      cy.get('#fh-taxonomy_canvas-txLangage-900000000000509007-pt').click();
+      cy.get('@languageToggle').should('contain', 'PT in US');
    }
 
-   // Reset the taxonomy
-   getResetTaxonomy() {
-      cy.get('#fh-taxonomy_canvas-resetButton').click()
-      if (cy.get('#fh-taxonomy_canvas-treenode-404684003').should('be.visible')) {
-         return cy.log('Taxonomy is refreshed')
-      }
+   verifyPtIsDisplayed(conceptId: string) {
+      let text = '';
+
+      cy.get('#fh-taxonomy_canvas-treenode-' + conceptId).as('concept').then(($el) => {
+         text = $el.contents().eq(0).text();
+      });
+      cy.get('@concept').invoke('attr', 'data-fsn').then((value) => {
+         expect(value).to.not.eq(text);
+      });
+      cy.get('@concept').invoke('attr', 'data-preferred-term').then((value) => {
+         expect(value).to.eq(text);
+      });
    }
 
+   removeFocusConcept() {
+      cy.get('#fh-taxonomy_canvas-clearConceptButton').click();
+   }
+
+   resetTaxonomy() {
+      cy.get('#fh-taxonomy_canvas-resetButton').click();
+   }
 }
