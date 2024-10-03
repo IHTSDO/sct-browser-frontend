@@ -8,7 +8,7 @@ const refsetPage = new RefsetPage()
 
 describe("C605829-Refset", () => {
 
-    it(`Launch browser`, () => {
+    it(`Launch browser at ${startPage.urlBrowser}`, () => {
         startPage.visit();
     })
 
@@ -25,8 +25,7 @@ describe("C605829-Refset", () => {
     })
 
     it("Select Refset tab", () => {
-        cy.get('a[href="#fh-refset_canvas"]').click();
-        cy.get('#fh-refset_canvas').should('have.class', 'active');
+        refsetPage.selectRefsetTab();
     })
 
     it("Load the first refset", () => {

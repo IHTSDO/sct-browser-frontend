@@ -1,4 +1,8 @@
 export class RefsetPage {
+    selectRefsetTab() {
+        cy.get('a[href="#fh-refset_canvas"]').click();
+        cy.get('#fh-refset_canvas').should('have.class', 'active');
+    }
 
     loadFirstRefset() {
         cy.get('#fh-refset_canvas-datatable a.refset-item').first().as('refset').click();
@@ -28,9 +32,8 @@ export class RefsetPage {
         cy.get('@activeMembersCount').should('have.class', 'sorting_asc');
         cy.get('#fh-refset_canvas-datatable .sorting_1').each(($el, index, $list) => {
             if (index > 0) {
-                assert(Number(Number($el.text()) >= Number($list[index - 1].textContent)));
+                expect(parseInt($el.text())).to.gte(parseInt($list[index - 1].textContent));
             }
         })
     }
-
 }
