@@ -8,7 +8,11 @@ const startPage = new StartPage()
 const searchPage = new SearchPage()
 const detailsTab = new DetailsTab()
 
-describe("C605827-Search_and_Load", () => {
+describe("C605827-Search and Load", () => {
+
+    let searchCount1 = 0;
+    let searchCount2 = 0;
+    let searchCount3 = 0;
 
     it(`Launch browser at ${startPage.urlBrowser}`, () => {
         startPage.visit();
@@ -38,9 +42,12 @@ describe("C605827-Search_and_Load", () => {
         searchPage.uncheckGroupByConcept()
     })
 
-    it("Search 'heart' and verify the search result", () => {
+    it("Search for 'heart' and verify the search result", () => {
         searchPage.search('heart');
-        searchPage.validateSearchResult();
+        searchPage.validateSearchResult('80891009');
+        cy.get('#fh-search_canvas-searchBar > span').then(($el) => {
+            searchCount1 = parseInt($el.contents().eq(0).text().trim());
+        })
     })
 
     it("Scroll down", () => {
@@ -49,12 +56,20 @@ describe("C605827-Search_and_Load", () => {
 
     it("Filter records by Body Structure semantic tag", () => {
         searchPage.setSemanticTagFilter('body structure');
-        searchPage.validateSearchResult();
+        searchPage.validateSearchResult(null);
+        cy.get('#fh-search_canvas-searchBar > span').should(($el) => {
+            searchCount2 = parseInt($el.contents().eq(0).text().trim());
+            expect(searchCount2).to.lt(searchCount1);
+        })
     })
 
     it("Check 'Group by concept' checkbox", () => {
         searchPage.checkGroupByConcept();
-        searchPage.validateSearchResult();
+        searchPage.validateSearchResult(null);
+        cy.get('#fh-search_canvas-searchBar > span').should(($el) => {
+            searchCount3 = parseInt($el.contents().eq(0).text().trim());
+            expect(searchCount3).to.lt(searchCount2);
+        })
     })
 
     it("Scroll up", () => {

@@ -15,12 +15,18 @@ export class StartPage {
     }
 
     selectInternationalEdition() {
-        cy.get('#international_editions').find('a[codesystem-shortname="SNOMEDCT"]').click()
+        this.selectEdition('codesystem-shortname', 'SNOMEDCT', true);
     }
 
-    selectEditionByEditionCode(editionCode: string, internationalEdition: boolean) {
+    selectInternationalDerivativesEdition() {
+        this.selectEdition('codesystem-shortname', 'SNOMEDCT-DERIVATIVES', true);
+    }
+
+    selectEdition(attributeName: string, attributeValue: string, internationalEdition: boolean) {
         const editionsSelector = internationalEdition ? '#international_editions' : '#local_editions';
-        cy.get(editionsSelector).find('a[editioncode="' + editionCode + '"]').click();
+        cy.get(editionsSelector).find('a[' + attributeName + '="' + attributeValue + '"]').click();
+        cy.get('#fh-search_canvas').should('have.class', 'active');
+        cy.get('#fh-cd1_canvas-pane').should('have.class', 'active');
     }
 
 }

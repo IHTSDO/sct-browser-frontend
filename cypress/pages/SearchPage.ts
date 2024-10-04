@@ -32,12 +32,19 @@ export class SearchPage {
         cy.get('#fh-search_canvas-searchBox').type(searchTerm);
     }
 
-    validateSearchResult() {
-        cy.get('#fh-search_canvas-resultsTable .resultRow').should('have.length.at.least', 1)
+    validateSearchResult(conceptId: string) {
+        cy.get('#fh-search_canvas-resultsTable').as('resultTable').find('.resultRow').should('have.length.at.least', 1);
+        if (conceptId) {
+            cy.get('@resultTable').find('.resultRow a[data-concept-id="' + conceptId + '"]').should('exist');
+        }
     }
 
     loadConcept(conceptId: string) {
         cy.get('#fh-search_canvas-resultsTable').find('.resultRow a[data-concept-id="' + conceptId + '"]').click();
+        cy.get('#home-attributes-fh-cd1_canvas')
+            .within(() => {
+                cy.get('a[data-concept-id="' + conceptId + '"]').should('exist').and('be.visible');
+            })
     }
 
     selectView(view: string) {
