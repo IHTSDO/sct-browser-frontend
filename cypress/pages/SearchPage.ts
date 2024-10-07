@@ -56,7 +56,11 @@ export class SearchPage {
     }
 
     selectTab(tab: string) {
-        cy.get('#details-tabs-fh-cd1_canvas a[data-test="' + tab + '"]').click();
+        cy.get('#details-tabs-fh-cd1_canvas').find('a[data-test="' + tab + '"]').then(($el) => {
+            const href = $el.attr('href');
+            $el.trigger('click');
+            cy.get(href).should('have.class', 'active');
+        })
     }
 
 }

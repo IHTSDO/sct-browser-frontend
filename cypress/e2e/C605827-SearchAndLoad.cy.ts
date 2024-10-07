@@ -3,10 +3,12 @@ import {it} from "mocha"
 import {StartPage} from "../pages/StartPage"
 import {SearchPage} from "../pages/SearchPage"
 import {DetailsTab} from "../pages/DetailsTab"
+import {HistoryTab} from "../pages/HistoryTab"
 
-const startPage = new StartPage()
-const searchPage = new SearchPage()
-const detailsTab = new DetailsTab()
+const startPage = new StartPage();
+const searchPage = new SearchPage();
+const detailsTab = new DetailsTab();
+const historyTab = new HistoryTab();
 
 describe("C605827-Search and Load", () => {
 
@@ -120,8 +122,8 @@ describe("C605827-Search and Load", () => {
         searchPage.selectTab('history');
     })
 
-    /*it("Navigate to Details tab by clicking the first history item in the history tab", () => {
+    it("Navigate to Details tab by clicking the first history item in the history tab", () => {
         historyTab.selectFirstHistoryItem();
-    })*/
+    })
 
 })
