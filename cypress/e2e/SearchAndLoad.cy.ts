@@ -116,6 +116,8 @@ describe("Search and Load", () => {
 
     it("Navigate to Details tab by clicking the first history item in the history tab", () => {
         historyTab.selectFirstHistoryItem();
+        // Add a delay for the sake of a video recording
+        cy.wait(2000);
     })
 
 })
