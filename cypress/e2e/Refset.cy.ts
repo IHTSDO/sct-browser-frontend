@@ -6,7 +6,7 @@ import {RefsetPage} from "../pages/RefsetPage"
 const startPage = new StartPage()
 const refsetPage = new RefsetPage()
 
-describe("C605829-Refset", () => {
+describe("Refset", () => {
 
     it(`Launch browser at ${startPage.urlBrowser}`, () => {
         startPage.visit();

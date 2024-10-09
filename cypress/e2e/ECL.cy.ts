@@ -7,7 +7,7 @@ import {ECLPage} from "../pages/ECLPage"
 const startPage = new StartPage()
 const eclPage = new ECLPage()
 
-describe("C605828-ECL", () => {
+describe("ECL", () => {
 
     let searchCount1 = 0;
     let searchCount2 = 0;

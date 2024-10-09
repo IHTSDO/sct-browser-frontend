@@ -7,7 +7,7 @@ import {TaxonomyPage} from "../pages/TaxonomyPage"
 const startPage = new StartPage()
 const taxonomyPage = new TaxonomyPage()
 
-describe("C605829-Taxonomy", () => {
+describe("Taxonomy", () => {
 
     it(`Launch browser at ${startPage.urlBrowser}`, () => {
         startPage.visit();

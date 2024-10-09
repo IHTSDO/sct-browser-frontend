@@ -25,7 +25,12 @@ export class SearchPage {
     }
 
     setSemanticTagFilter(semanticTag: string){
-        cy.get('.semtag-link[data-semtag="' + semanticTag + '"]').click();
+        cy.get('#fh-search_canvas-panelBody').find('.semtag-link[data-semtag="' + semanticTag + '"]').click();
+    }
+
+    setModuleFilter(moduleId: string, moduleName: string) {
+        cy.get('#fh-search_canvas-panelBody').find('.module-link[data-module="' + moduleId + '"]').click();
+        cy.get('#fh-search_canvas-moduleResumed').should('have.attr', 'data-name', moduleName);
     }
 
     search(searchTerm: string) {

@@ -15,11 +15,19 @@ export class StartPage {
     }
 
     selectInternationalEdition() {
-        this.selectEdition('codesystem-shortname', 'SNOMEDCT', true);
+        this.selectEditionByShortName('SNOMEDCT', true);
     }
 
     selectInternationalDerivativesEdition() {
-        this.selectEdition('codesystem-shortname', 'SNOMEDCT-DERIVATIVES', true);
+        this.selectEditionByShortName('SNOMEDCT-DERIVATIVES', true);
+    }
+
+    selectEditionByEditionCode(editionCode: string, internationalEdition: boolean) {
+        this.selectEdition('editionCode', editionCode, internationalEdition);
+    }
+
+    selectEditionByShortName(shortName: string, internationalEdition: boolean) {
+        this.selectEdition('codesystem-shortname', shortName, internationalEdition);
     }
 
     selectEdition(attributeName: string, attributeValue: string, internationalEdition: boolean) {

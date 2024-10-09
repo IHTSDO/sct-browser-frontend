@@ -1,7 +1,11 @@
 import {it} from "mocha";
-import editions = require('../fixtures/editions.json');
 
-const urlBrowser = Cypress.env('URL_BROWSER');
+import editions = require('../fixtures/editions.json');
+import {StartPage} from "../pages/StartPage";
+import {SearchPage} from "../pages/SearchPage";
+
+const startPage = new StartPage();
+const searchPage = new SearchPage();
 
 beforeEach(() => {
     cy.clearCookies();
@@ -11,21 +15,20 @@ editions.forEach((edition) => {
 
     describe(edition.editionName, () => {
 
-        it(`Launch browser at ${urlBrowser}`, () => {
-            cy.visit(urlBrowser);
+        it(`Launch browser at ${startPage.urlBrowser}`, () => {
+            startPage.visit();
         })
 
         it(`Accept cookies`, () => {
-            cy.get('#iubenda-cs-banner').find('.iubenda-cs-accept-btn').click();
+            startPage.acceptCookies();
         })
 
         it(`Accept license agreement`, () => {
-            cy.get('#license-modal').find('#accept-license-button-modal').click();
+            startPage.acceptLicenseAgreement();
         })
 
         it(`Select edition '${edition.editionName}'`, () => {
-            const editionsSelector = edition.internationalEdition ? '#international_editions' : '#local_editions';
-            cy.get(editionsSelector).find('a[editioncode="' + edition.editionCode + '"]').should('contain', edition.editionName).click();
+            startPage.selectEditionByEditionCode(edition.editionCode, edition.internationalEdition);
         })
 
         it(`Check selected language is '${edition.languageFlag}'`, () => {
@@ -33,17 +36,12 @@ editions.forEach((edition) => {
         })
 
         it(`Search '${edition.searchTerm}' and verify the result`, () => {
-            cy.get('#fh-search_canvas-searchBox').type(edition.searchTerm);
-            cy.get('#fh-search_canvas-resultsTable .resultRow').should('have.length.at.least', 1)
-        })
-
-        it(`Scroll down`, () => {
-            cy.get('#fh-tabs-pane').scrollTo(0, 500);
+            searchPage.search(edition.searchTerm);
+            searchPage.validateSearchResult(null);
         })
 
         it(`Set module filter '${edition.moduleName}`, () => {
-            cy.get('.module-link[data-module="' + edition.moduleId + '"]').click();
-            cy.get('#fh-search_canvas-moduleResumed').should('have.attr', 'data-name', edition.moduleName)
+            searchPage.setModuleFilter(edition.moduleId, edition.moduleName);
         })
 
         it(`Assert that the first result has '${edition.editionCode}' flag in the first column`, () => {
@@ -51,7 +49,7 @@ editions.forEach((edition) => {
         })
 
         it(`Select module concept '${edition.moduleId} | ${edition.moduleName}'`, () => {
-            cy.get('#fh-search_canvas-resultsTable').find('.resultRow a[data-concept-id="' + edition.moduleId + '"]').click();
+            searchPage.loadConcept(edition.moduleId);
         })
 
         it(`Assert that '${edition.editionCode}' flag is displayed in the Summary tab`, () => {
@@ -63,7 +61,7 @@ editions.forEach((edition) => {
         })
 
         it(`Select Details tab`, () => {
-            cy.get('#details-tabs-fh-cd1_canvas a[data-test="details"]').click();
+            searchPage.selectTab('details');
         })
 
         it(`Assert that '${edition.editionCode}' flag is displayed in the Details tab`, () => {

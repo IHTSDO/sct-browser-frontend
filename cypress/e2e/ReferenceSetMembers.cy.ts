@@ -8,7 +8,7 @@ const startPage = new StartPage()
 const searchPage = new SearchPage()
 const membersTab = new MembersTab()
 
-describe("C605842-Reference Set Members", () => {
+describe("Reference Set Members", () => {
 
     it(`Launch browser at ${startPage.urlBrowser}`, () => {
         startPage.visit();

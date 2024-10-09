@@ -10,7 +10,7 @@ const searchPage = new SearchPage();
 const detailsTab = new DetailsTab();
 const historyTab = new HistoryTab();
 
-describe("C605827-Search and Load", () => {
+describe("Search and Load", () => {
 
     let searchCount1 = 0;
     let searchCount2 = 0;
@@ -52,10 +52,6 @@ describe("C605827-Search and Load", () => {
         })
     })
 
-    it("Scroll down", () => {
-        cy.get('#fh-tabs-pane').scrollTo(0, 500)
-    })
-
     it("Filter records by Body Structure semantic tag", () => {
         searchPage.setSemanticTagFilter('body structure');
         searchPage.validateSearchResult(null);
@@ -72,10 +68,6 @@ describe("C605827-Search and Load", () => {
             searchCount3 = parseInt($el.contents().eq(0).text().trim());
             expect(searchCount3).to.lt(searchCount2);
         })
-    })
-
-    it("Scroll up", () => {
-        cy.get('#fh-tabs-pane').scrollTo('top')
     })
 
     it("Load concept '80891009 | Heart structure (body structure)'", () => {
