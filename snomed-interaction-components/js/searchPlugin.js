@@ -1541,16 +1541,16 @@ function searchPanel(divElement, options) {
             });
             $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
                 channel.publish(panel.divElement.id, {
-                    term: $(event.target).attr("data-term"),
-                    module: $(event.target).attr("data-module"),
-                    conceptId: $(event.target).attr('data-concept-id'),
+                    term: $(event.currentTarget).attr("data-term"),
+                    module: $(event.currentTarget).attr("data-module"),
+                    conceptId: $(event.currentTarget).attr('data-concept-id'),
                     source: panel.divElement.id,
                     showConcept: true,
-                    branch: $(event.target).attr('data-branch')
+                    branch: $(event.currentTarget).attr('data-branch')
                 });
 
-                if ($(event.target).attr('data-branch') && typeof options.updateReleaseSwitcher !== 'undefined') {
-                    options.updateReleaseSwitcher($(event.target).attr('data-branch'), $(event.target).attr('data-concept-id'));
+                if ($(event.currentTarget).attr('data-branch') && typeof options.updateReleaseSwitcher !== 'undefined') {
+                    options.updateReleaseSwitcher($(event.currentTarget).attr('data-branch'), $(event.currentTarget).attr('data-concept-id'));
                 }
             });
             $("[draggable='true']").tooltip({
