@@ -1025,7 +1025,7 @@ function searchPanel(divElement, options) {
     this.findConceptDescriptions = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {
         var searchUrl = '';
         if (panel.options.multiExtensionSearch) {
-            searchUrl = options.serverUrl + "/multisearch/descriptions?&limit=100&active=true&conceptActive=true&term=" + encodeURIComponent(t);
+            searchUrl = options.serverUrl + "/multisearch/descriptions?offset="+skipTo+"&limit="+returnLimit+"&active=true&conceptActive=true&term=" + encodeURIComponent(t);
         }
         else {
             if (panel.options.searchMode == "partialMatching") {
