@@ -1023,6 +1023,7 @@ function searchPanel(divElement, options) {
     }
 
     this.findConceptDescriptions = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {
+        console.log("findConceptDescriptions");
         var searchUrl = '';
         if (panel.options.multiExtensionSearch) {
             searchUrl = options.serverUrl + "/multisearch/descriptions?offset="+skipTo+"&limit="+returnLimit+"&active=true&conceptActive=true&term=" + encodeURIComponent(t);
@@ -1030,8 +1031,16 @@ function searchPanel(divElement, options) {
         else {
             if (panel.options.searchMode == "partialMatching") {
                 t = t.toLowerCase();
-                t = t.replace("(", "");
-                t = t.replace(")", "");
+                var words = t.split(" ");
+                for (var i = 0; i < words.length; i++) {
+                    if (words[i].startsWith("(") !== -1 && !words[i].endsWith(")") && words[i].indexOf(")") === -1) {
+                        words[i] = words[i].replace("(", "");
+                    }
+                    if (words[i].endsWith(")") !== -1 && !words[i].startsWith("(") && words[i].indexOf("(") === -1) {
+                        words[i] = words[i].replace(")", "");
+                    }
+                }
+                t = words.join(" ");
             }
 
             var startTime = Date.now();
