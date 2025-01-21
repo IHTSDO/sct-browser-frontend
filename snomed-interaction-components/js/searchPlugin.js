@@ -1023,15 +1023,24 @@ function searchPanel(divElement, options) {
     }
 
     this.findConceptDescriptions = function(t, skipTo, returnLimit, skipSemtagFilter, semTags) {
+        console.log("findConceptDescriptions");
         var searchUrl = '';
         if (panel.options.multiExtensionSearch) {
-            searchUrl = options.serverUrl + "/multisearch/descriptions?&limit=100&active=true&conceptActive=true&term=" + encodeURIComponent(t);
+            searchUrl = options.serverUrl + "/multisearch/descriptions?offset="+skipTo+"&limit="+returnLimit+"&active=true&conceptActive=true&term=" + encodeURIComponent(t);
         }
         else {
             if (panel.options.searchMode == "partialMatching") {
                 t = t.toLowerCase();
-                t = t.replace("(", "");
-                t = t.replace(")", "");
+                var words = t.split(" ");
+                for (var i = 0; i < words.length; i++) {
+                    if (words[i].startsWith("(") !== -1 && !words[i].endsWith(")") && words[i].indexOf(")") === -1) {
+                        words[i] = words[i].replace("(", "");
+                    }
+                    if (words[i].endsWith(")") !== -1 && !words[i].startsWith("(") && words[i].indexOf("(") === -1) {
+                        words[i] = words[i].replace(")", "");
+                    }
+                }
+                t = words.join(" ");
             }
 
             var startTime = Date.now();
@@ -1541,16 +1550,16 @@ function searchPanel(divElement, options) {
             });
             $('#' + panel.divElement.id + '-resultsTable').find(".result-item").click(function(event) {
                 channel.publish(panel.divElement.id, {
-                    term: $(event.target).attr("data-term"),
-                    module: $(event.target).attr("data-module"),
-                    conceptId: $(event.target).attr('data-concept-id'),
+                    term: $(event.currentTarget).attr("data-term"),
+                    module: $(event.currentTarget).attr("data-module"),
+                    conceptId: $(event.currentTarget).attr('data-concept-id'),
                     source: panel.divElement.id,
                     showConcept: true,
-                    branch: $(event.target).attr('data-branch')
+                    branch: $(event.currentTarget).attr('data-branch')
                 });
 
-                if ($(event.target).attr('data-branch') && typeof options.updateReleaseSwitcher !== 'undefined') {
-                    options.updateReleaseSwitcher($(event.target).attr('data-branch'), $(event.target).attr('data-concept-id'));
+                if ($(event.currentTarget).attr('data-branch') && typeof options.updateReleaseSwitcher !== 'undefined') {
+                    options.updateReleaseSwitcher($(event.currentTarget).attr('data-branch'), $(event.currentTarget).attr('data-concept-id'));
                 }
             });
             $("[draggable='true']").tooltip({
