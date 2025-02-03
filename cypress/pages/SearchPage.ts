@@ -52,6 +52,35 @@ export class SearchPage {
             })
     }
 
+    loadConceptByIndex(index: number) {
+        cy.get('#fh-search_canvas-resultsTable').find('.resultRow').eq(index).find('.result-item a').then(($el) => {
+            const conceptId = $el.attr('data-concept-id');
+            $el.trigger('click');
+            cy.get('#home-attributes-fh-cd1_canvas')
+                .within(() => {
+                    cy.get('a[data-concept-id="' + conceptId + '"]').should('exist').and('be.visible');
+                })
+        })
+    }
+
+    addToFavourites() {
+        cy.get('#home-attributes-fh-cd1_canvas')
+            .within(() => {
+                cy.get('.glyphicon-star-empty').click();
+                cy.get('.glyphicon-star-empty').should('not.exist');
+                cy.get('.glyphicon-star').should('exist').and('be.visible');
+            })
+    }
+
+    removeFromFavourites() {
+        cy.get('#home-attributes-fh-cd1_canvas')
+            .within(() => {
+                cy.get('.glyphicon-star').click();
+                cy.get('.glyphicon-star').should('not.exist');
+                cy.get('.glyphicon-star-empty').should('exist').and('be.visible');
+            })
+    }
+
     selectView(view: string) {
         cy.get('#home-fh-cd1_canvas-' + view + '-button').then(($btn) => {
             if (!$btn.hasClass('btn-primary')) {
