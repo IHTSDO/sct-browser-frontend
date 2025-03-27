@@ -6,10 +6,6 @@ export class StartPage {
         cy.visit(this.urlBrowser);
     }
 
-    visitQaStatPage() {
-        cy.visit(this.urlBrowser + '/qa/');
-    }
-
     acceptCookies() {
         cy.get('#iubenda-cs-banner').find('.iubenda-cs-accept-btn').click();
     }
