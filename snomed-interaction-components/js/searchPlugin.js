@@ -690,8 +690,11 @@ function searchPanel(divElement, options) {
             t = t.substring(0, t.indexOf(' '));
         }
 
+        var latinRegexp = /[A-z\u00C0-\u00ff]+/g;
         if (t != "" && (originalSearchStr != lastT || forceSearch)) {
-            if (t.length < 3 && (!panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.filter(function(item) {return panel.options.singleCharacterSearchLanguageRefsets.indexOf(item) !== -1;}).length == 0)) {
+            if (t.length < 3 && (!panel.options.languageRefsetSearchFilter 
+                || panel.options.languageRefsetSearchFilter.filter(function(item) {return panel.options.singleCharacterSearchLanguageRefsets.indexOf(item) !== -1;}).length == 0
+                || latinRegexp.test(t))) {
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('glyphicon-ok');
                 $('#' + panel.divElement.id + '-typeIcon').removeClass('text-success');
                 $('#' + panel.divElement.id + '-typeIcon').addClass('glyphicon-remove');
