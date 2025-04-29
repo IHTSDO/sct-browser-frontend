@@ -1,4 +1,4 @@
-export class MembersTab {
+export default class MembersTab {
     verifyMembersAreShown() {
         cy.get('#members-fh-cd1_canvas-resultsTable').should('exist').and('be.visible')
             .within(() => {

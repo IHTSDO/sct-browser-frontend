@@ -1,4 +1,4 @@
-export class TaxonomyPage {
+export default class TaxonomyPage {
    verifyConceptExpanded(conceptId: string, childConceptId: string) {
       cy.get('#fh-taxonomy_canvas')
           .find('li[data-concept-id="' + conceptId + '"]').should('exist')

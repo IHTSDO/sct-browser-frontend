@@ -1,11 +1,9 @@
-import {it} from "mocha"
-
 import taxonomy = require('../fixtures/taxonomy.json');
-import {StartPage} from "../pages/StartPage"
-import {TaxonomyPage} from "../pages/TaxonomyPage"
+import StartPage from "../pages/StartPage";
+import TaxonomyPage from "../pages/TaxonomyPage";
 
-const startPage = new StartPage()
-const taxonomyPage = new TaxonomyPage()
+const startPage = new StartPage();
+const taxonomyPage = new TaxonomyPage();
 
 describe("Taxonomy", () => {
 

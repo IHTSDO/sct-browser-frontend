@@ -1,4 +1,4 @@
-export class FavouritesPage {
+export default class FavouritesPage {
     selectFavouritesTab() {
         cy.get('a[href="#fh-favorites_canvas"]').click();
         cy.get('#fh-favorites_canvas').should('have.class', 'active');

@@ -1,10 +1,8 @@
-import {it} from "mocha"
+import StartPage from "../pages/StartPage";
+import RefsetPage from "../pages/RefsetPage";
 
-import {StartPage} from "../pages/StartPage"
-import {RefsetPage} from "../pages/RefsetPage"
-
-const startPage = new StartPage()
-const refsetPage = new RefsetPage()
+const startPage = new StartPage();
+const refsetPage = new RefsetPage();
 
 describe("Refset", () => {
 

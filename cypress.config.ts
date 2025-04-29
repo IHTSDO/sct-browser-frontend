@@ -3,6 +3,7 @@ import {defineConfig} from 'cypress';
 module.exports = defineConfig({
   video: true,
   videoCompression: true,
+  userAgent: 'Cypress',
 
   reporter: 'cypress-mochawesome-reporter',
 

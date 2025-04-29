@@ -1,4 +1,4 @@
-export class StartPage {
+export default class StartPage {
 
     urlBrowser = Cypress.env('URL_BROWSER');
 

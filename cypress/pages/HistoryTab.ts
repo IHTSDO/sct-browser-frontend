@@ -1,4 +1,4 @@
-export class HistoryTab {
+export default class HistoryTab {
     selectFirstHistoryItem() {
         cy.wait(3000);
 

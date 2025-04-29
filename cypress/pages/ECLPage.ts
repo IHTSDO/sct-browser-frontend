@@ -1,4 +1,4 @@
-export class ECLPage {
+export default class ECLPage {
     populateTypeaheadBox(expressionSectionIndex: number, typeaheadIndex: number, searchTerm: string, conceptId: string) {
         cy.get('ecl-builder').find('.expression-section').eq(expressionSectionIndex).within(() => {
             cy.get('.ecl-builder-typeahead > input').eq(typeaheadIndex).type(searchTerm);

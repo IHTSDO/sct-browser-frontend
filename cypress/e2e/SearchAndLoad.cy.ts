@@ -1,9 +1,7 @@
-import {it} from "mocha"
-
-import {StartPage} from "../pages/StartPage"
-import {SearchPage} from "../pages/SearchPage"
-import {DetailsTab} from "../pages/DetailsTab"
-import {HistoryTab} from "../pages/HistoryTab"
+import StartPage from "../pages/StartPage";
+import SearchPage from "../pages/SearchPage";
+import DetailsTab from "../pages/DetailsTab";
+import HistoryTab from "../pages/HistoryTab";
 
 const startPage = new StartPage();
 const searchPage = new SearchPage();
