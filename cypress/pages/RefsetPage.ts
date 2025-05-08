@@ -1,4 +1,4 @@
-export class RefsetPage {
+export default class RefsetPage {
     selectRefsetTab() {
         cy.get('a[href="#fh-refset_canvas"]').click();
         cy.get('#fh-refset_canvas').should('have.class', 'active');

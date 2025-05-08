@@ -1,8 +1,6 @@
-import {it} from "mocha"
-
-import {StartPage} from "../pages/StartPage"
-import {SearchPage} from "../pages/SearchPage"
-import {FavouritesPage} from "../pages/FavouritesPage"
+import StartPage from "../pages/StartPage";
+import SearchPage from "../pages/SearchPage";
+import FavouritesPage from "../pages/FavouritesPage";
 
 const startPage = new StartPage();
 const searchPage = new SearchPage();

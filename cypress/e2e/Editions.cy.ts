@@ -1,8 +1,6 @@
-import {it} from "mocha";
-
 import editions = require('../fixtures/editions.json');
-import {StartPage} from "../pages/StartPage";
-import {SearchPage} from "../pages/SearchPage";
+import StartPage from "../pages/StartPage";
+import SearchPage from "../pages/SearchPage";
 
 const startPage = new StartPage();
 const searchPage = new SearchPage();

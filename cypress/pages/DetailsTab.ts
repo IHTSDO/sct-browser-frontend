@@ -1,4 +1,4 @@
-export class DetailsTab {
+export default class DetailsTab {
     openDescriptionDetailsView() {
         cy.get('.popover').should('not.exist');
         cy.get('#fh-cd1_canvas-descriptions-panel .fsn-row').first().find('button.more-fields-button').click();

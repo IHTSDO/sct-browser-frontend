@@ -1,12 +1,10 @@
-import {it} from "mocha"
+import StartPage from "../pages/StartPage";
+import SearchPage from "../pages/SearchPage";
+import MembersTab from "../pages/MembersTab";
 
-import {StartPage} from "../pages/StartPage"
-import {SearchPage} from "../pages/SearchPage"
-import {MembersTab} from "../pages/MembersTab"
-
-const startPage = new StartPage()
-const searchPage = new SearchPage()
-const membersTab = new MembersTab()
+const startPage = new StartPage();
+const searchPage = new SearchPage();
+const membersTab = new MembersTab();
 
 describe("Reference Set Members", () => {
 

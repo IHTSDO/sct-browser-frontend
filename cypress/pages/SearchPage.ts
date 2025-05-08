@@ -1,4 +1,4 @@
-export class SearchPage {
+export default class SearchPage {
 
     openVersionSelectorDropdown(){
         cy.get('#version-selector button[data-toggle="dropdown"]').click();
