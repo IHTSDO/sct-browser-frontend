@@ -9,6 +9,15 @@
     "moduleName": "módulo identificador de la extensión Argentina"
   },
   {
+    "editionName": "Australian Edition",
+    "editionCode": "au",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "32506021000036107",
+    "moduleName": "SNOMED Clinical Terms Australian extension"
+  },
+  {
     "editionName": "Austrian Edition",
     "editionCode": "at",
     "internationalEdition": false,
@@ -36,6 +45,15 @@
     "moduleName": "Canada Health Infoway English module"
   },
   {
+    "editionName": "Czech Republic Edition",
+    "editionCode": "cz",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "11000279109",
+    "moduleName": "Czech Republic module"
+  },
+  {
     "editionName": "Danish Edition",
     "editionCode": "dk",
     "internationalEdition": false,
@@ -61,6 +79,15 @@
     "searchTerm": "module",
     "moduleId": "11000229106",
     "moduleName": "Finnish module"
+  },
+  {
+    "editionName": "French Edition",
+    "editionCode": "fr",
+    "internationalEdition": false,
+    "languageFlag": "fr",
+    "searchTerm": "module",
+    "moduleId": "11000315107",
+    "moduleName": "module français"
   },
   {
     "editionName": "Germany Edition",
