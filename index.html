@@ -151,7 +151,6 @@
             highlightByEffectiveTime: "false",
             dailyBuildBrowser: false,
             publicBrowser: false,
-            previewBrowser: false,
             tsBrowser: false,
             communityBrowser: false,
             communityContentReleases: [],
@@ -205,8 +204,6 @@
                 options.dailyBuildBrowser = true;
             } else if (window.location.hostname.includes('community')) {
                 options.communityBrowser = true;
-            } else if (window.location.hostname.includes('concrete') || window.location.hostname.includes('preview')) {
-                options.previewBrowser = true;
             } else if (window.location.hostname.includes('browser')) {
                 options.publicBrowser = true;
             } else {
@@ -304,9 +301,6 @@
                         addEditionLinks($('#local_editions'), localReleases);
                         addStatsLinks($('#international_tools'), internationalReleases);
                         addMrcmLink($('#international_tools'), internationalReleases);
-                    } else if (options.previewBrowser) {
-                        addEditionLinks($('#preview_editions'), internationalReleases);
-                        addMrcmLink($('#preview_mrcm'), internationalReleases);
                     } else if (options.communityBrowser) {
                         addEditionLinks($('#commnunity_content_editions'), options.communityContentReleases)
                     } else if (options.dailyBuildBrowser) {
@@ -352,7 +346,7 @@
             var getUIConfiguration = function() {
                 var dfd = $.Deferred();
 
-                if (options.dailyBuildBrowser || options.publicBrowser || options.communityBrowser || options.previewBrowser) {
+                if (options.dailyBuildBrowser || options.publicBrowser || options.communityBrowser) {
                     options.imsUrl = null;
                     return dfd.resolve();
                 }
@@ -404,7 +398,7 @@
                 if (options.imsUrl == null) {
 
                     // Marked as public browser if both daily build and community browser could not be specifed from URL
-                    if (!options.communityBrowser && !options.dailyBuildBrowser && !options.publicBrowser && !options.previewBrowser) {
+                    if (!options.communityBrowser && !options.dailyBuildBrowser && !options.publicBrowser) {
                         options.publicBrowser = true;
                         if (response && response.internationalReleases && response.localReleases) {
                             addEditionLinks($('#international_editions'), response.internationalReleases);
@@ -465,12 +459,8 @@
                     var $span1 = $('<span>');
                     var $span2 = $('<span>');
                     $span1.text("MRCM Browser");
-                    $span1.attr("style", "margin-left:15px;");
-                    if (options.previewBrowser) {
-                        var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "height:81px; width:253px; margin-bottom:10px;");
-                    } else {
-                        var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "height:81px; width:165px; margin-bottom:10px;");
-                    }
+                    $span1.attr("style", "margin-left:15px;");                    
+                    var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "height:81px; width:165px; margin-bottom:10px;");                 
                     $span2.attr("class", "glyphicon glyphicon-tasks").attr("style", "top: 30px; left: -70px; font-size: 18px;");
                     $a.append($span1);
                     $a.append($span2);
@@ -1525,10 +1515,6 @@
                 });
             } else if (options.communityBrowser) {
                 $("#welcome-perspective-community-content").css({
-                    "display": "block"
-                });
-            } else if (options.previewBrowser) {
-                $("#welcome-perspective-preview").css({
                     "display": "block"
                 });
             } else {
