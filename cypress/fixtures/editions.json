@@ -45,6 +45,15 @@
     "moduleName": "Canada Health Infoway English module"
   },
   {
+    "editionName": "Chilean Edition",
+    "editionCode": "cl",
+    "internationalEdition": false,
+    "languageFlag": "es",
+    "searchTerm": "modulo",
+    "moduleId": "21000325107",
+    "moduleName": "módulo de la extension de Chile"
+  },
+  {
     "editionName": "Czech Republic Edition",
     "editionCode": "cz",
     "internationalEdition": false,
