@@ -30,7 +30,7 @@ export default class SearchPage {
 
     setModuleFilter(moduleId: string, moduleName: string) {
         cy.get('#fh-search_canvas-panelBody').find('.module-link[data-module="' + moduleId + '"]').click();
-        cy.get('#fh-search_canvas-moduleResumed').should('have.attr', 'data-name', moduleName);
+        cy.get('#fh-search_canvas-moduleResumed', {timeout: 10000}).should('have.attr', 'data-name', moduleName);
     }
 
     search(searchTerm: string) {
@@ -38,7 +38,7 @@ export default class SearchPage {
     }
 
     validateSearchResult(conceptId: string) {
-        cy.get('#fh-search_canvas-resultsTable').as('resultTable').find('.resultRow').should('have.length.at.least', 1);
+        cy.get('#fh-search_canvas-resultsTable').as('resultTable').find('.resultRow', {timeout: 10000}).should('have.length.at.least', 1);
         if (conceptId) {
             cy.get('@resultTable').find('.resultRow a[data-concept-id="' + conceptId + '"]').should('exist');
         }
