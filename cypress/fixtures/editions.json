@@ -126,15 +126,6 @@
     "moduleName": "Jamaican module"
   },
   {
-    "editionName": "Maltese Edition",
-    "editionCode": "mt",
-    "internationalEdition": false,
-    "languageFlag": "us",
-    "searchTerm": "module",
-    "moduleId": "11000328104",
-    "moduleName": "Maltese module"
-  },
-  {
     "editionName": "Netherlands Edition",
     "editionCode": "nl",
     "internationalEdition": false,
