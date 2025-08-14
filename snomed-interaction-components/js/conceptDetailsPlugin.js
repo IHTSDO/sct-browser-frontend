@@ -600,13 +600,13 @@ function conceptDetails(divElement, conceptId, options) {
                 langRefset: panel.options.languages,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : ''),
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
-                showIssueCollector: panel.options.communityBrowser || (panel.options.publicBrowser && (options.edition.startsWith('MAIN/SNOMEDCT-SE')
+                showIssueCollector: panel.options.showIssueCollector && (panel.options.communityBrowser || (panel.options.publicBrowser && (options.edition.startsWith('MAIN/SNOMEDCT-SE')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-NZ')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-DE')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-BE')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-DK')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-AT')
-                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-CH')))
+                                                                                                    || options.edition.startsWith('MAIN/SNOMEDCT-CH'))))
             };
             $('#' + panel.attributesPId).html(JST["snomed-interaction-components/views/conceptDetailsPlugin/tabs/details/attributes-panel.hbs"](context));
 

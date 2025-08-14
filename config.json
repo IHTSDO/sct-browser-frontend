@@ -85,5 +85,6 @@
         "11000328104": "mt"
 
     },
-    "singleCharacterSearchLanguageRefsets": ["21000267104", "722128001"]
+    "singleCharacterSearchLanguageRefsets": ["21000267104", "722128001"],
+    "showIssueCollector": false
 } 
