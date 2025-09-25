@@ -178,6 +178,7 @@
                     success:    function(data, status) {
                         countryIcons = data.countryIcons;
                         options.languageNameOfLangRefset = data.languageRefsetShortname;
+                        options.thirdPartyTrackingEnabled = data.thirdPartyTrackingEnabled;
                         dfd.resolve();
                     }
                 });
@@ -187,9 +188,68 @@
             
             $.when(getCodeSystems(), getConfig()).then(function() {
                 $('#edition-selector').css('display', 'block');
+
+                if (options.thirdPartyTrackingEnabled) {
+                    initWidgetFeedback();
+                    initGoogleTag();
+                    initBrowserUpdate();
+                }
                 start();
             });
-        }   
+        }
+        
+        function initWidgetFeedback() {
+            var e = document.createElement('script');
+            e.type = 'text/javascript';
+            e.async = true;
+            e.src = 'https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js';
+            e.onload = function () {
+                if (typeof FreshWidget !== "undefined" && typeof FreshWidget.init === "function") {
+                    document.getElementById("feedback-button").style.display = "block";
+
+                    FreshWidget.init("", {
+                        "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback&submitTitle=Send+Feedback&submitThanks=Thank+you+for+your+feedback&captcha=yes&searchArea=no",
+                        "utf8": "✓",
+                        "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png",
+                        "widgetType": "popup",
+                        "buttonType": "image",
+                        "buttonText": "Support",
+                        "buttonColor": "white",
+                        "buttonBg": "#00aadd",
+                        "alignment": "1",
+                        "offset": "-1500px",
+                        "submitThanks": "Thank you for your feedback",
+                        "formHeight": "500px",
+                        "captcha": "yes",
+                        "url": "https://ihtsdo.freshdesk.com",
+                        "loadOnEvent": "immediate"
+                    });
+                }
+            };
+
+            document.body.appendChild(e);
+        }
+
+        function initGoogleTag() {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-MFCMKEHSYB';
+            script.onload = function () {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+
+                gtag('config', 'G-MFCMKEHSYB');
+            };
+            document.body.appendChild(script);
+        }
+
+        function initBrowserUpdate() {
+            var e = document.createElement("script");
+            e.setAttribute("type", "text/javascript");
+            e.setAttribute("src", "//browser-update.org/update.js");
+            document.body.appendChild(e);
+        }
 
         function start() {
             $(function() {
@@ -550,11 +610,11 @@
                         </ul>
                     </li>                    
 
-                    <li class="navbar-btn feedback-button">
+                    <li class="navbar-btn feedback-button" id="feedback-button" style="display: none">
                         <button type="button" class="btn btn-info" onclick="FreshWidget.show();
                                     return false;">
-                                <span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
-                            </button>
+                            <span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
+                        </button>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
@@ -690,54 +750,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
-
-    <!-- Using Freshdesk Widget for feedback -->
-    <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
-    <script type="text/javascript">
-        FreshWidget.init("", {
-            "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback&submitTitle=Send+Feedback&submitThanks=Thank+you+for+your+feedback&captcha=yes&searchArea=no",
-            "utf8": "✓",
-            "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png",
-            "widgetType": "popup",
-            "buttonType": "image",
-            "buttonText": "Support",
-            "buttonColor": "white",
-            "buttonBg": "#00aadd",
-            "alignment": "1",
-            "offset": "-1500px",
-            "submitThanks": "Thank you for your feedback",
-            "formHeight": "500px",
-            "captcha": "yes",
-            "url": "https://ihtsdo.freshdesk.com"
-        });
-    </script>
-    
-
-    <script type="text/javascript">
-        var $buoop = {};
-        $buoop.ol = window.onload;
-        window.onload = function() {
-            try {
-                if ($buoop.ol)
-                    $buoop.ol();
-            } catch (e) {}
-            var e = document.createElement("script");
-            e.setAttribute("type", "text/javascript");
-            e.setAttribute("src", "//browser-update.org/update.js");
-            document.body.appendChild(e);
-        }
-    </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MFCMKEHSYB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-MFCMKEHSYB');
-    </script>
+    <!-- /.modal -->   
 </body>
 
 </html>

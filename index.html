@@ -19,30 +19,38 @@
         .modal.fade .modal-dialog {
             margin-top: 60px;
         }
+
         .row.splitter_panel {
             height: calc(100vh - 95px) !important;
         }
+
         .ecl-builder ngb-typeahead-window.dropdown-menu {
             max-width: 60vw !important;
         }
+
         .ecl-builder div.modal-body button.circle {
             top: 20px !important;
         }
+
         .ecl-builder div.expression-group.grey div.expression-row:first-child div.position-relative,
         .ecl-builder div.expression-group.grey div.expression-row:first-child input[type=text] {
             width: 61.3vw !important;
         }
+
         .ecl-builder div.expression-group.grey div.expression-row:not(:first-child) div.position-relative,
         .ecl-builder div.expression-group.grey div.expression-row:not(:first-child) input[type=text] {
             width: 57vw !important;
-        }  
+        }
+
         .ecl-builder div.expression-group.blue div.expression-row:not(:first-child) div.position-relative,
         .ecl-builder div.expression-group.blue div.expression-row:not(:first-child) input[type=text] {
             width: 19.85vw !important;
-        }      
+        }
+
         .ecl-builder div.expression-group.grey div.expression-row:first-child ngb-typeahead-window.dropdown-menu {
             left: 0px !important;
         }
+
         .ecl-builder div.expression-group.grey div.expression-row:not(:first-child) ngb-typeahead-window.dropdown-menu {
             left: 0px !important;
         }
@@ -159,7 +167,7 @@
             history: false
         };
 
-        options.updateReleaseSwitcher = function(branch, conceptId) {
+        options.updateReleaseSwitcher = function (branch, conceptId) {
             options.edition = branch;
             defaultConceptId = conceptId;
 
@@ -172,7 +180,7 @@
             }
         };
 
-        options.setEcl = function(eclQuery) {
+        options.setEcl = function (eclQuery) {
             options.ecl = eclQuery;
         };
 
@@ -180,7 +188,7 @@
             $.ajax({
                 type: 'GET',
                 url: '/',
-                success: function(data, textStatus, response) {
+                success: function (data, textStatus, response) {
                     let copyrightYear = new Date(response.getResponseHeader('Date')).getFullYear();
                     $('.copyright_year').text(copyrightYear);
                 }
@@ -189,7 +197,7 @@
 
         function setUILanguage() {
             var ui_language = '';
-            if (typeof(Storage) !== "undefined") {
+            if (typeof (Storage) !== "undefined") {
                 if (localStorage.getItem("ui_language")) {
                     ui_language = localStorage.getItem("ui_language");
                 }
@@ -230,10 +238,10 @@
                 });
             }
 
-            var getCodeSystems = function() {
+            var getCodeSystems = function () {
                 var dfd = $.Deferred();
 
-                $.getJSON("/snowstorm/snomed-ct/codesystems", function(result) {}).done(function(result) {
+                $.getJSON("/snowstorm/snomed-ct/codesystems", function (result) { }).done(function (result) {
                     options.serverUrl = "/snowstorm/snomed-ct";
                     options.queryServerUrl = "/snowstorm/snomed-ct";
                     options.releases = result;
@@ -287,12 +295,12 @@
                     }
 
                     // sort international extensions
-                    internationalReleases.sort(function(a, b) {
+                    internationalReleases.sort(function (a, b) {
                         return internationalEditionShortNames.indexOf(a.shortName) - internationalEditionShortNames.indexOf(b.shortName);
                     });
 
                     // sort local extensions again
-                    localReleases.sort(function(a, b) {
+                    localReleases.sort(function (a, b) {
                         return a.name.localeCompare(b.name);
                     });
 
@@ -315,7 +323,7 @@
                         internationalReleases: internationalReleases,
                         localReleases: localReleases
                     });
-                }).fail(function() {
+                }).fail(function () {
                     console.log('fail');
                     dfd.resolve();
                 });
@@ -323,7 +331,7 @@
                 return dfd.promise();
             };
 
-            var getConfig = function() {
+            var getConfig = function () {
                 var dfd = $.Deferred();
 
                 $.ajax({
@@ -332,11 +340,12 @@
                     cache: false,
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
-                    success: function(data, status) {
+                    success: function (data, status) {
                         countryIcons = data.countryIcons;
                         options.languageNameOfLangRefset = data.languageRefsetShortname;
                         options.singleCharacterSearchLanguageRefsets = data.singleCharacterSearchLanguageRefsets;
                         options.showIssueCollector = data.showIssueCollector;
+                        options.thirdPartyTrackingEnabled = data.thirdPartyTrackingEnabled;
                         dfd.resolve();
                     }
                 });
@@ -344,7 +353,7 @@
                 return dfd.promise();
             }
 
-            var getUIConfiguration = function() {
+            var getUIConfiguration = function () {
                 var dfd = $.Deferred();
 
                 if (options.dailyBuildBrowser || options.publicBrowser || options.communityBrowser) {
@@ -352,7 +361,7 @@
                     return dfd.resolve();
                 }
 
-                $.getJSON("/authoring-services/ui-configuration", function(result) {}).done(function(result) {
+                $.getJSON("/authoring-services/ui-configuration", function (result) { }).done(function (result) {
                     options.imsUrl = result.endpoints.imsEndpoint;
                     options.tsBrowser = true;
 
@@ -387,7 +396,7 @@
                     $header.append($taskSelect);
 
                     dfd.resolve();
-                }).fail(function() {
+                }).fail(function () {
                     options.imsUrl = null;
                     dfd.resolve();
                 })
@@ -395,7 +404,7 @@
                 return dfd.promise();
             };
 
-            $.when(getCodeSystems(), getUIConfiguration(), getConfig()).then(function(response) {
+            $.when(getCodeSystems(), getUIConfiguration(), getConfig()).then(function (response) {
                 if (options.imsUrl == null) {
 
                     // Marked as public browser if both daily build and community browser could not be specifed from URL
@@ -426,11 +435,70 @@
                         $('#multi-extension-search').css('display', 'block');
                         $('#version-selector').css('display', 'block');
                     }
+
+                    if (options.thirdPartyTrackingEnabled) {
+                        initWidgetFeedback();
+                        initGoogleTag();
+                        initBrowserUpdate();
+                    }
                 } else {
                     // do nothing
                 }
                 start();
             });
+        }
+
+        function initWidgetFeedback() {
+            var e = document.createElement('script');
+            e.type = 'text/javascript';
+            e.async = true;
+            e.src = 'https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js';
+            e.onload = function () {
+                if (typeof FreshWidget !== "undefined" && typeof FreshWidget.init === "function") {
+                    document.getElementById("feedback-button").style.display = "block";
+
+                    FreshWidget.init("", {
+                        "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback&submitTitle=Send+Feedback&submitThanks=Thank+you+for+your+feedback&captcha=yes&searchArea=no",
+                        "utf8": "✓",
+                        "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png",
+                        "widgetType": "popup",
+                        "buttonType": "image",
+                        "buttonText": "Support",
+                        "buttonColor": "white",
+                        "buttonBg": "#00aadd",
+                        "alignment": "1",
+                        "offset": "-1500px",
+                        "submitThanks": "Thank you for your feedback",
+                        "formHeight": "500px",
+                        "captcha": "yes",
+                        "url": "https://ihtsdo.freshdesk.com",
+                        "loadOnEvent": "immediate"
+                    });
+                }
+            };
+
+            document.body.appendChild(e);
+        }
+
+        function initGoogleTag() {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-MFCMKEHSYB';
+            script.onload = function () {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+
+                gtag('config', 'G-MFCMKEHSYB');
+            };
+            document.body.appendChild(script);
+        }
+
+        function initBrowserUpdate() {
+            var e = document.createElement("script");
+            e.setAttribute("type", "text/javascript");
+            e.setAttribute("src", "//browser-update.org/update.js");
+            document.body.appendChild(e);
         }
 
         function addStatsLinks($statsLinks, releases) {
@@ -460,8 +528,8 @@
                     var $span1 = $('<span>');
                     var $span2 = $('<span>');
                     $span1.text("MRCM Browser");
-                    $span1.attr("style", "margin-left:15px;");                    
-                    var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "height:81px; width:165px; margin-bottom:10px;");                 
+                    $span1.attr("style", "margin-left:15px;");
+                    var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "height:81px; width:165px; margin-bottom:10px;");
                     $span2.attr("class", "glyphicon glyphicon-tasks").attr("style", "top: 30px; left: -70px; font-size: 18px;");
                     $a.append($span1);
                     $a.append($span2);
@@ -508,7 +576,7 @@
                         $a.attr("href", "javascript:void(0);");
                         $a.attr("editionCode", release.countryCode);
                         $a.attr("codesystem-shortname", release.shortName);
-                        $a.on("click", function() {
+                        $a.on("click", function () {
                             var parsedLanguages = "";
                             for (var language in release.languages) {
                                 parsedLanguages = parsedLanguages + language + ',';
@@ -632,16 +700,16 @@
             }
             // Read parameters
             $.ajaxSetup({
-                "error": function(jqXHR, textStatus, errorThrown) {
+                "error": function (jqXHR, textStatus, errorThrown) {
                     if (options.imsUrl && jqXHR.status == 403) {
                         window.location = decodeURIComponent(options.imsUrl + 'login' + '?serviceReferer=' + window.location.href);
                     }
                 }
             });
-            $(function() {
-                $.extend($.fn.disableTextSelect = function() {
-                    return this.each(function() {
-                        $(this).mousedown(function() {
+            $(function () {
+                $.extend($.fn.disableTextSelect = function () {
+                    return this.each(function () {
+                        $(this).mousedown(function () {
                             return false;
                         });
                     });
@@ -650,10 +718,10 @@
             });
 
             // hide any open popovers when the anywhere else in the body is clicked
-            $('body').on('mouseup', function(e) {
-                $("div[class$='-popover'],div[class*='-popover ']").each(function() {
+            $('body').on('mouseup', function (e) {
+                $("div[class$='-popover'],div[class*='-popover ']").each(function () {
                     if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0 && $(this).hasClass("in")) {
-                        $.each($(this).attr('class').split(/\s+/), function(i, name) {
+                        $.each($(this).attr('class').split(/\s+/), function (i, name) {
                             if (name.indexOf('-popover') > -1) {
                                 $('#' + name.substr(0, name.indexOf('-popover'))).popover('hide');
                             }
@@ -707,10 +775,10 @@
             }
             if (options.dailyBuildBrowser || options.communityBrowser) {
                 var releases = options.dailyBuildBrowser ? options.dailyBuildReleases : options.communityContentReleases;
-                if (releases.filter(function(release) {
-                        hideCommunityContentTab(release);
-                        return release.branchPath === edition;
-                    }).length !== 0) {
+                if (releases.filter(function (release) {
+                    hideCommunityContentTab(release);
+                    return release.branchPath === edition;
+                }).length !== 0) {
                     options.edition = edition;
                 } else {
                     options.edition = 'MAIN';
@@ -739,14 +807,14 @@
                     }
                 }
             } else {
-                if (!isLatestRedirect) {                    
+                if (!isLatestRedirect) {
                     if (typeof edition !== 'undefined') {
                         options.edition = edition;
                     } else {
                         console.error('Edition not found');
                     }
                 } else {
-                    var filteredReleases = options.releases.items.filter(function(release) {
+                    var filteredReleases = options.releases.items.filter(function (release) {
                         return (typeof release.latestVersion !== "undefined") && (release.branchPath === edition || release.latestVersion.branchPath === edition);
                     });
                     if (filteredReleases.length !== 0) {
@@ -755,7 +823,7 @@
                         for (let i = 0; i < options.releases.items.length; i++) {
                             let release = options.releases.items[i];
                             if (typeof release.latestVersion !== "undefined" && release.latestVersion.branchPath) {
-                                options.edition = release.latestVersion.branchPath;                     
+                                options.edition = release.latestVersion.branchPath;
                                 break;
                             }
                         }
@@ -776,11 +844,11 @@
                             for (var language in release.languages) {
                                 parsedLanguages = parsedLanguages + language + ',';
                             }
-                            parsedLanguages = parsedLanguages.slice(0, -1);                                                      
+                            parsedLanguages = parsedLanguages.slice(0, -1);
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                             if (!QueryString || !QueryString.languages) {
                                 options.languages = parsedLanguages;
-                            }                             
+                            }
                             break;
                         }
                     }
@@ -833,12 +901,12 @@
             }
 
             $("#navBarBrand").unbind();
-            $("#navBarBrand").on("click", function() {                
+            $("#navBarBrand").on("click", function () {
                 initialize();
             });
 
             $("#accept-license-button-modal").unbind();
-            $("#accept-license-button-modal").click(function() {
+            $("#accept-license-button-modal").click(function () {
                 createCookie("licenseCookie", "true", 2);
             });
             options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
@@ -847,7 +915,7 @@
             }
 
             $("#cookiescript_accept").unbind();
-            $("#cookiescript_accept").click(function() {
+            $("#cookiescript_accept").click(function () {
                 createCookie("complianceCookie", "true", 2);
                 $('#cookiescript').hide();
             });
@@ -861,7 +929,7 @@
 
             // set language one more time after finishing components initialization
             setUILanguage();
-           
+
 
             // RELEASES DROPDOWN HANDLER for daily build/community content
             if (options.dailyBuildBrowser || options.communityBrowser) {
@@ -874,7 +942,7 @@
                         var $li = $('<li>');
                         var $a = $('<a>').attr("shortName", release.shortName).append(release.name + " ").append('<span style="color: dodgerblue;">' + (options.dailyBuildBrowser ? 'DAILY BUILD' : 'Community Content') + '</span>');
                         $a.attr("href", "javascript:void(0);");
-                        $a.on("click", function() {
+                        $a.on("click", function () {
                             var parsedLanguages = "";
                             if (options.communityBrowser) {
                                 if (typeof release.latestVersion !== 'undefined') {
@@ -901,7 +969,7 @@
                             options.modules = release.modules;
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
                             options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
-                            
+
                             if (currentPerspective == "home") {
                                 currentPerspective = "full";
                             }
@@ -932,7 +1000,7 @@
                             var $li = $('<li>')
                             var $a = $('<a>').attr("shortName", release.shortName).append(release.name);
                             $a.attr("href", "javascript:void(0);");
-                            $a.on("click", function(event) {
+                            $a.on("click", function (event) {
                                 event.stopPropagation();
 
                                 var parsedLanguages = "";
@@ -958,18 +1026,18 @@
                                 }
 
                                 if (QueryString.conceptId1) {
-                                    var checkConceptExist = function(conceptId) {
+                                    var checkConceptExist = function (conceptId) {
                                         var dfd = $.Deferred();
-                                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/concepts/" + QueryString.conceptId1, function(result) {
+                                        xhr = $.getJSON(options.serverUrl + "/" + options.edition + "/concepts/" + QueryString.conceptId1, function (result) {
                                             dfd.resolve(true);
-                                        }).done(function(result) {}).fail(function() {
+                                        }).done(function (result) { }).fail(function () {
                                             dfd.resolve(false);
                                         });
 
                                         return dfd.promise();
                                     };
 
-                                    checkConceptExist(QueryString.conceptId1).then(function(result) {
+                                    checkConceptExist(QueryString.conceptId1).then(function (result) {
                                         if (result) {
                                             reloadCurrentPerspective();
                                         } else {
@@ -1032,11 +1100,11 @@
         }
 
         function initVersionsDropdown(shortName) {
-            $.getJSON("/snowstorm/snomed-ct/codesystems/" + shortName + "/versions?showFutureVersions=false&showInternalReleases=false", function(result) {}).done(function(result) {
+            $.getJSON("/snowstorm/snomed-ct/codesystems/" + shortName + "/versions?showFutureVersions=false&showInternalReleases=false", function (result) { }).done(function (result) {
                 var $versionSwitcher = $('#versionSwitcher');
                 $versionSwitcher.html("");
                 if (result.items.length > 0) {
-                    result.items.sort(function(a, b) {
+                    result.items.sort(function (a, b) {
                         return b.effectiveDate - a.effectiveDate;
                     });
                 }
@@ -1045,7 +1113,7 @@
                     var $li = $('<li>');
                     var $a = $('<a>').append(version.version);
                     $a.attr("href", "javascript:void(0);");
-                    $a.on("click", function() {
+                    $a.on("click", function () {
                         if (currentPerspective == "home") {
                             currentPerspective = "full";
                         }
@@ -1066,7 +1134,7 @@
         function initializeTSBrowser() {
             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
-            var isTask = function(task) {
+            var isTask = function (task) {
                 var strArray = task.split('-');
                 if (strArray.length === 2 && !isNaN(strArray[1])) {
                     return true;
@@ -1081,11 +1149,11 @@
             }
 
             $("#navBarBrand").unbind();
-            $("#navBarBrand").on("click", function() {                           
+            $("#navBarBrand").on("click", function () {
                 window.open("https://" + getEnvPrefix() + "browser.ihtsdotools.org/", "_blank");
             });
 
-            $.when(getAuth(), getProjects()).then(function(roles, projects) {
+            $.when(getAuth(), getProjects()).then(function (roles, projects) {
 
                 if (options.managedServiceUser) {
                     findProjectMainline(projects);
@@ -1095,7 +1163,7 @@
                     }
                 }
 
-                var found = projects.filter(function(item) {
+                var found = projects.filter(function (item) {
                     return item.branchPath === options.edition;
                 }).length !== 0;
 
@@ -1121,15 +1189,15 @@
                         $('<option>').val(options.projectMainlinePath).text(options.projectMainlineText).appendTo($projectDdl);
                     }
                 }
-                $.each(projects, function() {
+                $.each(projects, function () {
                     $('<option>').val(this.branchPath).text(this.key).appendTo($projectDdl);
                 });
 
                 $("#projectDdl").val(options.edition);
 
-                getTasks().then(function(tasks) {
+                getTasks().then(function (tasks) {
                     if (options.release) {
-                        var found = tasks.filter(function(item) {
+                        var found = tasks.filter(function (item) {
                             return item.key === options.release;
                         }).length !== 0;
 
@@ -1149,7 +1217,7 @@
             function getAuth() {
                 var dfd = $.Deferred();
 
-                $.getJSON("/auth", function() {}).done(function(response) {
+                $.getJSON("/auth", function () { }).done(function (response) {
                     options.managedServiceUser = response.roles.includes('ROLE_ms-users') && !response.roles.includes('ROLE_int-sca-author');
                     dfd.resolve(response.roles);
                 });
@@ -1159,10 +1227,10 @@
 
             function getProjects() {
                 var dfd = $.Deferred();
-                $.getJSON("/authoring-services/projects?lightweight=true").done(function(result) {
+                $.getJSON("/authoring-services/projects?lightweight=true").done(function (result) {
                     var projectsInDateFormat = [];
                     var projectsInStringFormat = [];
-                    result.forEach(function(item) {
+                    result.forEach(function (item) {
                         var strArray = item.key.split('-');
                         if (!isNaN(strArray[0])) {
                             projectsInDateFormat.push(item);
@@ -1171,16 +1239,16 @@
                         }
                     });
 
-                    projectsInStringFormat.sort(function(a, b) {
+                    projectsInStringFormat.sort(function (a, b) {
                         return a.key.localeCompare(b.key);
                     });
 
-                    projectsInDateFormat.sort(function(a, b) {
+                    projectsInDateFormat.sort(function (a, b) {
                         return b.key.localeCompare(a.key);
                     });
                     result.items = projectsInStringFormat.concat(projectsInDateFormat);
 
-                    var projectChanged = function() {
+                    var projectChanged = function () {
                         options.edition = $('#projectDdl').val();
                         options.release = "None";
                         findDefaultLanguageRefsetsByBranchPath(options.edition);
@@ -1190,7 +1258,7 @@
                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                     }
 
-                    $("#projectDdl").on("change", function(event) {
+                    $("#projectDdl").on("change", function (event) {
                         projectChanged(this, event);
                     });
 
@@ -1204,7 +1272,7 @@
             function getTasks() {
                 var dfd = $.Deferred();
 
-                var groupTaskList = function(taskList) {
+                var groupTaskList = function (taskList) {
                     //return b.baseTimestamp - a.baseTimestamp;
                     var map = {};
                     for (var i = 0; i < taskList.length; i++) {
@@ -1216,7 +1284,7 @@
                                 items = map[strArray[0]];
                             }
                             items.push(task);
-                            items.sort(function(a, b) {
+                            items.sort(function (a, b) {
                                 var strArrayA = a.key.split('-');
                                 var strArrayB = b.key.split('-');
                                 if (strArrayA[0] > strArrayB[0]) {
@@ -1237,7 +1305,7 @@
                     }
 
                     var keys = Object.keys(map);
-                    keys.sort(function(a, b) {
+                    keys.sort(function (a, b) {
                         return a.localeCompare(b);
                     });
 
@@ -1257,23 +1325,23 @@
 
                     return dfd.resolve([]);
                 }
-                $.getJSON("/authoring-services/projects/" + project + "/tasks?lightweight=true").done(function(result) {
+                $.getJSON("/authoring-services/projects/" + project + "/tasks?lightweight=true").done(function (result) {
                     var $taskDdl = $('#taskDdl');
                     $taskDdl.html("");
                     $('<option>').val("None").text("None").appendTo($taskDdl);
                     result = groupTaskList(result);
-                    $.each(result, function() {
+                    $.each(result, function () {
                         $('<option>').val(this.key).text(this.key).appendTo($taskDdl);
                     });
 
-                    var taskChanged = function() {
+                    var taskChanged = function () {
                         options.release = $('#taskDdl').val();
                         reloadCurrentPerspective(null, false);
                         var selectedLanguageAndFlag = getSelectedLanguageAndFlag(selectedLanguage);
                         switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);
                     }
 
-                    $("#taskDdl").on("change", function(event) {
+                    $("#taskDdl").on("change", function (event) {
                         taskChanged(this, event);
                     });
 
@@ -1343,140 +1411,140 @@
             if (typeof tours[selectedLanguage] == "undefined") {
                 tours[selectedLanguage] = new Tour({
                     steps: [{
-                            element: "nothing",
-                            title: i18n_tour_step1_fh_title,
-                            content: i18n_tour_step1_fh_text,
-                            placement: "bottom",
-                            orphan: true,
-                            backdrop: false,
-                            onShow: function(tour) {
-                                switchToFullHeight(204351007, 138875005)
-                            }
-                        }, {
-                            element: "#fh-tabs-pane",
-                            title: i18n_tour_step2_title,
-                            content: i18n_tour_step2_text,
-                            placement: "right",
-                            backdrop: true
-                        }, {
-                            element: "#fh-taxonomy_canvas-taxonomyConfigBar",
-                            title: i18n_tour_step5_title,
-                            content: i18n_tour_step5_text,
-                            placement: "bottom",
-                            backdrop: true
-                        }, {
-                            element: "#fh-taxonomy_canvas-treenode-404684003",
-                            title: i18n_tour_step10_title,
-                            content: i18n_tour_step10_text,
-                            placement: "right",
-                            backdrop: true
-                        }, {
-                            element: "#fh-taxonomy_canvas-treeicon-404684003",
-                            title: i18n_tour_step11_title,
-                            content: i18n_tour_step11_text,
-                            placement: "right",
-                            backdrop: true
-                        }, {
-                            element: "#fh-tabs",
-                            title: i18n_tour_step2_5_title,
-                            content: i18n_tour_step2_5_text,
-                            placement: "bottom",
-                            backdrop: true,
-                            onNext: function(tour) {
-                                $('#fh-tabs li:eq(1) a').tab('show')
-                            }
-                        }, {
-                            element: "#fh-tabs-pane",
-                            title: i18n_tour_step3_title,
-                            content: i18n_tour_step3_text,
-                            placement: "right",
-                            backdrop: true
-                        }, {
-                            element: "#fh-search_canvas-searchConfigBar",
-                            title: i18n_tour_step6_title,
-                            content: i18n_tour_step6_text,
-                            placement: "bottom",
-                            backdrop: true
-                        }, {
-                            element: "#fh-search_canvas",
-                            title: i18n_tour_step12_title,
-                            content: i18n_tour_step12_text,
-                            placement: "right",
-                            backdrop: true
-                        }, {
-                            element: "#fh-search_canvas-historyButton",
-                            title: i18n_tour_step13_title,
-                            content: i18n_tour_step13_text,
-                            placement: "left",
-                            backdrop: true,
-                            onNext: function(tour) {
-                                $('#fh-tabs li:eq(0) a').tab('show')
-                            }
-                        }, {
-                            element: "#fh-cd1_canvas",
-                            title: i18n_tour_step4_title,
-                            content: i18n_tour_step4_text,
-                            placement: "left",
-                            backdrop: true
-                        }, {
-                            element: "#fh-cd1_canvas-configButton",
-                            title: i18n_tour_step7_title,
-                            content: i18n_tour_step7_text,
-                            placement: "left",
-                            backdrop: true
-                        },
-                        /*{
-                         element: "#fh-taxonomy_canvas-linkerButton",
-                         title: i18n_tour_step8_title,
-                         content: i18n_tour_step8_text,
-                         placement: "left",
-                         backdrop: true
-                         },
-                         {
-                         element: "#bp-taxonomy_canvas-subscribersMarker",
-                         title: i18n_tour_step9_title,
-                         content: i18n_tour_step9_text,
-                         placement: "right",
-                         backdrop: true
-                         },*/
-                        {
-                            element: "#details-tabs-fh-cd1_canvas",
-                            title: i18n_tour_step13_1_title,
-                            content: i18n_tour_step13_1_text,
-                            placement: "bottom",
-                            backdrop: true
-                        }, {
-                            element: "#fh-cd1_canvas-panelBody",
-                            title: i18n_tour_step13_2_title,
-                            content: i18n_tour_step13_2_text,
-                            placement: "left",
-                            backdrop: true,
-                            onNext: function(tour) {
-                                $('#details-tabs-fh-cd1_canvas li:eq(1) a').tab('show')
-                            }
-                        }, {
-                            element: "#fh-cd1_canvas-panelBody",
-                            title: i18n_tour_step13_3_title,
-                            content: i18n_tour_step13_3_text,
-                            placement: "left",
-                            backdrop: true
-                        }, {
-                            element: "#fh-cd1_canvas-attributesClip",
-                            title: i18n_tour_step14_title,
-                            content: i18n_tour_step14_text,
-                            placement: "left",
-                            backdrop: true,
-                            onNext: function(tour) {
-                                initialize()
-                            }
-                        }, {
-                            element: "nothing",
-                            title: i18n_tour_step15_title,
-                            content: i18n_tour_step15_text,
-                            placement: "bottom",
-                            orphan: true,
-                            backdrop: true
+                        element: "nothing",
+                        title: i18n_tour_step1_fh_title,
+                        content: i18n_tour_step1_fh_text,
+                        placement: "bottom",
+                        orphan: true,
+                        backdrop: false,
+                        onShow: function (tour) {
+                            switchToFullHeight(204351007, 138875005)
                         }
+                    }, {
+                        element: "#fh-tabs-pane",
+                        title: i18n_tour_step2_title,
+                        content: i18n_tour_step2_text,
+                        placement: "right",
+                        backdrop: true
+                    }, {
+                        element: "#fh-taxonomy_canvas-taxonomyConfigBar",
+                        title: i18n_tour_step5_title,
+                        content: i18n_tour_step5_text,
+                        placement: "bottom",
+                        backdrop: true
+                    }, {
+                        element: "#fh-taxonomy_canvas-treenode-404684003",
+                        title: i18n_tour_step10_title,
+                        content: i18n_tour_step10_text,
+                        placement: "right",
+                        backdrop: true
+                    }, {
+                        element: "#fh-taxonomy_canvas-treeicon-404684003",
+                        title: i18n_tour_step11_title,
+                        content: i18n_tour_step11_text,
+                        placement: "right",
+                        backdrop: true
+                    }, {
+                        element: "#fh-tabs",
+                        title: i18n_tour_step2_5_title,
+                        content: i18n_tour_step2_5_text,
+                        placement: "bottom",
+                        backdrop: true,
+                        onNext: function (tour) {
+                            $('#fh-tabs li:eq(1) a').tab('show')
+                        }
+                    }, {
+                        element: "#fh-tabs-pane",
+                        title: i18n_tour_step3_title,
+                        content: i18n_tour_step3_text,
+                        placement: "right",
+                        backdrop: true
+                    }, {
+                        element: "#fh-search_canvas-searchConfigBar",
+                        title: i18n_tour_step6_title,
+                        content: i18n_tour_step6_text,
+                        placement: "bottom",
+                        backdrop: true
+                    }, {
+                        element: "#fh-search_canvas",
+                        title: i18n_tour_step12_title,
+                        content: i18n_tour_step12_text,
+                        placement: "right",
+                        backdrop: true
+                    }, {
+                        element: "#fh-search_canvas-historyButton",
+                        title: i18n_tour_step13_title,
+                        content: i18n_tour_step13_text,
+                        placement: "left",
+                        backdrop: true,
+                        onNext: function (tour) {
+                            $('#fh-tabs li:eq(0) a').tab('show')
+                        }
+                    }, {
+                        element: "#fh-cd1_canvas",
+                        title: i18n_tour_step4_title,
+                        content: i18n_tour_step4_text,
+                        placement: "left",
+                        backdrop: true
+                    }, {
+                        element: "#fh-cd1_canvas-configButton",
+                        title: i18n_tour_step7_title,
+                        content: i18n_tour_step7_text,
+                        placement: "left",
+                        backdrop: true
+                    },
+                    /*{
+                     element: "#fh-taxonomy_canvas-linkerButton",
+                     title: i18n_tour_step8_title,
+                     content: i18n_tour_step8_text,
+                     placement: "left",
+                     backdrop: true
+                     },
+                     {
+                     element: "#bp-taxonomy_canvas-subscribersMarker",
+                     title: i18n_tour_step9_title,
+                     content: i18n_tour_step9_text,
+                     placement: "right",
+                     backdrop: true
+                     },*/
+                    {
+                        element: "#details-tabs-fh-cd1_canvas",
+                        title: i18n_tour_step13_1_title,
+                        content: i18n_tour_step13_1_text,
+                        placement: "bottom",
+                        backdrop: true
+                    }, {
+                        element: "#fh-cd1_canvas-panelBody",
+                        title: i18n_tour_step13_2_title,
+                        content: i18n_tour_step13_2_text,
+                        placement: "left",
+                        backdrop: true,
+                        onNext: function (tour) {
+                            $('#details-tabs-fh-cd1_canvas li:eq(1) a').tab('show')
+                        }
+                    }, {
+                        element: "#fh-cd1_canvas-panelBody",
+                        title: i18n_tour_step13_3_title,
+                        content: i18n_tour_step13_3_text,
+                        placement: "left",
+                        backdrop: true
+                    }, {
+                        element: "#fh-cd1_canvas-attributesClip",
+                        title: i18n_tour_step14_title,
+                        content: i18n_tour_step14_text,
+                        placement: "left",
+                        backdrop: true,
+                        onNext: function (tour) {
+                            initialize()
+                        }
+                    }, {
+                        element: "nothing",
+                        title: i18n_tour_step15_title,
+                        content: i18n_tour_step15_text,
+                        placement: "bottom",
+                        orphan: true,
+                        backdrop: true
+                    }
                     ],
                     storage: false,
                     debug: false,
@@ -1546,7 +1614,7 @@
             currentPerspective = "browsing";
             postal.unsubscribeFor();
             if (typeof componentsRegistry != "undefined") {
-                $.each(componentsRegistry, function(i, field) {
+                $.each(componentsRegistry, function (i, field) {
                     field = null;
                 });
                 componentsRegistry = [];
@@ -1588,7 +1656,7 @@
             cdPanel2.subscribe(spa);
             cdPanel2.setupCanvas();
 
-            loadLanguageRefsets().then(function(result) {
+            loadLanguageRefsets().then(function (result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);
                 cdPanel2.setLangugeRefsets(result.languageRefsets);
                 spa.setLanguageRefsets(result.languageRefsets);
@@ -1608,7 +1676,7 @@
                 orientation: 'vertical',
                 limit: 20
             });
-            $.each(componentsRegistry, function(i, field) {
+            $.each(componentsRegistry, function (i, field) {
                 field.loadMarkers();
             });
         }
@@ -1631,7 +1699,7 @@
             currentPerspective = "compare_concepts";
             postal.unsubscribeFor();
             if (typeof componentsRegistry != "undefined") {
-                $.each(componentsRegistry, function(i, field) {
+                $.each(componentsRegistry, function (i, field) {
                     field = null;
                 });
                 componentsRegistry = [];
@@ -1671,7 +1739,7 @@
             cdPanel1.setupCanvas();
             cdPanel2.setupCanvas();
 
-            loadLanguageRefsets().then(function(result) {
+            loadLanguageRefsets().then(function (result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);
                 cdPanel2.setLangugeRefsets(result.languageRefsets);
                 spa.setLanguageRefsets(result.languageRefsets);
@@ -1683,7 +1751,7 @@
             $('#comparing-concept-details').split({
                 orientation: 'vertical'
             });
-            $.each(componentsRegistry, function(i, field) {
+            $.each(componentsRegistry, function (i, field) {
                 field.loadMarkers();
             });
         }
@@ -1692,7 +1760,7 @@
             currentPerspective = "compare_hierarchies";
             postal.unsubscribeFor();
             if (typeof componentsRegistry != "undefined") {
-                $.each(componentsRegistry, function(i, field) {
+                $.each(componentsRegistry, function (i, field) {
                     field = null;
                 });
                 componentsRegistry = [];
@@ -1735,7 +1803,7 @@
             cdPanel1.subscribe(spa);
             cdPanel1.setupCanvas();
 
-            loadLanguageRefsets().then(function(result) {
+            loadLanguageRefsets().then(function (result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);
                 spa.setLanguageRefsets(result.languageRefsets);
                 tx1.setLanguageRefsets(result.languageRefsets);
@@ -1754,7 +1822,7 @@
             $('#search-cd-wrapper').split({
                 orientation: 'vertical'
             });
-            $.each(componentsRegistry, function(i, field) {
+            $.each(componentsRegistry, function (i, field) {
                 field.loadMarkers();
             });
         }
@@ -1779,7 +1847,7 @@
             currentPerspective = "full";
             postal.unsubscribeFor();
             if (typeof componentsRegistry != "undefined") {
-                $.each(componentsRegistry, function(i, field) {
+                $.each(componentsRegistry, function (i, field) {
                     field = null;
                 });
                 componentsRegistry = [];
@@ -1835,7 +1903,7 @@
 
             options.fhTaxonomyCanvasLoaded = false;
             $("#fh-taxonomies_canvas-li").unbind();
-            $("#fh-taxonomies_canvas-li").click(function() {
+            $("#fh-taxonomies_canvas-li").click(function () {
                 if (!options.fhTaxonomyCanvasLoaded) {
                     tpt.updateCanvas();
                     options.fhTaxonomyCanvasLoaded = true;
@@ -1849,7 +1917,7 @@
             cdPanel1.subscribe(ref);
             cdPanel1.setupCanvas();
 
-            loadLanguageRefsets().then(function(result) {
+            loadLanguageRefsets().then(function (result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);
                 spa.setLanguageRefsets(result.languageRefsets);
                 ref.renderRefsets(result.referenceSets);
@@ -1874,7 +1942,7 @@
                 $('#fh-tabs li:eq(1) a').tab('show');
                 searchInPanel(spa.divElement.id, decodeURI(QueryString.searchTerm));
             }
-            $.each(componentsRegistry, function(i, field) {
+            $.each(componentsRegistry, function (i, field) {
                 if (field.loadMarkers)
                     field.loadMarkers();
             });
@@ -1890,7 +1958,7 @@
             currentPerspective = "responsive";
             postal.unsubscribeFor();
             if (typeof componentsRegistry != "undefined") {
-                $.each(componentsRegistry, function(i, field) {
+                $.each(componentsRegistry, function (i, field) {
                     field = null;
                 });
                 componentsRegistry = [];
@@ -1933,7 +2001,7 @@
             cdPanel2.subscribe(spa);
             cdPanel2.setupCanvas();
 
-            loadLanguageRefsets().then(function(result) {
+            loadLanguageRefsets().then(function (result) {
                 cdPanel1.setLangugeRefsets(result.languageRefsets);
                 cdPanel2.setLangugeRefsets(result.languageRefsets);
                 spa.setLanguageRefsets(result.languageRefsets);
@@ -1955,7 +2023,7 @@
                 orientation: 'vertical',
                 limit: 20
             });
-            $.each(componentsRegistry, function(i, field) {
+            $.each(componentsRegistry, function (i, field) {
                 field.loadMarkers();
             });
         }
@@ -1971,15 +2039,15 @@
                     'Accept-Language': options.languages
                 }
             });
-            $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function(result) {}).done(function(result) {
+            $.getJSON(options.serverUrl + "/browser/" + branch + "/members?active=true&limit=1", function (result) { }).done(function (result) {
                 var languageRefsets = [];
-                Object.keys(result.referenceSets).forEach(function(key) {
+                Object.keys(result.referenceSets).forEach(function (key) {
                     if (result.referenceSets[key].referenceSetType && result.referenceSets[key].referenceSetType.id === '900000000000506000') {
                         languageRefsets.push(result.referenceSets[key]);
                     }
                 });
 
-                languageRefsets.sort(function(a, b) {
+                languageRefsets.sort(function (a, b) {
                     if (a.conceptId === '900000000000509007') {
                         return -1;
                     }
@@ -1993,7 +2061,7 @@
                     'referenceSets': result,
                     'languageRefsets': languageRefsets
                 });
-            }).fail(function() {
+            }).fail(function () {
                 dfd.reject();
             });
 
@@ -2065,7 +2133,7 @@
 
         function switchLanguage(language, flagPng, fade) {
             selectedLanguage = language;
-            if (typeof(Storage) !== "undefined") {
+            if (typeof (Storage) !== "undefined") {
                 localStorage.setItem("ui_language", language);
             }
             $("#nav-selected-flag").html('<div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ' + flagPng + '" style="width:100%;height:100%"></span></div>');
@@ -2077,11 +2145,11 @@
                 language: language,
                 cache: true
             });
-            $(".i18n").each(function(index) {
+            $(".i18n").each(function (index) {
                 var translation = jQuery.i18n.prop($(this).attr('data-i18n-id'));
                 if (translation != "[" + $(this).attr('data-i18n-id') + "]") {
                     if (fade) {
-                        $(this).fadeOut("slow", function() {
+                        $(this).fadeOut("slow", function () {
                             $(this).html(translation);
                             $(this).fadeIn("slow");
                         });
@@ -2096,11 +2164,11 @@
             var i18n_search_placeholder = jQuery.i18n.prop('i18n_search_placeholder');
             var i18n_ecl_search_option_placeholder = jQuery.i18n.prop('i18n_ecl_search_option_placeholder');
             if (fade) {
-                $('#fh-search_canvas-searchBox').fadeOut("slow", function() {
+                $('#fh-search_canvas-searchBox').fadeOut("slow", function () {
                     $('#fh-search_canvas-searchBox').attr('placeholder', i18n_search_placeholder);
                     $('#fh-search_canvas-searchBox').fadeIn("slow");
                 });
-                $('#fh-query_canvas-searchBoxOption').fadeOut("slow", function() {
+                $('#fh-query_canvas-searchBoxOption').fadeOut("slow", function () {
                     $('#fh-query_canvas-searchBoxOption').attr('placeholder', i18n_ecl_search_option_placeholder);
                     $('#fh-query_canvas-searchBoxOption').fadeIn("slow");
                 });
@@ -2141,7 +2209,7 @@
                 title: i18n_history,
                 animation: true,
                 delay: 1000
-            });            
+            });
         }
     </script>
     <script>
@@ -2179,7 +2247,7 @@
             -o-transform: rotate(-45deg);
             transform: rotate(-45deg);
         }
-        
+
         .ribbon span {
             border: 1px solid #faa;
             color: #fff;
@@ -2190,11 +2258,11 @@
             text-align: center;
             text-decoration: none;
         }
-        
+
         .navbar-brand {
             margin-top: 4px;
         }
-        
+
         .navbar .navbar-btn {
             margin-left: 10px;
         }
@@ -2206,108 +2274,145 @@
         <div>
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header" id="header-nav">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="javascript:void(0);" id="navBarBrand">
                     <strong>
-                            &nbsp;&nbsp;SNOMED CT Browser</strong></a>
+                        &nbsp;&nbsp;SNOMED CT Browser</strong></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-left: 20px; padding-right: 20px;">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
+                style="padding-left: 20px; padding-right: 20px;">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="navbar-btn" id="edition-selector" style="display: none">
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel"></span> <span class="caret"></span>
-                            </button>
+                            <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span
+                                id="editionLabel"></span> <span class="caret"></span>
+                        </button>
                         <ul class="dropdown-menu" id="releaseSwitcher" role="menu">
                         </ul>
                     </li>
                     <li class="navbar-btn" id="version-selector" style="display: none">
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_version">Version</span>:&nbsp;<span id="versionLabel"></span> <span class="caret"></span>
-                            </button>
-                        <ul class="dropdown-menu" id="versionSwitcher" role="menu" style="max-height: 600px;overflow: auto;">
+                            <span class="i18n" data-i18n-id="i18n_version">Version</span>:&nbsp;<span
+                                id="versionLabel"></span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" id="versionSwitcher" role="menu"
+                            style="max-height: 600px;overflow: auto;">
                         </ul>
                     </li>
 
                     <li class="navbar-btn" id="perspective-selector">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
-                            </button>
+                            <span class="i18n" data-i18n-id="i18n_perspective">Perspective</span>:&nbsp;<span
+                                id="perspectiveLabel"><em>...</em></span> <span class="caret"></span>
+                        </button>
                         <ul class="dropdown-menu">
-                            <li><a href="javascript:void(0);" onclick="switchToFullHeight();"><span class="i18n" data-i18n-id="i18n_full_perspective">Full</span></a></li>
-                            <li><a href="javascript:void(0);" onclick="switchToComparingConcepts();"><span class="i18n" data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
-                            <li><a href="javascript:void(0);" onclick="switchToComparingTaxonomies(404684003, 138875005, 138875005);"><span class="i18n" data-i18n-id="i18n_comp_hier_perspective">Comparing hierarchy</span></a></li>
-<!--                            <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>-->
+                            <li><a href="javascript:void(0);" onclick="switchToFullHeight();"><span class="i18n"
+                                        data-i18n-id="i18n_full_perspective">Full</span></a></li>
+                            <li><a href="javascript:void(0);" onclick="switchToComparingConcepts();"><span class="i18n"
+                                        data-i18n-id="i18n_comp_concepts_perspective">Comparing concepts</span></a></li>
+                            <li><a href="javascript:void(0);"
+                                    onclick="switchToComparingTaxonomies(404684003, 138875005, 138875005);"><span
+                                        class="i18n" data-i18n-id="i18n_comp_hier_perspective">Comparing
+                                        hierarchy</span></a></li>
+                            <!--                            <li><a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);"><span class="i18n" data-i18n-id="i18n_responsive_perspective">Responsive (tablets, phones)</span></a></li>-->
                         </ul>
                     </li>
 
-                    <li class="navbar-btn feedback-button">
+                    <li class="navbar-btn feedback-button" id="feedback-button" style="display: none">
                         <button type="button" class="btn btn-info" onclick="FreshWidget.show();
                                     return false;">
-                                <span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
-                            </button>
+                            <span class="i18n" data-i18n-id="i18n_feedback">Feedback</span>
+                        </button>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n" data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="i18n"
+                                data-i18n-id="i18n_about">Help</span> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></li>
+                            <li><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International
+                                    Privacy Policy</a></li>
                             <li class="divider"></li>
-                            <li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>
+                            <li><a href="https://github.com/IHTSDO/sct-browser-frontend" target="_blank"><span
+                                        class="i18n" data-i18n-id="i18n_github">See the code on GitHub</span></a></li>
                             <li class="divider"></li>
-                            <li><a href="https://docs.snomed.org/snomed-ct-user-guides/snomed-ct-browser-guide/" target="_blank">User Guide</a></li>
+                            <li><a href="https://docs.snomed.org/snomed-ct-user-guides/snomed-ct-browser-guide/"
+                                    target="_blank">User Guide</a></li>
                             <li class="divider"></li>
-                            <li><a href="https://www.snomed.org/snomed-ct/software-tools" target="_blank">SNOMED International Tooling</a></li>
+                            <li><a href="https://www.snomed.org/snomed-ct/software-tools" target="_blank">SNOMED
+                                    International Tooling</a></li>
                             <li><a href="http://www.snomed.org" target="_blank">SNOMED International</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="nav-selected-flag"></span>
+                            <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag us" style="width:100%;height:100%"></span></div> English
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag es" style="width:100%;height:100%"></span></div> Español
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('fr', 'fr', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag fr" style="width:100%;height:100%"></span></div> Français</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag fr" style="width:100%;height:100%"></span></div> Français
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('de', 'de', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag de" style="width:100%;height:100%"></span></div> Deutsch</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag de" style="width:100%;height:100%"></span></div> Deutsch
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('no', 'no', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag no" style="width:100%;height:100%"></span></div> Norsk</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag no" style="width:100%;height:100%"></span></div> Norsk
+                                </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);" onclick="switchLanguage('sv', 'se', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Swedish</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag se" style="width:100%;height:100%"></span></div> Swedish
+                                </a>
                             </li>
                             <li class="divider"></li>
-                            <li style="margin: 5px;"><em><span class="i18n text-muted small" data-i18n-id="i18n_translation_warning">This option only applies to the Browser. Terminology language depends on the selected edition.</span></em></li>
+                            <li style="margin: 5px;"><em><span class="i18n text-muted small"
+                                        data-i18n-id="i18n_translation_warning">This option only applies to the Browser.
+                                        Terminology language depends on the selected edition.</span></em></li>
                         </ul>
                     </li>
                     <li>
                         <p class="pull-right">
                             <a href="http://www.snomed.org" target="_blank">
-                                <div class="phoca-flagbox pull-right visible-lg" style="width:110px;height: 48px;" alt="SNOMED International delivering SNOMED, the global clinical terminology"><span class="phoca-flag snomed-logo"></span></div>
+                                <div class="phoca-flagbox pull-right visible-lg" style="width:110px;height: 48px;"
+                                    alt="SNOMED International delivering SNOMED, the global clinical terminology"><span
+                                        class="phoca-flag snomed-logo"></span></div>
                             </a>
                     </li>
                 </ul>
@@ -2322,62 +2427,131 @@
         <!-- Welcome Perspective -->
         <div id="welcome-perspective" class="bperspective">
             <div class="jumbotron">
-                <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span></h1>
-                <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways to browse and search SNOMED CT. The browser has been implemented as part of development within the SNOMED International Open Tooling Framework, by SNOMED International and its development partners</span></p>
-                <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be used as part of production systems. There are other tools developed by SNOMED International for Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the offending IP address being banned from accessing the browser.</span></p>
-                <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback button at the top of the page. Your feedback is essential to the evolution and improvement of this service.</span></p>
-                <p class="i18n" data-i18n-id="i18n_home9">This site has been optimized for the Google Chrome browser and <strong>it will not work with Internet Explorer.</strong></p>
-                
+                <h1><span class="i18n" data-i18n-id="i18n_welcome_2nd">SNOMED International's SNOMED CT Browser</span>
+                </h1>
+                <p><span class="i18n" data-i18n-id="i18n_home1">SNOMED International's SNOMED CT Browser provides ways
+                        to browse and search SNOMED CT. The browser has been implemented as part of development within
+                        the SNOMED International Open Tooling Framework, by SNOMED International and its development
+                        partners</span></p>
+                <p><span class="i18n" data-i18n-id="i18n_home5">The Browser is provided by the SNOMED International to
+                        anyone for reference purposes and the interface and REST APIs are <strong>not</strong> to be
+                        used as part of production systems. There are other tools developed by SNOMED International for
+                        Members for the use in health care settings.<br>Any abuse of the REST APIs will result in the
+                        offending IP address being banned from accessing the browser.</span></p>
+                <p><span class="i18n" data-i18n-id="i18n_home3">Please provide any feedback by clicking on the feedback
+                        button at the top of the page. Your feedback is essential to the evolution and improvement of
+                        this service.</span></p>
+                <p class="i18n" data-i18n-id="i18n_home9">This site has been optimized for the Google Chrome browser and
+                    <strong>it will not work with Internet Explorer.</strong></p>
+
                 <div class="row">
-                  <div class="col-md-6" style="padding-left:15px;">
-                    <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
-                    <div id="international_editions" style="margin-bottom : 0px;"></div>
-                  </div>
-                  <div class="col-md-6">
-                      <h2><span class="i18n" data-i18n-id="i18n_international_tools">Additional Information</span></h2>
-                      <div id="international_tools" style="margin-bottom : 0px"></div>
-                  </div>
+                    <div class="col-md-6" style="padding-left:15px;">
+                        <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span>
+                        </h2>
+                        <div id="international_editions" style="margin-bottom : 0px;"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2><span class="i18n" data-i18n-id="i18n_international_tools">Additional Information</span>
+                        </h2>
+                        <div id="international_tools" style="margin-bottom : 0px"></div>
+                    </div>
                 </div>
-                <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local Extensions</span></h2>
+                <h2 style="margin-top : 2px"><span class="i18n" data-i18n-id="i18n_local_extensions">Local
+                        Extensions</span></h2>
                 <p id="local_editions" style="margin-bottom : 0px"></p>
                 <p id="multi-extension-search" style="display: none;">
-                    <a class="btn btn-primary btn-lg" role="button" onclick="window.location.href='multi-extension-search.html'" style="width: 160px;">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">All Editions</span><br><span id="extension-flags" style="font-size: 10px"></span></a>
+                    <a class="btn btn-primary btn-lg" role="button"
+                        onclick="window.location.href='multi-extension-search.html'"
+                        style="width: 160px;">&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go
+                            browsing...</span><br><span class="small">All Editions</span><br><span id="extension-flags"
+                            style="font-size: 10px"></span></a>
                 </p>
                 <p>
                     &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
-                    <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a></p>
+                    <a class="btn btn-primary " role="button" onclick="tourStart();"><span class="i18n"
+                            data-i18n-id="i18n_take_tour">take the Tour...</span></a>
+                </p>
                 <h2 style="margin-top : 2px">
                     <span class="i18n" data-i18n-id="i18n_home10">Externally Hosted Extensions</span>
                 </h2>
-                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px" href="https://termbrowser.nhs.uk/" target="_blank">
-                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom edition<br>(hosted by the UK)</span></a>
-                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px; margin-left: 2px" href="https://snomedsns.es/" target="_blank">
-                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">Spain edition<br>(hosted by Spain)</span></a>
-                <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries who have provided their extensions in this browser. If you would like to enquire further about any of the Member country extensions in this browser, please contact the relevant National Release Center via the URL's below:</span></p>
+                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px"
+                    href="https://termbrowser.nhs.uk/" target="_blank">
+                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb"
+                            style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n"
+                        data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">United Kingdom
+                        edition<br>(hosted by the UK)</span>
+                </a>
+                <a class="btn btn-primary btn-lg" role="button" style="margin-bottom : 15px; margin-left: 2px"
+                    href="https://snomedsns.es/" target="_blank">
+                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es"
+                            style="width:100%;height:100%"></span></div>&nbsp;&nbsp;&nbsp;<span class="i18n"
+                        data-i18n-id="i18n_go_browsing">Go browsing...</span><br><span class="small">Spain
+                        edition<br>(hosted by Spain)</span>
+                </a>
+                <p><span class="i18n" data-i18n-id="i18n_home8">Many thanks to the SNOMED International Member countries
+                        who have provided their extensions in this browser. If you would like to enquire further about
+                        any of the Member country extensions in this browser, please contact the relevant National
+                        Release Center via the URL's below:</span></p>
                 <p class="lead">
-                    <span class="phoca-flagbox" style="width:16px;height:16px"><span class="phoca-flag ar"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag au" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag be" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food Chain Safety and Environment, Belgium</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ca" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://sundhedsdatastyrelsen.dk/" target="_blank">The Danish Health Data Authority, Denmark</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nl" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.nictiz.nl/" target="_blank">Nictiz, Netherlands</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.socialstyrelsen.se" target="_blank">The National Board of Health and Welfare, Sweden</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://digital.nhs.uk/article/290/Terminology-and-Classifications"
-                        target="_blank">UK Terminology Centre, NHS Digital, United Kingdom</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United States</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag uy" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.gub.uy/agencia-gobierno-electronico-sociedad-informacion-conocimiento/node/346"
+                    <span class="phoca-flagbox" style="width:16px;height:16px"><span
+                            class="phoca-flag ar"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://www.argentina.gob.ar/salud/snomed" target="_blank">SNOMED Argentina</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag au"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://www.digitalhealth.gov.au/" target="_blank">Australian Digital Health Agency</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag be"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="http://www.terminology-center.be/" target="_blank">Federal Public Service Health, Food
+                        Chain Safety and Environment, Belgium</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag ca"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://ic.infoway-inforoute.ca/" target="_blank">Canada Health Infoway, Canada</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://sundhedsdatastyrelsen.dk/" target="_blank">The Danish Health Data Authority,
+                        Denmark</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nl"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://www.nictiz.nl/" target="_blank">Nictiz, Netherlands</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://www.socialstyrelsen.se" target="_blank">The National Board of Health and Welfare,
+                        Sweden</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag gb"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://digital.nhs.uk/article/290/Terminology-and-Classifications" target="_blank">UK
+                        Terminology Centre, NHS Digital, United Kingdom</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="http://www.nlm.nih.gov/" target="_blank">National Library of Medicine (NLM), United
+                        States</a>
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag uy"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://www.gub.uy/agencia-gobierno-electronico-sociedad-informacion-conocimiento/node/346"
                         target="_blank">Salud Digital- AGESIC, Uruguay</a>
-                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nz" style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a href="https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre"
+                    <br><span class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag nz"
+                            style="width:100%;height:100%"></span></span>&nbsp;&nbsp;&nbsp;<a
+                        href="https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre"
                         target="_blank">New Zealand SNOMED CT National Release Centre</a>
                 </p>
 
-                <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development, this code is available under an Apache v2 open source license. You can also find more information on the current backlog of feedback that is up for possible development here - <a href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser" target="_blank">SNOMED International Browser service page</a></span></p>
+                <p><span class="i18n" data-i18n-id="i18n_home4">If you would like to get involved in the development,
+                        this code is available under an Apache v2 open source license. You can also find more
+                        information on the current backlog of feedback that is up for possible development here - <a
+                            href="https://confluence.ihtsdotools.org/display/TOOLS/SNOMED+CT+Browser"
+                            target="_blank">SNOMED International Browser service page</a></span></p>
             </div>
-            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
+            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will
+                    allow the selection of SNOMED CT content from the International Edition or other extensions, with
+                    specific dates.</span>
             </p>
-            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>                for best results in tablets and phones.</span>
+            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are
+                    pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);"
+                        onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>
+                    for best results in tablets and phones.</span>
             </p>
-            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong> <span id="csconsentlink">Cookie Settings</span></small>
+            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy
+                        Policy</a></strong> <span id="csconsentlink">Cookie Settings</span></small>
             </p>
             <br>
             <br>
@@ -2389,7 +2563,9 @@
                 <h1>Daily Build SNOMED CT Browser</h1>
                 <p>This is a browser for the SNOMED CT Daily Build.</p>
                 <h2><span class="text-warning">Warning</span></h2>
-                <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
+                <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no
+                    expectation of continuity of identifiers, descriptions text or changes in components (e.g.
+                    relationships).</p>
                 <p>No new concepts or identifiers may be used in clinical systems.</p>
                 <p id="dailybuild_editions" style="margin-bottom : 0px"></p>
                 <p id="dailybuild_mrcm" style="margin-bottom : 0px"></p>
@@ -2399,13 +2575,20 @@
                 <h3>Other Daily Builds:</h3>
                 <p id="dailybuild_local_editions" style="margin-bottom : 0px"></p>
             </div>
-            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
+            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will
+                    allow the selection of SNOMED CT content from the International Edition or other extensions, with
+                    specific dates.</span>
             </p>
-            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>                for best results in tablets and phones.</span>
+            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are
+                    pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);"
+                        onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>
+                    for best results in tablets and phones.</span>
             </p>
-            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
+            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy
+                        Policy</a></strong></small>
             </p>
-            <p> <small><b>&copy; SNOMED International <span class="copyright_year"/></b> v<span>project_version</span><br></small>
+            <p> <small><b>&copy; SNOMED International <span class="copyright_year" /></b>
+                    v<span>project_version</span><br></small>
             </p>
         </div>
 
@@ -2413,20 +2596,33 @@
         <div id="welcome-perspective-community-content" class="bperspective">
             <div class="jumbotron" style="background-color:darkgray">
                 <h1>Community Content Browser</h1>
-                <p style="padding-top:20px; font-weight: bold">For more information on the Community Content platform and the content provided within this browser visit - <a href="http://snomed.org/community-content">snomed.org/community-content</a></p>
-                <p>This browser contains the first, draft view into different content projects being created collaboratively by the SNOMED community in the <strong>Community Content area</strong>. This content has not been verified by SNOMED International
+                <p style="padding-top:20px; font-weight: bold">For more information on the Community Content platform
+                    and the content provided within this browser visit - <a
+                        href="http://snomed.org/community-content">snomed.org/community-content</a></p>
+                <p>This browser contains the first, draft view into different content projects being created
+                    collaboratively by the SNOMED community in the <strong>Community Content area</strong>. This content
+                    has not been verified by SNOMED International
                     but has been quality assured by those working on each project.</p>
-                <p>At this stage, it is strongly recommended to not use any new concepts or identifiers in production clinical data.</p>
-                <p>Future iterations of this browser will provide ways for you to provide feedback on any new content that you see in a project.</p>
+                <p>At this stage, it is strongly recommended to not use any new concepts or identifiers in production
+                    clinical data.</p>
+                <p>Future iterations of this browser will provide ways for you to provide feedback on any new content
+                    that you see in a project.</p>
                 <p id="commnunity_content_editions" style="margin-bottom : 0px"></p>
             </div>
-            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
+            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will
+                    allow the selection of SNOMED CT content from the International Edition or other extensions, with
+                    specific dates.</span>
             </p>
-            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>                for best results in tablets and phones.</span>
+            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are
+                    pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);"
+                        onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>
+                    for best results in tablets and phones.</span>
             </p>
-            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
+            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy
+                        Policy</a></strong></small>
             </p>
-            <p> <small><b>&copy; SNOMED International <span class="copyright_year"/></b> v<span>project_version</span><br></small>
+            <p> <small><b>&copy; SNOMED International <span class="copyright_year" /></b>
+                    v<span>project_version</span><br></small>
             </p>
         </div>
 
@@ -2434,24 +2630,40 @@
         <div id="welcome-perspective-preview" class="bperspective">
             <div class="jumbotron">
                 <h1>SNOMED CT Concrete Domains Technical Preview Browser</h1>
-                <p style="padding-top:20px;">This Concrete Domains (CD) Technical Preview (TP) has been published in line with the SNOMED CT January 2021 International Edition, with drug concept strengths and counts expressed as concrete values in the new Relationships file.</p>
-                <p>It is a full RF2 International Edition package (as opposed to a standalone Delta file containing only Concrete Domains), containing all the January 2021 International content together with the new CD Relationships file. The release files
-                    offer a preview of the final release package contents and format once the CD transition is complete.</p>
-                <p>The CD TP Browser presents the TP content through the familiar SNOMED CT Browser user interface for ease of viewing and consideration of the impact and scope of the changes. Whilst browsing the content you can use the Feedback button in
+                <p style="padding-top:20px;">This Concrete Domains (CD) Technical Preview (TP) has been published in
+                    line with the SNOMED CT January 2021 International Edition, with drug concept strengths and counts
+                    expressed as concrete values in the new Relationships file.</p>
+                <p>It is a full RF2 International Edition package (as opposed to a standalone Delta file containing only
+                    Concrete Domains), containing all the January 2021 International content together with the new CD
+                    Relationships file. The release files
+                    offer a preview of the final release package contents and format once the CD transition is complete.
+                </p>
+                <p>The CD TP Browser presents the TP content through the familiar SNOMED CT Browser user interface for
+                    ease of viewing and consideration of the impact and scope of the changes. Whilst browsing the
+                    content you can use the Feedback button in
                     the header bar to send your thoughts and questions to SNOMED International via a pop-up form.</p>
-                <p style="padding-bottom:20px;">The CD TP Browser is optimized for the Google Chrome web browser, but may be usable in other modern web browsers, such as Safari, Firefox and Microsoft Edge. Internet Explorer is not supported since it is now deprecated by Microsoft in
+                <p style="padding-bottom:20px;">The CD TP Browser is optimized for the Google Chrome web browser, but
+                    may be usable in other modern web browsers, such as Safari, Firefox and Microsoft Edge. Internet
+                    Explorer is not supported since it is now deprecated by Microsoft in
                     favour of Microsoft Edge.</p>
                 <h2><span class="i18n" data-i18n-id="i18n_international_editions">International Editions</span></h2>
                 <p id="preview_editions" style="margin-bottom : 0px"></p>
                 <p id="preview_mrcm" style="margin-bottom : 0px"></p>
             </div>
-            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span>
+            <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will
+                    allow the selection of SNOMED CT content from the International Edition or other extensions, with
+                    specific dates.</span>
             </p>
-            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>                for best results in tablets and phones.</span>
+            <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span> are
+                    pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);"
+                        onclick="switchToResponsiveLayout(404684003, 404684003, 138875005);">responsive perspective</a>
+                    for best results in tablets and phones.</span>
             </p>
-            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy Policy</a></strong></small>
+            <p><strong><a href="http://snomed.org/snomedtools-privacy" target=_blank>SNOMED International Privacy
+                        Policy</a></strong></small>
             </p>
-            <p> <small><b>&copy; SNOMED International <span class="copyright_year"/></b> v<span>project_version</span><br></small>
+            <p> <small><b>&copy; SNOMED International <span class="copyright_year" /></b>
+                    v<span>project_version</span><br></small>
             </p>
         </div>
 
@@ -2525,15 +2737,25 @@
                         <li id="fh-taxonomies_canvas-li">
                             <a href="#fh-taxonomy_canvas" data-toggle="tab">
                                 <div>
-                                    <span ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');markTaxonomyTabAsLoaded();" ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span>
+                                    <span
+                                        ondrop="dropT(event, 'fh-taxonomy_canvas');$('#fh-tabs a:first').tab('show');markTaxonomyTabAsLoaded();"
+                                        ondragleave="removeHighlight();" ondragover="allowDrop(event)" class="i18n"
+                                        data-i18n-id="i18n_taxonomy">Taxonomy</span>
                                 </div>
                             </a>
                         </li>
-                        <li class="active"><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
-                        <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
-                        <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab" id="fh-refset_canvas-link"><span class="i18n" data-i18n-id="i18n_refset">Refset</span></a></li>
-                        <li id="fh-daily_canvas-li"><a href="#fh-daily_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_daily_build">Daily Build</span></a></li>
-                        <li id="fh-commnunity_content_canvas-li"><a href="#fh-commnunity_content_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_community_content">Community Content</span></a></li>
+                        <li class="active"><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n"
+                                    data-i18n-id="i18n_search">Search</span></a></li>
+                        <li id="fh-favorites_canvas-li"><a href="#fh-favorites_canvas" data-toggle="tab"><span
+                                    class="i18n" data-i18n-id="i18n_favorites">Favorites</span></a></li>
+                        <li id="fh-refset_canvas-li"><a href="#fh-refset_canvas" data-toggle="tab"
+                                id="fh-refset_canvas-link"><span class="i18n"
+                                    data-i18n-id="i18n_refset">Refset</span></a></li>
+                        <li id="fh-daily_canvas-li"><a href="#fh-daily_canvas" data-toggle="tab"><span class="i18n"
+                                    data-i18n-id="i18n_daily_build">Daily Build</span></a></li>
+                        <li id="fh-commnunity_content_canvas-li"><a href="#fh-commnunity_content_canvas"
+                                data-toggle="tab"><span class="i18n" data-i18n-id="i18n_community_content">Community
+                                    Content</span></a></li>
                         <!--<li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_constraint">Constraint</span></a></li>-->
                     </ul>
                     <div class="tab-content" id="left-nav-tabs">
@@ -2548,8 +2770,11 @@
                 </div>
                 <div class="a panel panel-default" id="fh-tabs-pane2" style="border-radius: 0px;">
                     <ul class="nav nav-tabs" id="fh-tabs2">
-                        <li class="active"><a href="#fh-cd1_canvas-pane" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_concept_details">Concept Details</span></a></li>
-                        <li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_expression_constraint_queries">Expression Constraint Queries</span></a></li>
+                        <li class="active"><a href="#fh-cd1_canvas-pane" data-toggle="tab"><span class="i18n"
+                                    data-i18n-id="i18n_concept_details">Concept Details</span></a></li>
+                        <li id="fh-query_canvas-li"><a href="#fh-query_canvas" data-toggle="tab"><span class="i18n"
+                                    data-i18n-id="i18n_expression_constraint_queries">Expression Constraint
+                                    Queries</span></a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="fh-cd1_canvas-pane" style="padding: 0px;margin: 0;">
@@ -2563,12 +2788,17 @@
         </div>
         <!-- Responsive Perspective -->
         <div id="responsive-perspective" class="bperspective">
-            <div id="comparing-taxonomies-wrapper3" class="row" style="width:100%; height: 91%; position: absolute;padding: 0px !important;margin: 0 !important;">
+            <div id="comparing-taxonomies-wrapper3" class="row"
+                style="width:100%; height: 91%; position: absolute;padding: 0px !important;margin: 0 !important;">
                 <div class="row">
-                    <div id="rp-taxonomy_canvas" class="col-sm-6" style="height: 500px;padding: 0px;margin: 0;border: 1px solid gainsboro;"></div>
-                    <div id="rp-cd1_canvas" class="col-sm-6" style="height: 500px;padding: 0px;margin: 0;border: 1px solid gainsboro;"></div>
-                    <div id="rp-search_canvas" class="col-sm-6" style="height: 500px;padding: 0px;margin: 0;border: 1px solid gainsboro;"></div>
-                    <div id="rp-cd2_canvas" class="col-sm-6" style="height: 500px;padding: 0px;margin: 0;border: 1px solid gainsboro;"></div>
+                    <div id="rp-taxonomy_canvas" class="col-sm-6"
+                        style="height: 500px;padding: 0px;margin: 0;border: 1px solid gainsboro;"></div>
+                    <div id="rp-cd1_canvas" class="col-sm-6"
+                        style="height: 500px;padding: 0px;margin: 0;border: 1px solid gainsboro;"></div>
+                    <div id="rp-search_canvas" class="col-sm-6"
+                        style="height: 500px;padding: 0px;margin: 0;border: 1px solid gainsboro;"></div>
+                    <div id="rp-cd2_canvas" class="col-sm-6"
+                        style="height: 500px;padding: 0px;margin: 0;border: 1px solid gainsboro;"></div>
                 </div>
             </div>
         </div>
@@ -2578,55 +2808,118 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><span class="i18n" data-i18n-id="i18n_licence_agreement">SNOMED International SNOMED CT Browser License Agreement</span></h4>
+                    <h4 class="modal-title"><span class="i18n" data-i18n-id="i18n_licence_agreement">SNOMED
+                            International SNOMED CT Browser License Agreement</span></h4>
                 </div>
                 <div class="modal-body">
-                    <p><span class="i18n" data-i18n-id="i18n_licence_agreement_1">In order to use the SNOMED International SNOMED CT Browser, please accept the following license agreement</span>:</p>
+                    <p><span class="i18n" data-i18n-id="i18n_licence_agreement_1">In order to use the SNOMED
+                            International SNOMED CT Browser, please accept the following license agreement</span>:</p>
                     <div style="height: 300px; overflow: auto; margin: 20px; border: 1px solid; padding: 10px;">
-                        <p><span class="i18n" data-i18n-id="i18n_licence_agreement_2"><strong>SNOMED International SNOMED CT Browser</strong> includes SNOMED Clinical Terms® (SNOMED CT®) which is used by permission of SNOMED International. All rights reserved. SNOMED CT® was originally created by the College of American Pathologists.</span>
-                            <span class="i18n" data-i18n-id="i18n_licence_agreement_3">“SNOMED”, “SNOMED CT” and “SNOMED Clinical Terms” are registered trademarks of the SNOMED International (<a href="http://www.snomed.org">www.snomed.org</a>).</span></p>
-                        <p><span class="i18n" data-i18n-id="i18n_licence_agreement_4">Use of SNOMED CT in <strong>SNOMED International SNOMED CT Browser</strong> is governed by the conditions of the following SNOMED CT license issued by the SNOMED International</span>:</p>
-                        <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”, “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and “SNOMED CT Content” are as defined in the SNOMED International Affiliate License Agreement (see www.snomed.org/license.pdf)</span>.</p>
-                        <p style="margin-left: 20px;">2. <span class="i18n" data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is available at <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate</a>. Individuals or organizations wishing to register as SNOMED International Affiliates can register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to acceptance of the Affiliate License Agreement (see <a href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate)</a></span>.</p>
-                        <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The current list of SNOMED International Member Territories can be viewed at <a href="http://snomed.org/members">snomed.org/members</a>. Countries not included in that list are “Non-Member Territories”</span>.</p>
-                        <p style="margin-left: 20px;">4. <span class="i18n" data-i18n-id="i18n_licence_agreement_8">End Users, that do not hold an SNOMED International Affiliate License, may access SNOMED CT® using <strong>SNOMED International SNOMED CT Browser</strong> subject to acceptance of and adherence to the following sub-license limitations</span>:</p>
-                        <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_9">The sub-licensee is only permitted to access SNOMED CT® using this software (or service) for the purpose of exploring and evaluating the terminology</span>.</p>
-                        <p style="margin-left: 40px;">b) <span class="i18n" data-i18n-id="i18n_licence_agreement_10">The sub-licensee is not permitted the use of this software as part of a system that constitutes a SNOMED CT “Data Creation System” or “Data Analysis System”, as defined in the SNOMED International Affiliate License. This means that the sub-licensee must not use <strong>SNOMED International SNOMED CT Browser</strong> to add or copy SNOMED CT identifiers into any type of record system, database or document</span>.</p>
-                        <p style="margin-left: 40px;">c) <span class="i18n" data-i18n-id="i18n_licence_agreement_11">The sub-licensee is not permitted to translate or modify SNOMED CT Content or Derivatives</span>.</p>
-                        <p style="margin-left: 40px;">d) <span class="i18n" data-i18n-id="i18n_licence_agreement_12">The sub-licensee is not permitted to distribute or share SNOMED CT Content or Derivatives</span>.</p>
-                        <p style="margin-left: 20px;">5. <span class="i18n" data-i18n-id="i18n_licence_agreement_13">SNOMED International Affiliates may use <strong>SNOMED International SNOMED CT Browser</strong> as part of a “Data Creation System” or “Data Analysis System” subject to the following conditions</span>:</p>
-                        <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_14">The SNOMED International Affiliate, using <strong>SNOMED International SNOMED CT Browser</strong> must accept full responsibility for any reporting and fees due for use or deployment of such a system in a Non-Member Territory</span>.</p>
-                        <p style="margin-left: 40px;">b) <span class="i18n" data-i18n-id="i18n_licence_agreement_15">The SNOMED International Affiliate must not use <strong>SNOMED International SNOMED CT Browser</strong> to access or interact with SNOMED CT in any way that is not permitted by the Affiliate License Agreement</span>.</p>
-                        <p style="margin-left: 40px;">c) <span class="i18n" data-i18n-id="i18n_licence_agreement_16">In the event of termination of the Affiliate License Agreement, the use of <strong>SNOMED International SNOMED CT Browser</strong> will be subject to the End User limitations noted in 4</span>.</p>
+                        <p><span class="i18n" data-i18n-id="i18n_licence_agreement_2"><strong>SNOMED International
+                                    SNOMED CT Browser</strong> includes SNOMED Clinical Terms® (SNOMED CT®) which is
+                                used by permission of SNOMED International. All rights reserved. SNOMED CT® was
+                                originally created by the College of American Pathologists.</span>
+                            <span class="i18n" data-i18n-id="i18n_licence_agreement_3">“SNOMED”, “SNOMED CT” and “SNOMED
+                                Clinical Terms” are registered trademarks of the SNOMED International (<a
+                                    href="http://www.snomed.org">www.snomed.org</a>).</span>
+                        </p>
+                        <p><span class="i18n" data-i18n-id="i18n_licence_agreement_4">Use of SNOMED CT in <strong>SNOMED
+                                    International SNOMED CT Browser</strong> is governed by the conditions of the
+                                following SNOMED CT license issued by the SNOMED International</span>:</p>
+                        <p style="margin-left: 20px;">1. <span class="i18n" data-i18n-id="i18n_licence_agreement_5">The
+                                meaning of the terms “Affiliate”, or “Data Analysis System”, “Data Creation System”,
+                                “Derivative”, “End User”, “Extension”, “Member”, “Non-Member Territory”, “SNOMED CT” and
+                                “SNOMED CT Content” are as defined in the SNOMED International Affiliate License
+                                Agreement (see www.snomed.org/license.pdf)</span>.</p>
+                        <p style="margin-left: 20px;">2. <span class="i18n"
+                                data-i18n-id="i18n_licence_agreement_6">Information about Affiliate Licensing is
+                                available at <a
+                                    href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate</a>.
+                                Individuals or organizations wishing to register as SNOMED International Affiliates can
+                                register at <a href="https://mlds.ihtsdotools.org">mlds.ihtsdotools.org</a>, subject to
+                                acceptance of the Affiliate License Agreement (see <a
+                                    href="http://snomed.org/license-affiliate">http://snomed.org/license-affiliate)</a></span>.
+                        </p>
+                        <p style="margin-left: 20px;">3. <span class="i18n" data-i18n-id="i18n_licence_agreement_7">The
+                                current list of SNOMED International Member Territories can be viewed at <a
+                                    href="http://snomed.org/members">snomed.org/members</a>. Countries not included in
+                                that list are “Non-Member Territories”</span>.</p>
+                        <p style="margin-left: 20px;">4. <span class="i18n" data-i18n-id="i18n_licence_agreement_8">End
+                                Users, that do not hold an SNOMED International Affiliate License, may access SNOMED CT®
+                                using <strong>SNOMED International SNOMED CT Browser</strong> subject to acceptance of
+                                and adherence to the following sub-license limitations</span>:</p>
+                        <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_9">The
+                                sub-licensee is only permitted to access SNOMED CT® using this software (or service) for
+                                the purpose of exploring and evaluating the terminology</span>.</p>
+                        <p style="margin-left: 40px;">b) <span class="i18n" data-i18n-id="i18n_licence_agreement_10">The
+                                sub-licensee is not permitted the use of this software as part of a system that
+                                constitutes a SNOMED CT “Data Creation System” or “Data Analysis System”, as defined in
+                                the SNOMED International Affiliate License. This means that the sub-licensee must not
+                                use <strong>SNOMED International SNOMED CT Browser</strong> to add or copy SNOMED CT
+                                identifiers into any type of record system, database or document</span>.</p>
+                        <p style="margin-left: 40px;">c) <span class="i18n" data-i18n-id="i18n_licence_agreement_11">The
+                                sub-licensee is not permitted to translate or modify SNOMED CT Content or
+                                Derivatives</span>.</p>
+                        <p style="margin-left: 40px;">d) <span class="i18n" data-i18n-id="i18n_licence_agreement_12">The
+                                sub-licensee is not permitted to distribute or share SNOMED CT Content or
+                                Derivatives</span>.</p>
+                        <p style="margin-left: 20px;">5. <span class="i18n"
+                                data-i18n-id="i18n_licence_agreement_13">SNOMED International Affiliates may use
+                                <strong>SNOMED International SNOMED CT Browser</strong> as part of a “Data Creation
+                                System” or “Data Analysis System” subject to the following conditions</span>:</p>
+                        <p style="margin-left: 40px;">a) <span class="i18n" data-i18n-id="i18n_licence_agreement_14">The
+                                SNOMED International Affiliate, using <strong>SNOMED International SNOMED CT
+                                    Browser</strong> must accept full responsibility for any reporting and fees due for
+                                use or deployment of such a system in a Non-Member Territory</span>.</p>
+                        <p style="margin-left: 40px;">b) <span class="i18n" data-i18n-id="i18n_licence_agreement_15">The
+                                SNOMED International Affiliate must not use <strong>SNOMED International SNOMED CT
+                                    Browser</strong> to access or interact with SNOMED CT in any way that is not
+                                permitted by the Affiliate License Agreement</span>.</p>
+                        <p style="margin-left: 40px;">c) <span class="i18n" data-i18n-id="i18n_licence_agreement_16">In
+                                the event of termination of the Affiliate License Agreement, the use of <strong>SNOMED
+                                    International SNOMED CT Browser</strong> will be subject to the End User limitations
+                                noted in 4</span>.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="http://www.snomed.org" class="btn btn-danger"><span class="i18n" data-i18n-id="i18n_reject">Reject</span></a>
-                    <button id="accept-license-button-modal" type="button" class="btn btn-success" data-dismiss="modal"><span class="i18n" data-i18n-id="i18n_accept">Accept</span></button>
+                    <a href="http://www.snomed.org" class="btn btn-danger"><span class="i18n"
+                            data-i18n-id="i18n_reject">Reject</span></a>
+                    <button id="accept-license-button-modal" type="button" class="btn btn-success"
+                        data-dismiss="modal"><span class="i18n" data-i18n-id="i18n_accept">Accept</span></button>
                     <div class="btn-group dropup pull-left">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span id="nav-selected-flag-modal"></span> <span class="caret"></span>
-                            </button>
+                            <span id="nav-selected-flag-modal"></span> <span class="caret"></span>
+                        </button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="pull-left">
                                 <a href="javascript:void(0);" onclick="switchLanguage('en', 'us', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag us" style="width:100%;height:100%"></span></div> English</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag us" style="width:100%;height:100%"></span></div> English
+                                </a>
                             </li>
                             <li class="pull-left">
                                 <a href="javascript:void(0);" onclick="switchLanguage('es', 'es', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag es" style="width:100%;height:100%"></span></div> Español</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag es" style="width:100%;height:100%"></span></div> Español
+                                </a>
                             </li>
                             <li class="pull-left">
                                 <a href="javascript:void(0);" onclick="switchLanguage('da', 'dk', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag dk" style="width:100%;height:100%"></span></div> Dansk
+                                </a>
                             </li>
                             <li class="pull-left">
                                 <a href="javascript:void(0);" onclick="switchLanguage('pt', 'pt', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag pt" style="width:100%;height:100%"></span></div> Português
+                                </a>
                             </li>
                             <li class="pull-left">
                                 <a href="javascript:void(0);" onclick="switchLanguage('se', 'se', true);">
-                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span class="phoca-flag se" style="width:100%;height:100%"></span></div> Svenska</a>
+                                    <div class="phoca-flagbox" style="width:16px;height:11px"><span
+                                            class="phoca-flag se" style="width:100%;height:100%"></span></div> Svenska
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -2639,64 +2932,19 @@
     <!-- /.modal -->
 
     <div id="footer">
-        <a class="footer-link" href="http://www.snomed.org/" target="_blank"><span>Copyright ©</span> <span class="copyright_year"></span> <span>SNOMED International</span></a>
-        <a class="footer-link" href="https://docs.snomed.org/snomed-ct-user-guides/snomed-ct-browser-guide/" target="_blank">User Guide</a>
+        <a class="footer-link" href="http://www.snomed.org/" target="_blank"><span>Copyright ©</span> <span
+                class="copyright_year"></span> <span>SNOMED International</span></a>
+        <a class="footer-link" href="https://docs.snomed.org/snomed-ct-user-guides/snomed-ct-browser-guide/"
+            target="_blank">User Guide</a>
         <a class="footer-link" href="http://www.snomed.org/contact-us/" target="_blank">Contact Us</a>
         <a class="footer-link inactive">v<span>project_version</span></a>
     </div>
 
-    <!-- Using Freshdesk Widget for feedback -->
-    <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
-    <script type="text/javascript">
-        FreshWidget.init("", {
-            "queryString": "&widgetType=popup&formTitle=SNOMED+CT+Browser+Feedback&submitTitle=Send+Feedback&submitThanks=Thank+you+for+your+feedback&captcha=yes&searchArea=no",
-            "utf8": "✓",
-            "backgroundImage": "https://s3.amazonaws.com/assets.freshdesk.com/widget/help-button.png",
-            "widgetType": "popup",
-            "buttonType": "image",
-            "buttonText": "Support",
-            "buttonColor": "white",
-            "buttonBg": "#00aadd",
-            "alignment": "1",
-            "offset": "-1500px",
-            "submitThanks": "Thank you for your feedback",
-            "formHeight": "500px",
-            "captcha": "yes",
-            "url": "https://ihtsdo.freshdesk.com"
-        });
-    </script>
-
-    <script type="text/javascript">
-        var $buoop = {};
-        $buoop.ol = window.onload;
-        window.onload = function() {
-            try {
-                if ($buoop.ol)
-                    $buoop.ol();
-            } catch (e) {}
-            var e = document.createElement("script");
-            e.setAttribute("type", "text/javascript");
-            e.setAttribute("src", "//browser-update.org/update.js");
-            document.body.appendChild(e);
-        }
-    </script>
-    
     <script type="text/javascript" src="external-libs/iubenda-cookies.js"></script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MFCMKEHSYB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-MFCMKEHSYB');
-    </script>
-
     <script>
         // History capture of the manual back and forward buttons
         manualStateChange = true;
-        History.Adapter.bind(window, 'statechange', function() { // Note: We are using statechange instead of popstate
+        History.Adapter.bind(window, 'statechange', function () { // Note: We are using statechange instead of popstate
             if (manualStateChange == true) {
                 // BACK BUTTON WAS PRESSED
                 var State = History.getState(); // Note: We are using History.getState() instead of event.state

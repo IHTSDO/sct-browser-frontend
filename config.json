@@ -86,5 +86,6 @@
 
     },
     "singleCharacterSearchLanguageRefsets": ["21000267104", "722128001"],
-    "showIssueCollector": false
+    "showIssueCollector": false,
+    "thirdPartyTrackingEnabled": false
 } 
