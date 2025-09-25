@@ -119,6 +119,7 @@
             searchLang: "english",
             diagrammingMarkupEnabled: false,           
             highlightByEffectiveTime: "false",
+            publicBrowser: false,
 
             /* New setting for multi Extenstion search */
             multiExtensionSearch: true,
@@ -147,6 +148,10 @@
         };
 
         function determineServer() {
+            if (window.location.hostname.includes('browser')) {
+                options.publicBrowser = true;
+            }
+
             var selectedLanguageAndFlag = getSelectedLanguageAndFlag(options.defaultLanguage);
             switchLanguage(selectedLanguageAndFlag.selectedLanguage, selectedLanguageAndFlag.selectedFlag, false);            
 
@@ -189,7 +194,7 @@
             $.when(getCodeSystems(), getConfig()).then(function() {
                 $('#edition-selector').css('display', 'block');
 
-                if (options.thirdPartyTrackingEnabled) {
+                if (options.thirdPartyTrackingEnabled && options.publicBrowser) {
                     initWidgetFeedback();
                     initGoogleTag();
                     initBrowserUpdate();

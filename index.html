@@ -436,7 +436,7 @@
                         $('#version-selector').css('display', 'block');
                     }
 
-                    if (options.thirdPartyTrackingEnabled) {
+                    if (options.thirdPartyTrackingEnabled && options.publicBrowser) {
                         initWidgetFeedback();
                         initGoogleTag();
                         initBrowserUpdate();
