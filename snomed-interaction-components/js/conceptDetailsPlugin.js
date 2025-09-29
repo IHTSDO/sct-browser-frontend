@@ -1448,7 +1448,7 @@ function conceptDetails(divElement, conceptId, options) {
                 'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
             }
         });
-        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + concept.conceptId + "/history?showFutureVersions=false", function(result) {
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + concept.conceptId + "/history?showFutureVersions=false&&showInternalReleases=true", function(result) {
 
         }).done(function(result) {
             result.history.forEach(function(item) {
