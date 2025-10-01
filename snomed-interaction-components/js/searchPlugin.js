@@ -683,7 +683,8 @@ function searchPanel(divElement, options) {
         }
 
         var originalSearchStr = t;
-
+        t = t.trim();
+        
         // omitted the text between the pipe-bars if any
         var patt = new RegExp('^\\d+\\s\\|.*\\|$');
         if (patt.test(t)) {
