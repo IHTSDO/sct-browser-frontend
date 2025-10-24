@@ -73,7 +73,7 @@
                     </ul>
                 </div>
             </span>
-            {{#if showIssueCollector}}
+            {{#if (or showIssueCollector showFeedbackButton)}}
                 <span class="pull-right">
                     <div>
                         <button class="btn btn-success" style="margin-left:15px;" type="button" id="{{divElementId}}-addsyn-sctid-details"aria-expanded="true">

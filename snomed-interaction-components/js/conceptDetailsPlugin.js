@@ -444,6 +444,9 @@ function conceptDetails(divElement, conceptId, options) {
 
                 return str.charAt(0).toUpperCase() + str.slice(1);
             });
+            Handlebars.registerHelper('or', function() {
+                return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+            });
             panel.statedParents = [];
             panel.inferredParents = [];
             panel.statedRoles = [];
@@ -600,6 +603,7 @@ function conceptDetails(divElement, conceptId, options) {
                 langRefset: panel.options.languages,
                 link: document.URL.split("?")[0].split("#")[0] + "?perspective=full&conceptId1=" + firstMatch.conceptId + "&edition=" + (panel.options.publicBrowser ? panel.options.edition.substring(0, panel.options.edition.lastIndexOf('/')) : panel.options.edition) + "&release=" + panel.options.release + "&languages=" + panel.options.languages + (typeof panel.options.latestRedirect !== 'undefined' && !panel.options.publicBrowser ? '&latestRedirect=' + panel.options.latestRedirect : ''),
                 dataContentValue: document.URL.split("?")[0].split("#")[0],
+                showFeedbackButton: panel.options.publicBrowser && (options.edition.startsWith('MAIN/SNOMEDCT-SE')),
                 showIssueCollector: panel.options.showIssueCollector && (panel.options.communityBrowser || (panel.options.publicBrowser && (options.edition.startsWith('MAIN/SNOMEDCT-SE')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-NZ')
                                                                                                     || options.edition.startsWith('MAIN/SNOMEDCT-DE')
@@ -681,6 +685,22 @@ function conceptDetails(divElement, conceptId, options) {
                         iframeContent.openJiraIssueCollectorDialog();
                     }
                 });
+            } else {
+                if (context.showFeedbackButton) {
+                    if (options.edition.startsWith('MAIN/SNOMEDCT-SE')) {              
+                        $("#" + panel.divElement.id + "-addsyn-sctid-details").tooltip({
+                            placement: 'bottom',
+                            trigger: 'hover',
+                            title: 'Skicka synonymförslag',
+                            animation: true,
+                            delay: 1000
+                        });
+                        $('#' + panel.divElement.id + '-addsyn-sctid-details').click(function(e) {
+                            e.preventDefault();
+                            window.open('https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/e-halsa/snomed-ct/frageformular/', '_blank');
+                        });
+                    }
+                }
             }
 
             $('#' + 'share-link-' + panel.divElement.id).disableTextSelect();
