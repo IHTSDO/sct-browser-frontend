@@ -2248,10 +2248,11 @@ function conceptDetails(divElement, conceptId, options) {
         $.each(newDescriptions, function(i, field) {
             if (field.active == true && Object.keys(field.acceptabilityMap).filter(function(key) {return panel.options.defaultLanguageReferenceSets.indexOf(key) !== -1}).length > 0) {
                 if (field.active == true) {
-                    if (homeDescriptionsHtml != "") {
-                        homeDescriptionsHtml = homeDescriptionsHtml + "<br>";
+                    homeDescriptionsHtml = homeDescriptionsHtml + '<div style="position: relative;"><div ' + (countryIcons[field.moduleId] ? 'style="margin-right: 15px;"' : '') + '>' + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term + "</div>";
+                    if (countryIcons[field.moduleId]) {
+                        homeDescriptionsHtml = homeDescriptionsHtml + "<div class='phoca-flagbox' style='width:16px;height:16px;position:absolute;top:0px;right:0px;display:block;'><span class='phoca-flag " + countryIcons[field.moduleId] + "'></span></div>";
                     }
-                    homeDescriptionsHtml = homeDescriptionsHtml + "&nbsp;&nbsp;<i>" + field.lang + "</i>&nbsp;&nbsp;&nbsp;" + field.term;
+                    homeDescriptionsHtml = homeDescriptionsHtml + "</div>";
                 }
             }
         });

@@ -17,7 +17,7 @@
                     {{#if ../options.dailyBuildBrowser}}{{#if_eq effectiveTime null}} highlightEffectiveTime {{/if_eq}}{{/if}}
                     {{#if ../options.tsBrowser}}{{#if_eq effectiveTime null}} highlightEffectiveTime{{/if_eq}}{{/if}}
                     {{#if ../options.history}}{{#if historyEffective}} highlightEffectiveTime{{/if}}{{/if}}'>
-                    <td>
+                    <td style="position: relative;">
                         {{#if_eq typeId "900000000000003001"}}
                             <span rel="tooltip-right" title="{{i18n "i18n_fsn" "FSN"}}">F</span>
                         {{else}}
@@ -43,7 +43,14 @@
                                 &nbsp;&nbsp;&nbsp;
                             {{/if}}
                         {{/if}}
-                        &nbsp;&nbsp;&nbsp;{{term}}</td>
+                        &nbsp;&nbsp;&nbsp;{{term}}
+
+                        {{#hasCountryIcon moduleId}}
+                            <div class="phoca-flagbox" style="position: absolute; width: 20px; height: 20px; top: 5px; right: 5px; z-index: 10; display: block;">
+                                <span class="phoca-flag {{countryIcon moduleId}}"></span>
+                            </div>&nbsp;
+                        {{/hasCountryIcon}}
+                        </td>
                     {{#if ../options.showIds}}
                         <td>{{descriptionId}}</td>
                     {{/if}}
