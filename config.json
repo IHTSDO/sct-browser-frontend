@@ -85,6 +85,53 @@
         "11000328104": "mt"
 
     },
+    "countryLinksOrder": ["ar", "au", "be", "ca", "dk", "nl", "se", "gb", "us", "uy", "nz"],
+    "countryLinks": {
+        "ar": {
+            "url": "https://www.argentina.gob.ar/salud/snomed",
+            "label": "SNOMED Argentina"
+        },
+        "au": {
+            "url": "https://www.digitalhealth.gov.au/",
+            "label": "Australian Digital Health Agency"
+        },
+        "be": {
+            "url": "https://apps.health.belgium.be/terminology-portal/standards/terminology_standards/snomed_ct/nl",
+            "label": "Federal Public Service Health, Food Chain Safety and Environment, Belgium"
+        },
+        "ca": {
+            "url": "https://ic.infoway-inforoute.ca/",
+            "label": "Canada Health Infoway, Canada"
+        },
+        "dk": {
+            "url": "https://sundhedsdatastyrelsen.dk/",
+            "label": "The Danish Health Data Authority, Denmark"
+        },
+        "nl": {
+            "url": "https://www.nictiz.nl/",
+            "label": "Nictiz, Netherlands"
+        },
+        "se": {
+            "url": "https://www.socialstyrelsen.se",
+            "label": "The National Board of Health and Welfare, Sweden"
+        },
+        "gb": {
+            "url": "https://digital.nhs.uk/article/290/Terminology-and-Classifications",
+            "label": "UK Terminology Centre, NHS Digital, United Kingdom"
+        },
+        "us": {
+            "url": "http://www.nlm.nih.gov/",
+            "label": "National Library of Medicine (NLM), United States"
+        },
+        "uy": {
+            "url": "https://www.gub.uy/agencia-gobierno-electronico-sociedad-informacion-conocimiento/node/346",
+            "label": "Salud Digital- AGESIC, Uruguay"
+        },
+        "nz": {
+            "url": "https://www.health.govt.nz/nz-health-statistics/classification-and-terminology/new-zealand-snomed-ct-national-release-centre",
+            "label": "New Zealand SNOMED CT National Release Centre"
+        }
+    },
     "singleCharacterSearchLanguageRefsets": ["21000267104", "722128001"],
     "showIssueCollector": false,
     "thirdPartyTrackingEnabled": false
