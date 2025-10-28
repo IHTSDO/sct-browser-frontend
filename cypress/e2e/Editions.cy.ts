@@ -5,13 +5,12 @@ import SearchPage from "../pages/SearchPage";
 const startPage = new StartPage();
 const searchPage = new SearchPage();
 
-beforeEach(() => {
-    cy.clearCookies();
-})
-
 editions.forEach((edition) => {
 
     describe(edition.editionName, () => {
+        before(() => {
+            cy.clearCookies();
+        })
 
         it(`Launch browser at ${startPage.urlBrowser}`, () => {
             startPage.visit();
