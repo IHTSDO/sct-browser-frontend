@@ -43,6 +43,7 @@ describe("Comparing Perspective", () => {
     it(`Select perspective "Comparing"`, () => {
         cy.get('#perspective-selector').click();
         cy.get('#perspective-selector .dropdown-menu').contains('a', 'Comparing').click();
+        cy.wait(2000);
     })
 
     it(`Assert that the screen is split into 2 parts, both showing the same concept in the Summary tab`, () => {
@@ -64,6 +65,7 @@ describe("Comparing Perspective", () => {
     it(`Select perspective "Full"`, () => {
         cy.get('#perspective-selector').click();
         cy.get('#perspective-selector .dropdown-menu').contains('a', 'Full').click();
+        cy.wait(2000);
     });
 
     it(`Assert that the screen returns to the initial layout: the Search tab on the left, the concept loaded in the Summary tab - on the right`, () => {
