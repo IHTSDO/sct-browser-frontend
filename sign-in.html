@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SNOMED International Browser</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="SNOMED International SNOMED CT Browser">
+    <meta name="author" content="SNOMED International">
+
+    <link rel="stylesheet" type="text/css" href="css/external.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+        }
+
+        /* Header */
+        .header {
+            background-color: #1b586b;
+            padding: 9px 0;
+            position: relative;
+        }
+
+        .header-content {
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 45px;
+            padding-right: 20px;
+        }
+
+        .brand-box {
+            width: 52px;
+            height: 34px;
+            position: relative;
+            padding-top: 5px;
+            background: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+            padding: 0 28px;
+            line-height: 1.4em;
+        }
+
+        .nav-links a+a {
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Main content */
+        .main-content {
+            position: relative;
+            min-height: calc(100vh - 52px);
+            display: block;
+        }
+
+        /* Right-side background image - replace path with your asset */
+        .main-content::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            background: url('img/sign-in-bg.png') no-repeat right top;
+            background-size: 100% 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bg-pattern.hidden { display: none; }
+
+        /* Hero placement */
+        .hero-wrapper {
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .hero-card {
+            background-color: #164f5f;
+            color: #ffffff;
+            padding: 36px 20px 7px 20px;
+            border-radius: 2px;
+            width: 530px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+            position: absolute;
+            left: calc(7vw);
+            top: calc(27vh);
+            z-index: 10;
+        }
+
+        .hero-text {
+            font-size: 20px;
+            line-height: 1.4;
+            margin-bottom: 0;
+            font-weight: 300;
+            color: #9fb3ba;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 24px;
+            font-size: 14px;
+        }
+
+        .hero-actions a.sign-in-btn {
+            text-decoration: none;
+        }
+
+        .register-link {
+            color: #cfe0e6;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .register-link:hover {
+            color: #ffffff;
+        }
+
+        .sign-in-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            color: #164f5f;
+            border-radius: 22px;
+            padding: 8px 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            margin-right: 2px;
+            margin-left: auto;
+        }
+
+        .s-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3aa7e1;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .phoca-flagbox {
+            width: 248px;
+            height: 110px;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/http-interceptor.js"></script>
+    <header class="header">
+        <div class="header-content">
+            <div class="brand-box">
+                <a href="https://www.snomed.org" target="_blank" rel="noopener noreferrer">
+                    <div class="phoca-flagbox"
+                        alt="SNOMED International delivering SNOMED, the global clinical terminology"><span
+                            class="phoca-flag snomed-logo"></span></div>
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="https://www.snomed.org/news" target="_blank" rel="noopener noreferrer"><span class="i18n" data-i18n-id="i18n_news">News</span></a>
+                <a href="https://www.snomed.org/events" target="_blank" rel="noopener noreferrer"><span class="i18n" data-i18n-id="i18n_events">Events</span></a>
+                <a href="https://www.snomed.org/resources" target="_blank" rel="noopener noreferrer"><span class="i18n" data-i18n-id="i18n_resources">Resources</span></a>
+                <a href="https://www.snomed.org/contact-us" target="_blank" rel="noopener noreferrer"><span class="i18n" data-i18n-id="i18n_contact_us">Contact Us</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="hero-wrapper">
+            <div class="hero-card">
+                <p class="hero-text"><span class="i18n" data-i18n-id="i18n_landing_hero">Start exploring the SNOMED CT terminology using the online SNOMED CT Browser.</span></p>
+                <div class="hero-actions">
+                    <a href="#" class="register-link" id="registerBtn" style="display: none;"><span class="i18n" data-i18n-id="i18n_register_here">register here</span></a>
+                    <a href="#" class="sign-in-btn" id="signInBtn">
+                        <span class="s-badge">S</span>
+                        <span class="i18n" data-i18n-id="i18n_sign_in">sign in</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-pattern hidden"></div>
+    </main>
+    <script src="external-libs/jquery-3.3.1.min.js"></script>
+    <script src="external-libs/jquery.i18n.properties-min-1.0.9.js"></script>
+    <script>
+        (function () {
+            if (!window.jQuery) { return; }
+            $(function () {
+                $.getJSON('config.json')
+                    .done(function (cfg) {
+                        if (cfg) {
+                            if (cfg.imsUrl) {
+                                var referer = window.location.origin; // include protocol + host (+ port), no path
+                                $('#signInBtn').attr('href', cfg.imsUrl + '/#/login?serviceReferer=' + encodeURIComponent(referer));
+                            }
+                            if (cfg.registerUrl) {
+                                $('#registerBtn').attr('href', cfg.registerUrl);
+                                $('#registerBtn').css('display', 'inline-block');
+                            }
+                        }
+                    });
+                try {
+                    var uiLang = 'en';
+                    if (typeof (Storage) !== 'undefined' && localStorage.getItem('ui_language')) {
+                        uiLang = localStorage.getItem('ui_language');
+                    }
+                    jQuery.i18n.properties({
+                        name: 'Languages',
+                        path: 'i18n/',
+                        mode: 'both',
+                        language: uiLang,
+                        cache: true,
+                        callback: function () {
+                            // Translate title
+                            var titleKey = 'i18n_sign_in_page_title';
+                            var t = jQuery.i18n.prop(titleKey);
+                            if (t && t !== '[' + titleKey + ']') { document.title = t; }
+                            // Translate all .i18n elements
+                            $('.i18n').each(function () {
+                                var key = $(this).attr('data-i18n-id');
+                                var txt = jQuery.i18n.prop(key);
+                                if (txt && txt !== '[' + key + ']') {
+                                    $(this).text(txt);
+                                }
+                            });
+                        }
+                    });
+                } catch (_) { /* ignore */ }
+            });
+        })();
+    </script>
+</body>
+
+</html>
