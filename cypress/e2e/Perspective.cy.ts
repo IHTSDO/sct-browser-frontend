@@ -4,15 +4,18 @@ import SearchPage from "../pages/SearchPage";
 const startPage = new StartPage();
 const searchPage = new SearchPage();
 
+const urlBrowser = Cypress.env('URL_BROWSER');
+
 describe("Comparing Perspective", () => {
-    let conceptId: string;
 
     before(() => {
-        cy.clearCookies();
+        cy.clearAllCookies();
     })
 
-    it(`Launch browser at ${startPage.urlBrowser}`, () => {
-        startPage.visit();
+    let conceptId: string;
+
+    it(`Launch browser at ${urlBrowser}`, () => {
+        startPage.visit(urlBrowser);
     })
 
     it(`Accept cookies`, () => {
