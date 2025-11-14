@@ -6,8 +6,8 @@ export default class StartPage {
 
     visit(url: string) {
         cy.visit(url);
-        cy.get('#signInBtn').click();
-        utils.login();
+        //cy.get('#signInBtn').click();
+        //utils.login();
     }
 
     acceptCookies() {
