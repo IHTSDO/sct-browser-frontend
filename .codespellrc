@@ -1,0 +1,6 @@
+[codespell]
+# Ref: https://github.com/codespell-project/codespell#using-a-config-file
+skip = .git*,*.svg,i18n,*.css,*.min.*,external-libs,external-css,.codespellrc,*.css.map,editions.json
+check-hidden = true
+ignore-regex = \b(for[A-Z]\S+|MAuBE|Created by alo)\b|\.cant\b|\{cant\}
+ignore-words-list = datas,criterias
