@@ -439,7 +439,7 @@
             $.when(getCodeSystems(), getUIConfiguration(), getConfig()).then(function (response) {
                 if (options.imsUrl == null) {
 
-                    // Marked as public browser if both daily build and community browser could not be specifed from URL
+                    // Marked as public browser if both daily build and community browser could not be specified from URL
                     if (!options.communityBrowser && !options.dailyBuildBrowser && !options.publicBrowser) {
                         options.publicBrowser = true;
                         if (response && response.internationalReleases && response.localReleases) {

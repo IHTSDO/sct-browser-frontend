@@ -2723,7 +2723,7 @@ function conceptDetails(divElement, conceptId, options) {
         }
     }
 
-    // Subsription methods
+    // Subscription methods
     this.subscribe = function(panelToSubscribe) {
         var panelId = panelToSubscribe.divElement.id;
         var alreadySubscribed = false;

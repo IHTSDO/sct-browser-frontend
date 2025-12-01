@@ -546,7 +546,7 @@ function searchPanel(divElement, options) {
             }
         });
 
-        // must add a label attribue after muiltiselect initialised
+        // must add a label attribute after muiltiselect initialised
         $('#' + panel.divElement.id + '-filterLanguageRefsetOpt option').each(function() {
             $(this).attr('label', panel.options.languageNameOfLangRefset[$(this).val()]);
         });
@@ -859,7 +859,7 @@ function searchPanel(divElement, options) {
                     concept.descriptions = concept.descriptions.filter(function(item) {return !panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.length === 0
                         || Object.keys(item.acceptabilityMap).filter(function(i) {return panel.options.languageRefsetSearchFilter.includes(i)}).length !==0; });
 
-                    // Filter by descritpion status
+                    // Filter by description status
                     $.each(concept.descriptions, function(i, field) {
                         var aux = field;
                         aux.definitionStatus = concept.definitionStatus;
@@ -1609,7 +1609,7 @@ function searchPanel(divElement, options) {
         });
         semanticTagsInUsed = [];
 
-        // check for Spainish semantic tags
+        // check for Spanish semantic tags
         for (var i = 0; i < semanticTags.length; i++) {
             if (allEsSemantictags.indexOf(semanticTags[i].key) !== -1) {
                 semanticTagsInUsed.push(semanticTags[i]);

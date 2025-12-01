@@ -197,7 +197,7 @@
             }
             self.position(pos, true);
         });
-        //inital position of splitter
+        //initial position of splitter
         var pos;
         if (settings.orientation == 'vertical') {
             if (pos > width-settings.limit) {
