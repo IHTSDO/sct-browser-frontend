@@ -1636,7 +1636,7 @@ function searchPanel(divElement, options) {
         });
         semanticTagsInUsed = [];
 
-        // treat all remaning ones as English Semantic tags
+        // treat all remaining ones as English Semantic tags
         for (var i = 0; i < semanticTags.length; i++) {
             newSemantictags.push({
                 en_key: semanticTags[i].key,
