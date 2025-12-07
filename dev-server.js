@@ -54,12 +54,12 @@ app.use('/ecl', createProxyMiddleware({
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`\n🚀 SNOMED CT Browser development server running at:`);
+  console.log(`\nSNOMED CT Browser development server running at:`);
   console.log(`   http://localhost:${PORT}`);
-  console.log(`\n📡 Proxying API requests to: ${API_HOST}`);
-  console.log(`\n📝 API endpoints:`);
+  console.log(`\nProxying API requests to: ${API_HOST}`);
+  console.log(`\nAPI endpoints:`);
   console.log(`   /snowstorm/snomed-ct/* -> ${API_HOST}/*`);
   console.log(`   /fhir/*                -> ${API_HOST}/fhir/*`);
   console.log(`   /ecl/*                 -> http://localhost:8080/*`);
-  console.log(`\n💡 Press Ctrl+C to stop\n`);
+  console.log(`\nPress Ctrl+C to stop\n`);
 });
