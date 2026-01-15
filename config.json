@@ -135,5 +135,11 @@
     },
     "singleCharacterSearchLanguageRefsets": ["21000267104", "722128001"],
     "showIssueCollector": false,
-    "thirdPartyTrackingEnabled": false
+    "thirdPartyTrackingEnabled": false,
+    "defaultAcceptLanguage" : {
+        "SNOMEDCT-NZ": "en-X-271000210107",
+        "SNOMEDCT-SE": "sv-X-46011000052107",
+        "SNOMEDCT-IE": "en-X-21000220103",
+        "SNOMEDCT-NO": "no-X-61000202103"
+    }
 } 
