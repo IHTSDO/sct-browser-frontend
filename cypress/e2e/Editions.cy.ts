@@ -5,15 +5,18 @@ import SearchPage from "../pages/SearchPage";
 const startPage = new StartPage();
 const searchPage = new SearchPage();
 
+const urlBrowser = Cypress.env('URL_BROWSER');
+
 editions.forEach((edition) => {
 
     describe(edition.editionName, () => {
+
         before(() => {
-            cy.clearCookies();
+            cy.clearAllCookies();
         })
 
-        it(`Launch browser at ${startPage.urlBrowser}`, () => {
-            startPage.visit();
+        it(`Launch browser at ${urlBrowser}`, () => {
+            startPage.visit(urlBrowser);
         })
 
         it(`Accept cookies`, () => {

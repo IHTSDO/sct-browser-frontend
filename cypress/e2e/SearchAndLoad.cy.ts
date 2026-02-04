@@ -8,14 +8,20 @@ const searchPage = new SearchPage();
 const detailsTab = new DetailsTab();
 const historyTab = new HistoryTab();
 
+const urlBrowser = Cypress.env('URL_BROWSER');
+
 describe("Search and Load", () => {
+
+    before(() => {
+        cy.clearAllCookies();
+    })
 
     let searchCount1 = 0;
     let searchCount2 = 0;
     let searchCount3 = 0;
 
-    it(`Launch browser at ${startPage.urlBrowser}`, () => {
-        startPage.visit();
+    it(`Launch browser at ${urlBrowser}`, () => {
+        startPage.visit(urlBrowser);
     })
 
     it(`Accept cookies`, () => {

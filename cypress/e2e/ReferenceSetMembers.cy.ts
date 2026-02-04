@@ -6,10 +6,16 @@ const startPage = new StartPage();
 const searchPage = new SearchPage();
 const membersTab = new MembersTab();
 
+const urlBrowser = Cypress.env('URL_BROWSER');
+
 describe("Reference Set Members", () => {
 
-    it(`Launch browser at ${startPage.urlBrowser}`, () => {
-        startPage.visit();
+    before(() => {
+        cy.clearAllCookies();
+    })
+
+    it(`Launch browser at ${urlBrowser}`, () => {
+        startPage.visit(urlBrowser);
     })
 
     it(`Accept cookies`, () => {

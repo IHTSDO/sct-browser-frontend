@@ -4,10 +4,16 @@ import RefsetPage from "../pages/RefsetPage";
 const startPage = new StartPage();
 const refsetPage = new RefsetPage();
 
+const urlBrowser = Cypress.env('URL_BROWSER');
+
 describe("Refset", () => {
 
-    it(`Launch browser at ${startPage.urlBrowser}`, () => {
-        startPage.visit();
+    before(() => {
+        cy.clearAllCookies();
+    })
+
+    it(`Launch browser at ${urlBrowser}`, () => {
+        startPage.visit(urlBrowser);
     })
 
     it(`Accept cookies`, () => {

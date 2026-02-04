@@ -2,16 +2,22 @@ import ecl = require('../fixtures/ecl.json');
 import StartPage from "../pages/StartPage";
 import ECLPage from "../pages/ECLPage";
 
-const startPage = new StartPage()
-const eclPage = new ECLPage()
+const startPage = new StartPage();
+const eclPage = new ECLPage();
+
+const urlBrowser = Cypress.env('URL_BROWSER');
 
 describe("ECL", () => {
+
+    before(() => {
+        cy.clearAllCookies();
+    })
 
     let searchCount1 = 0;
     let searchCount2 = 0;
 
-    it(`Launch browser at ${startPage.urlBrowser}`, () => {
-        startPage.visit();
+    it(`Launch browser at ${urlBrowser}`, () => {
+        startPage.visit(urlBrowser);
     })
 
     it(`Accept cookies`, () => {

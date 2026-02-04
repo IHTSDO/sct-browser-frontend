@@ -1,9 +1,13 @@
+import Utils from '../commands/Utils';
+
+const utils = new Utils();
+
 export default class StartPage {
 
-    urlBrowser = Cypress.env('URL_BROWSER');
-
-    visit() {
-        cy.visit(this.urlBrowser);
+    visit(url: string) {
+        cy.visit(url);
+        //cy.get('#signInBtn').click();
+        //utils.login();
     }
 
     acceptCookies() {

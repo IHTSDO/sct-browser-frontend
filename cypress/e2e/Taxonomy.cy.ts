@@ -5,10 +5,16 @@ import TaxonomyPage from "../pages/TaxonomyPage";
 const startPage = new StartPage();
 const taxonomyPage = new TaxonomyPage();
 
+const urlBrowser = Cypress.env('URL_BROWSER');
+
 describe("Taxonomy", () => {
 
-    it(`Launch browser at ${startPage.urlBrowser}`, () => {
-        startPage.visit();
+    before(() => {
+        cy.clearAllCookies();
+    })
+
+    it(`Launch browser at ${urlBrowser}`, () => {
+        startPage.visit(urlBrowser);
     })
 
     it(`Accept cookies`, () => {

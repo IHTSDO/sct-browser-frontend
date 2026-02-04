@@ -260,15 +260,6 @@
                     if (options.releases) {
                         for (let i = 0; i < options.releases.items.length; ++i) {
                             var release = options.releases.items[i];
-
-                            /* TODO: The default Accept language should be handled by code-system */
-                            if (release.shortName === 'SNOMEDCT-NZ') {
-                                release.defaultAcceptLanguage = 'en-X-271000210107';
-                            } else if (release.shortName === 'SNOMEDCT-SE') {
-                                release.defaultAcceptLanguage = 'sv-X-46011000052107';
-                            } else if (release.shortName === 'SNOMEDCT-IE') {
-                                release.defaultAcceptLanguage = 'en-X-21000220103';
-                            }
                             if (internationalEditionShortNames.indexOf(release.shortName) > -1) {
                                 if (release.shortName === 'SNOMEDCT') {
                                     release.stats = true;
@@ -349,6 +340,7 @@
                         options.thirdPartyTrackingEnabled = data.thirdPartyTrackingEnabled;
                         options.countryLinks = data.countryLinks;
                         options.countryLinksOrder = data.countryLinksOrder;
+                        options.defaultAcceptLanguageMapping = data.defaultAcceptLanguage;
                         
                         // Render country links if they exist in config
                         if (data.countryLinks && data.countryLinksOrder) {
@@ -476,6 +468,17 @@
                 } else {
                     // do nothing
                 }
+
+                // Set default accept language from config
+                if (options.releases && options.defaultAcceptLanguageMapping) {
+                    for (let i = 0; i < options.releases.items.length; ++i) {
+                        var release = options.releases.items[i];
+                        if (options.defaultAcceptLanguageMapping[release.shortName]) {
+                            release.defaultAcceptLanguage = options.defaultAcceptLanguageMapping[release.shortName];
+                        }
+                    }
+                }
+                
                 start();
             });
         }
