@@ -168,6 +168,11 @@
             history: false
         };
 
+        // Helper function to get release name with fallback to shortName
+        function getReleaseName(release) {
+            return release.name || release.shortName || '';
+        }
+
         options.updateReleaseSwitcher = function (branch, conceptId) {
             options.edition = branch;
             defaultConceptId = conceptId;
@@ -175,7 +180,7 @@
             for (let i = 0; i < options.releases.items.length; ++i) {
                 let release = options.releases.items[i];
                 if (typeof release.latestVersion !== "undefined" && (release.latestVersion.branchPath === options.edition || release.branchPath === options.edition)) {
-                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                    $("#editionLabel").html(getReleaseName(release) + " " + release.latestVersion.version);
                     break;
                 }
             }
@@ -291,9 +296,10 @@
                         return internationalEditionShortNames.indexOf(a.shortName) - internationalEditionShortNames.indexOf(b.shortName);
                     });
 
+                    console.log("localReleases before sort:", localReleases);
                     // sort local extensions again
                     localReleases.sort(function (a, b) {
-                        return a.name.localeCompare(b.name);
+                        return getReleaseName(a).localeCompare(getReleaseName(b));
                     });
 
                     if (options.publicBrowser) {
@@ -586,13 +592,13 @@
                     $span1.text("Go browsing...");
                     var $span2 = $('<span>').attr("class", "small");
                     if (options.dailyBuildBrowser) {
-                        $span2.append(release.name + "<br>DAILY BUILD");
-                        $("#editionLabel").html(release.name + " DAILY BUILD");
+                        $span2.append(getReleaseName(release) + "<br>DAILY BUILD");
+                        $("#editionLabel").html(getReleaseName(release) + " DAILY BUILD");
                     } else if (options.communityBrowser) {
-                        $span2.append(release.name + "<br>Community Content");
-                        $("#editionLabel").html(release.name + " Community Content");
+                        $span2.append(getReleaseName(release) + "<br>Community Content");
+                        $("#editionLabel").html(getReleaseName(release) + " Community Content");
                     } else {
-                        $span2.append(release.name + "<br>" + release.latestVersion.version);
+                        $span2.append(getReleaseName(release) + "<br>" + release.latestVersion.version);
                     }
 
                     var $a = $('<a>').attr("class", "btn btn-primary btn-lg").attr("role", "button").attr("style", "margin-bottom : 15px");
@@ -619,10 +625,10 @@
                             parsedLanguages = parsedLanguages.slice(0, -1);
                             if (options.dailyBuildBrowser) {
                                 options.edition = release.branchPath;
-                                $("#editionLabel").html(release.name + " DAILY BUILD");
+                                $("#editionLabel").html(getReleaseName(release) + " DAILY BUILD");
                             } else if (options.communityBrowser) {
                                 options.edition = release.branchPath;
-                                $("#editionLabel").html(release.name + " Community Content");
+                                $("#editionLabel").html(getReleaseName(release) + " Community Content");
                                 if (typeof release.latestVersion !== 'undefined') {
                                     $("#fh-commnunity_content_canvas-li").css({
                                         "display": "none"
@@ -635,11 +641,11 @@
                             } else {
                                 options.edition = release.latestVersion.branchPath;
                                 if (options.publicBrowser) {
-                                    $("#editionLabel").html(release.name);
+                                    $("#editionLabel").html(getReleaseName(release));
                                     $("#versionLabel").html(release.latestVersion.version);
                                     initVersionsDropdown(release.shortName);
                                 } else {
-                                    $("#editionLabel").html(release.name + " " + release.latestVersion.version);
+                                    $("#editionLabel").html(getReleaseName(release) + " " + release.latestVersion.version);
                                 }
                             }
 
@@ -975,7 +981,7 @@
                     for (let i = 0; i < releases.length; ++i) {
                         let release = releases[i];
                         var $li = $('<li>');
-                        var $a = $('<a>').attr("shortName", release.shortName).append(release.name + " ").append('<span style="color: dodgerblue;">' + (options.dailyBuildBrowser ? 'DAILY BUILD' : 'Community Content') + '</span>');
+                        var $a = $('<a>').attr("shortName", release.shortName).append(getReleaseName(release) + " ").append('<span style="color: dodgerblue;">' + (options.dailyBuildBrowser ? 'DAILY BUILD' : 'Community Content') + '</span>');
                         $a.attr("href", "javascript:void(0);");
                         $a.on("click", function () {
                             var parsedLanguages = "";
@@ -999,7 +1005,7 @@
                             options.languages = parsedLanguages;
                             options.languageObject = release.languages;
                             options.editionShortname = release.shortName;
-                            $("#editionLabel").html(release.name + (options.dailyBuildBrowser ? " DAILY BUILD" : ' Community Content'));
+                            $("#editionLabel").html(getReleaseName(release) + (options.dailyBuildBrowser ? " DAILY BUILD" : ' Community Content'));
                             options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
                             options.modules = release.modules;
                             options.defaultLanguage = getDefaultLanguage(release.defaultLanguageCode, parsedLanguages);
@@ -1019,7 +1025,7 @@
 
                         // set default selection for release
                         if (options.edition && release.branchPath === options.edition) {
-                            $("#editionLabel").html(release.name + (options.dailyBuildBrowser ? " DAILY BUILD" : ' Community Content'));
+                            $("#editionLabel").html(getReleaseName(release) + (options.dailyBuildBrowser ? " DAILY BUILD" : ' Community Content'));
                         }
                     }
                 }
@@ -1033,7 +1039,7 @@
                         let release = options.releases.items[i];
                         if (typeof release.latestVersion !== "undefined" && (!release.maintainerType || release.maintainerType !== 'Community Content')) {
                             var $li = $('<li>')
-                            var $a = $('<a>').attr("shortName", release.shortName).append(release.name);
+                            var $a = $('<a>').attr("shortName", release.shortName).append(getReleaseName(release));
                             $a.attr("href", "javascript:void(0);");
                             $a.on("click", function (event) {
                                 event.stopPropagation();
@@ -1110,11 +1116,11 @@
                     // set default selection for release
                     if (foundRelease) {
                         if (options.publicBrowser) {
-                            $("#editionLabel").html(foundRelease.name);
+                            $("#editionLabel").html(getReleaseName(foundRelease));
                             $("#versionLabel").html(foundRelease.latestVersion.version);
                             initVersionsDropdown(foundRelease.shortName);
                         } else {
-                            $("#editionLabel").html(foundRelease.name + " " + foundRelease.latestVersion.version);
+                            $("#editionLabel").html(getReleaseName(foundRelease) + " " + foundRelease.latestVersion.version);
                         }
                     } else {
                         if (options.publicBrowser && /^MAIN.*\d{4}-\d{2}-\d{2}$/.test(options.edition)) {
@@ -1122,7 +1128,7 @@
                             for (let i = 0; i < options.releases.items.length; ++i) {
                                 let release = options.releases.items[i];
                                 if ((isInternationalBranch && release.branchPath === 'MAIN') || (!isInternationalBranch && release.branchPath !== 'MAIN' && options.edition.startsWith(release.branchPath))) {
-                                    $("#editionLabel").html(release.name);
+                                    $("#editionLabel").html(getReleaseName(release));
                                     $("#versionLabel").html(options.edition.substring(options.edition.lastIndexOf('/') + 1));
                                     initVersionsDropdown(release.shortName);
                                     break;
