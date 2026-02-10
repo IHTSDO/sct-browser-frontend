@@ -1628,7 +1628,7 @@ function conceptDetails(divElement, conceptId, options) {
                         return dfd.promise();
                     };
                     $.when(getConcepts(ids)).then(
-                        function( respone ) {
+                        function( response ) {
                             var populateRefsetMember = function (list, type, conceptsMap) {
                                 if (type === 'simple' || type === 'simplemap'){
                                     list.forEach(function(item) {
@@ -1673,7 +1673,7 @@ function conceptDetails(divElement, conceptId, options) {
                             }
 
                             var conceptsMap = {};
-                            respone.concepts.forEach(function(item) {
+                            response.concepts.forEach(function(item) {
                                 conceptsMap[item.conceptId] = item;
                             });
 
@@ -2723,7 +2723,7 @@ function conceptDetails(divElement, conceptId, options) {
         }
     }
 
-    // Subsription methods
+    // Subscription methods
     this.subscribe = function(panelToSubscribe) {
         var panelId = panelToSubscribe.divElement.id;
         var alreadySubscribed = false;
