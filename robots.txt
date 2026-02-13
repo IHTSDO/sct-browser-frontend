@@ -5,13 +5,20 @@ Allow: /$
 Allow: /index.html
 Disallow: /
 
+User-agent: Googlebot
+Allow: /$
+Allow: /index.html
+Allow: /css/
+Allow: /js/
+Allow: /external-libs/
+Allow: /internal-libs/
+Allow: /favicon.png
+Disallow: /
+
 User-agent: SemrushBot
 Disallow: /
 
 User-agent: AdsBot-Google
-Disallow: /
-
-User-agent: Googlebot
 Disallow: /
 
 User-agent: Mediapartners-Google
