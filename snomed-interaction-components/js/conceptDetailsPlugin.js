@@ -2237,6 +2237,20 @@ function conceptDetails(divElement, conceptId, options) {
         });
 
         panel.sortDescriptions(englishDescriptions);
+        // Group non-English by language, then sort each group
+        var nonEnByLang = {};
+        $.each(nonEnglishDescriptions, function(i, description) {
+            var lang = description.lang || '';
+            if (!nonEnByLang[lang]) {
+                nonEnByLang[lang] = [];
+            }
+            nonEnByLang[lang].push(description);
+        });
+        nonEnglishDescriptions = [];
+        $.each(Object.keys(nonEnByLang).sort(), function(i, lang) {
+            panel.sortDescriptions(nonEnByLang[lang]);
+            nonEnglishDescriptions = nonEnglishDescriptions.concat(nonEnByLang[lang]);
+        });
         var newDescriptions = [];
         if (panel.options.defaultLanguage && panel.options.defaultLanguage !== 'en') {
             newDescriptions = nonEnglishDescriptions.concat(englishDescriptions);
