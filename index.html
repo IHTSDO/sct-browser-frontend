@@ -1399,6 +1399,7 @@
                                 if (branchPath.includes(release.branchPath)) {
                                     options.languageObject = release.languages;
                                     options.defaultLanguageReferenceSets = release.defaultLanguageReferenceSets ? release.defaultLanguageReferenceSets : [];
+                                    options.defaultAcceptLanguage = release.defaultAcceptLanguage ? release.defaultAcceptLanguage : '';
                                     options.modules = release.modules;
 
                                     var parsedLanguages = "";
