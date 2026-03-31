@@ -1145,7 +1145,7 @@ function searchPanel(divElement, options) {
         url: searchUrl,
         type: "GET",
         beforeSend: function(xhr){
-            xhr.setRequestHeader('Accept-Language', options.languages);
+            xhr.setRequestHeader('Accept-Language', (panel.options.multiExtensionSearch && panel.options.multiDescriptionSearchAcceptLanguage) ? panel.options.multiDescriptionSearchAcceptLanguage : options.languages);
         },
         success: function(result) {
 

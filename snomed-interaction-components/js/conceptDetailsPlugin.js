@@ -2760,6 +2760,16 @@ function conceptDetails(divElement, conceptId, options) {
                                 options.edition = release.latestVersion.branchPath;
                                 panel.options.edition = release.latestVersion.branchPath;
                                 found = true;
+                                if (panel.options.defaultAcceptLanguageMapping && panel.options.defaultAcceptLanguageMapping[release.shortName]) {
+                                    options.defaultAcceptLanguage = panel.options.defaultAcceptLanguageMapping[release.shortName];
+                                } else {
+                                    options.defaultAcceptLanguage = "";
+                                    var parsedLanguages = "";
+                                    for (var language in release.languages) {
+                                        parsedLanguages = parsedLanguages + language + ',';
+                                    }
+                                    options.languages = parsedLanguages;
+                                }
                                 break;
                             }
                         }
