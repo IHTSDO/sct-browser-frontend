@@ -1,1 +1,12 @@
 .git
+node_modules
+cypress
+dist
+target
+deb
+REST
+Dockerfile
+.gitignore
+*.md
+*.log
+pom.xml
