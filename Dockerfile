@@ -1,10 +1,10 @@
-FROM node AS builder
+FROM node:20-alpine AS builder
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN npm install --force && ./node_modules/grunt-cli/bin/grunt
 
 
-FROM nginx
+FROM nginx:alpine
 RUN rm /etc/nginx/conf.d/default.conf
 COPY --from=builder /usr/src/app/index.html /usr/share/nginx/html/
 COPY --from=builder /usr/src/app/sign-in.html /usr/share/nginx/html/
