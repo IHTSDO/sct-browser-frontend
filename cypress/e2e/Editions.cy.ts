@@ -28,7 +28,7 @@ editions.forEach((edition) => {
         })
 
         it(`Select edition '${edition.editionName}'`, () => {
-            startPage.selectEditionByEditionCode(edition.editionCode, edition.internationalEdition);
+            startPage.selectEditionByShortName(edition.codeSystemShortname, edition.internationalEdition);
         })
 
         it(`Check selected language is '${edition.languageFlag}'`, () => {

@@ -2,6 +2,7 @@
   {
     "editionName": "Argentinian Edition",
     "editionCode": "ar",
+    "codeSystemShortname": "SNOMEDCT-AR",
     "internationalEdition": false,
     "languageFlag": "es",
     "searchTerm": "modulo",
@@ -11,6 +12,7 @@
   {
     "editionName": "Australian Edition",
     "editionCode": "au",
+    "codeSystemShortname": "SNOMEDCT-AU",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -20,6 +22,7 @@
   {
     "editionName": "Austrian Edition",
     "editionCode": "at",
+    "codeSystemShortname": "SNOMEDCT-AT",
     "internationalEdition": false,
     "languageFlag": "de",
     "searchTerm": "module",
@@ -29,6 +32,7 @@
   {
     "editionName": "Belgian Edition",
     "editionCode": "be",
+    "codeSystemShortname": "SNOMEDCT-BE",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -38,6 +42,7 @@
   {
     "editionName": "Canadian Edition",
     "editionCode": "ca",
+    "codeSystemShortname": "SNOMEDCT-CA",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -47,6 +52,7 @@
   {
     "editionName": "Chilean Edition",
     "editionCode": "cl",
+    "codeSystemShortname": "SNOMEDCT-CL",
     "internationalEdition": false,
     "languageFlag": "es",
     "searchTerm": "modulo",
@@ -56,6 +62,7 @@
   {
     "editionName": "Czech Republic Edition",
     "editionCode": "cz",
+    "codeSystemShortname": "SNOMEDCT-CZ",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -65,6 +72,7 @@
   {
     "editionName": "Danish Edition",
     "editionCode": "dk",
+    "codeSystemShortname": "SNOMEDCT-DK",
     "internationalEdition": false,
     "languageFlag": "dk",
     "searchTerm": "module",
@@ -74,6 +82,7 @@
   {
     "editionName": "Estonian Edition",
     "editionCode": "ee",
+    "codeSystemShortname": "SNOMEDCT-EE",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -83,6 +92,7 @@
   {
     "editionName": "Finnish Edition",
     "editionCode": "fi",
+    "codeSystemShortname": "SNOMEDCT-FI",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -92,6 +102,7 @@
   {
     "editionName": "French Edition",
     "editionCode": "fr",
+    "codeSystemShortname": "SNOMEDCT-FR",
     "internationalEdition": false,
     "languageFlag": "fr",
     "searchTerm": "module",
@@ -101,6 +112,7 @@
   {
     "editionName": "Germany Edition",
     "editionCode": "de",
+    "codeSystemShortname": "SNOMEDCT-DE",
     "internationalEdition": false,
     "languageFlag": "de",
     "searchTerm": "module",
@@ -110,6 +122,7 @@
   {
     "editionName": "Irish Edition",
     "editionCode": "ie",
+    "codeSystemShortname": "SNOMEDCT-IE",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -119,6 +132,7 @@
   {
     "editionName": "Jamaican Edition",
     "editionCode": "jm",
+    "codeSystemShortname": "SNOMEDCT-JM",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -126,8 +140,19 @@
     "moduleName": "Jamaican module"
   },
   {
+    "editionName": "Korean Edition",
+    "editionCode": "kr",
+    "codeSystemShortname": "SNOMEDCT-KR",
+    "internationalEdition": false,
+    "languageFlag": "us",
+    "searchTerm": "module",
+    "moduleId": "11000267109",
+    "moduleName": "Korean module"
+  },
+  {
     "editionName": "Netherlands Edition",
     "editionCode": "nl",
+    "codeSystemShortname": "SNOMEDCT-NL",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -137,6 +162,7 @@
   {
     "editionName": "New Zealand Edition",
     "editionCode": "nz",
+    "codeSystemShortname": "SNOMEDCT-NZ",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -146,6 +172,7 @@
   {
     "editionName": "Norwegian Edition",
     "editionCode": "no",
+    "codeSystemShortname": "SNOMEDCT-NO",
     "internationalEdition": false,
     "languageFlag": "no",
     "searchTerm": "module",
@@ -156,6 +183,7 @@
     "editionName": "Spanish Edition",
     "editionCode": "es",
     "internationalEdition": true,
+    "codeSystemShortname": "SNOMEDCT-ES",
     "languageFlag": "es",
     "searchTerm": "modulo",
     "moduleId": "450829007",
@@ -164,6 +192,7 @@
   {
     "editionName": "Swedish Edition",
     "editionCode": "se",
+    "codeSystemShortname": "SNOMEDCT-SE",
     "internationalEdition": false,
     "languageFlag": "se",
     "searchTerm": "module",
@@ -173,6 +202,7 @@
   {
     "editionName": "Swiss Edition",
     "editionCode": "ch",
+    "codeSystemShortname": "SNOMEDCT-CH",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -182,6 +212,7 @@
   {
     "editionName": "United States Edition",
     "editionCode": "us",
+    "codeSystemShortname": "SNOMEDCT-US",
     "internationalEdition": false,
     "languageFlag": "us",
     "searchTerm": "module",
@@ -191,6 +222,7 @@
   {
     "editionName": "Uruguay Edition",
     "editionCode": "uy",
+    "codeSystemShortname": "SNOMEDCT-UY",
     "internationalEdition": false,
     "languageFlag": "es",
     "searchTerm": "modulo",
