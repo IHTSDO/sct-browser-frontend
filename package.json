@@ -3,7 +3,10 @@
     "description": "SNOMED CT Interaction Components",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "grunt",
+        "start": "npm run build && node dev-server.js",
+        "dev": "node dev-server.js"
     },
     "repository": {
         "type": "git",
@@ -29,6 +32,7 @@
         "snomed-ecl-builder": "^1.0.4"
     },
     "devDependencies": {
+        "express": "^4.18.2",
         "grunt-bump": "0.0.14",
         "grunt-contrib-clean": "^2.0.1",
         "grunt-contrib-concat": "^2.1.0",
@@ -36,6 +40,7 @@
         "grunt-contrib-cssmin": "^5.0.0",
         "grunt-contrib-jshint": "^3.2.0",
         "grunt-contrib-uglify": "^5.2.2",
+        "http-proxy-middleware": "^2.0.6",
         "jshint-stylish": "^0.4.0"
     }
 }
