@@ -16,7 +16,7 @@ Project Structure
 
 The index.html includes all the logic for rendering the Browser UI, switching between different SNOMED CT releases and UI layouts (perspectives).
 
-* bootstrap-custom: folder that contains a custom build of the Boostrap framework
+* bootstrap-custom: folder that contains a custom build of the Bootstrap framework
 * css: stylesheets for this site
 * external-libs: js libraries used by this site
 * snomed-interaction-components: js, css and fonts for the SNOMED CT widgets contained in this site
@@ -109,7 +109,7 @@ http {
 
 ## URL Shortcuts
 
-The browser includes URL parameters that will act as shorcuts for opening the browser with pre-defined settings or content selections, skipping the need of selecting options from the main view.
+The browser includes URL parameters that will act as shortcuts for opening the browser with pre-defined settings or content selections, skipping the need of selecting options from the main view.
 
 Use:
 http://browser.ihtsdotools.org/index.html?perspective=full&conceptId1=195967001
