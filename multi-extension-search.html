@@ -334,12 +334,33 @@
             }
         }
 
+        function compareEditionsByNameWithInternationalFirst(a, b) {
+            var topOrder = ['SNOMEDCT', 'SNOMEDCT-DERIVATIVES'];
+            var ia = topOrder.indexOf(a.shortName);
+            var ib = topOrder.indexOf(b.shortName);
+            var ta = ia === -1 ? topOrder.length : ia;
+            var tb = ib === -1 ? topOrder.length : ib;
+            if (ta !== tb) {
+                return ta - tb;
+            }
+            var nameA = (a.name || '').toString();
+            var nameB = (b.name || '').toString();
+            return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+        }
+
         function renderReleaseSwitcher() {
             if (options.releases && options.releases.items) {
                 var $releaseSwitcher = $('#releaseSwitcher');
+                var publicReleases = [];
                 for (let i = 0; i < options.releases.items.length; ++i) {
                     let release = options.releases.items[i];
                     if (typeof release.latestVersion !== "undefined") {
+                        publicReleases.push(release);
+                    }
+                }
+                publicReleases.sort(compareEditionsByNameWithInternationalFirst);
+                for (let i = 0; i < publicReleases.length; ++i) {
+                    let release = publicReleases[i];
                         var $li = $('<li>')
                         var $a = $('<a>').attr("shortName", release.shortName).append(release.name + " " + release.latestVersion.version);
                         $a.attr("href", "javascript:void(0);");
@@ -381,7 +402,6 @@
                         if (options.edition && release.latestVersion.branchPath === options.edition) {
                             $("#editionLabel").html(release.name + " " + release.latestVersion.version);
                         }
-                    }                        
                 }
             }
         }

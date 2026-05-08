@@ -576,11 +576,35 @@
             }
         }
 
+        function compareEditionsByNameWithInternationalFirst(a, b) {
+            var topOrder = ['SNOMEDCT', 'SNOMEDCT-DERIVATIVES'];
+            var ia = topOrder.indexOf(a.shortName);
+            var ib = topOrder.indexOf(b.shortName);
+            var ta = ia === -1 ? topOrder.length : ia;
+            var tb = ib === -1 ? topOrder.length : ib;
+            if (ta !== tb) {
+                return ta - tb;
+            }
+            var nameA = (a.name || '').toString();
+            var nameB = (b.name || '').toString();
+            return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+        }
+
         function addEditionLinks($releaseSwitcher, releases) {
+            if (!releases || releases.length === 0) {
+                return;
+            }
+            var toShow = [];
             for (let i = 0; i < releases.length; ++i) {
                 let release = releases[i];
                 if (typeof release.latestVersion !== 'undefined' || options.dailyBuildBrowser || options.communityBrowser) {
-                    var $img = '<div class="phoca-flagbox" style="' + (release.countryCode !== '' ? 'width:16px;height:11px' : 'width:20px;height:20px') + '"><span class="phoca-flag ' + (release.countryCode !== '' ? release.countryCode : 'logo') + '" style="width:100%;height:100%"></span></div>' + ' ';
+                    toShow.push(release);
+                }
+            }
+            toShow.sort(compareEditionsByNameWithInternationalFirst);
+            for (let i = 0; i < toShow.length; ++i) {
+                let release = toShow[i];
+                var $img = '<div class="phoca-flagbox" style="' + (release.countryCode !== '' ? 'width:16px;height:11px' : 'width:20px;height:20px') + '"><span class="phoca-flag ' + (release.countryCode !== '' ? release.countryCode : 'logo') + '" style="width:100%;height:100%"></span></div>' + ' ';
 
                     var $span1 = $('<span>').attr("class", "i18n").attr("data-i18n-id", "i18n_go_browsing");
                     $span1.text("Go browsing...");
@@ -663,7 +687,6 @@
 
                     $releaseSwitcher.append($a);
                     $releaseSwitcher.append(" ");
-                }
             }
         }
 
@@ -971,7 +994,7 @@
                 if ((options.dailyBuildBrowser && options.dailyBuildReleases) ||
                     (options.communityBrowser && options.communityContentReleases)) {
                     var $releaseSwitcher = $('#releaseSwitcher');
-                    var releases = options.dailyBuildBrowser ? options.dailyBuildReleases : options.communityContentReleases;
+                    var releases = (options.dailyBuildBrowser ? options.dailyBuildReleases : options.communityContentReleases).slice().sort(compareEditionsByNameWithInternationalFirst);
                     for (let i = 0; i < releases.length; ++i) {
                         let release = releases[i];
                         var $li = $('<li>');
@@ -1029,9 +1052,16 @@
                 if (options.releases && options.releases.items) {
                     var $releaseSwitcher = $('#releaseSwitcher');
                     var foundRelease = null;
+                    var publicReleases = [];
                     for (let i = 0; i < options.releases.items.length; ++i) {
                         let release = options.releases.items[i];
                         if (typeof release.latestVersion !== "undefined" && (!release.maintainerType || release.maintainerType !== 'Community Content')) {
+                            publicReleases.push(release);
+                        }
+                    }
+                    publicReleases.sort(compareEditionsByNameWithInternationalFirst);
+                    for (let i = 0; i < publicReleases.length; ++i) {
+                        let release = publicReleases[i];
                             var $li = $('<li>')
                             var $a = $('<a>').attr("shortName", release.shortName).append(release.name);
                             $a.attr("href", "javascript:void(0);");
@@ -1105,7 +1135,6 @@
                             if (options.edition && release.latestVersion.branchPath === options.edition) {
                                 foundRelease = release;
                             }
-                        }
                     }
                     // set default selection for release
                     if (foundRelease) {
