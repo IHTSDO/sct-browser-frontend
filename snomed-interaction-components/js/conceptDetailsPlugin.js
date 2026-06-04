@@ -2248,9 +2248,24 @@ function conceptDetails(divElement, conceptId, options) {
         });
         nonEnglishDescriptions = [];
         $.each(Object.keys(nonEnByLang).sort(), function(i, lang) {
-            panel.sortDescriptions(nonEnByLang[lang]);
-            nonEnglishDescriptions = nonEnglishDescriptions.concat(nonEnByLang[lang]);
+            var descs = nonEnByLang[lang];
+            $.each(descs, function(i, desc) {
+                desc.preferred = false;
+                desc.acceptable = false;
+                if (desc.acceptabilityMap) {
+                    $.each(desc.acceptabilityMap, function(langref, acceptability) {
+                        if (acceptability == "PREFERRED") {
+                            desc.preferred = true;
+                        } else if (acceptability == "ACCEPTABLE") {
+                            desc.acceptable = true;
+                        }
+                    });
+                }
+            });
+            panel.sortDescriptions(descs);
+            nonEnglishDescriptions = nonEnglishDescriptions.concat(descs);
         });
+
         var newDescriptions = [];
         if (panel.options.defaultLanguage && panel.options.defaultLanguage !== 'en') {
             newDescriptions = nonEnglishDescriptions.concat(englishDescriptions);
