@@ -42,7 +42,7 @@
             return originalFetch.apply(this, args).then(function (response) {
                 try {
                     if (!response) { return response; }
-                    if (response.status === 401 || response.status === 403) {
+                    if (response.status === 401) {
                         redirectToSignIn();
                     }
                 } catch (_) {}
