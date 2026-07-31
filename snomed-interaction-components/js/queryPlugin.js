@@ -1584,9 +1584,12 @@ function queryComputerPanel(divElement, options) {
                             tableTr.append($("<th>").append(field));
                         });
                     } else {
-                        tableTr.append($("<th>").append("Concept"));
-                        tableTr.append($("<th>").append("Preferred Term"));
-                        tableTr.append($("<th>").append("Id"));
+                        var i18n_concept_text = jQuery.i18n.prop('i18n_concept');
+                        var i18n_preferred_term_text = jQuery.i18n.prop('i18n_preferred_term');
+                        var i18n_id_text = jQuery.i18n.prop('i18n_id');
+                        tableTr.append($("<th>").append($("<span>").addClass("i18n").attr("data-i18n-id", "i18n_concept").text(i18n_concept_text)));
+                        tableTr.append($("<th>").append($("<span>").addClass("i18n").attr("data-i18n-id", "i18n_preferred_term").text(i18n_preferred_term_text)));
+                        tableTr.append($("<th>").append($("<span>").addClass("i18n").attr("data-i18n-id", "i18n_id").text(i18n_id_text)));
                     }
                     var queryOutputBody = $('#' + panel.divElement.id + '-outputBody');
                     $.each(data.items, function(i, row) {
