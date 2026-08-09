@@ -976,7 +976,7 @@ function queryComputerPanel(divElement, options) {
             }
         });
 
-        // must add a label attribue after muiltiselect initialised
+        // must add a label attribute after muiltiselect initialised
         $('#' + panel.divElement.id + '-filterLanguageRefsetOpt option').each(function() {
             $(this).attr('label', panel.options.languageNameOfLangRefset[$(this).val()]);
         });
