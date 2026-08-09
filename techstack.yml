@@ -1,0 +1,383 @@
+repo_name: IHTSDO/sct-browser-frontend
+report_id: 6729a1abd7d4b65f10bfc60a6d48e922
+version: 0.1
+repo_type: Public
+timestamp: '2024-03-21T12:57:12+00:00'
+requested_by: QuyenLy87
+provider: github
+branch: master
+detected_tools_count: 24
+tools:
+- name: CSS 3
+  description: The latest evolution of the Cascading Style Sheets language
+  website_url: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS3
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/6727/css.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend
+  detection_source: Repo Metadata
+- name: Handlebars.js
+  description: Minimal Templating on Steroids
+  website_url: http://handlebarsjs.com/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Templating Languages & Extensions
+  image_url: https://img.stackshare.io/service/1143/Handlebars.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend
+  detection_source: Repo Metadata
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend
+  detection_source: Repo Metadata
+- name: Docker
+  description: Enterprise Container Platform for High-Velocity Innovation.
+  website_url: https://www.docker.com/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Virtual Machine Platforms & Containers
+  image_url: https://img.stackshare.io/service/586/n4u37v9t_400x400.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend
+  detection_source: Repo Metadata
+- name: Grunt
+  description: The JavaScript Task Runner
+  website_url: http://gruntjs.com/
+  version: 1.0.3
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: JS Build Tools / JS Task Runners
+  image_url: https://img.stackshare.io/service/845/falgg2jybmhgk16y62lr.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: JSHint
+  description: A Static Code Analysis Tool for JavaScript
+  website_url: http://www.jshint.com/about/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Code Review
+  image_url: https://img.stackshare.io/service/1945/mzh2bRes_400x400.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: NGINX
+  description: A high performance free open source web server powering busiest sites
+    on the Internet.
+  website_url: http://nginx.org
+  open_source: false
+  hosted_saas: false
+  category: Application Hosting
+  sub_category: Web Servers
+  image_url: https://img.stackshare.io/service/1052/YMxUfyWf.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/docker/nginx.conf
+  detection_source: docker/nginx.conf
+  last_updated_by: Rory Davidson
+  last_updated_on: 2019-01-08 14:37:13.000000000 Z
+- name: npm
+  description: The package manager for JavaScript.
+  website_url: https://www.npmjs.com/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Front End Package Manager
+  image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: Shell
+  description: A shell is a text-based terminal, used for manipulating programs and
+    files. Shell scripts typically manage program execution.
+  website_url: https://en.wikipedia.org/wiki/Shell_script
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend
+  detection_source: Repo Metadata
+- name: chalk
+  description: terminal colors
+  website_url: https://github.com/chalk/chalk
+  open_source: false
+  hosted_saas: false
+  image_url: https://img.stackshare.io/service/8072/13122722.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: chalk
+  description: Terminal string styling done right
+  package_url: https://www.npmjs.com/chalk
+  version: 0.5.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15813/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-bump
+  description: Bump package version
+  package_url: https://www.npmjs.com/grunt-bump
+  version: 0.0.14
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16360/default_92302d1bbf4c0f67b862869662b4f69002c94aad.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-cli
+  description: The grunt command line interface
+  package_url: https://www.npmjs.com/grunt-cli
+  version: 0.1.13
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16021/default_924b66c04aa848a4028c1a5753a23dae0f835f86.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-contrib-clean
+  description: Clean files and folders
+  package_url: https://www.npmjs.com/grunt-contrib-clean
+  version: 0.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15939/default_8b5680d4e916298d08363c291a0d6e34c07ceb15.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-contrib-concat
+  description: Concatenate files
+  package_url: https://www.npmjs.com/grunt-contrib-concat
+  version: 0.4.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16075/default_d4e765f8a43dcfd232c8b9ee9732058bc27c727a.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-contrib-copy
+  description: Copy files and folders
+  package_url: https://www.npmjs.com/grunt-contrib-copy
+  version: 0.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16056/default_c7b204838197013798409fa2b4dafce450edc7fb.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-contrib-cssmin
+  description: Minify CSS
+  package_url: https://www.npmjs.com/grunt-contrib-cssmin
+  version: 0.10.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16324/default_b5c8f3c8e46d368f74a982d06d7f13291fe651ea.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-contrib-jshint
+  description: Validate files with JSHint
+  package_url: https://www.npmjs.com/grunt-contrib-jshint
+  version: 0.10.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15898/default_59a1b5716eefa3750c20936c3d53ff13a6390ee1.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-contrib-uglify
+  description: Minify JavaScript files with UglifyJS
+  package_url: https://www.npmjs.com/grunt-contrib-uglify
+  version: 0.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15954/default_ac622bc364a601d766b9a6f6039f191492f54d65.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-conventional-changelog
+  description: Generate a changelog using conventional-changelog
+  package_url: https://www.npmjs.com/grunt-conventional-changelog
+  version: 6.1.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17072/default_d17bbf7e4f3b102e29ff09c01b8165e7ba600319.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: grunt-release
+  description: Release a new version of your Node-based project
+  package_url: https://www.npmjs.com/grunt-release
+  version: 0.14.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16336/default_97104dc50154593d2dde1d791400955934c9c715.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
+- name: handlebars
+  description: Handlebars provides the power necessary to let you build semantic templates
+    effectively with no frustration
+  package_url: https://www.npmjs.com/handlebars
+  version: 4.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16013/default_f8be85789693a9901dbcfa43c135c60525ae49a1.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Chris Swires
+  last_updated_on: 2022-05-25 14:51:00.000000000 Z
+  vulnerabilities:
+  - name: Remote code execution in handlebars when compiling templates
+    cve_id: CVE-2021-23369
+    cve_url: https://github.com/advisories/GHSA-f2jv-r9rf-7988
+    detected_date: Aug 22
+    severity: critical
+    first_patched: 4.7.7
+  - name: Prototype Pollution in handlebars
+    cve_id: CVE-2021-23383
+    cve_url: https://github.com/advisories/GHSA-765h-qjxv-5f44
+    detected_date: Feb 11
+    severity: critical
+    first_patched: 4.7.7
+  - name: Prototype Pollution in handlebars
+    cve_id: CVE-2019-19919
+    cve_url: https://github.com/advisories/GHSA-w457-6q6x-cgp9
+    detected_date: Aug 22
+    severity: critical
+    first_patched: 4.3.0
+  - name: Arbitrary Code Execution in Handlebars
+    cve_id: CVE-2019-20920
+    cve_url: https://github.com/advisories/GHSA-3cqr-58rm-57f8
+    detected_date: Feb 11
+    severity: high
+    first_patched: 4.5.3
+  - name: Arbitrary Code Execution in handlebars
+    cve_id:
+    cve_url: https://github.com/advisories/GHSA-2cf5-4w76-r9qv
+    detected_date: Aug 22
+    severity: high
+    first_patched: 4.5.2
+  - name: Prototype Pollution in handlebars
+    cve_id:
+    cve_url: https://github.com/advisories/GHSA-g9r4-xpmj-mj65
+    detected_date: Aug 22
+    severity: high
+    first_patched: 4.5.3
+  - name: Prototype Pollution in handlebars
+    cve_id:
+    cve_url: https://github.com/advisories/GHSA-q42p-pg8m-cqh6
+    detected_date: Aug 22
+    severity: high
+    first_patched: 4.0.14
+  - name: Regular Expression Denial of Service in Handlebars
+    cve_id: CVE-2019-20922
+    cve_url: https://github.com/advisories/GHSA-62gr-4qp9-h98f
+    detected_date: Feb 11
+    severity: high
+    first_patched: 4.4.5
+  - name: Arbitrary Code Execution in handlebars
+    cve_id:
+    cve_url: https://github.com/advisories/GHSA-q2c6-c6pm-g3gh
+    detected_date: Aug 22
+    severity: high
+    first_patched: 4.5.3
+  - name: Remote code execution in Handlebars.js
+    cve_id:
+    cve_url: https://github.com/advisories/GHSA-6r5x-hmgg-7h53
+    detected_date: Aug 13
+    severity: moderate
+    first_patched: 4.1.0
+  - name: Denial of Service in handlebars
+    cve_id:
+    cve_url: https://github.com/advisories/GHSA-f52g-6jhx-586p
+    detected_date: Aug 22
+    severity: moderate
+    first_patched: 4.4.5
+- name: jshint-stylish
+  description: Stylish reporter for JSHint
+  package_url: https://www.npmjs.com/jshint-stylish
+  version: 0.4.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16031/default_261820f5687b4c88a3e8f95c71b5e8dccd34c1d7.png
+  detection_source_url: https://github.com/IHTSDO/sct-browser-frontend/blob/master/package.json
+  detection_source: package.json
+  last_updated_by: Quyen Ly
+  last_updated_on: 2020-01-02 11:22:34.000000000 Z
