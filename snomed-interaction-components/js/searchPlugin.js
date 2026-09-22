@@ -870,7 +870,9 @@ function searchPanel(divElement, options) {
                             aux.danger = true;
                         }
                         if (field.active) {
-                            if ($("#" + panel.divElement.id + "-groupConcept").is(":checked")) {
+                            if ($("#" + panel.divElement.id + "-groupConcept").is(":checked") 
+                                && (!panel.options.languageRefsetSearchFilter || panel.options.languageRefsetSearchFilter.length === 0) 
+                                && !panel.options.typeSearchFilter) {
                                 if ((aux.term === concept.pt.term || (panel.options.typeSearchFilter === 'fsn' && aux.term === concept.fsn.term)) && aux.lang == concept.pt.lang) {
                                     if (panel.options.statusSearchFilter == "activeOnly"
                                         || panel.options.statusSearchFilter == "activeAndInactive"
