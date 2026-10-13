@@ -26,6 +26,7 @@ COPY --from=builder /usr/src/app/img/ /usr/share/nginx/html/img/
 COPY --from=builder /usr/src/app/i18n/ /usr/share/nginx/html/i18n/
 COPY --from=builder /usr/src/app/snomed-interaction-components/fonts/ /usr/share/nginx/html/snomed-interaction-components/fonts/
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf.template
+COPY docker/license-cookie.js /etc/nginx/njs/license-cookie.js
 COPY docker/docker-entrypoint.sh /
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]

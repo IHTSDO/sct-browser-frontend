@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="SNOMED International SNOMED CT Browser">
     <meta name="author" content="SNOMED International">
+    <script src="js/license.js"></script>
     
     <script src="internal-libs/snomed-interaction-components.min.js?version=3.41.0-SNAPSHOT-${BUILD_NUMBER}"></script>
     <script type="text/javascript" src="internal-libs/node_modules/snomed-ecl-builder/output/ecl-builder.js"></script>
@@ -80,16 +81,20 @@
             document.cookie = name + "=" + value + expires + "; path=/";
         }
 
-        function createCookieIfNotAcceptLicense() {
+        function checkLicenseAcceptance() {
             $("#accept-license-button-modal").unbind();
             $("#accept-license-button-modal").click(function() {
-                createCookie("licenseCookie", "true", 2);
+                options.acceptLicense = true;
+                License.accept();
             });
-             
-            options.acceptLicense = getCookie("licenseCookie") == "true";
-            if (!options.acceptLicense) {
-                $('#license-modal').modal('show');
-            }
+
+            options.acceptLicense = false;
+            License.isAccepted().then(function(accepted) {
+                options.acceptLicense = accepted;
+                if (!accepted) {
+                    $('#license-modal').modal('show');
+                }
+            });
         }       
         
         var defaultConceptId = 404684003;
@@ -283,7 +288,7 @@
                 });
             });
 
-            createCookieIfNotAcceptLicense();
+            checkLicenseAcceptance();
             
             componentsRegistry = [];
             postal.unsubscribeFor();

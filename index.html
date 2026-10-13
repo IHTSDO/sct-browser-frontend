@@ -9,6 +9,7 @@
     <meta name="description" content="SNOMED International SNOMED CT Browser">
     <meta name="author" content="SNOMED International">
     <script src="js/http-interceptor.js"></script>
+    <script src="js/license.js"></script>
 
     <script src="internal-libs/snomed-interaction-components.min.js?version=build_version"></script>
     <script type="text/javascript" src="internal-libs/node_modules/snomed-ecl-builder/output/ecl-builder.js"></script>
@@ -965,11 +966,17 @@
 
             $("#accept-license-button-modal").unbind();
             $("#accept-license-button-modal").click(function () {
-                createCookie("licenseCookie", "true", 2);
+                options.acceptLicense = true;
+                License.accept();
             });
-            options.acceptLicense = (acceptLicense == "true" || getCookie("licenseCookie") == "true");
+            options.acceptLicense = (acceptLicense == "true");
             if (!options.acceptLicense) {
-                $('#license-modal').modal('show');
+                License.isAccepted().then(function (accepted) {
+                    options.acceptLicense = accepted;
+                    if (!accepted) {
+                        $('#license-modal').modal('show');
+                    }
+                });
             }
 
             $("#cookiescript_accept").unbind();

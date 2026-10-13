@@ -134,5 +134,27 @@ docker build -t snomedinternational/snomedct-browser .
 Or you can just jump to running the following command, replacing the `<host>` variable with the full URL to your snowstorm instance:
 
 ```bash
-docker run --name snowstorm-nginx -d -p 80:80 --env API_HOST=<host> snomedinternational/snomedct-browser
+docker run --name snowstorm-nginx -d -p 80:80 --env API_HOST=<host> --env LICENSE_COOKIE_SECRET=<secret> snomedinternational/snomedct-browser
 ```
+
+## Licence acceptance cookie
+
+When a user accepts the SNOMED CT licence, nginx issues a `licenseCookie` containing an HMAC-SHA256 signed token
+(`v1.<expiry>.<nonce>.<signature>`, valid for 2 days). The cookie is `HttpOnly`, so it cannot be read or forged from
+JavaScript, and it is handled by [docker/license-cookie.js](docker/license-cookie.js) using the nginx njs module:
+
+Endpoint|Method|Use
+---|---|---
+/license/accept|POST|Issues a signed licence cookie.
+/license/status|GET|Returns `{"accepted": true\|false}`; clears the cookie if it is not validly signed.
+
+Requests to `/snowstorm/snomed-ct/` (and `/fhir`) that carry a `licenseCookie` which is forged, tampered with, expired
+or signed with another secret are rejected with `403`. Requests without the cookie are unaffected.
+
+`LICENSE_COOKIE_SECRET` must be at least 32 characters (e.g. `openssl rand -base64 48`) and identical on every instance
+behind the same load balancer. If it is not set, the container generates a random secret at startup, which is only
+suitable for a single local instance. Changing the secret invalidates all issued cookies; users will be asked to
+accept the licence again.
+
+Deployments that do not use the Docker image must provide the same `/license/*` endpoints and `403` check in their own
+nginx configuration (see [docker/nginx.conf](docker/nginx.conf)).
