@@ -255,8 +255,7 @@ var renderExpression = function(concept, inferredConcept, div, options) {
 
     if((concept.classAxioms && concept.classAxioms.length !== 0) || (concept.gciAxioms && concept.gciAxioms.length !== 0)) {
         
-        $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + concept.conceptId + '&active=true', function(result) {
-        }).done(function(result) {
+        fetchAllReferenceSetMembers(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + concept.conceptId + '&active=true').done(function(result) {
             var classAxiomOwlExpressions = [];
             var gciAxiomOwlExpressions = [];
             var otherOwlExpressions = [];           

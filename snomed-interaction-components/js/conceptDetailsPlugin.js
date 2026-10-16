@@ -1528,8 +1528,8 @@ function conceptDetails(divElement, conceptId, options) {
             xhrRefsets = null;
         }
 
-        xhrRefsets = $.getJSON(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId + '&active=true', function(result) {
-            }).done(function(result) {
+        xhrRefsets = fetchAllReferenceSetMembers(options.serverUrl + "/" + options.edition + "/" + ((options.release && options.release !== 'None') ? options.release + '/': '') + "members?referencedComponentId=" + firstMatch.conceptId + '&active=true');
+        xhrRefsets.done(function(result) {
                 var simpleRefsetMembers = [];
                 var simpleMapRefsetMembers = [];
                 var attributeValueRefsetMembers = [];
@@ -1716,10 +1716,12 @@ function conceptDetails(divElement, conceptId, options) {
                         $("[data-toggle=popover]").popover();
                     }, 0);
                 }
-            }).fail(function() {
-                $("#refsets-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
+        }).fail(function(xhr, textStatus) {
+            if (textStatus === 'abort') {
+                return;
             }
-        );
+            $("#refsets-" + panel.divElement.id).html("<div class='alert alert-danger'><span class='i18n' data-i18n-id='i18n_ajax_failed'><strong>Error</strong> while retrieving data from server...</span></div>");
+        });
     }
 
     this.getReferences = function(conceptId, historyBranch) {

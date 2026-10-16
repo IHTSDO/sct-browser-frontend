@@ -454,6 +454,55 @@ function registerContextMenu(options) {
     });
 }
 
+// Snowstorm defaults member searches to 50 rows and caps each page at 10000.
+// Keep requesting the next page until every member has been collected.
+function fetchAllReferenceSetMembers(baseUrl) {
+    var deferred = $.Deferred();
+    var collected = [];
+    var separator = baseUrl.indexOf('?') === -1 ? '?' : '&';
+    var pageSize = 10000;
+    var currentRequest = null;
+    var aborted = false;
+    var promise = deferred.promise();
+
+    promise.abort = function() {
+        aborted = true;
+        if (currentRequest && currentRequest.abort) {
+            currentRequest.abort();
+        }
+    };
+
+    var fetchPage = function(offset) {
+        if (aborted) {
+            deferred.reject(currentRequest, 'abort');
+            return;
+        }
+        currentRequest = $.getJSON(baseUrl + separator + 'limit=' + pageSize + '&offset=' + offset);
+        currentRequest.done(function(result) {
+            if (aborted) {
+                deferred.reject(currentRequest, 'abort');
+                return;
+            }
+            if (result.items && result.items.length) {
+                collected = collected.concat(result.items);
+            }
+            var total = typeof result.total === 'number' ? result.total : collected.length;
+            if (collected.length < total && result.items && result.items.length) {
+                fetchPage(collected.length);
+                return;
+            }
+            result.items = collected;
+            result.total = total;
+            deferred.resolve(result);
+        }).fail(function(xhr, textStatus, errorThrown) {
+            deferred.reject(xhr, aborted ? 'abort' : textStatus, errorThrown);
+        });
+    };
+
+    fetchPage(0);
+    return promise;
+}
+
 if (!String.prototype.endsWith) {
     String.prototype.endsWith = function(searchString, position) {
         var subjectString = this.toString();
