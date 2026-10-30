@@ -503,6 +503,62 @@ function fetchAllReferenceSetMembers(baseUrl) {
     return promise;
 }
 
+// Branch metadata is { identiferSchemeUrlMap: { "30051010000102": "http://loinc.org/" } }.
+// The alternate identifier is appended to that base URI.
+var alternateIdentifierSchemeRequests = {};
+
+function loadAlternateIdentifierSchemeUrlMap(serverUrl, branchPath) {
+    var codeSystemBranch = String(branchPath || "").replace(/\/\d{4}-\d{2}-\d{2}$/, "");
+    if (!serverUrl || !codeSystemBranch) {
+        return $.Deferred().resolve({}).promise();
+    }
+    if (!alternateIdentifierSchemeRequests[codeSystemBranch]) {
+        alternateIdentifierSchemeRequests[codeSystemBranch] = $.getJSON(serverUrl + "/branches/" + codeSystemBranch + "/metadata?includeInheritedMetadata=true").then(function(metadata) {
+            var schemes = metadata && metadata.identiferSchemeUrlMap;
+            return schemes && typeof schemes === "object" ? schemes : {};
+        }, function() {
+            return {};
+        });
+    }
+    return alternateIdentifierSchemeRequests[codeSystemBranch];
+}
+
+function alternativeIdentifierHref(identifier, metadata) {
+    if (!identifier || !identifier.alternateIdentifier || !metadata || typeof metadata.hash !== "undefined") {
+        return "";
+    }
+    var scheme = identifier.identifierScheme || {};
+    var schemeId = identifier.identifierSchemeId || scheme.conceptId;
+    var base = schemeId ? metadata[schemeId] : "";
+    if (!base || String(base).indexOf("http") !== 0) {
+        return "";
+    }
+    return String(base).replace(/\/+$/, "") + "/" + identifier.alternateIdentifier;
+}
+
+// No metadata entry: the original label. Otherwise the label plus a white arrow that opens base/id in a new tab.
+Handlebars.registerHelper("alternativeIdentifier", function(identifier, metadata, options) {
+    var home = options.hash.home;
+    var margin = options.hash.margin ? "margin-right:" + options.hash.margin + ";" : "";
+    var label = Handlebars.escapeExpression(identifier.identifierScheme.pt.term + ": " + identifier.alternateIdentifier);
+    var href = alternativeIdentifierHref(identifier, metadata);
+    if (!href) {
+        if (home) {
+            return new Handlebars.SafeString('<div class="row" style="background-color:#fff;color:rgb(66,139,202);padding:2.5px 4px 2px;border:1px solid darkgrey;border-radius:4px;width:fit-content;margin-left:0;' + margin + '">' + label + '</div>');
+        }
+        return new Handlebars.SafeString('<div style="background-color:rgb(66,139,202);color:#fff;padding:2px 4px;border:1px solid darkgrey;border-radius:4px;width:fit-content;display:inline;margin-left:10px;">' + label + '</div>');
+    }
+    var labelStyle = home ? "background:#fff;color:rgb(66,139,202);" : "background:rgb(66,139,202);color:#fff;";
+    var linkStyle = home
+        ? "display:flex;width:fit-content;text-decoration:none;margin-left:0;" + margin
+        : "display:inline-flex;text-decoration:none;margin-left:10px;vertical-align:middle;";
+    return new Handlebars.SafeString(
+        '<a href="' + Handlebars.escapeExpression(href) + '" target="_blank" rel="noopener noreferrer" title="Opens in a new tab" style="' + linkStyle + '">' +
+        '<span style="' + labelStyle + 'padding:2px 4px;border:1px solid darkgrey;border-radius:4px 0 0 4px;">' + label + '</span>' +
+        '<span style="background:#fff;color:#428bca;border:1px solid darkgrey;border-left:0;border-radius:0 4px 4px 0;padding:2px 5px;"><span class="glyphicon glyphicon-new-window"></span></span></a>'
+    );
+});
+
 if (!String.prototype.endsWith) {
     String.prototype.endsWith = function(searchString, position) {
         var subjectString = this.toString();

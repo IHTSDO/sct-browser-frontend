@@ -379,8 +379,10 @@ function conceptDetails(divElement, conceptId, options) {
             xhr = null;
         }
 
-        xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "?descendantCountForm=" + panel.options.selectedView, function(result) {
-        }).done(function(result) {
+        xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "?descendantCountForm=" + panel.options.selectedView);
+        $.when(xhr, loadAlternateIdentifierSchemeUrlMap(options.serverUrl, branch)).done(function(conceptResponse, identiferSchemeUrlMap) {
+            var result = conceptResponse[0];
+            panel.options.alternateIdentifierSchemeUrlMap = identiferSchemeUrlMap || {};
             if (result.active) {
                 panel.getParent(panel.conceptId, null, historyBranch, false);
                 panel.getChildren(panel.conceptId, panel.options.displayChildren, historyBranch, false);
