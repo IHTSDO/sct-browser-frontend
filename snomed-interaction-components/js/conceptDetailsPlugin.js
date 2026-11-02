@@ -380,7 +380,7 @@ function conceptDetails(divElement, conceptId, options) {
         }
 
         xhr = $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + panel.conceptId + "?descendantCountForm=" + panel.options.selectedView);
-        $.when(xhr, loadAlternateIdentifierSchemeUrlMap(options.serverUrl, branch)).done(function(conceptResponse, identiferSchemeUrlMap) {
+        $.when(xhr, loadAlternateIdentifierSchemeUrlMap(options.releases)).done(function(conceptResponse, identiferSchemeUrlMap) {
             var result = conceptResponse[0];
             panel.options.alternateIdentifierSchemeUrlMap = identiferSchemeUrlMap || {};
             if (result.active) {

@@ -503,24 +503,18 @@ function fetchAllReferenceSetMembers(baseUrl) {
     return promise;
 }
 
-// Branch metadata is { identiferSchemeUrlMap: { "30051010000102": "http://loinc.org/" } }.
-// The alternate identifier is appended to that base URI.
-var alternateIdentifierSchemeRequests = {};
-
-function loadAlternateIdentifierSchemeUrlMap(serverUrl, branchPath) {
-    var codeSystemBranch = String(branchPath || "").replace(/\/\d{4}-\d{2}-\d{2}$/, "");
-    if (!serverUrl || !codeSystemBranch) {
-        return $.Deferred().resolve({}).promise();
+// Code systems are already loaded on the index as options.releases. Each one may set
+// alternateSchemaSctid and alternateSchemaUri, for example "30051010000102" and "http://loinc.org".
+function loadAlternateIdentifierSchemeUrlMap(codeSystems) {
+    var urlMap = {};
+    var items = (codeSystems && codeSystems.items) || [];
+    for (var i = 0; i < items.length; i++) {
+        var codeSystem = items[i] || {};
+        if (codeSystem.alternateSchemaSctid && codeSystem.alternateSchemaUri) {
+            urlMap[codeSystem.alternateSchemaSctid] = codeSystem.alternateSchemaUri;
+        }
     }
-    if (!alternateIdentifierSchemeRequests[codeSystemBranch]) {
-        alternateIdentifierSchemeRequests[codeSystemBranch] = $.getJSON(serverUrl + "/branches/" + codeSystemBranch + "/metadata?includeInheritedMetadata=true").then(function(metadata) {
-            var schemes = metadata && metadata.identiferSchemeUrlMap;
-            return schemes && typeof schemes === "object" ? schemes : {};
-        }, function() {
-            return {};
-        });
-    }
-    return alternateIdentifierSchemeRequests[codeSystemBranch];
+    return urlMap;
 }
 
 function alternativeIdentifierHref(identifier, metadata) {
