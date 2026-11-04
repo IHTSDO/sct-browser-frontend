@@ -503,6 +503,73 @@ function fetchAllReferenceSetMembers(baseUrl) {
     return promise;
 }
 
+// US English, GB English, the edition's main language refset, then the rest by name.
+function sortLanguageRefsets(languageRefsets, defaultLanguageReferenceSets) {
+    var mainExtensionRefset = (defaultLanguageReferenceSets || []).find(function(id) {
+        return id !== "900000000000509007" && id !== "900000000000508004";
+    });
+    function rank(refset) {
+        var id = refset.conceptId || refset.id;
+        if (id === "900000000000509007") {
+            return 0;
+        }
+        if (id === "900000000000508004") {
+            return 1;
+        }
+        if (mainExtensionRefset && id === mainExtensionRefset) {
+            return 2;
+        }
+        return 3;
+    }
+    function name(refset) {
+        return (refset.fsn && refset.fsn.term) || (refset.pt && refset.pt.term) || "";
+    }
+    return languageRefsets.sort(function(a, b) {
+        return rank(a) - rank(b) || name(a).localeCompare(name(b));
+    });
+}
+
+var languageRefsetLanguageCodes = {};
+
+// The language of a language refset is the language of the descriptions it holds, as the Search
+// "Language Refsets" filter shows. One active member is enough because Snowstorm returns its description.
+function loadLanguageRefsetLanguageCode(serverUrl, branch, refsetId) {
+    var deferred = $.Deferred();
+    var key = branch + "|" + refsetId;
+    if (!refsetId || languageRefsetLanguageCodes[key] !== undefined) {
+        return deferred.resolve(languageRefsetLanguageCodes[key]).promise();
+    }
+    $.ajax({
+        url: serverUrl + "/" + branch + "/members?referenceSet=" + refsetId + "&active=true&limit=1",
+        dataType: 'json'
+    }).done(function(result) {
+        var member = result && result.items && result.items[0];
+        languageRefsetLanguageCodes[key] = (member && member.referencedComponent && member.referencedComponent.lang) || "";
+    }).fail(function() {
+        languageRefsetLanguageCodes[key] = "";
+    }).always(function() {
+        deferred.resolve(languageRefsetLanguageCodes[key]);
+    });
+    return deferred.promise();
+}
+
+// Snowstorm takes each PT from the first Accept-Language entry that has one, and only when the description
+// language matches the entry's language code. The default header goes last so terms missing from the
+// chosen refset still come from the default.
+function languageRefsetAcceptLanguage(refsetId, languageCode, defaultAcceptLanguage) {
+    if (!refsetId) {
+        return defaultAcceptLanguage;
+    }
+    if (!/^[a-z]{2}$/i.test(languageCode || "")) {
+        languageCode = String(defaultAcceptLanguage || "").substring(0, 2);
+    }
+    if (!/^[a-z]{2}$/i.test(languageCode)) {
+        languageCode = "en";
+    }
+    var acceptLanguage = languageCode.toLowerCase() + "-x-" + refsetId;
+    return defaultAcceptLanguage ? acceptLanguage + "," + defaultAcceptLanguage : acceptLanguage;
+}
+
 // Code systems are already loaded on the index as options.releases. Each one may set
 // alternateSchemaSctid and alternateSchemaUri, for example "30051010000102" and "http://loinc.org".
 function loadAlternateIdentifierSchemeUrlMap(codeSystems) {

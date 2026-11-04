@@ -488,7 +488,7 @@ function searchPanel(divElement, options) {
     }
 
     this.setLanguageRefsets = function(languageRefsets) {
-        panel.options.languageRefsets = languageRefsets;
+        panel.options.languageRefsets = sortLanguageRefsets(languageRefsets || [], panel.options.defaultLanguageReferenceSets);
         if (panel.options.languageRefsets.length !== 0) {
             panel.setupLanguageRefsetDropdown();
         }

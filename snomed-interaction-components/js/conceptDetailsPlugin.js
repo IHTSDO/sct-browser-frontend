@@ -2487,17 +2487,7 @@ function conceptDetails(divElement, conceptId, options) {
                 }
             });
 
-            panel.options.languageRefsets.sort(function(a, b) {
-                if (a.conceptId === '900000000000509007'){
-                    return -1;
-                }
-
-                if (b.conceptId === '900000000000509007'){
-                    return 1;
-                }
-
-                return a.fsn.term.localeCompare(b.fsn.term);
-            });
+            sortLanguageRefsets(panel.options.languageRefsets, panel.options.defaultLanguageReferenceSets);
 
             if (!panel.options.defaultLanguageReferenceSets || panel.options.defaultLanguageReferenceSets.length === 0) {
                 panel.options.defaultLanguageReferenceSets = [];
@@ -2516,7 +2506,7 @@ function conceptDetails(divElement, conceptId, options) {
     }
 
     this.setLangugeRefsets = function(langRefsets) {
-        panel.options.languageRefsets = langRefsets;
+        panel.options.languageRefsets = sortLanguageRefsets(langRefsets || [], panel.options.defaultLanguageReferenceSets);
         if (!panel.options.defaultLanguageReferenceSets || panel.options.defaultLanguageReferenceSets.length === 0) {
             panel.options.defaultLanguageReferenceSets = [];
             panel.options.languageRefsets.forEach(function(item) {
@@ -2529,22 +2519,34 @@ function conceptDetails(divElement, conceptId, options) {
         $("#" + panel.divElement.id + "-configButton").removeAttr("disabled");
     }
 
-    this.loadMembers = function(returnLimit, skipTo, paginate, historyBranch) {
-        var branch = options.edition;
+    this.getMembersBranch = function(historyBranch) {
+        if (historyBranch) {
+            return historyBranch;
+        }
+        if (options.release.length > 0 && options.release !== 'None') {
+            return options.edition + "/" + options.release;
+        }
+        return options.edition;
+    };
 
-        if (historyBranch){
-            branch = historyBranch;
-        }
-        else{
-            if(options.release.length > 0 && options.release !== 'None'){
-                branch = branch + "/" + options.release;
-            }
-        }
+    this.loadMembers = function(returnLimit, skipTo, paginate, historyBranch) {
+        var branch = panel.getMembersBranch(historyBranch);
         var membersUrl = options.serverUrl + "/" + branch + "/members?referenceSet=" + panel.conceptId + "&limit=100&active=true";
         if (skipTo > 0) {
             membersUrl = membersUrl + "&offset=" + skipTo;
         } else {
+            panel.renderMembersTermsFrom(historyBranch);
             $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><i class='glyphicon glyphicon-refresh icon-spin'></i></td></tr>");
+        }
+        var languageRefset = panel.membersLanguageRefset;
+        var languageCode = languageRefsetLanguageCodes[branch + "|" + languageRefset];
+        if (languageRefset && languageCode === undefined) {
+            loadLanguageRefsetLanguageCode(options.serverUrl, branch, languageRefset).always(function() {
+                if (languageRefset === panel.membersLanguageRefset) {
+                    panel.loadMembers(returnLimit, skipTo, paginate, historyBranch);
+                }
+            });
+            return;
         }
         var total;
         if (typeof total != "undefined") {
@@ -2557,13 +2559,19 @@ function conceptDetails(divElement, conceptId, options) {
             xhrMembers = null;
         }
 
+        var defaultAcceptLanguage = options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages;
         $.ajaxSetup({
             headers : {
-                'Accept-Language': options.defaultAcceptLanguage ? options.defaultAcceptLanguage : options.languages
+                'Accept-Language': defaultAcceptLanguage
             }
         });
 
-        xhrMembers = $.getJSON(membersUrl, function(result) {
+        xhrMembers = $.ajax({
+            url: membersUrl,
+            dataType: 'json',
+            headers: {
+                'Accept-Language': languageRefsetAcceptLanguage(languageRefset, languageCode, defaultAcceptLanguage)
+            }
         }).done(function(result) {
             var remaining = "asd";
             if (typeof total == "undefined") total = result.total;
@@ -2696,6 +2704,41 @@ function conceptDetails(divElement, conceptId, options) {
         }).fail(function() {
             $('#members-' + panel.divElement.id + "-resultsTable").html("<tr><td class='text-muted' colspan='2'><span data-i18n-id='i18n_no_members' class='i18n'>"+i18n_no_members+"</span></td></tr>");
         });
+    };
+
+    this.renderMembersTermsFrom = function(historyBranch) {
+        var container = $("#members-" + panel.divElement.id + "-termsFrom");
+        var refsets = panel.options.languageRefsets || [];
+        if (refsets.length === 0) {
+            panel.membersLanguageRefset = "";
+            container.empty();
+            return;
+        }
+        var label = jQuery.i18n.prop('i18n_language_refset');
+        if (label === "[i18n_language_refset]") {
+            label = "Language Refset";
+        }
+        var select = $("<select class='form-control input-sm' style='display: inline-block; width: auto; margin-left: 5px;'></select>");
+        var refsetIds = refsets.map(function(refset) {
+            var id = refset.conceptId || refset.id;
+            var term = (refset.pt && refset.pt.term) || (refset.fsn && refset.fsn.term) || id;
+            select.append($("<option></option>").val(id).text(term));
+            return id;
+        });
+        if (refsetIds.indexOf(panel.membersLanguageRefset) === -1) {
+            var defaultRefsets = (panel.options.defaultLanguageReferenceSets || []).filter(function(id) {
+                return refsetIds.indexOf(id) !== -1;
+            });
+            panel.membersLanguageRefset = defaultRefsets.length ? defaultRefsets[0] : refsetIds[0];
+        }
+        select.val(panel.membersLanguageRefset);
+        select.change(function() {
+            panel.membersLanguageRefset = $(this).val();
+            panel.loadMembers(100, 0, 1, historyBranch);
+        });
+        container.empty()
+            .append($("<span class='i18n' data-i18n-id='i18n_language_refset'></span>").text(label))
+            .append(select);
     };
 
     this.stripDiagrammingMarkup = function(htmlString) {

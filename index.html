@@ -2118,15 +2118,7 @@
                     }
                 });
 
-                languageRefsets.sort(function (a, b) {
-                    if (a.conceptId === '900000000000509007') {
-                        return -1;
-                    }
-                    if (b.conceptId === '900000000000509007') {
-                        return 1;
-                    }
-                    return a.fsn.term.localeCompare(b.fsn.term);
-                });
+                sortLanguageRefsets(languageRefsets, options.defaultLanguageReferenceSets);
 
                 dfd.resolve({
                     'referenceSets': result,
