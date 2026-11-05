@@ -400,12 +400,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                     });
                     $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + selectedId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {
                         result.forEach(function(item) {
-                            if(panel.options.showPreferredTerm){
-                                item.defaultTerm = item.pt.term;
-                            }
-                            else{
-                                item.defaultTerm = item.fsn.term;
-                            }
+                            item.defaultTerm = conceptDisplayTerm(item, panel.options.showPreferredTerm);
                         });
                     }).done(function(result) {
                         if (selectedId === '138875005') {
@@ -479,20 +474,33 @@ function taxonomyPanel(divElement, conceptId, options) {
               'Accept-Language': panel.options.acceptLanguageValue
             }
         });
-        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {}).done(function(result) {
-            result.forEach(function(item) {
-                if(panel.options.showPreferredTerm){
-                    item.defaultTerm = item.pt.term;
-                }
-                else{
-                    item.defaultTerm = item.fsn.term;
+        function stopSpinner(replacementClass) {
+            var icons = $("#" + panel.divElement.id + "-treeicon-" + conceptId);
+            if (target) {
+                icons = icons.add($(target).closest("i")).add($(target).find("i"));
+            }
+            icons.removeClass("glyphicon-refresh icon-spin");
+            icons.each(function() {
+                var icon = $(this);
+                if (!icon.is(".glyphicon-chevron-down, .glyphicon-chevron-right, .glyphicon-chevron-up, .glyphicon-minus")) {
+                    icon.addClass(replacementClass);
                 }
             });
+        }
+        $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/children?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {}).done(function(result) {
+            result = result || [];
+            result.forEach(function(item) {
+                item.defaultTerm = (item.pt && item.pt.term) || (item.fsn && item.fsn.term) || item.conceptId;
+            });
             result.sort(function(a, b) {
-                if (a.defaultTerm.toLowerCase() < b.defaultTerm.toLowerCase())
+                var left = String(a.defaultTerm || "").toLowerCase();
+                var right = String(b.defaultTerm || "").toLowerCase();
+                if (left < right) {
                     return -1;
-                if (a.defaultTerm.toLowerCase() > b.defaultTerm.toLowerCase())
+                }
+                if (left > right) {
                     return 1;
+                }
                 return 0;
             });
             //console.log(JSON.stringify(result));
@@ -583,9 +591,9 @@ function taxonomyPanel(divElement, conceptId, options) {
             });
 
         }).fail(function() {
-            $("#" + panel.divElement.id + "-treeicon-" + conceptId).removeClass("icon-spin");
-            $("#" + panel.divElement.id + "-treeicon-" + conceptId).removeClass("glyphicon-refresh");
-            $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-minus");
+            stopSpinner("glyphicon-chevron-right");
+        }).always(function() {
+            stopSpinner("glyphicon-chevron-right");
         });
     }
 
@@ -606,7 +614,10 @@ function taxonomyPanel(divElement, conceptId, options) {
                 var firstParent = "empty";
                 var parentsStrs = [];
                 $.each(parents, function(i, parent) {
-                    var parentLiHtml = "<li data-concept-id='" + parent.conceptId + "' data-term='" + parent.fsn.term + "' class='treeLabel'>";
+                    var defaultTerm = conceptDisplayTerm(parent, panel.options.showPreferredTerm);
+                    var fsnTerm = (parent.fsn && parent.fsn.term) || defaultTerm;
+                    var ptTerm = (parent.pt && parent.pt.term) || defaultTerm;
+                    var parentLiHtml = "<li data-concept-id='" + parent.conceptId + "' data-term='" + fsnTerm + "' class='treeLabel'>";
                     parentLiHtml = parentLiHtml + "<button class='btn btn-link btn-xs treeButton' style='padding:2px'><i class='glyphicon glyphicon-chevron-";
                     if (parent.conceptId == "138875005" || parent.conceptId == "9999999999") {
                         parentLiHtml = parentLiHtml + "down";
@@ -615,21 +626,14 @@ function taxonomyPanel(divElement, conceptId, options) {
                     }
                     parentLiHtml = parentLiHtml + " treeButton'  id='" + panel.divElement.id + "-treeicon-" + parent.conceptId + "'></i></button>";
                     if (parent.definitionStatus == "PRIMITIVE") {
-                        parentLiHtml = parentLiHtml + '<span class="badge alert-warning context-menu" data-concept-id="' + parent.conceptId + '" data-fsn="' + parent.fsn.term + '" data-preferred-term="' + parent.pt.term + '" data-term="' + parent.fsn.term + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&nbsp;&nbsp;</span>&nbsp;&nbsp;';
+                        parentLiHtml = parentLiHtml + '<span class="badge alert-warning context-menu" data-concept-id="' + parent.conceptId + '" data-fsn="' + fsnTerm + '" data-preferred-term="' + ptTerm + '" data-term="' + fsnTerm + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&nbsp;&nbsp;</span>&nbsp;&nbsp;';
                     } else {
-                        parentLiHtml = parentLiHtml + '<span class="badge alert-warning context-menu" data-concept-id="' + parent.conceptId + '" data-fsn="' + parent.fsn.term + '" data-preferred-term="' + parent.pt.term + '" data-term="' + parent.fsn.term + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&equiv;</span>&nbsp;&nbsp;';
+                        parentLiHtml = parentLiHtml + '<span class="badge alert-warning context-menu" data-concept-id="' + parent.conceptId + '" data-fsn="' + fsnTerm + '" data-preferred-term="' + ptTerm + '" data-term="' + fsnTerm + '" draggable="true" ondragstart="drag(event)" class="treeLabel selectable-row" id="' + panel.divElement.id + '-treenode-' + parent.conceptId + '">&equiv;</span>&nbsp;&nbsp;';
                     }
                     if (countryIcons[parent.module]) {
                         parentLiHtml = parentLiHtml + "<div class='phoca-flagbox' style='width:33px;height:33px'><span class='phoca-flag " + countryIcons[parent.module] + "'></span></div> ";
                     }
-                    var defaultTerm = "";
-                    if(panel.options.showPreferredTerm){
-                        defaultTerm = parent.pt.term;
-                    }
-                    else{
-                        defaultTerm = parent.fsn.term;
-                    }
-                    parentLiHtml = parentLiHtml + '<a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"><span class="treeLabel selectable-row" data-concept-id="' + parent.conceptId + '" data-term="' + parent.fsn.term + '" data-preferred-term="' + parent.pt.term + '" draggable="true" ondragstart="drag(event)"> ' + defaultTerm + '</span></a>';
+                    parentLiHtml = parentLiHtml + '<a href="javascript:void(0);" style="color: inherit;text-decoration: inherit;"><span class="treeLabel selectable-row" data-concept-id="' + parent.conceptId + '" data-term="' + fsnTerm + '" data-preferred-term="' + ptTerm + '" draggable="true" ondragstart="drag(event)"> ' + defaultTerm + '</span></a>';
                     parentLiHtml = parentLiHtml + "</li>";
                     parentsStrs.push(parentLiHtml);
                     if (firstParent == "empty") {
@@ -695,7 +699,10 @@ function taxonomyPanel(divElement, conceptId, options) {
                 }
                 icon = iconToDrag(term);
             });
-        }).fail(function() {});
+        }).fail(function() {
+            $("#" + panel.divElement.id + "-treeicon-" + conceptId).removeClass("glyphicon-refresh icon-spin");
+            $("#" + panel.divElement.id + "-treeicon-" + conceptId).addClass("glyphicon-chevron-up");
+        });
     }
 
     this.setToConcept = function(conceptId, term, definitionStatus, module, descendantCount) {
@@ -713,12 +720,7 @@ function taxonomyPanel(divElement, conceptId, options) {
         $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + "/parents?form=" + panel.options.selectedView + "&includeDescendantCount=" + panel.options.descendantsCount, function(result) {
             $.each(result, function(i, item) {
                 if (typeof item.defaultTerm == "undefined") {
-                    if(panel.options.showPreferredTerm){
-                        item.defaultTerm = item.pt.term;
-                    }
-                    else{
-                        item.defaultTerm = item.fsn.term;
-                    }                    
+                    item.defaultTerm = conceptDisplayTerm(item, panel.options.showPreferredTerm);
                 }
             });
         }).done(function(result) {            
@@ -730,12 +732,7 @@ function taxonomyPanel(divElement, conceptId, options) {
                 });
                 var urlArgs = '?descendantCountForm=' + panel.options.selectedView;                
                 $.getJSON(options.serverUrl + "/browser/" + branch + "/concepts/" + conceptId + urlArgs, function(res) {
-                    if(panel.options.showPreferredTerm){
-                        res.defaultTerm = res.pt.term;
-                    }
-                    else{
-                        res.defaultTerm = res.fsn.term;
-                    }
+                    res.defaultTerm = conceptDisplayTerm(res, panel.options.showPreferredTerm);
                     
                     if (conceptId === 138875005) {
                         $("#" + panel.divElement.id + "-selectedConceptSection").hide();
@@ -765,13 +762,19 @@ function taxonomyPanel(divElement, conceptId, options) {
         var languageFilter = [];
         languageFilter.push(usFSN);
         languageFilter.push(usPT);
+        languageRefsets = languageRefsets || [];
+        sortLanguageRefsets(languageRefsets, panel.options.defaultLanguageReferenceSets);
         languageRefsets.forEach(function(languageRefset) {
-            if (languageRefset.conceptId !== '900000000000509007' 
-                && languageRefset.conceptId !== '900000000000508004'
-                && panel.options.languageNameOfLangRefset.hasOwnProperty(languageRefset.conceptId)) {
-                var dialect = {id: languageRefset.conceptId, label: 'PT in ' + panel.options.languageNameOfLangRefset[languageRefset.conceptId], dialectId: languageRefset.conceptId};
-                languageFilter.push(dialect);
-            }            
+            var refsetId = languageRefset.conceptId || languageRefset.id;
+            if (refsetId !== '900000000000509007'
+                && refsetId !== '900000000000508004'
+                && panel.options.languageNameOfLangRefset.hasOwnProperty(refsetId)) {
+                languageFilter.push({
+                    id: refsetId,
+                    label: 'PT in ' + panel.options.languageNameOfLangRefset[refsetId],
+                    dialectId: refsetId
+                });
+            }
         });
         languageFilter.forEach(function(language) {        
             var li = "<li><button class='btn btn-link' id='" + panel.divElement.id + "-txLangage-" + language['id'] + "'><span>" + language['label'] + "</span></button></li>";
@@ -792,10 +795,8 @@ function taxonomyPanel(divElement, conceptId, options) {
         if (languageFilter.length === 2) {
             defaultLanguage = languageFilter[0];
             panel.options.showPreferredTerm = false;
-        } else if (languageFilter.length === 3) {
-            defaultLanguage = languageFilter[2];
         } else {
-            defaultLanguage = languageFilter[1];
+            defaultLanguage = languageFilter[2] || languageFilter[1];
         }
         
         $("#" + panel.divElement.id + "-txLanguageSwitcherLabel").html("<span><span class='i18n' data-i18n-id='i18n_language'>" + i18n_language + "</span>: " + defaultLanguage['label'] + "</span>");
@@ -803,16 +804,20 @@ function taxonomyPanel(divElement, conceptId, options) {
     }
 
     panel.getAcceptLanguage = function(dialectId) {
-        if (dialectId !== "900000000000509007" && panel.options.languageNameOfLangRefset.hasOwnProperty(dialectId)) {
-            if (panel.options.languageNameOfLangRefset[dialectId].includes('-')) {
-                var strArray = panel.options.languageNameOfLangRefset[dialectId].split('-');
-                return strArray[0].toLowerCase() + '-' + strArray[1].toUpperCase() + '-x-' + dialectId + ';q=0.8,en-US;q=0.5';
+        var names = panel.options.languageNameOfLangRefset || {};
+        var acceptLanguage;
+        var shortName = names[dialectId];
+        if (dialectId !== "900000000000509007" && shortName) {
+            if (shortName.includes('-')) {
+                var strArray = shortName.split('-');
+                acceptLanguage = strArray[0].toLowerCase() + '-' + strArray[1].toUpperCase() + '-x-' + dialectId + ';q=0.8,en-US;q=0.5';
+            } else {
+                acceptLanguage = shortName.toLowerCase() + '-' + shortName.toUpperCase() + '-x-' + dialectId + ';q=0.8,en-US;q=0.5';
             }
-
-            return panel.options.languageNameOfLangRefset[dialectId] + '-' + panel.options.languageNameOfLangRefset[dialectId].toUpperCase() + '-x-' + dialectId + ';q=0.8,en-US;q=0.5';
         } else {
-            return "en-us;q=0.8,en-gb;q=0.5";
-        }        
+            acceptLanguage = "en-us;q=0.8,en-gb;q=0.5";
+        }
+        return acceptLanguage;
     }
 
     panel.reloadCurrentConcept = function() {

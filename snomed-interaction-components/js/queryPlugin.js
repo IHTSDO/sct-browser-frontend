@@ -928,8 +928,9 @@ function queryComputerPanel(divElement, options) {
     this.setupLanguageRefsetDropdown = function() {
         panel.options.languageRefsets.forEach(function(concept) {
             // add item to language refset dropdow list
-            var o = new Option(concept.pt.term, concept.id);
-            $(o).html(concept.pt.term);
+            var term = (concept.pt && concept.pt.term) || (concept.fsn && concept.fsn.term) || concept.id;
+            var o = new Option(term, concept.id);
+            $(o).html(term);
             $('#' + panel.divElement.id + '-filterLanguageRefsetOpt').append(o);
         });
 

@@ -66,6 +66,21 @@ function setDefaultTerm(concept) {
 	}
 }
 
+// Snowstorm returns pt: {} / fsn: {} when no description matches the requested dialects.
+function conceptDisplayTerm(concept, preferPreferredTerm) {
+    if (!concept) {
+        return "";
+    }
+    var preferred = concept.pt && concept.pt.term;
+    var fsn = concept.fsn && concept.fsn.term;
+    var term = preferPreferredTerm ? (preferred || fsn) : (fsn || preferred);
+    return term || concept.conceptId || concept.id || "";
+}
+
+function compareDefaultTerms(a, b) {
+    return String((a && a.defaultTerm) || "").toLowerCase().localeCompare(String((b && b.defaultTerm) || "").toLowerCase());
+}
+
 function getUsFsn(concept) {
     for (var i = 0; i < concept.descriptions.length; i++) {
         var desc = concept.descriptions[i];
