@@ -1297,7 +1297,7 @@
 
             function getProjects() {
                 var dfd = $.Deferred();
-                $.getJSON("/authoring-services/projects?lightweight=true").done(function (result) {
+                $.getJSON("/authoring-services/projects?lightweight=true&includeReviewerOnlyProjects=true").done(function (result) {
                     var projectsInDateFormat = [];
                     var projectsInStringFormat = [];
                     result.forEach(function (item) {
